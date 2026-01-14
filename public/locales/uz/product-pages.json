@@ -1,0 +1,163 @@
+{
+    "titles": {
+        "3dModels": "3D moddellar va Interier dizaynlar",
+        "designDevelopments": "Dizayn shablonlar",
+        "scientificResources": "Ilmiy ishlar kategoriyasi",
+        "templates": "Tayyor shablonlar",
+        "videoLessons": "Video darsliklar",
+        "websites": "Veb saytlar"
+    },
+    "meta": {
+        "defaultDescription": "Biz siz qidirayotgan mahsulotlarni Soff.uz saytimizning kategoriyasida topdik",
+        "3dDescription": "3D moddellar va Interier dizaynlar kategoriyasi: Taqdimotlar Tayyor shablonlar Kurs ishlari Diplom ishlari Referatlar Mustaqil ishlar Labaratoriya Ishlari Dissertatsiya ishlari Testlar O'quv qo'llanmalar Dars ishlanmalar Tarqatma materiallar Amaliy ishlar Blankalar Ijodiy Ishlar Loyihalar Plakatlar Maqola Ixtiro patenti Namunaviy hujjatlar Statistika Elektron kitoblar Dasturlash tillari",
+        "scientificDescription": " bo'yicha eng yaxshi raqamli mahsulotlarni Soff.uz da toping. Ishonchli sotuvchilar va sifatli kontent!"
+    },
+    "howItWorks": {
+        "title": "Tayyor mahsulotlardan foydalanish qanday ishlaydi?",
+        "steps": {
+            "search": {
+                "title": "Qidiring va tanlang",
+                "description": "Katalogdan yoki qidiruv orqali sizga kerakli tayyor mahsulotni toping."
+            },
+            "purchase": {
+                "title": "Sotib oling",
+                "description": "Xavfsiz to'lov tizimi orqali mahsulotni sotib oling — narx va shartlar oldindan ko'rinadi."
+            },
+            "download": {
+                "title": "Yuklab oling va foydalaning",
+                "description": "Mahsulotni darhol yuklab oling va ishlatishni boshlang."
+            }
+        }
+    },
+    "grayCard": {
+        "title": "Kerakli mahsulotni topa olmadingizmi? Buyurtma berishingiz mumkin.",
+        "button": "Buyurtmar berish"
+    },
+    "filter": {
+        "allProducts": "Barcha mahsulotlar",
+        "searchPlaceholder": "Qanday mahsulot izlamoqdasiz?",
+        "openFilters": "Filtrlarni ochish",
+        "category": "Kategoriya",
+        "selectCategory": "Kategoriya tanlang",
+        "subCategory": "Sub kategoriya",
+        "selectSubCategory": "Sub kategoriyani tanlang",
+        "fileTypes": "Fayl turlari",
+        "priceRange": "Narx oralig'i",
+        "pageRange": "Varoqlar oralig'i",
+        "page": "bet",
+        "pages": "bet",
+        "clearFilter": "Filtrni tozalash",
+        "applyFilter": "Filtrni qo'llash",
+        "currency": "so'm"
+    },
+    "productsByCategory": {
+        "noInfoFound": "Ma'lumot topilmadi",
+        "emptyStateTitle": "😕 Bu yerda hozircha hech narsa yo'q...",
+        "emptyStateDescription": "Ammo bu siz uchun ajoyib imkoniyat! Birinchilardan bo'lib ushbu kategoriyaga mahsulot joylashtiring, o'z auditoriyangizni yarating va daromad olishni boshlang. Imkoniyatni qo'ldan boy bermang!",
+        "becomeSeller": "Sotuvchi bo'lish"
+    },
+    "productCard": {
+        "free": "Bepul",
+        "currency": "so'm",
+        "cardImage": "Mahsulot rasmi",
+        "icon": "Ikona",
+        "modal": {
+            "title": "Muvaffaqqiyatli",
+            "message": "Mahsulotingizni savatga qo'shdingiz!",
+            "goToCart": "Savatga o'tish",
+            "continueShopping": "Xaridlarni davom etirish"
+        }
+    },
+    "productDetail": {
+        "notFound": "Mahsulot topilmadi",
+        "videoBanner": {
+            "title": "SOFF'da xarid qilishni bilmayapsizmi?",
+            "subtitle": "Taxminan 1 daqiqalik video: mahsulotni qanday sotib olishni ko'rsatadi."
+        },
+        "joyride": {
+            "step1": "Bu yerda mahsulotning bir qismi joylashgan.",
+            "step2": "Bu yerda narxi va sotib olish tugmasi bor. Bosib sotib olasiz.",
+            "back": "Oldingisi",
+            "last": "Tushundim",
+            "close": "Yopish",
+            "next": "Keyingisi",
+            "open": "Ochish",
+            "skip": "Bilaman"
+        },
+        "headings": {
+            "similarProducts": "O'xshash mahsulotlar",
+            "lastAddedProducts": "So'ngi yuklangan mahsulotlar"
+        },
+        "fileActions": {
+            "free": "Bepul",
+            "currency": "so'm",
+            "soldCount": "Mahsulotni sotilgan soni:",
+            "countUnit": "ta",
+            "videoDuration": "Video davomiyligi:",
+            "pageCount": "Betlar soni:",
+            "fileSize": "Fayl hajmi :",
+            "fileType": "Fayl turi:",
+            "style": "Uslub:",
+            "height": "Balandlik:",
+            "width": "Eni:",
+            "length": "Uzunlik:",
+            "color": "Rang:",
+            "materials": "Materiallar:",
+            "shape": "Shakl:",
+            "render": "Render:",
+            "platform": "Platforma:",
+            "addToCart": "Savatga qo'shish",
+            "addToWishlist": "Wishlistga qo'shish",
+            "download": "Yuklab olish",
+            "buyNow": "Hoziroq xarid qilish (",
+            "copySuccess": "Nusxa ko'chirildi",
+            "copyError": "Nusxa ko'chirilmadi",
+            "videoIdNotFound": "Video ID topilmadi.",
+            "scrollUp": "Yuqoriga scroll qilish",
+            "scrollDown": "Pastga scroll qilish",
+            "sellerImage": "Sotuvchi rasmi"
+        },
+        "description": {
+            "title": "Mahsulot tavsifi",
+            "noDescription": "Batafsil ma'lumot yo'q",
+            "noDescriptionText": "Hozircha muallif ushbu mahsuloti uchun tavsif qo'shmagan."
+        },
+        "sellerProfile": {
+            "author": "Muallif:",
+            "totalProducts": "Jami mahsulotlar soni:",
+            "soldProducts": "Sotilgan mahsulotlar soni:",
+            "countUnit": "ta",
+            "sellerImage": "Sotuvchi profili"
+        },
+        "similarProducts": {
+            "notFound": "O'xshash mahsulotlar topilmadi",
+            "noInfoAlt": "Batafsil ma'lumot yo'q"
+        },
+        "lastAddedProducts": {
+            "notFound": "So'ngi yuklangan mahsulotlar topilmadi",
+            "noInfoAlt": "Batafsil ma'lumot yo'q"
+        },
+        "fileImagesScroll": {
+            "copyrightViolation": "Mualliflik huquqi buzilgan holatda",
+            "report": "shikoyat qiling!",
+            "sellerImage": "Sotuvchi rasmi"
+        },
+        "videoDetails": {
+            "copyrightViolation": "Mualliflik huquqi buzilgan holatda",
+            "report": "shikoyat qiling!"
+        },
+        "fileDetails": {
+            "productName": "Mahsulot nomi",
+            "categoryName": "Kategoriya nomi"
+        },
+        "aiSoffia": {
+            "title": "AI yordamida prezentatsiya yarating",
+            "description": "Prezentatsiya tayyorlashni aqlli botga topshiring – tez, qulay va samarali.",
+            "button": "Boshlash",
+            "notFound": {
+                "alt": "Ma'lumot topilmadi",
+                "message": "So'rovingiz bo'yicha ma'lumot topilmadi..."
+            }
+        }
+    }
+}

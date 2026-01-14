@@ -2,6 +2,7 @@ import React from 'react';
 import { Avatar, Empty } from 'antd';
 import { FaHeadset } from 'react-icons/fa';
 import styles from '../../style/chat-empty-messages.module.scss';
+import { useTranslation } from 'next-i18next';
 
 type DirectorEmptyStateProps = {
     name: string;
@@ -12,6 +13,7 @@ export const DirectorEmptyState: React.FC<DirectorEmptyStateProps> = ({
     name,
     photoUrl,
 }) => {
+    const { t } = useTranslation('chat');
     return (
         <div className={styles.directorEmptyState}>
             <Avatar
@@ -24,11 +26,9 @@ export const DirectorEmptyState: React.FC<DirectorEmptyStateProps> = ({
             <h3 className={styles.directorName}>{name}</h3>
 
             <div className={styles.welcomeMessage}>
-                <p className={styles.greeting}>Assalomu alaykum</p>
+                <p className={styles.greeting}>{t('window.greeting')}</p>
                 <p className={styles.instruction}>
-                    Talab va takliflaringiz bo‘yicha xabaringizni shu yerda
-                    yuborishingiz mumkin. Murojaatingiz albatta ko‘rib
-                    chiqiladi.
+                    {t('window.directorMessage')}
                 </p>
             </div>
         </div>
@@ -36,24 +36,25 @@ export const DirectorEmptyState: React.FC<DirectorEmptyStateProps> = ({
 };
 
 export const ModeratorEmptyState: React.FC = () => {
+    const { t } = useTranslation('chat');
     return (
         <div className={styles.moderatorEmptyState}>
             <div className={styles.headsetIconContainer}>
                 <FaHeadset className={styles.headsetIcon} />
             </div>
-            <h3 className={styles.moderatorTitle}>Support bilan suhbat</h3>
+            <h3 className={styles.moderatorTitle}>{t('window.moderatorTitle')}</h3>
             <p className={styles.moderatorMessage}>
-                Savol yoki muammolaringiz bo'yicha support xodimi sizga yordam
-                berishga tayyor. Birinchi xabaringizni yuboring!
+                {t('window.moderatorMessage')}
             </p>
         </div>
     );
 };
 
 export const EmptyMessages: React.FC = () => {
+    const { t } = useTranslation('chat');
     return (
         <Empty
-            description="Hozircha xabarlar yo'q"
+            description={t('window.empty')}
             image={Empty.PRESENTED_IMAGE_SIMPLE}
         />
     );

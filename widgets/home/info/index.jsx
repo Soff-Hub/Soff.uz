@@ -1,40 +1,39 @@
 import React from 'react';
 import styles from './style.module.scss';
-
-const steps = [
-    {
-        id: 1,
-        title: 'Xizmatni tanlang',
-        description:
-            'Katalogdan yoki qidiruv orqali sizga kerakli xizmat yoki frilanserni toping.',
-    },
-    {
-        id: 2,
-        title: 'Xizmat tafsiloti bilan tanishing',
-        description:
-            'Talablaringizga mos xizmat ekanligiga amin bo’ling va kerak bo’lsa frilanser bilan muloqot qilib kelishib oling',
-    },
-    {
-        id: 3,
-        title: 'To‘lov qiling - xavfsiz',
-        description:
-            'To‘lov faqat ish yakunlangandan so‘ng ijrochiga o‘tkaziladi. Sizning pulingiz platforma kafolati ostida saqlanadi.',
-    },
-    {
-        id: 4,
-        title: 'Sifatli natijani oling',
-        description:
-            'Ishni qabul qiling va kerak bo‘lsa tuzatishlar so‘rang. 100% qoniqish kafolati.',
-    },
-];
+import { useTranslation } from 'next-i18next';
 
 const Info = () => {
+    const { t } = useTranslation('index');
+    
+    const steps = [
+        {
+            id: 1,
+            title: t('info.steps.step1.title'),
+            description: t('info.steps.step1.description'),
+        },
+        {
+            id: 2,
+            title: t('info.steps.step2.title'),
+            description: t('info.steps.step2.description'),
+        },
+        {
+            id: 3,
+            title: t('info.steps.step3.title'),
+            description: t('info.steps.step3.description'),
+        },
+        {
+            id: 4,
+            title: t('info.steps.step4.title'),
+            description: t('info.steps.step4.description'),
+        },
+    ];
+
     return (
         <div>
             <div className={styles.titleWrapper}>
                 <img src="/static/img/HomePage/icon.png" alt="" />
-                <h2>Xizmatlardan foydalanish juda oson</h2>
-                <h3>SOFF.UZ</h3>
+                <h2>{t('info.title')}</h2>
+                <h3>{t('info.subtitle')}</h3>
             </div>
             <div className={styles.stepsSection}>
                 {steps.map((step) => (

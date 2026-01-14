@@ -1,0 +1,21 @@
+{
+    "meta": {
+        "title": "Soff.uz - Search Results",
+        "titleWithKeyword": "\"{{keyword}}\"",
+        "description": "Download the digital products you need through Soff.uz",
+        "descriptionWithKeyword": "Results found for \"{{keyword}}\". Download the digital products you need through Soff.uz"
+    },
+    "tabs": {
+        "products": "Products",
+        "services": "Services",
+        "specialists": "Specialists"
+    },
+    "input": {
+        "placeholder": "Find the product you are looking for...",
+        "clear": "Clear"
+    },
+    "notFound": {
+        "createOrder": "Create order"
+    }
+}
+

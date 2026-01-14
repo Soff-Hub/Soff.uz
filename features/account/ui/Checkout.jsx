@@ -6,8 +6,10 @@ import RedesignModulePaymentOrderSummary from './modules/RedesignModulePaymentOr
 import { FaArrowLeft } from 'react-icons/fa6';
 import { FaBoxOpen } from 'react-icons/fa';
 import { Button } from 'antd';
+import { useTranslation } from 'next-i18next';
 
 const Checkout = () => {
+    const { t } = useTranslation('account');
     const router = useRouter();
     const { cartDataItems, status } = useSelector(state => state.ecomerce);
     if (!router.isReady) return null;
@@ -41,17 +43,17 @@ const Checkout = () => {
                 <h3
                     style={{ fontSize: '30px' }}
                     className="font-bold mb-2 text-gray-800">
-                    Savat bo'sh
+                    {t('checkout.emptyTitle')}
                 </h3>
                 <p className="mb-4 text-center text-muted">
-                    To'lov qilish uchun biror mahsulot qo'shing.
+                    {t('checkout.emptyDescription')}
                 </p>
                 <Button
                     type="primary"
                     size="large"
                     onClick={() => router.push('/')}>
                     <FaArrowLeft />
-                    Xarid qilishni boshlash
+                    {t('checkout.startShopping')}
                 </Button>
             </div>
         );

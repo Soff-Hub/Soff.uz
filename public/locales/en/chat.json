@@ -1,0 +1,75 @@
+{
+  "title": "Chat",
+  "meta": {
+    "description": "Communicate directly with freelancers and clients through Soff.uz chat service. You can chat about messages, files and orders."
+  },
+  "sidebar": {
+    "empty": "No conversations found",
+    "searchPlaceholder": "Search conversations",
+    "loading": "Searching...",
+    "loadingMore": "Loading...",
+    "technicalSupport": "Technical Support",
+    "support": "Support",
+    "supportService": "Technical support service",
+    "pinned": "Pinned",
+    "offers": "Offers"
+  },
+  "window": {
+    "empty": "No messages yet",
+    "online": "Online",
+    "greeting": "Hello",
+    "directorMessage": "You can send your message here regarding your requests and suggestions. Your request will definitely be reviewed.",
+    "moderatorTitle": "Chat with Support",
+    "moderatorMessage": "Support staff is ready to help you with your questions or problems. Send your first message!"
+  },
+  "input": {
+    "placeholder": "Type a message...",
+    "editPlaceholder": "Editing message...",
+    "send": "Send",
+    "uploadFile": "Upload file",
+    "fileUploaded": "File uploaded successfully",
+    "fileUploadError": "Error uploading file",
+    "fileSizeError": "File size must not exceed 50MB"
+  },
+  "header": {
+    "createOrder": "Place order",
+    "createOrderShort": "Order"
+  },
+  "message": {
+    "edit": "Edit",
+    "delete": "Delete",
+    "edited": "Edited",
+    "copy": "Copy",
+    "download": "Download",
+    "deleteConfirmTitle": "Confirm deletion",
+    "deleteConfirmContent": "Are you sure you want to delete this message?",
+    "deleteConfirmOk": "Yes, delete",
+    "deleteConfirmCancel": "Cancel",
+    "copySuccess": "Message copied",
+    "copyError": "Error copying message",
+    "sending": "Sending...",
+    "read": "Read",
+    "delivered": "Delivered"
+  },
+  "modals": {
+    "deleteTitle": "Delete message?",
+    "deleteConfirm": "Are you sure you want to delete this message?",
+    "editTitle": "Edit message"
+  },
+  "dropOverlay": {
+    "title": "Upload file",
+    "description": "Drop file here"
+  },
+  "alerts": {
+    "blockedTitle": "Freelancer temporarily blocked",
+    "blockedDescription": "Unfortunately, this freelancer's services are temporarily blocked. Please try again later or choose another freelancer.",
+    "safetyWarning": "Warning! Payment or information exchange outside the site is dangerous. The platform is not responsible for such cases. Always conduct conversations and payments within the platform."
+  },
+  "errors": {
+    "sendMessageError": "Error sending message. Please try again.",
+    "updateMessageError": "Error updating message. Please try again.",
+    "createChatError": "An error occurred",
+    "createChatSuccess": "Chat created"
+  }
+}
+

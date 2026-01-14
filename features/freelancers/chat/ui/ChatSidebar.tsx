@@ -18,6 +18,7 @@ import { FaThumbtack } from 'react-icons/fa';
 import { FaCrown } from 'react-icons/fa';
 import { useViewportContext } from '~/shared/hooks/useViewportContext';
 import styles from '../style/chat.module.scss';
+import { useTranslation } from 'next-i18next';
 
 function BackButton() {
     const router = useRouter();
@@ -51,6 +52,7 @@ type ChatSidebarProps = {
 };
 
 const ChatSidebar: React.FC<ChatSidebarProps> = ({ setChat }) => {
+    const { t } = useTranslation('chat');
     const { containerHeight } = useViewportContext();
     const [search, setSearch] = useState('');
     const debouncedSearch = useDebounce(search, 300);
@@ -73,7 +75,7 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({ setChat }) => {
 
         if (existingModeratorChat)
             return {
-                opponent_name: 'Texnik yordam',
+                opponent_name: t('sidebar.technicalSupport'),
                 ...(existingModeratorChat as any),
                 isModerator: true,
             };
@@ -81,10 +83,10 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({ setChat }) => {
         return {
             chat_id: 0,
             opponent_id: MODERATOR_ID,
-            opponent_name: 'Texnik yordam',
+            opponent_name: t('sidebar.technicalSupport'),
             opponent_photo_url: null,
             last_message: {
-                content: 'Assalomu alaykum',
+                content: t('window.greeting'),
                 created_at: new Date().toISOString(),
             },
             unread_count: 0,
@@ -151,7 +153,7 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({ setChat }) => {
     if (isLoading && !isValidChats) {
         sidebarContent = (
             <div style={{ textAlign: 'center', padding: '20px' }}>
-                <Spin size="large" tip="Qidirilmoqda..." />
+                <Spin size="large" tip={t('sidebar.loading')} />
             </div>
         );
     } else if (isValidChats) {
@@ -172,7 +174,7 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({ setChat }) => {
                             textAlign: 'center',
                             padding: '10px',
                         }}>
-                        <Spin tip="Yuklanmoqda..." />
+                        <Spin tip={t('sidebar.loadingMore')} />
                     </div>
                 )}
             </>
@@ -184,7 +186,7 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({ setChat }) => {
                     textAlign: 'center',
                     padding: '20px',
                 }}>
-                <Empty description="Chatlar topilmadi" />
+                <Empty description={t('sidebar.empty')} />
             </div>
         );
     }
@@ -198,7 +200,7 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({ setChat }) => {
             <div className={styles.chat_search}>
                 <BackButton />
                 <Input.Search
-                    placeholder="Chatlarni qidirish"
+                    placeholder={t('sidebar.searchPlaceholder')}
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                     allowClear
@@ -220,6 +222,7 @@ const ChatListItem: React.FC<ChatListItemProps> = ({
     handleChat,
     isCreatingChat,
 }) => {
+    const { t } = useTranslation('chat');
     const router = useRouter();
     const isModerator = chat?.opponent_id === MODERATOR_ID;
     const isDirector = chat?.isDirector;
@@ -240,12 +243,14 @@ const ChatListItem: React.FC<ChatListItemProps> = ({
                 <div className={styles.moderatorInfo}>
                     <div className={styles.moderatorHeaderRow}>
                         <h4>{chat?.opponent_name}</h4>
-                        <span className={styles.moderatorBadge}>Support</span>
+                        <span className={styles.moderatorBadge}>
+                            {t('sidebar.support')}
+                        </span>
                     </div>
                     <p className={styles.moderatorSubtext}>
                         {truncateTitle(
                             chat?.last_message?.content ||
-                                'Texnik yordam xizmati',
+                                t('sidebar.supportService'),
                             40
                         )}
                     </p>
@@ -257,7 +262,10 @@ const ChatListItem: React.FC<ChatListItemProps> = ({
                     )}
                 </div>
                 {isCreatingChat && <Spin size="small" />}
-                <FaThumbtack className={styles.pinnedIcon} title="Topilgan" />
+                <FaThumbtack
+                    className={styles.pinnedIcon}
+                    title={t('sidebar.pinned')}
+                />
             </div>
         );
     }
@@ -283,7 +291,7 @@ const ChatListItem: React.FC<ChatListItemProps> = ({
                         {isDirector && (
                             <div className={styles.directorBadge}>
                                 <FaCrown className={styles.directorIcon} />
-                                <span>Takliflar</span>
+                                <span>{t('sidebar.offers')}</span>
                             </div>
                         )}
                     </div>
@@ -299,7 +307,10 @@ const ChatListItem: React.FC<ChatListItemProps> = ({
                 </div>
             </div>
             {isDirector && (
-                <FaThumbtack className={styles.pinnedIcon} title="Topilgan" />
+                <FaThumbtack
+                    className={styles.pinnedIcon}
+                    title={t('sidebar.pinned')}
+                />
             )}
         </div>
     );

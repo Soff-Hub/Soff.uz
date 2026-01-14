@@ -1,0 +1,37 @@
+{
+    "meta": {
+        "title": "Video guide on using Soff.uz platform – Digital services marketplace",
+        "description": "Complete video guide on selling products, purchasing and using services on the Soff.uz platform. With step-by-step explanatory tutorials, you will learn to operate freely on Soff.uz.",
+        "keywords": {
+            "videoGuide": "Soff.uz video guide",
+            "userGuide": "user guide",
+            "productSelling": "product selling",
+            "serviceProvision": "service provision",
+            "platformUsage": "platform usage",
+            "soffUzTutorial": "Soff.uz tutorial",
+            "readyMaterials": "ready materials",
+            "onlineServices": "online services",
+            "digitalProducts": "digital products"
+        },
+        "author": "Soff.uz team"
+    },
+    "content": {
+        "sectionTitle": "Video guide for Soff.uz sellers:",
+        "videos": [
+            {
+                "title": "How to make money on Soff uz? Complete guide!"
+            },
+            {
+                "title": "Becoming a seller on Soff uz – how to register and sell?"
+            },
+            {
+                "title": "Soff uz seller profile – all opportunities and functions!"
+            },
+            {
+                "title": "How to upload and start selling your first product on Soff uz?"
+            }
+        ]
+    }
+}
+
+

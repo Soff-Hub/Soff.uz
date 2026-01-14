@@ -7,6 +7,7 @@ import { useTimeManager } from '~/shared/hooks/useTimeManager';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { useDisableWindowScroll } from '~/shared/hooks/useDisableWindowScroll';
 import SearchResult from '../../search-result';
+import { useTranslation } from 'react-i18next';
 
 function SearchModal({ onClose, open, defaultType = 'mahsulotlar' }) {
     const searchRef = useRef(null);
@@ -22,6 +23,7 @@ function SearchModal({ onClose, open, defaultType = 'mahsulotlar' }) {
         options,
         isLoading,
     } = useSearch();
+    const { t } = useTranslation('header');
     const [isSearchFocused, setIsSearchFocused] = useState(false);
 
     const { startTimeout } = useTimeManager();
@@ -46,9 +48,9 @@ function SearchModal({ onClose, open, defaultType = 'mahsulotlar' }) {
                     value={type}
                     onChange={(val) => setType(val)}
                     className={searchStyle.select}>
-                    <Option value="mahsulotlar">Mahsulotlar</Option>
-                    <Option value="xizmatlar">Xizmatlar</Option>
-                    <Option value="mutaxasislar">Mutaxassislar</Option>
+                    <Option value="mahsulotlar">{t('products')}</Option>
+                    <Option value="xizmatlar">{t('services')}</Option>
+                    <Option value="mutaxasislar">{t('specialties')}</Option>
                 </Select>
 
                 <Input
@@ -64,7 +66,7 @@ function SearchModal({ onClose, open, defaultType = 'mahsulotlar' }) {
                         />
                     }
                     className={searchStyle.input}
-                    placeholder={'izlash...'}
+                    placeholder={t('seekPlaceholder')}
                     onFocus={() => setIsSearchFocused(true)}
                     onBlur={() => setIsSearchFocused(false)}
                     value={search}
@@ -74,7 +76,7 @@ function SearchModal({ onClose, open, defaultType = 'mahsulotlar' }) {
 
                 <Button type="primary" onClick={handleSearch}>
                     <IoSearch />
-                    Izlash
+                    {t('seek')}
                 </Button>
             </div>
         );
@@ -93,15 +95,15 @@ function SearchModal({ onClose, open, defaultType = 'mahsulotlar' }) {
                         onChange={(val) => setType(val)}
                         className={searchStyle.select}
                         bordered={false}>
-                        <Option value="mahsulotlar">Mahsulotlar</Option>
-                        <Option value="xizmatlar">Xizmatlar</Option>
-                        <Option value="mutaxasislar">Mutaxassislar</Option>
+                        <Option value="mahsulotlar">{t('products')}</Option>
+                        <Option value="xizmatlar">{t('services')}</Option>
+                        <Option value="mutaxasislar">{t('specialties')}</Option>
                     </Select>
 
                     <Input
                         ref={searchRef}
                         className={searchStyle.input}
-                        placeholder={'izlash...'}
+                        placeholder={t('seekPlaceholder')}
                         onFocus={() => setIsSearchFocused(true)}
                         onBlur={() => setIsSearchFocused(false)}
                         value={search}
@@ -120,7 +122,7 @@ function SearchModal({ onClose, open, defaultType = 'mahsulotlar' }) {
 
     return (
         <Modal
-            title={'Qidiruv'}
+            title={t('search')}
             classNames={{
                 content: searchStyle.searchModalContent,
             }}

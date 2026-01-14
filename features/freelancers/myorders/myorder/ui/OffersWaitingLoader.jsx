@@ -2,9 +2,11 @@ import React from 'react';
 import { Spin } from 'antd';
 import { motion } from 'motion/react';
 import { cn } from '~/shared/utilities/cn';
+import { useTranslation } from 'next-i18next';
 import styles from './OffersWaitingLoader.module.scss';
 
 const OffersWaitingLoader = ({ bufferedCount, remainingSeconds }) => {
+    const { t } = useTranslation('my-orders');
     const hasCounters = bufferedCount > 0 || remainingSeconds !== null;
 
     return (
@@ -27,7 +29,7 @@ const OffersWaitingLoader = ({ bufferedCount, remainingSeconds }) => {
                 <div className={styles.message}>
                     {hasCounters ? (
                         <p className={styles.messageText}>
-                            Takliflar hozircha yig'ilmoqda
+                            {t('offers.waitingMessage')}
                             {bufferedCount > 0 && (
                                 <>
                                     {' '}
@@ -62,15 +64,14 @@ const OffersWaitingLoader = ({ bufferedCount, remainingSeconds }) => {
                                             }}>
                                             {remainingSeconds}
                                         </motion.span>{' '}
-                                        soniya{' '}
+                                        {t('offers.waitingMessageSeconds')}{' '}
                                     </>
                                 )}
-                            ichida mavjud takliflar ko'rsatiladi.
+                            {t('offers.waitingMessageWithCount')}
                         </p>
                     ) : (
                         <p className={styles.messageText}>
-                            Frilanserlar taklif yubormoqda. Iltimos biroz
-                            kuting...
+                            {t('offers.waitingForOffers')}
                         </p>
                     )}
                 </div>

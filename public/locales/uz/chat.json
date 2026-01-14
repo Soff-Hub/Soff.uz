@@ -1,0 +1,75 @@
+{
+  "title": "Chat",
+  "meta": {
+    "description": "Soff.uz chat xizmati orqali frilanserlar va mijozlar bilan bevosita aloqa qiling. Xabarlar, fayllar va buyurtmalar bo'yicha suhbatlashingiz mumkin."
+  },
+  "sidebar": {
+    "empty": "Chatlar topilmadi",
+    "searchPlaceholder": "Chatlarni qidirish",
+    "loading": "Qidirilmoqda...",
+    "loadingMore": "Yuklanmoqda...",
+    "technicalSupport": "Texnik yordam",
+    "support": "Support",
+    "supportService": "Texnik yordam xizmati",
+    "pinned": "Topilgan",
+    "offers": "Takliflar"
+  },
+  "window": {
+    "empty": "Hozircha xabarlar yo'q",
+    "online": "Online",
+    "greeting": "Assalomu alaykum",
+    "directorMessage": "Talab va takliflaringiz bo'yicha xabaringizni shu yerda yuborishingiz mumkin. Murojaatingiz albatta ko'rib chiqiladi.",
+    "moderatorTitle": "Support bilan suhbat",
+    "moderatorMessage": "Savol yoki muammolaringiz bo'yicha support xodimi sizga yordam berishga tayyor. Birinchi xabaringizni yuboring!"
+  },
+  "input": {
+    "placeholder": "Xabar yozing...",
+    "editPlaceholder": "Xabarni tahrir qilyapsiz...",
+    "send": "Yuborish",
+    "uploadFile": "Fayl yuborish",
+    "fileUploaded": "Fayl muvaffaqiyatli yuborildi",
+    "fileUploadError": "Faylni yuborishda xatolik yuz berdi",
+    "fileSizeError": "Fayl hajmi 50MB dan oshmasligi kerak"
+  },
+  "header": {
+    "createOrder": "Buyurtma berish",
+    "createOrderShort": "Buyurtma"
+  },
+  "message": {
+    "edit": "Tahrirlash",
+    "delete": "O'chirish",
+    "edited": "Tahrirlangan",
+    "copy": "Nusxalash",
+    "download": "Yuklab olish",
+    "deleteConfirmTitle": "Xabarni o'chirishni tasdiqlang",
+    "deleteConfirmContent": "Rostdan ham ushbu xabarni o'chirmoqchimisiz?",
+    "deleteConfirmOk": "Ha, o'chirish",
+    "deleteConfirmCancel": "Bekor qilish",
+    "copySuccess": "Xabar nusxalandi",
+    "copyError": "Nusxalashda xatolik yuz berdi",
+    "sending": "Yuborilmoqda...",
+    "read": "O'qildi",
+    "delivered": "Yetib bordi"
+  },
+  "modals": {
+    "deleteTitle": "Xabarni o'chirish?",
+    "deleteConfirm": "Bu xabarni o'chirishni xohlaysizmi?",
+    "editTitle": "Xabarni tahrirlash"
+  },
+  "dropOverlay": {
+    "title": "Faylni yuklash",
+    "description": "Faylni bu yerga tashlang"
+  },
+  "alerts": {
+    "blockedTitle": "Frilanser vaqtincha bloklangan",
+    "blockedDescription": "Afsuski, ushbu frilanserning xizmatlari vaqtincha bloklangan. Iltimos, keyinroq qayta urinib ko'ring yoki boshqa frilanserni tanlang.",
+    "safetyWarning": "Ogohlantirish! Sayt tashqarisida to'lov yoki ma'lumot almashish xavfli. Platforma bunday holatlar uchun mas'ul emas. Har doim suhbat va to'lovlarni platforma ichida bajaring."
+  },
+  "errors": {
+    "sendMessageError": "Xabar yuborishda xatolik yuz berdi. Qayta urinib ko'ring.",
+    "updateMessageError": "Xabarni yangilashda xatolik yuz berdi. Qayta urinib ko'ring.",
+    "createChatError": "Xatolik yuz berdi",
+    "createChatSuccess": "Chat yaratildi"
+  }
+}
+

@@ -1,0 +1,33 @@
+{
+    "meta": {
+        "title": "Sotuvchiga aylaning",
+        "description": "Soff.uz - Saytimizda siz sotuvchi bo'lib ro'yxatdan o'tishingiz mumkin albatta"
+    },
+    "content": {
+        "title": "Sotuvchiga aylaning",
+        "intro": "O'z Intellektual mulklaringizni Soff Marketga joylab, daromadga ega bo'lishingiz uchun Sotuvchi bo'lib ro'yxatdan o'ting! Uning uchun quyidagi 5 qadamni amalga oshiring.",
+        "step1": {
+            "title": "1) Ro'yxatdan o'tish oynasiga o'ting",
+            "imageAlt": "soff market asosiy oynasi"
+        },
+        "step2": {
+            "title": "2) \"Sotuvchi\" tugmasiga bosing.",
+            "imageAlt": "soff marketdan adminkaga kirish oynasi"
+        },
+        "step3": {
+            "title": "3) Maydonlarni to'ldiring, shartlar bilan tanishib chiqganingizdan so'ng \"Ro'yxatdan o'tish\" tugmasini bosing.",
+            "imageAlt": "soff marketdan ro'yxatdan o'tish oynasi"
+        },
+        "step4": {
+            "title": "4) Nomeringiz yoki Pochtangizga yuborilgan tasqilash kodini ko'rsatilgan maydonga kiriting, so'ng \"Yuborish\" tugamsini bosing.",
+            "note": "Agar pochtangizga kod kelmagan bo'lsa, iltimos pochtangizning \"Spam\" oynasiga o'tib tekshirib ko'ring.",
+            "imageAlt": "soff market kod tasdiqlash oynasi"
+        },
+        "step5": {
+            "title": "5) Siz muvaffaqiyatli ro'yxatdan o'tdingiz! Tabriklaymiz! :)",
+            "imageAlt": "soff market admin oyansi"
+        }
+    }
+}
+
+

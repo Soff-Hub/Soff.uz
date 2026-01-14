@@ -7,8 +7,10 @@ import Cookies from 'js-cookie';
 import AuthModal from '~/features/auth/ui/auth-modal';
 import { useIsLoggedIn } from '~/shared/hooks/useIsLoggedIn';
 import AffiliateEarningsSection from './AffiliateEarningsSection';
+import { useTranslation } from 'next-i18next';
 
 const CreateLinkSection = () => {
+    const { t } = useTranslation('affiliate');
     const [userLink, setUserLink] = useState('');
     const [loading, setLoading] = useState(false);
     const [authModalOpen, setAuthModalOpen] = useState(false);
@@ -21,7 +23,7 @@ const CreateLinkSection = () => {
     const generateAndCopy = async () => {
         setInputError('');
         if (!userLink) {
-            message.warning('Iltimos, havolani kiriting!');
+            message.warning(t('createLink.enterLink'));
             return;
         }
         if (!isLoggedIn) {
@@ -47,17 +49,17 @@ const CreateLinkSection = () => {
                 setUserLink(newLink.link); // 🔧 Faqat link qiymatini yoz
                 setCopied(true);
                 await navigator.clipboard.writeText(newLink.link); // 📋 Avto nusxalash
-                message.success('Havola yaratildi va nusxalandi!');
+                message.success(t('createLink.linkCreated'));
             } else {
-                setInputError('Havola yaratilmadi.');
+                setInputError(t('createLink.linkNotCreated'));
             }
         } catch (error) {
             console.error(error);
             if (error?.response?.data && typeof error.response.data === 'object') {
                 const messages = Object.values(error.response.data).join(' ');
-                setInputError(messages || 'Xatolik yuz berdi.');
+                setInputError(messages || t('createLink.error'));
             } else {
-                setInputError(error?.response?.data?.message || error?.message || 'Xatolik yuz berdi.');
+                setInputError(error?.response?.data?.message || error?.message || t('createLink.error'));
             }
         } finally {
             setLoading(false);
@@ -67,14 +69,14 @@ const CreateLinkSection = () => {
     const handleCopy = async () => {
         if (userLink) {
             await navigator.clipboard.writeText(userLink);
-            message.success('Link nusxalandi!');
+            message.success(t('createLink.linkCopied'));
         }
     };
 
     return (
         <div className='container py-5'>
             <div style={{maxWidth: !isLoggedIn && "700px"}} className='create_link_section'>
-                <h2>Hamkorlik havolangizni yarating</h2>
+                <h2>{t('createLink.title')}</h2>
                 <div className={`${isLoggedIn && "row d-flex align-items-center justify-content-between" }`}>
                     <div className={`link_box ${isLoggedIn && "col-12 col-md-6"} `}>
                         <Input
@@ -84,7 +86,7 @@ const CreateLinkSection = () => {
                                 setCopied(false);
                             }}
                             value={userLink}
-                            placeholder='https://soff.uz'
+                            placeholder={t('createLink.placeholder')}
                             size="large"
                             status={inputError ? 'error' : ''}
                         />
@@ -95,7 +97,7 @@ const CreateLinkSection = () => {
                             loading={loading}
                             size="large"
                         >
-                            {copied ? 'Nusxalash' : 'Yaratish'}
+                            {copied ? t('createLink.copy') : t('createLink.create')}
                         </Button>
                     </div>
                     {isLoggedIn && 

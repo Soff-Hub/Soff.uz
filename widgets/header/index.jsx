@@ -29,11 +29,9 @@ const Header = () => {
             <div className={`header-bottom top-0 bg-white`}>
                 <div className="container">
                     <HeaderTop />
-                    <div className="">
-                        <div className="header-inner">
-                            <HeaderLogo mode={'dark'} />
-                            <HeaderActions />
-                        </div>
+                    <div className="header-inner">
+                        <HeaderLogo mode={'dark'} />
+                        <HeaderActions />
                     </div>
                 </div>
                 {isMobile ? <NavbarSearch /> : <NavbarMenu />}

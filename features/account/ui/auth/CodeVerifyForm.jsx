@@ -8,8 +8,9 @@ import { useDispatch } from 'react-redux';
 import { login } from '~/store/auth/slice';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
 import { isReturnUrlEmpty } from '~/shared/utilities/return-url';
+import { useTranslation } from 'next-i18next';
 
-export const formatTime = seconds => {
+export const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
     const secondsLeft = seconds % 60;
     return `${String(minutes).padStart(2, '0')}:${String(secondsLeft).padStart(
@@ -19,7 +20,7 @@ export const formatTime = seconds => {
 };
 
 // Helper function to validate slug
-const isValidSlug = slug => {
+const isValidSlug = (slug) => {
     return (
         slug &&
         typeof slug === 'string' &&
@@ -36,6 +37,7 @@ export default function CodeVerifyForm({ authCode, onClose, slug, onSuccess }) {
     const [msg, setMsg] = useState(null);
     const router = useRouter();
     const dispatch = useDispatch();
+    const { t } = useTranslation('code-verify');
 
     useEffect(() => {
         setMsg(localStorage.getItem('msg'));
@@ -47,7 +49,7 @@ export default function CodeVerifyForm({ authCode, onClose, slug, onSuccess }) {
         clearAll();
 
         startInterval(() => {
-            setSecondsRemaining(prev => {
+            setSecondsRemaining((prev) => {
                 if (prev > 0) return prev - 1;
                 clearAll();
                 return 0;
@@ -107,7 +109,7 @@ export default function CodeVerifyForm({ authCode, onClose, slug, onSuccess }) {
             setLoading(false);
             Modal.error({
                 centered: true,
-                title: 'Xatolik',
+                title: t('form.errorTitle'),
                 content: err?.response?.data?.msg,
             });
         }
@@ -124,8 +126,8 @@ export default function CodeVerifyForm({ authCode, onClose, slug, onSuccess }) {
             });
             Modal.success({
                 centered: true,
-                title: 'Yuborildi',
-                content: 'Tasdiqlash kodi qayta yuborildi',
+                title: t('form.resendSuccessTitle'),
+                content: t('form.resendSuccessMessage'),
             });
 
             setSecondsRemaining(120);
@@ -133,7 +135,7 @@ export default function CodeVerifyForm({ authCode, onClose, slug, onSuccess }) {
         } catch (err) {
             Modal.error({
                 centered: true,
-                title: 'Xatolik',
+                title: t('form.errorTitle'),
                 content: err?.response?.data?.msg,
             });
         }
@@ -153,7 +155,7 @@ export default function CodeVerifyForm({ authCode, onClose, slug, onSuccess }) {
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Iltimos, kodni kiriting',
+                                    message: t('form.codeRequired'),
                                 },
                             ]}>
                             <Input.OTP
@@ -170,11 +172,11 @@ export default function CodeVerifyForm({ authCode, onClose, slug, onSuccess }) {
                                 className="text-xs text-center mb-4"
                                 style={{ color: 'red', cursor: 'pointer' }}
                                 onClick={getRecode}>
-                                Qayta kod yuborish
+                                {t('form.resendNow')}
                             </p>
                         ) : (
                             <p className="text-xs text-center mb-4">
-                                Qayta kod olish uchun{' '}
+                                {t('form.resendInPrefix')}
                                 {formatTime(secondsRemaining)}
                             </p>
                         )}
@@ -187,7 +189,7 @@ export default function CodeVerifyForm({ authCode, onClose, slug, onSuccess }) {
                                 {loading ? (
                                     <BeatLoader color="#fff" />
                                 ) : (
-                                    'Tasdiqlash'
+                                    t('form.submit')
                                 )}
                             </button>
                         </div>

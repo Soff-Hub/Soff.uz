@@ -5,8 +5,10 @@ import { Skeleton, Button } from 'antd';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { IoDocumentsSharp } from 'react-icons/io5';
+import { useTranslation } from 'next-i18next';
 
 const Search_Results_NotFound = forwardRef(({ isSearchPage = true }, ref) => {
+    const { t } = useTranslation('orders');
     const { isLoggedIn } = useSelector(state => state.auth);
     const { data, isLoading } = useFGet(
         'top-services',
@@ -35,14 +37,14 @@ const Search_Results_NotFound = forwardRef(({ isSearchPage = true }, ref) => {
                 />
                 <p className="Search_Results_not_found_title">
                     {isSearchPage
-                        ? 'Afsuski, izlagan narsangiz topilmadi. Ammo siz uni buyurtma qilishingiz mumkin.👇'
-                        : 'Afsuski, izlagan xizmatingiz topilmadi. Ammo siz uni buyurtma qilishingiz mumkin.👇'}
+                        ? t('notFound.searchPage')
+                        : t('notFound.ordersPage')}
                 </p>
                 <p className="Search_Results_not_found_subtitle">
                     <span
                         className="Search_Results_not_found_btn"
                         onClick={handleRedirect}>
-                        Buyurtma yaratish
+                        {t('notFound.createOrder')}
                     </span>
                 </p>
             </div>
@@ -78,6 +80,7 @@ const Search_Results_NotFound = forwardRef(({ isSearchPage = true }, ref) => {
 });
 
 export const SearchProductsNotFound = forwardRef((props, ref) => {
+    const { t } = useTranslation('orders');
     const router = useRouter();
     const handleLoadSimilarDocuments = () => {
         router.push(
@@ -104,8 +107,7 @@ export const SearchProductsNotFound = forwardRef((props, ref) => {
                     className="Search_Results_not_found_img"
                 />
                 <p className="Search_Results_not_found_title">
-                    Afsuski, izlagan narsangiz topilmadi. Lekin siz o'xshash
-                    mahsulotlarni ko'rib chiqishingiz mumkin.
+                    {t('notFound.productsNotFound')}
                 </p>
                 <p className="Search_Results_not_found_subtitle">
                     <Button
@@ -118,7 +120,7 @@ export const SearchProductsNotFound = forwardRef((props, ref) => {
                             fontSize: '18px',
                             fontWeight: 'bold',
                         }}>
-                        O'xshash mahsulotlar
+                        {t('notFound.similarProducts')}
                     </Button>
                 </p>
             </div>

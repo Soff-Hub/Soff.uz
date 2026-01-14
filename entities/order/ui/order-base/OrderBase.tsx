@@ -1,8 +1,9 @@
 import React, { ReactNode } from 'react';
 import styles from './style.module.scss';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
-import { getRemainingDays } from '~/shared/utilities/dayjs-locale-uz';
+import { getRemainingDays } from '~/shared/utilities/dayjs-helpers';
 import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
 import { message, Badge } from 'antd';
 import { STATUS_MAP } from '../../config/status-map';
 import { FaLanguage } from 'react-icons/fa6';
@@ -81,6 +82,8 @@ const getOrderBaseSize = (size: BaseOrderProps['size']) => {
 const OrderBase = (props: OrderBaseProps) => {
     const { order, size = 'large', onClick, actionsSlot, filesSlot } = props;
     const router = useRouter();
+    const { t } = useTranslation('common');
+    const { locale = 'uz' } = router;
     const orderStatus = (order?.order_status_doing?.status ||
         'pending') as keyof typeof STATUS_MAP;
     const statusAsset = STATUS_MAP[orderStatus];
@@ -105,7 +108,12 @@ const OrderBase = (props: OrderBaseProps) => {
               minute: '2-digit',
           })
         : order.service?.delivery_days
-        ? `${getRemainingDays(order.created_at, order.service.delivery_days)}`
+        ? getRemainingDays(
+              order.created_at,
+              order.service.delivery_days,
+              t,
+              locale
+          )
         : '-';
 
     const createdAtDisplay = new Date(order.created_at).toLocaleString(

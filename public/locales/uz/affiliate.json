@@ -1,0 +1,69 @@
+{
+  "meta": {
+    "title": "Hamkorlik dasturi - Soff.uz",
+    "description": "Soff.uz hamkorlik dasturiga qo'shiling va yangi foydalanuvchilarni taklif qilish orqali daromad oling. Har bir tavsiya bo'yicha tranzaksiya uchun mukofot oling."
+  },
+  "hero": {
+    "title": "Soff.uz ga yangi foydalanuvchilarni taklif qilish orqali daromadingizni oshiring!",
+    "description": "Hamkorlik havolasini baham ko'ring va tavsiyalaringiz amalga oshirgan har bir tranzaksiya uchun mukofot oling. Bu juda oddiy."
+  },
+  "createLink": {
+    "title": "Hamkorlik havolangizni yarating",
+    "placeholder": "https://soff.uz",
+    "create": "Yaratish",
+    "copy": "Nusxalash",
+    "linkCreated": "Havola yaratildi va nusxalandi!",
+    "linkCopied": "Link nusxalandi!",
+    "linkNotCreated": "Havola yaratilmadi.",
+    "enterLink": "Iltimos, havolani kiriting!",
+    "error": "Xatolik yuz berdi."
+  },
+  "threeSteps": {
+    "title": "4 qadamda daromad oling",
+    "step1": {
+      "title": "Ro'yxatdan o'ting",
+      "description": "Soff.uz saytida profil yarating va hamkorlik havolangizni oling."
+    },
+    "step2": {
+      "title": "Havolangizni ulashing",
+      "description": "Do'stlaringizga, auditoriyangizga yoki ijtimoiy tarmoqlarga havolani joylashtiring."
+    },
+    "step3": {
+      "title": "Daromad oling",
+      "description": "Taklif havolangiz orqali kelgan sotuvdan 5% ulush."
+    },
+    "step4": {
+      "title": "Yig'ilgan summani qulay yechish",
+      "description": "Taklif havolasi orqali yig'ilgan summani tezkor yechish imkoniyati."
+    }
+  },
+  "promoteOptions": {
+    "title": "Qanday xizmatlarni targ'ib qila olasiz?",
+    "description": "Siz Soff.uz dagi turli xil raqamli mahsulotlarni reklama qilib, har bir xariddan daromad olishingiz mumkin.",
+    "items": {
+      "file": "Ilmiy ishlar",
+      "3d": "3D modellar va interier dizaynlar",
+      "design": "Dizayn shablonlar",
+      "website": "Veb saytlar",
+      "template": "Turli sohalar uchun shablonlar",
+      "video": "Video darsliklar"
+    }
+  },
+  "benefits": {
+    "title": "Soff.uz hamkorlik dasturining afzalliklari",
+    "description": "Hamkor sifatida siz har bir faoliyatingiz uchun mukofot olasiz. Quyidagi imkoniyatlardan bahramand bo'ling:",
+    "items": {
+      "percentage": "Har bir sotuvdan foizli daromad",
+      "passive": "Passiv daromad olish imkoniyati",
+      "minimal": "Minimal harakat — maksimal foyda",
+      "monitoring": "Doimiy kuzatuv va statistika",
+      "withdraw": "Pulni tezkor yechib olish imkoniyati",
+      "market": "Raqobatsiz mahalliy bozor"
+    }
+  },
+  "joinSoff": {
+    "title": "Soff.uz Hamkorlik dasturiga qo'shiling va bugundan daromad olishni boshlang!",
+    "button": "Daromad Olishni Boshlang"
+  }
+}
+

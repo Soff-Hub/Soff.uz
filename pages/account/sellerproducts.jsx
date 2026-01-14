@@ -2,15 +2,16 @@ import React from 'react';
 import MyProducts_listSeller from '~/features/account/ui/MyProducts_listSeller';
 import PageContainer from '~/widgets/layouts/PageContainer';
 import Meta from '~/shared/ui/meta';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const SellerProducts = () => {
+    const { t } = useTranslation('account');
     return (
         <>
             <Meta
-                title={'Sotib olinganlar'}
-                description={
-                    'Soff.uz’da sotib olingan mahsulot va xizmatlaringizni bu sahifada ko‘rib chiqing. Yuklab oling, qayta faollashtiring yoki tafsilotlarni boshqaring.'
-                }
+                title={t('sellerProducts.title')}
+                description={t('sellerProducts.description')}
             />
             <PageContainer>
                 <div className="ps-page--my-account">
@@ -20,5 +21,20 @@ const SellerProducts = () => {
         </>
     );
 };
+
+export async function getServerSideProps({ locale }) {
+    return {
+        props: {
+            ...(await serverSideTranslations(locale, [
+                'header',
+                'footer',
+                'common',
+                'account',
+                'product-pages',
+                'modals',
+            ])),
+        },
+    };
+}
 
 export default SellerProducts;

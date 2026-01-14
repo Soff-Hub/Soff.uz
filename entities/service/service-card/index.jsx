@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react';
+import { useTranslation } from 'next-i18next';
 import styles from './style.module.scss';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import Link from 'next/link';
@@ -20,6 +21,7 @@ const isValidSlug = (slug) => {
 };
 
 const ServiceCard = ({ service, hasFooter = true, disabled = false }) => {
+    const { t } = useTranslation('orders');
     const { isLoggedIn } = useSelector((state) => state.auth);
     const [open, setOpen] = useState(false);
     const { push } = useRouter();
@@ -80,13 +82,13 @@ const ServiceCard = ({ service, hasFooter = true, disabled = false }) => {
                                     }}>
                                     {Number(service?.avg_rating).toFixed(1)}
                                 </span>
-                                <span>({service?.feedback_count} izoh)</span>
+                                <span>({service?.feedback_count} {t('serviceCard.reviews')})</span>
                             </div>
                         ) : (
                             <div></div>
                         )}
                         <h3 className={styles.price}>
-                            {formatCurrencyWithSpace(service?.price)} so'm
+                            {formatCurrencyWithSpace(service?.price)} {t('serviceCard.currency')}
                         </h3>
                     </div>
                     <div className={styles.btns}>
@@ -95,7 +97,7 @@ const ServiceCard = ({ service, hasFooter = true, disabled = false }) => {
                             disabled={disabled}
                             onClick={handleViewDetails}
                             className={styles.secondaryBtn}>
-                            Batafsil
+                            {t('serviceCard.details')}
                         </Button>
 
                         <Button
@@ -103,7 +105,7 @@ const ServiceCard = ({ service, hasFooter = true, disabled = false }) => {
                             disabled={disabled}
                             onClick={handleOrder}
                             className={styles.primaryBtn}>
-                            Buyurtma berish
+                            {t('serviceCard.placeOrder')}
                         </Button>
                     </div>
                 </div>
@@ -128,7 +130,7 @@ const ServiceCard = ({ service, hasFooter = true, disabled = false }) => {
                                                 service?.user?.photo_url ||
                                                 '/static/img/ozodbek.png'
                                             }
-                                            alt="user_img"
+                                            alt={t('serviceCard.userImage')}
                                             width={30}
                                             height={30}
                                             objectFit="cover"

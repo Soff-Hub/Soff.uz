@@ -1,0 +1,173 @@
+{
+    "meta": {
+        "title": "User Agreement - Soff.uz",
+        "description": "User agreement of the Soff.uz platform. Terms and conditions for using the digital products and online services marketplace."
+    },
+    "content": {
+        "title": "Soff.uz User Agreement",
+        "intro": {
+            "p1": "This User Agreement (hereinafter referred to as \"Agreement\") is concluded between the Soff.uz platform (hereinafter referred to as \"Platform\") and the user of the Platform services and establishes the terms and conditions for using the https://soff.uz website and the seller.soff.uz sellers panel.",
+            "p2": "Please read the Agreement carefully before using the Platform. If you do not agree with any provision of the Agreement, you may refuse to use the Platform."
+        },
+        "section1": {
+            "title": "1. Basic Concepts",
+            "p1": "<strong>Platform</strong> — Soff.uz website and related services, a marketplace that allows selling and buying digital products (business plans, information, manuals, abstracts, presentations, etc.) and online services.",
+            "p2": "<strong>Personal account</strong> — A special page created by a User or Seller on the Platform, intended for using services.",
+            "p3": "<strong>\"SOFF-STUDY\" LLC</strong> — \"SOFF-STUDY\" Limited Liability Company (TIN: 309460545). Legal address: Republic of Uzbekistan, Tashkent city, Chilanzar district, Novza mahalla, E quarter, 8/1.",
+            "p4": "<strong>Digital product</strong> — Materials and content in electronic format sold on the Platform, including: academic works (business plans, course works, diploma works, abstracts, research, presentations), 3D models and interior designs, design templates (web design, animation, branding, illustration, product design), websites, ready-made templates (business, marketing, financial, educational, legal templates), video tutorials and other digital content. Digital products are downloaded as electronic files and can be used by the user for personal or commercial purposes.",
+            "p5": "<strong>Online service</strong> — Remote services offered in the \"Business Services\" section of the Platform, including: academic and research services (writing scientific articles, conducting research, preparing abstracts, writing course and diploma works), design services (logo design, web design, graphic design, branding), 3D model creation and interior design services, programming services (creating websites, developing mobile applications, writing software) and other remote professional services. Online services are provided by the Seller remotely and are delivered based on pre-agreed terms and deadlines with the User.",
+            "p6": "<strong>User (Buyer)</strong> — A person registered as a user on the Platform for the purpose of purchasing digital products or services.",
+            "p7": "<strong>Seller</strong> — An individual entrepreneur, legal entity, or self-employed person registered and verified on the Platform to sell their digital products or services.",
+            "p8": "<strong>Order</strong> — A formal request made by the User on the Platform to purchase a digital product or service.",
+            "p9": "<strong>Fraudulent activities</strong> — Actions committed for malicious purposes through deception and abuse of trust. These actions are prosecuted in accordance with the Criminal Code of the Republic of Uzbekistan."
+        },
+        "section2": {
+            "title": "2. Subject of the Agreement",
+            "p1": "2.1. The subject of the Agreement is to regulate the relations between the Platform and the User/Seller arising from providing access to the Platform.",
+            "p2": "2.2. The User and Seller must fully familiarize themselves with this Agreement before starting to use the Platform. Registration, use of any Platform functions, or simply viewing the Platform means full and unconditional acceptance of the Agreement.",
+            "p3": "2.3. Use of the Platform is regulated by this Agreement, as well as the following documents that are an integral part of it: Privacy Policy, Terms of Use (Offer).",
+            "p4": "2.4. If the User or Seller does not agree with any provision of the Agreement, they are not entitled to use the Platform."
+        },
+        "section3": {
+            "title": "3. Registration and Authorization",
+            "p1": "3.1. To fully use the Platform services, the User or Seller must go through the registration process.",
+            "p2": "3.2. The following information is required for registration:",
+            "p3": "— First and last name;",
+            "p4": "— Phone number or email address;",
+            "p5": "— Password.",
+            "p6": "3.3. To operate as a Seller, additional verification process is required. The following information is necessary for verification:",
+            "p7": "— Passport series and number;",
+            "p8": "— Personal Identification Number (PIN);",
+            "p9": "— Date of birth;",
+            "p10": "— Additional phone number;",
+            "p11": "— Passport copy photo;",
+            "p12": "— Self-employment certificate.",
+            "p13": "3.4. The User and Seller independently create a password to access their personal account and are responsible for ensuring its confidentiality.",
+            "p14": "3.5. The User and Seller are responsible for all actions performed under their account."
+        },
+        "section4": {
+            "title": "4. User (Buyer) Rights and Obligations",
+            "subtitle1": "4.1. The User has the following rights:",
+            "right1": "— Free registration on the Platform;",
+            "right2": "— Use of services provided by the Platform;",
+            "right3": "— Purchase and download digital products;",
+            "right4": "— Use purchased products for personal purposes;",
+            "right5": "— Rate and comment on products;",
+            "right6": "— Contact the Platform administration.",
+            "subtitle2": "4.2. The User must fulfill the following obligations:",
+            "obligation1": "— Provide accurate information during registration;",
+            "obligation2": "— Keep account information (login, password) confidential;",
+            "obligation3": "— Use purchased products only for personal purposes (commercial use is prohibited);",
+            "obligation4": "— Not violate the rights of third parties;",
+            "obligation5": "— Comply with the legislation of the Republic of Uzbekistan;",
+            "obligation6": "— Comply with the Platform's terms of use."
+        },
+        "section5": {
+            "title": "5. Seller Rights and Obligations",
+            "subtitle1": "5.1. The Seller has the following rights:",
+            "right1": "— Free registration on the Platform;",
+            "right2": "— Place and sell their digital products on the Platform;",
+            "right3": "— Receive income from sold products;",
+            "right4": "— Withdraw accumulated funds to a bank card;",
+            "right5": "— Invite friends through referral links and receive bonuses;",
+            "right6": "— Contact the Platform administration.",
+            "subtitle2": "5.2. The Seller must fulfill the following obligations:",
+            "obligation1": "— Complete the verification process;",
+            "obligation2": "— Place only products that belong to them or with the author's permission;",
+            "obligation3": "— Ensure products are of high quality and functional;",
+            "obligation4": "— Pay 18% commission to the platform for each sold product;",
+            "obligation5": "— Comply with the legislation of the Republic of Uzbekistan regarding taxes and budget payments;",
+            "obligation6": "— Not redirect clients to external platforms;",
+            "obligation7": "— Comply with the Platform's terms of use."
+        },
+        "section6": {
+            "title": "6. Purchasing Digital Products",
+            "subtitle1": "6.1. Order Processing",
+            "p1": "6.1.1. The User has the opportunity to view, select, and purchase digital products available on the Platform.",
+            "p2": "6.1.2. When processing an order, the User must carefully check the price, description, and terms of the selected product.",
+            "p3": "6.1.3. By clicking the \"Payment\" button, the User expresses consent to purchase the product.",
+            "subtitle2": "6.2. Payment",
+            "p4": "6.2.1. Payments on the Platform are made through Click, Payme and other official payment systems.",
+            "p5": "6.2.2. Product prices are displayed in national currency — soum.",
+            "p6": "6.2.3. After successful payment, the product is placed in the User's personal account.",
+            "subtitle3": "6.3. Receiving the Product",
+            "p7": "6.3.1. After payment is made, the digital product is placed in the \"Purchased\" section of the User's personal account.",
+            "p8": "6.3.2. The User can download the product at any time.",
+            "p9": "6.3.3. A notification about the product is sent to the User's email address."
+        },
+        "section7": {
+            "title": "7. Refund Policy",
+            "p1": "7.1. Given the nature of digital products, funds are not refunded after payment is made and the product is placed in the personal account.",
+            "p2": "7.2. Refund requests are considered in the following cases:",
+            "p3": "— When technical problems occur when downloading the product;",
+            "p4": "7.3. Refund requests are considered by the Platform administration within 3 business days."
+        },
+        "section8": {
+            "title": "8. Copyright",
+            "p1": "8.1. The Seller may only sell products that belong to them or are placed with the author's permission.",
+            "p2": "8.2. If plagiarism or unauthorized use is detected, the product is removed from the Platform and the Seller's account may be blocked.",
+            "p3": "8.3. Complaints about copyright violations are considered within 3 business days.",
+            "p4": "8.4. The User may only use purchased products for personal purposes. Reselling products or using them for commercial purposes is prohibited."
+        },
+        "section9": {
+            "title": "9. Ratings and Reviews",
+            "p1": "9.1. The User has the right to rate and comment on purchased products.",
+            "p2": "9.2. Reviews must meet the following requirements:",
+            "p3": "— Be related to the product;",
+            "p4": "— Not contain offensive words and slander;",
+            "p5": "— Not contain advertising materials.",
+            "p6": "9.3. The Platform has the right to remove reviews that do not comply with the rules."
+        },
+        "section10": {
+            "title": "10. Platform Rights and Obligations",
+            "subtitle1": "10.1. The Platform has the following rights:",
+            "right1": "— Make changes to the Agreement;",
+            "right2": "— Restrict access to information on the Platform;",
+            "right3": "— Block users or sellers who violate the rules;",
+            "right4": "— Remove suspicious or illegal products;",
+            "right5": "— Carry out technical work to improve services.",
+            "subtitle2": "10.2. The Platform assumes the following obligations:",
+            "obligation1": "— Ensure quality operation of services;",
+            "obligation2": "— Protect users' personal data;",
+            "obligation3": "— Promptly eliminate technical failures;",
+            "obligation4": "— Provide support to users and sellers."
+        },
+        "section11": {
+            "title": "11. Limitation of Liability",
+            "p1": "11.1. The Platform is not directly responsible for the quality and content of products placed by sellers.",
+            "p2": "11.2. The Platform is not directly responsible for disputes between users and sellers, but has the right to consider complaints.",
+            "p3": "11.3. The Platform is not liable for damages resulting from technical failures and force majeure circumstances.",
+            "p4": "11.4. The Platform is not responsible for problems arising from incorrect information entered by the user or seller."
+        },
+        "section12": {
+            "title": "12. Violation of the Agreement",
+            "p1": "12.1. If the User or Seller violates this Agreement, the Platform has the right to take the following measures:",
+            "p2": "— Issue a warning;",
+            "p3": "— Temporarily restrict access to the personal account;",
+            "p4": "— Permanently block the account.",
+            "p5": "12.2. Reasons for blocking:",
+            "p6": "— Fraudulent activities;",
+            "p7": "— Copyright violations;",
+            "p8": "— Violation of other users' rights;",
+            "p9": "— Repeated violation of Platform rules."
+        },
+        "section13": {
+            "title": "13. Dispute Resolution",
+            "p1": "13.1. Requests from Users or Sellers are considered through the following channels:",
+            "p2": "— Email: <strong>support@soff.uz</strong>",
+            "p3": "— Telegram: <strong>@soff_uz</strong>",
+            "p4": "— Website: <strong>https://soff.uz</strong>",
+            "p5": "— Phone number: <strong>+998 (91) 008 67 89</strong>",
+            "p6": "13.2. Disputes are resolved through negotiations.",
+            "p7": "13.3. If no agreement is reached, disputes are resolved by applying to the courts of the Republic of Uzbekistan."
+        },
+        "section14": {
+            "title": "14. Final Provisions",
+            "p1": "14.1. This Agreement is regulated in accordance with the legislation of the Republic of Uzbekistan.",
+            "p2": "14.2. The Platform reserves the right to make changes to this Agreement at any time.",
+            "p3": "14.3. Changes take effect from the moment they are introduced to the Platform.",
+            "p4": "14.4. By continuing to use the Platform, the User and/or Seller confirms their consent to the changes made to the Agreement.",
+            "p5": "14.5. Any news or changes announced on the official Telegram channel (<strong>t.me/soff_uz</strong>) are considered official."
+        }
+    }
+}

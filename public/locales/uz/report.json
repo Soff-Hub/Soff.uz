@@ -1,0 +1,19 @@
+{
+    "title": "Mualliflik huquqini buzish to'g'risida xabar berish",
+    "description": "Agar mualliflik huquqi buzilgan deb hisoblasangiz, bu sahifaga orqali biz bilan bog'laning",
+    "meta": {
+        "description": "Mualliflik huquqi buzilgan bo'lsa, Soff.uz orqali bizga xabar bering. Biz sizning murojaatingizni ko'rib chiqamiz va zarur choralarni ko'ramiz."
+    },
+    "form": {
+        "contactPlaceholder": "Siz bilan bog'lanish uchun kontakt ma'lumotlaringiz",
+        "messageLabel": "Murojaatingizni batafsil yozing",
+        "messagePlaceholder": "Yozing...",
+        "submit": "Yuborish",
+        "submitting": "Yuborilmoqda...",
+        "success": "Murojaatingiz muvaffaqiyatli yuborildi, tez orada biz bilan bog'lanamiz",
+        "error": "Xatolik yuz berdi"
+    },
+    "product": {
+        "reportedProduct": "Xabar berilgan mahsulot"
+    }
+}

@@ -1,0 +1,132 @@
+{
+    "meta": {
+        "title": "Privacy Policy - Soff.uz",
+        "description": "Privacy policy of the Soff.uz platform. About the protection of your personal information in the digital products and online services marketplace."
+    },
+    "content": {
+        "title": "Soff.uz Privacy Policy",
+        "section1": {
+            "title": "1. Introduction",
+            "p1": "1.1. This Privacy Policy (hereinafter referred to as \"Policy\") has been adopted on the Soff.uz digital products and online services marketplace platform (hereinafter referred to as \"Platform\") and has been developed to protect and ensure the security of users' personal information.",
+            "p2": "1.2. This Policy is an integral part of the Agreement with the User and the Agreement with Sellers. By using the Platform, you agree to the terms of this Policy."
+        },
+        "section2": {
+            "title": "2. Terms and Definitions",
+            "p1": "<strong>Platform</strong> — Soff.uz website and mobile application, a marketplace that allows selling and buying digital products (business plans, information, manuals, abstracts, presentations, etc.) and online services.",
+            "p2": "<strong>Personal information</strong> — information related to a specific individual or enabling their identification.",
+            "p3": "<strong>User (Buyer)</strong> — a person registered as a user on the Platform for the purpose of purchasing digital products or services.",
+            "p4": "<strong>Seller</strong> — an individual entrepreneur, legal entity or self-employed person registered on the Platform for the purpose of selling their digital products or services.",
+            "p5": "<strong>Processing of personal information</strong> — any operation involving collection, storage, systematization, modification, use, transfer and destruction of personal information."
+        },
+        "section3": {
+            "title": "3. Scope of Application",
+            "p1": "3.1. This Policy applies to all personal information that may be obtained from Users and/or Sellers during the process of interaction with the Platform.",
+            "p2": "3.2. By using the Platform and providing personal information, the User and/or Seller consents to the processing of personal information in accordance with this Policy."
+        },
+        "section4": {
+            "title": "4. Collected Information",
+            "subtitle1": "4.1. User (Buyer) Information:",
+            "userData1": "— First and last name;",
+            "userData2": "— Phone number;",
+            "userData3": "— Email address (E-mail);",
+            "userData4": "— Purchase history.",
+            "subtitle2": "4.2. Seller Information:",
+            "sellerData1": "— First and last name;",
+            "sellerData2": "— Phone number;",
+            "sellerData3": "— Email address (E-mail);",
+            "sellerData4": "— Passport series and number;",
+            "sellerData5": "— Personal Identification Number (PIN);",
+            "sellerData6": "— Date of birth;",
+            "sellerData7": "— Self-employment certificate;",
+            "sellerData8": "— Bank card information (for withdrawing funds);",
+            "sellerData9": "— Sales history and income.",
+            "subtitle3": "4.3. Automatically Collected Information:",
+            "autoData1": "— IP address;",
+            "autoData2": "— Browser and operating system type;",
+            "autoData3": "— Platform access time and duration;",
+            "autoData4": "— Pages viewed and links;",
+            "autoData5": "— Information obtained through cookies."
+        },
+        "section5": {
+            "title": "5. Cookies",
+            "p1": "5.1. The Platform uses cookies to improve user experience and collect statistical information.",
+            "p2": "5.2. The following information may be collected through cookies:",
+            "cookieData1": "— Page views and click statistics;",
+            "cookieData2": "— Browser identifier;",
+            "cookieData3": "— Information about user device;",
+            "cookieData4": "— Information about selected products and services.",
+            "p3": "5.3. Users can manage cookies by changing browser settings. However, blocking cookies may result in some Platform functions not working."
+        },
+        "section6": {
+            "title": "6. Purposes of Data Collection and Processing",
+            "p1": "6.1. The Platform processes personal information for the following purposes:",
+            "purpose1": "— Providing access to the Platform and use of personal account;",
+            "purpose2": "— Processing orders for purchasing digital products and services;",
+            "purpose3": "— Accepting and processing payments;",
+            "purpose4": "— Verifying sellers;",
+            "purpose5": "— Enabling sellers to withdraw their income;",
+            "purpose6": "— Establishing communication with Users and Sellers;",
+            "purpose7": "— Ensuring security and preventing fraud;",
+            "purpose8": "— Improving Platform services;",
+            "purpose9": "— Complying with legal requirements."
+        },
+        "section7": {
+            "title": "7. Data Retention Period",
+            "p1": "7.1. Personal information is stored for the period necessary to achieve the processing purposes.",
+            "p2": "7.2. Users or Sellers have the right to withdraw their consent to the processing of personal information at any time. To do this, a written request must be sent to the email address <strong>info@soff.uz</strong>."
+        },
+        "section8": {
+            "title": "8. Data Protection Measures",
+            "p1": "8.1. The Platform applies the following measures to protect personal information:",
+            "measure1": "— Restricting access to information systems;",
+            "measure2": "— Protection against malicious software;",
+            "measure3": "— Data encryption;",
+            "measure4": "— Network firewalls;",
+            "measure5": "— Regular security analysis of the system.",
+            "p2": "8.2. Platform employees are obligated to keep users' personal information confidential."
+        },
+        "section9": {
+            "title": "9. Transfer of Information to Third Parties",
+            "p1": "9.1. The Platform may transfer personal information to third parties in the following cases:",
+            "transfer1": "— With the consent of the User or Seller;",
+            "transfer2": "— For payment processing (Click, Payme and others);",
+            "transfer3": "— To government authorities in accordance with the legislation of the Republic of Uzbekistan;",
+            "transfer4": "— To partners involved in providing Platform services.",
+            "p2": "9.2. All third parties to whom information is transferred must comply with relevant data protection regulations."
+        },
+        "section10": {
+            "title": "10. User and Seller Rights",
+            "subtitle1": "10.1. User (Buyer) Rights:",
+            "userRight1": "— View and modify their information in personal account;",
+            "userRight2": "— Request deletion of personal information;",
+            "userRight3": "— Obtain information about processing of their data;",
+            "userRight4": "— Withdraw consent at any time.",
+            "subtitle2": "10.2. Seller Rights:",
+            "sellerRight1": "— View and modify their information in personal account;",
+            "sellerRight2": "— Obtain information about processing of their data;",
+            "sellerRight3": "— Update identification information;",
+            "sellerRight4": "— Withdraw consent at any time."
+        },
+        "section11": {
+            "title": "11. Policy Changes",
+            "p1": "11.1. The Platform reserves the right to make changes to this Policy at any time.",
+            "p2": "11.2. Changes take effect from the moment they are introduced to the Platform.",
+            "p3": "11.3. By continuing to use the Platform, Users and/or Sellers confirm their consent to the changes made to the Policy."
+        },
+        "section12": {
+            "title": "12. Contact Information",
+            "p1": "12.1. For questions or inquiries regarding your personal information, you can contact the following address:",
+            "contact1": "— Email: <strong>support@soff.uz</strong>",
+            "contact2": "— Telegram: <strong>@soff_uz</strong>",
+            "contact3": "— Website: <strong>https://soff.uz</strong>",
+            "contact4": "— Phone number: <strong>+998 (91) 008 67 89</strong>"
+        },
+        "section13": {
+            "title": "13. Final Provisions",
+            "p1": "13.1. This Policy is regulated in accordance with the legislation of the Republic of Uzbekistan.",
+            "p2": "13.2. Disputes related to the Policy are resolved through negotiations, and if no agreement is reached, by applying to the courts of the Republic of Uzbekistan."
+        }
+    }
+}
+
+

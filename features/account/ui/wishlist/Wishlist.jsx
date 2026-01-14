@@ -17,23 +17,25 @@ import { FiDownload } from 'react-icons/fi';
 import styles from './wishlist.module.scss';
 import { FaArrowLeft, FaBoxOpen } from 'react-icons/fa6';
 import FileDownloadLink from '~/shared/ui/file-download-link';
-
-const breadCrumb = [
-    {
-        text: 'Asosiy sahifa',
-        url: '/',
-    },
-    {
-        text: 'Tanlanganlar',
-    },
-];
+import { useTranslation } from 'next-i18next';
 
 function Wishlist() {
+    const { t } = useTranslation('account');
     const { wishlist, status } = useSelector((state) => state.ecomerce);
     const { removeSavedItem, setAllSaved, isSavedItem } = useWishlist();
     const { setCartOneItem } = useCart();
     const hasItems = wishlist && wishlist.length > 0;
     const isLoading = status === 'loading';
+
+    const breadCrumb = [
+        {
+            text: t('breadcrumbs.home'),
+            url: '/',
+        },
+        {
+            text: t('breadcrumbs.wishlist'),
+        },
+    ];
 
     useEffect(() => {
         const localWishlist =
@@ -49,8 +51,8 @@ function Wishlist() {
 
         Modal.success({
             centered: true,
-            title: 'Muvaffaqqiyatli!',
-            content: `Siz mahsulotni savatga qo'shdingiz`,
+            title: t('wishlist.successTitle'),
+            content: t('wishlist.successAddToCart'),
         });
     };
 
@@ -64,7 +66,7 @@ function Wishlist() {
         contentView = (
             <div className={styles.wishlistContent}>
                 <h2 className={styles.wishlistTitle}>
-                    Tanlanganlar ({wishlist.length})
+                    {t('wishlist.count', { count: wishlist.length })}
                 </h2>
                 <div className={styles.wishlistProducts}>
                     {[...Array(4)].map((_, index) => (
@@ -80,7 +82,7 @@ function Wishlist() {
         contentView = (
             <div className={styles.wishlistContent}>
                 <h2 className={styles.wishlistTitle}>
-                    Tanlanganlar ({wishlist.length})
+                    {t('wishlist.count', { count: wishlist.length })}
                 </h2>
                 <div className={styles.wishlistProducts}>
                     {wishlist.map((item) => (
@@ -140,7 +142,7 @@ function Wishlist() {
                                         <p
                                             className="free-product-text"
                                             style={{ width: 'fit-content' }}>
-                                            Bepul
+                                            {t('wishlist.free')}
                                         </p>
                                     )}
 
@@ -176,7 +178,7 @@ function Wishlist() {
                                             handleAddItemToCart(e, item)
                                         }
                                         className={styles.wishlistAddButton}>
-                                        Savatga qo'shish
+                                        {t('wishlist.addToCart')}
                                     </Button>
                                 ) : (
                                     <FileDownloadLink
@@ -193,7 +195,7 @@ function Wishlist() {
                                             className={
                                                 styles.wishlistAddButton
                                             }>
-                                            Yuklab olish
+                                            {t('wishlist.download')}
                                         </Button>
                                     </FileDownloadLink>
                                 )}
@@ -240,17 +242,16 @@ function Wishlist() {
                     <h3
                         style={{ fontSize: '30px' }}
                         className="font-bold mb-2 text-gray-800 text-center">
-                        Tanlangan mahsulotlar yo'q
+                        {t('wishlist.emptyTitle')}
                     </h3>
                     <p className="mb-4 text-center text-muted">
-                        Mahsulotni tanlash uchun yurakcha belgisini bosing va
-                        ularni bu yerda saqlang.
+                        {t('wishlist.emptyDescription')}
                     </p>
                     <Link href={'/scientific-resources/all'}>
                         <a>
                             <Button type="primary" size="large">
                                 <FaArrowLeft />
-                                Mahsulotlar tanlash
+                                {t('wishlist.selectProducts')}
                             </Button>
                         </a>
                     </Link>
@@ -264,7 +265,7 @@ function Wishlist() {
             <BreadCrumb breacrumb={breadCrumb} />
             <div className="ps-wishlist">
                 <div className="container my-5">
-                    <h1 className="page-title">Tanlanganlar</h1>
+                    <h1 className="page-title">{t('wishlist.title')}</h1>
                     <SidebarLayout>{contentView}</SidebarLayout>
                 </div>
             </div>

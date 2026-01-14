@@ -10,12 +10,14 @@ import {
 import styles from '../../style/chat.module.scss';
 import { useConversation } from './Conversation';
 import { MAX_SIZE } from '../../constants/file-size';
+import { useTranslation } from 'next-i18next';
 
 const { TextArea } = Input;
 
 type ChatInputProps = {};
 
 const ChatInput = ({}: ChatInputProps) => {
+    const { t } = useTranslation('chat');
     const {
         chat,
         edit,
@@ -79,12 +81,12 @@ const ChatInput = ({}: ChatInputProps) => {
                             queryKey: ['chat-messages', chatId],
                         });
                         startTimeout(scrollToBottom, 100);
-                        message.success('Fayl muvaffaqiyatli yuborildi');
+                        message.success(t('input.fileUploaded'));
                     },
                     onError: (err: any) => {
                         message.error(
                             err?.response?.data?.detail ||
-                                'Faylni yuborishda xatolik yuz berdi'
+                                t('input.fileUploadError')
                         );
                     },
                 }
@@ -223,7 +225,7 @@ const ChatInput = ({}: ChatInputProps) => {
                 }}
                 beforeUpload={(file) => {
                     if (file.size > MAX_SIZE) {
-                        message.error('Fayl hajmi 50MB dan oshmasligi kerak');
+                        message.error(t('input.fileSizeError'));
                         return Upload.LIST_IGNORE;
                     }
                     return true;
@@ -242,7 +244,7 @@ const ChatInput = ({}: ChatInputProps) => {
                 </Button>
             </Upload>
             <div className={styles.chat_input_box}>
-                <Tooltip title="Fayl yuborish">
+                <Tooltip title={t('input.uploadFile')}>
                     <Button
                         icon={<PaperClipOutlined />}
                         type="primary"
@@ -259,7 +261,7 @@ const ChatInput = ({}: ChatInputProps) => {
                     onKeyDown={handleKeyPress}
                     autoSize={{ minRows: 1, maxRows: 6 }}
                     placeholder={
-                        edit ? 'Xabarni tahrir qilyapsiz...' : 'Xabar yozing...'
+                        edit ? t('input.editPlaceholder') : t('input.placeholder')
                     }
                     className={styles.chat_input}
                 />

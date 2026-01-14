@@ -1,0 +1,21 @@
+{
+    "meta": {
+        "title": "Soff.uz - Qidiruv natijalar",
+        "titleWithKeyword": "\"{{keyword}}\"",
+        "description": "Soff.uz orqali kerakli bo'lgan raqamli mahsulotlarni yuklab olishingiz mumkin",
+        "descriptionWithKeyword": "\"{{keyword}}\" bo'yicha topilgan natijalar. Soff.uz orqali kerakli bo'lgan raqamli mahsulotlarni yuklab olishingiz mumkin"
+    },
+    "tabs": {
+        "products": "Mahsulotlar",
+        "services": "Xizmatlar",
+        "specialists": "Mutahasislar"
+    },
+    "input": {
+        "placeholder": "Izlayotgan mahsulotingizni toping...",
+        "clear": "Tozalash"
+    },
+    "notFound": {
+        "createOrder": "Buyurtma yaratish"
+    }
+}
+

@@ -7,10 +7,12 @@ import { useConversation } from './Conversation';
 import useResponsive from '~/shared/utilities/useResponsive';
 import styles from '../../style/chat.module.scss';
 import { BlockedAlert, SafetyAlert } from './ChatAlerts';
+import { useTranslation } from 'next-i18next';
 
 type ChatHeaderProps = {};
 
 function ChatHeader({}: ChatHeaderProps) {
+    const { t } = useTranslation('chat');
     const { isDesktop } = useResponsive();
     const {
         goBack,
@@ -59,7 +61,7 @@ function ChatHeader({}: ChatHeaderProps) {
                     </div>
                     <span>
                         {isModerator || isDirector
-                            ? 'Online'
+                            ? t('window.online')
                             : chat?.opponent?.last_seen}
                     </span>
                 </div>
@@ -70,7 +72,9 @@ function ChatHeader({}: ChatHeaderProps) {
                         icon={<ShoppingCartOutlined />}
                         onClick={handleCreateOrderClick}
                         style={{ marginLeft: 'auto', flexShrink: 0 }}>
-                        {isDesktop ? 'Buyurtma berish' : 'Buyurtma'}
+                        {isDesktop
+                            ? t('header.createOrder')
+                            : t('header.createOrderShort')}
                     </Button>
                 )}
             </div>

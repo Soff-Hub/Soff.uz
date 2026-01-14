@@ -13,52 +13,7 @@ import { useFGet } from '~/shared/hooks/useFApi';
 import SearchSellerCard from '~/entities/seller/search-seller-card';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { rankingsImg } from '~/shared/constants/rankings-img';
-
-const items = [
-    {
-        label: 'Ilmiy va Akademik Xizmatlar',
-        content_type: 'file',
-        images: {
-            left: '/static/img/HomePage/file1.webp',
-            rightTop: '/static/img/HomePage/file2.webp',
-            rightBot: '/static/img/HomePage/file3.webp',
-        },
-    },
-    {
-        label: 'Grafik va & UI, UX Dizayn xizmatlari',
-        content_type: 'design',
-        images: {
-            left: '/static/img/HomePage/design1.webp',
-            rightTop: '/static/img/HomePage/design3.webp',
-            rightBot: '/static/img/HomePage/design2.webp',
-        },
-    },
-    {
-        label: 'IT & Dasturlash xizmatlari',
-        content_type: 'website',
-        images: {
-            left: '/static/img/HomePage/web3.webp',
-            rightTop: '/static/img/HomePage/web1.webp',
-            rightBot: '/static/img/HomePage/web2.webp',
-        },
-    },
-    {
-        label: '3D Dizayn va Vizualizatsiya',
-        content_type: '3d',
-        images: {
-            left: '/static/img/HomePage/3d2.webp',
-            rightTop: '/static/img/HomePage/3d1.webp',
-            rightBot: '/static/img/HomePage/3d3.webp',
-        },
-    },
-];
-
-const title = {
-    '3d': '3D Dizayn va Vizualizatsiya',
-    website: 'Dasturlash xizmatlari',
-    design: 'Dizayn',
-    file: 'Ilmiy va Akademik Xizmatlar',
-};
+import { useTranslation } from 'next-i18next';
 
 const link = {
     '3d': '/orders?direction=three_d',
@@ -74,6 +29,53 @@ const ranksImg = [
 ];
 
 const Freelance = () => {
+    const { t } = useTranslation('index');
+    const items = [
+        {
+            label: t('freelance.serviceTypes.scientific'),
+            content_type: 'file',
+            images: {
+                left: '/static/img/HomePage/file1.webp',
+                rightTop: '/static/img/HomePage/file2.webp',
+                rightBot: '/static/img/HomePage/file3.webp',
+            },
+        },
+        {
+            label: t('freelance.serviceTypes.design'),
+            content_type: 'design',
+            images: {
+                left: '/static/img/HomePage/design1.webp',
+                rightTop: '/static/img/HomePage/design3.webp',
+                rightBot: '/static/img/HomePage/design2.webp',
+            },
+        },
+        {
+            label: t('freelance.serviceTypes.it'),
+            content_type: 'website',
+            images: {
+                left: '/static/img/HomePage/web3.webp',
+                rightTop: '/static/img/HomePage/web1.webp',
+                rightBot: '/static/img/HomePage/web2.webp',
+            },
+        },
+        {
+            label: t('freelance.serviceTypes.3d'),
+            content_type: '3d',
+            images: {
+                left: '/static/img/HomePage/3d2.webp',
+                rightTop: '/static/img/HomePage/3d1.webp',
+                rightBot: '/static/img/HomePage/3d3.webp',
+            },
+        },
+    ];
+
+    const title = {
+        '3d': t('freelance.serviceTitles.3d'),
+        website: t('freelance.serviceTitles.website'),
+        design: t('freelance.serviceTitles.design'),
+        file: t('freelance.serviceTitles.file'),
+    };
+
     return (
         <>
             <TopFreelanceRankings />
@@ -90,19 +92,18 @@ const Freelance = () => {
                         </div>
                         <div className={styles.titleWrapper}>
                             <h2 className={styles.labelWrapperH1}>
-                                Xizmatni tanlang – Buyurtma bering
+                                {t('freelance.title')}
                             </h2>
 
                             <p className={styles.labelWrapperP}>
-                                Tajribali frilanserlar bilan ishlang va sifatli
-                                natijaga erishing.
+                                {t('freelance.subtitle')}
                             </p>
                         </div>
                     </div>
                 </div>
                 <Link href="/orders">
                     <a className={styles.freelance_button}>
-                        Barcha xizmatlar
+                        {t('freelance.allServices')}
                         <img
                             src={'/static/img/arrowwhite.svg'}
                             sizes="15"
@@ -117,6 +118,7 @@ const Freelance = () => {
                         key={item.content_type}
                         content_type={item.content_type}
                         items={item.images}
+                        title={title}
                     />
                 ))}
             </div>
@@ -127,6 +129,7 @@ const Freelance = () => {
 export default Freelance;
 
 const TopFreelanceRankings = () => {
+    const { t } = useTranslation('index');
     const { isDesktop, isMobile } = useResponsive();
     const [isEnd, setIsEnd] = useState(false);
     const [isBeginning, setIsBeginning] = useState(true); // Start with true as initial state
@@ -218,7 +221,7 @@ const TopFreelanceRankings = () => {
                 ))}
                 <div className={styles.card}>
                     <h3 className={styles.title}>
-                        {sellersData?.count} ta frilanser topildi
+                        {sellersData?.count} {t('freelance.topRankings.found')}
                     </h3>
                     <Link
                         href={
@@ -226,7 +229,7 @@ const TopFreelanceRankings = () => {
                         }>
                         <a className={styles.viewAllButton}>
                             <button className={styles.btn}>
-                                Barchasini ko'rish
+                                {t('freelance.topRankings.viewAll')}
                             </button>
                         </a>
                     </Link>
@@ -248,7 +251,7 @@ const TopFreelanceRankings = () => {
                             marginTop: '20px',
                             marginBottom: 0,
                         }}>
-                        Afsuski, bu yo'nalishda frilanserlar topilmadi.
+                        {t('freelance.topRankings.notFound')}
                     </p>
                 </div>
             </div>
@@ -302,7 +305,7 @@ const TopFreelanceRankings = () => {
                         </div>
                         <div className={styles.titleWrapper}>
                             <h2 className={styles.labelWrapperH1}>
-                                Top frilanser va sotuvchilar reytingi
+                                {t('freelance.topRankings.title')}
                             </h2>
                         </div>
                     </div>
@@ -373,7 +376,7 @@ const TopFreelanceRankings = () => {
     );
 };
 
-const ServiceCard = ({ content_type = 'file', items = {} }) => {
+const ServiceCard = ({ content_type = 'file', items = {}, title }) => {
     return (
         <Link href={link[content_type]}>
             <a>

@@ -9,16 +9,18 @@ import {
 } from '@ant-design/icons';
 import ServiceSteps from './service-steps';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
+import { useTranslation } from 'next-i18next';
 
 const { Option } = Select;
 
 const ServicesFilterSection = ({ parentCategory, directions }) => {
     const router = useRouter();
     const { query } = router;
+    const { t } = useTranslation('orders');
     const { startTimeout, stopTimeout } = useTimeManager();
 
     const directionsWithEmpty = [
-        { label: 'Barchasi', value: '' },
+        { label: t('filter.all'), value: '' },
         ...directions,
     ];
 
@@ -108,7 +110,7 @@ const ServicesFilterSection = ({ parentCategory, directions }) => {
                             suffixIcon={
                                 <DownOutlined style={{ color: 'green' }} />
                             }
-                            placeholder="Yo'nalish"
+                            placeholder={t('filter.directionPlaceholder')}
                             value={selectedDirection || undefined}
                             onChange={updateDirection}>
                             {directionsWithEmpty.map((d) => (
@@ -124,10 +126,10 @@ const ServicesFilterSection = ({ parentCategory, directions }) => {
                             suffixIcon={
                                 <DownOutlined style={{ color: 'green' }} />
                             }
-                            placeholder="Kategoriya"
+                            placeholder={t('filter.categoryPlaceholder')}
                             value={selectedParentCategory || undefined}
                             onChange={onParentCategoryChange}>
-                            <Option value="">Barchasi</Option>
+                            <Option value="">{t('filter.all')}</Option>
                             {parentCategory?.map((cat) => (
                                 <Option key={cat.id} value={String(cat.id)}>
                                     {cat.title}
@@ -147,7 +149,7 @@ const ServicesFilterSection = ({ parentCategory, directions }) => {
                             <input
                                 value={searchValue}
                                 onChange={(e) => setSearchValue(e.target.value)}
-                                placeholder="Qanday xizmat izlamoqdasiz"
+                                placeholder={t('filter.searchPlaceholder')}
                                 className={styles.input}
                                 type="text"
                             />

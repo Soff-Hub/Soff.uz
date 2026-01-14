@@ -4,6 +4,7 @@ import {
     SortAscendingOutlined,
     SortDescendingOutlined,
 } from '@ant-design/icons';
+import { useTranslation } from 'next-i18next';
 
 const OffersFilter = ({
     filters,
@@ -13,6 +14,7 @@ const OffersFilter = ({
     setFilterAccordionOpen,
     disabled = false,
 }) => {
+    const { t } = useTranslation('my-orders');
     const hasActiveFilters = Object.values(filters).some(
         (val) => val !== null && val !== undefined
     );
@@ -38,11 +40,11 @@ const OffersFilter = ({
                         fontSize: '14px',
                         fontWeight: 500,
                     }}>
-                    Minimal reyting
+                    {t('filters.minRating')}
                 </label>
                 <Select
                     style={{ width: '100%' }}
-                    placeholder="Min. reyting"
+                    placeholder={t('filters.minRatingPlaceholder')}
                     allowClear
                     value={filters.min_rating}
                     onChange={(value) =>
@@ -74,11 +76,11 @@ const OffersFilter = ({
                         fontSize: '14px',
                         fontWeight: 500,
                     }}>
-                    Tajriba
+                    {t('filters.experience')}
                 </label>
                 <Select
                     style={{ width: '100%' }}
-                    placeholder="Tajriba tanlang"
+                    placeholder={t('filters.experiencePlaceholder')}
                     allowClear
                     value={filters.has_category_experience}
                     onChange={(value) =>
@@ -89,9 +91,9 @@ const OffersFilter = ({
                     }
                     disabled={disabled}
                     options={[
-                        { label: 'Tajribali', value: true },
+                        { label: t('filters.experienced'), value: true },
                         {
-                            label: "Boshlang'ich darajadagi",
+                            label: t('filters.beginner'),
                             value: false,
                         },
                     ]}
@@ -114,11 +116,11 @@ const OffersFilter = ({
                             fontSize: '14px',
                             fontWeight: 500,
                         }}>
-                        Tartiblash
+                        {t('filters.sort')}
                     </label>
                     <Select
                         style={{ width: '100%' }}
-                        placeholder="Tartiblash"
+                        placeholder={t('filters.sortPlaceholder')}
                         allowClear
                         value={filters.sort_by}
                         onChange={(value) =>
@@ -131,11 +133,11 @@ const OffersFilter = ({
                         disabled={disabled}
                         options={[
                             {
-                                label: "Reyting bo'yicha",
+                                label: t('filters.sortByRating'),
                                 value: 'rating',
                             },
                             {
-                                label: "Yuborilgan vaqt bo'yicha",
+                                label: t('filters.sortByTime'),
                                 value: 'sent_time',
                             },
                         ]}
@@ -145,8 +147,8 @@ const OffersFilter = ({
                     <Tooltip
                         title={
                             filters.sort_order === 'asc'
-                                ? "O'sish tartibi"
-                                : 'Kamayish tartibi'
+                                ? t('filters.sortAscending')
+                                : t('filters.sortDescending')
                         }>
                         <Button
                             type="primary"
@@ -193,7 +195,7 @@ const OffersFilter = ({
                     height: '32px',
                     ...(isMobile && { marginTop: '4px' }),
                 }}>
-                Filtrni tozalash
+                {t('filters.clearFilters')}
             </Button>
         </div>
     );
@@ -223,7 +225,9 @@ const OffersFilter = ({
                                     justifyContent: 'space-between',
                                     alignItems: 'center',
                                 }}>
-                                <span style={{ fontWeight: 500 }}>Filter</span>
+                                <span style={{ fontWeight: 500 }}>
+                                    {t('filters.title')}
+                                </span>
                                 {hasActiveFilters && (
                                     <span
                                         style={{
@@ -231,7 +235,7 @@ const OffersFilter = ({
                                             color: '#1890ff',
                                             marginLeft: '8px',
                                         }}>
-                                        (Faol)
+                                        ({t('filters.active')})
                                     </span>
                                 )}
                             </div>

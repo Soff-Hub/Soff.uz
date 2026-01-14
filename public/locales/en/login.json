@@ -1,0 +1,41 @@
+{
+  "breadcrumb": {
+    "home": "Home",
+    "login": "Login"
+  },
+  "meta": {
+    "title": "Sign up",
+    "description": "Register on the Soff.uz platform and start using freelance services. Find work, place orders or offer your own services — all in one place."
+  },
+  "alreadyLoggedIn": "You are already logged in",
+  "form": {
+    "title": "Login",
+    "or": "Or",
+    "phoneLabel": "Phone number",
+    "emailLabel": "Email",
+    "phonePlaceholder": "Phone number",
+    "emailPlaceholder": "Email",
+    "phoneRequired": "Phone number is required",
+    "phoneInvalid": "Please enter a valid phone number",
+    "emailRequired": "Email is required",
+    "emailInvalid": "Please enter a valid email address",
+    "submit": "Get code",
+    "errorTitle": "Error"
+  },
+  "telegram": {
+    "breadcrumb": "Telegram",
+    "meta": {
+      "title": "Login via Telegram",
+      "description": "Quick and secure login via Telegram. Get a verification code from the @soff_auth_bot bot and access your Soff.uz account."
+    },
+    "instructions": {
+      "prefix": "To login, get a verification code via ",
+      "suffix": ""
+    },
+    "codeRequired": "Please enter the code",
+    "resend": "Get code again",
+    "resendInPrefix": "You can request a new code in",
+    "submit": "Confirm",
+    "success": "You have successfully logged in"
+  }
+}

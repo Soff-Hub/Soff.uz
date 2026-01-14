@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'next-i18next';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import { baseURL } from '~/repositories/api';
@@ -13,12 +14,12 @@ export default function CommentForm({
     onSuccess,
     mode = 'default',
 }) {
+    const { t } = useTranslation('modals');
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
     const { isMobile, isTablet } = useResponsive();
     const isModal = mode === 'modal';
 
-    // Responsive font size for Rate component
     const getRateFontSize = () => {
         if (isMobile) return 18;
         if (isTablet) return 22;
@@ -34,7 +35,7 @@ export default function CommentForm({
 
         const token = Cookies.get('token');
         if (!token) {
-            message.error('Token topilmadi. Iltimos, tizimga kiring.');
+            message.error(t('comments.form.tokenNotFound'));
             return;
         }
 
@@ -56,12 +57,12 @@ export default function CommentForm({
 
             form.resetFields();
             form.setFieldsValue({ rating: 0 });
-            message.success('Izoh muvaffaqiyatli yuborildi!');
+            message.success(t('comments.form.success'));
             if (onSuccess) {
                 onSuccess();
             }
         } catch (err) {
-            message.error('Izoh yuborilmadi.');
+            message.error(t('comments.form.error'));
         } finally {
             setLoading(false);
         }
@@ -82,7 +83,10 @@ export default function CommentForm({
                     label={null}
                     name="commentText"
                     rules={[
-                        { required: true, message: 'Iltimos, izoh yozing!' },
+                        {
+                            required: true,
+                            message: t('comments.form.required'),
+                        },
                     ]}>
                     <TextArea
                         style={{
@@ -94,7 +98,7 @@ export default function CommentForm({
                         }}
                         className={isModal ? 'fs-4' : 'w-100 fs-4'}
                         rows="5"
-                        placeholder="Izohingizni yozing..."
+                        placeholder={t('comments.form.placeholder')}
                     />
                 </Form.Item>
                 <div className="d-flex justify-content-between align-items-center mt-3">
@@ -104,7 +108,7 @@ export default function CommentForm({
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Iltimos, baho bering!',
+                                    message: t('comments.form.ratingRequired'),
                                 },
                             ]}>
                             <Rate style={{ fontSize: getRateFontSize() }} />
@@ -118,7 +122,9 @@ export default function CommentForm({
                         variant="primary"
                         loading={loading}
                         className="rounded-5">
-                        {loading ? 'Yuborilmoqda...' : "Jo'natish"}
+                        {loading
+                            ? t('comments.form.submitting')
+                            : t('comments.form.submit')}
                     </Button>
                 </div>
             </div>

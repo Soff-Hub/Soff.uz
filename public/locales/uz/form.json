@@ -1,0 +1,52 @@
+{
+    "meta": {
+        "title": "Savollaringiz bormi?",
+        "description": "Soff.uz - Sayti haqida shu sahifamizda to'liq bilib olishingiz mumkin"
+    },
+    "content": {
+        "title": "Savollaringiz bormi?",
+        "contactInfo": "Agar qo'shimcha savollaringiz bo'lsa, bizning ishonch telefon raqam",
+        "phoneNumber": "+998910086789",
+        "phoneNote": "orqali yo'llang, biz qo'ng'iroqlarni 9:00 dan kech 22:00 ga qadar qabul qilamiz, xizmat qiymati - bepul!",
+        "emailInfo": "Bizning Pochta manzilimiz",
+        "emailAddress": "support@soff.uz",
+        "emailNote": "ga yozing, biz murojaatlarni 24/7 qabul qilamiz!",
+        "formTitle": "Xabar yuborish",
+        "fields": {
+            "name": {
+                "label": "Ism familiya",
+                "placeholder": "Ism familiya",
+                "error": "Ism familiyangizni kiriting"
+            },
+            "emailOrPhone": {
+                "label": "Email yoki telefon raqam",
+                "placeholder": "Email yoki telefon raqam",
+                "error": "Email yoki telefon raqamingizni kiriting"
+            },
+            "subject": {
+                "label": "Mavzu",
+                "placeholder": "Mavzu",
+                "tooltip": "Yuborayotgan xabaringizga mavzu yozing",
+                "error": "Yuborayotgan xabaringizga mavzu yozing"
+            },
+            "description": {
+                "label": "Xabar",
+                "placeholder": "Xabar",
+                "error": "Xabar yozing"
+            }
+        },
+        "submit": "Yuborish",
+        "modals": {
+            "success": {
+                "title": "Muvaffaqqiyatli!",
+                "defaultMessage": "Xabaringiz muvaffaqqiyatli qabul qilindi"
+            },
+            "error": {
+                "title": "Xatolik!",
+                "defaultMessage": "Xabaringiz muvaffaqqiyatli qabul qilindi"
+            }
+        }
+    }
+}
+
+

@@ -19,6 +19,7 @@ import useAuth from '~/shared/hooks/useAuth';
 import useResponsive from '~/shared/utilities/useResponsive';
 import useDebounce from '~/shared/hooks/useDebounce';
 import { useViewportContext } from '~/shared/hooks/useViewportContext';
+import { useTranslation } from 'next-i18next';
 
 const { Sider } = Layout;
 
@@ -27,6 +28,7 @@ const disableLinkStyle = {
 };
 
 function Sidebar({ collapsed, onChangeCollapse }) {
+    const { t } = useTranslation('account');
     const { logOutAuth } = useAuth();
     const { headerHeight } = useViewportContext();
     const { size } = useResponsive();
@@ -40,7 +42,7 @@ function Sidebar({ collapsed, onChangeCollapse }) {
     const isAuthorized = Boolean(user && Object.keys(user).length);
     const fullName =
         `${user?.first_name || ''} ${user?.last_name || ''}`.trim() ||
-        'Foydalanuvchi';
+        t('sidebar.user');
 
     const handleLogout = () => {
         const data = {
@@ -74,7 +76,7 @@ function Sidebar({ collapsed, onChangeCollapse }) {
                 label: (
                     <Link href={'/account/sellerproducts'}>
                         <a style={!isAuthorized ? disableLinkStyle : {}}>
-                            Sotib olinganlar
+                            {t('sidebar.purchased')}
                         </a>
                     </Link>
                 ),
@@ -86,7 +88,7 @@ function Sidebar({ collapsed, onChangeCollapse }) {
                 label: (
                     <Link href={'/order/my-orders'}>
                         <a style={!isAuthorized ? disableLinkStyle : {}}>
-                            Buyurtmalarim
+                            {t('sidebar.myOrders')}
                         </a>
                     </Link>
                 ),
@@ -100,7 +102,7 @@ function Sidebar({ collapsed, onChangeCollapse }) {
                 icon: <FaRegHeart size={20} />,
                 label: (
                     <Link href={'/account/wishlist'}>
-                        <a>Tanlanganlar</a>
+                        <a>{t('sidebar.wishlist')}</a>
                     </Link>
                 ),
             },
@@ -109,7 +111,7 @@ function Sidebar({ collapsed, onChangeCollapse }) {
                 icon: <MdOutlineShoppingCart size={20} />,
                 label: (
                     <Link href={'/account/shopping-cart'}>
-                        <a>Savatcha</a>
+                        <a>{t('sidebar.shoppingCart')}</a>
                     </Link>
                 ),
             },
@@ -120,7 +122,7 @@ function Sidebar({ collapsed, onChangeCollapse }) {
                 label: (
                     <Link href={'/chat'}>
                         <a style={!isAuthorized ? disableLinkStyle : {}}>
-                            Chat
+                            {t('sidebar.chat')}
                         </a>
                     </Link>
                 ),
@@ -132,7 +134,7 @@ function Sidebar({ collapsed, onChangeCollapse }) {
                 label: (
                     <Link href={'/account/notification'}>
                         <a style={!isAuthorized ? disableLinkStyle : {}}>
-                            Bildirishnomalar
+                            {t('sidebar.notifications')}
                         </a>
                     </Link>
                 ),
@@ -145,12 +147,12 @@ function Sidebar({ collapsed, onChangeCollapse }) {
                 key: 'logout',
                 icon: <PiSignOutBold size={20} />,
                 disabled: !isAuthorized,
-                label: 'Chiqish',
+                label: t('sidebar.logout'),
                 onClick: handleLogout,
                 danger: true,
             },
         ],
-        [isAuthorized]
+        [isAuthorized, t]
     );
 
     const onClickMenuItem = (menuItem) => {

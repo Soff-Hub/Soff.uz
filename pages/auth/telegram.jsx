@@ -3,19 +3,23 @@ import Meta from '~/shared/ui/meta';
 import BreadCrumb from '~/shared/ui/breadcrumb';
 import PageContainer from '~/widgets/layouts/PageContainer';
 import TelegramConfigmForm from '~/features/account/ui/auth/TelegramConfirmForm';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
 
 const CodeVerifyPage = () => {
+    const { t } = useTranslation('login');
+
     const breadCrumb = [
         {
-            text: 'Asosiy sahifa',
+            text: t('breadcrumb.home'),
             url: '/',
         },
         {
-            text: 'Kirish',
+            text: t('breadcrumb.login'),
             url: '/auth/login',
         },
         {
-            text: 'Telegram',
+            text: t('telegram.breadcrumb'),
         },
     ];
 
@@ -23,8 +27,8 @@ const CodeVerifyPage = () => {
         <PageContainer>
             <div className="ps-page--my-account">
                 <Meta
-                    title={"Ro'yxatdan o'tish"}
-                    description="Soff.uz platformasida ro‘yxatdan o‘ting va frilans xizmatlaridan foydalaning. Ish toping, buyurtma bering yoki o‘z xizmatlaringizni taklif qiling — barchasi bitta joyda."
+                    title={t('telegram.meta.title')}
+                    description={t('telegram.meta.description')}
                 />
                 <BreadCrumb breacrumb={breadCrumb} />
                 <TelegramConfigmForm />
@@ -32,5 +36,19 @@ const CodeVerifyPage = () => {
         </PageContainer>
     );
 };
+
+export async function getServerSideProps({ locale }) {
+    return {
+        props: {
+            ...(await serverSideTranslations(locale, [
+                'header',
+                'footer',
+                'common',
+                'login',
+                'modals',
+            ])),
+        },
+    };
+}
 
 export default CodeVerifyPage;

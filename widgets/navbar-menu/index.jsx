@@ -11,6 +11,7 @@ import 'swiper/css';
 import SwiperController from './swiperController';
 import { useSelector } from 'react-redux';
 import { FiExternalLink } from 'react-icons/fi';
+import { useTranslation } from 'react-i18next';
 
 const NavbarMenu = () => {
     const { data, isLoading } = useFGet('navbar-items', NAVBAR_MENU_CATEGORIES);
@@ -19,29 +20,29 @@ const NavbarMenu = () => {
     const [swiperController, setSwiperController] = useState(null);
     const swiperRef = useRef(null);
 
-    const getMethods = swiperClass => {
+    const getMethods = (swiperClass) => {
         setSwiperController(swiperClass);
     };
 
-    const setEnding = status => {
+    const setEnding = (status) => {
         setIsEnd(status);
     };
-    const setBeginning = status => {
+    const setBeginning = (status) => {
         setIsBeginning(status);
     };
 
-    const updateSwiperState = swiper => {
+    const updateSwiperState = (swiper) => {
         if (swiper) {
             setIsEnd(swiper.isEnd);
             setIsBeginning(swiper.isBeginning);
         }
     };
 
-    const handleSwiperInit = swiper => {
+    const handleSwiperInit = (swiper) => {
         updateSwiperState(swiper);
     };
 
-    const handleSlideChange = swiper => {
+    const handleSlideChange = (swiper) => {
         updateSwiperState(swiper);
     };
 
@@ -98,10 +99,12 @@ const NavbarMenu = () => {
                                 slidesPerView={'auto'}
                                 onSwiper={handleSwiperInit}
                                 onSlideChange={handleSlideChange}
-                                className={`categorySwiper ${!isEnd &&
-                                    'categorySwiperEnding'} ${!isBeginning &&
-                                    'categorySwiperBeginning'}`}>
-                                {data.map(item => (
+                                className={`categorySwiper ${
+                                    !isEnd && 'categorySwiperEnding'
+                                } ${
+                                    !isBeginning && 'categorySwiperBeginning'
+                                }`}>
+                                {data.map((item) => (
                                     <SwiperSlide key={item.direction}>
                                         <MenuItem
                                             products={item.freelance_categories}
@@ -149,8 +152,8 @@ const templateLink = {
 };
 
 const MenuItem = ({ products, templates, label }) => {
-    const { directions } = useSelector(state => state.profile);
-
+    const { directions } = useSelector((state) => state.profile);
+    const { t } = useTranslation('header');
     const option = directions.reduce((acc, item) => {
         acc[item.value] = item.label;
         return acc;
@@ -162,7 +165,7 @@ const MenuItem = ({ products, templates, label }) => {
             <div className="templates">
                 <Link href={`/${templateLink[label]}/all`}>
                     <a className="section-label">
-                        Tayyor mahsulotlar{' '}
+                        {t('readyProducts')}{' '}
                         <FiExternalLink
                             fontSize={14}
                             style={{
@@ -173,7 +176,7 @@ const MenuItem = ({ products, templates, label }) => {
                 </Link>
 
                 <ul className="details-list">
-                    {templates.map(item => (
+                    {templates.map((item) => (
                         <Link
                             key={item.id}
                             href={`/${templateLink[label]}/${item.slug}?slug=${item.slug}&search=&parentCategory=${item.slug}&title=${item.title}`}>
@@ -191,7 +194,7 @@ const MenuItem = ({ products, templates, label }) => {
             <div className="orders">
                 <Link href={`/orders?direction=${label}`}>
                     <a className="section-label">
-                        Buyurtma berish{' '}
+                        {t('createOrder')}{' '}
                         <FiExternalLink
                             fontSize={14}
                             style={{
@@ -202,7 +205,7 @@ const MenuItem = ({ products, templates, label }) => {
                 </Link>
 
                 <ul className="details-list">
-                    {products.map(item => (
+                    {products.map((item) => (
                         <Link
                             key={item.id}
                             href={`/orders?direction=${label}&category_id=${item.id}&title=${item.title}`}>

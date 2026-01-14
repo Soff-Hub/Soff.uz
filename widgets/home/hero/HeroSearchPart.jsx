@@ -4,14 +4,16 @@ import { Input, Popover } from 'antd';
 import styles from './style.module.scss';
 import useSearch from '~/shared/hooks/useSearch';
 import SearchResult from '~/shared/components/search-result';
-
-const placeholders = {
-    mahsulotlar: 'Qaysi turdagi tayyor mahsulot qidirmoqdasiz?',
-    xizmatlar: 'Qaysi turdagi  xizmat  qidirmoqdasiz?',
-    mutaxasislar: 'Qaysi turdagi mutaxassislar qidirmoqdasiz?',
-};
+import { useTranslation } from 'next-i18next';
 
 function HeroSearchPart() {
+    const { t } = useTranslation('index');
+    
+    const placeholders = {
+        mahsulotlar: t('heroSearch.placeholders.products'),
+        xizmatlar: t('heroSearch.placeholders.services'),
+        mutaxasislar: t('heroSearch.placeholders.specialists'),
+    };
     const {
         options,
         search,
@@ -83,7 +85,7 @@ function HeroSearchPart() {
                             ? styles.activeHeroBtn
                             : styles.heroBtn
                     }>
-                    <i className="fa-solid fa-download"></i> Mahsulotlar
+                    <i className="fa-solid fa-download"></i> {t('heroSearch.products')}
                 </span>
                 <span
                     onClick={() => setType('xizmatlar')}
@@ -92,7 +94,7 @@ function HeroSearchPart() {
                             ? styles.activeHeroBtn
                             : styles.heroBtn
                     }>
-                    <i className="fa-solid fa-briefcase"></i> Xizmatlar
+                    <i className="fa-solid fa-briefcase"></i> {t('heroSearch.services')}
                 </span>
                 <span
                     onClick={() => setType('mutaxasislar')}
@@ -101,7 +103,7 @@ function HeroSearchPart() {
                             ? styles.activeHeroBtn
                             : styles.heroBtn
                     }>
-                    <i className="fa-solid fa-users"></i> Mutaxasislar
+                    <i className="fa-solid fa-users"></i> {t('heroSearch.specialists')}
                 </span>
             </div>
 

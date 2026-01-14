@@ -24,6 +24,7 @@ import { FaRegUserCircle } from 'react-icons/fa';
 import OrderCard from '~/widgets/order-card';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { f_base_url } from '~/shared/api/base-url';
+import { useTranslation } from 'next-i18next';
 
 const { confirm } = Modal;
 
@@ -37,6 +38,7 @@ const ChatMessage = ({
     setRes,
     setFeedbackOpen,
 }) => {
+    const { t } = useTranslation('chat');
     const { isMobile } = useResponsive();
     const isMyMessage = msg.is_mine;
     const isMessageLoading =
@@ -71,31 +73,31 @@ const ChatMessage = ({
 
     const handleDeleteConfirm = useCallback(() => {
         confirm({
-            title: 'Xabarni o‘chirishni tasdiqlang',
+            title: t('message.deleteConfirmTitle'),
             icon: <ExclamationCircleOutlined />,
-            content: 'Rostdan ham ushbu xabarni o‘chirmoqchimisiz?',
-            okText: 'Ha, o‘chirish',
+            content: t('message.deleteConfirmContent'),
+            okText: t('message.deleteConfirmOk'),
             okType: 'danger',
-            cancelText: 'Bekor qilish',
+            cancelText: t('message.deleteConfirmCancel'),
             onOk() {
                 onDelete(msg.id, msg.status);
             },
         });
-    }, [onDelete, msg.id]);
+    }, [onDelete, msg.id, t]);
 
     const handleCopy = useCallback((text) => {
         navigator.clipboard
             .writeText(text)
-            .then(() => AntMessage.success('Xabar nusxalandi'))
-            .catch(() => AntMessage.error('Nusxalashda xatolik yuz berdi'));
-    }, []);
+            .then(() => AntMessage.success(t('message.copySuccess')))
+            .catch(() => AntMessage.error(t('message.copyError')));
+    }, [t]);
 
     const myMenuItems = useMemo(() => {
         if (msg.file && !msg.content) {
             return [
                 {
                     key: 'delete',
-                    label: 'O‘chirish',
+                    label: t('message.delete'),
                     icon: <DeleteOutlined />,
                     danger: true,
                     onClick: handleDeleteConfirm,
@@ -105,20 +107,20 @@ const ChatMessage = ({
             return [
                 {
                     key: 'edit',
-                    label: 'Tahrirlash',
+                    label: t('message.edit'),
                     icon: <EditOutlined />,
                     disabled: isMessageLoading,
                     onClick: handleEdit,
                 },
                 {
                     key: 'copy',
-                    label: 'Nusxalash',
+                    label: t('message.copy'),
                     icon: <CopyOutlined />,
                     onClick: () => handleCopy(msg.content),
                 },
                 {
                     key: 'delete',
-                    label: 'O‘chirish',
+                    label: t('message.delete'),
                     icon: <DeleteOutlined />,
                     danger: true,
                     onClick: handleDeleteConfirm,
@@ -131,6 +133,7 @@ const ChatMessage = ({
         handleDeleteConfirm,
         handleCopy,
         isMessageLoading,
+        t,
     ]);
 
     const opponentMenuItems = useMemo(() => {
@@ -138,7 +141,7 @@ const ChatMessage = ({
             return [
                 {
                     key: 'dowload',
-                    label: 'Yuklab olish',
+                    label: t('message.download'),
                     icon: <DownloadOutlined />,
                     onClick: () => window.open(fileUrl, '_blank'),
                 },
@@ -147,13 +150,13 @@ const ChatMessage = ({
             return [
                 {
                     key: 'copy',
-                    label: 'Nusxalash',
+                    label: t('message.copy'),
                     icon: <CopyOutlined />,
                     onClick: () => handleCopy(msg.content),
                 },
             ];
         }
-    }, [msg.content, msg.file, fileUrl, handleCopy]);
+    }, [msg.content, msg.file, fileUrl, handleCopy, t]);
 
     const fileUrl = useMemo(() => {
         if (!msg.file?.url) return null;
@@ -178,7 +181,7 @@ const ChatMessage = ({
 
         if (isMessageLoading) {
             return (
-                <Tooltip title="Yuborilmoqda...">
+                <Tooltip title={t('message.sending')}>
                     <img
                         src="/static/svg/svg-spinners--clock.svg"
                         alt="loading"
@@ -194,7 +197,7 @@ const ChatMessage = ({
         }
 
         return msg.is_read ? (
-            <Tooltip title="O‘qildi">
+            <Tooltip title={t('message.read')}>
                 <CheckOutlined
                     style={{ fontSize: '8px', color: 'white', marginLeft: 4 }}
                 />
@@ -203,7 +206,7 @@ const ChatMessage = ({
                 />
             </Tooltip>
         ) : (
-            <Tooltip title="Yetib bordi">
+            <Tooltip title={t('message.delivered')}>
                 <CheckOutlined
                     style={{
                         fontSize: '8px',
@@ -213,7 +216,7 @@ const ChatMessage = ({
                 />
             </Tooltip>
         );
-    }, [isMyMessage, msg.is_read, isMessageLoading]);
+    }, [isMyMessage, msg.is_read, isMessageLoading, t]);
 
     return (
         <div

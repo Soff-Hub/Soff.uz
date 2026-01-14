@@ -1,0 +1,132 @@
+{
+    "meta": {
+        "title": "Maxfiylik siyosati - Soff.uz",
+        "description": "Soff.uz platformasining maxfiylik siyosati. Raqamli mahsulotlar va onlayn xizmatlar bozorida shaxsiy ma'lumotlaringiz himoyasi haqida."
+    },
+    "content": {
+        "title": "Soff.uz Maxfiylik siyosati",
+        "section1": {
+            "title": "1. Kirish",
+            "p1": "1.1. Ushbu Maxfiylik siyosati (keyingi o'rinlarda \"Siyosat\" deb yuritiladi) Soff.uz raqamli mahsulotlar va onlayn xizmatlar bozori platformasida (keyingi o'rinlarda \"Platforma\" deb yuritiladi) qabul qilingan bo'lib, foydalanuvchilarning shaxsiy ma'lumotlarini himoya qilish va xavfsizligini ta'minlash maqsadida ishlab chiqilgan.",
+            "p2": "1.2. Mazkur Siyosat Foydalanuvchi bilan kelishuv va Sotuvchilar bilan shartnomaning ajralmas qismi hisoblanadi. Platformadan foydalanish orqali siz ushbu Siyosat shartlariga rozilik bildirgan hisoblanasiz."
+        },
+        "section2": {
+            "title": "2. Atama va ta'riflar",
+            "p1": "<strong>Platforma</strong> — Soff.uz veb-sayti va mobil ilovasi, raqamli mahsulotlar (biznes rejalar, ma'lumotlar, qo'llanmalar, referatlar, prezentatsiyalar va boshqalar) hamda onlayn xizmatlarni sotish va sotib olish imkonini beruvchi bozor.",
+            "p2": "<strong>Shaxsiy ma'lumotlar</strong> — muayyan jismoniy shaxsga taalluqli bo'lgan yoki uni identifikatsiya qilish imkonini beradigan axborot.",
+            "p3": "<strong>Foydalanuvchi (Xaridor)</strong> — Platformadan raqamli mahsulotlar yoki xizmatlarni sotib olish maqsadida foydalanuvchi sifatida ro'yxatdan o'tgan shaxs.",
+            "p4": "<strong>Sotuvchi</strong> — Platformada o'z raqamli mahsulotlari yoki xizmatlarini sotish uchun ro'yxatdan o'tgan yakka tartibdagi tadbirkor, yuridik shaxs yoki o'zini o'zi band qilgan shaxs.",
+            "p5": "<strong>Shaxsiy ma'lumotlarni qayta ishlash</strong> — shaxsiy ma'lumotlarni yig'ish, saqlash, tizimlashtirish, o'zgartirish, foydalanish, uzatish va yo'q qilishni o'z ichiga olgan har qanday operatsiya."
+        },
+        "section3": {
+            "title": "3. Qo'llash sohasi",
+            "p1": "3.1. Ushbu Siyosat Platforma bilan o'zaro munosabatlar jarayonida Foydalanuvchi va/yoki Sotuvchidan olinishi mumkin bo'lgan barcha shaxsiy ma'lumotlarga nisbatan amal qiladi.",
+            "p2": "3.2. Platformadan foydalanish va shaxsiy ma'lumotlarini taqdim etish orqali Foydalanuvchi va/yoki Sotuvchi shaxsiy ma'lumotlarni ushbu Siyosatga muvofiq qayta ishlashga rozilik beradi."
+        },
+        "section4": {
+            "title": "4. Yig'iladigan ma'lumotlar",
+            "subtitle1": "4.1. Foydalanuvchi (Xaridor) ma'lumotlari:",
+            "userData1": "— Ism va familiya;",
+            "userData2": "— Telefon raqami;",
+            "userData3": "— Elektron pochta manzili (E-mail);",
+            "userData4": "— Xarid qilingan mahsulotlar tarixi.",
+            "subtitle2": "4.2. Sotuvchi ma'lumotlari:",
+            "sellerData1": "— Ism va familiya;",
+            "sellerData2": "— Telefon raqami;",
+            "sellerData3": "— Elektron pochta manzili (E-mail);",
+            "sellerData4": "— Pasport seriyasi va raqami;",
+            "sellerData5": "— JShShIR (Jismoniy Shaxsning Shaxsiy Identifikatsiya Raqami);",
+            "sellerData6": "— Tug'ilgan sana;",
+            "sellerData7": "— O'zini o'zi band qiluvchi shaxs guvohnomasi;",
+            "sellerData8": "— Bank karta ma'lumotlari (pul mablag'larini yechib olish uchun);",
+            "sellerData9": "— Sotilgan mahsulotlar va daromadlar tarixi.",
+            "subtitle3": "4.3. Avtomatik yig'iladigan ma'lumotlar:",
+            "autoData1": "— IP-manzil;",
+            "autoData2": "— Brauzer va operatsion tizim turi;",
+            "autoData3": "— Platformaga kirish vaqti va muddati;",
+            "autoData4": "— Ko'rilgan sahifalar va havolalar;",
+            "autoData5": "— Cookie fayllari orqali olingan ma'lumotlar."
+        },
+        "section5": {
+            "title": "5. Cookie fayllari",
+            "p1": "5.1. Platforma foydalanuvchi tajribasini yaxshilash va statistik ma'lumotlarni to'plash maqsadida Cookie fayllardan foydalanadi.",
+            "p2": "5.2. Cookie fayllari orqali quyidagi ma'lumotlar yig'ilishi mumkin:",
+            "cookieData1": "— Sahifa ko'rishlar va bosishlar statistikasi;",
+            "cookieData2": "— Brauzer identifikatori;",
+            "cookieData3": "— Foydalanuvchi qurilmasi haqida ma'lumot;",
+            "cookieData4": "— Tanlangan mahsulotlar va xizmatlar haqida ma'lumot.",
+            "p3": "5.3. Foydalanuvchi brauzer sozlamalarini o'zgartirish orqali Cookie fayllarni boshqarishi mumkin. Biroq Cookie fayllarni bloklash Platformaning ba'zi funksiyalarining ishlamasligiga olib kelishi mumkin."
+        },
+        "section6": {
+            "title": "6. Ma'lumotlarni yig'ish va qayta ishlash maqsadlari",
+            "p1": "6.1. Platforma shaxsiy ma'lumotlarni quyidagi maqsadlarda qayta ishlaydi:",
+            "purpose1": "— Platformaga kirish va shaxsiy kabinetdan foydalanish imkonini berish;",
+            "purpose2": "— Raqamli mahsulotlar va xizmatlarni sotib olish buyurtmalarini qayta ishlash;",
+            "purpose3": "— To'lovlarni qabul qilish va amalga oshirish;",
+            "purpose4": "— Sotuvchilarning identifikatsiyasini amalga oshirish;",
+            "purpose5": "— Sotuvchilarga daromadlarini yechib olish imkonini berish;",
+            "purpose6": "— Foydalanuvchi va Sotuvchi bilan aloqa o'rnatish;",
+            "purpose7": "— Xavfsizlikni ta'minlash va firibgarlikning oldini olish;",
+            "purpose8": "— Platforma xizmatlarini takomillashtirish;",
+            "purpose9": "— Qonunchilik talablarini bajarish."
+        },
+        "section7": {
+            "title": "7. Ma'lumotlarni saqlash muddati",
+            "p1": "7.1. Shaxsiy ma'lumotlar qayta ishlash maqsadlariga erishish uchun zarur bo'lgan muddat davomida saqlanadi.",
+            "p2": "7.2. Foydalanuvchi yoki Sotuvchi istalgan vaqtda shaxsiy ma'lumotlariga ishlov berishga bergan roziligini qaytarib olish huquqiga ega. Buning uchun <strong>info@soff.uz</strong> elektron manziliga yozma ariza yuborish lozim."
+        },
+        "section8": {
+            "title": "8. Ma'lumotlarni himoya qilish choralari",
+            "p1": "8.1. Platforma shaxsiy ma'lumotlarni himoya qilish uchun quyidagi choralarni qo'llaydi:",
+            "measure1": "— Axborot tizimlariga kirishni cheklash;",
+            "measure2": "— Zararli dasturlardan himoya qilish;",
+            "measure3": "— Ma'lumotlarni shifrlash;",
+            "measure4": "— Tarmoqlararo ekranlash;",
+            "measure5": "— Tizim xavfsizligini muntazam tahlil qilish.",
+            "p2": "8.2. Platforma xodimlari foydalanuvchilarning shaxsiy ma'lumotlarini maxfiy saqlash majburiyatiga ega."
+        },
+        "section9": {
+            "title": "9. Ma'lumotlarni uchinchi shaxslarga uzatish",
+            "p1": "9.1. Platforma shaxsiy ma'lumotlarni quyidagi hollarda uchinchi shaxslarga uzatishi mumkin:",
+            "transfer1": "— Foydalanuvchi yoki Sotuvchining roziligi bilan;",
+            "transfer2": "— To'lov xizmatlarini amalga oshirish uchun (Click, Payme va boshqalar);",
+            "transfer3": "— O'zbekiston Respublikasi qonunchiligiga muvofiq davlat organlariga;",
+            "transfer4": "— Platforma xizmatlarini ko'rsatish uchun jalb qilingan hamkorlarga.",
+            "p2": "9.2. Ma'lumotlar uzatiladigan barcha uchinchi shaxslar tegishli ma'lumotlarni himoya qilish qoidalariga rioya qilishlari shart."
+        },
+        "section10": {
+            "title": "10. Foydalanuvchi va Sotuvchi huquqlari",
+            "subtitle1": "10.1. Foydalanuvchi (Xaridor) huquqlari:",
+            "userRight1": "— Shaxsiy kabinetda o'z ma'lumotlarini ko'rish va o'zgartirish;",
+            "userRight2": "— Shaxsiy ma'lumotlarini o'chirishni so'rash;",
+            "userRight3": "— Ma'lumotlariga ishlov berish to'g'risida ma'lumot olish;",
+            "userRight4": "— Rozilikni istalgan vaqtda qaytarib olish.",
+            "subtitle2": "10.2. Sotuvchi huquqlari:",
+            "sellerRight1": "— Shaxsiy kabinetda o'z ma'lumotlarini ko'rish va o'zgartirish;",
+            "sellerRight2": "— Ma'lumotlariga ishlov berish to'g'risida ma'lumot olish;",
+            "sellerRight3": "— Identifikatsiya ma'lumotlarini yangilash;",
+            "sellerRight4": "— Rozilikni istalgan vaqtda qaytarib olish."
+        },
+        "section11": {
+            "title": "11. Siyosatga o'zgartirishlar kiritish",
+            "p1": "11.1. Platforma ushbu Siyosatga istalgan vaqtda o'zgartirishlar kiritish huquqini o'zida saqlab qoladi.",
+            "p2": "11.2. O'zgartirishlar Platformaga kiritilgan paytdan boshlab kuchga kiradi.",
+            "p3": "11.3. Platformadan foydalanishni davom ettirgan holda, Foydalanuvchi va/yoki Sotuvchi Siyosatga kiritilgan o'zgartirishlarga roziligini tasdiqlaydi."
+        },
+        "section12": {
+            "title": "12. Aloqa ma'lumotlari",
+            "p1": "12.1. Shaxsiy ma'lumotlaringizga oid savollar yoki murojaat uchun quyidagi manzilga murojaat qilishingiz mumkin:",
+            "contact1": "— Elektron pochta: <strong>support@soff.uz</strong>",
+            "contact2": "— Telegram: <strong>@soff_uz</strong>",
+            "contact3": "— Veb-sayt: <strong>https://soff.uz</strong>",
+            "contact4": "— Telefon raqami: <strong>+998 (91) 008 67 89</strong>"
+        },
+        "section13": {
+            "title": "13. Yakuniy qoidalar",
+            "p1": "13.1. Ushbu Siyosat O'zbekiston Respublikasi qonunchiligiga muvofiq tartibga solinadi.",
+            "p2": "13.2. Siyosat bilan bog'liq nizolar muzokaralar yo'li bilan hal qilinadi, kelishuv erishilmagan taqdirda esa O'zbekiston Respublikasi sudlariga murojaat qilinadi."
+        }
+    }
+}
+
+

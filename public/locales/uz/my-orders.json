@@ -1,0 +1,105 @@
+{
+    "pageTitle": "Mening buyurtmalarim",
+    "breadcrumb": {
+        "previousPage": "Oldingi sahifa"
+    },
+    "balance": {
+        "label": "Balance",
+        "currency": "so'm"
+    },
+    "tabs": {
+        "all": "Barchasi",
+        "new": "Yangi",
+        "inProcess": "Jarayonda",
+        "completed": "Tugallandi",
+        "cancelled": "Bekor qilingan"
+    },
+    "emptyStates": {
+        "noOrders": "Sizda buyurtmalar mavjud emas",
+        "noNewOrders": "Sizda yangi buyurtmalar mavjud emas",
+        "noInProcessOrders": "Sizda jarayondagi buyurtmalar mavjud emas",
+        "noCompletedOrders": "Sizda tugallangan buyurtmalar mavjud emas",
+        "noCancelledOrders": "Sizda bekor qilingan buyurtmalar mavjud emas",
+        "noOrdersTitle": "Sizda hozircha buyurtmalar mavjud emas",
+        "noOrdersDescription": "Maxsus buyurtmalar bo'limi orqali siz o'zingizga kerakli xizmatlarni topishingiz va buyurtma berishingiz mumkin.",
+        "createCustomOrder": "Maxsus buyurtma yaratish"
+    },
+    "drawer": {
+        "title": "Frilanser takliflari",
+        "selectFreelancerWarning": "Ishni boshlash uchun frilanser tanlashingiz kerak",
+        "paymentRequired": "Frilanser ishni boshlashi uchun to'lovni amalga oshiring",
+        "makePayment": "To'lovni amalga oshiring",
+        "back": "Orqaga",
+        "chat": "Chat"
+    },
+    "moderator": {
+        "title": "Moderator bilan bog'lanish",
+        "description": "Savol yoki muammo yuzasidan moderatorlarimizga murojaat qilishingiz mumkin.",
+        "openChat": "Chat ochish"
+    },
+    "offers": {
+        "waitingMessage": "Takliflar hozircha yig'ilmoqda",
+        "waitingMessageWithCount": "ichida mavjud takliflar ko'rsatiladi.",
+        "waitingMessageSeconds": "soniya",
+        "waitingForOffers": "Frilanserlar taklif yubormoqda. Iltimos biroz kuting...",
+        "selectOffer": "Taklifni tanlash",
+        "back": "Orqaga"
+    },
+    "offerCard": {
+        "offerPrice": "Taklif narxi:",
+        "chat": "Chat",
+        "select": "Tanlash",
+        "reviews": "ta izoh",
+        "expand": "Batafsil",
+        "collapse": "Yopish",
+        "noComment": "Izoh yo'q"
+    },
+    "filters": {
+        "title": "Filter",
+        "active": "Faol",
+        "minRating": "Minimal reyting",
+        "minRatingPlaceholder": "Min. reyting",
+        "experience": "Tajriba",
+        "experiencePlaceholder": "Tajriba tanlang",
+        "experienced": "Tajribali",
+        "beginner": "Boshlang'ich darajadagi",
+        "sort": "Tartiblash",
+        "sortPlaceholder": "Tartiblash",
+        "sortByRating": "Reyting bo'yicha",
+        "sortByTime": "Yuborilgan vaqt bo'yicha",
+        "sortAscending": "O'sish tartibi",
+        "sortDescending": "Kamayish tartibi",
+        "clearFilters": "Filtrni tozalash"
+    },
+    "modals": {
+        "selectFreelancer": {
+            "title": "Haqiqatan ham Siz",
+            "titleSuffix": "ni tanlamoqchimisiz?",
+            "confirm": "Ha, tanlayman",
+            "cancel": "Yo'q",
+            "note": "Eslatma:",
+            "notePartialPayment": "Siz ilgari",
+            "notePartialPaymentMiddle": "so'm to'lovni amalga oshirgansiz. Taklif narxi",
+            "notePartialPaymentEnd": "so'm.",
+            "noteRefund": "Siz tanlagan frilanserning taklif narxi",
+            "noteRefundMiddle": "so'm siz ilgari to'lagan summadan kam. Ortiqcha to'lov summasi balansingizga qaytariladi.",
+            "freelancerComment": "Frilanser izohi:",
+            "noComment": "Izoh yo'q"
+        },
+        "payment": {
+            "useBalanceTooltip": "To'lov uchun balansingizdan foydalaning",
+            "balance": "Balance",
+            "back": "Orqaga"
+        }
+    },
+    "messages": {
+        "error": "Xatolik yuz berdi",
+        "selectFreelancerError": "Frilanser tanlanmadi. Iltimos qayta urinib ko'ring!",
+        "selectFreelancerSuccess": "Frilanser tanlandi!",
+        "selectFreelancerSuccessWithRefund": "Frilanser tanlandi! Ortiqcha to'lov summasi:",
+        "refunded": "so'm qaytarildi",
+        "additionalPaymentRequired": "Frilanser tanlash uchun iltimos qo'shimcha",
+        "additionalPaymentRequiredEnd": "so'm to'lovni amalga oshiring"
+    }
+}
+

@@ -10,8 +10,10 @@ import {
 } from '~/shared/api/end-points';
 import { useTelegram } from '~/shared/hooks/useTelegram';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'next-i18next';
 
 export default function TelegramNotification({ header, hideIfActivated }) {
+    const { t } = useTranslation('common');
     const { isMobile } = useResponsive();
     const { user } = useSelector((state) => state.auth);
     const [checked, setChecked] = useState(false);
@@ -36,7 +38,9 @@ export default function TelegramNotification({ header, hideIfActivated }) {
             },
             {
                 onSuccess: () => {
-                    message.success('Bildirishnomalar o‘chirildi!');
+                    message.success(
+                        t('telegramNotification.notificationsDisabled')
+                    );
                 },
             }
         );
@@ -79,8 +83,8 @@ export default function TelegramNotification({ header, hideIfActivated }) {
             }}>
             {header || (
                 <div className="d-flex align-items-center gap-2">
-                    <span>Telegram orqali davom ettirish</span>
-                    <Tooltip title="Buyurtma holati va yangi takliflar haqida telegram bot orqali bildirishnomalarni qabul qilish">
+                    <span>{t('telegramNotification.continueViaTelegram')}</span>
+                    <Tooltip title={t('telegramNotification.tooltip')}>
                         <InfoCircleOutlined style={{ color: '#faad14' }} />
                     </Tooltip>
                 </div>

@@ -1,0 +1,107 @@
+{
+    "meta": {
+        "title": "Frequently Asked Questions - Soff.uz",
+        "description": "Frequently asked questions (FAQ) on the Soff.uz platform. Frequently asked questions and answers about products, services, selling and buying processes.",
+        "keywords": {
+            "frequentlyAskedQuestions": "Frequently Asked Questions",
+            "faqSoffUz": "FAQ Soff.uz",
+            "soffUzQuestions": "Soff.uz questions",
+            "digitalProductsQuestions": "digital products questions",
+            "onlineServicesFaq": "online services FAQ",
+            "productSellingQuestions": "product selling questions",
+            "purchaseQuestions": "purchase questions",
+            "usageQuestions": "usage questions"
+        },
+        "author": "Soff.uz team"
+    },
+    "sections": {
+        "customersTitle": "Frequently asked questions from Soff.uz customers:",
+        "sellersTitle": "Frequently asked questions from Soff.uz sellers:"
+    },
+    "customersFaqs": [
+        {
+            "question": "1. What is Soff.uz?",
+            "answer": "Soff.uz is an online marketplace for digital products and services where you can easily purchase various digital products such as audio files, videos, graphics, educational materials and other digital products."
+        },
+        {
+            "question": "2. What products can I buy from Soff.uz?",
+            "answer": "On the Soff.uz platform, you can purchase the following types of products: Digital educational materials, Graphics, designs and logos, Audio and video files, Books, articles and other written content, Web design and other digital services. All products sold on the platform are of high quality and contain information needed by users."
+        },
+        {
+            "question": "3. How can I buy products from Soff.uz?",
+            "answer": "To buy a product from Soff.uz: You need to register on the platform. Select the product and go to its page. Click the 'Buy Now' button and make the payment. After payment is confirmed, you will be able to download the product immediately."
+        },
+        {
+            "question": "4. What are the payment methods?",
+            "answer": "The following payment methods are available on the Soff.uz platform: Bank cards (Visa, MasterCard) Electronic wallets (Payme, Click), Payment via money transfers. Each payment method is implemented securely and conveniently."
+        },
+        {
+            "question": "5. How can I download the purchased product?",
+            "answer": "Downloading the purchased product is very easy. After payment is confirmed, a 'Download' button will appear on the product page. Click this button and download the product to your device. The second way is that when the buyer logs into their profile, the purchased product is also added to the Purchased Materials section. If you have problems downloading the product, please contact Soff.uz customer service."
+        },
+        {
+            "question": "6. How can I return the purchased product?",
+            "answer": "The refund policy for purchased digital products on the Soff.uz platform is determined based on the platform's user agreement. If there is any problem with the product, you can contact our customer service department. Product returns are only made in some cases, for example, if the product was incorrectly presented."
+        },
+        {
+            "question": "7. How can I search for products on Soff.uz?",
+            "answer": "Searching for products on Soff.uz is very easy. You can search by entering the name of the desired product or service through the search panel at the top of the site. You can also find products by category."
+        },
+        {
+            "question": "8. Is Soff.uz secure?",
+            "answer": "Yes, Soff.uz users' personal information and payments are securely protected. All information on the platform is encrypted and transactions are carried out through secure payment systems."
+        },
+        {
+            "question": "9. How can I get help when purchasing?",
+            "answer": "If you need help during the product purchase process or have questions about the product, you can contact Soff.uz customer service. Our help center has frequently asked questions and detailed answers."
+        },
+        {
+            "question": "10. How can I stay informed about news and offers on Soff.uz?",
+            "answer": "To stay informed about new products, discounts and special offers on the Soff.uz platform, you can use Soff.uz's Telegram channel or email newsletters."
+        },
+        {
+            "question": "11. How can I contact Soff.uz help center?",
+            "answer": "If you need to contact Soff.uz, you can reach us through our Telegram channel or by email. You can also get quick answers through the Help Center available on our site."
+        }
+    ],
+    "sellersFaqs": [
+        {
+            "question": "1. What is Soff.uz?",
+            "answer": "Soff.uz is an online platform specially created for specialists who want to work independently. Freelancers can present their qualifications and services and work directly with clients. Soff.uz has opportunities to work in various fields, such as design, writing, translation, web development and many other services."
+        },
+        {
+            "question": "2. How do I start working on Soff.uz?",
+            "answer": "To start working on Soff.uz, you need to register on the Soff.uz platform. After registering, you can create a profile and add your services. After that, you start receiving work orders from clients and can sell your services online."
+        },
+        {
+            "question": "3. How can I achieve good results on Soff.uz?",
+            "answer": "To be successful on Soff.uz, you can follow these recommendations: Expanded portfolio: Present your services fully and clearly. Add previously completed projects. Flexible pricing policy: Offer different price options for clients and adapt to their needs. Good communication: Stay in regular contact with clients and try to resolve their requests quickly. Ratings and reviews: Strive to get positive reviews and ratings, this increases your credibility."
+        },
+        {
+            "question": "4. What services do clients offer on Soff.uz?",
+            "answer": "On the Soff.uz platform, clients can offer services in various fields. These fields include: Design and graphics, Website development, Content creation, Translation and transcription, Video editing, Marketing and SEO services, Data analysis. You can present your services in each field."
+        },
+        {
+            "question": "5. How are payments made?",
+            "answer": "Payments on the Soff.uz platform are made conveniently and securely. Freelancers receive payment from clients using their services. Payments are made securely through the Soff.uz system and you can transfer money from your balance to your card at your discretion."
+        },
+        {
+            "question": "6. How can I showcase my services on Soff.uz?",
+            "answer": "To showcase your services on Soff.uz, you need to create a profile and add a list of services. Also, fully describe your services and add your previously completed projects. You can set a price for each service and clients can see your services and contact you."
+        },
+        {
+            "question": "7. Is using the Soff.uz platform free?",
+            "answer": "Yes, using the Soff.uz platform is free. After you register, you can present your services. The platform makes money by taking a commission from your earnings."
+        },
+        {
+            "question": "8. What security does the platform provide?",
+            "answer": "Soff.uz pays great attention to ensuring secure work for clients and freelancers. The payment system is protected and users' personal information is protected. Also, the platform has a fraud detection system that identifies fake accounts."
+        },
+        {
+            "question": "9. How can I get help on Soff.uz",
+            "answer": "If you have questions or problems using the Soff.uz platform, you can contact our help center. Also, the FAQ page available on the platform has answers to many common questions. For other help, you can contact us via Telegram."
+        }
+    ]
+}
+
+

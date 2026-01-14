@@ -1,10 +1,12 @@
 import React from 'react';
+import { useTranslation } from 'next-i18next';
 import { Collapse } from 'antd';
 import styles from '../styles/detail.module.scss';
 
 const { Panel } = Collapse;
 
 const MoneyBack = () => {
+    const { t } = useTranslation('orders');
     return (
         <div
             className="card shadow-sm border-0 my-4"
@@ -20,7 +22,7 @@ const MoneyBack = () => {
                 }}>
                 <img
                     src="/static/img/services_images/garant.png"
-                    alt="money garant img"
+                    alt={t('serviceDetail.moneyBack.imageAlt')}
                     style={{
                         width: '70px',
                         height: '70px',
@@ -31,11 +33,10 @@ const MoneyBack = () => {
                     <h3
                         className="mb-1"
                         style={{ fontSize: '18px', fontWeight: '600' }}>
-                        Pulni qaytarish kafolati
+                        {t('serviceDetail.moneyBack.title')}
                     </h3>
                     <p className="mb-0 text-muted" style={{ fontSize: '14px' }}>
-                        Agar buyurtmangiz siz kutgandek bo‘lmasa, pulingizni
-                        to‘liq qaytaramiz.
+                        {t('serviceDetail.moneyBack.description')}
                     </p>
                 </div>
             </div>
@@ -54,7 +55,7 @@ const MoneyBack = () => {
                         <span
                             className="text-success"
                             style={{ fontWeight: 500 }}>
-                            Batafsil ma’lumot
+                            {t('serviceDetail.moneyBack.moreInfo')}
                         </span>
                     }
                     key="1">
@@ -65,17 +66,7 @@ const MoneyBack = () => {
                             lineHeight: '1.6',
                         }}>
                         <p>
-                            Bizning asosiy maqsadimiz – mijozning mamnunligi.
-                            Agar buyurtma natijasi siz kutgandek bo‘lmasa yoki
-                            umuman bajarilmasa, sizda {' '}
-                            <strong>
-                                pulni to‘liq qaytarib olish huquqi
-                            </strong>{' '}
-                            mavjud. Mablag‘ balansingizga qaytariladi va uni
-                            istalgan vaqtda yechib olishingiz mumkin. Demak,{' '}
-                            <strong>Soff.uz</strong> da buyurtma berish{' '}
-                            <strong>100% xavfsiz</strong> — natija bo‘lmasa,
-                            pulingiz qaytadi.
+                            {t('serviceDetail.moneyBack.detailedDescription')}
                         </p>
                     </div>
                 </Panel>

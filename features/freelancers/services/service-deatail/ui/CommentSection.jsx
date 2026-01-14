@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'next-i18next';
 import { List, Avatar, Rate, Button } from 'antd';
 import { useRouter } from 'next/router';
 import dayjs from 'dayjs';
@@ -8,6 +9,7 @@ import { cn } from '~/shared/utilities/cn';
 import { DownOutlined } from '@ant-design/icons';
 
 const CommentSection = ({ id, type }) => {
+    const { t } = useTranslation('orders');
     const router = useRouter();
     const {
         data,
@@ -23,12 +25,12 @@ const CommentSection = ({ id, type }) => {
 
     return (
         <div className={styles.commentSection}>
-            <h3 className={styles.title}>Fikrlar</h3>
+            <h3 className={styles.title}>{t('serviceDetail.commentSection.title')}</h3>
 
             <List
                 itemLayout="horizontal"
                 dataSource={comments}
-                locale={{ emptyText: "Hozircha izohlar yo'q" }}
+                locale={{ emptyText: t('serviceDetail.commentSection.noComments') }}
                 renderItem={item => (
                     <List.Item className={styles.commentItem}>
                         <List.Item.Meta
@@ -67,11 +69,11 @@ const CommentSection = ({ id, type }) => {
             {hasNextPage && (
                 <div style={{ textAlign: 'center', marginTop: 16 }}>
                     <Button onClick={() => fetchNextPage()} loading={isFetchingNextPage} shape="round">
-                        {isFetchingNextPage ? 'Yuklanmoqda...' : <div className={cn("flex", 'items-center', 'gap-2')}>Ko'proq ko‘rsatish <DownOutlined /></div>}
+                        {isFetchingNextPage ? t('serviceDetail.commentSection.loading') : <div className={cn("flex", 'items-center', 'gap-2')}>{t('serviceDetail.commentSection.loadMore')} <DownOutlined /></div>}
                     </Button>
                 </div>
             )}
-            <p className={cn("mt-2", 'text-[12px]', 'text-center')}>{data?.pages[0].total} tadan {comments?.length} ta ko'rsatilgan</p>
+            <p className={cn("mt-2", 'text-[12px]', 'text-center')}>{data?.pages[0].total} {t('serviceDetail.commentSection.showing')} {comments?.length} {t('serviceDetail.commentSection.shown')}</p>
         </div>
     );
 };

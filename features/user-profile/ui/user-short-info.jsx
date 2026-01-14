@@ -22,6 +22,7 @@ import { FaLink } from 'react-icons/fa6';
 import styles from '../styles/user-short-info.module.scss';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import { PiMoneyWavyBold } from 'react-icons/pi';
+import { useTranslation } from 'next-i18next';
 
 const InfoRow = memo(({ icon, label, value }) => (
     <div
@@ -43,6 +44,7 @@ const InfoRow = memo(({ icon, label, value }) => (
 ));
 
 const UserShortInfo = ({ seller }) => {
+    const { t } = useTranslation('seller');
     const router = useRouter();
     const { isLoggedIn, status } = useSelector((state) => state?.auth);
     const { mutate: createChat } = useCreateChat();
@@ -67,8 +69,8 @@ const UserShortInfo = ({ seller }) => {
         () =>
             seller?.last_login
                 ? dayjs(seller.last_login).fromNow()
-                : 'Faol emas',
-        [seller?.last_login]
+                : t('profile.notActive'),
+        [seller?.last_login, t]
     );
 
     const joinedDate = useMemo(
@@ -97,7 +99,7 @@ const UserShortInfo = ({ seller }) => {
     const sellerStats = useMemo(
         () => [
             {
-                title: 'Jarayondagi ishlar',
+                title: t('profile.statsItems.inProgress'),
                 value: seller?.progress_jobs_count,
                 icon: (
                     <SyncOutlined className={cn('text-info', 'text-[15px]')} />
@@ -105,7 +107,7 @@ const UserShortInfo = ({ seller }) => {
                 color: 'text-info',
             },
             {
-                title: 'Muvaffaqiyatli ishlar',
+                title: t('profile.statsItems.successful'),
                 value: seller?.successful_jobs_count,
                 icon: (
                     <CheckCircleOutlined
@@ -115,7 +117,7 @@ const UserShortInfo = ({ seller }) => {
                 color: 'text-primary',
             },
             {
-                title: 'Muvaffaqiyatsiz ishlar',
+                title: t('profile.statsItems.unsuccessful'),
                 value: seller?.unsuccessful_jobs_count,
                 icon: (
                     <CloseCircleOutlined
@@ -125,7 +127,7 @@ const UserShortInfo = ({ seller }) => {
                 color: 'text-danger',
             },
             {
-                title: 'Yuklangan mahsulotlar',
+                title: t('profile.statsItems.uploaded'),
                 value: seller?.total_products_count,
                 icon: (
                     <FileTextOutlined
@@ -135,7 +137,7 @@ const UserShortInfo = ({ seller }) => {
                 color: 'text-purple',
             },
             {
-                title: 'Sotilgan mahsulotlar',
+                title: t('profile.statsItems.sold'),
                 value: seller?.total_sold_documents,
                 icon: (
                     <ShoppingOutlined
@@ -145,7 +147,7 @@ const UserShortInfo = ({ seller }) => {
                 color: 'text-warning',
             },
         ],
-        [seller]
+        [seller, t]
     );
 
     const handleCreateOrder = () => {
@@ -214,12 +216,12 @@ const UserShortInfo = ({ seller }) => {
         navigator.clipboard
             .writeText(link)
             .then(() => {
-                message.success('Link nusxalandi!');
+                message.success(t('profile.linkCopied'));
             })
             .catch(() => {
-                message.error('Link nusxalanmadi');
+                message.error(t('profile.linkNotCopied'));
             });
-    }, [seller?.id]);
+    }, [seller?.id, t]);
 
     useEffect(() => {
         const { order } = router.query;
@@ -299,7 +301,9 @@ const UserShortInfo = ({ seller }) => {
                                 <PiMoneyWavyBold className={styles.icon} />
                             </div>
                             <div className={styles.info}>
-                                <p className={styles.label}>Jami daromad</p>
+                                <p className={styles.label}>
+                                    {t('profile.totalIncome')}
+                                </p>
                                 <div className={styles.amount}>
                                     <span className={styles.value}>
                                         {formatCurrencyWithSpace(
@@ -307,7 +311,7 @@ const UserShortInfo = ({ seller }) => {
                                         )}
                                     </span>
                                     <span className={styles.currency}>
-                                        so'm
+                                        {t('profile.currency')}
                                     </span>
                                 </div>
                             </div>
@@ -332,7 +336,7 @@ const UserShortInfo = ({ seller }) => {
             <div className={cn(marginClass, 'flex', 'flex-col', 'gap-4')}>
                 <InfoRow
                     icon={<i className="fa-solid fa-clipboard-list"></i>}
-                    label="Xizmatlar uchun ochiq"
+                    label={t('profile.openForServices')}
                     value={
                         !isOrderingClosed ? (
                             <CheckCircleOutlined
@@ -348,18 +352,18 @@ const UserShortInfo = ({ seller }) => {
                 {seller?.location && (
                     <InfoRow
                         icon={<i className="fa-solid fa-globe"></i>}
-                        label="Joylashuv"
+                        label={t('profile.location')}
                         value={seller?.location}
                     />
                 )}
                 <InfoRow
                     icon={<i className="fa-regular fa-clock"></i>}
-                    label="Oxirgi faollik"
+                    label={t('profile.lastActive')}
                     value={lastActive}
                 />
                 <InfoRow
                     icon={<i className="fa-regular fa-calendar-check"></i>}
-                    label="Ro'yhatdan o'tgan"
+                    label={t('profile.joined')}
                     value={joinedDate}
                 />
             </div>
@@ -368,8 +372,8 @@ const UserShortInfo = ({ seller }) => {
             {isBlocked && (
                 <Alert
                     className={styles.alertMiddle}
-                    message="Frilanser vaqtincha bloklangan"
-                    description="Afsuski, ushbu frilanserning xizmatlari vaqtincha bloklangan. Boshqa frilanser xizmatlaridan foydalanishingiz mumkin."
+                    message={t('profile.blocked.title')}
+                    description={t('profile.blocked.description')}
                     type="error"
                     showIcon
                 />
@@ -377,8 +381,8 @@ const UserShortInfo = ({ seller }) => {
             {isLockedForService && !isBlocked && (
                 <Alert
                     className={styles.alertMiddle}
-                    message="Xizmatlar uchun ochiq emas"
-                    description="Afsuski, ushbu frilanserning xizmatlari vaqtincha ochiq emas. Boshqa frilanser xizmatlaridan foydalanishingiz mumkin."
+                    message={t('profile.notOpen.title')}
+                    description={t('profile.notOpen.description')}
                     type="warning"
                     showIcon
                 />
@@ -396,7 +400,8 @@ const UserShortInfo = ({ seller }) => {
                     block
                     onClick={handleCreateOrder}
                     disabled={isOrderingClosed}>
-                    <i className="fa-solid fa-calendar"></i> Buyurtma berish
+                    <i className="fa-solid fa-calendar"></i>{' '}
+                    {t('profile.placeOrder')}
                 </Button>
             </div>
 
@@ -439,7 +444,7 @@ const UserShortInfo = ({ seller }) => {
                         'font-semibold',
                         'text-[16px]'
                     )}>
-                    Statistikalar
+                    {t('profile.stats')}
                 </span>
                 <div className={cn('flex', 'flex-col', 'gap-2')}>
                     {sellerStats.map((stat) => (

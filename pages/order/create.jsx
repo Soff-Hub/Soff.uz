@@ -8,10 +8,13 @@ import useResponsive from '~/shared/utilities/useResponsive';
 import { useSelector } from 'react-redux';
 import PhoneNumberModal from '~/features/orders/ui/PhoneNumberModal';
 import ProductVideoBanner from '~/shared/components/product-video-banner';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 // import Editor from '~/components/Editor';
 
 const video_url = 'https://youtu.be/qy38WGhOq3Q?si=0y_oSKS1WRiSJ4G5';
 function OrderCreate() {
+    const { t } = useTranslation('order-create');
     const router = useRouter();
     const { isLoggedIn, status } = useSelector((state) => state.auth);
 
@@ -29,16 +32,11 @@ function OrderCreate() {
 
     return (
         <PageContainer>
-            <Meta
-                title={'Maxsus buyurtma yaratish'}
-                description={
-                    'Soff.uz’da maxsus buyurtma yarating — o‘z loyihangiz uchun kerakli mutaxassisni toping. Talablaringizni yozing, frilanserlardan takliflarni qabul qiling va eng yaxshisini tanlang.'
-                }
-            />
+            <Meta title={t('meta.title')} description={t('meta.description')} />
             <ProductVideoBanner
                 videoUrl={video_url}
-                title={`SOFF'da buyurtma berishni bilmayapsizmi?`}
-                subtitle={`Buyurtma berish bo‘yicha video qo‘llanma.`}
+                title={t('videoBanner.title')}
+                subtitle={t('videoBanner.subtitle')}
             />
             <div className="page-content">
                 <div className="container">
@@ -51,7 +49,7 @@ function OrderCreate() {
                                 lineHeight: '1.2',
                                 textAlign: 'center',
                             }}>
-                            Maxsus buyurtma yaratish
+                            {t('form.title')}
                         </h3>
                     </div>
                     <OrderCreateForm />
@@ -61,7 +59,22 @@ function OrderCreate() {
     );
 }
 
+export async function getServerSideProps({ locale }) {
+    return {
+        props: {
+            ...(await serverSideTranslations(locale, [
+                'header',
+                'footer',
+                'order-create',
+                'common',
+                'modals',
+            ])),
+        },
+    };
+}
+
 const OrderCreateForm = () => {
+    const { t } = useTranslation('order-create');
     const {
         form,
         formItemsContent,
@@ -267,8 +280,8 @@ const OrderCreateForm = () => {
                             }}
                             block>
                             {isPending
-                                ? 'Buyurtmangiz joylashtirilmoqda...'
-                                : 'Buyurtmani joylashtirish'}
+                                ? t('form.submit.loading')
+                                : t('form.submit.text')}
                         </Button>
                     </Form.Item>
                 )}
@@ -284,14 +297,14 @@ const OrderCreateForm = () => {
                         block
                         style={{ height: '38px', fontSize: '14px' }}>
                         {isPending
-                            ? 'Buyurtmangiz joylashtirilmoqda...'
-                            : 'Buyurtmani joylashtirish'}
+                            ? t('form.submit.loading')
+                            : t('form.submit.text')}
                     </Button>
                 </Form.Item>
             </Form>
 
             <Modal
-                title="Buyurtmani tasdiqlash"
+                title={t('modal.confirmTitle')}
                 open={confirmOpen}
                 onCancel={handleCloseConfirm}
                 footer={[
@@ -300,7 +313,7 @@ const OrderCreateForm = () => {
                         type="primary"
                         loading={isPending}
                         onClick={handleConfirm}>
-                        To'lov qilish
+                        {t('modal.confirmButton')}
                     </Button>,
                 ]}
                 centered>
@@ -319,7 +332,7 @@ const OrderCreateForm = () => {
                             marginBottom: '16px',
                             color: '#1a1a1a',
                         }}>
-                        Buyurtma berishni tasdiqlaysizmi?
+                        {t('modal.confirmQuestion')}
                     </strong>
 
                     <div
@@ -331,20 +344,17 @@ const OrderCreateForm = () => {
                         }}>
                         <div style={{ marginBottom: '8px' }}>
                             <span style={{ marginRight: '8px' }}>✅</span>
-                            Buyurtma yaratilgandan so'ng siz 💳 to'lovni amalga
-                            oshirasiz
+                            {t('modal.point1')}
                         </div>
 
                         <div style={{ marginBottom: '8px' }}>
                             <span style={{ marginRight: '8px' }}>💼</span>
-                            Platformamizdagi malakali frilanserlar sizga narx va
-                            tavsif bilan o'z takliflarini taqdim etishadi
+                            {t('modal.point2')}
                         </div>
 
                         <div>
                             <span style={{ marginRight: '8px' }}>🎯</span>
-                            Siz esa ular orasidan sizga eng mos frilanserni
-                            tanlab, u bilan hamkorlikni boshlaysiz
+                            {t('modal.point3')}
                         </div>
                     </div>
                 </p>

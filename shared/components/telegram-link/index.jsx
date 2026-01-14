@@ -12,6 +12,7 @@ import { MODERATOR_ID } from '~/shared/constants';
 import { useSelector } from 'react-redux';
 import axiosInstance from '~/shared/api/freeleanceApi';
 import { useMutation } from '@tanstack/react-query';
+import { useTranslation } from 'next-i18next';
 
 const disabledLocations = ['/chat', '/auth', 'shopping-cart', 'search-page'];
 
@@ -20,6 +21,7 @@ const VIDEO_URL_ORDER_CREATE =
     'https://youtu.be/qy38WGhOq3Q?si=0y_oSKS1WRiSJ4G5';
 
 export function TelegramLink({ videoUrl }) {
+    const { t } = useTranslation('common');
     const { isMobile, isTablet } = useResponsive();
     const router = useRouter();
     const user = useSelector((state) => state.auth.user);
@@ -77,7 +79,7 @@ export function TelegramLink({ videoUrl }) {
                 `/chat?chatId=${data?.chat_id}&opponent_id=${MODERATOR_ID}`
             );
         } catch (error) {
-            console.error('⚠️ Support chat yaratishda xatolik:', error);
+            console.error(t('telegramLink.errorCreatingSupportChat'), error);
         }
     };
 
@@ -160,8 +162,8 @@ export function TelegramLink({ videoUrl }) {
                             </div>
                             <span className={styles.buttonText}>
                                 {isOrderCreatePage
-                                    ? 'Qanday buyurtma beraman?'
-                                    : 'Qanday xarid qilaman?'}
+                                    ? t('telegramLink.howToPlaceOrder')
+                                    : t('telegramLink.howToPurchase')}
                             </span>
                         </div>
                     )}
@@ -193,7 +195,7 @@ export function TelegramLink({ videoUrl }) {
                             <FaHeadset />
                         </div>
                         <span className={styles.buttonText}>
-                            Support bilan suhbat
+                            {t('telegramLink.chatWithSupport')}
                         </span>
                     </div>
                     <a
@@ -208,7 +210,9 @@ export function TelegramLink({ videoUrl }) {
                                 style={{ fontSize: '16px' }}
                             />
                         </div>
-                        <span className={styles.buttonText}>Telegram</span>
+                        <span className={styles.buttonText}>
+                            {t('telegramLink.telegram')}
+                        </span>
                     </a>
                 </div>
             </div>

@@ -1,0 +1,52 @@
+{
+    "meta": {
+        "title": "Do you have questions?",
+        "description": "Soff.uz - You can learn all about the site on this page"
+    },
+    "content": {
+        "title": "Do you have questions?",
+        "contactInfo": "If you have additional questions, send them to our trust phone number",
+        "phoneNumber": "+998910086789",
+        "phoneNote": "we accept calls from 9:00 to 22:00, service cost - free!",
+        "emailInfo": "Our email address",
+        "emailAddress": "support@soff.uz",
+        "emailNote": "write to us, we accept requests 24/7!",
+        "formTitle": "Send message",
+        "fields": {
+            "name": {
+                "label": "Full name",
+                "placeholder": "Full name",
+                "error": "Enter your full name"
+            },
+            "emailOrPhone": {
+                "label": "Email or phone number",
+                "placeholder": "Email or phone number",
+                "error": "Enter your email or phone number"
+            },
+            "subject": {
+                "label": "Subject",
+                "placeholder": "Subject",
+                "tooltip": "Write a subject for your message",
+                "error": "Write a subject for your message"
+            },
+            "description": {
+                "label": "Message",
+                "placeholder": "Message",
+                "error": "Write a message"
+            }
+        },
+        "submit": "Submit",
+        "modals": {
+            "success": {
+                "title": "Success!",
+                "defaultMessage": "Your message has been successfully received"
+            },
+            "error": {
+                "title": "Error!",
+                "defaultMessage": "Your message has been successfully received"
+            }
+        }
+    }
+}
+
+

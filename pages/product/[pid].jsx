@@ -5,6 +5,8 @@ import React, {
     useEffect,
     useCallback,
 } from 'react';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import PageContainer from '~/widgets/layouts/PageContainer';
 import { baseUrl } from '~/repositories/Repository';
 import * as cookie from 'cookie';
@@ -55,29 +57,7 @@ const VideosProductDetails = dynamic(
     { ssr: true }
 );
 
-const steps = [
-    {
-        target: '.product-short-view',
-        content: 'Bu yerda mahsulotning bir qismi joylashgan.',
-        disableBeacon: false,
-    },
-    {
-        target: '.product-price-section',
-        content:
-            'Bu yerda narxi va sotib olish tugmasi bor. Bosib sotib olasiz.',
-    },
-];
-
-const joyrideLocales = {
-    back: 'Oldingisi',
-    last: 'Tushundim',
-    close: 'Yopish',
-    next: 'Keyingisi',
-    open: 'Ochish',
-    skip: 'Bilaman',
-};
-
-const productsContentDetails = (contentType) => {
+const productsContentDetails = (contentType, t) => {
     switch (contentType) {
         case 'file':
             return FileProductDetatails;
@@ -89,11 +69,12 @@ const productsContentDetails = (contentType) => {
         case 'video':
             return VideosProductDetails;
         default:
-            return () => <div>Mahsulot topilmadi</div>;
+            return () => <div>{t('productDetail.notFound')}</div>;
     }
 };
 
 export default function ProductDefaultPage({ defaultProducts }) {
+    const { t } = useTranslation('product-pages');
     const [isPlay, setIsPlay] = useState(null);
     const [showJoyride, setShowJoyride] = useState(false);
     const similarRef = useRef();
@@ -105,8 +86,35 @@ export default function ProductDefaultPage({ defaultProducts }) {
     );
 
     const DetailComponent = useMemo(
-        () => productsContentDetails(contentType),
-        [contentType]
+        () => productsContentDetails(contentType, t),
+        [contentType, t]
+    );
+
+    const steps = useMemo(
+        () => [
+            {
+                target: '.product-short-view',
+                content: t('productDetail.joyride.step1'),
+                disableBeacon: false,
+            },
+            {
+                target: '.product-price-section',
+                content: t('productDetail.joyride.step2'),
+            },
+        ],
+        [t]
+    );
+
+    const joyrideLocales = useMemo(
+        () => ({
+            back: t('productDetail.joyride.back'),
+            last: t('productDetail.joyride.last'),
+            close: t('productDetail.joyride.close'),
+            next: t('productDetail.joyride.next'),
+            open: t('productDetail.joyride.open'),
+            skip: t('productDetail.joyride.skip'),
+        }),
+        [t]
     );
 
     const shouldShowAISoffia = useMemo(
@@ -184,8 +192,8 @@ export default function ProductDefaultPage({ defaultProducts }) {
             <div>
                 <ProductVideoBanner
                     videoUrl={video_url}
-                    title={`SOFF'da xarid qilishni bilmayapsizmi?`}
-                    subtitle={`Taxminan 1 daqiqalik video: mahsulotni qanday sotib olishni ko'rsatadi.`}
+                    title={t('productDetail.videoBanner.title')}
+                    subtitle={t('productDetail.videoBanner.subtitle')}
                 />
                 {/* Video helper banner */}
                 <div
@@ -208,7 +216,9 @@ export default function ProductDefaultPage({ defaultProducts }) {
                                         fontWeight: 400,
                                     }}
                                     className="py-4 similar_title">
-                                    O'xshash mahsulotlar
+                                    {t(
+                                        'productDetail.headings.similarProducts'
+                                    )}
                                 </h3>
                                 <SimilarProducts />
                             </div>
@@ -219,7 +229,9 @@ export default function ProductDefaultPage({ defaultProducts }) {
                                         fontWeight: 400,
                                     }}
                                     className="py-4 similar_title">
-                                    So'ngi yuklangan mahsulotlar
+                                    {t(
+                                        'productDetail.headings.lastAddedProducts'
+                                    )}
                                 </h3>
                                 <LastAddedProducts contentType={contentType} />
                             </div>
@@ -250,7 +262,7 @@ export default function ProductDefaultPage({ defaultProducts }) {
     );
 }
 
-export async function getServerSideProps({ query, req, res }) {
+export async function getServerSideProps({ query, req, res, locale }) {
     const { pid } = query;
 
     if (!pid) {
@@ -263,6 +275,7 @@ export async function getServerSideProps({ query, req, res }) {
 
     const headers = {
         'X-Device-ID': deviceId,
+        'Accept-Language': locale,
         ...(token && { Authorization: `Bearer ${token}` }),
     };
 
@@ -281,6 +294,7 @@ export async function getServerSideProps({ query, req, res }) {
             // Retry without auth token
             const retryHeaders = {
                 'X-Device-ID': deviceId,
+                'Accept-Language': locale,
             };
 
             const retryRequest = await fetch(
@@ -301,6 +315,8 @@ export async function getServerSideProps({ query, req, res }) {
             }
             defaultProducts = await request.json();
         }
+
+        console.log({ request });
     } catch (error) {
         try {
             const fallbackRequest = await fetch(
@@ -308,6 +324,7 @@ export async function getServerSideProps({ query, req, res }) {
                 {
                     headers: {
                         'X-Device-ID': deviceId,
+                        'Accept-Language': locale,
                     },
                 }
             );
@@ -317,6 +334,8 @@ export async function getServerSideProps({ query, req, res }) {
             }
 
             defaultProducts = await fallbackRequest.json();
+
+            console.log({ fallbackRequest });
         } catch (fallbackError) {
             console.error('Error fetching product:', fallbackError);
             return { notFound: true };
@@ -331,6 +350,13 @@ export async function getServerSideProps({ query, req, res }) {
     return {
         props: {
             defaultProducts,
+            ...(await serverSideTranslations(locale, [
+                'product-pages',
+                'common',
+                'modals',
+                'header',
+                'footer',
+            ])),
         },
     };
 }

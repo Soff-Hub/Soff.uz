@@ -1,11 +1,13 @@
 import React from 'react';
+import { useTranslation } from 'next-i18next';
 import { Collapse } from 'antd';
 import styles from "../styles/detail.module.scss";
 
 const FaqSection = ({ faqs }) => {
+  const { t } = useTranslation('orders');
   return (
     <div className={styles.faq}>
-      <h2>Ko‘p beriladigan savollar</h2>
+      <h2>{t('serviceDetail.faqSection.title')}</h2>
       <Collapse
         accordion
         items={faqs?.map((faq) => ({

@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import React, { useLayoutEffect, useRef, useState } from 'react';
+import { useTranslation } from 'next-i18next';
 import {
     InfoCircleOutlined,
     UpOutlined,
@@ -9,6 +10,7 @@ import Link from 'next/link';
 import ImageLightBox from './image-lightbox';
 
 function FileImagesScroll({ product }) {
+    const { t } = useTranslation('product-pages');
     const containerRef = useRef(null);
     const buttonsRef = useRef(null);
     const fullscreenButtonRef = useRef(null);
@@ -193,7 +195,9 @@ function FileImagesScroll({ product }) {
                                                 }
                                                 width={785}
                                                 height={614}
-                                                alt={'sellerImage'}
+                                                alt={t(
+                                                    'productDetail.fileImagesScroll.sellerImage'
+                                                )}
                                                 className={` seller_image_conatiner`}
                                                 objectFit="contain"
                                                 style={{
@@ -208,7 +212,9 @@ function FileImagesScroll({ product }) {
                                     src={'https://placehold.co/600x400'}
                                     width={1000}
                                     height={614}
-                                    alt={'sellerImage'}
+                                    alt={t(
+                                        'productDetail.fileImagesScroll.sellerImage'
+                                    )}
                                     className={` seller_image_conatiner`}
                                     objectFit="contain"
                                 />
@@ -275,7 +281,9 @@ function FileImagesScroll({ product }) {
                                 className="scroll-button"
                                 onClick={onClickUp}
                                 disabled={!canScrollUp}
-                                aria-label="Scroll up">
+                                aria-label={t(
+                                    'productDetail.fileActions.scrollUp'
+                                )}>
                                 <UpOutlined
                                     style={{
                                         fontSize: '16px',
@@ -287,7 +295,9 @@ function FileImagesScroll({ product }) {
                                 className="scroll-button"
                                 onClick={onClickDown}
                                 disabled={!canScrollDown}
-                                aria-label="Scroll down">
+                                aria-label={t(
+                                    'productDetail.fileActions.scrollDown'
+                                )}>
                                 <DownOutlined
                                     style={{
                                         fontSize: '16px',
@@ -306,16 +316,24 @@ function FileImagesScroll({ product }) {
                         <InfoCircleOutlined
                             className="fs-2 "
                             style={{ cursor: 'pointer' }}
-                            aria-label="Mualliflik huquqi buzilgan holatda"
+                            aria-label={t(
+                                'productDetail.fileImagesScroll.copyrightViolation'
+                            )}
                         />
-                        <span>Mualliflik huquqi buzilgan holatda</span>
+                        <span>
+                            {t(
+                                'productDetail.fileImagesScroll.copyrightViolation'
+                            )}
+                        </span>
                         <Link href={`/report/${product.slug}`}>
                             <a>
                                 <strong
                                     className="text-success"
                                     style={{ cursor: 'pointer' }}
-                                    aria-label="Shikoyat qiling!">
-                                    shikoyat qiling!
+                                    aria-label={t(
+                                        'productDetail.fileImagesScroll.report'
+                                    )}>
+                                    {t('productDetail.fileImagesScroll.report')}
                                 </strong>
                             </a>
                         </Link>

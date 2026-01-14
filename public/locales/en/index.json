@@ -1,0 +1,197 @@
+{
+    "myOrders": "My Orders",
+    "products": "Products",
+    "createOrder": "Create Order",
+    "searchPlaceholder": "Search...",
+    "hero": {
+        "title": "Digital products and online services marketplace",
+        "description": "Our specialists and sellers will quickly and efficiently provide you with the ready-made digital product or service you need."
+    },
+    "youtubeVid": {
+        "text": "Soff - Digital products and online services marketplace"
+    },
+    "lastServices": {
+        "title": "Recently opened services",
+        "subtitle": "Select a service – Place an order",
+        "allServices": "All services"
+    },
+    "freelance": {
+        "title": "Select a service – Place an order",
+        "subtitle": "Work with experienced freelancers and achieve quality results.",
+        "allServices": "All services",
+        "topRankings": {
+            "title": "Top freelancers and sellers ranking",
+            "found": "freelancers found",
+            "viewAll": "View all",
+            "notFound": "Unfortunately, no freelancers were found in this direction."
+        },
+        "serviceTypes": {
+            "scientific": "Scientific and Academic Services",
+            "design": "Graphic & UI, UX Design services",
+            "it": "IT & Programming services",
+            "3d": "3D Design and Visualization"
+        },
+        "serviceTitles": {
+            "3d": "3D Design and Visualization",
+            "website": "Programming services",
+            "design": "Design",
+            "file": "Scientific and Academic Services"
+        }
+    },
+    "info": {
+        "title": "Using services is very easy",
+        "subtitle": "SOFF.UZ",
+        "steps": {
+            "step1": {
+                "title": "Select a service",
+                "description": "Find the service or freelancer you need through the catalog or search."
+            },
+            "step2": {
+                "title": "Get acquainted with service details",
+                "description": "Make sure the service matches your requirements and, if necessary, communicate with the freelancer to agree"
+            },
+            "step3": {
+                "title": "Pay - securely",
+                "description": "Payment is transferred to the executor only after the work is completed. Your money is kept under the platform's guarantee."
+            },
+            "step4": {
+                "title": "Get quality results",
+                "description": "Accept the work and request corrections if necessary. 100% satisfaction guarantee."
+            }
+        }
+    },
+    "statistics": {
+        "title": "Statistics",
+        "digitalProducts": "Digital products",
+        "activeUsers": "Monthly active users",
+        "transactions": "Transactions",
+        "specialists": "Number of specialists"
+    },
+    "titleSection": {
+        "subtitle": "Digital products and online services marketplace",
+        "title": "SOFF.UZ"
+    },
+    "twoCard": {
+        "card1": {
+            "title": "Save your time with ready-made products",
+            "button": "All products"
+        },
+        "card2": {
+            "title": "Launch your project with freelancers",
+            "button": "Place an order"
+        }
+    },
+    "bests": {
+        "title": "Best of the week",
+        "activeSellers": "Most active sellers",
+        "bestsellerAuthors": "Bestseller authors",
+        "topProducts": "Top products",
+        "productsUploaded": "products uploaded",
+        "sales": "sales",
+        "viewed": "views",
+        "sold": "sold"
+    },
+    "lastProducts": {
+        "title": "Recently uploaded products",
+        "categories": {
+            "files": "Files",
+            "3d": "3D Models",
+            "design": "Design templates",
+            "video": "Video developments",
+            "templates": "Ready templates",
+            "websites": "Websites"
+        }
+    },
+    "faqs": {
+        "subtitle": "Frequently asked questions",
+        "title": "QUESTIONS",
+        "questions": {
+            "q1": {
+                "question": "What is Soff.uz?",
+                "answer": "Soff.uz is an online marketplace for digital products and services where you can easily purchase various digital products such as audio files, videos, graphics, educational materials and other digital products."
+            },
+            "q2": {
+                "question": "What products can I buy from Soff.uz?",
+                "answer": "On the Soff.uz platform, you can purchase the following types of products: Digital educational materials, Graphics, designs and logos, Audio and video files, Books, articles and other written content, Web design and other digital services. All products sold on the platform are of high quality and contain information useful to users."
+            },
+            "q3": {
+                "question": "How can I buy products from Soff.uz?",
+                "answer": "To buy a product from Soff.uz: You need to register on the platform. Select a product and go to its page. Click the 'Buy now' button and make the payment. After payment is confirmed, you will be able to download the product immediately."
+            },
+            "q4": {
+                "question": "What are the payment methods?",
+                "answer": "The following payment methods are available on the Soff.uz platform: Bank cards (Visa, MasterCard) Electronic wallets (Payme, Click), Payment via money transfers. Each payment method is carried out securely and conveniently."
+            },
+            "q5": {
+                "question": "How can I download a purchased product?",
+                "answer": "Downloading a purchased product is very easy. After payment is confirmed, a 'Download' button will appear on the product page. Click this button and download the product to your device. The second way is that when the buyer logs into their profile, the purchased product is also added in the Purchased materials section. If you encounter any problems downloading the product, please contact Soff.uz customer service."
+            },
+            "q6": {
+                "question": "How can I return a purchased product?",
+                "answer": "The return policy for purchased digital products on the Soff.uz platform is determined based on the platform's user agreement. If there is any problem with the product, you can contact our customer service department. Product returns are only carried out in certain cases, for example, if the product was incorrectly presented."
+            },
+            "q7": {
+                "question": "How can I search for a product on Soff.uz?",
+                "answer": "Searching for products on Soff.uz is very easy. You can search by entering the name of the desired product or service through the search panel at the top of the site. You can also find products by category."
+            },
+            "q8": {
+                "question": "Is Soff.uz secure?",
+                "answer": "Yes, Soff.uz users' personal information and payments are securely protected. All data on the platform is encrypted and transactions are carried out through secure payment systems."
+            },
+            "q9": {
+                "question": "How can I get help when shopping?",
+                "answer": "If you need help during the product purchase process or have questions about the product, you can contact Soff.uz customer service. Our help center has frequently asked questions and detailed answers."
+            },
+            "q10": {
+                "question": "How can I stay informed about news and offers on Soff.uz?",
+                "answer": "To stay informed about new products, discounts and special offers on the Soff.uz platform, you can use Soff.uz's Telegram channel or email newsletters."
+            },
+            "q11": {
+                "question": "How can I contact Soff.uz help center?",
+                "answer": "If you need to contact Soff.uz, you can reach us through our Telegram channel or by email. You can also get quick answers through the Help Center available on our website."
+            }
+        }
+    },
+    "heroSearch": {
+        "products": "Products",
+        "services": "Services",
+        "specialists": "Specialists",
+        "placeholders": {
+            "products": "What type of ready-made product are you looking for?",
+            "services": "What type of service are you looking for?",
+            "specialists": "What type of specialists are you looking for?"
+        }
+    },
+    "categorySection": {
+        "readyProducts": "Ready uploaded products",
+        "selectService": "Select a service – Place an order",
+        "categories": {
+            "scientific": "Scientific works",
+            "3d": "3D Models",
+            "design": "Design templates",
+            "websites": "Websites",
+            "templates": "Templates",
+            "video": "Video lessons",
+            "scientificServices": "Scientific and Academic Services",
+            "designServices": "Design services",
+            "programmingServices": "Programming services",
+            "3dServices": "3D Design and Visualization"
+        }
+    },
+    "meta": {
+        "title": "Digital products and online services marketplace – Soff.uz",
+        "description": "Soff.uz - marketplace for ready-made materials, scientific works, 3D designs, websites, design templates and various services. Buy or sell now!",
+        "keywords": {
+            "digitalProducts": "digital products",
+            "onlineServices": "online services",
+            "readyMaterials": "ready materials",
+            "scientificWorks": "scientific works",
+            "3dDesign": "3D design",
+            "designTemplates": "design templates",
+            "websites": "websites",
+            "graphicDesign": "graphic design",
+            "academicServices": "academic services",
+            "soffUz": "Soff.uz"
+        }
+    }
+}

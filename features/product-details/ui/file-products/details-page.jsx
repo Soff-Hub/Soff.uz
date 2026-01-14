@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'next-i18next';
 import FileImagesScroll from '../actions/file-images-scroll';
 import FileActions from '../actions/file-actions';
 import SellerProfile from '../seller-profile/seller-profile';
@@ -9,6 +10,7 @@ import { CommentList } from '~/features/comments/ui/commentList';
 import CommentFormWrapper from '~/features/comments/ui/commentWrapper';
 
 function FileProductsDetails({ product }) {
+    const { t } = useTranslation('product-pages');
     return (
         <div className="seller_container_products_details">
             <div className="ps-container p-0">
@@ -17,7 +19,7 @@ function FileProductsDetails({ product }) {
                         <h1 className="titleh3">
                             {product?.title || (
                                 <span className="invisible-text">
-                                    Mahsulot nomi
+                                    {t('productDetail.fileDetails.productName')}
                                 </span>
                             )}
                         </h1>
@@ -27,7 +29,9 @@ function FileProductsDetails({ product }) {
                                 <span className="m-0 fs-3">
                                     {product?.category?.name || (
                                         <span className="invisible-text">
-                                            Kategoriya nomi
+                                            {t(
+                                                'productDetail.fileDetails.categoryName'
+                                            )}
                                         </span>
                                     )}
                                 </span>

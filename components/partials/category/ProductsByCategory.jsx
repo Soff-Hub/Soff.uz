@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'next-i18next';
 import { Pagination } from 'antd';
 import Link from 'next/link';
 import ProductCard from '~/entities/product/product-card';
@@ -8,6 +9,7 @@ export default function ProductsByCategory({
     page,
     handlePagination,
 }) {
+    const { t } = useTranslation('product-pages');
     return (
         <section className="">
             <div className="row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-gap-2 row-gap-md-5 row-gap-lg-3 mb-5">
@@ -25,19 +27,15 @@ export default function ProductsByCategory({
                             style={{ paddingInline: '15px' }}>
                             <img
                                 src="/static/img/noinfo.svg"
-                                alt="Ma'lumot topilmadi"
+                                alt={t('productsByCategory.noInfoFound')}
                             />
-                            <h3>😕 Bu yerda hozircha hech narsa yo‘q...</h3>
+                            <h3>{t('productsByCategory.emptyStateTitle')}</h3>
                             <p>
-                                Ammo bu siz uchun ajoyib imkoniyat!
-                                Birinchilardan bo‘lib ushbu kategoriyaga
-                                mahsulot joylashtiring, o‘z auditoriyangizni
-                                yarating va daromad olishni boshlang.
-                                Imkoniyatni qo‘ldan boy bermang!
+                                {t('productsByCategory.emptyStateDescription')}
                             </p>
                             <p>
                                 <Link href="https://seller.soff.uz">
-                                    <a target="_blank">Sotuvchi bo'lish</a>
+                                    <a target="_blank">{t('productsByCategory.becomeSeller')}</a>
                                 </Link>
                             </p>
                         </div>

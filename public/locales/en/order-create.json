@@ -1,0 +1,99 @@
+{
+  "meta": {
+    "title": "Create custom order",
+    "description": "Create a custom order on Soff.uz — find the specialist you need for your project. Write your requirements, receive offers from freelancers and choose the best one."
+  },
+  "videoBanner": {
+    "title": "Don't know how to place an order on SOFF?",
+    "subtitle": "Video guide on how to place an order."
+  },
+  "form": {
+    "title": "Create custom order",
+    "direction": {
+      "label": "Select direction",
+      "placeholder": "Select direction",
+      "required": "Please select a direction!",
+      "infoTitle": "Information about selecting direction",
+      "info": "Select order direction:",
+      "infoPoint1": "Choose a direction that matches your order, this will help you find specialists that match your requirements.",
+      "infoPoint2": "Each direction has a group of specialists specialized in its field, so choosing the most suitable option based on your project characteristics is important.",
+      "infoPoint3": "Choosing the right direction ensures quality and timely completion of your order."
+    },
+    "category": {
+      "label": "Select category",
+      "placeholder": "Presentation, Course work, etc.",
+      "required": "Please select a category!",
+      "info": "Please select one of the following categories to properly direct your order. Each category corresponds to a specific type of service, so your choice plays an important role in finding the specialist you are looking for.",
+      "infoTitle": "Select category",
+      "infoPoint1": "Select from the list of available categories for each direction.",
+      "infoPoint2": "Choosing the right category helps direct your order to the right specialist."
+    },
+    "description": {
+      "label": "Enter order description",
+      "placeholder": "- Order topic or direction\n- Required volume (pages, words, slides, etc.)\n- Main requirements or plan\n- What format is needed (Word, PDF, PPT, etc.)\n- etc.",
+      "required": "Please write the order description!",
+      "info": "Please write your order topic and requirements clearly and understandably. This helps the executor complete the work quickly and correctly.",
+      "infoTitle": "Order details",
+      "infoPoint1": "Write the main requirements of your order clearly.",
+      "infoPoint2": "Provide information about important details, deadlines and budget.",
+      "infoPoint3": "If possible, share your previous work or samples."
+    },
+    "fileUpload": {
+      "button": "Upload file (optional)",
+      "maxSizeError": "File cannot be larger than 50 MB"
+    },
+    "language": {
+      "label": "Order language",
+      "placeholder": "In which language would you like it to be prepared?",
+      "required": "Please select the execution language!",
+      "infoTitle": "Order language",
+      "info": "Select the order execution language:",
+      "infoPoint1": "Choose one of Uzbek, Russian or English languages.",
+      "infoPoint2": "The selected language will be used for order text and communication.",
+      "options": {
+        "uzb": "Uzbek",
+        "rus": "Russian",
+        "eng": "English"
+      }
+    },
+    "budget": {
+      "label": "Enter your budget",
+      "placeholder": "50 000",
+      "required": "Please enter the price!",
+      "info": "Please write the budget you want to allocate for this work in soums.",
+      "infoTitle": "Budget",
+      "infoText": "Budget advice:",
+      "infoPoint1": "Set your budget realistically, this will attract suitable specialists.",
+      "infoPoint2": "If your budget is limited, be open about it and discuss with specialists."
+    },
+    "deadline": {
+      "label": "Set order completion deadline",
+      "datePlaceholder": "Select order completion date and time",
+      "timePlaceholder": "Time",
+      "required": "Please select delivery date and time!",
+      "infoTitle": "Order deadline",
+      "info": "Order deadline advice:",
+      "infoPoint1": "Set your deadline realistically, this will ensure quality work.",
+      "infoPoint2": "If the order needs to be completed faster, discuss this with the specialist in advance."
+    },
+    "submit": {
+      "loading": "Your order is being placed...",
+      "text": "Place order"
+    }
+  },
+  "modal": {
+    "confirmTitle": "Confirm order",
+    "confirmQuestion": "Do you confirm placing the order?",
+    "confirmButton": "Make payment",
+    "point1": "After creating the order, you will make 💳 payment",
+    "point2": "Qualified freelancers on our platform will present you with their offers with price and description",
+    "point3": "You will choose the freelancer that best suits you among them and start cooperation with them"
+  },
+  "messages": {
+    "success": "Order created successfully!",
+    "directOrderSuccess": "Order sent successfully!",
+    "unknownError": "An unknown error occurred"
+  },
+  "titleDescription": "Service needed for {{direction}}."
+}
+

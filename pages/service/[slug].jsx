@@ -1,4 +1,5 @@
 import React from 'react';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import PageContainer from '~/widgets/layouts/PageContainer';
 import ServiceDetail from '~/features/freelancers/services/service-deatail/ServiceDetail';
 import axiosInstance from '~/shared/api/freeleanceApi';
@@ -20,10 +21,18 @@ export async function getServerSideProps(context) {
             `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/customer/${slug}/`
         );
 
+        const { locale } = context;
         return {
             props: {
                 data,
                 status,
+                ...(await serverSideTranslations(locale, [
+                    'orders',
+                    'header',
+                    'footer',
+                    'common',
+                    'modals',
+                ])),
             },
         };
     } catch (error) {
@@ -33,10 +42,18 @@ export async function getServerSideProps(context) {
             return { notFound: true };
         }
 
+        const { locale } = context;
         return {
             props: {
                 data: null,
                 status: errStatus || 500,
+                ...(await serverSideTranslations(locale, [
+                    'orders',
+                    'header',
+                    'footer',
+                    'common',
+                    'modals',
+                ])),
             },
         };
     }

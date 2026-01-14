@@ -1,11 +1,11 @@
-export const accountLinks = [
+export const getAccountLinks = (t: (key: string) => string) => [
     {
-        text: 'Sotib olinganlar',
+        text: t('purchasedItems'),
         url: '/account/sellerproducts',
         icon: 'fa-solid fa-bag-shopping',
     },
     {
-        text: 'Buyurtmalarim',
+        text: t('myOrders'),
         url: '/order/my-orders',
         icon: 'fas fa-truck',
     },

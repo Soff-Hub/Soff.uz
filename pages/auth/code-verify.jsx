@@ -3,34 +3,53 @@ import Meta from '~/shared/ui/meta';
 import BreadCrumb from '~/shared/ui/breadcrumb';
 import PageContainer from '~/widgets/layouts/PageContainer';
 import CodeVerifyForm from '~/features/account/ui/auth/CodeVerifyForm';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const CodeVerifyPage = () => {
+    const { t } = useTranslation('code-verify');
+
     const breadCrumb = [
         {
-            text: 'Asosiy sahifa',
+            text: t('breadcrumb.home'),
             url: '/',
         },
         {
-            text: 'Kirish',
+            text: t('breadcrumb.login'),
             url: '/auth/login',
         },
         {
-            text: 'Tasdiqlash',
+            text: t('breadcrumb.verify'),
         },
     ];
 
+    const metaTitle = t('meta.title');
+    const metaDescription = t('meta.description');
+
     return (
-        <PageContainer>
+        <PageContainer title={metaTitle}>
             <div className="ps-page--my-account">
-                <Meta
-                    title={"Ro'yxatdan o'tish"}
-                    description="Soff.uz platformasida ro‘yxatdan o‘ting va frilans xizmatlaridan foydalaning. Ish toping, buyurtma bering yoki o‘z xizmatlaringizni taklif qiling — barchasi bitta joyda."
-                />
+                <Meta title={metaTitle} description={metaDescription} />
                 <BreadCrumb breacrumb={breadCrumb} />
                 <CodeVerifyForm />
             </div>
         </PageContainer>
     );
 };
+
+export async function getServerSideProps({ locale }) {
+    return {
+        props: {
+            ...(await serverSideTranslations(locale, [
+                'header',
+                'footer',
+                'login',
+                'common',
+                'code-verify',
+                'modals',
+            ])),
+        },
+    };
+}
 
 export default CodeVerifyPage;

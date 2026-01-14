@@ -8,6 +8,7 @@ import { cn } from '~/shared/utilities/cn';
 import styles from '@/widgets/header/HeaderActions/header-actions.module.scss';
 import ProductOnCart from '~/entities/product/ui/ProductOnCart';
 import { addPeriodToThousands } from '~/features/account/ui/price-formatter';
+import { useTranslation } from 'react-i18next';
 
 const flexStyle = {
     display: 'flex',
@@ -27,11 +28,10 @@ const fullWidthStyle = {
 const MiniCart = () => {
     const state = useSelector((state) => state.auth.user);
     const data = useSelector((state) => state.ecomerce.cartDataItems);
-
+    const { t } = useTranslation('header');
     const amount = calculateAmount(data);
     const hisob = addPeriodToThousands(amount);
 
-    // Popover content for cart items
     const cartContent =
         data && data.length > 0 ? (
             <div className={'ps-basket__content'}>
@@ -42,51 +42,43 @@ const MiniCart = () => {
                 </div>
                 <div className="ps-basket__content__footer">
                     <h3>
-                        Jami:
+                        {t('total')}:{' '}
                         <strong
                             style={{
                                 fontWeight: 'bold',
                             }}>
-                            {hisob ? hisob : 0} so'm
+                            {hisob ? hisob : 0} {t('som')}
                         </strong>
                     </h3>
-                    <div
-                        // className="ps-basket__content__footer__figure"
-                        style={flexStyle}>
+                    <div style={flexStyle}>
                         <Link href="/account/shopping-cart">
-                            <a
-                                // className="ps-basket__content__footer__figure__btn--secondary"
-                                style={flexItemStyle}>
+                            <a style={flexItemStyle}>
                                 <Button size="large" style={fullWidthStyle}>
-                                    Savat
+                                    {t('basket')}
                                 </Button>
                             </a>
                         </Link>
                         {state !== null ? (
                             <Link href="/account/checkout">
-                                <a
-                                    // className="ps-basket__content__footer__figure__btn--primary"
-                                    style={flexItemStyle}>
+                                <a style={flexItemStyle}>
                                     <Button
                                         size="large"
                                         variant="filled"
                                         type="primary"
                                         style={fullWidthStyle}>
-                                        Sotib olish
+                                        {t('purchase')}
                                     </Button>
                                 </a>
                             </Link>
                         ) : (
                             <Link href="/auth/login?returnUrl=/account/checkout">
-                                <a
-                                    // className="ps-basket__content__footer__figure__btn--primary"
-                                    style={flexItemStyle}>
+                                <a style={flexItemStyle}>
                                     <Button
                                         size="large"
                                         variant="filled"
                                         type="primary"
                                         style={fullWidthStyle}>
-                                        Sotib olish
+                                        {t('purchase')}
                                     </Button>
                                 </a>
                             </Link>
@@ -97,7 +89,7 @@ const MiniCart = () => {
         ) : (
             <div className="ps-cart__content">
                 <div className="ps-cart__items">
-                    <span>Savatda mahsulot yo'q</span>
+                    <span>{t('emptyBasket')}</span>
                 </div>
             </div>
         );

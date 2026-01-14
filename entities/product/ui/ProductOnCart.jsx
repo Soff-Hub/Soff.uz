@@ -5,10 +5,12 @@ import { addPeriodToThousands } from '~/features/account/ui/price-formatter';
 import useCart from '~/shared/hooks/useCart';
 import { Button } from 'antd';
 import { IoIosClose } from 'react-icons/io';
+import { useTranslation } from 'react-i18next';
 
 const ProductOnCart = ({ product }) => {
     const { thumbnailImage, title } = useProduct();
     const { removeCartOneItem } = useCart();
+    const { t } = useTranslation('header');
 
     function handleRemoveItem(e, item) {
         e.preventDefault();
@@ -30,18 +32,19 @@ const ProductOnCart = ({ product }) => {
                         ) : product?.discount === 0 ? (
                             <p className="price">
                                 {addPeriodToThousands(product.discount_price)}{' '}
-                                so'm
+                                {t('som')}
                             </p>
                         ) : (
                             <>
                                 <del>
-                                    {addPeriodToThousands(product?.price)} so'm
+                                    {addPeriodToThousands(product?.price)}{' '}
+                                    {t('som')}
                                 </del>
                                 <p>
                                     {addPeriodToThousands(
                                         product?.discount_price
                                     )}
-                                    so'm
+                                    {t('som')}
                                 </p>
                             </>
                         )}

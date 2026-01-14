@@ -1,0 +1,126 @@
+{
+    "meta": {
+        "defaultTitle": "Order services - Soff.uz",
+        "directionTitle": "{{direction}} - Soff.uz",
+        "directionCategoryTitle": "{{direction}} - {{category}} | Soff.uz",
+        "searchTitle": "Services for \"{{search}}\" query - Soff.uz",
+        "description": "Find services offered by freelancers in the Soff.uz services section. Search for specialists in design, programming, marketing and many other areas.",
+        "freelancers": {
+            "defaultTitle": "Best freelancers and specialists",
+            "titlePrefix": "{{parts}}",
+            "description": "Discover the best freelancers and specialists on the Soff.uz platform, find the perfect specialists for your project.",
+            "directionDescription": "Find the most experienced freelancers in the {{direction}} field on the Soff.uz platform and use their services.",
+            "positionDescription": "Hire qualified freelancers in {{position}}.",
+            "keywordDescription": "Your search results for \"{{keyword}}\"."
+        }
+    },
+    "filter": {
+        "all": "All",
+        "directionPlaceholder": "Direction",
+        "categoryPlaceholder": "Category",
+        "searchPlaceholder": "What service are you looking for"
+    },
+    "steps": {
+        "step1": "Choose a specialist",
+        "step2": "Place an order",
+        "step3": "Make payment",
+        "step4": "Wait and accept the order"
+    },
+    "notFound": {
+        "searchPage": "Unfortunately, what you were looking for was not found. But you can order it.👇",
+        "ordersPage": "Unfortunately, the service you were looking for was not found. But you can order it.👇",
+        "createOrder": "Create order",
+        "productsNotFound": "Unfortunately, what you were looking for was not found. But you can view similar products.",
+        "similarProducts": "Similar products"
+    },
+    "serviceCard": {
+        "details": "Details",
+        "placeOrder": "Place order",
+        "reviews": "reviews",
+        "currency": "UZS",
+        "addToFavorites": "Add to favorites",
+        "serviceImage": "Service image",
+        "userImage": "User image"
+    },
+    "serviceFirstCard": {
+        "title": "Submit your work to freelancers.",
+        "button": "Place order now"
+    },
+    "pagination": {
+        "itemsPerPage": "Items per page",
+        "items": "services"
+    },
+    "serviceDetail": {
+        "blockedFreelancer": "Freelancer temporarily blocked",
+        "blockedDescription": "Unfortunately, this freelancer's services are temporarily blocked. Please try again later or choose another freelancer.",
+        "similarServices": "Similar services",
+        "serviceDescription": {
+            "title": "Service description",
+            "requiredToStart": "Required to start",
+            "templateFile": "Template file for service requirements",
+            "downloadFiles": "Download files",
+            "whatsIncluded": "What's included",
+            "days": "days",
+            "revisions": "revisions",
+            "placeOrder": "Place order (",
+            "currency": "UZS"
+        },
+        "priceBox": {
+            "price": "Price",
+            "delivery": "Delivery",
+            "days": "days",
+            "revisions": "Revisions",
+            "times": "times",
+            "placeOrder": "Place order (",
+            "currency": "UZS"
+        },
+        "moneyBack": {
+            "title": "Money-back guarantee",
+            "description": "If your order is not as expected, we will fully refund your money.",
+            "moreInfo": "More information",
+            "detailedDescription": "Our main goal is customer satisfaction. If the order result is not as expected or not completed at all, you have the right to a full refund. The funds will be returned to your balance and you can withdraw them at any time. So ordering on Soff.uz is 100% safe — if there's no result, your money will be refunded.",
+            "imageAlt": "Money-back guarantee image"
+        },
+        "userBox": {
+            "reviews": "reviews",
+            "lastActive": "Last active:",
+            "notActive": "Not active",
+            "sendMessage": "Send message",
+            "noName": "No Name"
+        },
+        "faqSection": {
+            "title": "Frequently asked questions"
+        },
+        "portfolioSection": {
+            "title": "Portfolio",
+            "portfolios": "portfolios"
+        },
+        "commentSection": {
+            "title": "Reviews",
+            "noComments": "No comments yet",
+            "loadMore": "Show more",
+            "loading": "Loading...",
+            "showing": "of",
+            "shown": "shown"
+        },
+        "stickyBox": {
+            "chat": "Chat",
+            "placeOrder": "Place order (",
+            "currency": "UZS"
+        },
+        "orderModal": {
+            "title": "Make payment for order",
+            "securityMessage": "Your payment is securely stored by the Soff system. Payment to the specialist is made only after you review and approve the work.",
+            "freelancerNeeds": "Send the following for the freelancer to start work:",
+            "orderDetails": "Order details",
+            "additionalInfo": "Additional information about the order (optional)",
+            "fileUpload": "Upload file (optional)",
+            "fileSizeError": "File cannot be larger than 50 MB",
+            "formalizeOrder": "Formalize order",
+            "back": "Back",
+            "useBalance": "Use your balance for payment",
+            "balance": "Balance -",
+            "currency": "UZS"
+        }
+    }
+}

@@ -3,9 +3,11 @@ import { Avatar, Badge, Button } from 'antd';
 import { FaStar, FaRegCommentDots, FaEye } from 'react-icons/fa';
 import { LiaHandshake } from 'react-icons/lia';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
+import { useTranslation } from 'next-i18next';
 import styles from '../style/select-order-drawer.module.scss';
 
 const OfferCard = ({ offer, onSelect, onCreateChat }) => {
+    const { t } = useTranslation('my-orders');
     const [isExpanded, setIsExpanded] = useState(false);
 
     const checkIsOnline = (lastActive) => {
@@ -82,7 +84,7 @@ const OfferCard = ({ offer, onSelect, onCreateChat }) => {
                         ) : null}
                         {fakeFeedbackCount ? (
                             <span className={styles.reviewCount}>
-                                ({fakeFeedbackCount} ta izoh)
+                                ({fakeFeedbackCount} {t('offerCard.reviews')})
                             </span>
                         ) : null}
                     </div>
@@ -107,7 +109,7 @@ const OfferCard = ({ offer, onSelect, onCreateChat }) => {
                                 style={{
                                     marginLeft: isExpanded ? '4px' : '0',
                                 }}>
-                                {isExpanded ? ' Yopish' : ' Batafsil'}
+                                {isExpanded ? ` ${t('offerCard.collapse')}` : ` ${t('offerCard.expand')}`}
                             </button>
                         )}
                     </span>
@@ -122,10 +124,10 @@ const OfferCard = ({ offer, onSelect, onCreateChat }) => {
                                 color: 'rgba(0,0,0,0.6)',
                             }}
                             className="fa-solid fa-sack-dollar"></i>
-                        <span>Taklif narxi:</span>
+                        <span>{t('offerCard.offerPrice')}</span>
                     </div>
                     <span className={styles.priceValue}>
-                        {formatCurrencyWithSpace(offer?.money)} so'm
+                        {formatCurrencyWithSpace(offer?.money)} {t('balance.currency')}
                     </span>
                 </div>
                 <div className={styles.actionButtons}>
@@ -135,7 +137,7 @@ const OfferCard = ({ offer, onSelect, onCreateChat }) => {
                         }
                         className={styles.chatButton}>
                         <FaRegCommentDots className={styles.chatIcon} />
-                        Chat
+                        {t('offerCard.chat')}
                     </Button>
                     <Button
                         onClick={() => onSelect(offer)}
@@ -145,7 +147,7 @@ const OfferCard = ({ offer, onSelect, onCreateChat }) => {
                             className={styles.selectIcon}
                             fontSize={18}
                         />
-                        Tanlash
+                        {t('offerCard.select')}
                     </Button>
                 </div>
             </div>

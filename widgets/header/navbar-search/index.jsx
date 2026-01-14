@@ -4,6 +4,7 @@ import { Select, Input } from 'antd';
 import styles from './style.module.scss';
 import { useState } from 'react';
 import SearchModal from '~/shared/components/modals/search-modal/SearchModal';
+import { useTranslation } from 'react-i18next';
 
 const { Option } = Select;
 
@@ -11,6 +12,7 @@ const NavbarSearch = () => {
     const location = useRouter().pathname;
     const [type, setType] = useState('mahsulotlar');
     const [openSearchModal, setOpenSearchModal] = useState(false);
+    const { t } = useTranslation('header');
 
     if (location === '/') {
         return null;
@@ -30,23 +32,23 @@ const NavbarSearch = () => {
             <div className={styles.searchBox}>
                 <div className="d-flex w-100">
                     <label htmlFor="search-type" style={{ display: 'none' }}>
-                        Turi
+                        {t('searchType')}
                     </label>
                     <Select
                         id="search-type"
-                        aria-label="Turi"
+                        aria-label={t('searchType')}
                         value={type}
                         onChange={(val) => setType(val)}
                         className={styles.select}
                         bordered={false}>
-                        <Option value="mahsulotlar">Mahsulotlar</Option>
-                        <Option value="xizmatlar">Xizmatlar</Option>
-                        <Option value="mutaxasislar">Mutaxassislar</Option>
+                        <Option value="mahsulotlar">{t('products')}</Option>
+                        <Option value="xizmatlar">{t('services')}</Option>
+                        <Option value="mutaxasislar">{t('specialties')}</Option>
                     </Select>
 
                     <Input
                         className={styles.input}
-                        placeholder={'izlash...'}
+                        placeholder={t('searchPlaceholderMobile')}
                         onPressEnter={handleInputClick}
                         onClick={handleInputClick}
                         readOnly

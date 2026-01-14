@@ -1,10 +1,12 @@
 import Link from 'next/link';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import styles from '~/shared/styles/landingStyles.module.scss';
 import useResponsive from '~/shared/utilities/useResponsive';
 
 const MenuCategoriesDropdown = () => {
     const { isMobile } = useResponsive();
+    const { t } = useTranslation('header');
     return (
         <div className="menu--product-categories">
             <Link href={'https://seller.soff.uz/'} target="_blank">
@@ -16,7 +18,7 @@ const MenuCategoriesDropdown = () => {
                         fontWeight: '500',
                         marginRight: isMobile ? 0 : '5px',
                     }}>
-                    Sotuvchi bo'lish
+                    {t('becomeSeller')}
                 </a>
             </Link>
         </div>

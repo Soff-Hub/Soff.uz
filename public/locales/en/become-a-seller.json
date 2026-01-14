@@ -1,0 +1,33 @@
+{
+    "meta": {
+        "title": "Become a Seller",
+        "description": "Soff.uz - You can definitely register as a seller on our site"
+    },
+    "content": {
+        "title": "Become a Seller",
+        "intro": "Register as a Seller to place your Intellectual Property on Soff Market and earn income! To do this, follow these 5 steps.",
+        "step1": {
+            "title": "1) Go to the registration window",
+            "imageAlt": "soff market main window"
+        },
+        "step2": {
+            "title": "2) Click the \"Seller\" button.",
+            "imageAlt": "soff market admin login window"
+        },
+        "step3": {
+            "title": "3) Fill in the fields, then click the \"Register\" button after reading the terms.",
+            "imageAlt": "soff market registration window"
+        },
+        "step4": {
+            "title": "4) Enter the verification code sent to your number or email in the indicated field, then click the \"Submit\" button.",
+            "note": "If the code has not arrived in your email, please check your \"Spam\" folder.",
+            "imageAlt": "soff market code verification window"
+        },
+        "step5": {
+            "title": "5) You have successfully registered! Congratulations! :)",
+            "imageAlt": "soff market admin window"
+        }
+    }
+}
+
+

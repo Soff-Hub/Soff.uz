@@ -10,8 +10,9 @@ import Link from 'next/link';
 import useOrdersStatus from '~/features/freelancers/myorders/myorder/api/useOrderStatus';
 import { IoSearch } from 'react-icons/io5';
 import SearchModal from '~/shared/components/modals/search-modal/SearchModal';
+import { useTranslation } from 'react-i18next';
 
-const products = [
+const getProducts = (t) => [
     {
         key: '1',
         icon: (
@@ -26,7 +27,7 @@ const products = [
             <a
                 className={`ms-3 ${styles.dropLabel}`}
                 href="/scientific-resources/all?slug=all">
-                Ilmiy ishlar
+                {t('scientificWorks')}
             </a>
         ),
     },
@@ -36,7 +37,7 @@ const products = [
             <a
                 className={`ms-3 ${styles.dropLabel}`}
                 href="/3d-models-and-interior-designs/all?slug=all">
-                3D Dizayn va Vizualizatsiya
+                {t('design3D')}
             </a>
         ),
         icon: (
@@ -54,7 +55,7 @@ const products = [
             <a
                 className={`ms-3 ${styles.dropLabel}`}
                 href="/design-developments/all?slug=all">
-                Dizayn shablonlari
+                {t('designTemplates')}
             </a>
         ),
         icon: (
@@ -80,7 +81,7 @@ const products = [
             <a
                 className={`ms-2 ${styles.dropLabel}`}
                 href="/templates/all?slug=all">
-                Turli sohalar uchun shablonlar
+                {t('templatesForVariousFields')}
             </a>
         ),
     },
@@ -98,7 +99,7 @@ const products = [
             <a
                 className={`ms-3 ${styles.dropLabel}`}
                 href="/video-lessons/all?slug=all">
-                Video darsliklar
+                {t('videoLessons')}
             </a>
         ),
     },
@@ -116,7 +117,7 @@ const products = [
             <a
                 className={`ms-3 ${styles.dropLabel}`}
                 href="/websites/all?slug=all">
-                Dasturlash xizmatlari
+                {t('programmingServices')}
             </a>
         ),
     },
@@ -146,10 +147,13 @@ const HeaderCatergories = () => {
     const { isLoggedIn } = useSelector((state) => state.auth);
     const { push, query, replace, pathname } = useRouter();
     const { data } = useOrdersStatus();
+    const { t } = useTranslation('header');
 
     const totalOrders = data
         ? (data.pending || 0) + (data.requirement_process || 0)
         : 0;
+
+    const products = getProducts(t);
 
     useEffect(() => {
         if (query?.modal === 'open' && isLoggedIn) {
@@ -174,7 +178,7 @@ const HeaderCatergories = () => {
                             dot={isMobile ? totalOrders > 0 : false}
                             overflowCount={9}
                             offset={isMobile ? [0, 0] : [2, -3]}>
-                            Buyurtmalarim
+                            {t('myOrders')}
                         </Badge>
                     </a>
                 </Link>
@@ -182,14 +186,15 @@ const HeaderCatergories = () => {
             <div className={styles.dropBox}>
                 <Dropdown menu={{ items: products }}>
                     <Space className={styles.dropLabel}>
-                        Mahsulotlar
+                        {t('products')}
                         <DownOutlined />
                     </Space>
                 </Dropdown>
             </div>
+
             <div className={`${styles.orderBox} `}>
                 <Link href="/order/create">
-                    <a className={styles.dropLabel}>Buyurtma berish</a>
+                    <a className={styles.dropLabel}>{t('createOrder')}</a>
                 </Link>
             </div>
         </div>
@@ -198,6 +203,7 @@ const HeaderCatergories = () => {
 
 export const HeaderSearch = () => {
     const [openSearch, setOpenSearch] = useState(false);
+    const { t } = useTranslation('header');
 
     const onClose = () => {
         setOpenSearch(false);
@@ -241,7 +247,7 @@ export const HeaderSearch = () => {
                         flex: 1,
                         textAlign: 'left',
                     }}>
-                    Qidiruv...
+                    {t('searchPlaceholder')}
                 </span>
                 <div
                     style={{

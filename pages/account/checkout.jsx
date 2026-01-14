@@ -2,15 +2,16 @@ import React from 'react';
 import Checkout from '~/features/account/ui/Checkout';
 import PageContainer from '~/widgets/layouts/PageContainer';
 import Meta from '~/shared/ui/meta';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const CheckoutPage = () => {
+    const { t } = useTranslation('account');
     return (
         <PageContainer>
             <Meta
-                title={'Xarid savati'}
-                description={
-                    'Xaridni yakunlash va xizmatlardan foydalanish uchun Soff.uz xarid savatiga tashrif buyuring — qulay, tez va xavfsiz to‘lov tizimi.'
-                }
+                title={t('checkout.title')}
+                description={t('checkout.description')}
             />
             <div className="ps-page--simple">
                 <Checkout />
@@ -18,5 +19,19 @@ const CheckoutPage = () => {
         </PageContainer>
     );
 };
+
+export async function getServerSideProps({ locale }) {
+    return {
+        props: {
+            ...(await serverSideTranslations(locale, [
+                'header',
+                'footer',
+                'common',
+                'account',
+                'modals',
+            ])),
+        },
+    };
+}
 
 export default CheckoutPage;

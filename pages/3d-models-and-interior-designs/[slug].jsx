@@ -1,5 +1,7 @@
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import PageContainer from '~/widgets/layouts/PageContainer';
 import Meta from '~/shared/ui/meta';
 import { baseUrlUseApi } from '~/repositories/useApi';
@@ -9,7 +11,6 @@ import ProductFilterSection, {
 import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
 
 const type = '3d';
-const defaultTitle = '3D moddellar va Interier dizaynlar';
 
 export default function ModelsAndInteriorDesign({
     productsData,
@@ -19,6 +20,7 @@ export default function ModelsAndInteriorDesign({
     childCategory,
     page,
 }) {
+    const { t } = useTranslation('product-pages');
     const router = useRouter();
     const handlePageChange = (newPage) => {
         router.push({
@@ -35,14 +37,12 @@ export default function ModelsAndInteriorDesign({
 
     const fullTitle = title && subTitle ? `${title} - ${subTitle}` : title;
 
+    const defaultTitle = t('titles.3dModels');
     const finalTitle = fullTitle || defaultTitle;
 
     return (
         <PageContainer>
-            <Meta
-                title={finalTitle}
-                description={`3D moddellar va Interier dizaynlar kategoriyasi: Taqdimotlar Tayyor shablonlar Kurs ishlari Diplom ishlari Referatlar Mustaqil ishlar Labaratoriya Ishlari Dissertatsiya ishlari Testlar O'quv qo'llanmalar Dars ishlanmalar Tarqatma materiallar Amaliy ishlar Blankalar Ijodiy Ishlar Loyihalar Plakatlar Maqola Ixtiro patenti Namunaviy hujjatlar Statistika Elektron kitoblar Dasturlash tillari `}
-            />
+            <Meta title={finalTitle} description={t('meta.3dDescription')} />
 
             <ProductFilterSection
                 title={fullTitle}
@@ -65,6 +65,7 @@ export default function ModelsAndInteriorDesign({
 }
 
 export async function getServerSideProps(context) {
+    const { locale } = context;
     const {
         page = 1,
         parentCategory = '',
@@ -106,6 +107,13 @@ export async function getServerSideProps(context) {
 
     return {
         props: {
+            ...(await serverSideTranslations(locale, [
+                'header',
+                'footer',
+                'common',
+                'product-pages',
+                'modals',
+            ])),
             productsData: productsData || null,
             fourChildData: fourChildData || null,
             childCategoryData: childCategoryData || null,

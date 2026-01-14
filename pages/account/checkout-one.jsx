@@ -3,15 +3,18 @@ import BreadCrumb from '~/shared/ui/breadcrumb';
 import PageContainer from '~/widgets/layouts/PageContainer';
 import CheckoutOne from '~/features/account/ui/Chekout-one';
 import Meta from '~/shared/ui/meta';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const CheckoutOnePage = () => {
+    const { t } = useTranslation('account');
     const breadCrumb = [
         {
-            text: 'Asosiy sahifa',
+            text: t('breadcrumbs.home'),
             url: '/',
         },
         {
-            text: 'Xarid savati',
+            text: t('breadcrumbs.cart'),
         },
     ];
 
@@ -19,10 +22,8 @@ const CheckoutOnePage = () => {
         <PageContainer>
             <div className="ps-page--simple">
                 <Meta
-                    title={'Xarid savati'}
-                    description={
-                        'Xaridni yakunlash va xizmatlardan foydalanish uchun Soff.uz xarid savatiga tashrif buyuring — qulay, tez va xavfsiz to‘lov tizimi. '
-                    }
+                    title={t('checkout.title')}
+                    description={t('checkout.description')}
                 />
                 <BreadCrumb breacrumb={breadCrumb} />
                 <CheckoutOne />
@@ -30,5 +31,19 @@ const CheckoutOnePage = () => {
         </PageContainer>
     );
 };
+
+export async function getServerSideProps({ locale }) {
+    return {
+        props: {
+            ...(await serverSideTranslations(locale, [
+                'header',
+                'footer',
+                'common',
+                'account',
+                'modals',
+            ])),
+        },
+    };
+}
 
 export default CheckoutOnePage;

@@ -4,6 +4,7 @@ import UserProfile from '~/features/user-profile';
 import { d_base_url } from '~/shared/api/base-url';
 import fetchJson from '~/shared/api/fetch-json';
 import PageContainer from '~/widgets/layouts/PageContainer';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const SellerPage = ({ seller }) => {
     return (
@@ -21,10 +22,9 @@ const SellerPage = ({ seller }) => {
     );
 };
 
-export default SellerPage;
-
 export async function getServerSideProps(context) {
     const { pid } = context.params;
+    const { locale } = context;
 
     try {
         const url = `${d_base_url}/auth/freelance-profile/${pid}/`;
@@ -37,6 +37,13 @@ export async function getServerSideProps(context) {
         return {
             props: {
                 seller: res,
+                ...(await serverSideTranslations(locale || 'uz', [
+                    'header',
+                    'footer',
+                    'common',
+                    'seller',
+                    'modals',
+                ])),
             },
         };
     } catch (error) {
@@ -46,3 +53,5 @@ export async function getServerSideProps(context) {
         };
     }
 }
+
+export default SellerPage;

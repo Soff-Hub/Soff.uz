@@ -2,10 +2,12 @@ import React from 'react';
 import { useConversation } from './Conversation';
 import { Card } from 'antd';
 import { CloudUploadOutlined } from '@ant-design/icons';
+import { useTranslation } from 'next-i18next';
 
 type ChatDropOverlayProps = {};
 
 function ChatDropOverlay({}: ChatDropOverlayProps) {
+    const { t } = useTranslation('chat');
     const { isDragging } = useConversation();
 
     if (!isDragging) return null;
@@ -40,9 +42,11 @@ function ChatDropOverlay({}: ChatDropOverlayProps) {
                         marginBottom: '16px',
                     }}
                 />
-                <h3 style={{ margin: 0, color: '#1890ff' }}>Faylni yuklash</h3>
+                <h3 style={{ margin: 0, color: '#1890ff' }}>
+                    {t('dropOverlay.title')}
+                </h3>
                 <p style={{ margin: '8px 0 0 0', color: '#666' }}>
-                    Faylni bu yerga tashlang
+                    {t('dropOverlay.description')}
                 </p>
             </Card>
         </div>

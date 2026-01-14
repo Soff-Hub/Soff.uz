@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'next-i18next';
 import styles from '../styles/detail.module.scss';
 import { Button } from 'antd';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
@@ -8,6 +9,7 @@ import ServiceOrderModal from './ServiceOrderModal';
 import { sleep } from '~/shared/utilities/sleep';
 
 const PriceBox = ({ priceBox, requirements }) => {
+    const { t } = useTranslation('orders');
     const { price, days, revisions, user } = priceBox;
     const isBlocked = user[0]?.is_blocked;
     const [isOpen, setIsOpen] = useState(false);
@@ -57,10 +59,10 @@ const PriceBox = ({ priceBox, requirements }) => {
                 <div className={styles.infoRow}>
                     <div className={styles.key}>
                         <i className="fa-solid fa-money-bill-wave"></i>
-                        <span>Narx</span>
+                        <span>{t('serviceDetail.priceBox.price')}</span>
                     </div>
                     <div className={styles.value}>
-                        {formatCurrencyWithSpace(price)} so'm
+                        {formatCurrencyWithSpace(price)} {t('serviceDetail.priceBox.currency')}
                     </div>
                 </div>
 
@@ -68,18 +70,18 @@ const PriceBox = ({ priceBox, requirements }) => {
                 <div className={styles.infoRow}>
                     <div className={styles.key}>
                         <i className="fa-solid fa-clock"></i>
-                        <span>Yetkazish</span>
+                        <span>{t('serviceDetail.priceBox.delivery')}</span>
                     </div>
-                    <div className={styles.value}>{days} kunda</div>
+                    <div className={styles.value}>{days} {t('serviceDetail.priceBox.days')}</div>
                 </div>
 
                 {/* --- Tahrirlash --- */}
                 <div className={styles.infoRow}>
                     <div className={styles.key}>
                         <i className="fa-solid fa-pen-to-square"></i>
-                        <span>Tahrirlash</span>
+                        <span>{t('serviceDetail.priceBox.revisions')}</span>
                     </div>
-                    <div className={styles.value}>{revisions} marta</div>
+                    <div className={styles.value}>{revisions} {t('serviceDetail.priceBox.times')}</div>
                 </div>
             </div>
             <ServiceOrderModal
@@ -97,7 +99,7 @@ const PriceBox = ({ priceBox, requirements }) => {
                         }
                         className={!isBlocked && styles.btn}
                         disabled={isBlocked}>
-                        Buyurtma berish ({formatCurrencyWithSpace(price)} so'm)
+                        {t('serviceDetail.priceBox.placeOrder')}{formatCurrencyWithSpace(price)} {t('serviceDetail.priceBox.currency')})
                     </Button>
                 )}
             </ServiceOrderModal>

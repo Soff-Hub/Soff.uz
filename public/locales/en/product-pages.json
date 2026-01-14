@@ -1,0 +1,163 @@
+{
+    "titles": {
+        "3dModels": "3D Models and Interior Designs",
+        "designDevelopments": "Design Templates",
+        "scientificResources": "Scientific Works Category",
+        "templates": "Ready Templates",
+        "videoLessons": "Video Lessons",
+        "websites": "Websites"
+    },
+    "meta": {
+        "defaultDescription": "We found the products you are looking for in the Soff.uz category",
+        "3dDescription": "3D Models and Interior Designs category: Presentations Ready Templates Course Works Diploma Works Abstracts Independent Works Laboratory Works Dissertation Works Tests Educational Manuals Lesson Developments Handout Materials Practical Works Forms Creative Works Projects Posters Articles Invention Patents Sample Documents Statistics Electronic Books Programming Languages",
+        "scientificDescription": " Find the best digital products on Soff.uz. Trusted sellers and quality content!"
+    },
+    "howItWorks": {
+        "title": "How does using ready-made products work?",
+        "steps": {
+            "search": {
+                "title": "Search and select",
+                "description": "Find the ready-made product you need through the catalog or search."
+            },
+            "purchase": {
+                "title": "Purchase",
+                "description": "Purchase the product through a secure payment system — prices and terms are visible in advance."
+            },
+            "download": {
+                "title": "Download and use",
+                "description": "Download the product immediately and start using it."
+            }
+        }
+    },
+    "grayCard": {
+        "title": "Couldn't find the product you need? You can place an order.",
+        "button": "Place an order"
+    },
+    "filter": {
+        "allProducts": "All products",
+        "searchPlaceholder": "What product are you looking for?",
+        "openFilters": "Open filters",
+        "category": "Category",
+        "selectCategory": "Select category",
+        "subCategory": "Sub category",
+        "selectSubCategory": "Select sub category",
+        "fileTypes": "File types",
+        "priceRange": "Price range",
+        "pageRange": "Page range",
+        "page": "page",
+        "pages": "pages",
+        "clearFilter": "Clear filter",
+        "applyFilter": "Apply filter",
+        "currency": "UZS"
+    },
+    "productsByCategory": {
+        "noInfoFound": "No information found",
+        "emptyStateTitle": "😕 There's nothing here yet...",
+        "emptyStateDescription": "But this is a great opportunity for you! Be among the first to place products in this category, build your audience and start earning. Don't miss the opportunity!",
+        "becomeSeller": "Become a seller"
+    },
+    "productCard": {
+        "free": "Free",
+        "currency": "UZS",
+        "cardImage": "Product image",
+        "icon": "Icon",
+        "modal": {
+            "title": "Success",
+            "message": "You added the product to cart!",
+            "goToCart": "Go to cart",
+            "continueShopping": "Continue shopping"
+        }
+    },
+    "productDetail": {
+        "notFound": "Product not found",
+        "videoBanner": {
+            "title": "Don't know how to shop on SOFF?",
+            "subtitle": "About 1 minute video: shows how to buy a product."
+        },
+        "joyride": {
+            "step1": "Part of the product is located here.",
+            "step2": "Here is the price and purchase button. Click to buy.",
+            "back": "Previous",
+            "last": "Got it",
+            "close": "Close",
+            "next": "Next",
+            "open": "Open",
+            "skip": "I know"
+        },
+        "headings": {
+            "similarProducts": "Similar products",
+            "lastAddedProducts": "Last added products"
+        },
+        "fileActions": {
+            "free": "Free",
+            "currency": "UZS",
+            "soldCount": "Number of products sold:",
+            "countUnit": "items",
+            "videoDuration": "Video duration:",
+            "pageCount": "Number of pages:",
+            "fileSize": "File size:",
+            "fileType": "File type:",
+            "style": "Style:",
+            "height": "Height:",
+            "width": "Width:",
+            "length": "Length:",
+            "color": "Color:",
+            "materials": "Materials:",
+            "shape": "Shape:",
+            "render": "Render:",
+            "platform": "Platform:",
+            "addToCart": "Add to cart",
+            "addToWishlist": "Add to wishlist",
+            "download": "Download",
+            "buyNow": "Buy now (",
+            "copySuccess": "Copied",
+            "copyError": "Failed to copy",
+            "videoIdNotFound": "Video ID not found.",
+            "scrollUp": "Scroll up",
+            "scrollDown": "Scroll down",
+            "sellerImage": "Seller image"
+        },
+        "description": {
+            "title": "Product description",
+            "noDescription": "No detailed information",
+            "noDescriptionText": "The author has not yet added a description for this product."
+        },
+        "sellerProfile": {
+            "author": "Author:",
+            "totalProducts": "Total number of products:",
+            "soldProducts": "Number of products sold:",
+            "countUnit": "items",
+            "sellerImage": "Seller profile"
+        },
+        "similarProducts": {
+            "notFound": "Similar products not found",
+            "noInfoAlt": "No detailed information"
+        },
+        "lastAddedProducts": {
+            "notFound": "Last added products not found",
+            "noInfoAlt": "No detailed information"
+        },
+        "fileImagesScroll": {
+            "copyrightViolation": "Copyright violation",
+            "report": "report it!",
+            "sellerImage": "Seller image"
+        },
+        "videoDetails": {
+            "copyrightViolation": "Copyright violation",
+            "report": "report it!"
+        },
+        "fileDetails": {
+            "productName": "Product name",
+            "categoryName": "Category name"
+        },
+        "aiSoffia": {
+            "title": "Create presentation with AI",
+            "description": "Leave presentation preparation to the smart bot – fast, convenient and efficient.",
+            "button": "Get started",
+            "notFound": {
+                "alt": "Information not found",
+                "message": "No information found for your query..."
+            }
+        }
+    }
+}

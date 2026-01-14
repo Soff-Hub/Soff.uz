@@ -6,19 +6,22 @@ import PageContainer from '~/widgets/layouts/PageContainer';
 import LoginForm from '~/features/account/ui/auth/LoginForm';
 import { useRouter } from 'next/router';
 import { message } from 'antd';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const RegisterPage = () => {
     const { user } = useSelector((state) => state.auth);
     const router = useRouter();
     const isAlreadyPrinted = useRef(false);
+    const { t } = useTranslation('login');
 
     const breadCrumb = [
         {
-            text: 'Asosiy sahifa',
+            text: t('breadcrumb.home'),
             url: '/',
         },
         {
-            text: 'Kirish',
+            text: t('breadcrumb.login'),
         },
     ];
 
@@ -26,22 +29,36 @@ const RegisterPage = () => {
         if (user && !isAlreadyPrinted.current) {
             isAlreadyPrinted.current = true;
             router.replace('/');
-            message.success('Siz allaqachon tizimga kirgansiz');
+            message.success(t('alreadyLoggedIn'));
         }
-    }, [user]);
+    }, [user, t, router]);
+
+    const metaTitle = t('meta.title');
+    const metaDescription = t('meta.description');
 
     return (
-        <PageContainer title="Ro'yxatdan o'tish">
+        <PageContainer title={metaTitle}>
             <div className="ps-page--my-account">
-                <Meta
-                    title={"Ro'yxatdan o'tish"}
-                    description="Soff.uz platformasida ro‘yxatdan o‘ting va frilans xizmatlaridan foydalaning. Ish toping, buyurtma bering yoki o‘z xizmatlaringizni taklif qiling — barchasi bitta joyda."
-                />
+                <Meta title={metaTitle} description={metaDescription} />
                 <BreadCrumb breacrumb={breadCrumb} />
                 <LoginForm />
             </div>
         </PageContainer>
     );
 };
+
+export async function getServerSideProps({ locale }) {
+    return {
+        props: {
+            ...(await serverSideTranslations(locale, [
+                'header',
+                'footer',
+                'common',
+                'login',
+                'modals',
+            ])),
+        },
+    };
+}
 
 export default RegisterPage;

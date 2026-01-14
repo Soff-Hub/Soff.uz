@@ -6,6 +6,7 @@ import Loader from '~/shared/components/loader';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { Button } from 'antd';
+import { useTranslation } from 'next-i18next';
 
 export const EmptyTab = ({ description }) => {
     return (
@@ -27,6 +28,7 @@ export const EmptyTab = ({ description }) => {
 };
 
 const MyOrderTabs = () => {
+    const { t } = useTranslation('my-orders');
     const [activeKey, setActiveKey] = useState('0');
     const { data, isLoading } = useOrdersStatus({ activeclyFetch: true });
     const { query, push, replace } = useRouter();
@@ -52,49 +54,55 @@ const MyOrderTabs = () => {
     const items = [
         {
             key: '0',
-            label: `Barchasi ${totalOrders}`,
+            label: `${t('tabs.all')} ${totalOrders}`,
             children: totalOrders && <AllOrdersTable type={null} />,
         },
         {
             key: '1',
-            label: `Yangi ${data?.pending || 0}`,
+            label: `${t('tabs.new')} ${data?.pending || 0}`,
             children:
                 data?.pending > 0 ? (
                     <AllOrdersTable type={['pending']} />
                 ) : (
-                    <EmptyTab description="Sizda yangi buyurtmalar mavjud emas" />
+                    <EmptyTab description={t('emptyStates.noNewOrders')} />
                 ),
         },
         {
             key: '2',
-            label: `Jarayonda ${data?.requirement_process || 0}`,
+            label: `${t('tabs.inProcess')} ${data?.requirement_process || 0}`,
             children:
                 data?.requirement_process > 0 ? (
                     <AllOrdersTable
                         type={['order_accepted', 'order_file_sent', 'rejected']}
                     />
                 ) : (
-                    <EmptyTab description="Sizda jarayondagi buyurtmalar mavjud emas" />
+                    <EmptyTab
+                        description={t('emptyStates.noInProcessOrders')}
+                    />
                 ),
         },
         {
             key: '3',
-            label: `Tugallandi ${data?.completed}`,
+            label: `${t('tabs.completed')} ${data?.completed}`,
             children:
                 data?.completed > 0 ? (
                     <AllOrdersTable type={'completed'} />
                 ) : (
-                    <EmptyTab description="Sizda tugallangan buyurtmalar mavjud emas" />
+                    <EmptyTab
+                        description={t('emptyStates.noCompletedOrders')}
+                    />
                 ),
         },
         {
             key: '4',
-            label: `Bekor qilingan ${data?.cancelled || 0}`,
+            label: `${t('tabs.cancelled')} ${data?.cancelled || 0}`,
             children:
                 data?.cancelled > 0 ? (
                     <AllOrdersTable type={'cancelled'} />
                 ) : (
-                    <EmptyTab description="Sizda bekor qilingan buyurtmalar mavjud emas" />
+                    <EmptyTab
+                        description={t('emptyStates.noCancelledOrders')}
+                    />
                 ),
         },
     ];
@@ -131,7 +139,7 @@ const MyOrderTabs = () => {
                                 color: '#374151',
                                 marginBottom: '8px',
                             }}>
-                            Sizda hozircha buyurtmalar mavjud emas
+                            {t('emptyStates.noOrdersTitle')}
                         </h3>
                         <p
                             style={{
@@ -139,9 +147,7 @@ const MyOrderTabs = () => {
                                 textAlign: 'center',
                                 maxWidth: '448px',
                             }}>
-                            Maxsus buyurtmalar bo'limi orqali siz o'zingizga
-                            kerakli xizmatlarni topishingiz va buyurtma
-                            berishingiz mumkin.
+                            {t('emptyStates.noOrdersDescription')}
                         </p>
                         <Link
                             href="/order/create"
@@ -153,7 +159,7 @@ const MyOrderTabs = () => {
                                     borderRadius: '8px',
                                     padding: '0 24px',
                                 }}>
-                                Maxsus buyurtma yaratish
+                                {t('emptyStates.createCustomOrder')}
                             </Button>
                         </Link>
                     </>

@@ -1,35 +1,53 @@
 {
-  "welcome": "Xush kelibsiz",
-  "title": "Raqamli mahsulotlar va onlayn xizmatlar bozori – Soff.uz",
-  "description": "Soff.uz - Intellektual mulk marketi, Intellektual mahsulotlarini soting va xarid qiling.",
-  "navigation": {
-    "home": "Bosh sahifa",
-    "products": "Mahsulotlar",
-    "services": "Xizmatlar",
-    "about": "Biz haqimizda",
-    "contact": "Aloqa"
-  },
-  "common": {
-    "loading": "Yuklanmoqda...",
-    "error": "Xatolik yuz berdi",
-    "success": "Muvaffaqiyatli",
-    "save": "Saqlash",
-    "cancel": "Bekor qilish",
-    "delete": "O'chirish",
-    "edit": "Tahrirlash",
-    "search": "Qidirish",
-    "filter": "Filtrlash"
-  },
-  "auth": {
-    "login": "Kirish",
-    "logout": "Chiqish",
-    "register": "Ro'yxatdan o'tish",
-    "email": "Email",
-    "password": "Parol"
-  },
-  "messages": {
-    "tokenNotFound": "Token topilmadi. Iltimos, tizimga kiring.",
-    "commentSuccess": "Izoh muvaffaqiyatli yuborildi!",
-    "commentError": "Izoh yuborilmadi."
-  }
+    "welcome": "Xush kelibsiz",
+    "title": "Raqamli mahsulotlar va onlayn xizmatlar bozori – Soff.uz",
+    "description": "Soff.uz - Intellektual mulk marketi, Intellektual mahsulotlarini soting va xarid qiling.",
+    "navigation": {
+        "home": "Bosh sahifa",
+        "products": "Mahsulotlar",
+        "services": "Xizmatlar",
+        "about": "Biz haqimizda",
+        "contact": "Aloqa"
+    },
+    "common": {
+        "loading": "Yuklanmoqda...",
+        "error": "Xatolik yuz berdi",
+        "success": "Muvaffaqiyatli",
+        "save": "Saqlash",
+        "cancel": "Bekor qilish",
+        "delete": "O'chirish",
+        "edit": "Tahrirlash",
+        "search": "Qidirish",
+        "filter": "Filtrlash",
+        "unknownTime": "Noma'lum vaqt",
+        "minutesAgo": "{{count}} daqiqa oldin",
+        "hoursMinutesAgo": "{{hours}} soat {{minutes}} daqiqa oldin",
+        "dateTimeFormat": "DD.MM.YYYY HH:mm [da online edi]",
+        "deadlinePassed": "Muddat tugagan",
+        "daysRemaining": "{{count}} kun"
+    },
+    "auth": {
+        "login": "Kirish",
+        "logout": "Chiqish",
+        "register": "Ro'yxatdan o'tish",
+        "email": "Email",
+        "password": "Parol"
+    },
+    "messages": {
+        "tokenNotFound": "Token topilmadi. Iltimos, tizimga kiring.",
+        "commentSuccess": "Izoh muvaffaqiyatli yuborildi!",
+        "commentError": "Izoh yuborilmadi."
+    },
+    "telegramLink": {
+        "howToPlaceOrder": "Qanday buyurtma beraman?",
+        "howToPurchase": "Qanday xarid qilaman?",
+        "chatWithSupport": "Support bilan suhbat",
+        "telegram": "Telegram",
+        "errorCreatingSupportChat": "Support chat yaratishda xatolik:"
+    },
+    "telegramNotification": {
+        "continueViaTelegram": "Telegram orqali davom ettirish",
+        "tooltip": "Buyurtma holati va yangi takliflar haqida telegram bot orqali bildirishnomalarni qabul qilish",
+        "notificationsDisabled": "Bildirishnomalar o'chirildi!"
+    }
 }

@@ -1,0 +1,36 @@
+.languageSwitcher {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    .currentFlag {
+        border-radius: 4px;
+        object-fit: cover;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+}
+
+.menuItem {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 4px 0;
+
+    .flagIcon {
+        border-radius: 3px;
+        object-fit: cover;
+    }
+}
+
+.active {
+    background-color: rgba(0, 164, 79, 0.1);
+    font-weight: 500;
+}

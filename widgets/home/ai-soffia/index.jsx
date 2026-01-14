@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'next-i18next';
 import { Button } from 'antd';
 import {
     soffiaIconSVG2,
@@ -6,6 +7,7 @@ import {
 } from '~/widgets/header/HeaderActions/HeaderAIIcon';
 
 export default function AISoffiaPresentation() {
+    const { t } = useTranslation('product-pages');
     return (
         <div
             style={{
@@ -56,7 +58,7 @@ export default function AISoffiaPresentation() {
                                 color: '#312f30',
                                 fontSize: '18px',
                             }}>
-                            AI yordamida prezentatsiya yarating
+                            {t('productDetail.aiSoffia.title')}
                         </h3>
                         <p
                             className="d-md-block d-none"
@@ -65,8 +67,7 @@ export default function AISoffiaPresentation() {
                                 color: '#312f30a0',
                                 fontSize: '14px',
                             }}>
-                            Prezentatsiya tayyorlashni aqlli botga topshiring –
-                            tez, qulay va samarali.
+                            {t('productDetail.aiSoffia.description')}
                         </p>
                     </a>
                 </div>
@@ -87,7 +88,7 @@ export default function AISoffiaPresentation() {
                             border: 'none',
                             width: '100%',
                         }}>
-                        {soffiaIconSVG3} Boshlash
+                        {soffiaIconSVG3} {t('productDetail.aiSoffia.button')}
                     </Button>
                 </a>
             </div>
@@ -96,6 +97,7 @@ export default function AISoffiaPresentation() {
 }
 
 export const AISoffiaPresentationNotFoundProduct = () => {
+    const { t } = useTranslation('product-pages');
     return (
         <>
             <div className="bg-white p-5 rounded vh-100">
@@ -104,10 +106,10 @@ export const AISoffiaPresentationNotFoundProduct = () => {
                         <img
                             src="/static/img/noinfo.svg"
                             className="mb-5"
-                            alt="Ma'lumot topilmadi"
+                            alt={t('productDetail.aiSoffia.notFound.alt')}
                         />
                         <p className="display-6">
-                            So'rovingiz bo'yicha ma'lumot topilmadi...
+                            {t('productDetail.aiSoffia.notFound.message')}
                         </p>
                     </div>
                     <div
@@ -156,7 +158,7 @@ export const AISoffiaPresentationNotFoundProduct = () => {
                                             color: '#312f30',
                                             fontSize: '18px',
                                         }}>
-                                        AI yordamida prezentatsiya yarating
+                                        {t('productDetail.aiSoffia.title')}
                                     </h3>
                                     <p
                                         style={{
@@ -164,8 +166,9 @@ export const AISoffiaPresentationNotFoundProduct = () => {
                                             color: '#312f30a0',
                                             fontSize: '14px',
                                         }}>
-                                        Prezentatsiya tayyorlashni aqlli botga
-                                        topshiring – tez, qulay va samarali.
+                                        {t(
+                                            'productDetail.aiSoffia.description'
+                                        )}
                                     </p>
                                 </a>
                             </div>

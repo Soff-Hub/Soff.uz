@@ -1,0 +1,21 @@
+{
+    "meta": {
+        "title": "Soff.uz - Результаты поиска",
+        "titleWithKeyword": "\"{{keyword}}\"",
+        "description": "Скачайте нужные цифровые продукты через Soff.uz",
+        "descriptionWithKeyword": "Результаты поиска по запросу \"{{keyword}}\". Скачайте нужные цифровые продукты через Soff.uz"
+    },
+    "tabs": {
+        "products": "Товары",
+        "services": "Услуги",
+        "specialists": "Специалисты"
+    },
+    "input": {
+        "placeholder": "Найдите нужный вам товар...",
+        "clear": "Очистить"
+    },
+    "notFound": {
+        "createOrder": "Создать заказ"
+    }
+}
+

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'next-i18next';
 import { Button, message, Modal } from 'antd';
 import {
     DownloadOutlined,
@@ -47,6 +48,7 @@ export const fileIcons = {
 };
 
 function FileActions({ product }) {
+    const { t } = useTranslation('product-pages');
     const { addSavedItem, wishlist, removeSavedItem } = useWishlist();
     const [open, setOpen] = useState(false);
     const [authModal, setAuthModal] = useState(false);
@@ -91,15 +93,19 @@ function FileActions({ product }) {
 
     // Nusxa olish
     const infoSuccess = (url) => {
-        messageApi.success(`Nusxa ko\'chirildi (${url})`);
+        messageApi.success(
+            `${t('productDetail.fileActions.copySuccess')} (${url})`
+        );
     };
     const infoError = (url) => {
-        messageApi.error(`Nusxa ko\'chirilmadi (${url})`);
+        messageApi.error(
+            `${t('productDetail.fileActions.copyError')} (${url})`
+        );
     };
 
     const copyVideoUrl = () => {
         if (!pid) {
-            infoError('Video ID topilmadi.');
+            infoError(t('productDetail.fileActions.videoIdNotFound'));
             return;
         }
 
@@ -129,13 +135,13 @@ function FileActions({ product }) {
                 <div className="d-flex justify-content-between align-items-center">
                     <div className="price_container">
                         {product?.discount_price === 0 ? (
-                            <h2>Bepul</h2>
+                            <h2>{t('productDetail.fileActions.free')}</h2>
                         ) : product?.discount === 0 ? (
                             <h2>
                                 {addPeriodToThousands(
                                     product?.discount_price || 0
                                 )}{' '}
-                                so'm
+                                {t('productDetail.fileActions.currency')}
                             </h2>
                         ) : (
                             <div className="d-flex gap-3">
@@ -143,11 +149,11 @@ function FileActions({ product }) {
                                     {addPeriodToThousands(
                                         product?.discount_price || 0
                                     )}{' '}
-                                    so'm
+                                    {t('productDetail.fileActions.currency')}
                                 </h2>
                                 <del>
                                     {addPeriodToThousands(product?.price || 0)}{' '}
-                                    so'm
+                                    {t('productDetail.fileActions.currency')}
                                 </del>
                             </div>
                         )}
@@ -168,9 +174,12 @@ function FileActions({ product }) {
                                 <i
                                     className="fas fa-shopping-bag"
                                     style={{ color: '#00a44f' }}></i>{' '}
-                                Mahsulotni sotilgan soni:
+                                {t('productDetail.fileActions.soldCount')}
                             </span>{' '}
-                            <span>{product?.sold_count} ta</span>
+                            <span>
+                                {product?.sold_count}{' '}
+                                {t('productDetail.fileActions.countUnit')}
+                            </span>
                         </li>
                     )}
                     {product?.document?.content_duration && (
@@ -179,7 +188,7 @@ function FileActions({ product }) {
                                 <i
                                     className="fas fa-stopwatch"
                                     style={{ color: '#00a44f' }}></i>{' '}
-                                Video davomiyligi:
+                                {t('productDetail.fileActions.videoDuration')}
                             </span>{' '}
                             <span> {product?.document?.content_duration}</span>
                         </li>
@@ -190,9 +199,12 @@ function FileActions({ product }) {
                                 <i
                                     className="fas fa-copy"
                                     style={{ color: '#00a44f' }}></i>{' '}
-                                Betlar soni:
+                                {t('productDetail.fileActions.pageCount')}
                             </span>{' '}
-                            <span>{product?.document?.page_count} ta</span>
+                            <span>
+                                {product?.document?.page_count}{' '}
+                                {t('productDetail.fileActions.countUnit')}
+                            </span>
                         </li>
                     )}
                     {product?.document?.file_size && (
@@ -202,7 +214,7 @@ function FileActions({ product }) {
                                 <i
                                     className="fas fa-database"
                                     style={{ color: '#00a44f' }}></i>{' '}
-                                Fayl hajmi :
+                                {t('productDetail.fileActions.fileSize')}
                             </span>{' '}
                             <span>{product?.document?.file_size}</span>
                         </li>
@@ -217,7 +229,7 @@ function FileActions({ product }) {
                                         ] || 'fa-file-archive'
                                     }`}
                                     style={{ color: '#00a44f' }}></i>{' '}
-                                Fayl turi:
+                                {t('productDetail.fileActions.fileType')}
                             </span>{' '}
                             <span
                                 style={{
@@ -240,7 +252,7 @@ function FileActions({ product }) {
                                 <i
                                     className="fas fa-cube"
                                     style={{ color: '#00a44f' }}></i>{' '}
-                                Uslub:
+                                {t('productDetail.fileActions.style')}
                             </span>
                             <span>{product.three_d_features.style.name}</span>
                         </li>
@@ -253,7 +265,7 @@ function FileActions({ product }) {
                                     <i
                                         className="fas fa-ruler-vertical"
                                         style={{ color: '#00a44f' }}></i>{' '}
-                                    Balandlik:
+                                    {t('productDetail.fileActions.height')}
                                 </span>
                                 <span>
                                     {product.three_d_features.height_value}{' '}
@@ -269,7 +281,7 @@ function FileActions({ product }) {
                                     <i
                                         className="fas fa-arrows-alt-h"
                                         style={{ color: '#00a44f' }}></i>{' '}
-                                    Eni:
+                                    {t('productDetail.fileActions.width')}
                                 </span>
                                 <span>
                                     {product.three_d_features.width_value}{' '}
@@ -285,7 +297,7 @@ function FileActions({ product }) {
                                     <i
                                         className="fas fa-ruler-horizontal"
                                         style={{ color: '#00a44f' }}></i>{' '}
-                                    Uzunlik:
+                                    {t('productDetail.fileActions.length')}
                                 </span>
                                 <span>
                                     {product.three_d_features.length_value}{' '}
@@ -300,7 +312,7 @@ function FileActions({ product }) {
                                 <i
                                     className="fas fa-palette"
                                     style={{ color: '#00a44f' }}></i>{' '}
-                                Rang:
+                                {t('productDetail.fileActions.color')}
                             </span>
                             <span>
                                 {product.three_d_features.colors.map(
@@ -328,7 +340,7 @@ function FileActions({ product }) {
                                 <i
                                     className="fas fa-layer-group"
                                     style={{ color: '#00a44f' }}></i>{' '}
-                                Materiallar:
+                                {t('productDetail.fileActions.materials')}
                             </span>
                             <span>
                                 {product.three_d_features.materials
@@ -344,7 +356,7 @@ function FileActions({ product }) {
                                 <i
                                     className="fas fa-shapes"
                                     style={{ color: '#00a44f' }}></i>
-                                Shakl:
+                                {t('productDetail.fileActions.shape')}
                             </span>
                             <span>
                                 <img
@@ -365,7 +377,7 @@ function FileActions({ product }) {
                                 <i
                                     className="fas fa-shapes"
                                     style={{ color: '#00a44f' }}></i>
-                                Render:
+                                {t('productDetail.fileActions.render')}
                             </span>
 
                             <div className="d-flex gap-2 flex-wrap">
@@ -403,7 +415,7 @@ function FileActions({ product }) {
                                 <i
                                     className="fas fa-cube"
                                     style={{ color: '#00a44f' }}></i>
-                                Platforma:
+                                {t('productDetail.fileActions.platform')}
                             </span>
                             <span>{product.three_d_features.platform}</span>
                         </li>
@@ -423,7 +435,7 @@ function FileActions({ product }) {
                                     className="w-100 border-2 border-success text-success button_hover"
                                     icon={<ShoppingCartOutlined />}
                                     size={'large'}>
-                                    Savatga qo’shish
+                                    {t('productDetail.fileActions.addToCart')}
                                 </Button>
                             )}
                             <Button
@@ -437,7 +449,9 @@ function FileActions({ product }) {
                                 type="text"
                                 variant="solid"
                                 className="border-2 border-success text-success button_hover"
-                                aria-label="Wishlistga qo'shish"
+                                aria-label={t(
+                                    'productDetail.fileActions.addToWishlist'
+                                )}
                                 icon={
                                     wishlist?.some(
                                         (item) =>
@@ -461,7 +475,7 @@ function FileActions({ product }) {
             </div>
 
             <Modal
-                title="Muvaffaqqiyatli"
+                title={t('productCard.modal.title')}
                 open={open}
                 onOk={hideModalOk}
                 onCancel={hideModal}
@@ -475,10 +489,10 @@ function FileActions({ product }) {
                         color: '#fff',
                     },
                 }}
-                okText="Savatga o'tish"
-                cancelText="Xaridlarni davom etirish">
+                okText={t('productCard.modal.goToCart')}
+                cancelText={t('productCard.modal.continueShopping')}>
                 <p></p>
-                <p>Mahsulotingizni savatga qo'shdingiz!</p>
+                <p>{t('productCard.modal.message')}</p>
                 <p></p>
             </Modal>
             <AuthModal
@@ -494,6 +508,7 @@ function FileActions({ product }) {
 }
 
 const CustomResponsiveLayout = ({ product, handleBuynow }) => {
+    const { t } = useTranslation('product-pages');
     const { isMobile, size } = useResponsive();
     return (
         <>
@@ -510,7 +525,7 @@ const CustomResponsiveLayout = ({ product, handleBuynow }) => {
                             className="w-100 bg-success"
                             icon={<DownloadOutlined />}
                             size={'large'}>
-                            Yuklab olish
+                            {t('productDetail.fileActions.download')}
                         </Button>
                     </a>
                 ) : (
@@ -522,8 +537,9 @@ const CustomResponsiveLayout = ({ product, handleBuynow }) => {
                         className="w-100 bg-success truncate-text text-truncate"
                         icon={<DownloadOutlined />}
                         size={'large'}>
-                        Hoziroq xarid qilish (
-                        {formatCurrencyWithSpace(product?.price)} so'm)
+                        {t('productDetail.fileActions.buyNow')}
+                        {formatCurrencyWithSpace(product?.price)}{' '}
+                        {t('productDetail.fileActions.currency')})
                     </Button>
                 )}
             </div>
@@ -541,7 +557,7 @@ const CustomResponsiveLayout = ({ product, handleBuynow }) => {
                                 className="w-100 bg-success"
                                 icon={<DownloadOutlined />}
                                 size={'large'}>
-                                Yuklab olish
+                                {t('productDetail.fileActions.download')}
                             </Button>
                         </a>
                     ) : (
@@ -553,11 +569,16 @@ const CustomResponsiveLayout = ({ product, handleBuynow }) => {
                             className="w-100 bg-success"
                             icon={<DownloadOutlined />}
                             size={'large'}>
-                            {`Hoziroq xarid qilish ${
+                            {`${t('productDetail.fileActions.buyNow').replace(
+                                ' (',
+                                ''
+                            )} ${
                                 size >= 360
                                     ? `(${formatCurrencyWithSpace(
                                           product?.price
-                                      )} so'm)`
+                                      )} ${t(
+                                          'productDetail.fileActions.currency'
+                                      )})`
                                     : ''
                             }`}
                         </Button>

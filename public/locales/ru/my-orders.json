@@ -1,0 +1,105 @@
+{
+    "pageTitle": "Мои заказы",
+    "breadcrumb": {
+        "previousPage": "Предыдущая страница"
+    },
+    "balance": {
+        "label": "Баланс",
+        "currency": "UZS"
+    },
+    "tabs": {
+        "all": "Все",
+        "new": "Новые",
+        "inProcess": "В процессе",
+        "completed": "Завершенные",
+        "cancelled": "Отмененные"
+    },
+    "emptyStates": {
+        "noOrders": "У вас нет заказов",
+        "noNewOrders": "У вас нет новых заказов",
+        "noInProcessOrders": "У вас нет заказов в процессе",
+        "noCompletedOrders": "У вас нет завершенных заказов",
+        "noCancelledOrders": "У вас нет отмененных заказов",
+        "noOrdersTitle": "У вас пока нет заказов",
+        "noOrdersDescription": "Через раздел индивидуальных заказов вы можете найти нужные вам услуги и разместить заказ.",
+        "createCustomOrder": "Создать индивидуальный заказ"
+    },
+    "drawer": {
+        "title": "Предложения фрилансеров",
+        "selectFreelancerWarning": "Вам нужно выбрать фрилансера для начала работы",
+        "paymentRequired": "Осуществите оплату, чтобы фрилансер начал работу",
+        "makePayment": "Осуществить оплату",
+        "back": "Назад",
+        "chat": "Чат"
+    },
+    "moderator": {
+        "title": "Связаться с модератором",
+        "description": "Вы можете обратиться к нашим модераторам, если у вас есть вопросы или проблемы.",
+        "openChat": "Открыть чат"
+    },
+    "offers": {
+        "waitingMessage": "Предложения собираются",
+        "waitingMessageWithCount": "доступные предложения будут показаны в течение.",
+        "waitingMessageSeconds": "секунд",
+        "waitingForOffers": "Фрилансеры отправляют предложения. Пожалуйста, подождите немного...",
+        "selectOffer": "Выбрать предложение",
+        "back": "Назад"
+    },
+    "offerCard": {
+        "offerPrice": "Цена предложения:",
+        "chat": "Чат",
+        "select": "Выбрать",
+        "reviews": "отзывов",
+        "expand": "Подробнее",
+        "collapse": "Свернуть",
+        "noComment": "Нет комментария"
+    },
+    "filters": {
+        "title": "Фильтр",
+        "active": "Активен",
+        "minRating": "Минимальный рейтинг",
+        "minRatingPlaceholder": "Мин. рейтинг",
+        "experience": "Опыт",
+        "experiencePlaceholder": "Выберите опыт",
+        "experienced": "Опытный",
+        "beginner": "Начальный уровень",
+        "sort": "Сортировка",
+        "sortPlaceholder": "Сортировка",
+        "sortByRating": "По рейтингу",
+        "sortByTime": "По времени отправки",
+        "sortAscending": "По возрастанию",
+        "sortDescending": "По убыванию",
+        "clearFilters": "Очистить фильтры"
+    },
+    "modals": {
+        "selectFreelancer": {
+            "title": "Вы действительно хотите выбрать",
+            "titleSuffix": "?",
+            "confirm": "Да, выбрать",
+            "cancel": "Нет",
+            "note": "Примечание:",
+            "notePartialPayment": "Вы ранее осуществили оплату в размере",
+            "notePartialPaymentMiddle": "UZS. Цена предложения",
+            "notePartialPaymentEnd": "UZS.",
+            "noteRefund": "Цена предложения выбранного фрилансера составляет",
+            "noteRefundMiddle": "UZS меньше, чем вы ранее заплатили. Избыточная сумма будет возвращена на ваш баланс.",
+            "freelancerComment": "Комментарий фрилансера:",
+            "noComment": "Нет комментария"
+        },
+        "payment": {
+            "useBalanceTooltip": "Используйте свой баланс для оплаты",
+            "balance": "Баланс",
+            "back": "Назад"
+        }
+    },
+    "messages": {
+        "error": "Произошла ошибка",
+        "selectFreelancerError": "Фрилансер не был выбран. Пожалуйста, попробуйте снова!",
+        "selectFreelancerSuccess": "Фрилансер выбран!",
+        "selectFreelancerSuccessWithRefund": "Фрилансер выбран! Избыточная сумма оплаты:",
+        "refunded": "UZS возвращено",
+        "additionalPaymentRequired": "Пожалуйста, осуществите дополнительную оплату в размере",
+        "additionalPaymentRequiredEnd": "UZS для выбора фрилансера"
+    }
+}
+

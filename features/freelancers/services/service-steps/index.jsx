@@ -1,12 +1,15 @@
 import React from 'react'
 import styles from './style.module.scss'
+import { useTranslation } from 'next-i18next'
 
 const ServiceSteps = () => {
+    const { t } = useTranslation('orders');
+    
     const steps = [
-        { id: 1, title: "Mutaxassisni tanlang" },
-        { id: 2, title: "Buyurtma bering" },
-        { id: 3, title: "To’lovni amalga oshiring" },
-        { id: 4, title: "Buyurtmani kuting va qabul qiling" },
+        { id: 1, title: t('steps.step1') },
+        { id: 2, title: t('steps.step2') },
+        { id: 3, title: t('steps.step3') },
+        { id: 4, title: t('steps.step4') },
     ]
 
     return (

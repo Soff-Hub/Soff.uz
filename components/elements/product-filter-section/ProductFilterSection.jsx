@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useTranslation } from 'next-i18next';
 import styles from './ProductFilter.module.scss';
 import {
     SearchOutlined,
@@ -38,6 +39,7 @@ export const clearEmptyQueries = (obj) => {
 };
 
 const ProductFilterSection = ({ child, parent, path, isFile, title }) => {
+    const { t } = useTranslation('product-pages');
     const [showParentArrow, setShowParentArrow] = useState(false);
     const [showChildArrow, setShowChildArrow] = useState(false);
     const [search, setSearch] = useState(undefined);
@@ -105,7 +107,7 @@ const ProductFilterSection = ({ child, parent, path, isFile, title }) => {
     return (
         <div className={`${styles.filter} container`}>
             <h1 className={styles.title}>
-                {title ? title.split('-').join('&') : 'Barcha mahsulotlar'}
+                {title ? title.split('-').join('&') : t('filter.allProducts')}
             </h1>
             <div
                 style={{
@@ -128,7 +130,7 @@ const ProductFilterSection = ({ child, parent, path, isFile, title }) => {
                         allowClear
                         variant="borderless"
                         onChange={(e) => setSearch(e.target.value)}
-                        placeholder="Qanday mahsulot izlamoqdasiz?"
+                        placeholder={t('filter.searchPlaceholder')}
                         className={styles.input}
                         type="text"
                     />
@@ -219,7 +221,7 @@ const ProductFilterSection = ({ child, parent, path, isFile, title }) => {
                     }}
                     onClick={() => setDrawerOpen(true)}>
                     <LuSettings2 />
-                    Filtrlarni ochish
+                    {t('filter.openFilters')}
                 </Button>
             )}
             <ProductFilterForm
@@ -235,6 +237,7 @@ const ProductFilterSection = ({ child, parent, path, isFile, title }) => {
 };
 
 const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
+    const { t } = useTranslation('product-pages');
     const [selectedCategory, setSelectedCategory] = useState({
         slug: null,
         id: null,
@@ -377,9 +380,9 @@ const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
             }}>
             {/* Kategoriya Select */}
             <div style={{ marginBottom: 24 }}>
-                <h4>Kategoriya</h4>
+                <h4>{t('filter.category')}</h4>
                 <Select
-                    placeholder="Kategoriya tanlang"
+                    placeholder={t('filter.selectCategory')}
                     style={{ width: '100%' }}
                     allowClear
                     defaultValue={query.parentCategory || undefined}
@@ -401,10 +404,10 @@ const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
             {/* Sub kategoriya Select */}
             {selectedCategory?.slug && (
                 <div style={{ marginBottom: 24 }}>
-                    <h4>Sub kategoriya</h4>
+                    <h4>{t('filter.subCategory')}</h4>
                     <Select
                         loading={isFetchingChildData}
-                        placeholder="Sub kategoriyani tanlang"
+                        placeholder={t('filter.selectSubCategory')}
                         style={{ width: '100%' }}
                         allowClear
                         defaultValue={query.childCategory || undefined}
@@ -428,7 +431,7 @@ const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
 
             {isFile && (
                 <div style={{ marginBottom: 24 }}>
-                    <h4>Fayl turlari</h4>
+                    <h4>{t('filter.fileTypes')}</h4>
                     <Checkbox.Group
                         style={{
                             display: 'flex',
@@ -449,14 +452,20 @@ const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
             )}
 
             <div style={{ marginBottom: 24 }}>
-                <h4>Narx oralig‘i</h4>
+                <h4>{t('filter.priceRange')}</h4>
                 <div
                     style={{
                         display: 'flex',
                         justifyContent: 'space-between',
                     }}>
-                    <span>{formatCurrencyWithSpace(priceRange[0])} so'm</span>
-                    <span>{formatCurrencyWithSpace(priceRange[1])} so'm</span>
+                    <span>
+                        {formatCurrencyWithSpace(priceRange[0])}{' '}
+                        {t('filter.currency')}
+                    </span>
+                    <span>
+                        {formatCurrencyWithSpace(priceRange[1])}{' '}
+                        {t('filter.currency')}
+                    </span>
                 </div>
                 <Slider
                     range
@@ -469,14 +478,18 @@ const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
 
             {isFile && (
                 <div>
-                    <h4>Varoqlar oralig‘i</h4>
+                    <h4>{t('filter.pageRange')}</h4>
                     <div
                         style={{
                             display: 'flex',
                             justifyContent: 'space-between',
                         }}>
-                        <span>{pageRange[0]} bet</span>
-                        <span>{pageRange[1]} bet</span>
+                        <span>
+                            {pageRange[0]} {t('filter.page')}
+                        </span>
+                        <span>
+                            {pageRange[1]} {t('filter.page')}
+                        </span>
                     </div>
                     <Slider
                         range
@@ -490,11 +503,11 @@ const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
 
             <div style={{ display: 'flex', gap: 12, marginTop: 24 }}>
                 <Button block onClick={handleClear}>
-                    Filtrni tozalash
+                    {t('filter.clearFilter')}
                 </Button>
 
                 <Button type="primary" block onClick={handleSaveOnClose}>
-                    Filtrni qo‘llash
+                    {t('filter.applyFilter')}
                 </Button>
             </div>
         </Drawer>

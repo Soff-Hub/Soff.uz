@@ -15,8 +15,10 @@ import UserPortfolios from './user-portfolios';
 import UserServices from './user-services';
 import UserProducts from './user-products';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
+import { useTranslation } from 'next-i18next';
 
 const UserTabs = ({ seller }) => {
+    const { t } = useTranslation('seller');
     const router = useRouter();
     const { startTimeout, stopTimeout } = useTimeManager();
     const [activeKey, setActiveKey] = useState('about');
@@ -77,12 +79,12 @@ const UserTabs = ({ seller }) => {
     }, [activeKey]);
 
     const items = [
-        { key: 'about', label: 'Muallif haqida' },
+        { key: 'about', label: t('tabs.about') },
         {
             key: 'portfolio',
             label: (
                 <span>
-                    Portfolio{' '}
+                    {t('tabs.portfolio')}{' '}
                     {seller?.portfolio_count > 0 &&
                         `(${seller.portfolio_count})`}
                 </span>
@@ -92,7 +94,7 @@ const UserTabs = ({ seller }) => {
             key: 'service',
             label: (
                 <span>
-                    Xizmatlar{' '}
+                    {t('tabs.services')}{' '}
                     {seller?.service_count > 0 && `(${seller.service_count})`}
                 </span>
             ),
@@ -101,7 +103,7 @@ const UserTabs = ({ seller }) => {
             key: 'product',
             label: (
                 <span>
-                    Mahsulotlar{' '}
+                    {t('tabs.products')}{' '}
                     {seller?.total_products_count > 0 &&
                         `(${seller.total_products_count})`}
                 </span>
@@ -111,7 +113,7 @@ const UserTabs = ({ seller }) => {
             key: 'comments',
             label: (
                 <span>
-                    Izohlar{' '}
+                    {t('tabs.comments')}{' '}
                     {seller?.total_comments_count > 0 &&
                         `(${seller.total_comments_count})`}
                 </span>

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import useWishlist from '~/shared/hooks/useWishlist';
 import MiniCart from '~/shared/components/modals/MiniCart';
 import HeaderNotifications from './HeaderNotifications';
+import LanguageSwitcher from './LanguageSwitcher';
 import HeaderUserDropdown from './HeaderUserDropdown';
 import { Badge } from 'antd';
 import MenuCategoriesDropdown from '~/widgets/header/MenuCategoriesDropdown';
@@ -39,6 +40,7 @@ const HeaderActions = () => {
 
             {isMiniCartVisible && <MiniCart />}
             <HeaderNotifications />
+            <LanguageSwitcher />
             <HeaderUserDropdown />
         </div>
     );

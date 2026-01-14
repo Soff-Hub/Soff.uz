@@ -17,16 +17,7 @@ import { IoIosClose } from 'react-icons/io';
 import styles from './shopping-cart.module.scss';
 import { cn } from '~/shared/utilities/cn';
 import { FaArrowLeft, FaBoxOpen } from 'react-icons/fa6';
-
-const breadCrumb = [
-    {
-        text: 'Asosiy sahifa',
-        url: '/',
-    },
-    {
-        text: 'Savat',
-    },
-];
+import { useTranslation } from 'next-i18next';
 
 // Extended file colors and icons to include .docx
 const extendedFileColors = {
@@ -40,12 +31,23 @@ const extendedFileIcons = {
 };
 
 function ShoppingCart() {
+    const { t } = useTranslation('account');
     const state = useSelector((state) => state.auth.user);
     const { cartDataItems, status } = useSelector((state) => state.ecomerce);
     const { removeCartOneItem } = useCart();
     const [taxPercentage, setTaxPercentage] = useState(0.1); // Default 10%
     const hasItems = cartDataItems && cartDataItems.length;
     const isLoading = status === 'loading';
+
+    const breadCrumb = [
+        {
+            text: t('breadcrumbs.home'),
+            url: '/',
+        },
+        {
+            text: t('breadcrumbs.cart'),
+        },
+    ];
 
     useEffect(() => {
         async function getTaxPercentage() {
@@ -78,7 +80,7 @@ function ShoppingCart() {
         contentView = (
             <div className={styles.shoppingCartContent}>
                 <h2 className={styles.pageTitle}>
-                    Mahsulotlar ({cartDataItems.length})
+                    {t('shoppingCart.count', { count: cartDataItems.length })}
                 </h2>
                 <div className={styles.productsList}>
                     {Array.from({ length: 4 }).map((_, index) => (
@@ -99,7 +101,7 @@ function ShoppingCart() {
         contentView = (
             <div className={styles.shoppingCartContent}>
                 <h2 className={styles.pageTitle}>
-                    Mahsulotlar ({cartDataItems.length})
+                    {t('shoppingCart.count', { count: cartDataItems.length })}
                 </h2>
                 <div className={styles.productsList}>
                     {cartDataItems.map((item) => (
@@ -154,7 +156,7 @@ function ShoppingCart() {
                                         <p
                                             className="free-product-text"
                                             style={{ width: 'fit-content' }}>
-                                            Bepul
+                                            {t('shoppingCart.free')}
                                         </p>
                                     )}
 
@@ -193,24 +195,28 @@ function ShoppingCart() {
                     <div className={styles.summaryContent}>
                         <div className={styles.summaryDetails}>
                             <span className={styles.summaryItem}>
-                                Jami mahsulotlar:{' '}
-                                <strong>{cartDataItems.length} ta</strong>
+                                {t('shoppingCart.totalItems')}{' '}
+                                <strong>
+                                    {cartDataItems.length}{' '}
+                                    {t('shoppingCart.items')}
+                                </strong>
                             </span>
                             <span className={styles.summaryItem}>
-                                Oraliq summa:{' '}
+                                {t('shoppingCart.subtotal')}{' '}
                                 <strong>
                                     {addPeriodToThousands(subtotal)} so'm
                                 </strong>
                             </span>
                             <span className={styles.summaryItem}>
-                                Xizmat haqi ({Math.round(taxPercentage * 100)}
-                                %):{' '}
+                                {t('shoppingCart.serviceFee', {
+                                    percentage: Math.round(taxPercentage * 100),
+                                })}{' '}
                                 <strong>
                                     {addPeriodToThousands(tax)} so'm
                                 </strong>
                             </span>
                             <span className={styles.summaryItem}>
-                                Jami to'lov:{' '}
+                                {t('shoppingCart.total')}{' '}
                                 <strong className={styles.totalAmount}>
                                     {addPeriodToThousands(total)} so'm
                                 </strong>
@@ -218,7 +224,7 @@ function ShoppingCart() {
                         </div>
                         <div className={styles.checkoutButtonWrapper}>
                             <div className={styles.paymentSummaryAmount}>
-                                Jami to'lov:
+                                {t('shoppingCart.total')}:
                                 <strong className={styles.totalAmount}>
                                     {addPeriodToThousands(total)} so'm
                                 </strong>
@@ -230,7 +236,9 @@ function ShoppingCart() {
                                             type="primary"
                                             size="large"
                                             className={styles.checkoutButton}>
-                                            To'lovga o'tish
+                                            {t(
+                                                'shoppingCart.proceedToCheckout'
+                                            )}
                                         </Button>
                                     </a>
                                 </Link>
@@ -241,7 +249,9 @@ function ShoppingCart() {
                                             type="primary"
                                             size="large"
                                             className={styles.checkoutButton}>
-                                            To'lovga o'tish
+                                            {t(
+                                                'shoppingCart.proceedToCheckout'
+                                            )}
                                         </Button>
                                     </a>
                                 </Link>
@@ -278,16 +288,16 @@ function ShoppingCart() {
                     <h3
                         style={{ fontSize: '30px' }}
                         className="font-bold mb-2 text-gray-800 text-center">
-                        Savat bo'sh
+                        {t('shoppingCart.emptyTitle')}
                     </h3>
                     <p className="mb-4 text-center text-muted">
-                        To'lov qilish uchun biror mahsulot qo'shing.
+                        {t('shoppingCart.emptyDescription')}
                     </p>
                     <Link href={'/scientific-resources/all'}>
                         <a>
                             <Button type="primary" size="large">
                                 <FaArrowLeft />
-                                Xarid qilishni boshlash
+                                {t('shoppingCart.startShopping')}
                             </Button>
                         </a>
                     </Link>
@@ -301,7 +311,7 @@ function ShoppingCart() {
             <BreadCrumb breacrumb={breadCrumb} />
             <div className="ps-shopping-cart">
                 <div className="container my-5 h-100">
-                    <h1 className="page-title">Savat</h1>
+                    <h1 className="page-title">{t('shoppingCart.title')}</h1>
                     <SidebarLayout>{contentView}</SidebarLayout>
                 </div>
             </div>

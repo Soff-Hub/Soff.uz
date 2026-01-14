@@ -3,15 +3,17 @@ import { Alert } from 'antd';
 import TextSlicer from '~/shared/utilities/TextSlicer';
 import useResponsive from '~/shared/utilities/useResponsive';
 import styles from '../../style/chat.module.scss';
+import { useTranslation } from 'next-i18next';
 
 type ChatAlertsProps = {};
 
 export function BlockedAlert({}: ChatAlertsProps) {
+    const { t } = useTranslation('chat');
     return (
         <Alert
             className={styles.alertMiddle}
-            message="Frilanser vaqtincha bloklangan"
-            description="Afsuski, ushbu frilanserning xizmatlari vaqtincha bloklangan. Iltimos, keyinroq qayta urinib ko'ring yoki boshqa frilanserni tanlang."
+            message={t('alerts.blockedTitle')}
+            description={t('alerts.blockedDescription')}
             type="error"
             showIcon
         />
@@ -19,6 +21,7 @@ export function BlockedAlert({}: ChatAlertsProps) {
 }
 
 export const SafetyAlert = () => {
+    const { t } = useTranslation('chat');
     const [visible, setVisible] = useState(false);
     const { isMobile } = useResponsive();
 
@@ -42,9 +45,7 @@ export const SafetyAlert = () => {
             description={
                 <TextSlicer
                     title={''}
-                    bio={
-                        'Ogohlantirish! Sayt tashqarisida to‘lov yoki ma’lumot almashish xavfli. Platforma bunday holatlar uchun mas’ul emas. Har doim suhbat va to‘lovlarni platforma ichida bajaring.'
-                    }
+                    bio={t('alerts.safetyWarning')}
                     len={isMobile ? 50 : 100000}
                 />
             }

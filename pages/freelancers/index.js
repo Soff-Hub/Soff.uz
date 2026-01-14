@@ -3,6 +3,7 @@ import Freelancers from '~/features/freelancers';
 import Meta from '~/shared/ui/meta';
 import fetchJson from '~/shared/api/fetch-json';
 import PageLayout from '~/widgets/layouts/PageLayout';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const baseKeywords = [
     'frilanserslar',
@@ -12,25 +13,26 @@ const baseKeywords = [
     'Soff.uz',
 ];
 
-const generateMetaTags = (query) => {
+const generateMetaTags = (query, t) => {
     const { directionValue = '', position = '', keyword = '' } = query;
     const parts = [directionValue, position, keyword]
         .filter(Boolean)
         .flat(Infinity);
     const titlePrefix = parts.length
         ? parts.join(' - ')
-        : 'Eng yaxshi frilanserlar va mutaxassislar';
+        : t('meta.freelancers.defaultTitle');
     const title = `${titlePrefix} | Soff.uz`;
 
-    const description = `Soff.uz platformasidagi eng yaxshi frilanserlar va mutaxassislarni kashf eting, loyihangiz uchun mukammal mutaxassislarni toping. ${
-        directionValue
-            ? `${directionValue} sohasidagi eng tajribali frilanserlarni Soff.uz platformasida toping va ularning xizmatlaridan foydalaning.`
-            : ''
-    } ${
-        position
-            ? `${position} bo'yicha malakali frilanserlarni ishga oling.`
-            : ''
-    } ${keyword ? `Qidiruvingiz: "${keyword}" bo'yicha natijalar.` : ''}`;
+    let description = t('meta.freelancers.description');
+    if (directionValue) {
+        description += ' ' + t('meta.freelancers.directionDescription', { direction: directionValue });
+    }
+    if (position) {
+        description += ' ' + t('meta.freelancers.positionDescription', { position });
+    }
+    if (keyword) {
+        description += ' ' + t('meta.freelancers.keywordDescription', { keyword });
+    }
 
     const dynamicKeywords = parts.flatMap((part) => [
         `${part} frilanserlar`,
@@ -71,6 +73,7 @@ function FreelancersPage({ data, metaTags }) {
 
 export async function getServerSideProps(context) {
     const { query } = context;
+    const locale = context.locale || 'uz';
     const {
         keyword = '',
         position = '',
@@ -86,7 +89,34 @@ export async function getServerSideProps(context) {
         offset: offset.toString(),
     });
 
-    const metaTags = generateMetaTags(query);
+    // Load translations for server-side use
+    const fs = require('fs');
+    const path = require('path');
+    const translationPath = path.join(process.cwd(), 'public', 'locales', locale, 'orders.json');
+    let translations = {};
+    try {
+        const translationContent = fs.readFileSync(translationPath, 'utf8');
+        translations = JSON.parse(translationContent);
+    } catch (error) {
+        console.error('Error loading translations:', error);
+    }
+    
+    // Helper function to get translation
+    const getTranslation = (key, params = {}) => {
+        const keys = key.split('.');
+        let value = translations;
+        for (const k of keys) {
+            value = value?.[k];
+        }
+        if (typeof value === 'string') {
+            return Object.keys(params).reduce((str, param) => {
+                return str.replace(new RegExp(`{{${param}}}`, 'g'), params[param]);
+            }, value);
+        }
+        return value || key;
+    };
+
+    const metaTags = generateMetaTags(query, getTranslation);
 
     if (keyword) params.append('search', keyword);
 
@@ -114,12 +144,32 @@ export async function getServerSideProps(context) {
     try {
         const data = await fetchJson(url);
         return {
-            props: { data, metaTags },
+            props: { 
+                data, 
+                metaTags,
+                ...(await serverSideTranslations(locale, [
+                    'header',
+                    'footer',
+                    'common',
+                    'orders',
+                    'modals',
+                ])),
+            },
         };
     } catch (error) {
         console.error('❌ SSR fetch error:', error);
         return {
-            props: { data: [], metaTags },
+            props: { 
+                data: [], 
+                metaTags,
+                ...(await serverSideTranslations(locale, [
+                    'header',
+                    'footer',
+                    'common',
+                    'orders',
+                    'modals',
+                ])),
+            },
         };
     }
 }

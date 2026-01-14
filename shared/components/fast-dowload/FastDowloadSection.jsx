@@ -17,6 +17,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { baseURL } from '~/repositories/api';
 import { downloadFile } from '~/shared/utilities/utils';
+import { useTranslation } from 'react-i18next';
 
 // Default product for testing
 // const DEFAULT_PRODUCT = {
@@ -63,6 +64,7 @@ const FastDownloadSection = () => {
     const { removeAll } = useCart();
     const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
     const [selectedRating, setSelectedRating] = useState(0);
+    const { t } = useTranslation('header');
 
     let {
         data: product,
@@ -189,7 +191,7 @@ const FastDownloadSection = () => {
                     <div className={styles.productInfoPart}>
                         <p className={styles.productTitle}>
                             <Link href={`/product/${product?.slug}`}>
-                                <a>{product?.title || 'Mahsulot nomi'}</a>
+                                <a>{product?.title || t('productName')}</a>
                             </Link>
                         </p>
                         {!hasRating && (
@@ -212,7 +214,7 @@ const FastDownloadSection = () => {
                             handleDowload(product?.id);
                         }}>
                         <Button className={styles.downloadBtn} type="primary">
-                            Yuklab olish
+                            {t('download')}
                         </Button>
                     </FileDownloadLink>
                     <Button
@@ -226,7 +228,7 @@ const FastDownloadSection = () => {
                             height={20}
                         />
                         <span className={styles.telegramBtnText}>
-                            Yuklab olish
+                            {t('download')}
                         </span>
                     </Button>
                     <Button
@@ -238,7 +240,7 @@ const FastDownloadSection = () => {
                 </div>
             </div>
             <Modal
-                title="Izoh qoldiring"
+                title={t('leaveComment')}
                 open={isCommentModalOpen}
                 onCancel={handleModalClose}
                 footer={null}

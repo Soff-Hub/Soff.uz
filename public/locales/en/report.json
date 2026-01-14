@@ -1,0 +1,20 @@
+{
+  "title": "Report Copyright Infringement",
+  "description": "If you believe copyright has been violated, contact us through this page",
+  "meta": {
+    "description": "If copyright has been violated, report it to us through Soff.uz. We will review your request and take necessary measures."
+  },
+  "form": {
+    "contactPlaceholder": "Your contact information to reach you",
+    "messageLabel": "Write your request in detail",
+    "messagePlaceholder": "Write...",
+    "submit": "Submit",
+    "submitting": "Submitting...",
+    "success": "Your request has been sent successfully, we will contact you soon",
+    "error": "An error occurred"
+  },
+  "product": {
+    "reportedProduct": "Reported product"
+  }
+}
+

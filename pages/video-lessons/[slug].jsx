@@ -1,4 +1,6 @@
 import React from 'react';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import PageContainer from '~/widgets/layouts/PageContainer';
 import Meta from '~/shared/ui/meta';
 import { useRouter } from 'next/router';
@@ -9,7 +11,6 @@ import ProductFilterSection, {
 } from '~/components/elements/product-filter-section/ProductFilterSection';
 
 const type = 'video';
-const defaultTitle = 'Video darsliklar';
 
 export default function VideoLessons({
     productsData,
@@ -20,6 +21,7 @@ export default function VideoLessons({
     productsUrl,
     page,
 }) {
+    const { t } = useTranslation('product-pages');
     const router = useRouter();
     const handlePageChange = (newPage) => {
         router.push({
@@ -36,13 +38,14 @@ export default function VideoLessons({
 
     const fullTitle = title && subTitle ? `${title} - ${subTitle}` : title;
 
+    const defaultTitle = t('titles.videoLessons');
     const finalTitle = fullTitle || defaultTitle;
 
     return (
         <PageContainer>
             <Meta
                 title={finalTitle}
-                description={`Biz siz qidirayotgan mahsulotlarni Soff.uz saytimizning kategoriyasida topdik`}
+                description={t('meta.defaultDescription')}
             />
             <ProductFilterSection
                 title={fullTitle}
@@ -65,6 +68,7 @@ export default function VideoLessons({
 }
 
 export async function getServerSideProps(context) {
+    const { locale } = context;
     const {
         page = 1,
         parentCategory = '',
@@ -106,6 +110,13 @@ export async function getServerSideProps(context) {
 
     return {
         props: {
+            ...(await serverSideTranslations(locale, [
+                'header',
+                'footer',
+                'common',
+                'product-pages',
+                'modals',
+            ])),
             productsData: productsData || null,
             fourChildData: fourChildData || null,
             childCategoryData: childCategoryData || null,

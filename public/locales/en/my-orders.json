@@ -1,0 +1,105 @@
+{
+    "pageTitle": "My Orders",
+    "breadcrumb": {
+        "previousPage": "Previous page"
+    },
+    "balance": {
+        "label": "Balance",
+        "currency": "UZS"
+    },
+    "tabs": {
+        "all": "All",
+        "new": "New",
+        "inProcess": "In Process",
+        "completed": "Completed",
+        "cancelled": "Cancelled"
+    },
+    "emptyStates": {
+        "noOrders": "You have no orders",
+        "noNewOrders": "You have no new orders",
+        "noInProcessOrders": "You have no orders in process",
+        "noCompletedOrders": "You have no completed orders",
+        "noCancelledOrders": "You have no cancelled orders",
+        "noOrdersTitle": "You currently have no orders",
+        "noOrdersDescription": "Through the custom orders section, you can find the services you need and place orders.",
+        "createCustomOrder": "Create custom order"
+    },
+    "drawer": {
+        "title": "Freelancer Offers",
+        "selectFreelancerWarning": "You need to select a freelancer to start work",
+        "paymentRequired": "Make payment for the freelancer to start work",
+        "makePayment": "Make payment",
+        "back": "Back",
+        "chat": "Chat"
+    },
+    "moderator": {
+        "title": "Contact Moderator",
+        "description": "You can contact our moderators if you have questions or issues.",
+        "openChat": "Open Chat"
+    },
+    "offers": {
+        "waitingMessage": "Offers are currently being collected",
+        "waitingMessageWithCount": "available offers will be shown within.",
+        "waitingMessageSeconds": "seconds",
+        "waitingForOffers": "Freelancers are sending offers. Please wait a moment...",
+        "selectOffer": "Select Offer",
+        "back": "Back"
+    },
+    "offerCard": {
+        "offerPrice": "Offer Price:",
+        "chat": "Chat",
+        "select": "Select",
+        "reviews": "reviews",
+        "expand": "Details",
+        "collapse": "Collapse",
+        "noComment": "No comment"
+    },
+    "filters": {
+        "title": "Filter",
+        "active": "Active",
+        "minRating": "Minimum Rating",
+        "minRatingPlaceholder": "Min. rating",
+        "experience": "Experience",
+        "experiencePlaceholder": "Select experience",
+        "experienced": "Experienced",
+        "beginner": "Beginner level",
+        "sort": "Sort",
+        "sortPlaceholder": "Sort",
+        "sortByRating": "By Rating",
+        "sortByTime": "By Sent Time",
+        "sortAscending": "Ascending order",
+        "sortDescending": "Descending order",
+        "clearFilters": "Clear Filters"
+    },
+    "modals": {
+        "selectFreelancer": {
+            "title": "Are you sure you want to select",
+            "titleSuffix": "?",
+            "confirm": "Yes, select",
+            "cancel": "No",
+            "note": "Note:",
+            "notePartialPayment": "You previously made a payment of",
+            "notePartialPaymentMiddle": "UZS. The offer price is",
+            "notePartialPaymentEnd": "UZS.",
+            "noteRefund": "The selected freelancer's offer price is",
+            "noteRefundMiddle": "UZS less than what you previously paid. The excess payment amount will be refunded to your balance.",
+            "freelancerComment": "Freelancer Comment:",
+            "noComment": "No comment"
+        },
+        "payment": {
+            "useBalanceTooltip": "Use your balance for payment",
+            "balance": "Balance",
+            "back": "Back"
+        }
+    },
+    "messages": {
+        "error": "An error occurred",
+        "selectFreelancerError": "Freelancer was not selected. Please try again!",
+        "selectFreelancerSuccess": "Freelancer selected!",
+        "selectFreelancerSuccessWithRefund": "Freelancer selected! Excess payment amount:",
+        "refunded": "UZS refunded",
+        "additionalPaymentRequired": "Please make an additional payment of",
+        "additionalPaymentRequiredEnd": "UZS to select a freelancer"
+    }
+}
+

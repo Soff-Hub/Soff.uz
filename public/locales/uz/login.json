@@ -1,0 +1,41 @@
+{
+    "breadcrumb": {
+        "home": "Asosiy sahifa",
+        "login": "Kirish"
+    },
+    "meta": {
+        "title": "Ro'yxatdan o'tish",
+        "description": "Soff.uz platformasida ro‘yxatdan o‘ting va frilans xizmatlaridan foydalaning. Ish toping, buyurtma bering yoki o‘z xizmatlaringizni taklif qiling — barchasi bitta joyda."
+    },
+    "alreadyLoggedIn": "Siz allaqachon tizimga kirgansiz",
+    "form": {
+        "title": "Kirish",
+        "or": "Yoki",
+        "phoneLabel": "Telefon raqam",
+        "emailLabel": "Elektron pochta",
+        "phonePlaceholder": "Telefon raqam",
+        "emailPlaceholder": "Elektron pochta",
+        "phoneRequired": "Telefon raqam kiritish majburiy",
+        "phoneInvalid": "Iltimos, haqiqiy telefon raqam kiriting",
+        "emailRequired": "Elektron pochta kiritish majburiy",
+        "emailInvalid": "Iltimos, haqiqiy elektron pochta kiriting",
+        "submit": "Ko'dni olish",
+        "errorTitle": "Xatolik"
+    },
+    "telegram": {
+        "breadcrumb": "Telegram",
+        "meta": {
+            "title": "Telegram orqali kirish",
+            "description": "Telegram orqali tez va xavfsiz kirish. @soff_auth_bot botidan tasdiqlash kodini oling va Soff.uz hisobingizga kiring."
+        },
+        "instructions": {
+            "prefix": "Kirish uchun ",
+            "suffix": "orqali tasdiqlash kodini oling"
+        },
+        "codeRequired": "Iltimos, kodni kiriting",
+        "resend": "Qayta kod olish",
+        "resendInPrefix": "Qayta kod olish uchun",
+        "submit": "Tasdiqlash",
+        "success": "Siz tizimga muvaffaqiyatli kirdingiz"
+    }
+}

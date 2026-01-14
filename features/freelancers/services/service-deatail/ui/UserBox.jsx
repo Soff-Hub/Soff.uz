@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'next-i18next';
 import styles from '../styles/detail.module.scss';
 import { Button } from 'antd';
 import { MessageOutlined, StarFilled } from '@ant-design/icons';
@@ -9,6 +10,7 @@ import dayjs from 'dayjs';
 import Image from 'next/image';
 
 const UserBox = ({ pushUser, priceBox, rating, feedbacks }) => {
+    const { t } = useTranslation('orders');
     const { mutate } = useCreateChat();
     const { isLoggedIn } = useSelector((state) => state.auth);
     const [open, setOpen] = useState(false);
@@ -29,7 +31,7 @@ const UserBox = ({ pushUser, priceBox, rating, feedbacks }) => {
 
     const formattedLastActive = last_active
         ? dayjs(last_active).format('DD-MMMM YYYY, HH:mm')
-        : 'Faol emas';
+        : t('serviceDetail.userBox.notActive');
 
     return (
         <>
@@ -47,7 +49,7 @@ const UserBox = ({ pushUser, priceBox, rating, feedbacks }) => {
                             <h3
                                 style={{ cursor: 'pointer' }}
                                 onClick={pushUser}>
-                                {full_name || 'No Name'}
+                                {full_name || t('serviceDetail.userBox.noName')}
                             </h3>
                             {rating >= 1 && (
                                 <div className="d-flex gap-2 align-items-center">
@@ -64,12 +66,12 @@ const UserBox = ({ pushUser, priceBox, rating, feedbacks }) => {
                                         }}>
                                         {Number(rating).toFixed(1)}
                                     </span>
-                                    <span>({feedbacks} izoh)</span>
+                                    <span>({feedbacks} {t('serviceDetail.userBox.reviews')})</span>
                                 </div>
                             )}
                         </div>
                         <p className="m-0">
-                            Oxirgi faollik: {formattedLastActive}
+                            {t('serviceDetail.userBox.lastActive')} {formattedLastActive}
                         </p>
                     </div>
                 </div>
@@ -78,7 +80,7 @@ const UserBox = ({ pushUser, priceBox, rating, feedbacks }) => {
                     icon={<MessageOutlined />}
                     className="w-100"
                     disabled={isBlocked}>
-                    Xabar yuborish
+                    {t('serviceDetail.userBox.sendMessage')}
                 </Button>
             </div>
             <AuthModal open={open} onClose={() => setOpen(false)} />

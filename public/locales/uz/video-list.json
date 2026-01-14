@@ -1,0 +1,37 @@
+{
+    "meta": {
+        "title": "Soff.uz platformasidan foydalanish bo'yicha video qo'llanma – Raqamli xizmatlar bozori",
+        "description": "Soff.uz platformasida mahsulot sotish, xarid qilish va xizmatlardan foydalanish bo'yicha to'liq video qo'llanma. Bosqichma-bosqich tushuntiruvchi darsliklar yordamida siz Soff.uz'da bemalol faoliyat yuritishni o'rganasiz.",
+        "keywords": {
+            "videoGuide": "Soff.uz video qo'llanma",
+            "userGuide": "foydalanuvchi qo'llanmasi",
+            "productSelling": "mahsulot sotish",
+            "serviceProvision": "xizmat ko'rsatish",
+            "platformUsage": "platformadan foydalanish",
+            "soffUzTutorial": "Soff.uz darslik",
+            "readyMaterials": "tayyor materiallar",
+            "onlineServices": "onlayn xizmatlar",
+            "digitalProducts": "raqamli mahsulotlar"
+        },
+        "author": "Soff.uz jamoasi"
+    },
+    "content": {
+        "sectionTitle": "Soff.uz sotuvchilari uchun video qo'llanma:",
+        "videos": [
+            {
+                "title": "Soff uz'da qanday pul ishlash mumkin? To'liq qo'llanma!"
+            },
+            {
+                "title": "Soff uz'da sotuvchi bo'lish – qanday ro'yxatdan o'tish va savdo qilish?"
+            },
+            {
+                "title": "Soff uz sotuvchi profili – barcha imkoniyatlar va funktsiyalar!"
+            },
+            {
+                "title": "Soff uz'da birinchi mahsulotingizni qanday yuklash va sotishni boshlash?"
+            }
+        ]
+    }
+}
+
+

@@ -1,0 +1,98 @@
+{
+    "meta": {
+        "title": "Maxsus buyurtma yaratish",
+        "description": "Soff.uz'da maxsus buyurtma yarating — o'z loyihangiz uchun kerakli mutaxassisni toping. Talablaringizni yozing, frilanserlardan takliflarni qabul qiling va eng yaxshisini tanlang."
+    },
+    "videoBanner": {
+        "title": "SOFF'da buyurtma berishni bilmayapsizmi?",
+        "subtitle": "Buyurtma berish bo'yicha video qo'llanma."
+    },
+    "form": {
+        "title": "Maxsus buyurtma yaratish",
+        "direction": {
+            "label": "Yo'nalishni tanlang",
+            "placeholder": "Yo'nalishni tanlang",
+            "required": "Yo'nalish tanlang!",
+            "infoTitle": "Yo'nalish tanlash bo'yicha ma'lumot",
+            "info": "Buyurtma yo'nalishini tanlang:",
+            "infoPoint1": "Buyurtmangizga mos keladigan yo'nalishni tanlang, bu sizning talablaringizga mos mutaxassislarni topishga yordam beradi.",
+            "infoPoint2": "Har bir yo'nalish o'z sohasida ixtisoslashgan mutaxassislar guruhiga ega bo'lib, sizning loyihangiz xususiyatlariga qarab eng mos variantni tanlash muhim.",
+            "infoPoint3": "To'g'ri yo'nalish tanlovi buyurtmangizning sifatli va o'z vaqtida bajarilishini ta'minlaydi."
+        },
+        "category": {
+            "label": "Kategoriya tanlang",
+            "placeholder": "Taqdimot, Kurs ishi, v.k",
+            "required": "Kategoriya tanlang!",
+            "info": "Iltimos, buyurtmangizni to'g'ri yo'naltirish uchun quyidagi kategoriyalardan birini tanlang. Har bir kategoriya ma'lum bir xizmat turiga mos keladi, shuning uchun tanlovingiz siz izlayotgan mutaxassisni topishda muhim rol o'ynaydi.",
+            "infoTitle": "Kategoriya tanlang",
+            "infoPoint1": "Har bir yo'nalish uchun mavjud kategoriyalar ro'yxatidan tanlang.",
+            "infoPoint2": "To'g'ri kategoriya tanlovi sizning buyurtmangizni mos mutaxassisga yo'naltirishga yordam beradi."
+        },
+        "description": {
+            "label": "Buyurtma tavsifini kiriting",
+            "placeholder": "- Buyurtma mavzusi yoki yo'nalishi\n- Kerakli hajmi (bet, so'z, slayd va h.k.)\n- Asosiy talablar yoki reja\n- Qaysi formatda kerak (Word, PDF, PPT va b.)\n- h.k.",
+            "required": "Buyurtma tavsifini yozing!",
+            "info": "Iltimos, buyurtmangizning mavzusi va talablarini aniq va tushunarli tarzda yozing. Bu ijrochining ishni tez va to'g'ri bajarishiga yordam beradi.",
+            "infoTitle": "Buyurtma tafsilotlari",
+            "infoPoint1": "Buyurtmangizning asosiy talablarini aniq yozing.",
+            "infoPoint2": "Muhim tafsilotlar, muddatlar va byudjet haqida ma'lumot bering.",
+            "infoPoint3": "Iloji bo'lsa, oldingi ishlaringiz yoki namunalarni ulashing."
+        },
+        "fileUpload": {
+            "button": "Fayl yuklash (ixtiyoriy)",
+            "maxSizeError": "Fayl 50 MB dan katta bo'lishi mumkin emas"
+        },
+        "language": {
+            "label": "Buyurtma tili",
+            "placeholder": "Qaysi tilda tayyorlanishini xohlaysiz?",
+            "required": "Bajarilish tilini tanlang!",
+            "infoTitle": "Buyurtma tili",
+            "info": "Buyurtma bajarilish tilini tanlang:",
+            "infoPoint1": "O'zbekcha, Ruscha yoki Inglizcha tillaridan birini tanlang.",
+            "infoPoint2": "Tanlangan til buyurtma matni va muloqot uchun ishlatiladi.",
+            "options": {
+                "uzb": "O'zbekcha",
+                "rus": "Ruscha",
+                "eng": "Inglizcha"
+            }
+        },
+        "budget": {
+            "label": "Byudjetingizni kiriting",
+            "placeholder": "50 000",
+            "required": "Narx kiriting!",
+            "info": "Iltimos, ushbu ish uchun ajratmoqchi bo'lgan byudjetni so'mda yozing.",
+            "infoTitle": "Byudjet",
+            "infoText": "Byudjet haqida maslahatlar:",
+            "infoPoint1": "Byudjetingizni realistik belgilang, bu sizga mos mutaxassislarni jalb qiladi.",
+            "infoPoint2": "Agar byudjetingiz cheklangan bo'lsa, bu haqda ochiq bo'ling va mutaxassislar bilan muhokama qiling."
+        },
+        "deadline": {
+            "label": "Buyurtma tayyor bo'lish muddatini belgilang",
+            "datePlaceholder": "Buyurtma tayyor bo'lish sanasi va soatini tanlang",
+            "timePlaceholder": "Soat",
+            "required": "Yetkazib berish sanasini va vaqtini tanlang!",
+            "infoTitle": "Buyurtma muddati",
+            "info": "Buyurtma muddati haqida maslahatlar:",
+            "infoPoint1": "Muddatingizni realistik belgilang, bu sizga sifatli ishni ta'minlaydi.",
+            "infoPoint2": "Agar buyurtma tezroq bajarilishi kerak bo'lsa, bu haqda mutaxassis bilan oldindan kelishib oling."
+        },
+        "submit": {
+            "loading": "Buyurtmangiz joylashtirilmoqda...",
+            "text": "Buyurtmani joylashtirish"
+        }
+    },
+    "modal": {
+        "confirmTitle": "Buyurtmani tasdiqlash",
+        "confirmQuestion": "Buyurtma berishni tasdiqlaysizmi?",
+        "confirmButton": "To'lov qilish",
+        "point1": "Buyurtma yaratilgandan so'ng siz 💳 to'lovni amalga oshirasiz",
+        "point2": "Platformamizdagi malakali frilanserlar sizga narx va tavsif bilan o'z takliflarini taqdim etishadi",
+        "point3": "Siz esa ular orasidan sizga eng mos frilanserni tanlab, u bilan hamkorlikni boshlaysiz"
+    },
+    "messages": {
+        "success": "Buyurtma muvaffaqiyatli yaratildi!",
+        "directOrderSuccess": "Buyurtma muvaffaqiyatli yuborildi!",
+        "unknownError": "Noma'lum xato yuz berdi"
+    },
+    "titleDescription": "{{direction}} bo'yicha xizmat kerak."
+}

@@ -10,7 +10,8 @@ import Image from 'next/image';
 import { useFGet } from '~/shared/hooks/useFApi';
 import { CHAT_UNSEENS } from '~/shared/api/end-points';
 import { cn } from '~/shared/utilities/cn';
-import { accountLinks } from '../constants/account-links';
+import { getAccountLinks } from '../constants/account-links';
+import { useTranslation } from 'react-i18next';
 
 const HeaderUserDropdown = (props) => {
     const dispatch = useDispatch();
@@ -18,6 +19,7 @@ const HeaderUserDropdown = (props) => {
     const { user: profile } = useSelector((state) => state.profile);
     const refresh = useSelector((state) => state.auth?.user?.refresh);
     const router = useRouter();
+    const { t } = useTranslation('header');
 
     const handleLogout = () => {
         const data = {
@@ -48,6 +50,7 @@ const HeaderUserDropdown = (props) => {
         token: user?.access,
     });
 
+    const accountLinks = getAccountLinks(t);
     const linksView = accountLinks.map((item, index) => (
         <li key={index} className={styles.hoverAction}>
             <Link href={item.url}>
@@ -123,7 +126,7 @@ const HeaderUserDropdown = (props) => {
                             <a href="#" onClick={handleLogout}>
                                 <i
                                     className={`fa-solid fa-right-from-bracket me-3 mx-2 text-dark fs-4`}></i>{' '}
-                                Chiqish
+                                {t('logout')}
                             </a>
                         </li>
                     </ul>
@@ -138,7 +141,7 @@ const HeaderUserDropdown = (props) => {
                     e.preventDefault();
                     Router.push(`/auth/login/?returnUrl=${returnUrl}`);
                 }}>
-                <p className={`${styles.loginEntrance} m-0`}>Kirish</p>
+                <p className={`${styles.loginEntrance} m-0`}>{t('login')}</p>
             </Link>
         );
     }

@@ -10,8 +10,10 @@ import OrderCard from '~/widgets/order-card';
 import OrderApproveFiles from '~/features/order-approve-files';
 import { useQueryClient } from '@tanstack/react-query';
 import useResponsive from '~/shared/utilities/useResponsive';
+import { useTranslation } from 'next-i18next';
 
 export const AllOrdersTable = ({ type }) => {
+    const { t } = useTranslation('my-orders');
     const { isMobile } = useResponsive();
     const queryClient = useQueryClient();
     const router = useRouter();
@@ -109,9 +111,7 @@ export const AllOrdersTable = ({ type }) => {
             </>
         );
     } else {
-        ordersContent = (
-            <EmptyTab description="Sizda buyurtmalar mavjud emas" />
-        );
+        ordersContent = <EmptyTab description={t('emptyStates.noOrders')} />;
     }
 
     useEffect(() => {

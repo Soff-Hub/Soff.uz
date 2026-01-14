@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'next-i18next';
 import { Button } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons';
 import styles from '../styles/detail.module.scss';
@@ -13,6 +14,7 @@ import { sleep } from '~/shared/utilities/sleep';
 import ServiceOrderModal from './ServiceOrderModal';
 
 const ServiceDescription = ({ description = {}, priceBox = {} }) => {
+    const { t } = useTranslation('orders');
     const { price, days, revisions, title, category, user } = priceBox;
     const {
         requirements = '',
@@ -68,21 +70,21 @@ const ServiceDescription = ({ description = {}, priceBox = {} }) => {
                 <div className={cn('flex', 'items-center', 'gap-2')}>
                     <AiOutlineDollar color="rgba(0,0,0,0.5)" />
                     <span className={cn('text-[14px]')}>
-                        {formatCurrencyWithSpace(price)} so'm
+                        {formatCurrencyWithSpace(price)} {t('serviceDetail.serviceDescription.currency')}
                     </span>
                 </div>
                 <div className={cn('flex', 'items-center', 'gap-2')}>
                     <IoTimeOutline color="rgba(0,0,0,0.5)" />
-                    <span className={cn('text-[14px]')}>{days} kun</span>
+                    <span className={cn('text-[14px]')}>{days} {t('serviceDetail.serviceDescription.days')}</span>
                 </div>
                 <div className={cn('flex', 'items-center', 'gap-2')}>
                     <GoPencil color="rgba(0,0,0,0.5)" />
                     <span className={cn('text-[14px]')}>
-                        {revisions} ta tahrir
+                        {revisions} {t('serviceDetail.serviceDescription.revisions')}
                     </span>
                 </div>
             </div>
-            <h2>Xizmat tavsifi</h2>
+            <h2>{t('serviceDetail.serviceDescription.title')}</h2>
             {descText && (
                 <div
                     style={{ borderBottom: '1px solid rgba(0,0,0,0.04)' }}
@@ -90,7 +92,7 @@ const ServiceDescription = ({ description = {}, priceBox = {} }) => {
                 />
             )}
 
-            <h3>Boshlash uchun kerak</h3>
+            <h3>{t('serviceDetail.serviceDescription.requiredToStart')}</h3>
             {requirements && (
                 <div
                     style={{ borderBottom: '1px solid rgba(0,0,0,0.04)' }}
@@ -99,7 +101,7 @@ const ServiceDescription = ({ description = {}, priceBox = {} }) => {
             )}
             {file && (
                 <>
-                    <h3>Xizmat talablari uchun shablon fayl</h3>
+                    <h3>{t('serviceDetail.serviceDescription.templateFile')}</h3>
                     <Button
                         type="primary"
                         icon={<DownloadOutlined />}
@@ -107,13 +109,13 @@ const ServiceDescription = ({ description = {}, priceBox = {} }) => {
                         target="_blank"
                         download
                         className={styles.downloadBtn}>
-                        Fayllarni yuklab olish
+                        {t('serviceDetail.serviceDescription.downloadFiles')}
                     </Button>
                 </>
             )}
             {serviceItems?.length > 0 && (
                 <div className={styles.serviceBox}>
-                    <h3>Nimalar kiradi</h3>
+                    <h3>{t('serviceDetail.serviceDescription.whatsIncluded')}</h3>
                     {serviceItems.map((item, idx) => (
                         <p key={idx} className={styles.serviceItem}>
                             <FaCheck color="green" /> {item.service_item}
@@ -148,8 +150,8 @@ const ServiceDescription = ({ description = {}, priceBox = {} }) => {
                                         setModalOpen,
                                     })
                                 }>
-                                Buyurtma berish (
-                                {formatCurrencyWithSpace(price)}so'm)
+                                {t('serviceDetail.serviceDescription.placeOrder')}
+                                {formatCurrencyWithSpace(price)}{t('serviceDetail.serviceDescription.currency')})
                             </Button>
                         </div>
                     )}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'next-i18next';
 import FileActions from '../actions/file-actions';
 import Description from '../actions/description';
 import SellerProfile from '../seller-profile/seller-profile';
@@ -9,6 +10,7 @@ import CommentFormWrapper from '~/features/comments/ui/commentWrapper';
 import { CommentList } from '~/features/comments/ui/commentList';
 
 function VideosProductsDetails({ product, isPlay, setIsPlay }) {
+    const { t } = useTranslation('product-pages');
     const type = 'playlists';
 
     return (
@@ -44,14 +46,26 @@ function VideosProductsDetails({ product, isPlay, setIsPlay }) {
                                 <InfoCircleOutlined
                                     className="fs-2 "
                                     style={{ cursor: 'pointer' }}
+                                    aria-label={t(
+                                        'productDetail.videoDetails.copyrightViolation'
+                                    )}
                                 />
-                                <span>Mualliflik huquqi buzilgan holatda</span>
+                                <span>
+                                    {t(
+                                        'productDetail.videoDetails.copyrightViolation'
+                                    )}
+                                </span>
                                 <Link href={`/report/${product.slug}`}>
                                     <a>
                                         <strong
                                             className="text-success"
-                                            style={{ cursor: 'pointer' }}>
-                                            shikoyat qiling!
+                                            style={{ cursor: 'pointer' }}
+                                            aria-label={t(
+                                                'productDetail.videoDetails.report'
+                                            )}>
+                                            {t(
+                                                'productDetail.videoDetails.report'
+                                            )}
                                         </strong>
                                     </a>
                                 </Link>

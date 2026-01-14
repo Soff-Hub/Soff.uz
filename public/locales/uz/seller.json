@@ -1,0 +1,40 @@
+{
+  "profile": {
+    "title": "Sotuvchi profili",
+    "stats": "Statistikalar",
+    "openForServices": "Xizmatlar uchun ochiq",
+    "location": "Joylashuv",
+    "lastActive": "Oxirgi faollik",
+    "joined": "Ro'yhatdan o'tgan",
+    "notActive": "Faol emas",
+    "totalIncome": "Jami daromad",
+    "currency": "so'm",
+    "placeOrder": "Buyurtma berish",
+    "linkCopied": "Link nusxalandi!",
+    "linkNotCopied": "Link nusxalanmadi",
+    "blocked": {
+      "title": "Frilanser vaqtincha bloklangan",
+      "description": "Afsuski, ushbu frilanserning xizmatlari vaqtincha bloklangan. Boshqa frilanser xizmatlaridan foydalanishingiz mumkin."
+    },
+    "notOpen": {
+      "title": "Xizmatlar uchun ochiq emas",
+      "description": "Afsuski, ushbu frilanserning xizmatlari vaqtincha ochiq emas. Boshqa frilanser xizmatlaridan foydalanishingiz mumkin."
+    },
+    "statsItems": {
+      "inProgress": "Jarayondagi ishlar",
+      "successful": "Muvaffaqiyatli ishlar",
+      "unsuccessful": "Muvaffaqiyatsiz ishlar",
+      "uploaded": "Yuklangan mahsulotlar",
+      "sold": "Sotilgan mahsulotlar"
+    }
+  },
+  "tabs": {
+    "about": "Muallif haqida",
+    "portfolio": "Portfolio",
+    "services": "Xizmatlar",
+    "products": "Mahsulotlar",
+    "comments": "Izohlar"
+  }
+}
+
+

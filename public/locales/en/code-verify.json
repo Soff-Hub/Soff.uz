@@ -1,0 +1,20 @@
+{
+    "breadcrumb": {
+        "home": "Home",
+        "login": "Login",
+        "verify": "Verification"
+    },
+    "meta": {
+        "title": "Sign up",
+        "description": "Register on the Soff.uz platform and start using freelance services. Find work, place orders or offer your own services — all in one place."
+    },
+    "form": {
+        "codeRequired": "Please enter the code",
+        "submit": "Verify",
+        "errorTitle": "Error",
+        "resendNow": "Resend code",
+        "resendInPrefix": "To request a new code ",
+        "resendSuccessTitle": "Sent",
+        "resendSuccessMessage": "Verification code has been resent"
+    }
+}

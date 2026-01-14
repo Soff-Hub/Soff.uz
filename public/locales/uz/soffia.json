@@ -1,0 +1,34 @@
+{
+  "meta": {
+    "title": "Sun'iy Intellekt Orqali Prezentatsiya yaratish - Soffia AI",
+    "description": "Soffia AI yordamida tez va oson prezentatsiya yarating. Mavzuni kiriting, to'lovni amalga oshiring va 8-10 ta slayddan iborat tayyor faylni yuklab oling."
+  },
+  "hero": {
+    "title": "Soffia AI yordamida avtomatik prezentatsiya yarating",
+    "description": "Mavzuni kiriting — botimiz siz uchun tayyor 8-10 ta slayddan iborat prezentatsiya yaratib beradi. Ma'lumotlar to'liq sun'iy intellekt asosida tayyorlanadi.",
+    "button": "Botni ishga tushurish"
+  },
+  "steps": {
+    "step1": {
+      "title": "Botga /start bering",
+      "description": "Bot sizdan to'lov qilishingizni so'raydi"
+    },
+    "step2": {
+      "title": "To'lovni amalga oshiring",
+      "description": "So'ngra sizdan mavzu haqida so'raydi"
+    },
+    "step3": {
+      "title": "Mavzuni kiriting",
+      "description": "Bot sizga presentatsiya tayyorlaydi"
+    },
+    "step4": {
+      "title": "Prezentatsiyani yuklab oling",
+      "description": "8-10 ta slayddan iborat fayl tayyor."
+    }
+  },
+  "cta": {
+    "button": "Prezentatsiya yaratishni boshlang 🚀"
+  }
+}
+
+

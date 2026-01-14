@@ -6,6 +6,8 @@ import Meta from '~/shared/ui/meta';
 import ServicesFilterSection from '~/features/freelancers/services/ServicesFilterSection';
 import ServicesCardSection from '~/features/freelancers/services/ServicesCardSection';
 import { useGetDirectionsQuery } from '~/store/profile/slice';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const getTitleFromDirection = (directions, value) => {
     const direction = directions.find((dir) => dir.value === value);
@@ -28,6 +30,7 @@ export default function SoffFreelancerPage({
     search,
 }) {
     const router = useRouter();
+    const { t } = useTranslation('orders');
     const { data: directionsData } = useGetDirectionsQuery();
     const directions = directionsData || [];
     const currentPage = Math.floor(offset / limit) + 1;
@@ -38,12 +41,15 @@ export default function SoffFreelancerPage({
     const fullTitle =
         // NOTE: It may conflict with search page SEO
         directionTitle && categoryTitle && search
-            ? `"${search}" so'rovi bo'yicha xizmatlar - Soff.uz`
+            ? t('meta.searchTitle', { search })
             : directionTitle && categoryTitle
-            ? `${directionTitle} - ${categoryTitle} | Soff.uz`
+            ? t('meta.directionCategoryTitle', {
+                  direction: directionTitle,
+                  category: categoryTitle,
+              })
             : directionTitle
-            ? `${directionTitle} - Soff.uz`
-            : 'Xizmatlarga buyurtma berish - Soff.uz';
+            ? t('meta.directionTitle', { direction: directionTitle })
+            : t('meta.defaultTitle');
 
     const onChangePage = (page, pageSize) => {
         router.push({
@@ -58,12 +64,7 @@ export default function SoffFreelancerPage({
 
     return (
         <PageContainer>
-            <Meta
-                title={fullTitle}
-                description={
-                    'Soff.uz xizmatlar bo‘limida frilanserlar tomonidan taklif etilgan xizmatlarni toping. Dizayn, dasturlash, marketing va boshqa ko‘plab yo‘nalishlarda mutaxassislarni izlang.'
-                }
-            />
+            <Meta title={fullTitle} description={t('meta.description')} />
 
             <div className="ps-page--shop my-5 container">
                 <ServicesFilterSection
@@ -99,7 +100,7 @@ export default function SoffFreelancerPage({
 }
 
 export async function getServerSideProps(context) {
-    const { query } = context;
+    const { query, locale } = context;
     const {
         category_id = '',
         search = '',
@@ -150,6 +151,13 @@ export async function getServerSideProps(context) {
             childCategory,
             offset: Number(offset),
             limit: Number(limit),
+            ...(await serverSideTranslations(locale, [
+                'header',
+                'footer',
+                'orders',
+                'common',
+                'modals',
+            ])),
         },
     };
 }

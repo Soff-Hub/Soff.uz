@@ -11,15 +11,28 @@ import { useTelegram } from '~/shared/hooks/useTelegram';
 import { TelegramLink } from '~/shared/components/telegram-link';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
 import '~/shared/utilities/dayjs-locale-uz';
+import { useDayjsLocale } from '~/shared/hooks/useDayjsLocale';
 import Script from 'next/script';
+import { useRouter } from 'next/router';
+import { defineUserLocale } from '~/shared/utilities/locale-detection';
 
 function App({ Component, pageProps }) {
+    const router = useRouter();
     const { tg } = useTelegram();
     const { startTimeout } = useTimeManager();
+
+    // Sync dayjs locale with Next.js router locale
+    useDayjsLocale();
 
     useEffect(() => {
         tg?.ready();
     }, [tg]);
+
+    useEffect(() => {
+        if (!router.isReady || window == undefined) return;
+
+        defineUserLocale(router);
+    }, [router.isReady, router.asPath]);
 
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);

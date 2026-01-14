@@ -2,9 +2,11 @@ import React from 'react';
 import { Button } from 'antd';
 import { FaRegCommentDots } from 'react-icons/fa';
 import { FaHeadset } from 'react-icons/fa';
+import { useTranslation } from 'next-i18next';
 import styles from '../style/select-order-drawer.module.scss';
 
 const ModeratorChatCard = ({ onCreateChat, isMobile }) => {
+    const { t } = useTranslation('my-orders');
     return (
         <div
             className={styles.moderatorCard}
@@ -29,11 +31,10 @@ const ModeratorChatCard = ({ onCreateChat, isMobile }) => {
                     }),
                 }}>
                 <h3 className={styles.moderatorTitle}>
-                    Moderator bilan bog'lanish
+                    {t('moderator.title')}
                 </h3>
                 <p className={styles.moderatorDescription}>
-                    Savol yoki muammo yuzasidan moderatorlarimizga murojaat
-                    qilishingiz mumkin.
+                    {t('moderator.description')}
                 </p>
             </div>
             <Button
@@ -47,7 +48,7 @@ const ModeratorChatCard = ({ onCreateChat, isMobile }) => {
                         width: '100%',
                     }),
                 }}>
-                Chat ochish
+                {t('moderator.openChat')}
             </Button>
         </div>
     );

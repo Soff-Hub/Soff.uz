@@ -3,6 +3,7 @@ import styles from './ServiceFilterSection.module.scss';
 import ServiceCard from '../../../entities/service/service-card';
 import ServiceFirstCard from './service-first-card';
 import Search_Results_NotFound from '~/widgets/search-results/notFound';
+
 const ServicesCardSection = ({ services }) => {
     const hasProducts = services?.items?.length > 0;
     return (

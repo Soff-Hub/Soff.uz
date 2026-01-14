@@ -1,0 +1,40 @@
+{
+  "profile": {
+    "title": "Seller Profile",
+    "stats": "Statistics",
+    "openForServices": "Open for services",
+    "location": "Location",
+    "lastActive": "Last active",
+    "joined": "Joined",
+    "notActive": "Not active",
+    "totalIncome": "Total income",
+    "currency": "UZS",
+    "placeOrder": "Place order",
+    "linkCopied": "Link copied!",
+    "linkNotCopied": "Link not copied",
+    "blocked": {
+      "title": "Freelancer temporarily blocked",
+      "description": "Unfortunately, this freelancer's services are temporarily blocked. You can use other freelancer services."
+    },
+    "notOpen": {
+      "title": "Not open for services",
+      "description": "Unfortunately, this freelancer's services are temporarily not open. You can use other freelancer services."
+    },
+    "statsItems": {
+      "inProgress": "In progress jobs",
+      "successful": "Successful jobs",
+      "unsuccessful": "Unsuccessful jobs",
+      "uploaded": "Uploaded products",
+      "sold": "Sold products"
+    }
+  },
+  "tabs": {
+    "about": "About author",
+    "portfolio": "Portfolio",
+    "services": "Services",
+    "products": "Products",
+    "comments": "Comments"
+  }
+}
+
+

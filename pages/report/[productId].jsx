@@ -4,10 +4,14 @@ import Link from 'next/link';
 import Router, { useRouter } from 'next/router';
 import React from 'react';
 import PageContainer from '~/widgets/layouts/PageContainer';
+import Meta from '~/shared/ui/meta';
 import { orginalUrl } from '~/reositoriy-admin/Repository';
 import { useGet } from '~/repositories/https';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 function Report() {
+    const { t } = useTranslation('report');
     const router = useRouter();
     const [loading, setLoading] = React.useState(false);
     const { productId } = router.query;
@@ -29,26 +33,27 @@ function Report() {
         try {
             await Axios.post(orginalUrl + 'customer/complaint/create/', data);
             e.target.reset();
-            message.success(
-                "Murojaatingiz muvaffaqiyatli yuborildi, tez orada biz bilan bog'lanamiz"
-            );
+            message.success(t('form.success'));
             Router.back();
         } catch (error) {
-            message.error('Xatolik yuz berdi');
+            message.error(t('form.error'));
         }
         setLoading(false);
     }
 
     return (
         <div>
-            <PageContainer title="Mualliflik huquqini buzish to'g'risida xabar berish">
+            <Meta
+                title={t('title')}
+                description={t('meta.description')}
+            />
+            <PageContainer title={t('title')}>
                 <div className="container">
                     <div
                         className="report-page py-5"
                         style={{ maxWidth: '900px', marginTop: '20px' }}>
                         <p className="fs-3">
-                            Agar mualliflik huquqi buzilgan deb hisoblasangiz,
-                            bu sahifaga orqali biz bilan bog'laning
+                            {t('description')}
                         </p>
 
                         <Link href={`/product/${product?.slug}`}>
@@ -82,24 +87,24 @@ function Report() {
                         <form onSubmit={handleSubmit}>
                             <input
                                 type="text"
-                                placeholder="Siz bilan bog'lanish uchun kontakt ma'lumotlaringiz"
+                                placeholder={t('form.contactPlaceholder')}
                                 className="form-control mb-3 bg-white"
                             />
                             <div className="form-group">
                                 <label for="exampleFormControlTextarea1">
-                                    Murojaatingizni batafsil yozing
+                                    {t('form.messageLabel')}
                                 </label>
                                 <textarea
                                     className="form-control bg-white"
                                     id="exampleFormControlTextarea1"
-                                    placeholder="Yozing..."
+                                    placeholder={t('form.messagePlaceholder')}
                                     rows="3"></textarea>
                             </div>
                             <button
                                 disabled={loading}
                                 type="submit"
                                 className="btn btn-success fs-3 px-5">
-                                {loading ? 'Yuborilmoqda...' : 'Yuborish'}
+                                {loading ? t('form.submitting') : t('form.submit')}
                             </button>
                         </form>
                     </div>
@@ -107,6 +112,20 @@ function Report() {
             </PageContainer>
         </div>
     );
+}
+
+export async function getServerSideProps({ locale }) {
+    return {
+        props: {
+            ...(await serverSideTranslations(locale, [
+                'header',
+                'footer',
+                'common',
+                'report',
+                'modals',
+            ])),
+        },
+    };
 }
 
 export default Report;

@@ -7,8 +7,10 @@ import ProductCard from '~/entities/product/product-card';
 import { LAST_ADDED_PRODUCTS } from '~/shared/api/end-points';
 import { Skeleton } from 'antd';
 import { AiOutlineRight } from 'react-icons/ai';
+import { useTranslation } from 'next-i18next';
 
 const LastProducts = () => {
+    const { t } = useTranslation('index');
     const { isMobile } = useResponsive();
     const sectionRef = useRef(null);
     const limit = isMobile ? 6 : 5;
@@ -86,32 +88,32 @@ const LastProducts = () => {
 
     const data = [
         {
-            title: 'Fayllar',
+            title: t('lastProducts.categories.files'),
             href: '/scientific-resources/all',
             data: fileData?.results,
         },
         {
-            title: '3D moddellar',
+            title: t('lastProducts.categories.3d'),
             href: '/3d-models-and-interior-designs/all',
             data: threeDData?.results,
         },
         {
-            title: 'Dizayn shablonlari',
+            title: t('lastProducts.categories.design'),
             href: '/design-developments/all',
             data: designData?.results,
         },
         {
-            title: 'Video ishlanmalar',
+            title: t('lastProducts.categories.video'),
             href: '/video-lessons/all',
             data: videoData?.results,
         },
         {
-            title: 'Tayyor shablonlar',
+            title: t('lastProducts.categories.templates'),
             href: '/templates/all',
             data: templateData?.results,
         },
         {
-            title: 'Vebsaytlar',
+            title: t('lastProducts.categories.websites'),
             href: '/websites/all',
             data: websiteData?.results,
         },
@@ -142,7 +144,7 @@ const LastProducts = () => {
                     alt="badge"
                     className={styles.badge}
                 />
-                <h2>So’ngi yuklangan mahsulotlar</h2>
+                <h2>{t('lastProducts.title')}</h2>
             </div>
 
             {isLoading && <ProductSkeleton limit={limit} />}

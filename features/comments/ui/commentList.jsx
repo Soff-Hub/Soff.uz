@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { useTranslation } from 'next-i18next';
 import { Tooltip, Rate } from 'antd';
 import { CheckCircleFilled, MessageOutlined } from '@ant-design/icons';
 import { useEffect, useRef, useState } from 'react';
@@ -7,6 +8,7 @@ import { getTimeAgo } from '~/shared/utilities/dayjs-locale-uz';
 import ReplyForm from './replysForm';
 
 export function CommentList({ slug }) {
+    const { t } = useTranslation('product-pages');
     const [comments, setComments] = useState({ count: 0, results: [] });
     const [nextUrl, setNextUrl] = useState(null);
     const [activeReplyId, setActiveReplyId] = useState(null);
@@ -73,7 +75,7 @@ export function CommentList({ slug }) {
     return (
         <div className="border rounded-5 p-5 bg-white">
             <h5 className="mb-4 fs-1 d-flex align-items-center gap-2">
-                Izohlar
+                {t('productDetail.comments.list.title')}
                 <span className="rounded-5 fs-4 text-white bg-success px-3 py-1">
                     {comments.count || 0}
                 </span>
@@ -93,7 +95,7 @@ export function CommentList({ slug }) {
                         <div className="d-flex align-items-start gap-3">
                             <Image
                                 src="/static/img/ozodbek.png"
-                                alt="avatar"
+                                alt={t('productDetail.comments.list.avatarAlt')}
                                 width={50}
                                 height={50}
                                 className="rounded-circle"
@@ -122,14 +124,20 @@ export function CommentList({ slug }) {
 
                                 {comment.is_document_owner && (
                                     <div className="d-flex gap-4 text-muted fs-6">
-                                        <Tooltip title="Javob yozish">
+                                        <Tooltip
+                                            title={t(
+                                                'productDetail.comments.list.replyTooltip'
+                                            )}>
                                             <span
                                                 role="button"
                                                 onClick={() =>
                                                     setActiveReplyId(comment.id)
                                                 }
                                                 className="text-success">
-                                                <MessageOutlined /> Javob berish
+                                                <MessageOutlined />{' '}
+                                                {t(
+                                                    'productDetail.comments.list.reply'
+                                                )}
                                             </span>
                                         </Tooltip>
                                     </div>
@@ -154,7 +162,9 @@ export function CommentList({ slug }) {
                                 className="d-flex align-items-start gap-3 mt-4 ms-5 ps-3 border-start border-3 border-success">
                                 <Image
                                     src="/static/img/ozodbek.png"
-                                    alt="avatar"
+                                    alt={t(
+                                        'productDetail.comments.list.avatarAlt'
+                                    )}
                                     width={40}
                                     height={40}
                                     className="rounded-circle"
@@ -181,7 +191,9 @@ export function CommentList({ slug }) {
                     <div
                         ref={loadMoreRef}
                         className="text-center text-muted py-3">
-                        {loading ? 'Yuklanmoqda...' : 'Ko‘proq yuklanmoqda...'}
+                        {loading
+                            ? t('productDetail.comments.list.loading')
+                            : t('productDetail.comments.list.loadingMore')}
                     </div>
                 )}
             </div>

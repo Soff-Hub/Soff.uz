@@ -1,23 +1,14 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react';
+import { useTranslation } from 'next-i18next';
 import { useQuery } from '@tanstack/react-query';
 import { baseUrl } from '~/repositories/Repository';
 import useResponsive from '~/shared/utilities/useResponsive';
 import ProductCard from '~/entities/product/product-card';
 import { Skeleton } from 'antd';
-import dynamic from 'next/dynamic';
 import Image from 'next/image';
 
-// Lazy load the no-info image
-const NoInfoImage = dynamic(() => Promise.resolve(() => (
-    <Image
-        src="/static/img/noinfo.svg"
-        alt="Batafsil ma'lumot yo'q"
-        width={200}
-        height={200}
-    />
-)), { ssr: false });
-
 function LastAddedProducts({ contentType }) {
+    const { t } = useTranslation('product-pages');
     const { isMobile } = useResponsive();
     const containerRef = useRef(null);
     const [isVisible, setIsVisible] = useState(false);
@@ -111,13 +102,18 @@ function LastAddedProducts({ contentType }) {
                 </div>
             ) : (
                 <div className="text-center">
-                    <NoInfoImage />
+                    <Image
+                        src="/static/img/noinfo.svg"
+                        alt={t('productDetail.lastAddedProducts.noInfoAlt')}
+                        width={200}
+                        height={200}
+                    />
                     <p
                         style={{
                             fontSize: 18,
                             marginTop: '16px',
                         }}>
-                        So'ngi yuklangan mahsulotlar topilmadi.
+                        {t('productDetail.lastAddedProducts.notFound')}
                     </p>
                 </div>
             )}

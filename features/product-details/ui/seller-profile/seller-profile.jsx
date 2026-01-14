@@ -2,11 +2,13 @@ import { Button, Rate } from 'antd';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
+import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import { setActiveIndex } from '~/store/seller/slice';
 
 function SellerProfile({ product }) {
+    const { t } = useTranslation('product-pages');
     const router = useRouter();
     const dispatch = useDispatch();
 
@@ -24,7 +26,7 @@ function SellerProfile({ product }) {
                             product?.seller?.image_url ||
                             '/static/img/ozodbek.png'
                         }
-                        alt="seller-profile"
+                        alt={t('productDetail.sellerProfile.sellerImage')}
                         height={200}
                         width={200}
                     />
@@ -34,7 +36,7 @@ function SellerProfile({ product }) {
                         style={{
                             color: 'gray',
                         }}>
-                        Muallif:
+                        {t('productDetail.sellerProfile.author')}
                     </span>
                     <Link href={`/seller/${product?.seller?.id}`}>
                         <a>
@@ -49,22 +51,24 @@ function SellerProfile({ product }) {
             <div className="w-100 d-flex flex-column gap-3">
                 <div className="w-100 d-flex align-items-center fs-3 gap-2">
                     <i className="fa-solid text-success fs-3 fa-circle-check"></i>
-                    <span>Jami mahsulotlar soni:</span>
+                    <span>
+                        {t('productDetail.sellerProfile.totalProducts')}
+                    </span>
                     <span>
                         {product.seller.total_approved_documents
                             ? product.seller.total_approved_documents
                             : 0}{' '}
-                        ta
+                        {t('productDetail.sellerProfile.countUnit')}
                     </span>
                 </div>
                 <div className="w-100 d-flex align-items-center fs-3 gap-2">
                     <i className="text-success fs-3 fa-solid fa-briefcase"></i>
-                    <span>Sotilgan mahsulotlar soni:</span>
+                    <span>{t('productDetail.sellerProfile.soldProducts')}</span>
                     <span>
                         {product.seller.total_sold_documents > 0
                             ? product.seller.total_sold_documents
                             : 0}{' '}
-                        ta
+                        {t('productDetail.sellerProfile.countUnit')}
                     </span>
                 </div>
             </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'next-i18next';
 import dynamic from 'next/dynamic';
 import ImageCarousel from './ui/ImageCarousel';
 import styles from './styles/detail.module.scss';
@@ -30,6 +31,7 @@ const StickyBox = dynamic(() => import('./ui/sticky-box'), {
 });
 
 const ServiceDetail = ({ data }) => {
+    const { t } = useTranslation('orders');
     const { push } = useRouter();
     const {
         service,
@@ -107,8 +109,10 @@ const ServiceDetail = ({ data }) => {
                         {isBlocked && (
                             <Alert
                                 className={styles.alertMiddle}
-                                message="Frilanser vaqtincha bloklangan"
-                                description="Afsuski, ushbu frilanserning xizmatlari vaqtincha bloklangan. Iltimos, keyinroq qayta urinib ko'ring yoki boshqa frilanserni tanlang."
+                                message={t('serviceDetail.blockedFreelancer')}
+                                description={t(
+                                    'serviceDetail.blockedDescription'
+                                )}
                                 type="error"
                                 showIcon
                             />
@@ -147,7 +151,7 @@ const ServiceDetail = ({ data }) => {
 
             {similar_services.length > 0 && (
                 <div>
-                    <h3>O'xshash xizmatlar</h3>
+                    <h3>{t('serviceDetail.similarServices')}</h3>
                     <div className="row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-gap-2 row-gap-md-5 row-gap-lg-3">
                         {similar_services
                             ?.slice(0, isMobile ? 10 : 8)

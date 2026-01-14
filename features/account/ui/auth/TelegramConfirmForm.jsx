@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import Axios from 'axios';
 import { baseUrlAuth } from '~/repositories/Repository';
 import { login } from '~/store/auth/slice';
+import { useTranslation } from 'next-i18next';
 
 export const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
@@ -33,6 +34,7 @@ export default function TelegramConfigmForm({ isModal, onSuccess }) {
 
     const router = useRouter();
     const dispatch = useDispatch();
+    const { t } = useTranslation('login');
 
     const handleSubmit = async ({ code }) => {
         setLoading(true);
@@ -60,9 +62,7 @@ export default function TelegramConfigmForm({ isModal, onSuccess }) {
             }
 
             if (isModal) {
-                message.success(
-                    "Siz tizimdan muvaffaqqiyatli ro'yxatdan o'tdingiz"
-                );
+                message.success(t('telegram.success'));
                 onSuccess();
                 return;
             }
@@ -80,9 +80,7 @@ export default function TelegramConfigmForm({ isModal, onSuccess }) {
             } else {
                 router.push('/account/sellerproducts');
             }
-            message.success(
-                "Siz tizimdan muvaffaqqiyatli ro'yxatdan o'tdingiz"
-            );
+            message.success(t('telegram.success'));
         } catch (err) {
             setLoading(false);
             message.error(err?.response?.data?.msg);
@@ -117,7 +115,7 @@ export default function TelegramConfigmForm({ isModal, onSuccess }) {
                 <div className="ps-form--account">
                     <Form onFinish={handleSubmit}>
                         <p className="text-center fs-2 mb-4">
-                            <span>Kirish uchun </span>
+                            <span>{t('telegram.instructions.prefix')}</span>
                             <a
                                 onClick={handleStart}
                                 href="https://t.me/soff_auth_bot?start=new_code"
@@ -125,7 +123,7 @@ export default function TelegramConfigmForm({ isModal, onSuccess }) {
                                 className="text-success">
                                 @soff_auth_bot
                             </a>{' '}
-                            <span>orqali tasdiqlash kodini oling</span>
+                            <span>{t('telegram.instructions.suffix')}</span>
                         </p>
                         <Form.Item
                             name="code"
@@ -133,7 +131,7 @@ export default function TelegramConfigmForm({ isModal, onSuccess }) {
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Ilitmos kodni kiriting',
+                                    message: t('telegram.codeRequired'),
                                 },
                             ]}>
                             <Input.OTP
@@ -152,11 +150,11 @@ export default function TelegramConfigmForm({ isModal, onSuccess }) {
                                         onClick={getRecode}
                                         href="tg://resolve?domain=soff_uz_bot"
                                         className="text-danger text-center d-block">
-                                        Qayta kod olish
+                                        {t('telegram.resend')}
                                     </a>
                                 ) : (
                                     <p className="text-xs cursor-pointer text-center mb-4">
-                                        Qayta kod olish uchun{' '}
+                                        {t('telegram.resendInPrefix')}{' '}
                                         {formatTime(secondsRemaining)}
                                     </p>
                                 )}
@@ -177,7 +175,7 @@ export default function TelegramConfigmForm({ isModal, onSuccess }) {
                                 <button
                                     type="submit"
                                     className="ps-btn ps-btn--fullwidth text-white">
-                                    Tasdiqlash
+                                    {t('telegram.submit')}
                                 </button>
                             )}
                         </div>

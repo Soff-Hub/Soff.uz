@@ -12,10 +12,12 @@ import { useFGet } from '~/shared/hooks/useFApi';
 import { cn } from '~/shared/utilities/cn';
 import { useQueryClient } from '@tanstack/react-query';
 import styles from './header-actions.module.scss';
+import { useTranslation } from 'react-i18next';
 
 export default function HeaderNotifications() {
     const queryClient = useQueryClient();
     const { token } = useCredentials();
+    const { t } = useTranslation(['header', 'error']);
     const [api, contextHolder] = notification.useNotification();
     const { data } = useFGet('unread_messages_count', CHAT_UNSEENS, {
         enabled: !!token,
@@ -54,16 +56,13 @@ export default function HeaderNotifications() {
             api.destroy();
             setNotificationsCount(0);
         } catch (error) {
-            console.error(
-                'Bildirishnomalarni o‘qilgan qilishda xatolik:',
-                error
-            );
+            console.error(t('error:handleReadError'), error);
         }
     };
 
     const openNotification = () => {
         api.open({
-            message: 'Yangi bildirishnoma!',
+            message: t('newNotification'),
             description: (
                 <div>
                     {notifications?.map((el, i) => (
@@ -79,7 +78,7 @@ export default function HeaderNotifications() {
                         )}>
                         <Link href={`/account/notification`}>
                             <a className="yashil">
-                                Batafsil{' '}
+                                {t('detailed')}{' '}
                                 <i className="fa-regular fa-hand-point-right"></i>
                             </a>
                         </Link>
@@ -91,7 +90,7 @@ export default function HeaderNotifications() {
                                 'hover-underline',
                                 'transition'
                             )}>
-                            O'qildi
+                            {t('read')}
                         </span>
                     </div>
                 </div>

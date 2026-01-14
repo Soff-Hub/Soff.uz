@@ -6,8 +6,10 @@ import useResponsive from '~/shared/utilities/useResponsive';
 import ServiceCard from '~/entities/service/service-card';
 import { useFGet } from '~/shared/hooks/useFApi';
 import { LAST_ADDED_SERVICES } from '~/shared/api/end-points';
+import { useTranslation } from 'next-i18next';
 
 const LastServices = () => {
+    const { t } = useTranslation('index');
     const { isMobile } = useResponsive();
     const { data } = useFGet('last-services', LAST_ADDED_SERVICES);
 
@@ -31,17 +33,17 @@ const LastServices = () => {
                         </div>
                         <div className={styles.titleWrapper}>
                             <h2 className={styles.labelWrapperH1}>
-                                So’ngi ochilgan xizmatlar
+                                {t('lastServices.title')}
                             </h2>
                             <p className={styles.labelWrapperP}>
-                                Xizmatni tanlang – Buyurtma bering
+                                {t('lastServices.subtitle')}
                             </p>
                         </div>
                     </div>
                 </div>
                 <Link href="/orders">
                     <a className={styles.freelance_button}>
-                        <span>Barcha xizmatlar</span>
+                        <span>{t('lastServices.allServices')}</span>
                         <img
                             src={'/static/img/arrowwhite.svg'}
                             width={45}

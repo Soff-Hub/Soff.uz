@@ -1,0 +1,173 @@
+{
+    "meta": {
+        "title": "Foydalanish shartnomasi - Soff.uz",
+        "description": "Soff.uz platformasining foydalanish shartnomasi. Raqamli mahsulotlar va onlayn xizmatlar bozoridan foydalanish tartibi va shartlari."
+    },
+    "content": {
+        "title": "Soff.uz Foydalanish shartnomasi",
+        "intro": {
+            "p1": "Ushbu Foydalanish shartnomasi (keyingi o'rinlarda \"Shartnoma\" deb yuritiladi) Soff.uz platformasi (keyingi o'rinlarda \"Platforma\" deb yuritiladi) va Platforma xizmatlaridan foydalanuvchi o'rtasida tuziladi hamda https://soff.uz veb-sayti va seller.soff.uz sotuvchilar panelidan foydalanish tartibi va shartlarini belgilaydi.",
+            "p2": "Platformadan foydalanishdan oldin Shartnomani diqqat bilan o'qib chiqing. Agar Shartnomaning biror qoidasiga rozi bo'lmasangiz, Platformadan foydalanishdan voz kechishingiz mumkin."
+        },
+        "section1": {
+            "title": "1. Asosiy tushunchalar",
+            "p1": "<strong>Platforma</strong> — Soff.uz veb-sayti va unga tegishli xizmatlar, raqamli mahsulotlar (biznes rejalar, ma'lumotlar, qo'llanmalar, referatlar, prezentatsiyalar va boshqalar) hamda onlayn xizmatlarni sotish va sotib olish imkonini beruvchi bozor.",
+            "p2": "<strong>Shaxsiy kabinet</strong> — Foydalanuvchi yoki Sotuvchi tomonidan Platformada yaratiladigan, xizmatlardan foydalanish uchun mo'ljallangan maxsus sahifa.",
+            "p3": "<strong>\"SOFF-STUDY\" MCHJ</strong> — \"SOFF-STUDY\" mas'uliyati cheklangan jamiyati (STIR: 309460545). Yuridik manzili: O'zbekiston Respublikasi, Toshkent shahri, Chilonzor tumani, Novza mahallasi, E kvartal, 8/1.",
+            "p4": "<strong>Raqamli mahsulot</strong> — Platformada sotilayotgan elektron formatdagi materiallar va kontentlar, jumladan: ilmiy ishlar (biznes rejalar, kurs ishlari, diplom ishlari, referatlar, tadqiqotlar, taqdimotlar), 3D modellar va interier dizaynlar, dizayn shablonlari (veb-dizayn, animatsiya, brending, illyustratsiya, mahsulot dizayni), veb saytlar, tayyor shablonlar (biznes, marketing, moliyaviy, ta'lim, yuridik shablonlar), video darsliklar va boshqa raqamli kontentlar. Raqamli mahsulotlar elektron fayl sifatida yuklab olinadi va foydalanuvchi tomonidan shaxsiy yoki tijorat maqsadlarida ishlatilishi mumkin.",
+            "p5": "<strong>Onlayn xizmat</strong> — Platformaning \"Biznes xizmatlar\" bo'limida taklif etiladigan masofaviy xizmatlar, jumladan: ilmiy va akademik xizmatlar (ilmiy maqolalar yozish, tadqiqotlar o'tkazish, referatlar tayyorlash, kurs va diplom ishlarini yozish), dizayn xizmatlari (logo dizayn, veb-dizayn, grafik dizayn, brending), 3D modellar yaratish va interier dizayn xizmatlari, dasturlash xizmatlari (veb-saytlar yaratish, mobil ilovalar ishlab chiqish, dasturiy ta'minot yozish) va boshqa masofaviy professional xizmatlar. Onlayn xizmatlar Sotuvchi tomonidan masofadan turib amalga oshiriladi va Foydalanuvchi bilan oldindan kelishilgan shartlar va muddatlar asosida taqdim etiladi.",
+            "p6": "<strong>Foydalanuvchi (Xaridor)</strong> — Platformadan raqamli mahsulotlar yoki xizmatlarni sotib olish maqsadida foydalanuvchi sifatida ro'yxatdan o'tgan shaxs.",
+            "p7": "<strong>Sotuvchi</strong> — Platformada o'z raqamli mahsulotlari yoki xizmatlarini sotish uchun ro'yxatdan o'tgan va identifikatsiyadan o'tgan yakka tartibdagi tadbirkor, yuridik shaxs yoki o'zini o'zi band qilgan shaxs.",
+            "p8": "<strong>Buyurtma</strong> — Foydalanuvchi tomonidan Platformada raqamli mahsulot yoki xizmatni sotib olish uchun rasmiylashtirilgan so'rov.",
+            "p9": "<strong>Firibgarlik harakatlari</strong> — aldash va ishonchni suiiste'mol qilish yo'li bilan g'arazli maqsadlarda sodir etilgan harakatlar. Ushbu harakatlar O'zbekiston Respublikasi Jinoyat kodeksiga muvofiq ta'qib qilinadi."
+        },
+        "section2": {
+            "title": "2. Shartnoma predmeti",
+            "p1": "2.1. Shartnomaning predmeti Platformaga kirish imkoniyatini taqdim etishda yuzaga keladigan Platforma va Foydalanuvchi/Sotuvchi o'rtasidagi munosabatlarni tartibga solishdir.",
+            "p2": "2.2. Foydalanuvchi va Sotuvchi Platformadan foydalanishni boshlashdan oldin ushbu Shartnoma bilan to'liq tanishib chiqishi shart. Ro'yxatdan o'tish, Platformaning har qanday funksiyalaridan foydalanish yoki Platformani shunchaki ko'rish Shartnomani to'liq va so'zsiz qabul qilishni anglatadi.",
+            "p3": "2.3. Platformadan foydalanish ushbu Shartnoma, shuningdek, uning ajralmas qismi bo'lgan quyidagi hujjatlar bilan tartibga solinadi: Maxfiylik siyosati, Foydalanish qonun-qoidalari (Oferta).",
+            "p4": "2.4. Agar Foydalanuvchi yoki Sotuvchi Shartnomaning biror qoidasiga rozi bo'lmasa, u Platformadan foydalanishga haqli emas."
+        },
+        "section3": {
+            "title": "3. Ro'yxatdan o'tish va avtorizatsiya",
+            "p1": "3.1. Platforma xizmatlaridan to'liq foydalanish uchun Foydalanuvchi yoki Sotuvchi ro'yxatdan o'tish jarayonidan o'tishi kerak.",
+            "p2": "3.2. Ro'yxatdan o'tish uchun quyidagi ma'lumotlar talab qilinadi:",
+            "p3": "— Ism va familiya;",
+            "p4": "— Telefon raqami yoki elektron pochta manzili;",
+            "p5": "— Parol.",
+            "p6": "3.3. Sotuvchi sifatida faoliyat yuritish uchun qo'shimcha identifikatsiya jarayonidan o'tish talab etiladi. Identifikatsiya uchun quyidagi ma'lumotlar zarur:",
+            "p7": "— Pasport seriyasi va raqami;",
+            "p8": "— JShShIR (Jismoniy Shaxsning Shaxsiy Identifikatsiya Raqami);",
+            "p9": "— Tug'ilgan sana;",
+            "p10": "— Qo'shimcha telefon raqam;",
+            "p11": "— Pasport nusxasi rasmi;",
+            "p12": "— O'zini o'zi band qiluvchi shaxs guvohnomasi.",
+            "p13": "3.4. Foydalanuvchi va Sotuvchi shaxsiy kabinetga kirish uchun parolni mustaqil ravishda yaratadi va uning maxfiyligini ta'minlash uchun javobgar bo'ladi.",
+            "p14": "3.5. Foydalanuvchi va Sotuvchi o'z hisobi ostida amalga oshirilgan barcha harakatlar uchun javobgar bo'ladi."
+        },
+        "section4": {
+            "title": "4. Foydalanuvchi (Xaridor) huquq va majburiyatlari",
+            "subtitle1": "4.1. Foydalanuvchi quyidagi huquqlarga ega:",
+            "right1": "— Platformada erkin ro'yxatdan o'tish;",
+            "right2": "— Platforma tomonidan taqdim etilayotgan xizmatlardan foydalanish;",
+            "right3": "— Raqamli mahsulotlarni sotib olish va yuklab olish;",
+            "right4": "— Xarid qilingan mahsulotlardan shaxsiy maqsadlarda foydalanish;",
+            "right5": "— Mahsulotlarga baho va sharh qoldirish;",
+            "right6": "— Platforma ma'muriyatiga murojaat qilish.",
+            "subtitle2": "4.2. Foydalanuvchi quyidagi majburiyatlarni bajarishi shart:",
+            "obligation1": "— Ro'yxatdan o'tish davomida to'g'ri ma'lumotlar kiritish;",
+            "obligation2": "— Hisobvaraq ma'lumotlarini (login, parol) maxfiy saqlash;",
+            "obligation3": "— Xarid qilingan mahsulotlardan faqat shaxsiy maqsadlarda foydalanish (tijorat maqsadlarida foydalanish taqiqlanadi);",
+            "obligation4": "— Uchinchi shaxslarning huquqlarini buzmaslik;",
+            "obligation5": "— O'zbekiston Respublikasi qonunchiligiga rioya qilish;",
+            "obligation6": "— Platformaning foydalanish qoidalariga rioya qilish."
+        },
+        "section5": {
+            "title": "5. Sotuvchi huquq va majburiyatlari",
+            "subtitle1": "5.1. Sotuvchi quyidagi huquqlarga ega:",
+            "right1": "— Platformada erkin ro'yxatdan o'tish;",
+            "right2": "— O'z raqamli mahsulotlarini Platformada joylashtirish va sotish;",
+            "right3": "— Sotilgan mahsulotlardan daromad olish;",
+            "right4": "— Yig'ilgan mablag'larni bank kartasiga yechib olish;",
+            "right5": "— Referal havola orqali do'stlarini taklif qilish va bonus olish;",
+            "right6": "— Platforma ma'muriyatiga murojaat qilish.",
+            "subtitle2": "5.2. Sotuvchi quyidagi majburiyatlarni bajarishi shart:",
+            "obligation1": "— Identifikatsiya jarayonidan to'liq o'tish;",
+            "obligation2": "— Faqat o'ziga tegishli yoki muallifning ruxsati bilan mahsulotlarni joylashtirish;",
+            "obligation3": "— Mahsulotlarning sifatli va yaroqli bo'lishini ta'minlash;",
+            "obligation4": "— Sotilgan har bir mahsulotdan platformaga 18% komissiya to'lash;",
+            "obligation5": "— Soliq va byudjet to'lovlari bo'yicha O'zbekiston Respublikasi qonunchiligiga rioya qilish;",
+            "obligation6": "— Mijozlarni tashqi platformalarga yo'naltirmaslik;",
+            "obligation7": "— Platformaning foydalanish qoidalariga rioya qilish."
+        },
+        "section6": {
+            "title": "6. Raqamli mahsulotlarni sotib olish",
+            "subtitle1": "6.1. Buyurtmani rasmiylashtirish",
+            "p1": "6.1.1. Foydalanuvchi Platformada mavjud raqamli mahsulotlarni ko'rish, tanlash va sotib olish imkoniyatiga ega.",
+            "p2": "6.1.2. Buyurtmani rasmiylashtirishda Foydalanuvchi tanlangan mahsulotning narxi, tavsifi va shartlarini diqqat bilan tekshirishi shart.",
+            "p3": "6.1.3. \"To'lov\" tugmasini bosish orqali Foydalanuvchi mahsulotni sotib olishga roziligini bildiradi.",
+            "subtitle2": "6.2. To'lov",
+            "p4": "6.2.1. Platformada to'lovlar Click, Payme va boshqa rasmiy to'lov tizimlari orqali amalga oshiriladi.",
+            "p5": "6.2.2. Mahsulot narxi milliy valyuta — so'mda ko'rsatiladi.",
+            "p6": "6.2.3. To'lov muvaffaqiyatli amalga oshirilgandan so'ng, mahsulot Foydalanuvchining shaxsiy kabinetiga joylashtiriladi.",
+            "subtitle3": "6.3. Mahsulotni qabul qilish",
+            "p7": "6.3.1. To'lov amalga oshirilgandan so'ng, raqamli mahsulot Foydalanuvchining shaxsiy kabinetidagi \"Sotib olinganlar\" bo'limiga joylashtiriladi.",
+            "p8": "6.3.2. Foydalanuvchi mahsulotni istalgan vaqtda yuklab olishi mumkin.",
+            "p9": "6.3.3. Mahsulot haqida xabarnoma Foydalanuvchining elektron pochta manziliga yuboriladi."
+        },
+        "section7": {
+            "title": "7. Pulni qaytarish siyosati",
+            "p1": "7.1. Raqamli mahsulotlarning xususiyatini hisobga olgan holda, to'lov amalga oshirilgandan va mahsulot shaxsiy kabinetga joylashtirilgandan so'ng, pul mablag'lari qaytarilmaydi.",
+            "p2": "7.2. Quyidagi hollarda pulni qaytarish so'rovi ko'rib chiqiladi:",
+            "p3": "— Mahsulotni yuklab olishda texnik muammo yuzaga kelganda;",
+            "p4": "7.3. Pulni qaytarish so'rovi Platforma ma'muriyati tomonidan 3 ish kuni ichida ko'rib chiqiladi."
+        },
+        "section8": {
+            "title": "8. Mualliflik huquqlari",
+            "p1": "8.1. Sotuvchi faqat o'ziga tegishli yoki muallifning ruxsati bilan joylashtirilgan mahsulotlarni sotishi mumkin.",
+            "p2": "8.2. Plagiat yoki ruxsatsiz foydalanish aniqlansa, mahsulot Platformadan o'chiriladi va Sotuvchining akkaunti bloklanishi mumkin.",
+            "p3": "8.3. Mualliflik huquqlarini buzish bo'yicha shikoyatlar 3 ish kuni ichida ko'rib chiqiladi.",
+            "p4": "8.4. Foydalanuvchi xarid qilgan mahsulotlardan faqat shaxsiy maqsadlarda foydalanishi mumkin. Mahsulotlarni qayta sotish yoki tijorat maqsadlarida foydalanish taqiqlanadi."
+        },
+        "section9": {
+            "title": "9. Baholash va sharhlar",
+            "p1": "9.1. Foydalanuvchi xarid qilgan mahsulotiga baho va sharh qoldirish huquqiga ega.",
+            "p2": "9.2. Sharhlar quyidagi talablarga javob berishi kerak:",
+            "p3": "— Mahsulot bilan bog'liq bo'lishi;",
+            "p4": "— Haqoratli so'zlar va tuhmatlarni o'z ichiga olmasligi;",
+            "p5": "— Reklama materiallarini o'z ichiga olmasligi.",
+            "p6": "9.3. Platforma qoidalarga javob bermaydigan sharhlarni olib tashlash huquqiga ega."
+        },
+        "section10": {
+            "title": "10. Platforma huquq va majburiyatlari",
+            "subtitle1": "10.1. Platforma quyidagi huquqlarga ega:",
+            "right1": "— Shartnomaga o'zgartirishlar kiritish;",
+            "right2": "— Platformadagi ma'lumotlarga kirishni cheklash;",
+            "right3": "— Qoidalarni buzgan foydalanuvchi yoki sotuvchilarni bloklash;",
+            "right4": "— Shubhali yoki qonunga zid mahsulotlarni o'chirish;",
+            "right5": "— Xizmatlarni takomillashtirish maqsadida texnik ishlarni olib borish.",
+            "subtitle2": "10.2. Platforma quyidagi majburiyatlarni oladi:",
+            "obligation1": "— Xizmatlarning sifatli ishlashini ta'minlash;",
+            "obligation2": "— Foydalanuvchilarning shaxsiy ma'lumotlarini himoya qilish;",
+            "obligation3": "— Texnik nosozliklarni tezkorlik bilan bartaraf etish;",
+            "obligation4": "— Foydalanuvchilar va sotuvchilarga qo'llab-quvvatlash ko'rsatish."
+        },
+        "section11": {
+            "title": "11. Javobgarlikni cheklash",
+            "p1": "11.1. Platforma sotuvchilar tomonidan joylashtirilgan mahsulotlarning sifati va mazmuni uchun to'g'ridan-to'g'ri javobgar emas.",
+            "p2": "11.2. Platforma foydalanuvchi va sotuvchi o'rtasidagi kelishmovchiliklarga to'g'ridan-to'g'ri javobgar emas, lekin shikoyatlarni ko'rib chiqish huquqiga ega.",
+            "p3": "11.3. Platforma texnik nosozliklar va fors-major holatlari natijasida yuzaga kelgan zararlar uchun javobgar bo'lmaydi.",
+            "p4": "11.4. Platforma foydalanuvchi yoki sotuvchi tomonidan noto'g'ri ma'lumotlar kiritilishi natijasida yuzaga kelgan muammolar uchun javobgar emas."
+        },
+        "section12": {
+            "title": "12. Shartnomani buzish",
+            "p1": "12.1. Foydalanuvchi yoki Sotuvchi ushbu Shartnomani buzgan taqdirda, Platforma quyidagi choralarni ko'rish huquqiga ega:",
+            "p2": "— Ogohlantirish berish;",
+            "p3": "— Shaxsiy kabinetga kirishni vaqtincha cheklash;",
+            "p4": "— Akkauntni doimiy bloklash.",
+            "p5": "12.2. Bloklash sabablari:",
+            "p6": "— Firibgarlik harakatlari;",
+            "p7": "— Mualliflik huquqlarini buzish;",
+            "p8": "— Boshqa foydalanuvchilarning huquqlarini buzish;",
+            "p9": "— Platformaning qoidalarini takroriy buzish."
+        },
+        "section13": {
+            "title": "13. Nizolarni hal qilish",
+            "p1": "13.1. Foydalanuvchi yoki Sotuvchining talablari quyidagi yo'llar bilan ko'rib chiqiladi:",
+            "p2": "— Elektron pochta: <strong>support@soff.uz</strong>",
+            "p3": "— Telegram: <strong>@soff_uz</strong>",
+            "p4": "— Veb-sayt: <strong>https://soff.uz</strong>",
+            "p5": "— Telefon raqami: <strong>+998 (91) 008 67 89</strong>",
+            "p6": "13.2. Nizoli vaziyatlar muzokaralar yo'li bilan hal qilinadi.",
+            "p7": "13.3. Kelishuv erishilmagan taqdirda, nizolar O'zbekiston Respublikasi sudlariga murojaat qilish orqali hal etiladi."
+        },
+        "section14": {
+            "title": "14. Yakuniy qoidalar",
+            "p1": "14.1. Ushbu Shartnoma O'zbekiston Respublikasi qonunchiligiga muvofiq tartibga solinadi.",
+            "p2": "14.2. Platforma ushbu Shartnomaga istalgan vaqtda o'zgartirishlar kiritish huquqini o'zida saqlab qoladi.",
+            "p3": "14.3. O'zgartirishlar Platformaga kiritilgan paytdan boshlab kuchga kiradi.",
+            "p4": "14.4. Platformadan foydalanishni davom ettirgan holda, Foydalanuvchi va/yoki Sotuvchi Shartnomaga kiritilgan o'zgartirishlarga roziligini tasdiqlaydi.",
+            "p5": "14.5. Rasmiy Telegram kanalida (<strong>t.me/soff_uz</strong>) e'lon qilingan har qanday yangilik yoki o'zgarish rasmiy hisoblanadi."
+        }
+    }
+}

@@ -3,8 +3,10 @@ import { message } from 'antd';
 import { useRouter } from 'next/router';
 import axiosInstance from '../../../../shared/api/freeleanceApi';
 import { useAppSelector } from '~/app/store/hooks';
+import { useTranslation } from 'next-i18next';
 
 export const useCreateChat = () => {
+    const { t } = useTranslation('chat');
     const { user } = useAppSelector((state) => state.auth);
     const axios = axiosInstance(user?.access);
     const queryClient = useQueryClient();
@@ -24,12 +26,12 @@ export const useCreateChat = () => {
         },
         onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: ['chats'] });
-            message.success('Chat yaratildi');
+            message.success(t('errors.createChatSuccess'));
             push(`/chat${data?.chat_id ? `?chatId=${data?.chat_id}` : ''}`);
         },
         onError: (error: any) => {
             const errorMsg =
-                error?.response?.data?.detail || 'Xatolik yuz berdi';
+                error?.response?.data?.detail || t('errors.createChatError');
             message.error(errorMsg);
         },
     });

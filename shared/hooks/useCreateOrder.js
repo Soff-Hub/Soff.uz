@@ -16,112 +16,77 @@ import { useFGet, useFPost } from '~/shared/hooks/useFApi';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/router';
 import { Info } from '~/shared/components/modals/create-order-modal/CreateOrderModal';
-import {
-    inputInfoToCreateOrder,
-    titleDescription,
-} from '~/shared/constants/createOrder';
 import useResponsive from '../utilities/useResponsive';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Thumbs } from 'swiper/modules';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import { useGetDirectionsQuery } from '~/store/profile/slice';
 import { useTimeManager } from './useTimeManager';
+import { useTranslation } from 'next-i18next';
 
 // import Editor from '~/components/Editor';
 
-const direction_content = (
-    <div style={{ maxWidth: '300px' }}>
-        <p>Buyurtma yo'nalishini tanlang:</p>
-        <ul>
-            <li>
-                Buyurtmangizga mos keladigan yo'nalishni tanlang, bu sizning
-                talablaringizga mos mutaxassislarni topishga yordam beradi.
-            </li>
-            <li>
-                Har bir yo'nalish o'z sohasida ixtisoslashgan mutaxassislar
-                guruhiga ega bo'lib, sizning loyihangiz xususiyatlariga qarab
-                eng mos variantni tanlash muhim.
-            </li>
-            <li>
-                To'g'ri yo'nalish tanlovi buyurtmangizning sifatli va o'z
-                vaqtida bajarilishini ta'minlaydi.
-            </li>
-        </ul>
-    </div>
-);
-
-const popover_content = (
-    <div style={{ maxWidth: '300px' }}>
-        <p>Buyurtma kategoriyasini tanlang:</p>
-        <ul>
-            <li>
-                Har bir yo'nalish uchun mavjud kategoriyalar ro'yxatidan
-                tanlang.
-            </li>
-            <li>
-                To'g'ri kategoriya tanlovi sizning buyurtmangizni mos
-                mutaxassisga yo'naltirishga yordam beradi.
-            </li>
-        </ul>
-    </div>
-);
-
-const description_content = (
-    <div style={{ maxWidth: '300px' }}>
-        <p>Buyurtma tavsifini yozish bo'yicha maslahatlar:</p>
-        <ul>
-            <li>Buyurtmangizning asosiy talablarini aniq yozing.</li>
-            <li>
-                Muhim tafsilotlar, muddatlar va byudjet haqida ma'lumot bering.
-            </li>
-            <li>
-                Iloji bo'lsa, oldingi ishlaringiz yoki namunalarni ulashing.
-            </li>
-        </ul>
-    </div>
-);
-
-const language_content = (
-    <div style={{ maxWidth: '300px' }}>
-        <p>Buyurtma bajarilish tilini tanlang:</p>
-        <ul>
-            <li>O'zbekcha, Ruscha yoki Inglizcha tillaridan birini tanlang.</li>
-            <li>Tanlangan til buyurtma matni va muloqot uchun ishlatiladi.</li>
-        </ul>
-    </div>
-);
-
-const budget_content = (
-    <div style={{ maxWidth: '300px' }}>
-        <p>Byudjet haqida maslahatlar:</p>
-        <ul>
-            <li>
-                Byudjetingizni realistik belgilang, bu sizga mos mutaxassislarni
-                jalb qiladi.
-            </li>
-            <li>
-                Agar byudjetingiz cheklangan bo'lsa, bu haqda ochiq bo'ling va
-                mutaxassislar bilan muhokama qiling.
-            </li>
-        </ul>
-    </div>
-);
-
-const deadline_content = (
-    <div style={{ maxWidth: '300px' }}>
-        <p>Buyurtma muddati haqida maslahatlar:</p>
-        <ul>
-            <li>
-                Muddatingizni realistik belgilang, bu sizga sifatli ishni
-                ta'minlaydi.
-            </li>
-            <li>
-                Agar buyurtma tezroq bajarilishi kerak bo'lsa, bu haqda
-                mutaxassis bilan oldindan kelishib oling.
-            </li>
-        </ul>
-    </div>
-);
+const getPopoverContent = (t, type) => {
+    const contents = {
+        direction: (
+            <div style={{ maxWidth: '300px' }}>
+                <p>{t('form.direction.info')}</p>
+                <ul>
+                    <li>{t('form.direction.infoPoint1')}</li>
+                    <li>{t('form.direction.infoPoint2')}</li>
+                    <li>{t('form.direction.infoPoint3')}</li>
+                </ul>
+            </div>
+        ),
+        category: (
+            <div style={{ maxWidth: '300px' }}>
+                <p>{t('form.category.infoTitle')}:</p>
+                <ul>
+                    <li>{t('form.category.infoPoint1')}</li>
+                    <li>{t('form.category.infoPoint2')}</li>
+                </ul>
+            </div>
+        ),
+        description: (
+            <div style={{ maxWidth: '300px' }}>
+                <p>{t('form.description.infoTitle')}:</p>
+                <ul>
+                    <li>{t('form.description.infoPoint1')}</li>
+                    <li>{t('form.description.infoPoint2')}</li>
+                    <li>{t('form.description.infoPoint3')}</li>
+                </ul>
+            </div>
+        ),
+        language: (
+            <div style={{ maxWidth: '300px' }}>
+                <p>{t('form.language.info')}</p>
+                <ul>
+                    <li>{t('form.language.infoPoint1')}</li>
+                    <li>{t('form.language.infoPoint2')}</li>
+                </ul>
+            </div>
+        ),
+        budget: (
+            <div style={{ maxWidth: '300px' }}>
+                <p>{t('form.budget.infoText')}</p>
+                <ul>
+                    <li>{t('form.budget.infoPoint1')}</li>
+                    <li>{t('form.budget.infoPoint2')}</li>
+                </ul>
+            </div>
+        ),
+        deadline: (
+            <div style={{ maxWidth: '300px' }}>
+                <p>{t('form.deadline.info')}</p>
+                <ul>
+                    <li>{t('form.deadline.infoPoint1')}</li>
+                    <li>{t('form.deadline.infoPoint2')}</li>
+                </ul>
+            </div>
+        ),
+    };
+    return contents[type];
+};
 
 const { TextArea } = Input;
 
@@ -132,6 +97,7 @@ function useCreateOrder({
     directOrderOnSuccess,
     directOrderOnClose,
 } = {}) {
+    const { t } = useTranslation('order-create');
     const [form] = Form.useForm();
     const direction = Form.useWatch('direction', form);
     const budget = Form.useWatch('budget', form);
@@ -198,7 +164,7 @@ function useCreateOrder({
             handleCloseConfirm();
             setPhoneModalOpen(false);
             setPendingOrderData(null);
-            message.success('Buyurtma muvaffaqiyatli yaratildi!');
+            message.success(t('messages.success'));
             startTimeout(() => {
                 push(`/order/my-orders?orderId=${data?.order_id}`);
             }, 100);
@@ -227,7 +193,7 @@ function useCreateOrder({
                 setPhoneModalOpen(true);
             }
 
-            const errorMsg = errorDetail || "Noma'lum xato yuz berdi";
+            const errorMsg = errorDetail || t('messages.unknownError');
             message.error(errorMsg);
         },
     });
@@ -237,7 +203,7 @@ function useCreateOrder({
             url: 'order/direct-order',
             token: user?.access,
             onSuccess: (data) => {
-                message.success('Buyurtma muvaffaqiyatli yuborildi!');
+                message.success(t('messages.directOrderSuccess'));
                 if (directOrderOnSuccess) {
                     directOrderOnSuccess({
                         id: data?.id,
@@ -273,7 +239,7 @@ function useCreateOrder({
                     setPendingOrderData({ order, files });
                     setPhoneModalOpen(true);
                 }
-                const errorMsg = errorDetail || "Noma'lum xato yuz berdi";
+                const errorMsg = errorDetail || t('messages.unknownError');
                 message.error(errorMsg);
             },
         });
@@ -373,45 +339,52 @@ function useCreateOrder({
     const formItems = [
         {
             id: 'direction',
-            title: "Yo'nalish tanlash bo'yicha ma'lumot",
+            title: t('form.direction.infoTitle'),
             content: (
                 <Form.Item
                     name="direction"
                     label={
                         <div className="d-flex align-items-start text-wrap flex-column flex-sm-row align-items-sm-center">
-                            <p className="m-0 text-dark">Yo’nalishni tanlang</p>
-                        </div>
-                    }
-                    rules={[{ required: true, message: "Yo'nalish tanlang!" }]}>
-                    <Select
-                        onChange={handleDirectionChange}
-                        className="form-element"
-                        size={size}
-                        options={directions}
-                        placeholder="Yo'nalishni tanlang"
-                    />
-                </Form.Item>
-            ),
-            popoverContent: direction_content,
-        },
-        {
-            id: 'category_id',
-            title: 'Kategoriya tanlang',
-            content: (
-                <Form.Item
-                    name="category_id"
-                    label={
-                        <div className="d-flex align-items-center">
-                            <p className="m-0 text-dark">Kategoriya tanlang</p>
-                            <Info
-                                title={inputInfoToCreateOrder.category.info}
-                            />
+                            <p className="m-0 text-dark">
+                                {t('form.direction.label')}
+                            </p>
                         </div>
                     }
                     rules={[
                         {
                             required: true,
-                            message: 'Kategoriya tanlang!',
+                            message: t('form.direction.required'),
+                        },
+                    ]}>
+                    <Select
+                        onChange={handleDirectionChange}
+                        className="form-element"
+                        size={size}
+                        options={directions}
+                        placeholder={t('form.direction.placeholder')}
+                    />
+                </Form.Item>
+            ),
+            popoverContent: getPopoverContent(t, 'direction'),
+        },
+        {
+            id: 'category_id',
+            title: t('form.category.infoTitle'),
+            content: (
+                <Form.Item
+                    name="category_id"
+                    label={
+                        <div className="d-flex align-items-center">
+                            <p className="m-0 text-dark">
+                                {t('form.category.label')}
+                            </p>
+                            <Info title={t('form.category.info')} />
+                        </div>
+                    }
+                    rules={[
+                        {
+                            required: true,
+                            message: t('form.category.required'),
                         },
                     ]}>
                     <Select
@@ -419,12 +392,12 @@ function useCreateOrder({
                         onSelect={(_, option) => {
                             form.setFieldValue(
                                 'title',
-                                titleDescription(option?.label)
+                                t('titleDescription', {
+                                    direction: option?.label,
+                                })
                             );
                         }}
-                        placeholder={inputInfoToCreateOrder[
-                            'category'
-                        ].placeholder(directions)}
+                        placeholder={t('form.category.placeholder')}
                         size={size}
                         options={categories?.map((cat) => ({
                             label: cat?.title,
@@ -433,11 +406,11 @@ function useCreateOrder({
                     />
                 </Form.Item>
             ),
-            popoverContent: popover_content,
+            popoverContent: getPopoverContent(t, 'category'),
         },
         {
             id: 'description',
-            title: 'Buyurtma tafsilotlari',
+            title: t('form.description.infoTitle'),
             content: (
                 <>
                     <Form.Item
@@ -448,30 +421,22 @@ function useCreateOrder({
                         label={
                             <div className="d-flex align-items-center align-items-sm-center">
                                 <p className="m-0 text-dark">
-                                    Buyurtma tavsifini kiriting
+                                    {t('form.description.label')}
                                 </p>
-                                <Info
-                                    title={
-                                        inputInfoToCreateOrder['description']
-                                            .info
-                                    }
-                                />
+                                <Info title={t('form.description.info')} />
                             </div>
                         }
                         rules={[
                             {
                                 required: true,
-                                message: 'Buyurtma tavsifini yozing!',
+                                message: t('form.description.required'),
                             },
                         ]}>
                         <TextArea
                             style={{ resize: 'none' }}
                             rows={4}
                             name="description"
-                            placeholder={
-                                inputInfoToCreateOrder['description']
-                                    .placeholder
-                            }
+                            placeholder={t('form.description.placeholder')}
                         />
                         {/* <Editor
                         onChange={(value) => {
@@ -479,9 +444,7 @@ function useCreateOrder({
                         }}
                         value={form.getFieldValue('description') || ''}
                         name="description"
-                        placeholder={
-                            inputInfoToCreateOrder['description'].placeholder
-                        }
+                        placeholder={t('form.description.placeholder')}
                     /> */}
                     </Form.Item>
                     <Upload
@@ -500,7 +463,7 @@ function useCreateOrder({
                                 const maxSize = 50 * 1024 * 1024;
                                 if (file.size > maxSize) {
                                     message.error(
-                                        "Fayl 50 MB dan katta bo'lishi mumkin emas"
+                                        t('form.fileUpload.maxSizeError')
                                     );
                                     return;
                                 }
@@ -510,68 +473,79 @@ function useCreateOrder({
                         onRemove={() => setFiles(null)}>
                         <Button
                             icon={<i className="fa-solid fa-paperclip"></i>}>
-                            Fayl yuklash (ixtiyoriy)
+                            {t('form.fileUpload.button')}
                         </Button>
                     </Upload>
                 </>
             ),
-            popoverContent: description_content,
+            popoverContent: getPopoverContent(t, 'description'),
         },
         {
             id: 'language',
-            title: 'Buyurtma tili',
+            title: t('form.language.infoTitle'),
             content: (
                 <Form.Item
                     name="language"
                     label={
                         <div className="d-flex align-items-center text-wrap  align-items-sm-center">
-                            <p className="m-0 text-dark">Buyurtma tili</p>
+                            <p className="m-0 text-dark">
+                                {t('form.language.label')}
+                            </p>
                         </div>
                     }
                     rules={[
                         {
                             required: true,
-                            message: 'Bajarilish tilini tanlang!',
+                            message: t('form.language.required'),
                         },
                     ]}>
                     <Select
                         className="form-element"
-                        placeholder={inputInfoToCreateOrder['lang'].placeholder}
+                        placeholder={t('form.language.placeholder')}
                         size={size}
                         options={[
-                            { label: "O'zbekcha", value: 'uzb' },
-                            { label: 'Ruscha', value: 'rus' },
-                            { label: 'Ingilizcha', value: 'eng' },
+                            {
+                                label: t('form.language.options.uzb'),
+                                value: 'uzb',
+                            },
+                            {
+                                label: t('form.language.options.rus'),
+                                value: 'rus',
+                            },
+                            {
+                                label: t('form.language.options.eng'),
+                                value: 'eng',
+                            },
                         ]}
                     />
                 </Form.Item>
             ),
-            popoverContent: language_content,
+            popoverContent: getPopoverContent(t, 'language'),
         },
         {
             id: 'budget',
-            title: 'Byudjet',
+            title: t('form.budget.infoTitle'),
             content: (
                 <Form.Item
                     name="budget"
                     label={
                         <div className="d-flex align-items-center">
                             <p className="m-0 text-dark">
-                                Byudjetingizni kiriting
+                                {t('form.budget.label')}
                             </p>
                             <span>
-                                <Info
-                                    title={inputInfoToCreateOrder['price'].info}
-                                />
+                                <Info title={t('form.budget.info')} />
                             </span>
                         </div>
                     }
-                    rules={[{ required: true, message: 'Narx kiriting!' }]}>
+                    rules={[
+                        { required: true, message: t('form.budget.required') },
+                    ]}>
                     <InputNumber
                         min={minPrice}
                         style={{ width: '100%' }} // height'ni olib tashlang, CSS'dan keladi
                         className="form-element"
-                        placeholder={inputInfoToCreateOrder.price.placeholder}
+                        placeholder={t('form.budget.placeholder')}
                         size={size}
                         formatter={(value) =>
                             value
@@ -675,11 +649,11 @@ function useCreateOrder({
                     </div>
                 </Form.Item>
             ),
-            popoverContent: budget_content,
+            popoverContent: getPopoverContent(t, 'budget'),
         },
         {
             id: 'deadline',
-            title: 'Buyurtma muddati',
+            title: t('form.deadline.infoTitle'),
             content: (
                 <div>
                     <div className="d-flex align-items-start mb-2">
@@ -693,7 +667,7 @@ function useCreateOrder({
                             *
                         </span>
                         <p className="m-0 text-dark">
-                            Buyurtma tayyor bo‘lish muddatini belgilang
+                            {t('form.deadline.label')}
                         </p>
                     </div>
                     <div className="d-flex gap-2 mb-3">
@@ -704,15 +678,14 @@ function useCreateOrder({
                             rules={[
                                 {
                                     required: true,
-                                    message:
-                                        'Yetkazib berish sanasini va vaqtini tanlang!',
+                                    message: t('form.deadline.required'),
                                 },
                             ]}>
                             <DatePicker
                                 format="MMM DD, YYYY"
                                 placement="bottomLeft"
                                 className="form-element"
-                                placeholder="Buyurtma tayyor bo‘lish sanasi va soatini tanlang"
+                                placeholder={t('form.deadline.datePlaceholder')}
                                 size={size}
                                 disabledDate={(current) =>
                                     current && current < dayjs().startOf('day')
@@ -725,7 +698,7 @@ function useCreateOrder({
                             rules={[{ required: true, message: '' }]}>
                             <TimePicker
                                 format="HH:mm"
-                                placeholder="Soat"
+                                placeholder={t('form.deadline.timePlaceholder')}
                                 size={size}
                                 className="ant-picker-time-panel-column form-element"
                                 disabledDate={(current) =>
@@ -736,7 +709,7 @@ function useCreateOrder({
                     </div>
                 </div>
             ),
-            popoverContent: deadline_content,
+            popoverContent: getPopoverContent(t, 'deadline'),
         },
     ];
 

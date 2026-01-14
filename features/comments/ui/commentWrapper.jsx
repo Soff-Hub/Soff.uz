@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'next-i18next';
 import CommentForm from './commentForm';
 import Axios from 'axios';
 import { baseURL } from '~/repositories/api';
 import Cookies from 'js-cookie';
 
 export default function CommentFormWrapper({ slug, id }) {
+    const { t } = useTranslation('product-pages');
     const [canReview, setCanReview] = useState(false);
     const [hasFirstComment, setHasFirstComment] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -35,7 +37,7 @@ export default function CommentFormWrapper({ slug, id }) {
         if (slug) checkPermission();
     }, [slug]);
 
-    if (loading) return <p>Tekshirilmoqda...</p>;
+    if (loading) return <p>{t('productDetail.comments.checking')}</p>;
 
     if (canReview) {
         return (

@@ -1,0 +1,31 @@
+{
+    "comments": {
+        "checking": "Checking...",
+        "form": {
+            "tokenNotFound": "Token not found. Please log in.",
+            "success": "Comment sent successfully!",
+            "error": "Comment not sent.",
+            "required": "Please write a comment!",
+            "ratingRequired": "Please give a rating!",
+            "placeholder": "Write your comment...",
+            "submitting": "Submitting...",
+            "submit": "Submit"
+        },
+        "list": {
+            "title": "Comments",
+            "reply": "Reply",
+            "replyTooltip": "Write a reply",
+            "loading": "Loading...",
+            "loadingMore": "Loading more...",
+            "avatarAlt": "Avatar"
+        },
+        "reply": {
+            "tokenNotFound": "Token not found",
+            "success": "Reply sent",
+            "error": "Reply not sent",
+            "placeholder": "Write a reply...",
+            "submitting": "Submitting...",
+            "submit": "Submit"
+        }
+    }
+}

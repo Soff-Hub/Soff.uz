@@ -1,0 +1,69 @@
+{
+  "meta": {
+    "title": "Affiliate Program - Soff.uz",
+    "description": "Join Soff.uz affiliate program and earn income by inviting new users. Get rewarded for every transaction through your recommendations."
+  },
+  "hero": {
+    "title": "Increase your income by inviting new users to Soff.uz!",
+    "description": "Share your referral link and get rewarded for every transaction made through your recommendations. It's very simple."
+  },
+  "createLink": {
+    "title": "Create your referral link",
+    "placeholder": "https://soff.uz",
+    "create": "Create",
+    "copy": "Copy",
+    "linkCreated": "Link created and copied!",
+    "linkCopied": "Link copied!",
+    "linkNotCreated": "Link was not created.",
+    "enterLink": "Please enter the link!",
+    "error": "An error occurred."
+  },
+  "threeSteps": {
+    "title": "Earn income in 4 steps",
+    "step1": {
+      "title": "Register",
+      "description": "Create a profile on Soff.uz and get your referral link."
+    },
+    "step2": {
+      "title": "Share your link",
+      "description": "Place the link with your friends, audience or on social networks."
+    },
+    "step3": {
+      "title": "Earn income",
+      "description": "5% share from sales that came through your referral link."
+    },
+    "step4": {
+      "title": "Convenient withdrawal of accumulated amount",
+      "description": "Quick withdrawal opportunity for the amount accumulated through the referral link."
+    }
+  },
+  "promoteOptions": {
+    "title": "What services can you promote?",
+    "description": "You can advertise various digital products on Soff.uz and earn income from every purchase.",
+    "items": {
+      "file": "Scientific works",
+      "3d": "3D models and interior designs",
+      "design": "Design templates",
+      "website": "Websites",
+      "template": "Templates for various fields",
+      "video": "Video lessons"
+    }
+  },
+  "benefits": {
+    "title": "Advantages of Soff.uz affiliate program",
+    "description": "As a partner, you get rewarded for every activity. Enjoy the following opportunities:",
+    "items": {
+      "percentage": "Percentage income from every sale",
+      "passive": "Opportunity to earn passive income",
+      "minimal": "Minimal effort — maximum benefit",
+      "monitoring": "Continuous monitoring and statistics",
+      "withdraw": "Quick withdrawal opportunity",
+      "market": "Uncompetitive local market"
+    }
+  },
+  "joinSoff": {
+    "title": "Join Soff.uz Affiliate Program and start earning today!",
+    "button": "Start Earning"
+  }
+}
+

@@ -1,0 +1,126 @@
+{
+    "meta": {
+        "defaultTitle": "Xizmatlarga buyurtma berish - Soff.uz",
+        "directionTitle": "{{direction}} - Soff.uz",
+        "directionCategoryTitle": "{{direction}} - {{category}} | Soff.uz",
+        "searchTitle": "\"{{search}}\" so'rovi bo'yicha xizmatlar - Soff.uz",
+        "description": "Soff.uz xizmatlar bo'limida frilanserlar tomonidan taklif etilgan xizmatlarni toping. Dizayn, dasturlash, marketing va boshqa ko'plab yo'nalishlarda mutaxassislarni izlang.",
+        "freelancers": {
+            "defaultTitle": "Eng yaxshi frilanserlar va mutaxassislar",
+            "titlePrefix": "{{parts}}",
+            "description": "Soff.uz platformasidagi eng yaxshi frilanserlar va mutaxassislarni kashf eting, loyihangiz uchun mukammal mutaxassislarni toping.",
+            "directionDescription": "{{direction}} sohasidagi eng tajribali frilanserlarni Soff.uz platformasida toping va ularning xizmatlaridan foydalaning.",
+            "positionDescription": "{{position}} bo'yicha malakali frilanserlarni ishga oling.",
+            "keywordDescription": "Qidiruvingiz: \"{{keyword}}\" bo'yicha natijalar."
+        }
+    },
+    "filter": {
+        "all": "Barchasi",
+        "directionPlaceholder": "Yo'nalish",
+        "categoryPlaceholder": "Kategoriya",
+        "searchPlaceholder": "Qanday xizmat izlamoqdasiz"
+    },
+    "steps": {
+        "step1": "Mutaxassisni tanlang",
+        "step2": "Buyurtma bering",
+        "step3": "To'lovni amalga oshiring",
+        "step4": "Buyurtmani kuting va qabul qiling"
+    },
+    "notFound": {
+        "searchPage": "Afsuski, izlagan narsangiz topilmadi. Ammo siz uni buyurtma qilishingiz mumkin.👇",
+        "ordersPage": "Afsuski, izlagan xizmatingiz topilmadi. Ammo siz uni buyurtma qilishingiz mumkin.👇",
+        "createOrder": "Buyurtma yaratish",
+        "productsNotFound": "Afsuski, izlagan narsangiz topilmadi. Lekin siz o'xshash mahsulotlarni ko'rib chiqishingiz mumkin.",
+        "similarProducts": "O'xshash mahsulotlar"
+    },
+    "serviceCard": {
+        "details": "Batafsil",
+        "placeOrder": "Buyurtma berish",
+        "reviews": "izoh",
+        "currency": "so'm",
+        "addToFavorites": "Sevimlilarga qo'shish",
+        "serviceImage": "Xizmat rasmi",
+        "userImage": "Foydalanuvchi rasmi"
+    },
+    "serviceFirstCard": {
+        "title": "Ishingizni frilanserlarga topshiring.",
+        "button": "Hoziroq buyurtma berish"
+    },
+    "pagination": {
+        "itemsPerPage": "Sahifada",
+        "items": "ta xizmat"
+    },
+    "serviceDetail": {
+        "blockedFreelancer": "Frilanser vaqtincha bloklangan",
+        "blockedDescription": "Afsuski, ushbu frilanserning xizmatlari vaqtincha bloklangan. Iltimos, keyinroq qayta urinib ko'ring yoki boshqa frilanserni tanlang.",
+        "similarServices": "O'xshash xizmatlar",
+        "serviceDescription": {
+            "title": "Xizmat tavsifi",
+            "requiredToStart": "Boshlash uchun kerak",
+            "templateFile": "Xizmat talablari uchun shablon fayl",
+            "downloadFiles": "Fayllarni yuklab olish",
+            "whatsIncluded": "Nimalar kiradi",
+            "days": "kun",
+            "revisions": "ta tahrir",
+            "placeOrder": "Buyurtma berish (",
+            "currency": "so'm"
+        },
+        "priceBox": {
+            "price": "Narx",
+            "delivery": "Yetkazish",
+            "days": "kunda",
+            "revisions": "Tahrirlash",
+            "times": "marta",
+            "placeOrder": "Buyurtma berish (",
+            "currency": "so'm"
+        },
+        "moneyBack": {
+            "title": "Pulni qaytarish kafolati",
+            "description": "Agar buyurtmangiz siz kutgandek bo'lmasa, pulingizni to'liq qaytaramiz.",
+            "moreInfo": "Batafsil ma'lumot",
+            "detailedDescription": "Bizning asosiy maqsadimiz – mijozning mamnunligi. Agar buyurtma natijasi siz kutgandek bo'lmasa yoki umuman bajarilmasa, sizda pulni to'liq qaytarib olish huquqi mavjud. Mablag' balansingizga qaytariladi va uni istalgan vaqtda yechib olishingiz mumkin. Demak, Soff.uz da buyurtma berish 100% xavfsiz — natija bo'lmasa, pulingiz qaytadi.",
+            "imageAlt": "Pulni qaytarish kafolati rasmi"
+        },
+        "userBox": {
+            "reviews": "izoh",
+            "lastActive": "Oxirgi faollik:",
+            "notActive": "Faol emas",
+            "sendMessage": "Xabar yuborish",
+            "noName": "No Name"
+        },
+        "faqSection": {
+            "title": "Ko'p beriladigan savollar"
+        },
+        "portfolioSection": {
+            "title": "Portfolio",
+            "portfolios": "ta portfolio"
+        },
+        "commentSection": {
+            "title": "Fikrlar",
+            "noComments": "Hozircha izohlar yo'q",
+            "loadMore": "Ko'proq ko'rsatish",
+            "loading": "Yuklanmoqda...",
+            "showing": "tadan",
+            "shown": "ta ko'rsatilgan"
+        },
+        "stickyBox": {
+            "chat": "Chat",
+            "placeOrder": "Buyurtma berish (",
+            "currency": "so'm"
+        },
+        "orderModal": {
+            "title": "Buyurtma uchun to'lovni amalga oshiring",
+            "securityMessage": "Sizning to'lovingiz Soff tizimi tomonidan xavfsiz saqlanadi. Mutaxassisga to'lov faqat siz ishni ko'rib chiqib, tasdiqlaganingizdan so'ng amalga oshiriladi.",
+            "freelancerNeeds": "Frilanser ishni boshlashi uchun quyidagilarni yuboring:",
+            "orderDetails": "Buyurtma tafsilotlari",
+            "additionalInfo": "Buyurtma bo'yicha qo'shimcha ma'lumot (ixtiyoriy)",
+            "fileUpload": "Fayl yuklash (ixtiyoriy)",
+            "fileSizeError": "Fayl 50 MB dan katta bo'lishi mumkin emas",
+            "formalizeOrder": "Buyurtmani rasmiylashtirish",
+            "back": "Orqaga",
+            "useBalance": "To'lov uchun balansingizdan foydalaning",
+            "balance": "Balance -",
+            "currency": "so'm"
+        }
+    }
+}

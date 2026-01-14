@@ -36,6 +36,7 @@ import { IoMdArrowBack } from 'react-icons/io';
 import OffersFilter from './OffersFilter';
 import ModeratorChatCard from './ModeratorChatCard';
 import dynamic from 'next/dynamic';
+import { useTranslation } from 'next-i18next';
 
 // Dynamically import OffersWaitingLoader to reduce initial bundle size
 const OffersWaitingLoader = dynamic(() => import('./OffersWaitingLoader'), {
@@ -57,6 +58,7 @@ const OffersWaitingLoader = dynamic(() => import('./OffersWaitingLoader'), {
 });
 
 const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
+    const { t } = useTranslation('my-orders');
     const [selectedOffer, setSelectedOffer] = useState(null);
     const { user } = useSelector((state) => state.auth);
     const [paymentModal, setPaymentModal] = useState(false);
@@ -117,7 +119,7 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
             }
         } catch (error) {
             const errorMsg =
-                error?.response?.data?.detail || 'Xatolik yuz berdi';
+                error?.response?.data?.detail || t('messages.error');
             message.error(errorMsg);
         }
     };
@@ -218,9 +220,11 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
         onSuccess: (data) => {
             if (!data.success) {
                 message.warning(
-                    `Frilanser tanlash uchun iltimos qo'shimcha ${formatCurrencyWithSpace(
-                        data.extra_amount
-                    )} so'm to'lovni amalga oshiring`,
+                    `${t(
+                        'messages.additionalPaymentRequired'
+                    )} ${formatCurrencyWithSpace(data.extra_amount)} ${t(
+                        'messages.additionalPaymentRequiredEnd'
+                    )}`,
                     2.5
                 );
                 setPaymentModal(true);
@@ -231,10 +235,12 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
 
             message.success(
                 selectedOffer.money < price
-                    ? `Frilanser tanlandi! Ortiqcha to'lov summasi: ${formatCurrencyWithSpace(
+                    ? `${t(
+                          'messages.selectFreelancerSuccessWithRefund'
+                      )} ${formatCurrencyWithSpace(
                           price - selectedOffer.money
-                      )} so'm qaytarildi`
-                    : `Frilanser tanlandi!`
+                      )} ${t('messages.refunded')}`
+                    : t('messages.selectFreelancerSuccess')
             );
             if (order?.id) {
                 clearOfferDelayFlag(order.id);
@@ -244,9 +250,7 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
             onClose();
         },
         onError: () => {
-            message.error(
-                'Frilanser tanlanmadi. Iltimos qayta urinib ko‘ring!'
-            );
+            message.error(t('messages.selectFreelancerError'));
         },
     });
 
@@ -294,7 +298,7 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                         border: 'none',
                     }}
                     icon={<ExclamationCircleOutlined />}>
-                    Ishni boshlash uchun frilanser tanlashingiz kerak
+                    {t('drawer.selectFreelancerWarning')}
                 </Tag>
 
                 <OffersFilter
@@ -348,7 +352,7 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
         orderDrawerContent = (
             <div className="border rounded-4 border-success align-items-center gap-3 justify-content-between d-flex flex-column flex-lg-row flex-sm-column p-4 mb-4">
                 <h3 className="fs-3 mb-0 text-center">
-                    Frilanser ishni boshlashi uchun to'lovni amalga oshiring
+                    {t('drawer.paymentRequired')}
                 </h3>
                 <Button
                     type="primary"
@@ -356,7 +360,7 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                     className="px-5 py-2"
                     onClick={handleOpenPaymentModal}>
                     <i class="fa-solid fa-credit-card"></i>
-                    To'lovni amalga oshiring
+                    {t('drawer.makePayment')}
                 </Button>
             </div>
         );
@@ -390,7 +394,7 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
     return (
         <>
             <Drawer
-                title="Frilanser takliflari"
+                title={t('drawer.title')}
                 placement="right"
                 className={styles.selectOrderDrawer}
                 width={drawerWidth}
@@ -456,10 +460,12 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                                             setChatDrawerOpen(false);
                                             setCurrentChat(null);
                                         }}>
-                                        Orqaga
+                                        {t('drawer.back')}
                                     </Button>
                                 ) : (
-                                    <h3 style={{ margin: 0 }}>Chat</h3>
+                                    <h3 style={{ margin: 0 }}>
+                                        {t('drawer.chat')}
+                                    </h3>
                                 )}
 
                                 <div
@@ -480,7 +486,7 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                                                 setChatDrawerOpen(false);
                                                 setCurrentChat(null);
                                             }}>
-                                            Taklifni tanlash
+                                            {t('offers.selectOffer')}
                                         </Button>
                                     )}
                                 </div>
@@ -514,37 +520,40 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
             <Modal
                 title={
                     <>
-                        Haqiqatan ham Siz{' '}
-                        <strong>{selectedOffer?.seller?.full_name}</strong> ni
-                        tanlamoqchimisiz?
+                        {t('modals.selectFreelancer.title')}{' '}
+                        <strong>{selectedOffer?.seller?.full_name}</strong>{' '}
+                        {t('modals.selectFreelancer.titleSuffix')}
                     </>
                 }
                 open={!!selectedOffer}
                 onCancel={() => setSelectedOffer(null)}
                 onOk={handleSelect}
-                okText="Ha, tanlayman"
-                cancelText="Yo'q"
+                okText={t('modals.selectFreelancer.confirm')}
+                cancelText={t('modals.selectFreelancer.cancel')}
                 confirmLoading={isPending}
                 zIndex={20000}
                 centered>
                 <div className="text-center mb-4 text-warning">
                     {offerAmount > 0 && (
                         <p className="text-warning mb-0 mt-2">
-                            Eslatma: Siz ilgari{' '}
+                            {t('modals.selectFreelancer.note')}{' '}
+                            {t('modals.selectFreelancer.notePartialPayment')}{' '}
                             {formatCurrencyWithSpace(
                                 order?.approved_transaction_amount
                             )}{' '}
-                            so'm to'lovni amalga oshirgansiz. Taklif narxi{' '}
+                            {t(
+                                'modals.selectFreelancer.notePartialPaymentMiddle'
+                            )}{' '}
                             {formatCurrencyWithSpace(selectedOffer?.money)}{' '}
-                            so'm.
+                            {t('modals.selectFreelancer.notePartialPaymentEnd')}
                         </p>
                     )}
                     {offerAmount < 0 && (
                         <p className="text-warning mb-0 mt-2">
-                            Eslatma: Siz tanlagan frilanserning taklif narxi{' '}
-                            {formatCurrencyWithSpace(-offerAmount)} so'm siz
-                            ilgari to'lagan summadan kam. Ortiqcha to'lov
-                            summasi balansingizga qaytariladi.
+                            {t('modals.selectFreelancer.note')}{' '}
+                            {t('modals.selectFreelancer.noteRefund')}{' '}
+                            {formatCurrencyWithSpace(-offerAmount)}{' '}
+                            {t('modals.selectFreelancer.noteRefundMiddle')}
                         </p>
                     )}
                 </div>
@@ -569,8 +578,11 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                 ) : null}
                 <p>
                     <TextSlicer
-                        title={'Frilanser izohi:'}
-                        bio={`${selectedOffer?.comment || 'Izoh yo‘q'}`}
+                        title={t('modals.selectFreelancer.freelancerComment')}
+                        bio={`${
+                            selectedOffer?.comment ||
+                            t('modals.selectFreelancer.noComment')
+                        }`}
                     />
                 </p>
             </Modal>
@@ -587,7 +599,8 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                     <div className={styles.orderPaymentHeader}>
                         {/* NOTE: Balance button temporarily commented */}
                         {balanceDisabled ? (
-                            <Tooltip title="To'lov uchun balansingizdan foydalaning">
+                            <Tooltip
+                                title={t('modals.payment.useBalanceTooltip')}>
                                 <Button
                                     onClick={() => setMode((pre) => !pre)}
                                     className={
@@ -599,7 +612,8 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                                     }
                                     disabled={!balanceDisabled}>
                                     <Switch value={mode} size="small" />
-                                    Balance - {leftBalance} so'm
+                                    {t('modals.payment.balance')} -{' '}
+                                    {leftBalance} {t('balance.currency')}
                                 </Button>
                             </Tooltip>
                         ) : null}
@@ -608,7 +622,7 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                             className={styles.backButton}
                             icon={<i className="fa-solid fa-arrow-left"></i>}
                             onClick={handleRetreatDrawer}>
-                            Orqaga
+                            {t('modals.payment.back')}
                         </Button>
                     </div>
                     {!mode ? (
@@ -627,7 +641,7 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                                         {formatCurrencyWithSpace(
                                             serviceCheckoutOrder.price
                                         )}{' '}
-                                        so'm
+                                        {t('balance.currency')}
                                     </h4>
                                 </div>
                             </div>

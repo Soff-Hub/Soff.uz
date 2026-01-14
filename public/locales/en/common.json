@@ -1,35 +1,53 @@
 {
-  "welcome": "Welcome",
-  "title": "Digital products and online services marketplace – Soff.uz",
-  "description": "Soff.uz - Intellectual property marketplace, Sell and buy intellectual products.",
-  "navigation": {
-    "home": "Home",
-    "products": "Products",
-    "services": "Services",
-    "about": "About",
-    "contact": "Contact"
-  },
-  "common": {
-    "loading": "Loading...",
-    "error": "An error occurred",
-    "success": "Success",
-    "save": "Save",
-    "cancel": "Cancel",
-    "delete": "Delete",
-    "edit": "Edit",
-    "search": "Search",
-    "filter": "Filter"
-  },
-  "auth": {
-    "login": "Login",
-    "logout": "Logout",
-    "register": "Register",
-    "email": "Email",
-    "password": "Password"
-  },
-  "messages": {
-    "tokenNotFound": "Token not found. Please log in.",
-    "commentSuccess": "Comment sent successfully!",
-    "commentError": "Failed to send comment."
-  }
+    "welcome": "Welcome",
+    "title": "Digital products and online services marketplace – Soff.uz",
+    "description": "Soff.uz - Intellectual property marketplace, Sell and buy intellectual products.",
+    "navigation": {
+        "home": "Home",
+        "products": "Products",
+        "services": "Services",
+        "about": "About",
+        "contact": "Contact"
+    },
+    "common": {
+        "loading": "Loading...",
+        "error": "An error occurred",
+        "success": "Success",
+        "save": "Save",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "edit": "Edit",
+        "search": "Search",
+        "filter": "Filter",
+        "unknownTime": "Unknown time",
+        "minutesAgo": "{{count}} minutes ago",
+        "hoursMinutesAgo": "{{hours}} hours {{minutes}} minutes ago",
+        "dateTimeFormat": "DD.MM.YYYY HH:mm [was online]",
+        "deadlinePassed": "Deadline passed",
+        "daysRemaining": "{{count}} days"
+    },
+    "auth": {
+        "login": "Login",
+        "logout": "Logout",
+        "register": "Register",
+        "email": "Email",
+        "password": "Password"
+    },
+    "messages": {
+        "tokenNotFound": "Token not found. Please log in.",
+        "commentSuccess": "Comment sent successfully!",
+        "commentError": "Failed to send comment."
+    },
+    "telegramLink": {
+        "howToPlaceOrder": "How do I place an order?",
+        "howToPurchase": "How do I purchase?",
+        "chatWithSupport": "Chat with Support",
+        "telegram": "Telegram",
+        "errorCreatingSupportChat": "Error creating support chat:"
+    },
+    "telegramNotification": {
+        "continueViaTelegram": "Continue via Telegram",
+        "tooltip": "Receive notifications via Telegram bot about order status and new offers",
+        "notificationsDisabled": "Notifications disabled!"
+    }
 }

@@ -1,13 +1,17 @@
 import React from 'react';
 import PageContainer from '~/widgets/layouts/PageContainer';
 import Meta from '~/shared/ui/meta';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const QuestionsPage = () => {
+    const { t } = useTranslation('questions');
+    
     return (
         <PageContainer>
             <Meta
-                title={'Savol-javoblar'}
-                description="Saytdan foydalanish haqida to'liq qo'llanma bizning Savol-javoblar sahifamizda batafsil yoritib berilgan"
+                title={t('meta.title')}
+                description={t('meta.description')}
             />
             <div className="ps-page--singlee">
                 <div className="container-faqs"></div>
@@ -15,5 +19,19 @@ const QuestionsPage = () => {
         </PageContainer>
     );
 };
+
+export async function getServerSideProps({ locale }) {
+    return {
+        props: {
+            ...(await serverSideTranslations(locale, [
+                'header',
+                'footer',
+                'common',
+                'questions',
+                'modals',
+            ])),
+        },
+    };
+}
 
 export default QuestionsPage;

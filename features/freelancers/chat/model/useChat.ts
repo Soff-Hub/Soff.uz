@@ -9,8 +9,10 @@ import { useChatSocket } from '../api/useChatSocket';
 import { useMessageState, groupMessages } from './useMessageState';
 import { usePendingMessages } from './usePendingMessages';
 import { useAppSelector } from '~/app/store/hooks';
+import { useTranslation } from 'next-i18next';
 
 export const useChat = (chatId?: string) => {
+    const { t } = useTranslation('chat');
     const { startTimeout, stopTimeout, startInterval, stopInterval } =
         useTimeManager();
     const { mutateAsync: deleteMsg } = useDeleteMessage();
@@ -472,9 +474,7 @@ export const useChat = (chatId?: string) => {
             console.error('❌ Error sending message:', error);
             pending.removePending(contentTrimmed, tempMessage.id);
             messageState.removeMessage(tempMessage);
-            message.error(
-                'Xabar yuborishda xatolik yuz berdi. Qayta urinib ko‘ring.'
-            );
+            message.error(t('errors.sendMessageError'));
         }
     };
 
@@ -528,9 +528,7 @@ export const useChat = (chatId?: string) => {
                     status: undefined,
                 });
             }
-            message.error(
-                'Xabarni yangilashda xatolik yuz berdi. Qayta urinib ko‘ring.'
-            );
+            message.error(t('errors.updateMessageError'));
         }
     };
 

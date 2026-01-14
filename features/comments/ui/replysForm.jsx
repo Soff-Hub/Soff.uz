@@ -1,10 +1,12 @@
 import { useState } from 'react';
+import { useTranslation } from 'next-i18next';
 import Cookies from 'js-cookie';
 import { message } from 'antd';
 import { baseURL } from '~/repositories/api';
 import Axios from 'axios';
 
 export default function ReplyForm({ commentId, documentId, onSuccess }) {
+    const { t } = useTranslation('product-pages');
     const [text, setText] = useState('');
     const [loading, setLoading] = useState(false);
 
@@ -14,7 +16,7 @@ export default function ReplyForm({ commentId, documentId, onSuccess }) {
         if (!text.trim()) return;
         const token = Cookies.get('token');
         if (!token) {
-            message.error('Token topilmadi');
+            message.error(t('productDetail.comments.reply.tokenNotFound'));
             return;
         }
 
@@ -34,11 +36,11 @@ export default function ReplyForm({ commentId, documentId, onSuccess }) {
                 }
             );
 
-            message.success('Javob yuborildi');
+            message.success(t('productDetail.comments.reply.success'));
             setText('');
             if (onSuccess) onSuccess();
         } catch (err) {
-            message.error('Javob yuborilmadi');
+            message.error(t('productDetail.comments.reply.error'));
         } finally {
             setLoading(false);
         }
@@ -54,7 +56,7 @@ export default function ReplyForm({ commentId, documentId, onSuccess }) {
                 }}
                 className="form-control mb-2"
                 rows="2"
-                placeholder="Javob yozing..."
+                placeholder={t('productDetail.comments.reply.placeholder')}
                 value={text}
                 onChange={(e) => setText(e.target.value)}
             />
@@ -62,7 +64,7 @@ export default function ReplyForm({ commentId, documentId, onSuccess }) {
                 type="submit"
                 className="btn btn-success btn fs-3  px-4"
                 disabled={loading}>
-                {loading ? 'Yuborilmoqda...' : 'Yuborish'}
+                {loading ? t('productDetail.comments.reply.submitting') : t('productDetail.comments.reply.submit')}
             </button>
         </form>
     );

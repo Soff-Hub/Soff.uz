@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Button, Input, Modal, Upload, Switch, Radio, Tooltip } from 'antd';
+import { useTranslation } from 'next-i18next';
+import { Button, Input, Modal, Upload, Switch, Radio, Tooltip, message } from 'antd';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import ServiceCheckout from './auth/serviceCheckout';
 import AuthModal from '~/features/auth/ui/auth-modal';
@@ -15,6 +16,7 @@ function ServiceOrderModal({
     requirements = '',
     externalOpenModal,
 }) {
+    const { t } = useTranslation('orders');
     const [openAuth, setOpenAuth] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [showPayment, setShowPayment] = useState(false);
@@ -110,7 +112,7 @@ function ServiceOrderModal({
                                     styles.title
                                     // "type_payment_h3 text-center mb-4"
                                 }>
-                                Buyurtma uchun to'lovni amalga oshiring
+                                {t('serviceDetail.orderModal.title')}
                             </h3>
 
                             <div
@@ -120,10 +122,7 @@ function ServiceOrderModal({
                                 }>
                                 <i className="fa-solid fa-shield-halved text-success fs-4 mb-2"></i>
                                 <p className="text-muted mb-0">
-                                    Sizning to'lovingiz Soff tizimi tomonidan
-                                    xavfsiz saqlanadi. Mutaxassisga to'lov faqat
-                                    siz ishni ko'rib chiqib, tasdiqlaganingizdan
-                                    so'ng amalga oshiriladi.
+                                    {t('serviceDetail.orderModal.securityMessage')}
                                 </p>
                             </div>
 
@@ -140,7 +139,7 @@ function ServiceOrderModal({
                                     <div className="text-end">
                                         <h4 className="text-primary mb-0 fw-bold">
                                             {formatCurrencyWithSpace(price)}{' '}
-                                            so'm
+                                            {t('serviceDetail.orderModal.currency')}
                                         </h4>
                                     </div>
                                 </div>
@@ -151,8 +150,7 @@ function ServiceOrderModal({
                                     <h5
                                         className="mb-3"
                                         style={{ fontWeight: 'semi-bold' }}>
-                                        Frilanser ishni boshlashi uchun
-                                        quyidagilarni yuboring:
+                                        {t('serviceDetail.orderModal.freelancerNeeds')}
                                     </h5>
                                     <div
                                         style={{
@@ -173,7 +171,7 @@ function ServiceOrderModal({
                                 style={{
                                     fontWeight: 'semi-bold',
                                 }}>
-                                Buyurtma tafsilotlari
+                                {t('serviceDetail.orderModal.orderDetails')}
                             </h5>
                             <TextArea
                                 rows={4}
@@ -181,7 +179,7 @@ function ServiceOrderModal({
                                 onChange={(e) => {
                                     setDescription(e.target.value);
                                 }}
-                                placeholder="Buyurtma bo'yicha qo'shimcha ma'lumot (ixtiyoriy)"
+                                placeholder={t('serviceDetail.orderModal.additionalInfo')}
                                 className="mb-4"
                             />
 
@@ -203,7 +201,7 @@ function ServiceOrderModal({
                                         const maxSize = 50 * 1024 * 1024;
                                         if (file.size > maxSize) {
                                             message.error(
-                                                "Fayl 50 MB dan katta bo'lishi mumkin emas"
+                                                t('serviceDetail.orderModal.fileSizeError')
                                             );
                                             return;
                                         }
@@ -215,7 +213,7 @@ function ServiceOrderModal({
                                     icon={
                                         <i className="fa-solid fa-paperclip"></i>
                                     }>
-                                    Fayl yuklash (ixtiyoriy)
+                                    {t('serviceDetail.orderModal.fileUpload')}
                                 </Button>
                             </Upload>
 
@@ -232,7 +230,7 @@ function ServiceOrderModal({
                                     onClick={() => {
                                         handleToPaymentPart();
                                     }}>
-                                    Buyurtmani rasmiylashtirish
+                                    {t('serviceDetail.orderModal.formalizeOrder')}
                                     <i className="fa-solid fa-arrow-right ms-2"></i>
                                 </Button>
                             </div>
@@ -242,7 +240,7 @@ function ServiceOrderModal({
                             <div className={styles.orderPaymentHeader}>
                                 {/* NOTE: Balance button temporarily commented */}
                                 {balanceDisabled ? (
-                                    <Tooltip title="To'lov uchun balansingizdan foydalaning">
+                                    <Tooltip title={t('serviceDetail.orderModal.useBalance')}>
                                         <Button
                                             onClick={() =>
                                                 setMode((pre) => !pre)
@@ -257,7 +255,7 @@ function ServiceOrderModal({
                                             }
                                             disabled={!balanceDisabled}>
                                             <Switch value={mode} size="small" />
-                                            Balance - {leftBalance} so'm
+                                            {t('serviceDetail.orderModal.balance')} {leftBalance} {t('serviceDetail.orderModal.currency')}
                                         </Button>
                                     </Tooltip>
                                 ) : null}
@@ -269,7 +267,7 @@ function ServiceOrderModal({
                                         <i className="fa-solid fa-arrow-left"></i>
                                     }
                                     onClick={() => setShowPayment(false)}>
-                                    Orqaga
+                                    {t('serviceDetail.orderModal.back')}
                                 </Button>
                             </div>
 

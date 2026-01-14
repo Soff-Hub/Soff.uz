@@ -1,24 +1,15 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react';
+import { useTranslation } from 'next-i18next';
 import { useQuery } from '@tanstack/react-query';
 import { baseUrl } from '~/repositories/Repository';
 import { useRouter } from 'next/router';
 import ProductCard from '~/entities/product/product-card';
 import { Skeleton } from 'antd';
 import useResponsive from '~/shared/utilities/useResponsive';
-import dynamic from 'next/dynamic';
 import Image from 'next/image';
 
-// Lazy load the no-info image
-const NoInfoImage = dynamic(() => Promise.resolve(() => (
-    <Image
-        src="/static/img/noinfo.svg"
-        alt="Batafsil ma'lumot yo'q"
-        width={200}
-        height={200}
-    />
-)), { ssr: false });
-
 function SimilarProducts() {
+    const { t } = useTranslation('product-pages');
     const router = useRouter();
     const { isMobile } = useResponsive();
     const { query } = router;
@@ -113,13 +104,18 @@ function SimilarProducts() {
                 </div>
             ) : (
                 <div className="text-center">
-                    <NoInfoImage />
+                    <Image
+                        src="/static/img/noinfo.svg"
+                        alt={t('productDetail.similarProducts.noInfoAlt')}
+                        width={200}
+                        height={200}
+                    />
                     <p
                         style={{
                             fontSize: '18px',
                             marginTop: '16px',
                         }}>
-                        O'xshash mahsulotlar topilmadi
+                        {t('productDetail.similarProducts.notFound')}
                     </p>
                 </div>
             )}

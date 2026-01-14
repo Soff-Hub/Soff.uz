@@ -1,0 +1,90 @@
+{
+    "wishlist": {
+        "title": "Tanlanganlar",
+        "description": "Soff.uz - Saytida harid savatiga saqlab qo'ygan mahsuloatlaringizni sotib olishni unutmang",
+        "emptyTitle": "Tanlangan mahsulotlar yo'q",
+        "emptyDescription": "Mahsulotni tanlash uchun yurakcha belgisini bosing va ularni bu yerda saqlang.",
+        "addToCart": "Savatga qo'shish",
+        "download": "Yuklab olish",
+        "remove": "O'chirish",
+        "selectProducts": "Mahsulotlar tanlash",
+        "successTitle": "Muvaffaqqiyatli!",
+        "successAddToCart": "Siz mahsulotni savatga qo'shdingiz",
+        "free": "Bepul",
+        "count": "Tanlanganlar ({{count}})"
+    },
+    "shoppingCart": {
+        "title": "Savat",
+        "description": "Xarid savatingizdagi mahsulot va xizmatlarni ko'rib chiqing, narxlarni solishtiring va to'lovni amalga oshiring. Soff.uz — ishonchli onlayn marketplace va frilans platformasi.",
+        "emptyTitle": "Savat bo'sh",
+        "emptyDescription": "To'lov qilish uchun biror mahsulot qo'shing.",
+        "startShopping": "Xarid qilishni boshlash",
+        "totalItems": "Jami mahsulotlar:",
+        "subtotal": "Oraliq summa:",
+        "serviceFee": "Xizmat haqi ({{percentage}}%):",
+        "total": "Jami to'lov:",
+        "proceedToCheckout": "To'lovga o'tish",
+        "count": "Mahsulotlar ({{count}})",
+        "free": "Bepul",
+        "items": "ta"
+    },
+    "checkout": {
+        "title": "Xarid savati",
+        "description": "Xaridni yakunlash va xizmatlardan foydalanish uchun Soff.uz xarid savatiga tashrif buyuring — qulay, tez va xavfsiz to'lov tizimi.",
+        "emptyTitle": "Savat bo'sh",
+        "emptyDescription": "To'lov qilish uchun biror mahsulot qo'shing.",
+        "startShopping": "Xarid qilishni boshlash",
+        "header": "Xarid savati"
+    },
+    "notification": {
+        "title": "Yangiliklar",
+        "breadcrumbHome": "Bosh sahifa",
+        "breadcrumbNotifications": "Yangiliklar",
+        "description": "Soff.uz bildirishnomalar sahifasida sizga tegishli barcha yangiliklar, buyurtmalar, xabarlar va tizim ogohlantirishlarini ko'rib chiqing.",
+        "pageTitle": "Bildirishnomalar",
+        "empty": "Yangiliklar hozircha yo'q!",
+        "error": "Xatolik yuz berdi, qayta urinib ko'ring!",
+        "details": "Batafsil"
+    },
+    "sellerProducts": {
+        "title": "Sotib olinganlar",
+        "description": "Soff.uz'da sotib olingan mahsulot va xizmatlaringizni bu sahifada ko'rib chiqing. Yuklab oling, qayta faollashtiring yoki tafsilotlarni boshqaring.",
+        "pageTitle": "Xarid Qilingan Materiallar",
+        "searchPlaceholder": "Qidiruv",
+        "emptyTitle": "Xarid qilingan mahsulotlar topilmadi",
+        "emptyDescription": "Hozircha hech qanday mahsulot sotib olmagan ko'rinasiz. Bizning katalogimizni ko'rib chiqing va o'zingizga kerakli mahsulotlarni toping.",
+        "browseProducts": "Mahsulotlarni ko'rish",
+        "rate": "Baholash",
+        "download": "Yuklab olish",
+        "downloadViaTelegram": "Telegram orqali olish",
+        "commentModalTitle": "Izoh qoldiring",
+        "categories": {
+            "file": "Ilmiy ishlar",
+            "3d": "3D modellar va Interier dizaynlar",
+            "design": "Dizayn shablonlar",
+            "website": "Veb saytlar",
+            "template": "Turli sohalar uchun shablonlar",
+            "video": "Video darsliklar"
+        }
+    },
+    "donat": {
+        "title": "Loyiha rivojiga hissa qo'shing",
+        "heading": "Loyiha rivoji uchun o'z hissangizni qo'shing",
+        "description": "Soff.uz loyihasining rivojlanishiga o'z hissangizni qo'shing. Xayriya yordami bilan platformani yanada yaxshilashga yordam bering."
+    },
+    "breadcrumbs": {
+        "home": "Asosiy sahifa",
+        "cart": "Xarid savati",
+        "wishlist": "Tanlanganlar"
+    },
+    "sidebar": {
+        "user": "Foydalanuvchi",
+        "purchased": "Sotib olinganlar",
+        "myOrders": "Buyurtmalarim",
+        "wishlist": "Tanlanganlar",
+        "shoppingCart": "Savatcha",
+        "chat": "Chat",
+        "notifications": "Bildirishnomalar",
+        "logout": "Chiqish"
+    }
+}

@@ -1,0 +1,31 @@
+{
+    "comments": {
+        "checking": "Tekshirilmoqda...",
+        "form": {
+            "tokenNotFound": "Token topilmadi. Iltimos, tizimga kiring.",
+            "success": "Izoh muvaffaqiyatli yuborildi!",
+            "error": "Izoh yuborilmadi.",
+            "required": "Iltimos, izoh yozing!",
+            "ratingRequired": "Iltimos, baho bering!",
+            "placeholder": "Izohingizni yozing...",
+            "submitting": "Yuborilmoqda...",
+            "submit": "Jo'natish"
+        },
+        "list": {
+            "title": "Izohlar",
+            "reply": "Javob berish",
+            "replyTooltip": "Javob yozish",
+            "loading": "Yuklanmoqda...",
+            "loadingMore": "Ko'proq yuklanmoqda...",
+            "avatarAlt": "Avatar"
+        },
+        "reply": {
+            "tokenNotFound": "Token topilmadi",
+            "success": "Javob yuborildi",
+            "error": "Javob yuborilmadi",
+            "placeholder": "Javob yozing...",
+            "submitting": "Yuborilmoqda...",
+            "submit": "Yuborish"
+        }
+    }
+}

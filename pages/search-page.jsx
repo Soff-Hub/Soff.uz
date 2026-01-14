@@ -16,6 +16,8 @@ import { useQuery } from '@tanstack/react-query';
 import { api } from '~/repositories/api';
 import { baseUrlUseApi } from '~/repositories/useApi';
 import { getOrCreateDeviceId } from '~/shared/utilities/device-id';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const Search_Results = ({
     keyword,
@@ -33,6 +35,7 @@ const Search_Results = ({
     const pageRef = useRef(null);
     const { isLoggedIn } = useSelector((state) => state.auth);
     const tab = router.query.tab || '1';
+    const { t } = useTranslation('search');
 
     const topServicesQuery = new URLSearchParams({
         limit: 6,
@@ -69,7 +72,7 @@ const Search_Results = ({
                 <Link href={dynamicCreateBtnLink}>
                     <a>
                         <div className="Search_Results_not_found_btn w-100 text-center py-3">
-                            Buyurtma yaratish
+                            {t('notFound.createOrder')}
                         </div>
                     </a>
                 </Link>
@@ -196,7 +199,7 @@ const Search_Results = ({
     const tabItems = [
         {
             key: '1',
-            label: 'Mahsulotlar',
+            label: t('tabs.products'),
             children: (
                 <Search_Results_Products
                     children={sideElements}
@@ -206,7 +209,7 @@ const Search_Results = ({
         },
         {
             key: '2',
-            label: 'Xizmatlar',
+            label: t('tabs.services'),
             children: (
                 <Search_Results_Services
                     children={sideElements}
@@ -216,7 +219,7 @@ const Search_Results = ({
         },
         {
             key: '3',
-            label: 'Mutahasislar',
+            label: t('tabs.specialists'),
             children: (
                 <Search_Results_Specialists
                     children={sideElements}
@@ -230,15 +233,17 @@ const Search_Results = ({
         <div ref={pageRef} className="global_search_results">
             <Head>
                 <title>
-                    {keyword ? `“${keyword}”` : 'Soff.uz - Qidiruv natijalar'}
+                    {keyword
+                        ? `${t('meta.titleWithKeyword', { keyword })} | Soff.uz`
+                        : t('meta.title')}
                 </title>
                 <meta name="robots" content="index, follow" />
                 <meta
                     name="description"
                     content={
                         keyword
-                            ? `“${keyword}” bo‘yicha topilgan natijalar. Soff.uz orqali kerakli bo'lgan raqamli mahsulotlarni yuklab olishingiz mumkin`
-                            : "Soff.uz orqali kerakli bo'lgan raqamli mahsulotlarni yuklab olishingiz mumkin"
+                            ? t('meta.descriptionWithKeyword', { keyword })
+                            : t('meta.description')
                     }
                 />
             </Head>
@@ -275,7 +280,7 @@ const Search_Results = ({
                                     }
                                     type="text"
                                     value={searchTerm}
-                                    placeholder="Izlayotgan mahsulotingizni toping..."
+                                    placeholder={t('input.placeholder')}
                                     onChange={(e) =>
                                         setSearchTerm(e.target.value)
                                     }
@@ -308,6 +313,7 @@ const Search_Results = ({
 export default Search_Results;
 
 export async function getServerSideProps(context) {
+    const { locale } = context;
     const {
         keyword = '',
         page = 1,
@@ -409,6 +415,13 @@ export async function getServerSideProps(context) {
                     productsInitialData: productsInitialData?.results
                         ? productsInitialData
                         : null,
+                    ...(await serverSideTranslations(locale, [
+                        'header',
+                        'footer',
+                        'common',
+                        'search',
+                        'modals',
+                    ])),
                 },
             };
         }
@@ -420,6 +433,13 @@ export async function getServerSideProps(context) {
                     ...restQueries,
                     error: null,
                     servicesInitialData,
+                    ...(await serverSideTranslations(locale, [
+                        'header',
+                        'footer',
+                        'common',
+                        'search',
+                        'modals',
+                    ])),
                 },
             };
         }
@@ -430,6 +450,13 @@ export async function getServerSideProps(context) {
                 props: {
                     ...restQueries,
                     sellersInitialData,
+                    ...(await serverSideTranslations(locale, [
+                        'header',
+                        'footer',
+                        'common',
+                        'search',
+                        'modals',
+                    ])),
                 },
             };
         }
@@ -454,6 +481,13 @@ export async function getServerSideProps(context) {
                         : null,
                     servicesInitialData,
                     sellersInitialData,
+                    ...(await serverSideTranslations(locale, [
+                        'header',
+                        'footer',
+                        'common',
+                        'search',
+                        'modals',
+                    ])),
                 },
             };
         }

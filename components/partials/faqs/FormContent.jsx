@@ -1,8 +1,10 @@
 import React from 'react';
 import { Button, Form, Input, Modal } from 'antd';
 import useAuth from '~/shared/hooks/useAuth';
+import { useTranslation } from 'next-i18next';
 // import CaptchaForm from '~/components/captcha/CaptchaForm';
 const App = () => {
+    const { t } = useTranslation('form');
     const [form] = Form.useForm();
     const { feedbackPost } = useAuth();
     const onFinish = async values => {
@@ -10,22 +12,22 @@ const App = () => {
         if (respons.status === 201) {
             const modal = Modal.success({
                 centered: true,
-                title: 'Muvaffaqqiyatli!',
+                title: t('content.modals.success.title'),
                 content: `${
                     respons?.data?.msg
                         ? respons?.data?.msg
-                        : 'Xabaringiz muvaffaqqiyatli qabul qilindi'
+                        : t('content.modals.success.defaultMessage')
                 }`,
             });
             modal.update;
         } else if (respons.status === 404) {
             const modal = Modal.error({
                 centered: true,
-                title: 'Xatolik!',
+                title: t('content.modals.error.title'),
                 content: `${
                     respons?.data?.msg
                         ? respons?.data?.msg
-                        : 'Xabaringiz muvaffaqqiyatli qabul qilindi'
+                        : t('content.modals.error.defaultMessage')
                 }`,
             });
             modal.update;
@@ -36,26 +38,24 @@ const App = () => {
     return (
         <>
             <div className='mt-4'>
-                <h3>Savollaringiz bormi?</h3>
+                <h3>{t('content.title')}</h3>
                 <p>
-                    Agar qo’shimcha savollaringiz bo’lsa, bizning ishonch
-                    telefon raqam{' '}
+                    {t('content.contactInfo')}{' '}
                     <a
                         href='tell:+998910086789'
                         className='text-success text-decoration-underline'>
-                        +998910086789
+                        {t('content.phoneNumber')}
                     </a>{' '}
-                    orqali yo’llang, biz qo’ng’iroqlarni 9:00 dan kech 22:00 ga
-                    qadar qabul qilamiz, xizmat qiymati - bepul!
+                    {t('content.phoneNote')}
                 </p>
                 <p>
-                    Bizning Pochta manzilimiz{' '}
+                    {t('content.emailInfo')}{' '}
                     <a
                         href='mailto:support@soff.uz'
                         className='text-success text-decoration-underline'>
-                        support@soff.uz
+                        {t('content.emailAddress')}
                     </a>{' '}
-                    ga yozing, biz murojaatlarni 24/7 qabul qilamiz!
+                    {t('content.emailNote')}
                 </p>
             </div>
             <Form
@@ -67,7 +67,7 @@ const App = () => {
                     minHeight: '52px',
                 }}
                 scrollToFirstError>
-                <h3 className='mt-xl-5'>Xabar yuborish</h3>
+                <h3 className='mt-xl-5'>{t('content.formTitle')}</h3>
                 <div className='row'>
                     <div className='col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 '>
                         <div className='form-group'>
@@ -76,13 +76,13 @@ const App = () => {
                                 rules={[
                                     {
                                         required: true,
-                                        message: 'Ism familiyangizni kiriting',
+                                        message: t('content.fields.name.error'),
                                     },
                                 ]}
                                 hasFeedback>
                                 <Input
                                     className='inputt'
-                                    placeholder='Ism familiya'
+                                    placeholder={t('content.fields.name.placeholder')}
                                 />
                             </Form.Item>
                         </div>
@@ -94,16 +94,14 @@ const App = () => {
                                 rules={[
                                     {
                                         type: 'text',
-                                        message:
-                                            'Email yoki telefon raqamingizni kiriting',
+                                        message: t('content.fields.emailOrPhone.error'),
                                     },
                                     {
                                         required: true,
-                                        message:
-                                            'Email yoki telefon raqamingizni kiriting',
+                                        message: t('content.fields.emailOrPhone.error'),
                                     },
                                 ]}>
-                                <Input placeholder='Email yoki telefon raqam' />
+                                <Input placeholder={t('content.fields.emailOrPhone.placeholder')} />
                             </Form.Item>
                         </div>
                     </div>
@@ -111,16 +109,15 @@ const App = () => {
                         <div className='form-group'>
                             <Form.Item
                                 name='subject'
-                                tooltip='Yuborayotgan xabaringizga mavzu yozing'
+                                tooltip={t('content.fields.subject.tooltip')}
                                 rules={[
                                     {
                                         required: true,
-                                        message:
-                                            'Yuborayotgan xabaringizga mavzu yozing',
+                                        message: t('content.fields.subject.error'),
                                         whitespace: true,
                                     },
                                 ]}>
-                                <Input placeholder='Mavzu' />
+                                <Input placeholder={t('content.fields.subject.placeholder')} />
                             </Form.Item>
                         </div>
                     </div>
@@ -131,13 +128,13 @@ const App = () => {
                                 rules={[
                                     {
                                         required: true,
-                                        message: 'Xabar yozing',
+                                        message: t('content.fields.description.error'),
                                     },
                                 ]}>
                                 <Input.TextArea
                                     showCount
                                     maxLength={100}
-                                    placeholder='Xabar'
+                                    placeholder={t('content.fields.description.placeholder')}
                                 />
                             </Form.Item>
                         </div>
@@ -149,7 +146,7 @@ const App = () => {
                             <Button
                                 htmlType='submit'
                                 className='ps-btn  yuborish'>
-                                Yuborish
+                                {t('content.submit')}
                             </Button>
                         </div>
                     </div>

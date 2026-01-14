@@ -6,11 +6,20 @@ import { logout as profileLogout } from '~/store/profile/slice';
 
 const getToken = () => {
     if (typeof window !== 'undefined') {
-        const userLocal =
-            typeof window !== 'undefined' ? localStorage.getItem('user') : null;
+        const userLocal = localStorage.getItem('user');
         return userLocal ? JSON.parse(userLocal)?.access : '';
     }
     return null;
+};
+
+export const getUserLocale = () => {
+    if (typeof window !== 'undefined') {
+        const storedLocale = localStorage.getItem('user_locale');
+        // Fallback to 'uz' to keep previous default behavior
+        return storedLocale || 'uz';
+    }
+    // On server side we don't have access to localStorage, keep default
+    return 'uz';
 };
 
 // Retry function: only retry on server errors (5xx) or connection errors, not on 4xx errors
@@ -73,6 +82,12 @@ export const apiSoffSlice = createApi({
                 if (token) {
                     headers.set('authorization', `Bearer ${token}`);
                 }
+
+                const locale = getUserLocale();
+                if (locale) {
+                    headers.set('Accept-Language', locale);
+                }
+
                 return headers;
             },
         })
@@ -101,6 +116,12 @@ export const apiFreelanceSlice = createApi({
                 if (token) {
                     headers.set('authorization', `Bearer ${token}`);
                 }
+
+                const locale = getUserLocale();
+                if (locale) {
+                    headers.set('Accept-Language', locale);
+                }
+
                 return headers;
             },
         })

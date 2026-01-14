@@ -6,9 +6,11 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import isToday from 'dayjs/plugin/isToday';
 import isYesterday from 'dayjs/plugin/isYesterday';
+import 'dayjs/locale/en';
+import 'dayjs/locale/ru';
 
 // Lotincha oy va hafta kunlari
-const locale = {
+const uzLocale = {
     name: 'uz-latn',
     weekdays:
         'Yakshanba_Dushanba_Seshanba_Chorshanba_Payshanba_Juma_Shanba'.split(
@@ -20,7 +22,7 @@ const locale = {
     weekStart: 1,
     weekdaysShort: 'Yak_Du_Se_Ch_Pa_Ju_Sh'.split('_'),
     monthsShort: 'yan_fev_mar_apr_may_iyun_iyul_avg_sep_okt_noy_dek'.split('_'),
-    weekdaysMin: 'Ya_Du_Se_Ch_Pa_Ju_Sh'.split('_'), // This is the missing property!
+    weekdaysMin: 'Ya_Du_Se_Ch_Pa_Ju_Sh'.split('_'),
     formats: {
         LT: 'HH:mm',
         LTS: 'HH:mm:ss',
@@ -47,11 +49,27 @@ const locale = {
     ordinal: (n) => `${n}-chi`,
 };
 
-// Register the locale
-dayjs.locale(locale, undefined, true);
+// Register the custom Uzbek locale
+dayjs.locale(uzLocale, undefined, true);
 
-// IMPORTANT: Explicitly set it as active locale
-dayjs.locale('uz-latn');
+// Map Next.js locale to dayjs locale
+const dayjsLocaleMap = {
+    uz: 'uz-latn',
+    en: 'en',
+    ru: 'ru',
+};
+
+/**
+ * Set dayjs locale based on Next.js locale
+ * @param {string} nextLocale - Next.js locale (uz, en, ru)
+ */
+export function setDayjsLocale(nextLocale = 'uz') {
+    const dayjsLocale = dayjsLocaleMap[nextLocale] || 'uz-latn';
+    dayjs.locale(dayjsLocale);
+}
+
+// Initialize with default locale
+setDayjsLocale('uz');
 
 // Extend dayjs with UTC and timezone plugins
 dayjs.extend(utc);
@@ -65,6 +83,8 @@ dayjs.extend(isYesterday);
 // Set default timezone to Asia/Tashkent
 dayjs.tz.setDefault('Asia/Tashkent');
 
+// Legacy functions - kept for backward compatibility
+// For new code, use functions from dayjs-helpers.js with i18n support
 export function getTimeAgo(dateString) {
     return dayjs(dateString, 'YYYY-MM-DD HH:mm').fromNow();
 }
@@ -72,51 +92,13 @@ export function getTimeAgo(dateString) {
 export const getDate = (date) => {
     return dayjs(date).format('DD/MM/YYYY');
 };
+
 export const getDateTime = (date) => {
     return dayjs(date).format('YYYY-MM-DD HH:mm');
 };
 
-export const getStatus = (timestamp) => {
-    if (!timestamp || !dayjs(timestamp).isValid()) {
-        return 'Noma’lum vaqt';
-    }
-
-    const now = dayjs();
-    const diffMinutes = now.diff(dayjs(timestamp), 'minute');
-    const diffHours = now.diff(dayjs(timestamp), 'hour');
-    const diffDays = now.diff(dayjs(timestamp), 'day');
-
-    // 5 minut ichida
-    if (diffMinutes < 5) {
-        return <span style={{ color: '#02a214' }}>Online</span>;
-    }
-
-    // 1 soatdan kam
-    if (diffMinutes < 60) {
-        return `${diffMinutes} daqiqa oldin `;
-    }
-
-    // 24 soatdan kam
-    if (diffHours < 24) {
-        const minutes = diffMinutes % 60;
-        return `${diffHours} soat ${minutes} daqiqa oldin `;
-    }
-
-    // 1 kundan katta
-    return dayjs(timestamp).format('DD.MM.YYYY HH:mm [da online edi]');
-};
-
-export function getRemainingDays(createdAt, deliveryDay) {
-    const endDate = dayjs(createdAt).add(Number(deliveryDay), 'day'); // tugash sanasi
-    const today = dayjs(); // bugungi sana
-
-    const diff = endDate.diff(today, 'day'); // qolgan kunlar
-
-    if (diff < 0) {
-        return 'Muddat tugagan'; // muddat o‘tgan
-    }
-
-    return `${diff} kun`; // qolgan kun
-}
+// Note: getStatus and getRemainingDays are moved to dayjs-helpers.js
+// with i18n support. These are kept for backward compatibility only.
+// Please migrate to use the i18n-aware versions from dayjs-helpers.js
 
 export default dayjs;

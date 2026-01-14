@@ -15,9 +15,7 @@ const Faqs = dynamic(() => import('./faqs'), { ssr: false });
 const YoutubeVid = dynamic(() => import('./youtube-vid'), { ssr: false });
 
 const Home = () => {
-    const { t } = useTranslation('common');
-
-    console.log(t('welcome'));
+    const { t } = useTranslation('index');
 
     return (
         <div>
@@ -27,7 +25,7 @@ const Home = () => {
                 </div>
             </div>
             <YoutubeVid
-                text={'Soff - Raqamli mahsulotlar va onlayn xizmatlar bozori'}
+                text={t('youtubeVid.text')}
                 videoId={'https://www.youtube.com/watch?v=hn55AZoxWes'}
             />
             <div className="container">

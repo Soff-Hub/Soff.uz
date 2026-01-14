@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import { Button } from 'antd';
 import styles from './style.module.scss';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
@@ -8,6 +9,7 @@ import { sleep } from '~/shared/utilities/sleep';
 import ServiceOrderModal from '../ServiceOrderModal';
 
 const StickyBox = ({ data }) => {
+    const { t } = useTranslation('orders');
     const { mutate: createChat } = useCreateChat();
     const { isLoggedIn } = useSelector((state) => state.auth);
 
@@ -56,7 +58,7 @@ const StickyBox = ({ data }) => {
                                     setActionTracker,
                                 })
                             }>
-                            <span className={styles.chatTitle}>Chat</span>
+                            <span className={styles.chatTitle}>{t('serviceDetail.stickyBox.chat')}</span>
                         </Button>
 
                         <Button
@@ -69,8 +71,8 @@ const StickyBox = ({ data }) => {
                                     setActionTracker,
                                 })
                             }>
-                            Buyurtma berish (
-                            {formatCurrencyWithSpace(data?.price)} so'm)
+                            {t('serviceDetail.stickyBox.placeOrder')}
+                            {formatCurrencyWithSpace(data?.price)} {t('serviceDetail.stickyBox.currency')})
                         </Button>
                     </div>
                 </div>

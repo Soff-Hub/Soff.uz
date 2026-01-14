@@ -1,4 +1,6 @@
 import React from 'react';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import PageContainer from '~/widgets/layouts/PageContainer';
 import Meta from '~/shared/ui/meta';
 import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
@@ -37,7 +39,6 @@ const metaProps = {
 };
 
 const type = 'file';
-const defaultTitle = 'Ilmiy ishlar kategoriyasi';
 
 export default function ProductCategoryScreen({
     productsData,
@@ -47,6 +48,7 @@ export default function ProductCategoryScreen({
     childCategory,
     page,
 }) {
+    const { t } = useTranslation('product-pages');
     const router = useRouter();
 
     const handlePageChange = (newPage) => {
@@ -64,16 +66,14 @@ export default function ProductCategoryScreen({
 
     const fullTitle = title && subTitle ? `${title} - ${subTitle}` : title;
 
+    const defaultTitle = t('titles.scientificResources');
     const finalTitle = fullTitle || defaultTitle;
 
     return (
         <PageContainer>
             <Meta
                 title={finalTitle}
-                description={
-                    finalTitle +
-                    ' bo‘yicha eng yaxshi raqamli mahsulotlarni Soff.uz da toping. Ishonchli sotuvchilar va sifatli kontent!'
-                }
+                description={finalTitle + t('meta.scientificDescription')}
                 {...metaProps}
             />
 
@@ -109,7 +109,7 @@ export default function ProductCategoryScreen({
                             style={{
                                 marginBottom: '80px',
                             }}>
-                            Tayyor mahsulotlardan foydalanish qanday ishlaydi?
+                            {t('howItWorks.title')}
                         </h2>
                         <div className={styles.steps}>
                             <div className={styles.stepItem}>
@@ -118,10 +118,13 @@ export default function ProductCategoryScreen({
                                     alt="starts"
                                 />
                                 <div>
-                                    <h3>Qidiring va tanlang</h3>
+                                    <h3>
+                                        {t('howItWorks.steps.search.title')}
+                                    </h3>
                                     <p>
-                                        Katalogdan yoki qidiruv orqali sizga
-                                        kerakli tayyor mahsulotni toping.
+                                        {t(
+                                            'howItWorks.steps.search.description'
+                                        )}
                                     </p>
                                 </div>
                             </div>
@@ -131,11 +134,13 @@ export default function ProductCategoryScreen({
                                     alt="starts"
                                 />
                                 <div>
-                                    <h3>Sotib oling</h3>
+                                    <h3>
+                                        {t('howItWorks.steps.purchase.title')}
+                                    </h3>
                                     <p>
-                                        Xavfsiz to‘lov tizimi orqali mahsulotni
-                                        sotib oling — narx va shartlar oldindan
-                                        ko‘rinadi.
+                                        {t(
+                                            'howItWorks.steps.purchase.description'
+                                        )}
                                     </p>
                                 </div>
                             </div>
@@ -145,19 +150,21 @@ export default function ProductCategoryScreen({
                                     alt="starts"
                                 />
                                 <div>
-                                    <h3>Yuklab oling va foydalaning</h3>
+                                    <h3>
+                                        {t('howItWorks.steps.download.title')}
+                                    </h3>
                                     <p>
-                                        Mahsulotni darhol yuklab oling va
-                                        ishlatishni boshlang.
+                                        {t(
+                                            'howItWorks.steps.download.description'
+                                        )}
                                     </p>
                                 </div>
                             </div>
                         </div>
                     </section>
                     <GrayCard
-                        title="Kerakli mahsulotni topa olmadingizmi? Buyurtma
-                                berishingiz mumkin."
-                        btn="Buyurtmar berish"
+                        title={t('grayCard.title')}
+                        btn={t('grayCard.button')}
                         link="/orders?direction=scientific_work"
                     />
                 </div>
@@ -167,6 +174,7 @@ export default function ProductCategoryScreen({
 }
 
 export async function getServerSideProps(context) {
+    const { locale } = context;
     const {
         page = 1,
         parentCategory = '',
@@ -223,6 +231,13 @@ export async function getServerSideProps(context) {
 
     return {
         props: {
+            ...(await serverSideTranslations(locale, [
+                'header',
+                'footer',
+                'common',
+                'product-pages',
+                'modals',
+            ])),
             productsData: productsData || null,
             fourChildData: fourChildData || null,
             childCategoryData: childCategoryData || null,

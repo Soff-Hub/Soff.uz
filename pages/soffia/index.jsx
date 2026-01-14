@@ -3,41 +3,45 @@ import { Button, Steps } from 'antd';
 import PageContainer from '~/widgets/layouts/PageContainer';
 import Meta from '~/shared/ui/meta';
 import { soffiaIconSVG3 } from '~/widgets/header/HeaderActions/HeaderAIIcon';
-
-const steps = [
-  {
-    emoji: "🤖",
-    title: "Botga /start bering",
-    description: "Bot sizdan to'lov qilishingizni so'raydi",
-  },
-  {
-    emoji: "💳",
-    title: "To'lovni amalga oshiring",
-    description: "So'ngra sizdan mavzu haqida so‘raydi",
-  },
-  {
-    emoji: "📝",
-    title: "Mavzuni kiriting",
-    description: "Bot sizga presentatsiya tayyorlaydi",
-  },
-  {
-    emoji: "⬇️",
-    title: 'Prezentatsiyani yuklab oling',
-    description: '8-10 ta slayddan iborat fayl tayyor.',
-  },
-];
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 export default function SoffiaPage() {
+  const { t } = useTranslation('soffia');
+  
+  const steps = [
+    {
+      emoji: "🤖",
+      title: t('steps.step1.title'),
+      description: t('steps.step1.description'),
+    },
+    {
+      emoji: "💳",
+      title: t('steps.step2.title'),
+      description: t('steps.step2.description'),
+    },
+    {
+      emoji: "📝",
+      title: t('steps.step3.title'),
+      description: t('steps.step3.description'),
+    },
+    {
+      emoji: "⬇️",
+      title: t('steps.step4.title'),
+      description: t('steps.step4.description'),
+    },
+  ];
+  
   return (
     <PageContainer>
         <Meta
-        title={"Sun'iy Intellekt Orqali Prezentatsiya yaratish - Soffia AI"} 
+        title={t('meta.title')} 
         image={'https://soff.uz/static/img/soff/logo-dark.png'} 
-        description={"Soffia AI yordamida tez va oson prezentatsiya yarating. Mavzuni kiriting, to‘lovni amalga oshiring va 8-10 ta slayddan iborat tayyor faylni yuklab oling."} 
+        description={t('meta.description')} 
         keywords={[
             { name: "prezentatsiya yaratish" },
             { name: "Soffia AI" },
-            { name: "sun’iy intellekt prezentatsiya" },
+            { name: "sun'iy intellekt prezentatsiya" },
             { name: "AI prezentatsiya generator" },
             { name: "avtomatik slayd tayyorlash" },
             { name: "taqdimot tayyorlash" },
@@ -58,12 +62,10 @@ export default function SoffiaPage() {
           color: '#fff',
         }}>
           <h1 className="display-5 mb-4" style={{ fontFamily: 'Roboto, sans-serif' }}>
-            <strong>Soffia AI</strong> yordamida avtomatik prezentatsiya yarating
+            <strong>{t('hero.title')}</strong>
           </h1>
           <p className=" mb-4 mx-auto" style={{ maxWidth: '800px' }}>
-            Mavzuni kiriting — botimiz siz uchun tayyor 8-10 ta slayddan iborat
-            prezentatsiya yaratib beradi. Ma’lumotlar to‘liq sun’iy intellekt asosida
-            tayyorlanadi.
+            {t('hero.description')}
           </p>
           <a
             href="https://t.me/soffia_ai_bot"
@@ -82,7 +84,7 @@ export default function SoffiaPage() {
                 boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
               }}
             >
-              {soffiaIconSVG3} Botni ishga tushurish
+              {soffiaIconSVG3} {t('hero.button')}
             </Button>
           </a>
         </div>
@@ -162,11 +164,25 @@ export default function SoffiaPage() {
               onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
               onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
             >
-              Prezentatsiya yaratishni boshlang 🚀
+              {t('cta.button')}
             </Button>
           </a>
         </div>
       </div>
     </PageContainer>
   );
+}
+
+export async function getServerSideProps({ locale }) {
+    return {
+        props: {
+            ...(await serverSideTranslations(locale, [
+                'header',
+                'footer',
+                'common',
+                'soffia',
+                'modals',
+            ])),
+        },
+    };
 }

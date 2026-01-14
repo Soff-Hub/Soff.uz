@@ -15,19 +15,21 @@ import SidebarLayout from '~/widgets/sidebar/SidebarLayout';
 import FileDownloadLink from '~/shared/ui/file-download-link';
 import CommentForm from '~/features/comments/ui/commentForm';
 import styles from './MyProducts_listSeller.module.scss';
+import { useTranslation } from 'next-i18next';
 
 const { Option } = Select;
 
-const CATEGORY_LIST = [
-    { title: 'Ilmiy ishlar', value: 'file' },
-    { title: '3D modellar va Interier dizaynlar', value: '3d' },
-    { title: 'Dizayn shablonlar', value: 'design' },
-    { title: 'Veb saytlar', value: 'website' },
-    { title: 'Turli sohalar uchun shablonlar', value: 'template' },
-    { title: 'Video darsliklar', value: 'video' },
-];
-
 export default function PurchasedProducts() {
+    const { t } = useTranslation('account');
+
+    const CATEGORY_LIST = [
+        { title: t('sellerProducts.categories.file'), value: 'file' },
+        { title: t('sellerProducts.categories.3d'), value: '3d' },
+        { title: t('sellerProducts.categories.design'), value: 'design' },
+        { title: t('sellerProducts.categories.website'), value: 'website' },
+        { title: t('sellerProducts.categories.template'), value: 'template' },
+        { title: t('sellerProducts.categories.video'), value: 'video' },
+    ];
     const queryClient = useQueryClient();
     const [search, setSearch] = useState('');
     const debouncedSearch = useDebounce(search, 500);
@@ -113,7 +115,7 @@ export default function PurchasedProducts() {
     return (
         <div className={styles.wrapper}>
             <div className="container my-5">
-                <h1 className="page-title">Xarid Qilingan Materiallar</h1>
+                <h1 className="page-title">{t('sellerProducts.pageTitle')}</h1>
                 <SidebarLayout>
                     {/* Search va Filter */}
                     <div
@@ -130,7 +132,9 @@ export default function PurchasedProducts() {
                                 styles.searchWrapper
                             )}>
                             <Input.Search
-                                placeholder="Qidiruv"
+                                placeholder={t(
+                                    'sellerProducts.searchPlaceholder'
+                                )}
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
                                 size={inputSize}
@@ -183,7 +187,7 @@ export default function PurchasedProducts() {
 
             {/* Rating Modal */}
             <Modal
-                title="Izoh qoldiring"
+                title={t('sellerProducts.commentModalTitle')}
                 open={isCommentModalOpen}
                 onCancel={handleModalClose}
                 footer={null}
@@ -209,6 +213,7 @@ const PurchasedProductsLayout = ({
     onRateChange,
     onRateBoxClick,
 }) => {
+    const { t } = useTranslation('account');
     const hasProducts = products && products.length;
 
     // Empty state
@@ -219,19 +224,17 @@ const PurchasedProductsLayout = ({
                     <ShoppingCartOutlined />
                 </div>
                 <h3 className={styles.emptyStateTitle}>
-                    Xarid qilingan mahsulotlar topilmadi
+                    {t('sellerProducts.emptyTitle')}
                 </h3>
                 <p className={styles.emptyStateText}>
-                    Hozircha hech qanday mahsulot sotib olmagan ko'rinasiz.
-                    Bizning katalogimizni ko'rib chiqing va o'zingizga kerakli
-                    mahsulotlarni toping.
+                    {t('sellerProducts.emptyDescription')}
                 </p>
                 <Link href="/scientific-resources/all?slug=all">
                     <Button
                         type="primary"
                         size="large"
                         className={styles.browseBtn}>
-                        Mahsulotlarni ko'rish
+                        {t('sellerProducts.browseProducts')}
                     </Button>
                 </Link>
             </div>
@@ -328,7 +331,7 @@ const PurchasedProductsLayout = ({
                                                 }
                                             />
                                             <span className={styles.rateLabel}>
-                                                Baholash
+                                                {t('sellerProducts.rate')}
                                             </span>
                                         </div>
                                     </div>
@@ -346,7 +349,7 @@ const PurchasedProductsLayout = ({
                                             className={styles.downloadBtn}
                                             size="middle"
                                             block>
-                                            Yuklab olish
+                                            {t('sellerProducts.download')}
                                         </Button>
                                     </FileDownloadLink>
                                     <Button
@@ -364,7 +367,11 @@ const PurchasedProductsLayout = ({
                                             alt="Telegram"
                                             height={20}
                                         />
-                                        <span>Telegram orqali olish</span>
+                                        <span>
+                                            {t(
+                                                'sellerProducts.downloadViaTelegram'
+                                            )}
+                                        </span>
                                     </Button>
                                 </div>
                             </div>

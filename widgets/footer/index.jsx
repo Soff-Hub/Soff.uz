@@ -3,25 +3,26 @@ import styles from './style.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useGetDirectionsQuery } from '~/store/profile/slice';
+import { useTranslation } from 'react-i18next';
 
-const footerMenu = {
+const getFooterMenu = (t) => ({
     soff: {
         logoImg: '/static/img/soff.svg',
-        title: 'Raqamli xizmatlar bozori!',
+        title: t('digitalMarketplace'),
         path: '#',
     },
     services: {
-        title: 'Aloqa',
+        title: t('contact'),
         links: [
-            { name: 'Sotib olish va moderatsiya bo‘yicha', link: '' },
+            { name: t('purchaseAndModeration'), link: '' },
             { name: '+998 (91) 008 67 89', link: 'tel:+998910086789' },
             { name: '@soff_moderator', link: 'https://t.me/soff_moderator' },
-            { name: 'Texnik muammolar uchun', link: 'tel:+998910086789' },
+            { name: t('technicalIssues'), link: 'tel:+998910086789' },
             { name: '@hr_soffhub', link: 'https://t.me/hr_soffhub' },
         ],
     },
     social: {
-        title: 'Ijtimoiy tarmoqlarimiz',
+        title: t('socialNetworks'),
         items: [
             {
                 name: 'Telegram',
@@ -40,9 +41,9 @@ const footerMenu = {
             },
         ],
     },
-};
+});
 
-const products = [
+const getProducts = (t) => [
     {
         key: '1',
 
@@ -55,7 +56,7 @@ const products = [
             />
         ),
         link: '/scientific-resources/all?slug=all',
-        label: 'Ilmiy ishlar',
+        label: t('scientificWorks'),
     },
     {
         key: '2',
@@ -68,12 +69,12 @@ const products = [
             />
         ),
         link: '/3d-models-and-interior-designs/all?slug=all',
-        label: '3D Dizayn va Vizualizatsiya',
+        label: t('design3D'),
     },
     {
         key: '3',
         link: '/design-developments/all?slug=all',
-        label: 'Dizayn shablonlari',
+        label: t('designTemplates'),
         icon: (
             <Image
                 src={'/static/svg/image.svg'}
@@ -94,7 +95,7 @@ const products = [
             />
         ),
         link: '/templates/all?slug=all',
-        label: 'Turli sohalar uchun shablonlar',
+        label: t('templatesForVariousFields'),
     },
     {
         key: '5',
@@ -107,7 +108,7 @@ const products = [
             />
         ),
         link: '/video-lessons/all?slug=all',
-        label: 'Video darsliklar',
+        label: t('videoLessons'),
     },
     {
         key: '6',
@@ -120,38 +121,44 @@ const products = [
             />
         ),
         link: '/websites/all?slug=all',
-        label: 'Dasturlash xizmatlari',
+        label: t('programmingServices'),
     },
 ];
 
-const mainPages = [
-    { key: '1', link: '/', label: 'Bosh sahifa' },
-    { key: '2', link: '/search-page', label: 'Qidiruv' },
-    { key: '3', link: '/orders', label: 'Barcha xizmatlar' },
-    { key: '4', link: '/order/create', label: 'Yangi buyurtma yaratish' },
+const getMainPages = (t) => [
+    { key: '1', link: '/', label: t('homePage') },
+    { key: '2', link: '/search-page', label: t('search') },
+    { key: '3', link: '/orders', label: t('allServices') },
+    { key: '4', link: '/order/create', label: t('createNewOrder') },
     {
         key: '5',
         link: '/scientific-resources/all?slug=all',
-        label: 'Mahsulotlar',
+        label: t('products'),
     },
-    { key: '6', link: 'https://seller.soff.uz', label: 'Frilanserlar uchun' },
-    { key: '7', link: '/affiliate_program', label: 'Hamkorlikda ishlash' },
-    { key: '4', link: '/freelancers', label: 'Frilanserlar' },
-    { key: '8', link: '/soffia', label: 'Soffia Bot' },
-    { key: '9', link: '/page/oferta', label: 'Foydalanish shartlari' },
-    { key: '10', link: '/page/video-list', label: "Video qo'llanmalar" },
+    { key: '6', link: 'https://seller.soff.uz', label: t('forFreelancers') },
+    { key: '7', link: '/affiliate_program', label: t('affiliateProgram') },
+    { key: '4', link: '/freelancers', label: t('freelancers') },
+    { key: '8', link: '/soffia', label: t('soffiaBot') },
+    { key: '9', link: '/page/oferta', label: t('termsOfUse') },
+    { key: '10', link: '/page/video-list', label: t('videoTutorials') },
 ];
 
-const aboutUsPages = [
-    { key: '1', link: '/page/about-us', label: 'Biz haqimizda' },
-    { key: '3', link: '/page/faq', label: 'Savollar (FAQ)' },
-    { key: '4', link: '/page/form', label: 'Talab va takliflar uchun' },
-    { key: '5', link: '/page/oferta', label: 'Oferta' },
+const getAboutUsPages = (t) => [
+    { key: '1', link: '/page/about-us', label: t('aboutUs') },
+    { key: '3', link: '/page/faq', label: t('faq') },
+    { key: '4', link: '/page/form', label: t('requestsAndSuggestions') },
+    { key: '5', link: '/page/oferta', label: t('offer') },
 ];
 
 export default function Footer() {
     const currentYear = new Date().getFullYear();
     const { data: directions } = useGetDirectionsQuery();
+    const { t } = useTranslation('footer');
+
+    const footerMenu = getFooterMenu(t);
+    const products = getProducts(t);
+    const mainPages = getMainPages(t);
+    const aboutUsPages = getAboutUsPages(t);
 
     return (
         <footer className={styles.mainblock}>
@@ -166,7 +173,7 @@ export default function Footer() {
                         <a
                             href={footerMenu.soff.path}
                             className={`${styles.footerMainTitle} ${styles.footerSubtitle}`}>
-                            Tayyor mahsulotlar va xizmatlar bir joyda
+                            {t('readyProductsAndServices')}
                         </a>
 
                         <div className={styles.socialIconsContainer}>
@@ -218,7 +225,7 @@ export default function Footer() {
                     <div className={styles.footerLinksSection}>
                         <div>
                             <h5 className={styles.sectionTitle}>
-                                Tayyor mahsulotlar
+                                {t('readyProducts')}
                             </h5>
                             <ul>
                                 {products.map((link) => (
@@ -237,7 +244,7 @@ export default function Footer() {
                         </div>
                         <div>
                             <h5 className={styles.sectionTitle}>
-                                Xizmat turlari
+                                {t('serviceTypes')}
                             </h5>
                             <ul>
                                 {directions?.map((link) => (
@@ -257,7 +264,7 @@ export default function Footer() {
                         </div>
                         <div>
                             <h5 className={styles.sectionTitle}>
-                                Asosiy sahifalar
+                                {t('mainPages')}
                             </h5>
                             <ul>
                                 {mainPages.map((link) => (
@@ -276,7 +283,7 @@ export default function Footer() {
                         </div>
                         <div>
                             <h5 className={styles.sectionTitle}>
-                                Biz haqimizda
+                                {t('aboutUs')}
                             </h5>
                             <ul>
                                 {aboutUsPages.map((link) => (
@@ -298,21 +305,20 @@ export default function Footer() {
                 <div className={styles.footerBottom}>
                     <Link href="/page/oferta">
                         <a>
-                            © {currentYear} Soff.uz — Barcha huquqlar
-                            himoyalangan.{' '}
+                            © {currentYear} Soff.uz — {t('allRightsReserved')}{' '}
                         </a>
                     </Link>
 
                     <div className={styles.footerLinks}>
                         <Link href="/page/privacy-policy">
-                            <a aria-label="Maxfiylik siyosati">
-                                Maxfiylik siyosati
+                            <a aria-label={t('privacyPolicy')}>
+                                {t('privacyPolicy')}
                             </a>
                         </Link>
                         <div className={styles.divider}></div>
                         <Link href="/page/user-agreement">
-                            <a aria-label="Foydalanish shartnomasi">
-                                Foydalanish shartnomasi
+                            <a aria-label={t('userAgreement')}>
+                                {t('userAgreement')}
                             </a>
                         </Link>
                     </div>

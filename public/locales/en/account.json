@@ -1,0 +1,90 @@
+{
+    "wishlist": {
+        "title": "Wishlist",
+        "description": "Soff.uz - Don't forget to purchase the products you saved in your shopping cart on the site",
+        "emptyTitle": "No favorite products",
+        "emptyDescription": "Click the heart icon to select products and save them here.",
+        "addToCart": "Add to cart",
+        "download": "Download",
+        "remove": "Remove",
+        "selectProducts": "Select products",
+        "successTitle": "Success!",
+        "successAddToCart": "You have added the product to cart",
+        "free": "Free",
+        "count": "Wishlist ({{count}})"
+    },
+    "shoppingCart": {
+        "title": "Shopping Cart",
+        "description": "Review products and services in your shopping cart, compare prices and make payment. Soff.uz — trusted online marketplace and freelance platform.",
+        "emptyTitle": "Cart is empty",
+        "emptyDescription": "Add some products to make a payment.",
+        "startShopping": "Start shopping",
+        "totalItems": "Total items:",
+        "subtotal": "Subtotal:",
+        "serviceFee": "Service fee ({{percentage}}%):",
+        "total": "Total payment:",
+        "proceedToCheckout": "Proceed to checkout",
+        "count": "Products ({{count}})",
+        "free": "Free",
+        "items": "items"
+    },
+    "checkout": {
+        "title": "Checkout",
+        "description": "Visit Soff.uz shopping cart to complete your purchase and use services — convenient, fast and secure payment system.",
+        "emptyTitle": "Cart is empty",
+        "emptyDescription": "Add some products to make a payment.",
+        "startShopping": "Start shopping",
+        "header": "Checkout"
+    },
+    "notification": {
+        "title": "Notifications",
+        "breadcrumbHome": "Home",
+        "breadcrumbNotifications": "Notifications",
+        "description": "View all your relevant news, orders, messages and system notifications on the Soff.uz notifications page.",
+        "pageTitle": "Notifications",
+        "empty": "No notifications yet!",
+        "error": "An error occurred, please try again!",
+        "details": "Details"
+    },
+    "sellerProducts": {
+        "title": "Purchased",
+        "description": "View your purchased products and services on Soff.uz on this page. Download, reactivate or manage details.",
+        "pageTitle": "Purchased Materials",
+        "searchPlaceholder": "Search",
+        "emptyTitle": "No purchased products found",
+        "emptyDescription": "It seems you haven't purchased any products yet. Browse our catalog and find the products you need.",
+        "browseProducts": "Browse products",
+        "rate": "Rate",
+        "download": "Download",
+        "downloadViaTelegram": "Get via Telegram",
+        "commentModalTitle": "Leave a comment",
+        "categories": {
+            "file": "Scientific works",
+            "3d": "3D models and Interior designs",
+            "design": "Design templates",
+            "website": "Websites",
+            "template": "Templates for various fields",
+            "video": "Video lessons"
+        }
+    },
+    "donat": {
+        "title": "Contribute to project development",
+        "heading": "Make your contribution to project development",
+        "description": "Contribute to the development of the Soff.uz project. Help improve the platform with your charitable support."
+    },
+    "breadcrumbs": {
+        "home": "Home",
+        "cart": "Shopping Cart",
+        "wishlist": "Wishlist"
+    },
+    "sidebar": {
+        "user": "User",
+        "purchased": "Purchased",
+        "myOrders": "My Orders",
+        "wishlist": "Wishlist",
+        "shoppingCart": "Shopping Cart",
+        "chat": "Chat",
+        "notifications": "Notifications",
+        "logout": "Logout"
+    }
+}

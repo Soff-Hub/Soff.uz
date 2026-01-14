@@ -4,8 +4,10 @@ import { useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import { useQuery } from '@tanstack/react-query';
 import SidebarLayout from '~/widgets/sidebar/SidebarLayout';
+import { useTranslation } from 'next-i18next';
 
 export default function NotificationList() {
+    const { t } = useTranslation('account');
     const { user } = useSelector((state) => state.auth);
 
     const { data, isLoading, isError } = useQuery({
@@ -18,7 +20,7 @@ export default function NotificationList() {
     const hasNotifications = data?.results?.length > 0;
 
     let notificationContent = (
-        <Alert message="Yangiliklar hozircha yo‘q!" type="warning" showIcon />
+        <Alert message={t('notification.empty')} type="warning" showIcon />
     );
 
     if (isLoading) {
@@ -34,11 +36,7 @@ export default function NotificationList() {
             ));
     } else if (isError) {
         notificationContent = (
-            <Alert
-                message={'Xatolik yuz berdi, qayta urinib ko‘ring!'}
-                type="error"
-                showIcon
-            />
+            <Alert message={t('notification.error')} type="error" showIcon />
         );
     } else if (hasNotifications) {
         notificationContent = (
@@ -58,7 +56,9 @@ export default function NotificationList() {
     return (
         <div className=" ps-whishlist">
             <div className="container mb-5">
-                <h1 className="page-title mt-5">Bildirishnomalar</h1>
+                <h1 className="page-title mt-5">
+                    {t('notification.pageTitle')}
+                </h1>
                 <SidebarLayout>
                     <div className="ps-section__content">
                         {notificationContent}
@@ -94,7 +94,7 @@ const Notification = ({ notification, link, index }) => {
                         <a
                             target="_blank"
                             className="btn btn-success rounded-pill fs-5 px-4 py-1">
-                            Batafsil{' '}
+                            {t('notification.details')}{' '}
                             <i className="fa-solid fa-arrow-right ms-1"></i>
                         </a>
                     </Link>
