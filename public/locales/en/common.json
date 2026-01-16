@@ -44,7 +44,7 @@
         "howToPlaceOrder": "How do I place an order?",
         "howToPurchase": "How do I purchase?",
         "chatWithSupport": "Chat with Support",
-        "telegram": "Telegram",
+        "telegram": "Telegram channel",
         "errorCreatingSupportChat": "Error creating support chat:"
     },
     "telegramNotification": {

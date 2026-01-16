@@ -7,6 +7,14 @@ const nextSettings = {
     eslint: {
         ignoreDuringBuilds: true,
     },
+    experimental: {
+        logging: {
+            level: 'verbose',
+        },
+    },
+    typescript: {
+        ignoreBuildErrors: true,
+    },
     reactStrictMode: true,
     typescript: {
         ignoreBuildErrors: true,

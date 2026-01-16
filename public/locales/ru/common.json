@@ -44,7 +44,7 @@
         "howToPlaceOrder": "Как разместить заказ?",
         "howToPurchase": "Как совершить покупку?",
         "chatWithSupport": "Чат с поддержкой",
-        "telegram": "Telegram",
+        "telegram": "Telegram канал",
         "errorCreatingSupportChat": "Ошибка создания чата поддержки:"
     },
     "telegramNotification": {

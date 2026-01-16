@@ -52,8 +52,8 @@ export function TelegramLink({ videoUrl }) {
     const finalVideoUrl = isProductPage
         ? VIDEO_URL_BUY_PRODUCT
         : isOrderCreatePage
-        ? VIDEO_URL_ORDER_CREATE
-        : videoUrl;
+          ? VIDEO_URL_ORDER_CREATE
+          : videoUrl;
 
     const extractedVideoId = useMemo(
         () => getYouTubeVideoId(finalVideoUrl),
@@ -125,7 +125,7 @@ export function TelegramLink({ videoUrl }) {
                         isGroupOpen ? (
                             <CloseOutlined fontSize={25} />
                         ) : (
-                            <QuestionCircleOutlined fontSize={35} />
+                            <i className="fa-regular fa-paper-plane" />
                         )
                     }
                     onClick={() => setIsGroupOpen(!isGroupOpen)}
@@ -199,7 +199,7 @@ export function TelegramLink({ videoUrl }) {
                         </span>
                     </div>
                     <a
-                        href="https://t.me/+y5GpvEz48_hkMzli"
+                        href="https://t.me/+M1nwGXAYMzhhNDAy"
                         target="_blank"
                         rel="noopener noreferrer"
                         className={styles.customFloatButton}

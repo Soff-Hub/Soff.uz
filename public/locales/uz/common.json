@@ -44,7 +44,7 @@
         "howToPlaceOrder": "Qanday buyurtma beraman?",
         "howToPurchase": "Qanday xarid qilaman?",
         "chatWithSupport": "Support bilan suhbat",
-        "telegram": "Telegram",
+        "telegram": "Telegram kanal",
         "errorCreatingSupportChat": "Support chat yaratishda xatolik:"
     },
     "telegramNotification": {
