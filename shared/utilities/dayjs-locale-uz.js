@@ -86,7 +86,7 @@ dayjs.tz.setDefault('Asia/Tashkent');
 // Legacy functions - kept for backward compatibility
 // For new code, use functions from dayjs-helpers.js with i18n support
 export function getTimeAgo(dateString) {
-    return dayjs(dateString, 'YYYY-MM-DD HH:mm').fromNow();
+    return dayjs(dateString).fromNow();
 }
 
 export const getDate = (date) => {

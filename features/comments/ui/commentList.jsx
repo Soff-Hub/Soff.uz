@@ -73,7 +73,7 @@ export function CommentList({ slug }) {
     if (comments.count === 0) return <div></div>;
 
     return (
-        <div className="border rounded-5 p-5 bg-white">
+        <div className="border rounded-5 p-lg-5 p-4 bg-white">
             <h5 className="mb-4 fs-1 d-flex align-items-center gap-2">
                 {t('productDetail.comments.list.title')}
                 <span className="rounded-5 fs-4 text-white bg-success px-3 py-1">
@@ -156,7 +156,7 @@ export function CommentList({ slug }) {
                             </div>
                         </div>
 
-                        {comment.replys?.map((reply, index) => (
+                        {comment.answer_comment?.map((reply, index) => (
                             <div
                                 key={index}
                                 className="d-flex align-items-start gap-3 mt-4 ms-5 ps-3 border-start border-3 border-success">
@@ -172,11 +172,12 @@ export function CommentList({ slug }) {
                                 <div>
                                     <div className="d-flex align-items-center gap-2">
                                         <strong className="fs-6 text-success">
-                                            {reply.username}
+                                            {reply.user.first_name}{' '}
+                                            {reply.user.last_name}
                                         </strong>
                                         <CheckCircleFilled className="text-success" />
                                         <span className="text-muted small">
-                                            {reply.time}
+                                            {getTimeAgo(reply.created_at)}
                                         </span>
                                     </div>
                                     <p className="mt-1 mb-0">{reply.text}</p>

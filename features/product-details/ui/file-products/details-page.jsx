@@ -6,7 +6,7 @@ import SellerProfile from '../seller-profile/seller-profile';
 import Description from '../actions/description';
 import Tags from '../actions/tags';
 import Link from 'next/link';
-import { CommentList } from '~/features/comments/ui/commentList';
+import CommentList from '~/components/product-comments';
 import CommentFormWrapper from '~/features/comments/ui/commentWrapper';
 
 function FileProductsDetails({ product }) {
@@ -58,7 +58,7 @@ function FileProductsDetails({ product }) {
 
                         <SellerProfile product={product} />
                     </div>
-                    <div>
+                    <div style={{ marginBottom: '32px' }}>
                         <CommentFormWrapper
                             id={product.id}
                             slug={product.slug}

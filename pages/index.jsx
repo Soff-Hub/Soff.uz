@@ -3,7 +3,6 @@ import PageLayout from '~/widgets/layouts/PageLayout';
 import Home from '~/widgets/home';
 import Meta from '~/shared/ui/meta';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import Header from '~/widgets/header';
 import { useTranslation } from 'next-i18next';
 
 const type = 'website';

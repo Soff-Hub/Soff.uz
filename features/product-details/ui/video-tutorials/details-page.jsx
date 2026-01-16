@@ -7,7 +7,7 @@ import DefaultVideoContent from './default-video';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import Link from 'next/link';
 import CommentFormWrapper from '~/features/comments/ui/commentWrapper';
-import { CommentList } from '~/features/comments/ui/commentList';
+import CommentList from '~/components/product-comments';
 
 function VideosProductsDetails({ product, isPlay, setIsPlay }) {
     const { t } = useTranslation('product-pages');
