@@ -10,21 +10,11 @@ export function middleware(req: NextRequest) {
     const { pathname, search } = req.nextUrl;
     const url = req.url;
 
-    console.log('🔥 MIDDLEWARE FIRED!', pathname);
-
-    // Skip middleware for Next.js internals, API routes, and static files
-    if (pathname.startsWith('/_next')) {
-        console.log('⏭️ Skipping: _next path');
-        return NextResponse.next();
-    }
-
-    if (pathname.includes('/api/')) {
-        console.log('⏭️ Skipping: API route');
-        return NextResponse.next();
-    }
-
-    if (PUBLIC_FILE.test(pathname)) {
-        console.log('⏭️ Skipping: Public file');
+    if (
+        pathname.startsWith('/_next') ||
+        pathname.includes('/api/') ||
+        PUBLIC_FILE.test(pathname)
+    ) {
         return NextResponse.next();
     }
 
