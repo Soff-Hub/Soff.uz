@@ -3,14 +3,19 @@ import React, { memo, useCallback, useMemo, useState } from 'react';
 import { cn } from '~/shared/utilities/cn';
 import ProductComments from './product-comments';
 import ServiceComments from './service-comments';
-
-const items = [
-    { key: 'product', label: 'Mahsulotlar' },
-    { key: 'service', label: 'Xizmatlar' },
-];
+import { useTranslation } from 'next-i18next';
 
 const UserCommentsTabs = ({ id }) => {
+    const { t } = useTranslation('seller');
     const [activeKey, setActiveKey] = useState('product');
+
+    const items = useMemo(
+        () => [
+            { key: 'product', label: t('tabs.products') },
+            { key: 'service', label: t('tabs.services') },
+        ],
+        [t]
+    );
 
     const renderContent = useMemo(() => {
         if (activeKey === 'product') {
@@ -33,7 +38,7 @@ const UserCommentsTabs = ({ id }) => {
                 'shadow'
             )}>
             <span className={cn('font-bold', 'text-[20px]', 'mb-3', 'block')}>
-                Izohlar
+                {t('tabs.comments')}
             </span>
             <Tabs
                 className="user_tabs"

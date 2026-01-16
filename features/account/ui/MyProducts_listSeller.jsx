@@ -291,7 +291,8 @@ const PurchasedProductsLayout = ({
                                             href={`/product/${
                                                 item.document?.slug || ''
                                             }`}>
-                                            {item.document?.title || "Noma'lum"}
+                                            {item.document?.title ||
+                                                t('sellerProducts.unknown')}
                                         </Link>
                                     </h3>
                                     <span className={styles.productDate}>
@@ -308,7 +309,8 @@ const PurchasedProductsLayout = ({
                                 </div>
 
                                 <div className={styles.productPrice}>
-                                    {formatCurrencyWithSpace(item?.price)} so'm
+                                    {formatCurrencyWithSpace(item?.price)}{' '}
+                                    {t('sellerProducts.currency')}
                                 </div>
 
                                 {/* Rating Component */}

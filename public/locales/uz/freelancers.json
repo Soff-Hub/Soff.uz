@@ -1,0 +1,64 @@
+{
+    "meta": {
+        "defaultTitle": "Eng yaxshi frilanserlar va mutaxassislar",
+        "titlePrefix": "{{parts}}",
+        "description": "Soff.uz platformasidagi eng yaxshi frilanserlar va mutaxassislarni kashf eting, loyihangiz uchun mukammal mutaxassislarni toping.",
+        "directionDescription": "{{direction}} sohasidagi eng tajribali frilanserlarni Soff.uz platformasida toping va ularning xizmatlaridan foydalaning.",
+        "positionDescription": "{{position}} bo'yicha malakali frilanserlarni ishga oling.",
+        "keywordDescription": "Qidiruvingiz: \"{{keyword}}\" bo'yicha natijalar.",
+        "keywords": {
+            "freelancers": "{{part}} frilanserlar",
+            "freelancer": "{{part}} frilanser",
+            "specialist": "{{part}} mutaxassisi",
+            "services": "{{part}} xizmatlari",
+            "job": "{{part}} ish",
+            "finding": "{{part}} topish",
+            "freelancerPrefix": "frilanser {{part}}",
+            "base": {
+                "0": "frilanserslar",
+                "1": "frilanser xizmatlari",
+                "2": "onlayn ishchilar",
+                "3": "mustaqil ishchilar",
+                "4": "Soff.uz"
+            }
+        }
+    },
+    "hero": {
+        "title": "Loyihangiz uchun eng yaxshi mutaxassislar",
+        "description": "O'z loyihangizni boshlash uchun tajribali va ishonchli frilanserlarni shu yerdan toping."
+    },
+    "search": {
+        "placeholder": "Qaysi turdagi mutaxassislar qidirmoqdasiz?"
+    },
+    "filter": {
+        "title": "Filterlar",
+        "clear": "Filtrlarni tozalash",
+        "apply": "Filtrni qo'llash",
+        "direction": "Yo'nalish",
+        "selectDirection": "Yo'nalishni tanlang",
+        "position": "Kasb",
+        "selectPosition": "Kasblarni tanlang",
+        "sortBy": "Saralash",
+        "sortByRating": "Reyting bo'yicha",
+        "sortByActivity": "Faollik bo'yicha"
+    },
+    "result": {
+        "notFound": "Afsuski, bu yo'nalishda frilanserlar topilmadi."
+    },
+    "card": {
+        "unknown": "Noma'lum",
+        "activeNow": "Hozir faol",
+        "minutesAgo": "daqiqa oldin",
+        "hoursAgo": "soat oldin",
+        "daysAgo": "kun oldin",
+        "inProgressJobs": "Jarayondagi ishlar",
+        "completedJobs": "Muvaffaqiyatli ishlar",
+        "successRate": "Muvaffaqiyat darajasi",
+        "message": "Xabar",
+        "details": "Batafsil",
+        "reviewsCount": "ta izoh)",
+        "services": "Xizmatlar",
+        "servicesFound": "ta xizmatlar topildi",
+        "viewAll": "Barchasini ko'rish"
+    }
+}

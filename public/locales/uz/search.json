@@ -15,7 +15,71 @@
         "clear": "Tozalash"
     },
     "notFound": {
-        "createOrder": "Buyurtma yaratish"
+        "createOrder": "Buyurtma yaratish",
+        "searchPage": "Afsuski, izlagan narsangiz topilmadi. Ammo siz uni buyurtma qilishingiz mumkin.👇",
+        "ordersPage": "Afsuski, izlagan xizmatingiz topilmadi. Ammo siz uni buyurtma qilishingiz mumkin.👇",
+        "productsNotFound": "Afsuski, izlagan narsangiz topilmadi. Lekin siz o'xshash mahsulotlarni ko'rib chiqishingiz mumkin.",
+        "similarProducts": "O'xshash mahsulotlar"
+    },
+    "titles": {
+        "products": "Mahsulotlar"
+    },
+    "buttons": {
+        "viewMore": "Ko‘proq ko‘rish"
+    },
+    "side": {
+        "recommendedServices": "Tavsiya etiladigan xizmatlar",
+        "lastAddedProducts": "So'ngi yuklangan mahsulotlar"
+    },
+    "filter": {
+        "specialistCount": "{{count}} ta mutaxassis",
+        "noSpecialists": "Mutaxasislar yo'q",
+        "productCount": "{{count}} ta mahsulot topildi",
+        "serviceCount": "{{count}} ta xizmat topildi",
+        "all": "Barchasi",
+        "title": "Filterlar",
+        "button": "Filter",
+        "direction": "Yo‘nalish",
+        "category": "Kategoriya",
+        "parentCategory": "Katta kategoriya",
+        "fileType": "Fayl turi",
+        "sortBy": "Saralash",
+        "pageRange": "Betlar soni",
+        "pageFrom": "Bet dan",
+        "pageTo": "Bet gacha",
+        "pages": "bet",
+        "type": "Turi",
+        "types": {
+            "file": "Fayllar",
+            "3d": "3D modellar",
+            "design": "Dizayn shablonlar",
+            "template": "Turli shablonlar",
+            "website": "Veb saytlar",
+            "video": "Videolar"
+        },
+        "sortOptions": {
+            "priceLow": "Narx (arzon)",
+            "priceHigh": "Narx (qimmat)",
+            "views": "Ko'p ko‘rilganlar bo‘yicha",
+            "purchased": "Ko‘p xarid qilingan"
+        },
+        "tooltips": {
+            "cannotDeleteDefault": "Bu qiymat standart sozlamaligi uchun o'chira olmaysiz, filtr orqali o'zgartiring",
+            "cannotDeletePageFrom": "Bu qiymat standart sozlamaligi uchun o'chira olmaysiz, avval bet gacha qiymatini o'chiring",
+            "cannotDeletePageTo": "Bu qiymat standart sozlamaligi uchun o'chira olmaysiz, avval bet dan qiymatini o'chiring",
+            "clearAll": "Barcha filterlarni tozalash",
+            "clearCategoryFirst": "Yo‘nalishni o'chirish uchun kategoriyani avval tozalang"
+        },
+        "actions": {
+            "clear": "Tozalash",
+            "apply": "Qo‘llash"
+        }
+    },
+    "card": {
+        "price": "Narxi:",
+        "currency": "so'm",
+        "online": "Online",
+        "offline": "Offline"
     }
 }
 

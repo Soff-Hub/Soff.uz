@@ -7,7 +7,7 @@ import { useTimeManager } from '~/shared/hooks/useTimeManager';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { useDisableWindowScroll } from '~/shared/hooks/useDisableWindowScroll';
 import SearchResult from '../../search-result';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 
 function SearchModal({ onClose, open, defaultType = 'mahsulotlar' }) {
     const searchRef = useRef(null);

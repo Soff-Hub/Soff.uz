@@ -30,7 +30,7 @@ export async function getServerSideProps({ locale }) {
                 'footer',
                 'common',
                 'account',
-                'product-pages',
+                // 'product-pages',
                 'modals',
             ])),
         },

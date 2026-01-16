@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'next-i18next';
 import { Drawer, Button, Select } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
 import { AiOutlineApartment } from 'react-icons/ai';
@@ -8,6 +9,7 @@ import useResponsive from '~/shared/utilities/useResponsive';
 import { useDisableWindowScroll } from '~/shared/hooks/useDisableWindowScroll';
 
 function FreelancerFilterCollide({ collapsed, toggleCollapsed }) {
+    const { t } = useTranslation('freelancers');
     const [formVal, setFormVal] = useState({
         direction: null,
         positions: [],
@@ -109,13 +111,13 @@ function FreelancerFilterCollide({ collapsed, toggleCollapsed }) {
                         fontSize: isMobile ? '16px' : '18px',
                         marginBottom: '8px',
                     }}>
-                    <AiOutlineApartment /> Yo‘nalish
+                    <AiOutlineApartment /> {t('filter.direction')}
                 </label>
                 <Select
                     id="directions"
                     mode="multiple"
                     size={inputSizes}
-                    placeholder="Yo'nalishni tanlang"
+                    placeholder={t('filter.selectDirection')}
                     value={formVal.direction}
                     onChange={onChangeDirection}
                     style={{
@@ -135,13 +137,13 @@ function FreelancerFilterCollide({ collapsed, toggleCollapsed }) {
                         fontSize: isMobile ? '16px' : '18px',
                         marginBottom: '8px',
                     }}>
-                    <BiCategory /> Kasb
+                    <BiCategory /> {t('filter.position')}
                 </label>
                 <Select
                     id="positions"
                     mode="multiple"
                     size={inputSizes}
-                    placeholder="Kasblarni tanlang"
+                    placeholder={t('filter.selectPosition')}
                     value={formVal.positions}
                     onChange={onChangePositions}
                     style={{
@@ -157,7 +159,7 @@ function FreelancerFilterCollide({ collapsed, toggleCollapsed }) {
                     marginTop: 24,
                 }}>
                 <Button block onClick={handleClearAll} size={inputSizes}>
-                    Filtrni tozalash
+                    {t('filter.clear')}
                 </Button>
 
                 <Button
@@ -165,7 +167,7 @@ function FreelancerFilterCollide({ collapsed, toggleCollapsed }) {
                     block
                     onClick={handleSave}
                     size={inputSizes}>
-                    Filtrni qo‘llash
+                    {t('filter.apply')}
                 </Button>
             </div>
         </Drawer>

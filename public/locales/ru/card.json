@@ -1,0 +1,77 @@
+{
+    "productCard": {
+        "free": "Бесплатно",
+        "currency": "сум",
+        "cardImage": "Изображение продукта",
+        "icon": "Иконка",
+        "modal": {
+            "title": "Успешно",
+            "message": "Вы добавили продукт в корзину!",
+            "goToCart": "Перейти в корзину",
+            "continueShopping": "Продолжить покупки"
+        }
+    },
+    "serviceCard": {
+        "details": "Подробнее",
+        "placeOrder": "Разместить заказ",
+        "reviews": "отзывов",
+        "currency": "сум",
+        "addToFavorites": "Добавить в избранное",
+        "serviceImage": "Изображение услуги",
+        "userImage": "Изображение пользователя"
+    },
+    "serviceFirstCard": {
+        "title": "Поручите свою работу фрилансерам.",
+        "button": "Разместить заказ сейчас"
+    },
+    "pagination": {
+        "itemsPerPage": "На странице",
+        "items": "услуг"
+    },
+    "sellerCard": {
+        "unknown": "Неизвестно",
+        "activeNow": "Активен сейчас",
+        "minutesAgo": "Был активен {{count}} мин. назад",
+        "hoursAgo": "Был активен {{count}} ч. назад",
+        "daysAgo": "Был активен {{count}} дн. назад",
+        "reviews": "отзывов",
+        "professionNotSpecified": "Профессия не указана",
+        "locationNotSpecified": "Местоположение не указано",
+        "details": "Подробнее"
+    },
+    "orderCard": {
+        "cancel": "Отменить",
+        "makePayment": "Произвести оплату",
+        "details": "Подробнее",
+        "viewOffers": "Посмотреть предложения",
+        "orderCancelledWarning": "Вы отменили этот заказ",
+        "language": "Язык заказа",
+        "createdDates": "Дата создания",
+        "budget": "Бюджет",
+        "currency": "сум",
+        "deadline": "Срок сдачи",
+        "noFiles": "Загруженных файлов пока нет.",
+        "completionMessage": "Специалист завершил заказ и отправил вам результат. Скачайте результат, просмотрите его и подтвердите или отклоните.",
+        "noteTitle": "Примечание:",
+        "noteDescription": "Если вы не измените статус работы в течение 24 часов, заказ будет автоматически принят, и средства будут переведены специалисту.",
+        "uploadedFiles": "Загруженные файлы",
+        "reject": "Есть недостатки",
+        "accept": "Принять",
+        "acceptWork": "Принять работу",
+        "orderFiles": "Файлы заказа",
+        "description": "Описание заказа",
+        "less": "Скрыть",
+        "more": "Подробнее",
+        "paymentRefunded": "Платеж возвращен",
+        "paymentAccepted": "Платеж принят",
+        "paymentPartial": "Часть платежа в размере {{amount}} сум не выполнена",
+        "revisionReturned": "Файл возвращен на доработку",
+        "download": "Скачать",
+        "status": {
+            "completed": "Заказ выполнен",
+            "inProgress": "Заказ в процессе",
+            "cancelled": "Заказ отменен",
+            "pending": "Новый заказ"
+        }
+    }
+}

@@ -21,7 +21,7 @@ const isValidSlug = (slug) => {
 };
 
 const ServiceCard = ({ service, hasFooter = true, disabled = false }) => {
-    const { t } = useTranslation('orders');
+    const { t } = useTranslation('card');
     const { isLoggedIn } = useSelector((state) => state.auth);
     const [open, setOpen] = useState(false);
     const { push } = useRouter();
@@ -82,13 +82,17 @@ const ServiceCard = ({ service, hasFooter = true, disabled = false }) => {
                                     }}>
                                     {Number(service?.avg_rating).toFixed(1)}
                                 </span>
-                                <span>({service?.feedback_count} {t('serviceCard.reviews')})</span>
+                                <span>
+                                    ({service?.feedback_count}{' '}
+                                    {t('serviceCard.reviews')})
+                                </span>
                             </div>
                         ) : (
                             <div></div>
                         )}
                         <h3 className={styles.price}>
-                            {formatCurrencyWithSpace(service?.price)} {t('serviceCard.currency')}
+                            {formatCurrencyWithSpace(service?.price)}{' '}
+                            {t('serviceCard.currency')}
                         </h3>
                     </div>
                     <div className={styles.btns}>

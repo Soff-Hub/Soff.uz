@@ -1,6 +1,7 @@
 import LastAddedProductCard from '../search-page-card/lastAddedProductCard';
 import LastAddedServiceCard from '../search-page-card/lastAddedServiceCard';
 import { Skeleton } from 'antd';
+import { useTranslation } from 'next-i18next';
 
 const SerachSide = ({
     createBtn,
@@ -9,6 +10,8 @@ const SerachSide = ({
     lastProducts,
     lastProductsLoading,
 }) => {
+    const { t } = useTranslation('search');
+
     let topServicesContent = null;
     if (topServicesLoading) {
         topServicesContent = (
@@ -33,7 +36,7 @@ const SerachSide = ({
                         fontWeight: 400,
                     }}
                     className="similar_title">
-                    Tavsiya etiladigan xizmatlar
+                    {t('side.recommendedServices')}
                 </h3>
                 {topServices?.items?.map((s) => (
                     <div className="mb-4" key={s?.id}>
@@ -71,7 +74,7 @@ const SerachSide = ({
                             paddingTop: '10px',
                         }}
                         className="similar_title">
-                        So'ngi yuklangan mahsulotlar
+                        {t('side.lastAddedProducts')}
                     </h3>
                 )}
                 {lastProducts?.results?.map((p, i) => (

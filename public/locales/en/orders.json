@@ -33,23 +33,6 @@
         "productsNotFound": "Unfortunately, what you were looking for was not found. But you can view similar products.",
         "similarProducts": "Similar products"
     },
-    "serviceCard": {
-        "details": "Details",
-        "placeOrder": "Place order",
-        "reviews": "reviews",
-        "currency": "UZS",
-        "addToFavorites": "Add to favorites",
-        "serviceImage": "Service image",
-        "userImage": "User image"
-    },
-    "serviceFirstCard": {
-        "title": "Submit your work to freelancers.",
-        "button": "Place order now"
-    },
-    "pagination": {
-        "itemsPerPage": "Items per page",
-        "items": "services"
-    },
     "serviceDetail": {
         "blockedFreelancer": "Freelancer temporarily blocked",
         "blockedDescription": "Unfortunately, this freelancer's services are temporarily blocked. Please try again later or choose another freelancer.",

@@ -1,0 +1,77 @@
+{
+    "productCard": {
+        "free": "Bepul",
+        "currency": "so'm",
+        "cardImage": "Mahsulot rasmi",
+        "icon": "Ikona",
+        "modal": {
+            "title": "Muvaffaqqiyatli",
+            "message": "Mahsulotingizni savatga qo'shdingiz!",
+            "goToCart": "Savatga o'tish",
+            "continueShopping": "Xaridlarni davom etirish"
+        }
+    },
+    "serviceCard": {
+        "details": "Batafsil",
+        "placeOrder": "Buyurtma berish",
+        "reviews": "izoh",
+        "currency": "so'm",
+        "addToFavorites": "Sevimlilarga qo'shish",
+        "serviceImage": "Xizmat rasmi",
+        "userImage": "Foydalanuvchi rasmi"
+    },
+    "serviceFirstCard": {
+        "title": "Ishingizni frilanserlarga topshiring.",
+        "button": "Hoziroq buyurtma berish"
+    },
+    "pagination": {
+        "itemsPerPage": "Sahifada",
+        "items": "ta xizmat"
+    },
+    "sellerCard": {
+        "unknown": "Noma’lum",
+        "activeNow": "Hozir faol",
+        "minutesAgo": "{{count}} daqiqa oldin faol edi",
+        "hoursAgo": "{{count}} soat oldin faol edi",
+        "daysAgo": "{{count}} kun oldin faol edi",
+        "reviews": "ta izoh",
+        "professionNotSpecified": "Kasb ko‘rsatilmagan",
+        "locationNotSpecified": "Joylashuv ko‘rsatilmagan",
+        "details": "Batafsil"
+    },
+    "orderCard": {
+        "cancel": "Bekor qilish",
+        "makePayment": "To'lovni amalga oshirish",
+        "details": "Batafsil",
+        "viewOffers": "Takliflarni ko'rish",
+        "orderCancelledWarning": "Siz bu buyurtmani bekor qilgansiz",
+        "language": "Buyurtma tili",
+        "createdDates": "Yaratilgan vaqti",
+        "budget": "Budjet",
+        "currency": "so'm",
+        "deadline": "Topshirish muddati",
+        "noFiles": "Hozircha yuklangan fayllar mavjud emas.",
+        "completionMessage": "Mutahasis buyurtmani yakunladi va natijani sizga jo'natdi. Natijani yuklab olib ko'rib chiqing va tasdiqlang yoki rad eting.",
+        "noteTitle": "Eslatma:",
+        "noteDescription": "Agar siz 24 soat ichida ishni holatini o'zgartirmasangiz, buyurtma avtomatik ravishda qabul qilinadi va to'lov mutaxassisga o'tkaziladi.",
+        "uploadedFiles": "Yuklangan fayllar",
+        "reject": "Kamchilik aniqlandi",
+        "accept": "Qabul qilish",
+        "acceptWork": "Ishni qabul qilish",
+        "orderFiles": "Buyurtma fayllari",
+        "description": "Buyurtma tavsifi",
+        "less": "Kamroq",
+        "more": "Batafsil",
+        "paymentRefunded": "To'lov qaytarildi",
+        "paymentAccepted": "To'lov qabul qilindi",
+        "paymentPartial": "To'lovning {{amount}} so'm qismi amalga oshirilmagan",
+        "revisionReturned": "Fayl qayta ishlov uchun qaytarildi",
+        "download": "Yuklab olish",
+        "status": {
+            "completed": "Buyurtma tugallandi",
+            "inProgress": "Buyurtma jarayonda",
+            "cancelled": "Buyurtma bekor qilindi",
+            "pending": "Yangi yaratilgan buyurtma"
+        }
+    }
+}

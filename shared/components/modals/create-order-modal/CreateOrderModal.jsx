@@ -4,6 +4,7 @@ import { QuestionCircleOutlined } from '@ant-design/icons';
 import PhoneNumberModal from '~/features/orders/ui/PhoneNumberModal';
 import useCreateOrder from '~/shared/hooks/useCreateOrder';
 import useResponsive from '~/shared/utilities/useResponsive';
+import { useTranslation } from 'next-i18next';
 
 const CreateOrderModal = ({
     open,
@@ -14,6 +15,7 @@ const CreateOrderModal = ({
     defaultDirection,
     onSuccess,
 }) => {
+    const { t } = useTranslation('seller');
     const {
         form,
         formItemsContent,
@@ -41,8 +43,8 @@ const CreateOrderModal = ({
                 width={600}
                 title={
                     seller
-                        ? `${seller} uchun maxsus buyurtma berish`
-                        : 'Maxsus buyurtma yaratish'
+                        ? t('createOrder.titleForSeller', { seller })
+                        : t('createOrder.title')
                 }
                 open={open}
                 onCancel={onClose}
@@ -108,7 +110,7 @@ const CreateOrderModal = ({
                                             bottom: '3px',
                                         }}>
                                         {sellerInfo?.position ||
-                                            'No profession'}
+                                            t('createOrder.noProfession')}
                                     </div>
                                 </div>
                             </div>
@@ -185,8 +187,8 @@ const CreateOrderModal = ({
                                 }}
                                 block>
                                 {isPending
-                                    ? 'Buyurtmangiz joylashtirilmoqda...'
-                                    : 'Buyurtmani joylashtirish'}
+                                    ? t('createOrder.placingOrder')
+                                    : t('createOrder.placeOrder')}
                             </Button>
                         </Form.Item>
                     )}
@@ -202,30 +204,30 @@ const CreateOrderModal = ({
                             block
                             style={{ height: '38px', fontSize: '14px' }}>
                             {isPending
-                                ? 'Buyurtmangiz joylashtirilmoqda...'
-                                : 'Buyurtmani joylashtirish'}
+                                ? t('createOrder.placingOrder')
+                                : t('createOrder.placeOrder')}
                         </Button>
                     </Form.Item>
                 </Form>
             </Modal>
             <Modal
-                title="Buyurtmani tasdiqlash"
+                title={t('createOrder.confirmTitle')}
                 open={confirmOpen}
                 onCancel={handleCloseConfirm}
                 footer={[
                     <Button key="cancel" onClick={handleCloseConfirm}>
-                        Yo‘q
+                        {t('createOrder.confirmNo')}
                     </Button>,
                     <Button
                         key="ok"
                         type="primary"
                         loading={isPending}
                         onClick={handleConfirm}>
-                        Ha, buyurtmani yubor
+                        {t('createOrder.confirmYes')}
                     </Button>,
                 ]}
                 centered>
-                <p>Rostdan ham {seller} uchun buyurtma berishni xohlaysizmi?</p>
+                <p>{t('createOrder.confirmMessage', { seller })}</p>
             </Modal>
             <PhoneNumberModal
                 open={phoneModalOpen}

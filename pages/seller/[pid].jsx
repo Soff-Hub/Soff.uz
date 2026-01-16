@@ -38,10 +38,12 @@ export async function getServerSideProps(context) {
             props: {
                 seller: res,
                 ...(await serverSideTranslations(locale || 'uz', [
+                    'seller',
+                    'card',
+                    'order-create',
                     'header',
                     'footer',
                     'common',
-                    'seller',
                     'modals',
                 ])),
             },

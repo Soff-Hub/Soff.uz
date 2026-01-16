@@ -11,7 +11,8 @@
         "successTitle": "Muvaffaqqiyatli!",
         "successAddToCart": "Siz mahsulotni savatga qo'shdingiz",
         "free": "Bepul",
-        "count": "Tanlanganlar ({{count}})"
+        "count": "Tanlanganlar ({{count}})",
+        "currency": "so'm"
     },
     "shoppingCart": {
         "title": "Savat",
@@ -26,7 +27,9 @@
         "proceedToCheckout": "To'lovga o'tish",
         "count": "Mahsulotlar ({{count}})",
         "free": "Bepul",
-        "items": "ta"
+        "items": "ta",
+        "currency": "so'm",
+        "delete": "O'chirish"
     },
     "checkout": {
         "title": "Xarid savati",
@@ -34,7 +37,33 @@
         "emptyTitle": "Savat bo'sh",
         "emptyDescription": "To'lov qilish uchun biror mahsulot qo'shing.",
         "startShopping": "Xarid qilishni boshlash",
-        "header": "Xarid savati"
+        "header": "Xarid savati",
+        "selectPaymentType": "To'lov turini tanlang:",
+        "productCount": "{{count}} ta mahsulot",
+        "currency": "so'm",
+        "serviceFeeLabel": "Sayt xizmat haqi uchun:",
+        "totalPrice": "Jami narx:",
+        "payButton": "To'lash ({{amount}} so'm)",
+        "errorTitle": "Muvaffaqqiyatli emas",
+        "errors": {
+            "expireDate": "Karta amal qilish muddatini kiriting",
+            "cardNumber": "Karta raqamini to'g'ri kiriting",
+            "wrongCode": "Parol xato",
+            "error": "Xatolik!"
+        },
+        "success": "Muffaqiyatli!",
+        "cardNumberLabel": "Karta raqam",
+        "enterCodeTitle": "Kodni kiriting!",
+        "payActionButton": "To'lov qilish",
+        "payProcessButton": "To'lash",
+        "back": "Orqaga",
+        "codeSentTo": "Kod quyidagi raqamga yuborildi:",
+        "oneItemNote": "Mahsulotni sotib olganingizdan so'ng, shaxsiy kabinetingizdagi <1>Sotib olinganlar</1> sahifasidan yoki mahsulot to'liq sahifasiga <2/> qayta kirib yuklab olishingiz mumkin bo'ladi !",
+        "orderProducts": "Buyurtma mahsulotlari",
+        "product": "Mahsulot",
+        "playlist": "To'plam",
+        "videosCount": "{{count}} ta video",
+        "price": "Narxi"
     },
     "notification": {
         "title": "Yangiliklar",
@@ -65,7 +94,9 @@
             "website": "Veb saytlar",
             "template": "Turli sohalar uchun shablonlar",
             "video": "Video darsliklar"
-        }
+        },
+        "unknown": "Noma'lum",
+        "currency": "so'm"
     },
     "donat": {
         "title": "Loyiha rivojiga hissa qo'shing",

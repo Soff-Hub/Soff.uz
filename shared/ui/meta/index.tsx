@@ -30,9 +30,9 @@ const Meta = ({
     canonicalUrl,
     children,
 }: MetaProps) => {
-    const router = useRouter();
+    const { asPath } = useRouter();
 
-    const staticCanonicalUrl = `https://soff.uz${router.asPath.split('?')[0]}`;
+    const staticCanonicalUrl = `https://soff.uz${asPath.split('?')[0]}`;
 
     const processedDescription = description
         ? removeHTMLTags(description)
@@ -57,6 +57,15 @@ const Meta = ({
             <meta name="author" content={author} />
             <meta name="description" content={processedDescription} />
             <meta name="keywords" content={keywordsString} />
+            <link
+                rel="alternate"
+                href={`${url}/ru${asPath}`}
+                hrefLang={'x-default'}
+            />
+
+            <link rel="alternate" href={`${url}/en${asPath}`} hrefLang="en" />
+            <link rel="alternate" href={`${url}/uz${asPath}`} hrefLang="uz" />
+            <link rel="alternate" href={`${url}/ru${asPath}`} hrefLang="ru" />
 
             <link rel="canonical" href={canonicalUrl || staticCanonicalUrl} />
 

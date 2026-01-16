@@ -24,6 +24,7 @@ export async function getServerSideProps({ locale }) {
                 'header',
                 'footer',
                 'common',
+                'card',
                 'order-create',
                 'chat',
                 'modals',

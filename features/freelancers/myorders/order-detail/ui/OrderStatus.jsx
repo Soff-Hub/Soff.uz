@@ -4,13 +4,15 @@ import { Button, Steps, Tooltip, Badge } from 'antd';
 import { FaRegCommentDots } from 'react-icons/fa';
 import { useCreateChat } from '~/features/freelancers/chat/api/useCreateChat';
 import Link from 'next/link';
+import { useTranslation } from 'next-i18next';
 
 const OrderStatus = ({ order, handleShowStickySeller }) => {
     const orderStatusRef = useRef(null);
+    const { t } = useTranslation('order-detail');
     const priceFormatted =
         new Intl.NumberFormat('uz-UZ').format(
             order?.service?.price || order?.budget || 0
-        ) + " so'm";
+        ) + ` ${t('sum')}`;
     const { mutate: createChat } = useCreateChat();
 
     const orderStatus = {
@@ -26,15 +28,15 @@ const OrderStatus = ({ order, handleShowStickySeller }) => {
     };
 
     const orderStatusName = {
-        pending: 'Buyurtma yaratildi',
-        approved: "To'lov amalga oshirildi",
-        requirement_file: "Buyurtma talablari jo'natildi",
-        requirement_file_rejected: "Buyurtma talablari to'liq emas",
-        order_accepted: 'Buyurtma qabul qilindi',
-        order_file_sent: 'Tasdiqlash uchun topshirildi',
-        completed: 'Buyurtma tugallandi',
-        rejected: "Fayl to'liq emas",
-        cancelled: 'Buyurtma bekor qilindi',
+        pending: t('status_pending'),
+        approved: t('status_approved'),
+        requirement_file: t('status_requirement_file'),
+        requirement_file_rejected: t('status_requirement_file_rejected_title'),
+        order_accepted: t('status_order_accepted'),
+        order_file_sent: t('status_order_file_sent'),
+        completed: t('status_completed'),
+        rejected: t('status_rejected'),
+        cancelled: t('status_cancelled'),
     };
 
     useEffect(() => {
@@ -63,7 +65,7 @@ const OrderStatus = ({ order, handleShowStickySeller }) => {
             {/* Order info */}
             <div className={styles.status}>
                 <div className={styles.status_info}>
-                    <span>Buyurtma holati</span>
+                    <span>{t('order_status')}</span>
                     <p
                         style={{
                             background:
@@ -74,7 +76,7 @@ const OrderStatus = ({ order, handleShowStickySeller }) => {
                     </p>
                 </div>
                 <div className={styles.status_price}>
-                    <span>Buyurtma narxi</span>
+                    <span>{t('order_price')}</span>
                     <p>{priceFormatted}</p>
                 </div>
             </div>
@@ -98,7 +100,9 @@ const OrderStatus = ({ order, handleShowStickySeller }) => {
                                 href={`/seller/${order?.user?.soff_seller_id}#about_author`}>
                                 {order?.user?.full_name || ''}
                             </Link>
-                            <span className="text-muted fs-5">Frilanser</span>
+                            <span className="text-muted fs-5">
+                                {t('freelancer')}
+                            </span>
                         </div>
                     </div>
                     {order?.user?.soff_seller_id && (
@@ -141,11 +145,11 @@ const OrderStatus = ({ order, handleShowStickySeller }) => {
                         {
                             title: `${
                                 order?.order_status_doing?.status == 'cancelled'
-                                    ? 'Buyurtma bekor qilindi'
-                                    : 'Buyurtma yaratildi'
+                                    ? t('status_cancelled')
+                                    : t('status_pending')
                             }  `,
                         },
-                        { title: "To'lov amalga oshirildi" },
+                        { title: t('status_approved') },
                         {
                             title:
                                 order?.order_status_doing?.status ==
@@ -154,14 +158,16 @@ const OrderStatus = ({ order, handleShowStickySeller }) => {
                                         title={
                                             order?.order_status_doing?.reason
                                         }>
-                                        Buyurtma talablari rad etildi
+                                        {t(
+                                            'status_requirement_file_rejected_tooltip'
+                                        )}
                                     </Tooltip>
                                 ) : (
-                                    "Buyurtma talablari jo'natildi"
+                                    t('status_requirement_file')
                                 ),
                             className: order?.order_status_doing?.status,
                         },
-                        { title: 'Buyurtma qabul qilindi' },
+                        { title: t('status_order_accepted') },
                         {
                             title:
                                 order?.order_status_doing?.status ==
@@ -170,14 +176,14 @@ const OrderStatus = ({ order, handleShowStickySeller }) => {
                                         title={
                                             order?.order_status_doing?.reason
                                         }>
-                                        Fayl qayta ishlash uchun junatildi
+                                        {t('status_rejected_tooltip')}
                                     </Tooltip>
                                 ) : (
-                                    'Tasdiqlash uchun topshirildi'
+                                    t('status_order_file_sent')
                                 ),
                             className: order?.order_status_doing?.status,
                         },
-                        { title: 'Buyurtma tugallandi' },
+                        { title: t('status_completed') },
                     ]}
                 />
             </div>

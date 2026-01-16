@@ -8,8 +8,10 @@ import { addPeriodToThousands } from '../price-formatter';
 import axios from 'axios';
 import { baseUrl } from '~/repositories/Repository';
 import { Skeleton } from 'antd';
+import { useTranslation } from 'next-i18next';
 
 const ModulePaymentOrderSummaryOne = () => {
+    const { t } = useTranslation('account');
     const Router = useRouter();
     const { type, slug, id } = Router.query;
     const [data, setData] = useState(null);
@@ -22,7 +24,7 @@ const ModulePaymentOrderSummaryOne = () => {
             if (responseData) {
                 setPercentage(responseData?.data?.percentage);
             }
-        } else if(slug){
+        } else if (slug) {
             const endPoint = `customer/playlist/${slug}/`;
             try {
                 const response = await axios.get(baseUrl + endPoint, {
@@ -31,7 +33,7 @@ const ModulePaymentOrderSummaryOne = () => {
                     },
                 });
                 setData(response.data);
-            } catch (error) { }
+            } catch (error) {}
         }
     }
 
@@ -50,7 +52,7 @@ const ModulePaymentOrderSummaryOne = () => {
                     },
                 });
                 setData(response.data);
-            } catch (error) { }
+            } catch (error) {}
         }
         setLoading(false);
     };
@@ -62,17 +64,16 @@ const ModulePaymentOrderSummaryOne = () => {
 
     return (
         <div className="ps-block--checkout-order">
-            <h3>Buyurtma mahsulotlari</h3>
+            <h3>{t('checkout.orderProducts')}</h3>
             <div className="shot">
-                {
-                    data && <>
-
+                {data && (
+                    <>
                         <div
                             className="ps-block__content checkoutstep-0"
                             style={{ backgroundColor: 'transparent' }}>
                             {data && type !== 'playlist' ? (
                                 <figure>
-                                    <p>Mahsulot</p>
+                                    <p>{t('checkout.product')}</p>
                                     <div className="my-2">
                                         <Link href={`/product/${data?.slug}`}>
                                             <a>
@@ -84,17 +85,19 @@ const ModulePaymentOrderSummaryOne = () => {
                                         {data?.file_type}
                                     </span>
                                     <div className="product_price_click my-3">
-                                        <p>Narxi</p>
+                                        <p>{t('checkout.price')}</p>
                                         <div></div>
                                         <strong>
-                                            {addPeriodToThousands(data?.discount_price)}{' '}
-                                            so'm
+                                            {addPeriodToThousands(
+                                                data?.discount_price
+                                            )}{' '}
+                                            {t('checkout.currency')}
                                         </strong>
                                     </div>
                                 </figure>
                             ) : type === 'playlist' ? (
                                 <figure>
-                                    <p>To'plam</p>
+                                    <p>{t('checkout.playlist')}</p>
                                     <div className="my-2">
                                         <Link
                                             href={`/product/${data?.playlist_document?.[0]?.slug}`}>
@@ -104,13 +107,17 @@ const ModulePaymentOrderSummaryOne = () => {
                                         </Link>
                                     </div>
                                     <span className="product_type  ">
-                                        {data?.playlist_document?.length} ta video
+                                        {t('checkout.videosCount', {
+                                            count: data?.playlist_document
+                                                ?.length,
+                                        })}
                                     </span>
                                     <div className="product_price_click my-3">
-                                        <p>Narxi</p>
+                                        <p>{t('checkout.price')}</p>
                                         <div></div>
                                         <strong>
-                                            {addPeriodToThousands(data?.price)} so'm
+                                            {addPeriodToThousands(data?.price)}{' '}
+                                            {t('checkout.currency')}
                                         </strong>
                                     </div>
                                 </figure>
@@ -125,18 +132,37 @@ const ModulePaymentOrderSummaryOne = () => {
                                 <figure>
                                     {percentage > 0 && (
                                         <div className="product_price_click my-3">
-                                            <p>Xizmat haqi uchun</p>
+                                            <p>
+                                                {t('checkout.serviceFeeLabel')}
+                                            </p>
                                             <div></div>
                                             <strong>
-                                                {addPeriodToThousands(Math.floor(data?.discount_price * percentage))} so`m{' '}
+                                                {addPeriodToThousands(
+                                                    Math.floor(
+                                                        data?.discount_price *
+                                                            percentage
+                                                    )
+                                                )}{' '}
+                                                {t('checkout.currency')}{' '}
                                                 {`(${percentage * 100} %)`}
                                             </strong>
                                         </div>
                                     )}
                                     <figcaption className="product_price_click_all">
-                                        <strong>Jami narx</strong>
+                                        <strong>
+                                            {t('checkout.totalPrice')}
+                                        </strong>
                                         <div></div>
-                                        <strong>{addPeriodToThousands(data?.discount_price + Math.floor(data?.discount_price * percentage))} so'm </strong>
+                                        <strong>
+                                            {addPeriodToThousands(
+                                                data?.discount_price +
+                                                    Math.floor(
+                                                        data?.discount_price *
+                                                            percentage
+                                                    )
+                                            )}{' '}
+                                            {t('checkout.currency')}{' '}
+                                        </strong>
                                     </figcaption>
                                 </figure>
                             )}
@@ -146,7 +172,7 @@ const ModulePaymentOrderSummaryOne = () => {
                                         <div className="prevev_button">
                                             {' '}
                                             <i className="fa-solid fa-angles-left"></i>{' '}
-                                            orqaga
+                                            {t('checkout.back')}
                                         </div>
                                     </a>
                                 </Link>
@@ -155,7 +181,7 @@ const ModulePaymentOrderSummaryOne = () => {
                             )}
                         </div>
                     </>
-                }
+                )}
             </div>
         </div>
     );

@@ -27,5 +27,140 @@
             "submitting": "Submitting...",
             "submit": "Submit"
         }
+    },
+    "balanceWithdraw": {
+        "title": "Withdraw Balance",
+        "success": "Request sent successfully!",
+        "error": "An error occurred. Please try again.",
+        "cardNumber": {
+            "label": "Card Number",
+            "required": "Enter card number",
+            "validation_length": "Card number must be 16 digits",
+            "placeholder": "8600 1234 5678 9012"
+        },
+        "amount": {
+            "label": "Withdrawal Amount",
+            "required": "Please enter the amount",
+            "validation_invalid": "Please enter a valid amount",
+            "placeholder": "50 000"
+        },
+        "actions": {
+            "cancel": "Cancel",
+            "submit": "Confirm"
+        }
+    },
+    "orderCancel": {
+        "title": "Cancel Order",
+        "confirmQuestion": "Are you sure you want to cancel the order \" <strong>{{title}}</strong> \" ?",
+        "reasonLabel": "Select a reason",
+        "reasonRequired": "Please select a reason",
+        "reasonPlaceholder": "Select a cancellation reason...",
+        "success": "Order canceled successfully!",
+        "error": "An error occurred while canceling",
+        "okText": "Cancel",
+        "cancelText": "Close"
+    },
+    "orderApprove": {
+        "title": "Your feedback on the result",
+        "submit": "Submit",
+        "errors": {
+            "reasonRequired": "You must write down the shortcomings",
+            "feedbackRequired": "You need to write feedback and rating",
+            "submitError": "An error occurred while sending feedback"
+        },
+        "success": {
+            "submit": "Your feedback has been sent"
+        },
+        "completed": {
+            "description": "You have accepted the result.\nNow leave your feedback about the service and complete the work.",
+            "placeholder": "Write your comments about the service"
+        },
+        "rejected": {
+            "description": "Write down the shortcomings as detailed as possible. This will help the seller to make corrections faster.",
+            "placeholder": "Write down the identified shortcomings of the work"
+        },
+        "congratulation": {
+            "title": "🎉 Congratulations! 🎉",
+            "text": "Your order has been <b>successfully completed</b>. Thank you for choosing our platform 💚",
+            "button": "Thank you 🚀"
+        }
+    },
+    "phoneNumber": {
+        "title": "Enter phone number",
+        "alertDescription": "Please enter your phone number when ordering. It is important for us to contact you if any questions arise.",
+        "label": "Phone number",
+        "required": "Phone number input is required",
+        "pattern": "Please enter a valid phone number",
+        "placeholder": "Phone number",
+        "submitting": "Sending...",
+        "submit": "Confirm"
+    },
+    "login": {
+        "title": "Login",
+        "or": "Or",
+        "phoneLabel": "Phone number",
+        "emailLabel": "Email",
+        "phonePlaceholder": "Phone number",
+        "emailPlaceholder": "Email",
+        "phoneRequired": "Phone number is required",
+        "phoneInvalid": "Please enter a valid phone number",
+        "emailRequired": "Email is required",
+        "emailInvalid": "Please enter a valid email address",
+        "submit": "Get code",
+        "errorTitle": "Error"
+    },
+    "telegram": {
+        "instructions": {
+            "prefix": "To login, get a verification code via ",
+            "suffix": ""
+        },
+        "codeRequired": "Please enter the code",
+        "resend": "Get code again",
+        "resendInPrefix": "You can request a new code in",
+        "submit": "Confirm",
+        "success": "You have successfully logged in"
+    },
+    "codeVerify": {
+        "codeRequired": "Please enter the code",
+        "submit": "Verify",
+        "errorTitle": "Error",
+        "resendNow": "Resend code",
+        "resendInPrefix": "To request a new code ",
+        "resendSuccessTitle": "Sent",
+        "resendSuccessMessage": "Verification code has been resent"
+    },
+    "social": {
+        "telegram": "Login via Telegram",
+        "google": "Login via Google"
+    },
+    "serviceCheckout": {
+        "balanceSufficient": "You have sufficient funds on your balance. Payment can be made from the balance - no card required.",
+        "balanceInsufficient": "Funds on your balance cover part of the payment. You can pay the remaining amount via card or Click.",
+        "cardNumber": "Card number",
+        "continue": "Continue",
+        "pay": "Pay",
+        "unknownError": "Unknown error",
+        "successPayment": "Payment successful",
+        "balance": "Balance",
+        "remainingPayment": "Remaining payment",
+        "currency": "UZS",
+        "verificationTitle": "Shortly!",
+        "codeSentTo": "Code sent to number: {{phone}}",
+        "resendCode": "Resend code",
+        "back": "Back"
+    },
+    "searchResult": {
+        "recentResults": "Recent results",
+        "clear": "Clear",
+        "noData": "No data found for the query"
+    },
+    "portfolio": {
+        "info": "Portfolio Information",
+        "category": "Category",
+        "unknown": "Unknown",
+        "description": "Description",
+        "descriptionNotAvailable": "Description not available",
+        "imageNotFound": "Image not found.",
+        "videoNotFound": "Video not found."
     }
 }

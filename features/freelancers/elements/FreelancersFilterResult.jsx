@@ -1,4 +1,5 @@
 import { Pagination } from 'antd';
+import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
 import SearchSellerCard from '~/entities/seller/search-seller-card';
@@ -11,6 +12,7 @@ import { useTimeManager } from '~/shared/hooks/useTimeManager';
 import useResponsive from '~/shared/utilities/useResponsive';
 
 function FreelancersFilterResult({ data, collapsed, viewType }) {
+    const { t } = useTranslation('freelancers');
     const router = useRouter();
     const { isDesktop } = useResponsive();
     const { startTimeout } = useTimeManager();
@@ -114,7 +116,7 @@ function FreelancersFilterResult({ data, collapsed, viewType }) {
                     <p
                         className="Search_Results_not_found_title"
                         style={{ marginTop: 20, marginBottom: 0 }}>
-                        Afsuski, bu yo'nalishda frilanserlar topilmadi.
+                        {t('result.notFound')}
                     </p>
                 </div>
             )}

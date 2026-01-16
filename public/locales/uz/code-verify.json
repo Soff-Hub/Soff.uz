@@ -7,14 +7,5 @@
     "meta": {
         "title": "Ro'yxatdan o'tish",
         "description": "Soff.uz platformasida ro‘yxatdan o‘ting va frilans xizmatlaridan foydalaning. Ish toping, buyurtma bering yoki o‘z xizmatlaringizni taklif qiling — barchasi bitta joyda."
-    },
-    "form": {
-        "codeRequired": "Iltimos, kodni kiriting",
-        "submit": "Tasdiqlash",
-        "errorTitle": "Xatolik",
-        "resendNow": "Qayta kod yuborish",
-        "resendInPrefix": "Qayta kod olish uchun ",
-        "resendSuccessTitle": "Yuborildi",
-        "resendSuccessMessage": "Tasdiqlash kodi qayta yuborildi"
     }
 }

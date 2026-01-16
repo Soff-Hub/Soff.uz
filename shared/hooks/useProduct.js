@@ -2,8 +2,10 @@ import React from 'react';
 import { formatCurrency } from '~/shared/utilities/product-helper';
 import Link from 'next/link';
 import NextImageCard from '~/components/nextImagecard';
+import { useTranslation } from 'next-i18next';
 
 export default function useProduct() {
+    const { t } = useTranslation('common');
     return {
         thumbnailImage: (payload) => {
             return (
@@ -41,10 +43,10 @@ export default function useProduct() {
                         {payload.discount_price !== 0 ? (
                             <>
                                 {formatCurrency(payload.sale_price)}
-                                <span> so'm</span>
+                                <span> {t('common.currency')}</span>
                                 <del className="ms-2">
                                     {formatCurrency(payload.price)}
-                                    <span> so'm</span>
+                                    <span> {t('common.currency')}</span>
                                 </del>
                             </>
                         ) : (
@@ -66,7 +68,7 @@ export default function useProduct() {
                         ) : (
                             <>
                                 {formatCurrency(payload.price)}{' '}
-                                <span> so'm</span>
+                                <span> {t('common.currency')}</span>
                             </>
                         )}
                     </p>

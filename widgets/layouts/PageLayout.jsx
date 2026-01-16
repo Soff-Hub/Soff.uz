@@ -28,6 +28,7 @@ const PageLayout = ({ children, title, withFooter = true }) => {
     const { user } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     const Router = useRouter();
+    const { locale} = Router;
 
     const hasTitle = Boolean(title);
     const isValideUser = Boolean(user);
@@ -35,7 +36,7 @@ const PageLayout = ({ children, title, withFooter = true }) => {
     useGetProfileQuery(`userfetch - ${user?.access}`, {
         skip: !user?.access,
     });
-    useGetDirectionsQuery();
+    useGetDirectionsQuery(`all-directinos - ${locale}`);
 
     async function handleLogin(googleData) {
         Router.push(`/oauth/?token=${googleData}&returnUrl=${Router.asPath}`);

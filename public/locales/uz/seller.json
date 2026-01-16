@@ -1,40 +1,68 @@
 {
-  "profile": {
-    "title": "Sotuvchi profili",
-    "stats": "Statistikalar",
-    "openForServices": "Xizmatlar uchun ochiq",
-    "location": "Joylashuv",
-    "lastActive": "Oxirgi faollik",
-    "joined": "Ro'yhatdan o'tgan",
-    "notActive": "Faol emas",
-    "totalIncome": "Jami daromad",
-    "currency": "so'm",
-    "placeOrder": "Buyurtma berish",
-    "linkCopied": "Link nusxalandi!",
-    "linkNotCopied": "Link nusxalanmadi",
-    "blocked": {
-      "title": "Frilanser vaqtincha bloklangan",
-      "description": "Afsuski, ushbu frilanserning xizmatlari vaqtincha bloklangan. Boshqa frilanser xizmatlaridan foydalanishingiz mumkin."
+    "profile": {
+        "title": "Sotuvchi profili",
+        "stats": "Statistikalar",
+        "openForServices": "Xizmatlar uchun ochiq",
+        "location": "Joylashuv",
+        "lastActive": "Oxirgi faollik",
+        "joined": "Ro'yhatdan o'tgan",
+        "notActive": "Faol emas",
+        "totalIncome": "Jami daromad",
+        "currency": "so'm",
+        "placeOrder": "Buyurtma berish",
+        "linkCopied": "Link nusxalandi!",
+        "linkNotCopied": "Link nusxalanmadi",
+        "blocked": {
+            "title": "Frilanser vaqtincha bloklangan",
+            "description": "Afsuski, ushbu frilanserning xizmatlari vaqtincha bloklangan. Boshqa frilanser xizmatlaridan foydalanishingiz mumkin."
+        },
+        "notOpen": {
+            "title": "Xizmatlar uchun ochiq emas",
+            "description": "Afsuski, ushbu frilanserning xizmatlari vaqtincha ochiq emas. Boshqa frilanser xizmatlaridan foydalanishingiz mumkin."
+        },
+        "statsItems": {
+            "inProgress": "Jarayondagi ishlar",
+            "successful": "Muvaffaqiyatli ishlar",
+            "unsuccessful": "Muvaffaqiyatsiz ishlar",
+            "uploaded": "Yuklangan mahsulotlar",
+            "sold": "Sotilgan mahsulotlar"
+        }
     },
-    "notOpen": {
-      "title": "Xizmatlar uchun ochiq emas",
-      "description": "Afsuski, ushbu frilanserning xizmatlari vaqtincha ochiq emas. Boshqa frilanser xizmatlaridan foydalanishingiz mumkin."
+    "tabs": {
+        "about": "Muallif haqida",
+        "portfolio": "Portfolio",
+        "services": "Xizmatlar",
+        "products": "Mahsulotlar",
+        "comments": "Izohlar"
     },
-    "statsItems": {
-      "inProgress": "Jarayondagi ishlar",
-      "successful": "Muvaffaqiyatli ishlar",
-      "unsuccessful": "Muvaffaqiyatsiz ishlar",
-      "uploaded": "Yuklangan mahsulotlar",
-      "sold": "Sotilgan mahsulotlar"
+    "orderPayment": {
+        "title": "Buyurtma uchun to'lovni amalga oshiring",
+        "securityMessage": "Sizning to'lovingiz Soff tizimi tomonidan xavfsiz saqlanadi. Mutaxassisga to'lov faqat siz ishni ko'rib chiqib, tasdiqlaganingizdan so'ng amalga oshiriladi.",
+        "proceedToOrder": "Buyurtma berish",
+        "useBalance": "To'lov uchun balansingizdan foydalaning",
+        "balance": "Hisob",
+        "back": "Orqaga"
+    },
+    "actions": {
+        "viewAll": "Barchasini ko'rish"
+    },
+    "createOrder": {
+        "titleForSeller": "{{seller}} uchun maxsus buyurtma berish",
+        "title": "Maxsus buyurtma yaratish",
+        "noProfession": "Kasbi yo'q",
+        "placingOrder": "Buyurtmangiz joylashtirilmoqda...",
+        "placeOrder": "Buyurtmani joylashtirish",
+        "confirmTitle": "Buyurtmani tasdiqlash",
+        "confirmNo": "Yo‘q",
+        "confirmYes": "Ha, buyurtmani yubor",
+        "confirmMessage": "Rostdan ham {{seller}} uchun buyurtma berishni xohlaysizmi?"
+    },
+    "commentsSection": {
+        "noComments": "Hozircha izohlar mavjud emas",
+        "loading": "Yuklanmoqda...",
+        "showMore": "Ko‘proq ko‘rsatish",
+        "showingCount": "{{total}} tadan {{shown}} ta ko‘rsatilgan",
+        "specialOrder": "Maxsus buyurtma"
     }
-  },
-  "tabs": {
-    "about": "Muallif haqida",
-    "portfolio": "Portfolio",
-    "services": "Xizmatlar",
-    "products": "Mahsulotlar",
-    "comments": "Izohlar"
-  }
 }
-
 

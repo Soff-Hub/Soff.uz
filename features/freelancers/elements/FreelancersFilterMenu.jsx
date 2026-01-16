@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'next-i18next';
 import { Checkbox, Radio, Button } from 'antd';
 import { AiOutlineApartment } from 'react-icons/ai';
 import { MdOutlineClear } from 'react-icons/md';
@@ -7,6 +8,7 @@ import styles from '../styles/freelancersFilterMenu.module.scss';
 import useFreelancers from '../hooks/useFreelancers';
 
 function FreelancersFilterMenu({ collapsed }) {
+    const { t } = useTranslation('freelancers');
     const {
         directionsGroup,
         positionsGroup,
@@ -35,15 +37,15 @@ function FreelancersFilterMenu({ collapsed }) {
                         danger
                         onClick={handleClear}
                         icon={<MdOutlineClear />}>
-                        Filtrlarni tozalash
+                        {t('filter.clear')}
                     </Button>
                 </div>
             ) : null}
 
-            {/* Yo‘nalish */}
+            {/* Yo'nalish */}
             <div className={styles.filterGroup}>
                 <h4>
-                    <AiOutlineApartment /> Yo‘nalish
+                    <AiOutlineApartment /> {t('filter.direction')}
                 </h4>
                 <Checkbox.Group
                     value={selectedDirection}
@@ -60,7 +62,7 @@ function FreelancersFilterMenu({ collapsed }) {
             {/* Kasb */}
             <div className={styles.filterGroup}>
                 <h4>
-                    <BiCategory /> Kasb
+                    <BiCategory /> {t('filter.position')}
                 </h4>
                 <Checkbox.Group
                     value={selectedPositions}

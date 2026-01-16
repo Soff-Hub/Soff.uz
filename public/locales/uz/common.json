@@ -2,6 +2,7 @@
     "welcome": "Xush kelibsiz",
     "title": "Raqamli mahsulotlar va onlayn xizmatlar bozori – Soff.uz",
     "description": "Soff.uz - Intellektual mulk marketi, Intellektual mahsulotlarini soting va xarid qiling.",
+    "securityMessage": "To‘lov jarayoni ishonchli, shifrlangan va xavfsiz tarzda amalga oshiriladi.",
     "navigation": {
         "home": "Bosh sahifa",
         "products": "Mahsulotlar",
@@ -24,7 +25,8 @@
         "hoursMinutesAgo": "{{hours}} soat {{minutes}} daqiqa oldin",
         "dateTimeFormat": "DD.MM.YYYY HH:mm [da online edi]",
         "deadlinePassed": "Muddat tugagan",
-        "daysRemaining": "{{count}} kun"
+        "daysRemaining": "{{count}} kun",
+        "currency": "so'm"
     },
     "auth": {
         "login": "Kirish",

@@ -2,8 +2,10 @@ import Link from 'next/link';
 import React from 'react';
 import { fileColors } from '~/features/product-details/ui/actions/file-actions';
 import { addPeriodToThousands } from '~/features/account/ui/price-formatter';
+import { useTranslation } from 'next-i18next';
 
 const LastAddedProductCard = ({ product }) => {
+    const { t } = useTranslation('search');
     return (
         <Link href={`/product/${product.slug}`}>
             <a>
@@ -20,11 +22,11 @@ const LastAddedProductCard = ({ product }) => {
                         boxShadow: '0 0 6px rgba(0, 0, 0, 0.05)',
                         backgroundColor: '#fff',
                     }}
-                    onMouseEnter={e =>
+                    onMouseEnter={(e) =>
                         (e.currentTarget.style.boxShadow =
                             '0 4px 12px rgba(0,0,0,0.1)')
                     }
-                    onMouseLeave={e =>
+                    onMouseLeave={(e) =>
                         (e.currentTarget.style.boxShadow =
                             '0 0 6px rgba(0, 0, 0, 0.05)')
                     }>
@@ -65,10 +67,11 @@ const LastAddedProductCard = ({ product }) => {
                                 className="Search_Results_Products_card_boldtype">
                                 {product?.document?.file_type}
                             </span>
-                            {'     '}Narxi:{' '}
+                            {'     '}
+                            {t('card.price')}{' '}
                             <span style={{ fontWeight: 600, color: '#00a44f' }}>
                                 {addPeriodToThousands(product.discount_price)}{' '}
-                                so'm
+                                {t('card.currency')}
                             </span>
                         </p>
                     </div>

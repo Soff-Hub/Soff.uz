@@ -155,6 +155,7 @@ export async function getServerSideProps(context) {
                 'header',
                 'footer',
                 'orders',
+                'card',
                 'common',
                 'modals',
             ])),

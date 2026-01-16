@@ -5,11 +5,13 @@ import SearchResultsProducts_Card from './search-page-card/searchResultsProducts
 import Link from 'next/link';
 import SearchResultsServices_Card from './search-page-card/searchResultsServices_Card';
 import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
 
-export default function SearchAllProducts ({ data }, isLoading) {
-    const router = useRouter()
+export default function SearchAllProducts({ data }, isLoading) {
+    const router = useRouter();
+    const { t } = useTranslation('search');
     return (
-        <div className='SearchAllProducts'>
+        <div className="SearchAllProducts">
             <div>
                 {/* <div className='Search_Results_Products_Wrap'>
                     {false ? (
@@ -119,10 +121,12 @@ export default function SearchAllProducts ({ data }, isLoading) {
                     </button>
                 </Link> */}
 
-                <div className='productsDataSection'>
-                    <p className='SearchAllProductsTitle  '>Mahsulotlar</p>
+                <div className="productsDataSection">
+                    <p className="SearchAllProductsTitle  ">
+                        {t('titles.products')}
+                    </p>
 
-                    <div className='Search_Results_Products_Wrap'>
+                    <div className="Search_Results_Products_Wrap">
                         {false ? (
                             <>
                                 {Array(5)
@@ -131,7 +135,7 @@ export default function SearchAllProducts ({ data }, isLoading) {
                                         <Skeleton
                                             key={index}
                                             active
-                                            className='Search_Results_Wrap_skeleton'
+                                            className="Search_Results_Wrap_skeleton"
                                         />
                                     ))}
                             </>
@@ -145,25 +149,23 @@ export default function SearchAllProducts ({ data }, isLoading) {
                             ))
                         )}
                     </div>
-                    <Link 
-                        href={  
-                            {
-                                pathname: router.pathname,
-                                query: {...router.query, tab: 'products'}
-                            }
-                        }
-                    className='forMore'>
-                        <button className='forMoreBox'>
-                            Ko‘proq ko‘rish
+                    <Link
+                        href={{
+                            pathname: router.pathname,
+                            query: { ...router.query, tab: 'products' },
+                        }}
+                        className="forMore">
+                        <button className="forMoreBox">
+                            {t('buttons.viewMore')}
                             <svg
-                                xmlns='http://www.w3.org/2000/svg'
-                                width='18'
-                                height='18'
-                                viewBox='0 0 18 18'
-                                fill='none'>
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="18"
+                                height="18"
+                                viewBox="0 0 18 18"
+                                fill="none">
                                 <path
-                                    d='M11.6243 7.97984L7.86833 4.22389L8.85857 3.23364L14.305 8.68005L8.85857 14.1264L7.86833 13.1361L11.6243 9.38027H3.10156V7.97984H11.6243Z'
-                                    fill='#312F30'
+                                    d="M11.6243 7.97984L7.86833 4.22389L8.85857 3.23364L14.305 8.68005L8.85857 14.1264L7.86833 13.1361L11.6243 9.38027H3.10156V7.97984H11.6243Z"
+                                    fill="#312F30"
                                 />
                             </svg>
                         </button>
@@ -171,7 +173,7 @@ export default function SearchAllProducts ({ data }, isLoading) {
                 </div>
             </div>
 
-            <div className='forAdds'></div>
+            <div className="forAdds"></div>
         </div>
     );
 }

@@ -4,11 +4,11 @@ import { Result } from 'antd';
 import ProductCart from '~/entities/product/ui/ProductCart';
 import useCart from '~/shared/hooks/useCart';
 import { addPeriodToThousands } from '~/features/account/ui/price-formatter';
-import useResponsive from '~/shared/utilities/useResponsive';
+import { useTranslation } from 'next-i18next';
 
 const ModuleEcomerceCartItems = ({ cartItems }) => {
+    const { t } = useTranslation('common');
     const { removeCartOneItem } = useCart();
-    const { isMobile } = useResponsive();
 
     const handleRemoveItem = async (e, item) => {
         e.preventDefault();
@@ -27,16 +27,18 @@ const ModuleEcomerceCartItems = ({ cartItems }) => {
                     <span>
                         {item.discount === 0 ? (
                             <p>
-                                {addPeriodToThousands(item.discount_price)} so'm
+                                {addPeriodToThousands(item.discount_price)}{' '}
+                                {t('common.currency')}
                             </p>
                         ) : (
                             <>
                                 <del>
-                                    {addPeriodToThousands(item.price)} so'm
+                                    {addPeriodToThousands(item.price)}{' '}
+                                    {t('common.currency')}
                                 </del>
                                 <p>
                                     {addPeriodToThousands(item.discount_price)}
-                                    so'm
+                                    {t('common.currency')}
                                 </p>
                             </>
                         )}

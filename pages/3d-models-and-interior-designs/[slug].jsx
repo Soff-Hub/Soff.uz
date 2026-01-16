@@ -112,6 +112,7 @@ export async function getServerSideProps(context) {
                 'footer',
                 'common',
                 'product-pages',
+                'card',
                 'modals',
             ])),
             productsData: productsData || null,

@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { FaRegPenToSquare } from 'react-icons/fa6';
+import { useTranslation } from 'next-i18next';
 import styles from './style.module.scss';
 import Icon from '~/shared/ui/Icon';
 import { SizeType } from '~/shared/types/size';
@@ -38,6 +39,7 @@ const getDescriptionSize = (size: OrderDescriptionProps['size']) => {
 
 function OrderDescription({ order, size = 'large' }: OrderDescriptionProps) {
     const descRef = useRef<HTMLParagraphElement>(null);
+    const { t } = useTranslation('card');
     const [showMore, setShowMore] = useState(false);
     const [showMoreBtn, setShowMoreBtn] = useState(false);
     const sizeStyles = getDescriptionSize(size);
@@ -55,7 +57,7 @@ function OrderDescription({ order, size = 'large' }: OrderDescriptionProps) {
             <div className={styles.meta}>
                 <div className={styles.metaTitle}>
                     <Icon icon={FaRegPenToSquare} />
-                    Buyurtma tavsifi
+                    {t('orderCard.description')}
                 </div>
 
                 <p
@@ -86,7 +88,7 @@ function OrderDescription({ order, size = 'large' }: OrderDescriptionProps) {
                             display: 'inline-block',
                             fontSize: sizeStyles.fontSize,
                         }}>
-                        {showMore ? 'Kamroq' : 'Batafsil'}
+                        {showMore ? t('orderCard.less') : t('orderCard.more')}
                     </span>
                 )}
             </div>
@@ -95,7 +97,8 @@ function OrderDescription({ order, size = 'large' }: OrderDescriptionProps) {
         return (
             <div className={styles.meta}>
                 <div className={styles.metaTitle}>
-                    <Icon icon={FaRegPenToSquare} /> Buyurtma tavsifi
+                    <Icon icon={FaRegPenToSquare} />{' '}
+                    {t('orderCard.description')}
                 </div>
                 <div
                     style={{

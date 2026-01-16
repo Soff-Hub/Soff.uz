@@ -13,11 +13,17 @@ import { FaRegCreditCard } from 'react-icons/fa6';
 import { FaRegCalendarDays } from 'react-icons/fa6';
 
 import { IoShieldCheckmarkOutline } from 'react-icons/io5';
+import { useTranslation } from 'next-i18next';
 
-export const SecurePaymentAlert = ({ style, bordered = true, ...rest }) =>
+export const SecurePaymentAlert = ({
+    style,
+    bordered = true,
+    message,
+    ...rest
+}) =>
     bordered ? (
         <Alert
-            message="To‘lov jarayoni ishonchli, shifrlangan va xavfsiz tarzda amalga oshiriladi."
+            message={message}
             type="success"
             showIcon
             style={{
@@ -39,14 +45,11 @@ export const SecurePaymentAlert = ({ style, bordered = true, ...rest }) =>
                     marginBottom: '4px',
                 }}
             />
-            <span style={{ color: 'green', fontSize: '13px' }}>
-                To‘lov jarayoni ishonchli, shifrlangan va xavfsiz tarzda amalga
-                oshiriladi.
-            </span>
+            <span style={{ color: 'green', fontSize: '13px' }}>{message}</span>
         </div>
     );
 
-const FormSubmitButton = ({ hisob, message, className, ...rest }) => (
+const FormSubmitButton = ({ hisob, message, className, t, ...rest }) => (
     <div className={`w-100 ${className}`} {...rest}>
         <button
             type="submit"
@@ -54,7 +57,11 @@ const FormSubmitButton = ({ hisob, message, className, ...rest }) => (
             style={{
                 color: 'white',
             }}>
-            {message ? `To'lash (${hisob} so'm)` : <BeatLoader color="#fff" />}
+            {message ? (
+                t('checkout.payButton', { amount: hisob })
+            ) : (
+                <BeatLoader color="#fff" />
+            )}
         </button>
         <button
             type="submit"
@@ -62,12 +69,17 @@ const FormSubmitButton = ({ hisob, message, className, ...rest }) => (
             style={{
                 color: 'white',
             }}>
-            {message ? `To'lash (${hisob} so'm)` : <BeatLoader color="#fff" />}
+            {message ? (
+                t('checkout.payButton', { amount: hisob })
+            ) : (
+                <BeatLoader color="#fff" />
+            )}
         </button>
     </div>
 );
 
 const CreditCard2 = ({ document, type }) => {
+    const { t } = useTranslation(['account', 'common']);
     const { user } = useSelector((state) => state.auth);
     const ecomerce = useSelector((state) => state.ecomerce.cartDataItems);
     const { affiliateId } = useSelector((state) => state.affiliate);
@@ -135,7 +147,7 @@ const CreditCard2 = ({ document, type }) => {
             setMessage(true);
             const modal = Modal.error({
                 centered: true,
-                title: 'Muvaffaqqiyatli emas',
+                title: t('checkout.errorTitle'),
                 content: ItemsData?.data?.msg,
             });
             modal.update;
@@ -160,7 +172,7 @@ const CreditCard2 = ({ document, type }) => {
             setMessage(true);
             const modal = Modal.error({
                 centered: true,
-                title: 'Muvaffaqqiyatli emas',
+                title: t('checkout.errorTitle'),
                 content: ItemsData?.data?.msg,
             });
             modal.update;
@@ -188,11 +200,11 @@ const CreditCard2 = ({ document, type }) => {
             setMessage(true);
             const modal = Modal.error({
                 centered: true,
-                title: 'Muvaffaqqiyatli emas',
+                title: t('checkout.errorTitle'),
                 content: ItemsData?.data?.expire_date
-                    ? ' Karta amal qilish muddatini kiriting'
+                    ? t('checkout.errors.expireDate')
                     : ItemsData?.data?.card_number
-                    ? "Karta raqamini to'g'ri kiriting"
+                    ? t('checkout.errors.cardNumber')
                     : ItemsData?.data?.msg,
             });
             modal.update;
@@ -217,7 +229,7 @@ const CreditCard2 = ({ document, type }) => {
             setOpen(false);
             const modal = Modal.error({
                 centered: true,
-                title: 'Xatolik!',
+                title: t('checkout.errors.error'),
                 content: `${dataNews?.data?.msg}`,
             });
 
@@ -230,7 +242,7 @@ const CreditCard2 = ({ document, type }) => {
             localStorage.removeItem('cart');
             const modal = Modal.success({
                 centered: true,
-                title: 'Muffaqiyatli!',
+                title: t('checkout.success'),
                 content: `${dataNews?.data?.msg} `,
             });
 
@@ -364,7 +376,9 @@ const CreditCard2 = ({ document, type }) => {
                         style={{ marginInline: '1px' }}
                         className="pb-3 d-flex align-items-end justify-content-between row gap-4 bg-white">
                         <div className="col-xl-7 p-0 my-2" style={{ flex: 1 }}>
-                            <p className="cardNumber">Karta raqam</p>
+                            <p className="cardNumber">
+                                {t('checkout.cardNumberLabel')}
+                            </p>
                             <label htmlFor="ccn" style={{ width: '100%' }}>
                                 <Input
                                     ref={inputRef}
@@ -421,13 +435,17 @@ const CreditCard2 = ({ document, type }) => {
                             hisob={hisob}
                             message={message}
                             className={'col-12 p-0'}
+                            t={t}
                         />
                     </form>
-                    <SecurePaymentAlert bordered={false} />
+                    <SecurePaymentAlert
+                        bordered={false}
+                        message={t('securityMessage', { ns: 'common' })}
+                    />
 
                     <Modal
                         width={500}
-                        title={'Kodni kiriting!'}
+                        title={t('checkout.enterCodeTitle')}
                         centered
                         open={open}
                         onOk={handleSubmitCode}
@@ -441,13 +459,13 @@ const CreditCard2 = ({ document, type }) => {
                             buttonOk ? (
                                 <BeatLoader color="#fff" />
                             ) : (
-                                "To'lov qilish"
+                                t('checkout.payActionButton')
                             )
                         }
-                        cancelText="Orqaga">
+                        cancelText={t('checkout.back')}>
                         <>
                             <p>
-                                Kod quyidagi raqamga yuborildi:
+                                {t('checkout.codeSentTo')}
                                 {resData?.data?.phone_number}
                             </p>
                             <input
@@ -462,7 +480,7 @@ const CreditCard2 = ({ document, type }) => {
                             </strong>
                             <p className="text-danger">
                                 {resDataCode?.data?.msg?.[0] == 'Parol xato' &&
-                                    resDataCode?.data?.msg}
+                                    t('checkout.errors.wrongCode')}
                             </p>
                         </>
                     </Modal>
@@ -481,9 +499,16 @@ const CreditCard2 = ({ document, type }) => {
                     <form
                         onSubmit={handleClickCardPostsclick}
                         className="pt-4 pb-3 d-flex align-items-end justify-content-between">
-                        <FormSubmitButton hisob={hisob} message={message} />
+                        <FormSubmitButton
+                            hisob={hisob}
+                            message={message}
+                            t={t}
+                        />
                     </form>
-                    <SecurePaymentAlert bordered={false} />
+                    <SecurePaymentAlert
+                        bordered={false}
+                        message={t('securityMessage', { ns: 'common' })}
+                    />
                 </div>
             ),
         },
@@ -503,9 +528,16 @@ const CreditCard2 = ({ document, type }) => {
                     <form
                         onSubmit={handleClickCardPostsPayme}
                         className="pt-4 pb-3 d-flex align-items-end justify-content-between">
-                        <FormSubmitButton hisob={hisob} message={message} />
+                        <FormSubmitButton
+                            hisob={hisob}
+                            message={message}
+                            t={t}
+                        />
                     </form>
-                    <SecurePaymentAlert bordered={false} />
+                    <SecurePaymentAlert
+                        bordered={false}
+                        message={t('securityMessage', { ns: 'common' })}
+                    />
                 </div>
             ),
         },

@@ -28,41 +28,9 @@ import { MdOutlineFirstPage } from 'react-icons/md';
 import { MdOutlineLastPage } from 'react-icons/md';
 import { PiSortDescendingBold } from 'react-icons/pi';
 import { useMounted } from '~/shared/hooks/useMounted';
+import { useTranslation } from 'next-i18next';
 
-const fileTypes = [
-    { label: 'Barchasi', value: '' },
-    { label: 'DOCX', value: 'docx' },
-    { label: 'DOC', value: 'doc' },
-    { label: 'PPTX', value: 'pptx' },
-    { label: 'PPT', value: 'ppt' },
-    { label: 'PDF', value: 'pdf' },
-];
 const { Option } = Select;
-
-const orders = [
-    { label: 'Narx (arzon)', value: 'price' },
-    { label: 'Narx (qimmat)', value: '-price' },
-    { label: "Ko'p ko‘rilganlar bo‘yicha", value: 'views' },
-    { label: 'Ko‘p xarid qilingan', value: 'purchased_count' },
-];
-
-const allTypes = [
-    { title: 'Barchasi', value: 'all', icon: <AppstoreOutlined /> },
-    { title: 'Fayllar', value: 'file', icon: <FileTextOutlined /> },
-    { title: '3D modellar', value: '3d', icon: <PictureOutlined /> },
-    {
-        title: 'Dizayn shablonlar',
-        value: 'design',
-        icon: <LayoutOutlined />,
-    },
-    {
-        title: 'Turli shablonlar',
-        value: 'template',
-        icon: <CodeOutlined />,
-    },
-    { title: 'Veb saytlar', value: 'website', icon: <GlobalOutlined /> },
-    { title: 'Videolar', value: 'video', icon: <VideoCameraOutlined /> },
-];
 
 const defaultValues = {
     type: 'file',
@@ -77,6 +45,73 @@ function SearchResultsProductsFilter({ total, childData }) {
     const [filterOpen, setFilterOpen] = useState(false);
     const isMounted = useMounted(200);
     const router = useRouter();
+    const { t } = useTranslation('search');
+
+    const fileTypes = useMemo(
+        () => [
+            { label: t('filter.all'), value: '' },
+            { label: 'DOCX', value: 'docx' },
+            { label: 'DOC', value: 'doc' },
+            { label: 'PPTX', value: 'pptx' },
+            { label: 'PPT', value: 'ppt' },
+            { label: 'PDF', value: 'pdf' },
+        ],
+        [t]
+    );
+
+    const orders = useMemo(
+        () => [
+            { label: t('filter.sortOptions.priceLow'), value: 'price' },
+            { label: t('filter.sortOptions.priceHigh'), value: '-price' },
+            { label: t('filter.sortOptions.views'), value: 'views' },
+            {
+                label: t('filter.sortOptions.purchased'),
+                value: 'purchased_count',
+            },
+        ],
+        [t]
+    );
+
+    const allTypes = useMemo(
+        () => [
+            {
+                title: t('filter.all'),
+                value: 'all',
+                icon: <AppstoreOutlined />,
+            },
+            {
+                title: t('filter.types.file'),
+                value: 'file',
+                icon: <FileTextOutlined />,
+            },
+            {
+                title: t('filter.types.3d'),
+                value: '3d',
+                icon: <PictureOutlined />,
+            },
+            {
+                title: t('filter.types.design'),
+                value: 'design',
+                icon: <LayoutOutlined />,
+            },
+            {
+                title: t('filter.types.template'),
+                value: 'template',
+                icon: <CodeOutlined />,
+            },
+            {
+                title: t('filter.types.website'),
+                value: 'website',
+                icon: <GlobalOutlined />,
+            },
+            {
+                title: t('filter.types.video'),
+                value: 'video',
+                icon: <VideoCameraOutlined />,
+            },
+        ],
+        [t]
+    );
 
     const mutationsInForm = useMemo(() => {
         if (!isMounted) {
@@ -166,16 +201,15 @@ function SearchResultsProductsFilter({ total, childData }) {
                 title: currentType?.title,
                 isEnabled: !!router.query.type,
                 disabled: defaultValues.type === router.query.type,
-                disabledTooltip:
-                    "Bu qiymat standart sozlamaligi uchun o'chira olmaysiz, filtr orqali o'zgartiring",
-                tooltip: 'Turi',
+                disabledTooltip: t('filter.tooltips.cannotDeleteDefault'),
+                tooltip: t('filter.type'),
                 action: () => deleteQuerySelectively('type'),
             },
             {
                 key: 'file_type',
                 icon: <LuFileType2 />,
                 title: currentFileType?.label,
-                tooltip: 'Fayl turi',
+                tooltip: t('filter.fileType'),
                 isEnabled: !!router.query.file_type,
                 action: () => deleteQuerySelectively('file_type'),
             },
@@ -183,7 +217,7 @@ function SearchResultsProductsFilter({ total, childData }) {
                 key: 'parentCategory',
                 icon: <FaRegFile />,
                 title: currentParentCategory?.name,
-                tooltip: 'Katta kategoriya',
+                tooltip: t('filter.parentCategory'),
                 isEnabled: !!router.query.parentCategory,
                 action: () =>
                     deleteQuerySelectively('parentCategory', 'category'),
@@ -192,7 +226,7 @@ function SearchResultsProductsFilter({ total, childData }) {
                 key: 'order_by',
                 isEnabled: !!router.query.order_by,
                 icon: <PiSortDescendingBold fontSize={16} />,
-                tooltip: 'Saralash',
+                tooltip: t('filter.sortBy'),
                 title: currentOrderBy?.label,
                 action: () => deleteQuerySelectively('order_by'),
             },
@@ -202,11 +236,12 @@ function SearchResultsProductsFilter({ total, childData }) {
                     !!router.query.page_from ||
                     Number(router.query.page_to || 100) < 100,
                 disabled: !router.query.page_from,
-                tooltip: 'Betlar soni dan',
-                disabledTooltip:
-                    "Bu qiymat standart sozlamaligi uchun o'chira olmaysiz, avval bet gacha qiymatini o'chiring",
+                tooltip: t('filter.pageFrom'),
+                disabledTooltip: t('filter.tooltips.cannotDeletePageFrom'),
                 icon: <MdOutlineFirstPage fontSize={16} />,
-                title: `Bet dan: ${router.query.page_from || 1}`,
+                title: `${t('filter.pageFrom')}: ${
+                    router.query.page_from || 1
+                }`,
                 action: () => deleteQuerySelectively('page_from'),
             },
             {
@@ -215,15 +250,14 @@ function SearchResultsProductsFilter({ total, childData }) {
                     !!router.query.page_to ||
                     Number(router.query.page_from || 1) > 1,
                 icon: <MdOutlineLastPage fontSize={16} />,
-                tooltip: 'Betlar soni gacha',
-                disabledTooltip:
-                    "Bu qiymat standart sozlamaligi uchun o'chira olmaysiz, avval bet dan qiymatini o'chiring",
-                title: `Bet gacha: ${router.query.page_to || 100}`,
+                tooltip: t('filter.pageTo'),
+                disabledTooltip: t('filter.tooltips.cannotDeletePageTo'),
+                title: `${t('filter.pageTo')}: ${router.query.page_to || 100}`,
                 disabled: !router.query.page_to,
                 action: () => deleteQuerySelectively('page_to'),
             },
         ];
-    }, [router.query, childData]);
+    }, [router.query, childData, t, fileTypes, orders, allTypes]);
 
     const onClose = () => {
         setFilterOpen(false);
@@ -263,7 +297,7 @@ function SearchResultsProductsFilter({ total, childData }) {
                                 ))}
                             <Tooltip
                                 placement="top"
-                                title={'Barcha filterlarni tozalash'}>
+                                title={t('filter.tooltips.clearAll')}>
                                 <Button
                                     color="danger"
                                     icon={<IoClose />}
@@ -281,7 +315,7 @@ function SearchResultsProductsFilter({ total, childData }) {
                                 style={{
                                     width: 'auto',
                                 }}>
-                                Filter
+                                {t('filter.button')}
                             </Button>
                         </Badge>
                     </div>
@@ -289,7 +323,7 @@ function SearchResultsProductsFilter({ total, childData }) {
             ) : null}
             <div className="search_results_indicator">
                 <p className="countProduct text-nowrap m-0">
-                    {`${total} ta mahsulot topildi`}
+                    {t('filter.productCount', { count: total })}
                 </p>
 
                 {!mutationsInForm.hasMutation && (
@@ -302,7 +336,7 @@ function SearchResultsProductsFilter({ total, childData }) {
                                 style={{
                                     width: 'auto',
                                 }}>
-                                Filter
+                                {t('filter.button')}
                             </Button>
                         </Badge>
                     </div>
@@ -312,13 +346,24 @@ function SearchResultsProductsFilter({ total, childData }) {
                 open={filterOpen}
                 childData={childData}
                 onClose={onClose}
+                allTypes={allTypes}
+                fileTypes={fileTypes}
+                orders={orders}
             />
         </div>
     );
 }
 
-const FilterFormDrawer = ({ open, childData, onClose }) => {
+const FilterFormDrawer = ({
+    open,
+    childData,
+    onClose,
+    allTypes,
+    fileTypes,
+    orders,
+}) => {
     const router = useRouter();
+    const { t } = useTranslation('search');
     const initialFilterValues = useMemo(
         () => ({
             type: router.query.type || 'file',
@@ -392,7 +437,7 @@ const FilterFormDrawer = ({ open, childData, onClose }) => {
 
     return (
         <Drawer
-            title="Filterlar"
+            title={t('filter.title')}
             placement="left"
             onClose={handleSaveAndClose}
             open={open}
@@ -432,7 +477,7 @@ const FilterFormDrawer = ({ open, childData, onClose }) => {
 
                 <Select
                     style={{ width: '100%' }}
-                    placeholder="Fayl turi"
+                    placeholder={t('filter.fileType')}
                     value={filterValues.file_type || undefined}
                     disabled={filterValues?.type !== 'file'}
                     allowClear
@@ -444,7 +489,7 @@ const FilterFormDrawer = ({ open, childData, onClose }) => {
                 />
                 <Select
                     style={{ width: '100%' }}
-                    placeholder="Katta kategoriya"
+                    placeholder={t('filter.parentCategory')}
                     value={filterValues.parentCategory || undefined}
                     disabled={!filterValues.type || filterValues.type === 'all'}
                     allowClear
@@ -469,7 +514,7 @@ const FilterFormDrawer = ({ open, childData, onClose }) => {
                     }))}
                 />
                 <Select
-                    placeholder="Saralash"
+                    placeholder={t('filter.sortBy')}
                     style={{
                         width: '100%',
                         maxWidth: '159px',
@@ -485,7 +530,9 @@ const FilterFormDrawer = ({ open, childData, onClose }) => {
 
                 {filterValues.type === 'file' && (
                     <div className="ranger p-2 border rounded bg-light">
-                        <p className="mb-0 fw-medium small">Betlar soni</p>
+                        <p className="mb-0 fw-medium small">
+                            {t('filter.pageRange')}
+                        </p>
                         <Slider
                             range
                             min={1}
@@ -500,10 +547,10 @@ const FilterFormDrawer = ({ open, childData, onClose }) => {
                         />
                         <div className="d-flex justify-content-between">
                             <span className="text-muted small">
-                                {filterValues.pageRange[0]} bet
+                                {filterValues.pageRange[0]} {t('filter.pages')}
                             </span>
                             <span className="text-muted small">
-                                {filterValues.pageRange[1]} bet
+                                {filterValues.pageRange[1]} {t('filter.pages')}
                             </span>
                         </div>
                     </div>
@@ -515,10 +562,10 @@ const FilterFormDrawer = ({ open, childData, onClose }) => {
                         htmlType="reset"
                         block
                         onClick={handleClear}>
-                        Tozalash
+                        {t('filter.actions.clear')}
                     </Button>
                     <Button htmlType="submit" type="primary" block>
-                        Qo‘llash
+                        {t('filter.actions.apply')}
                     </Button>
                 </div>
             </form>

@@ -56,18 +56,6 @@
         "emptyStateDescription": "But this is a great opportunity for you! Be among the first to place products in this category, build your audience and start earning. Don't miss the opportunity!",
         "becomeSeller": "Become a seller"
     },
-    "productCard": {
-        "free": "Free",
-        "currency": "UZS",
-        "cardImage": "Product image",
-        "icon": "Icon",
-        "modal": {
-            "title": "Success",
-            "message": "You added the product to cart!",
-            "goToCart": "Go to cart",
-            "continueShopping": "Continue shopping"
-        }
-    },
     "productDetail": {
         "notFound": "Product not found",
         "videoBanner": {

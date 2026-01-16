@@ -431,7 +431,8 @@ const UserShortInfo = ({ seller }) => {
                     type="primary"
                     onClick={handleCreateOrder}
                     disabled={isOrderingClosed}>
-                    <i className="fa-solid fa-calendar"></i> Buyurtma berish
+                    <i className="fa-solid fa-calendar"></i>{' '}
+                    {t('profile.placeOrder')}
                 </Button>
             </div>
 

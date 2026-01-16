@@ -8,8 +8,8 @@ import { IoDocumentsSharp } from 'react-icons/io5';
 import { useTranslation } from 'next-i18next';
 
 const Search_Results_NotFound = forwardRef(({ isSearchPage = true }, ref) => {
-    const { t } = useTranslation('orders');
-    const { isLoggedIn } = useSelector(state => state.auth);
+    const { t } = useTranslation('search');
+    const { isLoggedIn } = useSelector((state) => state.auth);
     const { data, isLoading } = useFGet(
         'top-services',
         'customer/popular-services?limit=6',
@@ -66,7 +66,7 @@ const Search_Results_NotFound = forwardRef(({ isSearchPage = true }, ref) => {
                                   />
                               </div>
                           ))
-                        : data?.items?.map(service => (
+                        : data?.items?.map((service) => (
                               <div
                                   key={service.id}
                                   className="col-6 col-sm-6 col-md-4 px-1">
@@ -80,7 +80,7 @@ const Search_Results_NotFound = forwardRef(({ isSearchPage = true }, ref) => {
 });
 
 export const SearchProductsNotFound = forwardRef((props, ref) => {
-    const { t } = useTranslation('orders');
+    const { t } = useTranslation('search');
     const router = useRouter();
     const handleLoadSimilarDocuments = () => {
         router.push(

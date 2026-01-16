@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from 'antd';
+import { useTranslation } from 'next-i18next';
 import { DownloadOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import Icon from '~/shared/ui/Icon';
@@ -49,6 +50,7 @@ const getSizeStyles = (size: OrderFileProps['size']) => {
 
 function OrderFile({ file, size = 'large' }: OrderFileProps) {
     const sizeStyles = getSizeStyles(size);
+    const { t } = useTranslation('card');
 
     // Get CSS class names based on size
     const getFileCardClassName = () => {
@@ -58,6 +60,8 @@ function OrderFile({ file, size = 'large' }: OrderFileProps) {
     const getIconWrapperClassName = () => {
         return `${styles.orderConfirmFileIconWrapper} ${styles[size]}`;
     };
+
+    console.log({ file });
 
     return (
         <div key={file.url} className={getFileCardClassName()}>
@@ -91,7 +95,7 @@ function OrderFile({ file, size = 'large' }: OrderFileProps) {
                     className="w-4 h-4 mr-2"
                     style={{ fontSize: sizeStyles.downloadIconSize }}
                 />
-                Yuklab olish
+                {t('orderCard.download')}
             </Button>
         </div>
     );

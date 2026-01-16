@@ -3,8 +3,10 @@ import Link from 'next/link';
 import { calculateAmount } from '~/shared/utilities/ecomerce-helpers';
 import ProductRepository from '~/repositories/ProductRepository';
 import { addPeriodToThousands } from '~/features/account/ui/price-formatter';
+import { useTranslation } from 'next-i18next';
 
 const ModuleCartSummary = ({ source }) => {
+    const { t } = useTranslation('common');
     const [percentage, setPercentage] = useState(0);
 
     async function getPercentage() {
@@ -45,7 +47,8 @@ const ModuleCartSummary = ({ source }) => {
                     </Link>
                     <Link href="/product/[pid]" as={`/product/${item.slug}`}>
                         <a className="ps-product__price">
-                            {addPeriodToThousands(item?.price)} so'm
+                            {addPeriodToThousands(item?.price)}{' '}
+                            {t('common.currency')}
                         </a>
                     </Link>
                 </div>{' '}
@@ -58,7 +61,11 @@ const ModuleCartSummary = ({ source }) => {
             <div className="ps-block--shopping-total">
                 <div className="ps-block__header">
                     <p>
-                        Umumiy hisob <span> {hisob} so'm </span>
+                        Umumiy hisob{' '}
+                        <span>
+                            {' '}
+                            {hisob} {t('common.currency')}{' '}
+                        </span>
                     </p>
                 </div>
                 <div className="">
@@ -76,7 +83,10 @@ const ModuleCartSummary = ({ source }) => {
                         </p>
                     )}
                     <h3>
-                        Jami: <span>{allPercentage} so'm</span>
+                        Jami:{' '}
+                        <span>
+                            {allPercentage} {t('common.currency')}
+                        </span>
                     </h3>
                 </div>
             </div>

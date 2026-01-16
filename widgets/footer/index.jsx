@@ -3,7 +3,7 @@ import styles from './style.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useGetDirectionsQuery } from '~/store/profile/slice';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 
 const getFooterMenu = (t) => ({
     soff: {
@@ -305,7 +305,8 @@ export default function Footer() {
                 <div className={styles.footerBottom}>
                     <Link href="/page/oferta">
                         <a>
-                            © {currentYear} Soff.uz — {t('allRightsReserved')}{' '}
+                            © {currentYear} Soff.uz —{' '}
+                            {t('allRightsReserved')}{' '}
                         </a>
                     </Link>
 

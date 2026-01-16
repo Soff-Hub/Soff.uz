@@ -1,5 +1,6 @@
 import Router, { useRouter } from 'next/router';
 import React from 'react';
+import { useTranslation } from 'next-i18next';
 // import useAuth from '~/shared/hooks/useAuth';
 
 export default function GoogleBox({
@@ -12,6 +13,7 @@ export default function GoogleBox({
 }) {
     // const { registerGoogleUser } = useAuth();
     const router = useRouter();
+    const { t } = useTranslation('modals');
 
     const handleGoogleClick = async () => {
         // Build the OAuth URL with proper query parameters
@@ -27,7 +29,7 @@ export default function GoogleBox({
         }
 
         // Add existing query parameters
-        Object.keys(router.query).forEach(key => {
+        Object.keys(router.query).forEach((key) => {
             if (router.query[key]) {
                 params.append(key, router.query[key]);
             }
@@ -82,7 +84,7 @@ export default function GoogleBox({
                 }}
                 className="py-3 px-3 d-flex align-items-center gap-2 w-100 justify-content-center">
                 <img src="/static/img/telegram.png" alt="" height={20} />
-                <span>Telegram orqali kirish</span>
+                <span>{t('social.telegram')}</span>
             </div>
 
             <div
@@ -94,7 +96,7 @@ export default function GoogleBox({
                 }}
                 className="py-3 px-3 d-flex align-items-center gap-2 w-100 justify-content-center">
                 <img src="/static/img/google.png" alt="" height={20} />
-                <span>Google orqali kirish</span>
+                <span>{t('social.google')}</span>
             </div>
         </div>
     );

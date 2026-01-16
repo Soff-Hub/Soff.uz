@@ -2,6 +2,7 @@ import React, { ReactNode, useMemo } from 'react';
 import { Button, Alert, Skeleton, Collapse } from 'antd';
 import styles from './order-files.module.scss';
 import OrderFile from './OrderFile';
+import { useTranslation } from 'next-i18next';
 import { FileInfo } from '~/store/petApi';
 import { IoIosArrowForward } from 'react-icons/io';
 import {
@@ -35,6 +36,7 @@ const OrderPendingFiles: React.FC<PendingFilesCase> = ({
     setFeedbackOpen,
     size = 'large',
 }) => {
+    const { t } = useTranslation('card');
     const pendingFiles = useMemo(() => {
         if (!orderFiles || !orderFiles?.length) return [];
         return orderFiles?.filter((f: FileInfo) => f.status === 'pending');
@@ -85,7 +87,7 @@ const OrderPendingFiles: React.FC<PendingFilesCase> = ({
     } else {
         filesContent = (
             <p style={{ fontSize: sizeStyles.textFontSize }}>
-                Hozircha yuklangan fayllar mavjud emas.
+                {t('orderCard.noFiles')}
             </p>
         );
     }
@@ -93,13 +95,11 @@ const OrderPendingFiles: React.FC<PendingFilesCase> = ({
     const orderContent = (
         <div className={styles.orderConfirmContent}>
             <p style={{ fontSize: sizeStyles.textFontSize }}>
-                Mutahasis buyurtmani yakunladi va natijani sizga jo'natdi.
-                Natijani yuklab olib ko'rib chiqing va tasdiqlang yoki rad
-                eting.
+                {t('orderCard.completionMessage')}
             </p>
             <Alert
-                message="Eslatma:"
-                description="Agar siz 24 soat ichida ishni holatini o'zgartirmasangiz, buyurtma avtomatik ravishda qabul qilinadi va to'lov mutaxassisga o'tkaziladi."
+                message={t('orderCard.noteTitle')}
+                description={t('orderCard.noteDescription')}
                 type="warning"
                 showIcon
                 className={getAlertClassName()}
@@ -114,7 +114,7 @@ const OrderPendingFiles: React.FC<PendingFilesCase> = ({
                     color: '#333',
                     fontSize: sizeStyles.subtitleFontSize,
                 }}>
-                Yuklangan fayllar
+                {t('orderCard.uploadedFiles')}
             </h4>
             {filesContent}
             <div className={styles.orderConfirmFileActions}>
@@ -131,7 +131,7 @@ const OrderPendingFiles: React.FC<PendingFilesCase> = ({
                         setSelectedOrder && setSelectedOrder(order);
                         setFeedbackOpen(true);
                     }}>
-                    Kamchilik aniqlandi
+                    {t('orderCard.reject')}
                 </Button>
                 <Button
                     type="primary"
@@ -145,7 +145,7 @@ const OrderPendingFiles: React.FC<PendingFilesCase> = ({
                         setSelectedOrder && setSelectedOrder(order);
                         setFeedbackOpen(true);
                     }}>
-                    Qabul qilish
+                    {t('orderCard.accept')}
                 </Button>
             </div>
         </div>
@@ -155,7 +155,7 @@ const OrderPendingFiles: React.FC<PendingFilesCase> = ({
         <div className={styles.orderPayCardGrid}>
             {withCollapse ? (
                 wrapWithCollapse(orderContent, {
-                    text: 'Ishni qabul qilish',
+                    text: t('orderCard.acceptWork'),
                     size,
                     isDefaultOpen: true,
                 })
@@ -167,7 +167,7 @@ const OrderPendingFiles: React.FC<PendingFilesCase> = ({
                             fontSize: sizeStyles.titleFontSize,
                             marginBottom: '8px',
                         }}>
-                        Ishni qabul qilish
+                        {t('orderCard.acceptWork')}
                     </h3>
                     {orderContent}
                 </>
@@ -182,6 +182,7 @@ const OrderCompletedFiles: React.FC<CompletedFilesCase> = ({
     isOrderFilesFetching,
     size = 'large',
 }) => {
+    const { t } = useTranslation('card');
     const completedFiles = useMemo(() => {
         if (!orderFiles || !orderFiles?.length) return [];
         return orderFiles?.filter((f: FileInfo) => f.status === 'completed');
@@ -229,7 +230,7 @@ const OrderCompletedFiles: React.FC<CompletedFilesCase> = ({
         <div className={styles.orderPayCardGrid}>
             {hasCompletedFiles && withCollapse ? (
                 wrapWithCollapse(completedFilesContent, {
-                    text: 'Buyurtma fayllari',
+                    text: t('orderCard.orderFiles'),
                     size,
                     isDefaultOpen: true,
                 })
@@ -240,7 +241,7 @@ const OrderCompletedFiles: React.FC<CompletedFilesCase> = ({
                         style={{
                             fontSize: sizeStyles.titleFontSize,
                         }}>
-                        Buyurtma fayllari
+                        {t('orderCard.orderFiles')}
                     </h3>
                     {completedFilesContent}
                 </>

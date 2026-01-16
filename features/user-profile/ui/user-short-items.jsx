@@ -6,6 +6,7 @@ import { ArrowRightOutlined } from '@ant-design/icons';
 import { cn, useRcn } from '~/shared/utilities/cn';
 import { useFGet } from '~/shared/hooks/useFApi';
 import useResponsive from '~/shared/utilities/useResponsive';
+import { useTranslation } from 'next-i18next';
 
 import PortfolioCard from '~/entities/portfolio/portfolio-card';
 import ServiceCard from '~/entities/service/service-card';
@@ -29,14 +30,15 @@ const UserShortItems = ({
     sectionRef,
     direction,
 }) => {
+    const { t } = useTranslation('seller');
     const { isDesktop } = useResponsive();
     const router = useRouter();
     const [selected, setSelected] = useState(null);
 
     const titles = {
-        portfolio: 'Portfolio',
-        service: 'Xizmatlar',
-        product: 'Mahsulotlar',
+        portfolio: t('tabs.portfolio'),
+        service: t('tabs.services'),
+        product: t('tabs.products'),
     };
 
     const { key, url, Card } = useMemo(() => {
@@ -190,7 +192,7 @@ const UserShortItems = ({
                         icon={<ArrowRightOutlined />}
                         iconPosition="end"
                         onClick={handleMoreClick}>
-                        Barchasini ko'rish
+                        {t('actions.viewAll', "Barchasini ko'rish")}
                     </Button>
                 </div>
             </div>

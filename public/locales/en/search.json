@@ -15,7 +15,71 @@
         "clear": "Clear"
     },
     "notFound": {
-        "createOrder": "Create order"
+        "createOrder": "Create order",
+        "searchPage": "Unfortunately, what you were looking for was not found. But you can order it. 👇",
+        "ordersPage": "Unfortunately, the service you were looking for was not found. But you can order it. 👇",
+        "productsNotFound": "Unfortunately, what you were looking for was not found. However, you can check out similar products.",
+        "similarProducts": "Similar products"
+    },
+    "titles": {
+        "products": "Products"
+    },
+    "buttons": {
+        "viewMore": "View more"
+    },
+    "side": {
+        "recommendedServices": "Recommended services",
+        "lastAddedProducts": "Latest added products"
+    },
+    "filter": {
+        "specialistCount": "{{count}} specialists",
+        "noSpecialists": "No specialists",
+        "productCount": "{{count}} products found",
+        "serviceCount": "{{count}} services found",
+        "all": "All",
+        "title": "Filters",
+        "button": "Filter",
+        "direction": "Direction",
+        "category": "Category",
+        "parentCategory": "Parent Category",
+        "fileType": "File Type",
+        "sortBy": "Sort By",
+        "pageRange": "Number of pages",
+        "pageFrom": "Page from",
+        "pageTo": "Page to",
+        "pages": "pages",
+        "type": "Type",
+        "types": {
+            "file": "Files",
+            "3d": "3D Models",
+            "design": "Design Templates",
+            "template": "Various Templates",
+            "website": "Websites",
+            "video": "Videos"
+        },
+        "sortOptions": {
+            "priceLow": "Price (Low)",
+            "priceHigh": "Price (High)",
+            "views": "Most Viewed",
+            "purchased": "Most Purchased"
+        },
+        "tooltips": {
+            "cannotDeleteDefault": "You cannot remove this value as it is a default setting, change via filter",
+            "cannotDeletePageFrom": "You cannot remove this value as it is a default setting, delete 'page to' value first",
+            "cannotDeletePageTo": "You cannot remove this value as it is a default setting, delete 'page from' value first",
+            "clearAll": "Clear all filters",
+            "clearCategoryFirst": "Clear category first to delete direction"
+        },
+        "actions": {
+            "clear": "Clear",
+            "apply": "Apply"
+        }
+    },
+    "card": {
+        "price": "Price:",
+        "currency": "UZS",
+        "online": "Online",
+        "offline": "Offline"
     }
 }
 

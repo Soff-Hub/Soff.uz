@@ -6,9 +6,10 @@ import Image from 'next/image';
 import styles from './style.module.scss';
 import { IoTimeOutline, IoLocationOutline } from 'react-icons/io5';
 import Link from 'next/link';
+import { useTranslation } from 'next-i18next';
 
-const formatLastActive = (lastActive) => {
-    if (!lastActive) return 'Noma’lum';
+const formatLastActive = (lastActive, t) => {
+    if (!lastActive) return t('sellerCard.unknown');
     const last = new Date(lastActive);
 
     if (isNaN(last.getTime())) return lastActive;
@@ -16,15 +17,17 @@ const formatLastActive = (lastActive) => {
     const now = new Date();
     const diffMinutes = Math.floor((now - last) / 1000 / 60);
 
-    if (diffMinutes < 1) return 'Hozir faol';
-    if (diffMinutes < 60) return `${diffMinutes} daqiqa oldin faol edi`;
+    if (diffMinutes < 1) return t('sellerCard.activeNow');
+    if (diffMinutes < 60)
+        return t('sellerCard.minutesAgo', { count: diffMinutes });
     const diffHours = Math.floor(diffMinutes / 60);
-    if (diffHours < 24) return `${diffHours} soat oldin faol edi`;
+    if (diffHours < 24) return t('sellerCard.hoursAgo', { count: diffHours });
     const diffDays = Math.floor(diffHours / 24);
-    return `${diffDays} kun oldin faol edi`;
+    return t('sellerCard.daysAgo', { count: diffDays });
 };
 
 const SearchSellerCard = ({ seller, rankImage }) => {
+    const { t } = useTranslation('card');
     const isOnline = useMemo(() => {
         if (!seller?.last_active) return false;
         const lastActiveTime = new Date(seller.last_active);
@@ -63,13 +66,15 @@ const SearchSellerCard = ({ seller, rankImage }) => {
                                 {seller?.average_rating}
                             </span>
                             <span className={styles.reviewCount}>
-                                ({seller?.total_feedbacks_count} ta izoh)
+                                ({seller?.total_feedbacks_count}{' '}
+                                {t('sellerCard.reviews')})
                             </span>
                         </div>
                     )}
 
                     <p className={styles.position}>
-                        {seller?.position?.title || 'Kasb ko‘rsatilmagan'}
+                        {seller?.position?.title ||
+                            t('sellerCard.professionNotSpecified')}
                     </p>
                 </div>
             </div>
@@ -77,19 +82,20 @@ const SearchSellerCard = ({ seller, rankImage }) => {
             <div className={styles.extraInfo}>
                 <p className={styles.lastActive}>
                     <IoTimeOutline className={styles.iconSmall} />{' '}
-                    {formatLastActive(seller?.last_active)}
+                    {formatLastActive(seller?.last_active, t)}
                 </p>
                 {seller?.location && (
                     <p className={styles.location}>
                         <IoLocationOutline className={styles.iconSmall} />{' '}
-                        {seller?.location || 'Joylashuv ko‘rsatilmagan'}
+                        {seller?.location ||
+                            t('sellerCard.locationNotSpecified')}
                     </p>
                 )}
             </div>
             <Link href={`/seller/${seller?.soff_seller_id}`}>
                 <a>
                     <Button type="primary" className={styles.btn}>
-                        Batafsil <FaArrowRightLong />
+                        {t('sellerCard.details')} <FaArrowRightLong />
                     </Button>
                 </a>
             </Link>

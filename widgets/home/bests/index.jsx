@@ -7,7 +7,7 @@ import { Skeleton } from 'antd';
 import { useTranslation } from 'next-i18next';
 
 const Bests = () => {
-    const { t } = useTranslation('index');
+    const { t } = useTranslation(['index', 'common']);
     const sectionRef = useRef(null);
     const [isVisible, setIsVisible] = useState(false);
 
@@ -167,7 +167,9 @@ const Bests = () => {
                                             {t('bests.sales')}{' '}
                                             <span className={styles.infoGreen}>
                                                 {item.total_amount.toLocaleString()}{' '}
-                                                so'm
+                                                {t('common.currency', {
+                                                    ns: 'common',
+                                                })}
                                             </span>
                                         </p>
                                     </div>

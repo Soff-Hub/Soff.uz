@@ -352,6 +352,7 @@ export async function getServerSideProps({ query, req, res, locale }) {
             defaultProducts,
             ...(await serverSideTranslations(locale, [
                 'product-pages',
+                'card',
                 'common',
                 'modals',
                 'header',

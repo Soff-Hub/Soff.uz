@@ -53,9 +53,10 @@ export async function getServerSideProps({ locale }) {
             ...(await serverSideTranslations(locale, [
                 'header',
                 'footer',
+                'common',
                 'index',
                 'product-pages',
-                'orders',
+                'card',
                 'modals',
             ])),
         },

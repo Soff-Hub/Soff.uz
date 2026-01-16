@@ -11,7 +11,8 @@
         "successTitle": "Success!",
         "successAddToCart": "You have added the product to cart",
         "free": "Free",
-        "count": "Wishlist ({{count}})"
+        "count": "Wishlist ({{count}})",
+        "currency": "UZS"
     },
     "shoppingCart": {
         "title": "Shopping Cart",
@@ -26,7 +27,9 @@
         "proceedToCheckout": "Proceed to checkout",
         "count": "Products ({{count}})",
         "free": "Free",
-        "items": "items"
+        "items": "items",
+        "currency": "UZS",
+        "delete": "Delete"
     },
     "checkout": {
         "title": "Checkout",
@@ -34,7 +37,33 @@
         "emptyTitle": "Cart is empty",
         "emptyDescription": "Add some products to make a payment.",
         "startShopping": "Start shopping",
-        "header": "Checkout"
+        "header": "Checkout",
+        "selectPaymentType": "Select payment type:",
+        "productCount": "{{count}} products",
+        "currency": "UZS",
+        "serviceFeeLabel": "Site service fee:",
+        "totalPrice": "Total price:",
+        "payButton": "Pay ({{amount}} UZS)",
+        "errorTitle": "Not successful",
+        "errors": {
+            "expireDate": "Enter card expiration date",
+            "cardNumber": "Enter correct card number",
+            "wrongCode": "Wrong password",
+            "error": "Error!"
+        },
+        "success": "Successful!",
+        "cardNumberLabel": "Card number",
+        "enterCodeTitle": "Enter code!",
+        "payActionButton": "Pay",
+        "payProcessButton": "Pay",
+        "back": "Back",
+        "codeSentTo": "Code sent to number:",
+        "oneItemNote": "After purchasing the product, you will be able to download it again from the <1>Purchased</1> page in your personal account or from the full product page <2/>!",
+        "orderProducts": "Order products",
+        "product": "Product",
+        "playlist": "Playlist",
+        "videosCount": "{{count}} videos",
+        "price": "Price"
     },
     "notification": {
         "title": "Notifications",
@@ -65,7 +94,9 @@
             "website": "Websites",
             "template": "Templates for various fields",
             "video": "Video lessons"
-        }
+        },
+        "unknown": "Unknown",
+        "currency": "UZS"
     },
     "donat": {
         "title": "Contribute to project development",

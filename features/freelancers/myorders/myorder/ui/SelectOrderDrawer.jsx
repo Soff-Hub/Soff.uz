@@ -58,7 +58,7 @@ const OffersWaitingLoader = dynamic(() => import('./OffersWaitingLoader'), {
 });
 
 const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
-    const { t } = useTranslation('my-orders');
+    const { t } = useTranslation(['my-orders', 'modals']);
     const [selectedOffer, setSelectedOffer] = useState(null);
     const { user } = useSelector((state) => state.auth);
     const [paymentModal, setPaymentModal] = useState(false);
@@ -570,7 +570,8 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                             </div>
                             <div className="text-end">
                                 <h4 className="text-primary mb-0 fw-bold">
-                                    +{formatCurrencyWithSpace(offerAmount)} so'm
+                                    +{formatCurrencyWithSpace(offerAmount)}{' '}
+                                    {t('balance.currency')}
                                 </h4>
                             </div>
                         </div>

@@ -5,7 +5,7 @@
     },
     "balance": {
         "label": "Баланс",
-        "currency": "UZS"
+        "currency": "сум"
     },
     "tabs": {
         "all": "Все",
@@ -79,10 +79,10 @@
             "cancel": "Нет",
             "note": "Примечание:",
             "notePartialPayment": "Вы ранее осуществили оплату в размере",
-            "notePartialPaymentMiddle": "UZS. Цена предложения",
-            "notePartialPaymentEnd": "UZS.",
+            "notePartialPaymentMiddle": "сум. Цена предложения",
+            "notePartialPaymentEnd": "сум.",
             "noteRefund": "Цена предложения выбранного фрилансера составляет",
-            "noteRefundMiddle": "UZS меньше, чем вы ранее заплатили. Избыточная сумма будет возвращена на ваш баланс.",
+            "noteRefundMiddle": "сум меньше, чем вы ранее заплатили. Избыточная сумма будет возвращена на ваш баланс.",
             "freelancerComment": "Комментарий фрилансера:",
             "noComment": "Нет комментария"
         },
@@ -97,9 +97,8 @@
         "selectFreelancerError": "Фрилансер не был выбран. Пожалуйста, попробуйте снова!",
         "selectFreelancerSuccess": "Фрилансер выбран!",
         "selectFreelancerSuccessWithRefund": "Фрилансер выбран! Избыточная сумма оплаты:",
-        "refunded": "UZS возвращено",
+        "refunded": "сум возвращено",
         "additionalPaymentRequired": "Пожалуйста, осуществите дополнительную оплату в размере",
-        "additionalPaymentRequiredEnd": "UZS для выбора фрилансера"
+        "additionalPaymentRequiredEnd": "сум для выбора фрилансера"
     }
 }
-

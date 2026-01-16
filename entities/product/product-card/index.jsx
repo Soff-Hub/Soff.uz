@@ -9,7 +9,7 @@ import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import Link from 'next/link';
 
 const ProductCard = ({ product }) => {
-    const { t } = useTranslation('product-pages');
+    const { t } = useTranslation('card');
     const { addSavedItem, wishlist, removeSavedItem } = useWishlist();
     const [open, setOpen] = useState(false);
     const Router = useRouter();
@@ -54,6 +54,7 @@ const ProductCard = ({ product }) => {
     return (
         <>
             <Link href={`/product/${product?.slug}`}>
+                {/* <a aria-label={t('productCard.viewProduct')}> */}
                 <div className={styles.card}>
                     <div className={styles.cardHead}>
                         <div className={styles.cardHeadInfo}>
@@ -142,6 +143,7 @@ const ProductCard = ({ product }) => {
                         )}
                     </div>
                 </div>
+                {/* </a> */}
             </Link>
             <Modal
                 title={t('productCard.modal.title')}

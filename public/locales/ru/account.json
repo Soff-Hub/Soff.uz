@@ -11,7 +11,8 @@
         "successTitle": "Успешно!",
         "successAddToCart": "Вы добавили товар в корзину",
         "free": "Бесплатно",
-        "count": "Избранное ({{count}})"
+        "count": "Избранное ({{count}})",
+        "currency": "сум"
     },
     "shoppingCart": {
         "title": "Корзина",
@@ -26,7 +27,9 @@
         "proceedToCheckout": "Перейти к оплате",
         "count": "Товары ({{count}})",
         "free": "Бесплатно",
-        "items": "шт"
+        "items": "шт",
+        "currency": "сум",
+        "delete": "Удалить"
     },
     "checkout": {
         "title": "Оформление заказа",
@@ -34,7 +37,33 @@
         "emptyTitle": "Корзина пуста",
         "emptyDescription": "Добавьте товары для оплаты.",
         "startShopping": "Начать покупки",
-        "header": "Оформление заказа"
+        "header": "Оформление заказа",
+        "selectPaymentType": "Выберите тип оплаты:",
+        "productCount": "{{count}} товаров",
+        "currency": "сум",
+        "serviceFeeLabel": "Комиссия сайта:",
+        "totalPrice": "Общая цена:",
+        "payButton": "Оплатить ({{amount}} сум)",
+        "errorTitle": "Не успешно",
+        "errors": {
+            "expireDate": "Введите срок действия карты",
+            "cardNumber": "Введите правильный номер карты",
+            "wrongCode": "Неверный пароль",
+            "error": "Ошибка!"
+        },
+        "success": "Успешно!",
+        "cardNumberLabel": "Номер карты",
+        "enterCodeTitle": "Введите код!",
+        "payActionButton": "Оплатить",
+        "payProcessButton": "Оплатить",
+        "back": "Назад",
+        "codeSentTo": "Код отправлен на номер:",
+        "oneItemNote": "После покупки продукта вы сможете загрузить его снова со страницы <1>Купленные</1> в личном кабинете или со страницы самого продукта <2/>!",
+        "orderProducts": "Товары заказа",
+        "product": "Продукт",
+        "playlist": "Плейлист",
+        "videosCount": "{{count}} видео",
+        "price": "Цена"
     },
     "notification": {
         "title": "Уведомления",
@@ -65,7 +94,9 @@
             "website": "Веб-сайты",
             "template": "Шаблоны для различных областей",
             "video": "Видео уроки"
-        }
+        },
+        "unknown": "Неизвестно",
+        "currency": "сум"
     },
     "donat": {
         "title": "Внести вклад в развитие проекта",

@@ -2,6 +2,7 @@
     "welcome": "Добро пожаловать",
     "title": "Рынок цифровых продуктов и онлайн-услуг – Soff.uz",
     "description": "Soff.uz - Рынок интеллектуальной собственности, Продавайте и покупайте интеллектуальные продукты.",
+    "securityMessage": "Процесс оплаты надежен, зашифрован и безопасен.",
     "navigation": {
         "home": "Главная",
         "products": "Продукты",
@@ -24,7 +25,8 @@
         "hoursMinutesAgo": "{{hours}} часов {{minutes}} минут назад",
         "dateTimeFormat": "DD.MM.YYYY HH:mm [был онлайн]",
         "deadlinePassed": "Срок истек",
-        "daysRemaining": "{{count}} дней"
+        "daysRemaining": "{{count}} дней",
+        "currency": "сум"
     },
     "auth": {
         "login": "Войти",

@@ -1,13 +1,17 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import axiosInstance from '../api/freeleanceApi';
+import { useRouter } from 'next/router';
 
 export const useFGet = (
     key,
     url,
     { enabled = true, token, ...options } = {}
 ) => {
+    const { locale } = useRouter();
+    const queryKey = Array.isArray(key) ? [...key, locale] : [key, locale];
+    console.log({ locale, queryKey });
     return useQuery({
-        queryKey: Array.isArray(key) ? key : [key],
+        queryKey,
         queryFn: async () => {
             const { data } = await axiosInstance(token).get(url);
             return data;

@@ -5,9 +5,11 @@ import { addPeriodToThousands } from '~/features/account/ui/price-formatter';
 import useResponsive from '~/shared/utilities/useResponsive';
 import Link from 'next/link';
 import { formatFileSize } from '~/shared/utilities/utils';
+import { useTranslation } from 'next-i18next';
 
 export default function SearchResultsProducts_Card({ product }) {
     const { isDesktop } = useResponsive();
+    const { t } = useTranslation('search');
     const [isHovering, setIsHovering] = useState(false);
     const [previewPosition, setPreviewPosition] = useState({
         top: '0',

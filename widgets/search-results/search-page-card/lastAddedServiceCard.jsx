@@ -1,9 +1,10 @@
 import React from 'react';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import Link from 'next/link';
+import { useTranslation } from 'next-i18next';
 
 // Helper function to validate slug
-const isValidSlug = slug => {
+const isValidSlug = (slug) => {
     return (
         slug &&
         typeof slug === 'string' &&
@@ -14,6 +15,7 @@ const isValidSlug = slug => {
 };
 
 const LastAddedServiceCard = ({ service }) => {
+    const { t } = useTranslation('search');
     // Don't render if service or slug is invalid
     if (!service || !isValidSlug(service?.slug)) {
         console.warn(
@@ -39,11 +41,11 @@ const LastAddedServiceCard = ({ service }) => {
                         backgroundColor: '#fff',
                         flexDirection: 'column',
                     }}
-                    onMouseEnter={e =>
+                    onMouseEnter={(e) =>
                         (e.currentTarget.style.boxShadow =
                             '0 4px 12px rgba(0,0,0,0.1)')
                     }
-                    onMouseLeave={e =>
+                    onMouseLeave={(e) =>
                         (e.currentTarget.style.boxShadow =
                             '0 0 6px rgba(0, 0, 0, 0.05)')
                     }>
@@ -58,9 +60,10 @@ const LastAddedServiceCard = ({ service }) => {
                         {service?.title}
                     </p>
                     <p className="m-0">
-                        Narxi:{' '}
+                        {t('card.price')}{' '}
                         <span style={{ fontWeight: 600, color: '#00a44f' }}>
-                            {formatCurrencyWithSpace(service?.price)} so'm
+                            {formatCurrencyWithSpace(service?.price)}{' '}
+                            {t('card.currency')}
                         </span>
                     </p>
                 </div>

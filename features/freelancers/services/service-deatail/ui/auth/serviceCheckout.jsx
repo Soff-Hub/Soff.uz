@@ -19,6 +19,7 @@ import { IoCard } from 'react-icons/io5';
 import { FaWallet } from 'react-icons/fa';
 import { SecurePaymentAlert } from '~/features/account/ui/CreditCard2';
 import { TbReload } from 'react-icons/tb';
+import { useTranslation } from 'next-i18next';
 
 const ServiceCheckout = ({
     document,
@@ -31,6 +32,7 @@ const ServiceCheckout = ({
     onClose,
     onSuccess,
 }) => {
+    const { t } = useTranslation(['modals', 'common']);
     const verificationModalRef = useRef();
     const [isVerificationModalOpen, setIsVerificationModalOpen] =
         useState(false);
@@ -125,9 +127,7 @@ const ServiceCheckout = ({
                     await queryClient.invalidateQueries({
                         queryKey: ['getCustomBalance'],
                     });
-                    AlertMessage.success(
-                        "To'lov muvaffaqiyatli amalga oshirildi"
-                    );
+                    AlertMessage.success(t('serviceCheckout.successPayment'));
                     if (onSuccess) {
                         onSuccess(data?.order_id);
                         return;
@@ -142,7 +142,9 @@ const ServiceCheckout = ({
             onError: (err) => {
                 console.error('❌ Click payment error:', err);
                 setResData({
-                    detail: err?.response?.data?.detail || "Noma'lum xato",
+                    detail:
+                        err?.response?.data?.detail ||
+                        t('serviceCheckout.unknownError'),
                 });
             },
         });
@@ -208,6 +210,7 @@ const ServiceCheckout = ({
                         order={order}
                         balance={balance}
                         isVisible={balanceMode && !isBalanceSufficient}
+                        t={t}
                     />
                     <div style={{ marginInline: '10px' }}>
                         <form
@@ -216,7 +219,9 @@ const ServiceCheckout = ({
                             <div
                                 className="col-xl-7 p-0 my-2"
                                 style={{ flex: 1 }}>
-                                <p className="cardNumber">Karta raqam</p>
+                                <p className="cardNumber">
+                                    {t('serviceCheckout.cardNumber')}
+                                </p>
                                 <label
                                     htmlFor="ccn"
                                     className="m-0"
@@ -293,7 +298,7 @@ const ServiceCheckout = ({
                                     {isOrderCreatePending ? (
                                         <BeatLoader color="#fff" />
                                     ) : (
-                                        'Davom etish'
+                                        t('serviceCheckout.continue')
                                     )}
                                 </button>
                             </div>
@@ -304,6 +309,7 @@ const ServiceCheckout = ({
                         style={{
                             width: '100%',
                         }}
+                        message={t('securityMessage', { ns: 'common' })}
                     />
                     <VerificationCodeModal
                         ref={verificationModalRef}
@@ -317,6 +323,7 @@ const ServiceCheckout = ({
                         }
                         handleCancelVerification={handleCancelVerification}
                         handleCardPayment={handleCardPayment}
+                        t={t}
                     />
                 </>
             ),
@@ -337,6 +344,7 @@ const ServiceCheckout = ({
                         order={order}
                         balance={balance}
                         isVisible={balanceMode && !isBalanceSufficient}
+                        t={t}
                     />
                     <div
                         style={{
@@ -355,7 +363,7 @@ const ServiceCheckout = ({
                                         marginTop: '10px',
                                     }}>
                                     {!isOrderCreatePending ? (
-                                        'Davom etish'
+                                        t('serviceCheckout.continue')
                                     ) : (
                                         <BeatLoader color="#fff" />
                                     )}
@@ -366,6 +374,7 @@ const ServiceCheckout = ({
                                 style={{
                                     width: '100%',
                                 }}
+                                message={t('securityMessage', { ns: 'common' })}
                             />
                         </div>
                     </div>
@@ -388,6 +397,7 @@ const ServiceCheckout = ({
                         order={order}
                         balance={balance}
                         isVisible={balanceMode && !isBalanceSufficient}
+                        t={t}
                     />
                     <div
                         style={{
@@ -406,7 +416,7 @@ const ServiceCheckout = ({
                                         marginTop: '10px',
                                     }}>
                                     {!isOrderCreatePending ? (
-                                        'Davom etish'
+                                        t('serviceCheckout.continue')
                                     ) : (
                                         <BeatLoader color="#fff" />
                                     )}
@@ -417,6 +427,7 @@ const ServiceCheckout = ({
                                 style={{
                                     width: '100%',
                                 }}
+                                message={t('securityMessage', { ns: 'common' })}
                             />
                         </div>
                     </div>
@@ -428,7 +439,7 @@ const ServiceCheckout = ({
     return isBalanceMode ? (
         <div>
             <Alert
-                message="Sizning balansingizda yetarli mablag' mavjud. To'lovni balansdan to'lash mumkin - karta kerak emas."
+                message={t('serviceCheckout.balanceSufficient')}
                 type="success"
                 showIcon
                 style={{ marginBlock: '20px' }}
@@ -469,7 +480,8 @@ const ServiceCheckout = ({
                                 fontWeight: 'normal',
                                 fontSize: '16px',
                             }}>
-                            {formatCurrencyWithSpace(order?.price)} so'm
+                            {formatCurrencyWithSpace(order?.price)}{' '}
+                            {t('serviceCheckout.currency')}
                         </h4>
                     </div>
                 </div>
@@ -485,7 +497,7 @@ const ServiceCheckout = ({
                     marginTop: '10px',
                 }}>
                 {!isOrderCreatePending ? (
-                    "To'lov qilish"
+                    t('serviceCheckout.pay')
                 ) : (
                     <BeatLoader color="#fff" />
                 )}
@@ -495,6 +507,7 @@ const ServiceCheckout = ({
                 style={{
                     marginTop: '10px',
                 }}
+                message={t('securityMessage', { ns: 'common' })}
             />
         </div>
     ) : (
@@ -510,7 +523,7 @@ const ServiceCheckout = ({
     );
 };
 
-const ChildrenWithInsufficientBalance = ({ order, balance, isVisible }) => {
+const ChildrenWithInsufficientBalance = ({ order, balance, isVisible, t }) => {
     const extraPayment = order?.price - balance;
 
     if (!isVisible) return null;
@@ -518,7 +531,7 @@ const ChildrenWithInsufficientBalance = ({ order, balance, isVisible }) => {
     return (
         <>
             <Alert
-                message="Balansingizdagi mablag' to'lvoni bir qismini qoplaydi. Qolgan summani karta yoki Click orqali to'lashingiz mumkin."
+                message={t('serviceCheckout.balanceInsufficient')}
                 type="warning"
                 showIcon
                 style={{
@@ -561,7 +574,8 @@ const ChildrenWithInsufficientBalance = ({ order, balance, isVisible }) => {
                                 fontWeight: 'normal',
                                 fontSize: '16px',
                             }}>
-                            {formatCurrencyWithSpace(order?.price)} so'm
+                            {formatCurrencyWithSpace(order?.price)}{' '}
+                            {t('serviceCheckout.currency')}
                         </h4>
                     </div>
                 </div>
@@ -594,7 +608,7 @@ const ChildrenWithInsufficientBalance = ({ order, balance, isVisible }) => {
                                 fontWeight: 'normal',
                                 marginBottom: '0px',
                             }}>
-                            Balans
+                            {t('serviceCheckout.balance')}
                         </h5>
                     </div>
                     <div className="text-end">
@@ -605,7 +619,8 @@ const ChildrenWithInsufficientBalance = ({ order, balance, isVisible }) => {
                                 fontWeight: 'normal',
                                 fontSize: '16px',
                             }}>
-                            {formatCurrencyWithSpace(balance)} so'm
+                            {formatCurrencyWithSpace(balance)}{' '}
+                            {t('serviceCheckout.currency')}
                         </h4>
                     </div>
                 </div>
@@ -618,14 +633,17 @@ const ChildrenWithInsufficientBalance = ({ order, balance, isVisible }) => {
                 <div
                     className="d-flex justify-content-between align-items-center"
                     style={{ marginTop: '9px', fontWeight: 'normal' }}>
-                    <h4 className=" mb-0">Qoldiq to'lov</h4>
+                    <h4 className=" mb-0">
+                        {t('serviceCheckout.remainingPayment')}
+                    </h4>
                     <div className="text-end">
                         <h3
                             className="mb-0 text-primary fw-bold"
                             style={{
                                 fontSize: '20px',
                             }}>
-                            {formatCurrencyWithSpace(extraPayment)} so'm
+                            {formatCurrencyWithSpace(extraPayment)}{' '}
+                            {t('serviceCheckout.currency')}
                         </h3>
                     </div>
                 </div>
@@ -645,10 +663,12 @@ const VerificationCodeModal = forwardRef(
             closeVerificationModal,
             handleCancelVerification,
             handleCardPayment,
-        } = props,
+            t,
+        },
         ref
     ) => {
         const queryClient = useQueryClient();
+        const { push } = useRouter();
         const { display, left, reset } = useCountdown(120);
         const {
             mutate: mutateVerifyCode,
@@ -688,7 +708,7 @@ const VerificationCodeModal = forwardRef(
                     onError: (error) => {
                         console.log('❌ Verify code error:', error);
                         const errorMessage = error?.response?.data || {
-                            detail: "Noma'lum xato",
+                            detail: t('serviceCheckout.unknownError'),
                         };
                         setResDataCode(errorMessage);
                     },
@@ -717,12 +737,12 @@ const VerificationCodeModal = forwardRef(
             Boolean(left) &&
             (typeof resDataCode?.detail == 'string'
                 ? resDataCode?.detail
-                : "Noma'lum xato");
+                : t('serviceCheckout.unknownError'));
 
         return (
             <Modal
                 width={500}
-                title="Tez orada!"
+                title={t('serviceCheckout.verificationTitle')}
                 centered
                 open={isVerificationModalOpen}
                 onOk={handleVerifyCode}
@@ -736,11 +756,13 @@ const VerificationCodeModal = forwardRef(
                     },
                     disabled: isLoadingOrSuccess || !code?.length,
                 }}
-                okText={"To'lov qilish"}
-                cancelText="Orqaga">
+                okText={t('serviceCheckout.pay')}
+                cancelText={t('serviceCheckout.back')}>
                 <>
                     <p>
-                        Kod quyidagi raqamga yuborildi: {resData?.phone_number}
+                        {t('serviceCheckout.codeSentTo', {
+                            phone: resData?.phone_number,
+                        })}
                     </p>
                     <input
                         onChange={(e) => setCode(e.target.value)}
@@ -761,7 +783,7 @@ const VerificationCodeModal = forwardRef(
                                 }}
                                 type="link"
                                 onClick={handleResendCode}>
-                                Kodni qayta yuborish
+                                {t('serviceCheckout.resendCode')}
                             </Button>
                         )}
                     </strong>

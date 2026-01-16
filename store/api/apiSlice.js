@@ -13,13 +13,8 @@ const getToken = () => {
 };
 
 export const getUserLocale = () => {
-    if (typeof window !== 'undefined') {
-        const storedLocale = localStorage.getItem('user_locale');
-        // Fallback to 'uz' to keep previous default behavior
-        return storedLocale || 'uz';
-    }
-    // On server side we don't have access to localStorage, keep default
-    return 'uz';
+    if (typeof window === 'undefined') return 'uz';
+    return Cookies.get('user_locale') || 'uz';
 };
 
 // Retry function: only retry on server errors (5xx) or connection errors, not on 4xx errors

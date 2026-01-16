@@ -56,18 +56,6 @@
         "emptyStateDescription": "Ammo bu siz uchun ajoyib imkoniyat! Birinchilardan bo'lib ushbu kategoriyaga mahsulot joylashtiring, o'z auditoriyangizni yarating va daromad olishni boshlang. Imkoniyatni qo'ldan boy bermang!",
         "becomeSeller": "Sotuvchi bo'lish"
     },
-    "productCard": {
-        "free": "Bepul",
-        "currency": "so'm",
-        "cardImage": "Mahsulot rasmi",
-        "icon": "Ikona",
-        "modal": {
-            "title": "Muvaffaqqiyatli",
-            "message": "Mahsulotingizni savatga qo'shdingiz!",
-            "goToCart": "Savatga o'tish",
-            "continueShopping": "Xaridlarni davom etirish"
-        }
-    },
     "productDetail": {
         "notFound": "Mahsulot topilmadi",
         "videoBanner": {

@@ -11,7 +11,7 @@ import 'swiper/css';
 import SwiperController from './swiperController';
 import { useSelector } from 'react-redux';
 import { FiExternalLink } from 'react-icons/fi';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 
 const NavbarMenu = () => {
     const { data, isLoading } = useFGet('navbar-items', NAVBAR_MENU_CATEGORIES);

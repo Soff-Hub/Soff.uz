@@ -108,12 +108,15 @@ function useCreateOrder({
     const {
         push,
         query,
+        locale,
         replace,
         pathname,
         isReady: isRouterReady,
     } = useRouter();
     const [confirmOpen, setConfirmOpen] = useState(false);
-    const { data: directions } = useGetDirectionsQuery();
+    const { data: directions } = useGetDirectionsQuery(
+        `all-directinos - ${locale}`
+    );
     const [showLeftGradient, setShowLeftGradient] = useState(false);
     const [showRightGradient, setShowRightGradient] = useState(true);
     const [thumbsSwiper, setThumbsSwiper] = useState(null);

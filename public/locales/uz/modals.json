@@ -27,5 +27,140 @@
             "submitting": "Yuborilmoqda...",
             "submit": "Yuborish"
         }
+    },
+    "balanceWithdraw": {
+        "title": "Balansdan pul yechish",
+        "success": "So‘rov muvaffaqiyatli yuborildi!",
+        "error": "Xatolik yuz berdi. Qayta urinib ko‘ring.",
+        "cardNumber": {
+            "label": "Karta raqami",
+            "required": "Karta raqamini kiriting",
+            "validation_length": "Karta raqami 16 xonali bo‘lishi kerak",
+            "placeholder": "8600 1234 5678 9012"
+        },
+        "amount": {
+            "label": "Yechiladigan summa",
+            "required": "Iltimos summani kiriting",
+            "validation_invalid": "Summani to‘g‘ri kiriting",
+            "placeholder": "50 000"
+        },
+        "actions": {
+            "cancel": "Bekor qilish",
+            "submit": "Tasdiqlash"
+        }
+    },
+    "orderCancel": {
+        "title": "Buyurtmani bekor qilish",
+        "confirmQuestion": "Haqiqatan ham \" <strong>{{title}}</strong> \" buyurtmasini bekor qilmoqchimisiz?",
+        "reasonLabel": "Sababni tanlang",
+        "reasonRequired": "Iltimos, sababni tanlang",
+        "reasonPlaceholder": "Bekor qilish sababini tanlang...",
+        "success": "Buyurtma muvaffaqiyatli bekor qilindi!",
+        "error": "Bekor qilishda xatolik yuz berdi",
+        "okText": "Bekor qilish",
+        "cancelText": "Yopish"
+    },
+    "orderApprove": {
+        "title": "Natija bo‘yicha fikringiz",
+        "submit": "Yuborish",
+        "errors": {
+            "reasonRequired": "Kamchiliklarni yozishingiz kerak",
+            "feedbackRequired": "Fikr va bahoni yozishingiz kerak",
+            "submitError": "Fikr yuborishda xatolik yuz berdi"
+        },
+        "success": {
+            "submit": "Fikringiz yuborildi"
+        },
+        "completed": {
+            "description": "Siz natijani qabul qildingiz.\nEndi xizmat haqida o'z fikringizni yozib qoldiring va ishni yakunlang.",
+            "placeholder": "Xizmat haqida fikrlaringizni yozib qoldiring"
+        },
+        "rejected": {
+            "description": "Kamchiliklarni iloji boricha batafsil yozing. Bu sotuvchiga tezroq tuzatish kiritishga yordam beradi.",
+            "placeholder": "Ishning aniqlangan kamchiliklarini yozing"
+        },
+        "congratulation": {
+            "title": "🎉 Tabriklaymiz! 🎉",
+            "text": "Sizning buyurtmangiz <b> muvaffaqiyatli yakunlandi</b>. Bizning platformamizni tanlaganingiz uchun rahmat 💚",
+            "button": "Rahmat 🚀"
+        }
+    },
+    "phoneNumber": {
+        "title": "Telefon raqamni kiriting",
+        "alertDescription": "Buyurtma berishda iltimos, telefon raqamingizni kiriting. Savollar yuzaga kelganda siz bilan bog‘lana olishimiz uchun muhim.",
+        "label": "Telefon raqam",
+        "required": "Telefon raqam kiritish majburiy",
+        "pattern": "Iltimos, haqiqiy telefon raqam kiriting",
+        "placeholder": "Telefon raqam",
+        "submitting": "Yuborilmoqda...",
+        "submit": "Tasdiqlash"
+    },
+    "login": {
+        "title": "Kirish",
+        "or": "Yoki",
+        "phoneLabel": "Telefon raqam",
+        "emailLabel": "Elektron pochta",
+        "phonePlaceholder": "Telefon raqam",
+        "emailPlaceholder": "Elektron pochta",
+        "phoneRequired": "Telefon raqam kiritish majburiy",
+        "phoneInvalid": "Iltimos, haqiqiy telefon raqam kiriting",
+        "emailRequired": "Elektron pochta kiritish majburiy",
+        "emailInvalid": "Iltimos, haqiqiy elektron pochta kiriting",
+        "submit": "Ko'dni olish",
+        "errorTitle": "Xatolik"
+    },
+    "telegram": {
+        "instructions": {
+            "prefix": "Kirish uchun ",
+            "suffix": "orqali tasdiqlash kodini oling"
+        },
+        "codeRequired": "Iltimos, kodni kiriting",
+        "resend": "Qayta kod olish",
+        "resendInPrefix": "Qayta kod olish uchun",
+        "submit": "Tasdiqlash",
+        "success": "Siz tizimga muvaffaqiyatli kirdingiz"
+    },
+    "codeVerify": {
+        "codeRequired": "Iltimos, kodni kiriting",
+        "submit": "Tasdiqlash",
+        "errorTitle": "Xatolik",
+        "resendNow": "Qayta kod yuborish",
+        "resendInPrefix": "Qayta kod olish uchun ",
+        "resendSuccessTitle": "Yuborildi",
+        "resendSuccessMessage": "Tasdiqlash kodi qayta yuborildi"
+    },
+    "social": {
+        "telegram": "Telegram orqali kirish",
+        "google": "Google orqali kirish"
+    },
+    "serviceCheckout": {
+        "balanceSufficient": "Sizning balansingizda yetarli mablag' mavjud. To'lovni balansdan to'lash mumkin - karta kerak emas.",
+        "balanceInsufficient": "Balansingizdagi mablag' to'lovni bir qismini qoplaydi. Qolgan summani karta yoki Click orqali to'lashingiz mumkin.",
+        "cardNumber": "Karta raqam",
+        "continue": "Davom etish",
+        "pay": "To'lov qilish",
+        "unknownError": "Noma'lum xato",
+        "successPayment": "To'lov muvaffaqiyatli amalga oshirildi",
+        "balance": "Balans",
+        "remainingPayment": "Qoldiq to'lov",
+        "currency": "so'm",
+        "verificationTitle": "Tez orada!",
+        "codeSentTo": "Kod quyidagi raqamga yuborildi: {{phone}}",
+        "resendCode": "Kodni qayta yuborish",
+        "back": "Orqaga"
+    },
+    "searchResult": {
+        "recentResults": "Yaqinda izlangan natijalar",
+        "clear": "Tozalash",
+        "noData": "So'rov bo'yicha ma'lumotlar topilmadi"
+    },
+    "portfolio": {
+        "info": "Portfolio Ma'lumotlari",
+        "category": "Kategoriya",
+        "unknown": "Noma’lum",
+        "description": "Tavsif",
+        "descriptionNotAvailable": "Tavsif mavjud emas",
+        "imageNotFound": "Rasm topilmadi.",
+        "videoNotFound": "Video topilmadi."
     }
 }

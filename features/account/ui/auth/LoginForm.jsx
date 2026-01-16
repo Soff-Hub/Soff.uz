@@ -18,7 +18,8 @@ export default function LoginForm({
 }) {
     const [type, setType] = useState('phone'); // phone, email
     const router = useRouter();
-    const { t } = useTranslation('login');
+    const { locale } = router;
+    const { t } = useTranslation('modals');
 
     const formInputs = {
         phone: (
@@ -27,11 +28,11 @@ export default function LoginForm({
                 rules={[
                     {
                         required: true,
-                        message: t('form.phoneRequired'),
+                        message: t('login.phoneRequired'),
                     },
                     {
                         pattern: /^\d{9}$/,
-                        message: t('form.phoneInvalid'),
+                        message: t('login.phoneInvalid'),
                     },
                 ]}
                 normalize={(value) => value.replace(/\D/g, '').slice(0, 9)}>
@@ -39,7 +40,7 @@ export default function LoginForm({
                     autoComplete="off"
                     style={{ height: '50px', fontSize: '16px' }}
                     type="text"
-                    placeholder={t('form.phonePlaceholder')}
+                    placeholder={t('login.phonePlaceholder')}
                     addonBefore="+998"
                 />
             </Form.Item>
@@ -51,11 +52,11 @@ export default function LoginForm({
                 rules={[
                     {
                         required: true,
-                        message: t('form.emailRequired'),
+                        message: t('login.emailRequired'),
                     },
                     {
                         type: 'email',
-                        message: t('form.emailInvalid'),
+                        message: t('login.emailInvalid'),
                     },
                 ]}>
                 <Input
@@ -69,7 +70,7 @@ export default function LoginForm({
                         />
                     }
                     type="email"
-                    placeholder={t('form.emailPlaceholder')}
+                    placeholder={t('login.emailPlaceholder')}
                 />
             </Form.Item>
         ),
@@ -77,12 +78,12 @@ export default function LoginForm({
 
     const segmentOptions = [
         {
-            label: t('form.phoneLabel'),
+            label: t('login.phoneLabel'),
             value: 'phone',
             icon: <PhoneOutlined />,
         },
         {
-            label: t('form.emailLabel'),
+            label: t('login.emailLabel'),
             value: 'email',
             icon: <MailOutlined />,
         },
@@ -105,7 +106,12 @@ export default function LoginForm({
                     `auth/register/${
                         utm_source ? `?utm_source=${utm_source}` : ''
                     }`,
-                data
+                data,
+                {
+                    headers: {
+                        'Accept-Language': locale,
+                    },
+                }
             );
             localStorage.setItem('via_', resp?.data?.via_);
             localStorage.setItem('msg', resp?.data?.msg);
@@ -129,7 +135,7 @@ export default function LoginForm({
         onError: (error) => {
             const modal = Modal.error({
                 centered: true,
-                title: t('form.errorTitle'),
+                title: t('login.errorTitle'),
                 content:
                     error?.response?.data?.msg ||
                     JSON.stringify(error?.response),
@@ -143,7 +149,7 @@ export default function LoginForm({
     const submitButtonContent = disableAllInputs ? (
         <BeatLoader color="#fff" />
     ) : (
-        t('form.submit')
+        t('login.submit')
     );
 
     return (
@@ -153,7 +159,7 @@ export default function LoginForm({
                     <Form onFinish={handleSubmit}>
                         <div className="d-flex justify-content-center align-items-center flex-column mb-4">
                             <span style={{ fontSize: '28px', fontWeight: 700 }}>
-                                {t('form.title')}
+                                {t('login.title')}
                             </span>
                         </div>
                         <GoogleBox
@@ -171,7 +177,7 @@ export default function LoginForm({
                         <Divider
                             size="large"
                             style={{ borderColor: 'rgba(0,0,0,0.2)' }}>
-                            {t('form.or')}
+                            {t('login.or')}
                         </Divider>
                         <Segmented
                             onChange={setType}

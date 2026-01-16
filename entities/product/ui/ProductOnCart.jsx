@@ -5,7 +5,7 @@ import { addPeriodToThousands } from '~/features/account/ui/price-formatter';
 import useCart from '~/shared/hooks/useCart';
 import { Button } from 'antd';
 import { IoIosClose } from 'react-icons/io';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 
 const ProductOnCart = ({ product }) => {
     const { thumbnailImage, title } = useProduct();

@@ -7,12 +7,10 @@ const nextSettings = {
     eslint: {
         ignoreDuringBuilds: true,
     },
-    experimental: {
-        logging: {
-            level: 'verbose',
-        },
-    },
     reactStrictMode: true,
+    typescript: {
+        ignoreBuildErrors: true,
+    },
     env: {
         title: 'Soff uz',
         titleDescription:

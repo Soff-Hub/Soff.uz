@@ -1,4 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
+import { useTranslation } from 'next-i18next';
 import styles from './styles/freelancers.module.scss';
 import dynamic from 'next/dynamic';
 import FreelancersFilterHeader from './elements/FreelancersFilterHeader';
@@ -15,6 +16,7 @@ const FreelancerSearchInput = dynamic(
 );
 
 function Freelancers({ data }) {
+    const { t } = useTranslation('freelancers');
     const { isDesktop } = useResponsive();
     const [collapsed, setCollapsed] = useState(false);
     const [viewType, setViewType] = useState('horizontal');
@@ -37,11 +39,10 @@ function Freelancers({ data }) {
         <div className={`${styles.freelancers} container`}>
             <div className={styles.freelancersWrapper}>
                 <h1 className={styles.headline}>
-                    Loyihangiz uchun eng yaxshi mutaxassislar
+                    {t('hero.title')}
                 </h1>
                 <p className={styles.heroParagraph}>
-                    O'z loyihangizni boshlash uchun tajribali va ishonchli
-                    frilanserlarni shu yerdan toping.
+                    {t('hero.description')}
                 </p>
                 <FreelancerSearchInput />
             </div>

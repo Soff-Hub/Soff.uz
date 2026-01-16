@@ -1,10 +1,12 @@
 import React, { memo, useMemo } from 'react';
+import { useTranslation } from 'next-i18next';
 import { Modal, Descriptions, Tag } from 'antd';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { getYouTubeEmbed } from '~/shared/utilities/youtube-helpers';
 import styles from './style.module.scss';
 
 const PortfolioModal = ({ open, onClose, portfolio }) => {
+    const { t } = useTranslation('modals');
     const { isMobile } = useResponsive();
 
     const galleryImages = useMemo(
@@ -36,30 +38,34 @@ const PortfolioModal = ({ open, onClose, portfolio }) => {
             bodyStyle={{ maxHeight: '80vh', overflowY: 'auto' }}>
             <div>
                 <Descriptions
-                    title="Portfolio Ma'lumotlari"
+                    title={t('portfolio.info')}
                     bordered
                     size="small"
                     column={1}
                     className={styles.descriptions}>
-                    <Descriptions.Item label="Kategoriya">
+                    <Descriptions.Item label={t('portfolio.category')}>
                         <Tag color="blue">
-                            {portfolio?.category?.title || 'Noma’lum'}
+                            {portfolio?.category?.title ||
+                                t('portfolio.unknown')}
                         </Tag>
                     </Descriptions.Item>
 
                     {!isMobile && (
                         <Descriptions.Item
-                            label="Tavsif"
+                            label={t('portfolio.description')}
                             style={{
                                 whiteSpace: 'pre-wrap',
                             }}>
-                            {portfolio?.description || 'Tavsif mavjud emas'}
+                            {portfolio?.description ||
+                                t('portfolio.descriptionNotAvailable')}
                         </Descriptions.Item>
                     )}
                 </Descriptions>
                 {isMobile && (
                     <div className={styles.mobile}>
-                        <h4 className={styles.mobileTitle}>Tavsif</h4>
+                        <h4 className={styles.mobileTitle}>
+                            {t('portfolio.description')}
+                        </h4>
                         <p className={styles.mobileDescr}>
                             {portfolio?.description}
                         </p>
@@ -81,7 +87,7 @@ const PortfolioModal = ({ open, onClose, portfolio }) => {
                         ))
                     ) : (
                         <p className="text-gray-500 text-center mt-4">
-                            Rasm topilmadi.
+                            {t('portfolio.imageNotFound')}
                         </p>
                     )}
                     {galleryVideos.length > 0 ? (
@@ -102,7 +108,7 @@ const PortfolioModal = ({ open, onClose, portfolio }) => {
                         ))
                     ) : (
                         <p className="text-gray-500 text-center mt-4">
-                            Video topilmadi.
+                            {t('portfolio.videoNotFound')}
                         </p>
                     )}
                 </div>

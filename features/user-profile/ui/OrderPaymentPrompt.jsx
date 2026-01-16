@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Modal, Tooltip, Switch } from 'antd';
+import { useTranslation } from 'next-i18next';
 import ServiceCheckout from '~/features/freelancers/services/service-deatail/ui/auth/serviceCheckout';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import { useRouter } from 'next/router';
@@ -7,6 +8,7 @@ import useGetCustomBalance from '~/features/freelancers/myorders/myorder/api/use
 import styles from '../styles/orderPaymentPrompt.module.scss';
 
 function OrderPaymentPrompt({ isOpen, onClose, order }) {
+    const { t } = useTranslation('seller');
     const [showPayment, setShowPayment] = useState(false);
     const { push } = useRouter();
     const [mode, setMode] = useState(true);
@@ -28,16 +30,13 @@ function OrderPaymentPrompt({ isOpen, onClose, order }) {
                 {!showPayment ? (
                     <div className={styles.servicePreOrder}>
                         <h3 className={styles.title}>
-                            Buyurtma uchun to'lovni amalga oshiring
+                            {t('orderPayment.title')}
                         </h3>
 
                         <div className={styles.securityMessage}>
                             <i className="fa-solid fa-shield-halved text-success fs-4 mb-2"></i>
                             <p className="text-muted mb-0">
-                                Sizning to'lovingiz Soff tizimi tomonidan
-                                xavfsiz saqlanadi. Mutaxassisga to'lov faqat siz
-                                ishni ko'rib chiqib, tasdiqlaganingizdan so'ng
-                                amalga oshiriladi.
+                                {t('orderPayment.securityMessage')}
                             </p>
                         </div>
 
@@ -54,7 +53,7 @@ function OrderPaymentPrompt({ isOpen, onClose, order }) {
                                 <div className="text-end">
                                     <h4 className="text-primary mb-0 fw-bold">
                                         {formatCurrencyWithSpace(order?.price)}{' '}
-                                        so'm
+                                        {t('profile.currency')}
                                     </h4>
                                 </div>
                             </div>
@@ -71,7 +70,7 @@ function OrderPaymentPrompt({ isOpen, onClose, order }) {
                                     marginTop: '10px',
                                 }}
                                 onClick={() => setShowPayment(true)}>
-                                Buyurtma berish
+                                {t('orderPayment.proceedToOrder')}
                                 <i className="fa-solid fa-arrow-right ms-2"></i>
                             </Button>
                         </div>
@@ -81,9 +80,9 @@ function OrderPaymentPrompt({ isOpen, onClose, order }) {
                         <div className={styles.orderPaymentHeader}>
                             {/* NOTE: Balance button temporarily commented */}
                             {balanceDisabled ? (
-                                <Tooltip title="To'lov uchun balansingizdan foydalaning">
+                                <Tooltip title={t('orderPayment.useBalance')}>
                                     <Button
-                                        onClick={() => setMode(pre => !pre)}
+                                        onClick={() => setMode((pre) => !pre)}
                                         className={
                                             mode && isSufficientBalance
                                                 ? styles.orderButtonActive
@@ -93,7 +92,8 @@ function OrderPaymentPrompt({ isOpen, onClose, order }) {
                                         }
                                         disabled={!balanceDisabled}>
                                         <Switch value={mode} size="small" />
-                                        Balance - {leftBalance} so'm
+                                        {t('orderPayment.balance')} -{' '}
+                                        {leftBalance} {t('profile.currency')}
                                     </Button>
                                 </Tooltip>
                             ) : null}
@@ -104,7 +104,7 @@ function OrderPaymentPrompt({ isOpen, onClose, order }) {
                                     <i className="fa-solid fa-arrow-left"></i>
                                 }
                                 onClick={() => setShowPayment(false)}>
-                                Orqaga
+                                {t('orderPayment.back')}
                             </Button>
                         </div>
                         <ServiceCheckout

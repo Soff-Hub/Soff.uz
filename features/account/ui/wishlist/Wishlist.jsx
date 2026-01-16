@@ -136,8 +136,7 @@ function Wishlist() {
                                     {item.discount_price ? (
                                         `${addPeriodToThousands(
                                             item.discount_price
-                                        )}
-                                                                        so'm`
+                                        )} ${t('wishlist.currency')}`
                                     ) : (
                                         <p
                                             className="free-product-text"
@@ -158,7 +157,7 @@ function Wishlist() {
                                                 {addPeriodToThousands(
                                                     item.price
                                                 )}{' '}
-                                                so'm
+                                                {t('wishlist.currency')}
                                             </del>
                                         </sup>
                                     ) : null}
@@ -207,7 +206,7 @@ function Wishlist() {
                                         handleRemoveWishlistItem(e, item)
                                     }
                                     className={styles.wishlistRemoveButton}
-                                    aria-label="O'chirish"
+                                    aria-label={t('wishlist.remove')}
                                 />
                             </div>
                         </div>

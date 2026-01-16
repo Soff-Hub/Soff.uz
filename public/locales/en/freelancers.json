@@ -1,0 +1,64 @@
+{
+    "meta": {
+        "defaultTitle": "Best freelancers and specialists",
+        "titlePrefix": "{{parts}}",
+        "description": "Discover the best freelancers and specialists on the Soff.uz platform, find the perfect specialists for your project.",
+        "directionDescription": "Find the most experienced freelancers in the {{direction}} field on the Soff.uz platform and use their services.",
+        "positionDescription": "Hire qualified freelancers in {{position}}.",
+        "keywordDescription": "Your search results for \"{{keyword}}\".",
+        "keywords": {
+            "freelancers": "{{part}} freelancers",
+            "freelancer": "{{part}} freelancer",
+            "specialist": "{{part}} specialist",
+            "services": "{{part}} services",
+            "job": "{{part}} job",
+            "finding": "find {{part}}",
+            "freelancerPrefix": "freelancer {{part}}",
+            "base": {
+                "0": "freelancers",
+                "1": "freelancer services",
+                "2": "online workers",
+                "3": "independent workers",
+                "4": "Soff.uz"
+            }
+        }
+    },
+    "hero": {
+        "title": "Best specialists for your project",
+        "description": "Find experienced and trusted freelancers here to start your project."
+    },
+    "search": {
+        "placeholder": "What type of specialists are you looking for?"
+    },
+    "filter": {
+        "title": "Filters",
+        "clear": "Clear filters",
+        "apply": "Apply filter",
+        "direction": "Direction",
+        "selectDirection": "Select direction",
+        "position": "Position",
+        "selectPosition": "Select positions",
+        "sortBy": "Sort by",
+        "sortByRating": "By rating",
+        "sortByActivity": "By activity"
+    },
+    "result": {
+        "notFound": "Unfortunately, no freelancers were found in this direction."
+    },
+    "card": {
+        "unknown": "Unknown",
+        "activeNow": "Active now",
+        "minutesAgo": "minutes ago",
+        "hoursAgo": "hours ago",
+        "daysAgo": "days ago",
+        "inProgressJobs": "Jobs in progress",
+        "completedJobs": "Completed jobs",
+        "successRate": "Success rate",
+        "message": "Message",
+        "details": "Details",
+        "reviewsCount": "reviews)",
+        "services": "Services",
+        "servicesFound": "services found",
+        "viewAll": "View all"
+    }
+}

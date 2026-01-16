@@ -9,6 +9,7 @@ import { BiCategory } from 'react-icons/bi';
 import { AiOutlineApartment } from 'react-icons/ai';
 import { useQuery } from '@tanstack/react-query';
 import { useGetDirectionsQuery } from '~/store/profile/slice';
+import { useTranslation } from 'next-i18next';
 
 const defaultValues = {
     direction: '',
@@ -20,15 +21,16 @@ export default function SearchResultsProductsFilter({ total }) {
     const isMounted = useMounted(200);
     const router = useRouter();
     const [categoriesList, setCategoriesList] = useState([]);
+    const { t } = useTranslation('search');
 
     const { data: directionsData } = useGetDirectionsQuery();
 
     const directions = useMemo(() => {
         return [
-            { label: 'Barchasi', value: '' },
+            { label: t('filter.all'), value: '' },
             ...(directionsData || []),
         ].filter(Boolean);
-    }, [directionsData]);
+    }, [directionsData, t]);
 
     const mutationsInForm = useMemo(() => {
         if (!isMounted) {
@@ -40,7 +42,7 @@ export default function SearchResultsProductsFilter({ total }) {
 
         let hasMutation = false;
         let howManyMutations = 0;
-        Object.keys(defaultValues).forEach(key => {
+        Object.keys(defaultValues).forEach((key) => {
             if (router.query[key] && router.query[key] !== defaultValues[key]) {
                 hasMutation = true;
                 howManyMutations += 1;
@@ -71,7 +73,7 @@ export default function SearchResultsProductsFilter({ total }) {
 
     const deleteQuerySelectively = (...keys) => {
         const newParams = { ...router.query };
-        keys.forEach(key => {
+        keys.forEach((key) => {
             delete newParams[key];
         });
         router.push(
@@ -89,11 +91,11 @@ export default function SearchResultsProductsFilter({ total }) {
 
     const filterIndicatorSelectors = useMemo(() => {
         const currentType = directions?.find(
-            type => type?.value == router.query.direction
+            (type) => type?.value == router.query.direction
         );
 
         const currentFileType = categoriesList.find(
-            type => type.value == router.query.service_parent
+            (type) => type.value == router.query.service_parent
         );
 
         return [
@@ -105,21 +107,20 @@ export default function SearchResultsProductsFilter({ total }) {
                 disabled:
                     defaultValues.direction === router.query.direction ||
                     router.query.service_parent,
-                disabledTooltip:
-                    "Yo‘nalishni o'chirish uchun kategoriyani avval tozalang",
-                tooltip: 'Yo‘nalish',
+                disabledTooltip: t('filter.tooltips.clearCategoryFirst'),
+                tooltip: t('filter.direction'),
                 action: () => deleteQuerySelectively('direction'),
             },
             {
                 key: 'service_parent',
                 icon: <BiCategory />,
                 title: currentFileType?.label,
-                tooltip: 'Kategoriya',
+                tooltip: t('filter.category'),
                 isEnabled: !!router.query.service_parent,
                 action: () => deleteQuerySelectively('service_parent'),
             },
         ];
-    }, [router.query, directions, categoriesList]);
+    }, [router.query, directions, categoriesList, t]);
 
     const onClose = () => {
         setFilterOpen(false);
@@ -128,13 +129,12 @@ export default function SearchResultsProductsFilter({ total }) {
     return (
         <div className="Search_Results_Products_form_box">
             {mutationsInForm.hasMutation ? (
-                // <Badge.Ribbon text="Faol filterlar" placement="start">
                 <Card className="search_results_filter_card">
                     <div className="filter_card_action_btns">
                         <div className="filter_indicators">
                             {filterIndicatorSelectors
-                                .filter(selector => selector.isEnabled)
-                                .map(selector => (
+                                .filter((selector) => selector.isEnabled)
+                                .map((selector) => (
                                     <Tooltip
                                         placement="top"
                                         title={
@@ -160,7 +160,7 @@ export default function SearchResultsProductsFilter({ total }) {
                                 ))}
                             <Tooltip
                                 placement="top"
-                                title={'Barcha filterlarni tozalash'}>
+                                title={t('filter.tooltips.clearAll')}>
                                 <Button
                                     color="danger"
                                     icon={<IoClose />}
@@ -178,16 +178,15 @@ export default function SearchResultsProductsFilter({ total }) {
                                 style={{
                                     width: 'auto',
                                 }}>
-                                Filter
+                                {t('filter.button')}
                             </Button>
                         </Badge>
                     </div>
                 </Card>
-            ) : // </Badge.Ribbon>
-            null}
+            ) : null}
             <div className="search_results_indicator">
                 <p className="countProduct text-nowrap m-0">
-                    {total ? `${total} ta xizmat topildi` : ''}
+                    {total ? t('filter.serviceCount', { count: total }) : ''}
                 </p>
                 {!mutationsInForm.hasMutation && (
                     <div>
@@ -199,7 +198,7 @@ export default function SearchResultsProductsFilter({ total }) {
                                 style={{
                                     width: 'auto',
                                 }}>
-                                Filter
+                                {t('filter.button')}
                             </Button>
                         </Badge>
                     </div>
@@ -217,6 +216,7 @@ export default function SearchResultsProductsFilter({ total }) {
 
 const FilterFormDrawer = ({ open, onClose, directions, setCategoriesList }) => {
     const router = useRouter();
+    const { t } = useTranslation('search');
     const initialFilterValues = useMemo(() => {
         return {
             direction: router.query.direction || '',
@@ -239,14 +239,14 @@ const FilterFormDrawer = ({ open, onClose, directions, setCategoriesList }) => {
     });
 
     const categories = useMemo(() => {
-        return (parentData || []).map(parent => ({
+        return (parentData || []).map((parent) => ({
             label: parent.title,
             value: String(parent.id),
         }));
     }, [parentData]);
 
     const handleChangeFilterValues = (key, value) => {
-        setFilterValues(prev => {
+        setFilterValues((prev) => {
             if (typeof key === 'object') {
                 return {
                     ...prev,
@@ -291,7 +291,7 @@ const FilterFormDrawer = ({ open, onClose, directions, setCategoriesList }) => {
         onClose();
     };
 
-    const saveAndCloseForm = e => {
+    const saveAndCloseForm = (e) => {
         e.preventDefault();
         handleSaveAndClose();
     };
@@ -306,7 +306,7 @@ const FilterFormDrawer = ({ open, onClose, directions, setCategoriesList }) => {
 
     return (
         <Drawer
-            title="Filterlar"
+            title={t('filter.title')}
             placement="left"
             onClose={handleSaveAndClose}
             open={open}
@@ -324,9 +324,9 @@ const FilterFormDrawer = ({ open, onClose, directions, setCategoriesList }) => {
                 onSubmit={saveAndCloseForm}>
                 <Select
                     style={{ width: '100%', maxWidth: '159px' }}
-                    placeholder="Yo‘nalish"
+                    placeholder={t('filter.direction')}
                     value={filterValues.direction}
-                    onChange={value =>
+                    onChange={(value) =>
                         handleChangeFilterValues({
                             direction: value,
                             service_parent: undefined,
@@ -336,16 +336,16 @@ const FilterFormDrawer = ({ open, onClose, directions, setCategoriesList }) => {
                 />
                 <Select
                     style={{ width: '100%', maxWidth: '159px' }}
-                    placeholder="Katta kategoriya"
+                    placeholder={t('filter.parentCategory')}
                     value={filterValues.service_parent}
                     allowClear
-                    disabled={!(categories.length && filterValues.direction)} // 🔑 parentData bo‘sh bo‘lsa disable
+                    disabled={!(categories.length && filterValues.direction)}
                     onClear={() =>
                         handleChangeFilterValues({
                             service_parent: '',
                         })
                     }
-                    onChange={value =>
+                    onChange={(value) =>
                         handleChangeFilterValues({
                             service_parent: value,
                         })
@@ -362,10 +362,10 @@ const FilterFormDrawer = ({ open, onClose, directions, setCategoriesList }) => {
                         htmlType="reset"
                         block
                         onClick={handleClear}>
-                        Tozalash
+                        {t('filter.actions.clear')}
                     </Button>
                     <Button htmlType="submit" type="primary" block>
-                        Qo‘llash
+                        {t('filter.actions.apply')}
                     </Button>
                 </div>
             </form>

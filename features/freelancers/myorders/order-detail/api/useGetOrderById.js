@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
 import axiosInstance from '~/shared/api/freeleanceApi';
 
-const useGetOrderById = (id, initialData, enabled) => {
+const useGetOrderById = (id, enabled) => {
     const { user } = useSelector((state) => state.auth);
     const axios = axiosInstance(user?.access);
 
@@ -12,7 +12,6 @@ const useGetOrderById = (id, initialData, enabled) => {
             const { data } = await axios.get(`order/${id}`);
             return data;
         },
-        initialData,
         enabled: !!id && !!user?.access && enabled,
     });
 };

@@ -8,6 +8,7 @@ import { highlightMatch } from '~/shared/utilities/utils';
 import Link from 'next/link';
 import styles from './search-result.module.scss';
 import { EmptyTab } from '~/widgets/header/HeaderCategories';
+import { useTranslation } from 'next-i18next';
 
 function SearchResult({
     debouncedSearch,
@@ -15,6 +16,7 @@ function SearchResult({
     options,
     isLoading,
 }) {
+    const { t } = useTranslation('modals');
     const {
         searchHistory,
         clearHistoryItem,
@@ -32,13 +34,13 @@ function SearchResult({
                     marginBottom: '15px',
                 }}>
                 <div className={styles.searchHistoryHeader}>
-                    <h4>Yaqinda izlangan natijalar</h4>
+                    <h4>{t('searchResult.recentResults')}</h4>
                     <Button
                         variant="text"
                         color="danger"
                         onClick={clearHistoryItem}
                         size="small">
-                        Tozalash
+                        {t('searchResult.clear')}
                     </Button>
                 </div>
                 {searchHistory.map((item) => (
@@ -118,7 +120,7 @@ function SearchResult({
         );
     } else {
         filteredDataOptions = (
-            <EmptyTab description="So'rov bo'yicha ma'lumotlar topilmadi" />
+            <EmptyTab description={t('searchResult.noData')} />
         );
     }
 

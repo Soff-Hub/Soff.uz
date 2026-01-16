@@ -28,6 +28,7 @@ export async function getServerSideProps(context) {
                 status,
                 ...(await serverSideTranslations(locale, [
                     'orders',
+                    'card',
                     'header',
                     'footer',
                     'common',
@@ -49,6 +50,7 @@ export async function getServerSideProps(context) {
                 status: errStatus || 500,
                 ...(await serverSideTranslations(locale, [
                     'orders',
+                    'card',
                     'header',
                     'footer',
                     'common',

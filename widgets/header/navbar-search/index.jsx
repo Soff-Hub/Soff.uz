@@ -4,7 +4,7 @@ import { Select, Input } from 'antd';
 import styles from './style.module.scss';
 import { useState } from 'react';
 import SearchModal from '~/shared/components/modals/search-modal/SearchModal';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 
 const { Option } = Select;
 

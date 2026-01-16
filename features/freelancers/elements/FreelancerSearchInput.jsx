@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { SearchOutlined } from '@ant-design/icons';
 import { useQuery } from '@tanstack/react-query';
+import { useTranslation } from 'next-i18next';
 import { F_SEARCH_OPTIONS } from '~/shared/api/end-points';
 import useDebounce from '~/shared/hooks/useDebounce';
 import axiosInstance from '~/shared/api/freeleanceApi';
@@ -15,6 +16,7 @@ const AutoComplete = dynamic(() => import('antd/es/auto-complete'), {
 });
 
 function FreelancerSearchInput() {
+    const { t } = useTranslation('freelancers');
     const axios = axiosInstance();
     const [search, setSearch] = useState('');
     const router = useRouter();
@@ -51,7 +53,7 @@ function FreelancerSearchInput() {
                 allowClear
                 variant="borderless"
                 className={styles.input}
-                placeholder={'Qaysi turdagi mutaxassislar qidirmoqdasiz?'}
+                placeholder={t('search.placeholder')}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 style={{ width: '100%' }}

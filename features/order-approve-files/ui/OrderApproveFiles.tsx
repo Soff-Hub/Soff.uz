@@ -4,6 +4,7 @@ import { Modal, Button, Rate, Input, message } from 'antd';
 import useSubmit, { SubmitPayloadType } from '../model/useSubmit';
 import ReactConfetti from 'react-confetti';
 import styles from './OrderApproveFiles.module.scss';
+import { useTranslation, Trans } from 'next-i18next';
 
 const { TextArea } = Input;
 
@@ -18,12 +19,13 @@ type OrderApproveFilesProps = {
 
 function OrderApproveFiles({
     order,
-    res,
+    res = 'completed',
     setRes,
     feedbackOpen,
     setFeedbackOpen,
     onSuccess,
 }: OrderApproveFilesProps) {
+    const { t } = useTranslation('modals');
     const submit = useSubmit();
     const [text, setText] = useState('');
     const [rate, setRate] = useState<number | undefined>(undefined);
@@ -43,7 +45,7 @@ function OrderApproveFiles({
     return (
         <>
             <Modal
-                title="Natija bo‘yicha fikringiz"
+                title={t('orderApprove.title')}
                 open={feedbackOpen}
                 onCancel={handleCloseModal}
                 footer={[
@@ -54,7 +56,7 @@ function OrderApproveFiles({
                         onClick={() => {
                             if (res === 'rejected' && !text.trim()) {
                                 message.error(
-                                    'Kamchiliklarni yozishingiz kerak'
+                                    t('orderApprove.errors.reasonRequired')
                                 );
                                 return;
                             } else if (
@@ -62,7 +64,7 @@ function OrderApproveFiles({
                                 (!text.trim() || !rate)
                             ) {
                                 message.error(
-                                    'Fikr va bahoni yozishingiz kerak'
+                                    t('orderApprove.errors.feedbackRequired')
                                 );
                                 return;
                             }
@@ -86,7 +88,9 @@ function OrderApproveFiles({
 
                             submit.mutate(payload, {
                                 onSuccess: () => {
-                                    message.success('Fikringiz yuborildi');
+                                    message.success(
+                                        t('orderApprove.success.submit')
+                                    );
                                     onSuccess();
                                     handleCloseModal();
                                     if (payload.status == 'completed') {
@@ -95,20 +99,18 @@ function OrderApproveFiles({
                                 },
                                 onError: () => {
                                     message.error(
-                                        'Fikr yuborishda xatolik yuz berdi'
+                                        t('orderApprove.errors.submitError')
                                     );
                                 },
                             });
                         }}>
-                        Yuborish
+                        {t('orderApprove.submit')}
                     </Button>,
                 ]}>
                 {res === 'completed' && (
                     <div className={styles.approveContent}>
-                        <p className="m-0">
-                            Siz natijani qabul qildingiz. <br />
-                            Endi xizmat haqida oz fikringizni yozib qoldiring va
-                            ishni yakunlang.
+                        <p className="m-0" style={{ whiteSpace: 'pre-line' }}>
+                            {t('orderApprove.completed.description')}
                         </p>
                         <Rate
                             allowHalf={false}
@@ -116,7 +118,9 @@ function OrderApproveFiles({
                             onChange={(val) => setRate(val)}
                         />
                         <TextArea
-                            placeholder="Xizmat haqida fikrlaringizni yozib qoldiring"
+                            placeholder={t(
+                                'orderApprove.completed.placeholder'
+                            )}
                             rows={3}
                             value={text}
                             onChange={(e) => setText(e.target.value)}
@@ -126,12 +130,9 @@ function OrderApproveFiles({
 
                 {res === 'rejected' && (
                     <>
-                        <p>
-                            Kamchiliklarni iloji boricha batafsil yozing. Bu
-                            sotuvchiga tezroq tuzatish kiritishga yordam beradi.
-                        </p>
+                        <p>{t('orderApprove.rejected.description')}</p>
                         <TextArea
-                            placeholder="Ishning aniqlangan kamchiliklarini yozing"
+                            placeholder={t('orderApprove.rejected.placeholder')}
                             rows={3}
                             value={text}
                             onChange={(e) => setText(e.target.value)}
@@ -149,10 +150,15 @@ function OrderApproveFiles({
                 onCancel={() => setCongratModal(false)}>
                 <div className="text-center">
                     <SmileOutlined className={styles.congratIcon} />
-                    <h2 className={styles.congratTitle}>🎉 Tabriklaymiz! 🎉</h2>
+                    <h2 className={styles.congratTitle}>
+                        {t('orderApprove.congratulation.title')}
+                    </h2>
                     <p className={styles.congratText}>
-                        Sizning buyurtmangiz <b> muvaffaqiyatli yakunlandi</b>.
-                        Bizning platformamizni tanlaganingiz uchun rahmat 💚
+                        <Trans
+                            i18nKey="orderApprove.congratulation.text"
+                            ns="modals"
+                            components={{ b: <b /> }}
+                        />
                     </p>
 
                     <Button
@@ -160,7 +166,7 @@ function OrderApproveFiles({
                         size="large"
                         className={styles.congratButton}
                         onClick={() => setCongratModal(false)}>
-                        Rahmat 🚀
+                        {t('orderApprove.congratulation.button')}
                     </Button>
                 </div>
             </Modal>

@@ -5,7 +5,7 @@ import { getRemainingDays } from '~/shared/utilities/dayjs-helpers';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { message, Badge } from 'antd';
-import { STATUS_MAP } from '../../config/status-map';
+import { getStatusMap, OrderStatusKey } from '../../config/status-map';
 import { FaLanguage } from 'react-icons/fa6';
 import { FaRegClock } from 'react-icons/fa6';
 import { FaMoneyBillWave } from 'react-icons/fa6';
@@ -82,15 +82,16 @@ const getOrderBaseSize = (size: BaseOrderProps['size']) => {
 const OrderBase = (props: OrderBaseProps) => {
     const { order, size = 'large', onClick, actionsSlot, filesSlot } = props;
     const router = useRouter();
-    const { t } = useTranslation('common');
+    const { t } = useTranslation(['common', 'card']);
     const { locale = 'uz' } = router;
+    const STATUS_MAP = getStatusMap(t);
     const orderStatus = (order?.order_status_doing?.status ||
-        'pending') as keyof typeof STATUS_MAP;
+        'pending') as OrderStatusKey;
     const statusAsset = STATUS_MAP[orderStatus];
-
+    console.log({ order });
     const sizeStyles = getOrderBaseSize(size);
 
-    const hasSeller = Boolean(order.user);
+    const hasSeller = Boolean(order?.user);
     const price = order.service?.price ?? order.budget ?? 0;
     const isFullyPaid = order?.approved_transaction_amount >= price;
     const isPartiallyPaid =
@@ -129,7 +130,7 @@ const OrderBase = (props: OrderBaseProps) => {
 
     const handlePrimaryClick = () => {
         if (orderStatus === 'cancelled') {
-            message.warning('Siz bu buyurtmani bekor qilgansiz');
+            message.warning(t('card:orderCard.orderCancelledWarning'));
         } else if (hasSeller) {
             router.push(`/order/${order.id}`);
             return;
@@ -179,13 +180,13 @@ const OrderBase = (props: OrderBaseProps) => {
                     }}>
                     <OrderMetaItem
                         icon={FaLanguage}
-                        label="Buyurtma tili"
+                        label={t('card:orderCard.language')}
                         value={order.language?.toUpperCase() || '-'}
                         size={size}
                     />
                     <OrderMetaItem
                         icon={FaRegClock}
-                        label="Yaratilgan vaqti"
+                        label={t('card:orderCard.createdDates')}
                         value={createdAtDisplay}
                         size={size}
                     />
@@ -200,8 +201,10 @@ const OrderBase = (props: OrderBaseProps) => {
                     <div className={styles.budjet}>
                         <OrderMetaItem
                             icon={FaMoneyBillWave}
-                            label="Budjet"
-                            value={`${formatCurrencyWithSpace(price)} so'm`}
+                            label={t('card:orderCard.budget')}
+                            value={`${formatCurrencyWithSpace(price)} ${t(
+                                'card:orderCard.currency'
+                            )}`}
                             size={size}
                         />
                         <OrderPaymentStatus order={order} size={size} />
@@ -209,7 +212,7 @@ const OrderBase = (props: OrderBaseProps) => {
                     <div className={styles.date}>
                         <OrderMetaItem
                             icon={FaRegCalendar}
-                            label="Topshirish muddati"
+                            label={t('card:orderCard.deadline')}
                             value={deadlineDisplay}
                             size={size}
                         />

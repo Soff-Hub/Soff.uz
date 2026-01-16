@@ -17,7 +17,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { baseURL } from '~/repositories/api';
 import { downloadFile } from '~/shared/utilities/utils';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 
 // Default product for testing
 // const DEFAULT_PRODUCT = {

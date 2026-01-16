@@ -20,11 +20,13 @@ import OrderCancelModal from '~/features/order-cancel';
 import OrderCard from '~/widgets/order-card';
 import OrderApproveFilesModal from '~/features/order-approve-files';
 import OrderRejected from '~/entities/order/ui/order-base/OrderRejected';
+import { useTranslation } from 'next-i18next';
 
 // TimerComponent to show time remaining until deadline
 const TimerComponent = ({ deadlineDate }) => {
     const [timeRemaining, setTimeRemaining] = useState('');
     const [isOverdue, setIsOverdue] = useState(false);
+    const { t } = useTranslation('order-detail');
 
     useEffect(() => {
         const updateTimer = () => {
@@ -46,22 +48,22 @@ const TimerComponent = ({ deadlineDate }) => {
                 let overdueString = '';
 
                 if (years > 0) {
-                    overdueString += `${years} yil `;
+                    overdueString += `${years} ${t('years')} `;
                 }
                 if (months > 0) {
-                    overdueString += `${months} oy `;
+                    overdueString += `${months} ${t('months')} `;
                 }
                 if (days > 0) {
-                    overdueString += `${days} kun `;
+                    overdueString += `${days} ${t('days')} `;
                 }
                 if (hours > 0) {
-                    overdueString += `${hours} soat `;
+                    overdueString += `${hours} ${t('hours')} `;
                 }
                 if (minutes > 0 && days === 0 && hours === 0) {
-                    overdueString += `${minutes} daqiqa `;
+                    overdueString += `${minutes} ${t('minutes')} `;
                 }
 
-                setTimeRemaining(overdueString.trim() + ' kechikdi');
+                setTimeRemaining(overdueString.trim() + ' ' + t('late'));
                 setIsOverdue(true);
                 return;
             }
@@ -76,26 +78,26 @@ const TimerComponent = ({ deadlineDate }) => {
             let timeString = '';
 
             if (years > 0) {
-                timeString += `${years} yil `;
+                timeString += `${years} ${t('years')} `;
             }
             if (months > 0) {
-                timeString += `${months} oy `;
+                timeString += `${months} ${t('months')} `;
             }
             if (days > 0) {
-                timeString += `${days} kun `;
+                timeString += `${days} ${t('days')} `;
             }
             if (hours > 0) {
-                timeString += `${hours} soat `;
+                timeString += `${hours} ${t('hours')} `;
             }
             if (minutes > 0 && days === 0) {
-                timeString += `${minutes} daqiqa `;
+                timeString += `${minutes} ${t('minutes')} `;
             }
 
             if (!timeString) {
-                timeString = 'Bir necha daqiqa ';
+                timeString = t('few_minutes') + ' ';
             }
 
-            setTimeRemaining(timeString.trim() + ' qoldi');
+            setTimeRemaining(timeString.trim() + ' ' + t('left'));
             setIsOverdue(false);
         };
 
@@ -103,7 +105,7 @@ const TimerComponent = ({ deadlineDate }) => {
         const interval = setInterval(updateTimer, 60000); // Update every minute
 
         return () => clearInterval(interval);
-    }, [deadlineDate]);
+    }, [deadlineDate, t]);
 
     if (!timeRemaining) return null;
 
@@ -119,13 +121,13 @@ const TimerComponent = ({ deadlineDate }) => {
             }}>
             <span>
                 {isOverdue ? '⚠️ ' : '⏰ '}
-                Muddat: {timeRemaining}
+                {t('deadline')}: {timeRemaining}
             </span>
         </div>
     );
 };
 
-const TelegramNotificationHeader = (
+const TelegramNotificationHeader = (t) => (
     <div className={styles.telegramNotification}>
         <h5 className={styles.telegramNotificationTitle}>
             <div className={styles.telegramNotificationIcon}>
@@ -135,11 +137,10 @@ const TelegramNotificationHeader = (
                     }}
                 />
             </div>
-            Bildirishnomalarni yoqing
+            {t('enable_notifications')}
         </h5>
         <p className={'mb-0 text-muted ' + styles.telegramNotificationDesc}>
-            Buyurtma holati haqida xabardor bo'lish uchun Telegram orqali
-            bildirishnoma oling
+            {t('notification_desc')}
         </p>
     </div>
 );
@@ -152,6 +153,7 @@ const OrderMain = ({ order }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [showPayment, setShowPayment] = useState(false);
     const [mode, setMode] = useState(true);
+    const { t } = useTranslation('order-detail');
     const {
         data: file,
         isFetching: fileIsFetching,
@@ -169,7 +171,7 @@ const OrderMain = ({ order }) => {
     const isSufficientBalance = balance >= price;
 
     const items = [
-        { title: <Link href={'/order/my-orders'}>Mening buyurtmalarim</Link> },
+        { title: <Link href={'/order/my-orders'}>{t('my_orders')}</Link> },
         { title: `#${order?.id}` },
     ];
 
@@ -198,7 +200,7 @@ const OrderMain = ({ order }) => {
         if (!isFullyPaid) {
             setIsOpen(true);
         }
-    }, [setIsOpen, order]);
+    }, [setIsOpen, order, isFullyPaid]);
 
     return (
         <div className="col-lg-9 col-12 rounded-2 my-4">
@@ -207,7 +209,7 @@ const OrderMain = ({ order }) => {
                 {order?.order_status_doing?.status !== 'rejected' && (
                     <TelegramNotification
                         hideIfActivated
-                        header={TelegramNotificationHeader}
+                        header={TelegramNotificationHeader(t)}
                     />
                 )}
 
@@ -218,7 +220,7 @@ const OrderMain = ({ order }) => {
                                 className={`mb-0 ${
                                     !isDesktop && 'text-center'
                                 }`}>
-                                Frilanser ish boshlashiga to'lov qiling.
+                                {t('pay_to_start')}
                             </h5>
                         </div>
                         <Button
@@ -229,8 +231,8 @@ const OrderMain = ({ order }) => {
                                 padding: '16px 36px',
                             }}
                             onClick={() => setIsOpen(true)}>
-                            <i class="fa-solid fa-credit-card"></i> To'lovni
-                            amalga oshiring
+                            <i className="fa-solid fa-credit-card"></i>{' '}
+                            {t('make_payment')}
                         </Button>
                     </div>
                 )}
@@ -254,12 +256,10 @@ const OrderMain = ({ order }) => {
                                         style={{ fontSize: '25px' }}
                                     />
                                 </div>
-                                Buyurtma qabul qilindi! Frilanser ishni
-                                boshladi.
+                                {t('order_accepted_title')}
                             </h4>
                             <p className="mt-2 mb-0 text-muted">
-                                Ish tayyor bo'lgach fayl shu yerdan yuklanadi •
-                                Chat orqali frilanser bilan aloqada bo'ling
+                                {t('order_accepted_desc')}
                             </p>
                             <TimerComponent
                                 deadlineDate={order?.deadline_date}
@@ -273,25 +273,15 @@ const OrderMain = ({ order }) => {
                     <div className={styles.orderPayCardFlex}>
                         <div>
                             <h3 className={styles.orderNameLink}>
-                                Buyurtma talablari kutilmoqda
+                                {t('req_expected')}
                             </h3>
                             {order?.order_status_doing?.status ===
                                 'approved' && (
-                                <p>
-                                    Siz to‘lovni amalga oshirdingiz. Endi
-                                    mutahasis ishni boshlashi uchun kerakli
-                                    materiallar va ko‘rsatmalarni yuboring.
-                                </p>
+                                <p>{t('req_expected_desc_approve')}</p>
                             )}
                             {order?.order_status_doing?.status ===
                                 'requirement_file_rejected' && (
-                                <p>
-                                    Siz yuborgan materiallar yoki ko‘rsatmalar
-                                    yetarli emasligi sababli mutahasis ularni
-                                    rad etdi. Iltimos, ishni boshlash uchun
-                                    barcha kerakli fayllar va aniq
-                                    ko‘rsatmalarni qayta yuboring.
-                                </p>
+                                <p>{t('req_expected_desc_rejected')}</p>
                             )}
                         </div>
                         <Button
@@ -302,7 +292,7 @@ const OrderMain = ({ order }) => {
                                 padding: '16px 28px',
                             }}
                             onClick={() => setOpen(true)}>
-                            Talablarni yuborish
+                            {t('send_req')}
                         </Button>
                     </div>
                 )}
@@ -349,7 +339,7 @@ const OrderMain = ({ order }) => {
                                 fontSize: '18px',
                                 color: '#333',
                             }}>
-                            Buyurtma talablari
+                            {t('order_requirements')}
                         </h5>
 
                         <div className="d-flex flex-column flex-md-row align-items-start gap-3">
@@ -380,7 +370,7 @@ const OrderMain = ({ order }) => {
                                                     .order_requirement_file
                                             )
                                         }>
-                                        Faylni yuklab olish
+                                        {t('download_file')}
                                     </Button>
                                 </div>
                             )}
@@ -424,30 +414,28 @@ const OrderMain = ({ order }) => {
                     {!showPayment ? (
                         <div className={modalStyles.servicePreOrder}>
                             <h3 className={modalStyles.title}>
-                                Buyurtma uchun to'lovni amalga oshiring
+                                {t('pay_for_order')}
                             </h3>
 
                             <div className={modalStyles.securityMessage}>
                                 <i className="fa-solid fa-shield-halved text-success fs-4 mb-2"></i>
                                 <p className="text-muted mb-0">
-                                    Sizning to'lovingiz Soff tizimi tomonidan
-                                    xavfsiz saqlanadi. Mutaxassisga to'lov faqat
-                                    siz ishni ko'rib chiqib, tasdiqlaganingizdan
-                                    so'ng amalga oshiriladi.
+                                    {t('security_message')}
                                 </p>
                             </div>
 
                             {isPartiallyPaid && (
                                 <div className="text-center mb-4 text-warning">
                                     <p className="text-warning mb-0 mt-2">
-                                        Eslatma: Siz ilgari{' '}
-                                        {formatCurrencyWithSpace(
-                                            order?.approved_transaction_amount
-                                        )}{' '}
-                                        so'm to'lovni amalga oshirgansiz.
-                                        Iltimos, qolgan{' '}
-                                        {formatCurrencyWithSpace(notPaidAmount)}{' '}
-                                        so'm to'lovni amalga oshiring.
+                                        {t('partially_paid_note', {
+                                            amount1: formatCurrencyWithSpace(
+                                                order?.approved_transaction_amount
+                                            ),
+                                            amount2:
+                                                formatCurrencyWithSpace(
+                                                    notPaidAmount
+                                                ),
+                                        })}
                                     </p>
                                 </div>
                             )}
@@ -476,7 +464,7 @@ const OrderMain = ({ order }) => {
                                                         ? notPaidAmount
                                                         : price
                                                 )}{' '}
-                                                so'm
+                                                {t('sum')}
                                             </h4>
                                         </div>
                                     </div>
@@ -493,7 +481,7 @@ const OrderMain = ({ order }) => {
                                         borderColor: '#28a745',
                                     }}
                                     onClick={() => setShowPayment(true)}>
-                                    Buyurtma berish
+                                    {t('order_now')}
                                     <i className="fa-solid fa-arrow-right ms-2"></i>
                                 </Button>
                             </div>
@@ -503,7 +491,7 @@ const OrderMain = ({ order }) => {
                             <div className={modalStyles.orderPaymentHeader}>
                                 {/* NOTE: Balance button temporarily commented */}
                                 {balanceDisabled ? (
-                                    <Tooltip title="To'lov uchun balansingizdan foydalaning">
+                                    <Tooltip title={t('balance_tooltip')}>
                                         <Button
                                             onClick={() =>
                                                 setMode((pre) => !pre)
@@ -518,7 +506,9 @@ const OrderMain = ({ order }) => {
                                             }
                                             disabled={!balanceDisabled}>
                                             <Switch value={mode} size="small" />
-                                            Balance - {leftBalance} so'm
+                                            {t('balance_btn', {
+                                                amount: leftBalance,
+                                            })}
                                         </Button>
                                     </Tooltip>
                                 ) : null}
@@ -530,7 +520,7 @@ const OrderMain = ({ order }) => {
                                         <i className="fa-solid fa-arrow-left"></i>
                                     }
                                     onClick={() => setShowPayment(false)}>
-                                    Orqaga
+                                    {t('back')}
                                 </Button>
                             </div>
                             <div className="bg-white">

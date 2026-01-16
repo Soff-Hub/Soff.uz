@@ -1,17 +1,11 @@
 import React from 'react';
+import { useTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
 import Freelancers from '~/features/freelancers';
 import Meta from '~/shared/ui/meta';
 import fetchJson from '~/shared/api/fetch-json';
 import PageLayout from '~/widgets/layouts/PageLayout';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-
-const baseKeywords = [
-    'frilanserslar',
-    'frilanser xizmatlari',
-    'onlayn ishchilar',
-    'mustaqil ishchilar',
-    'Soff.uz',
-];
 
 const generateMetaTags = (query, t) => {
     const { directionValue = '', position = '', keyword = '' } = query;
@@ -20,29 +14,41 @@ const generateMetaTags = (query, t) => {
         .flat(Infinity);
     const titlePrefix = parts.length
         ? parts.join(' - ')
-        : t('meta.freelancers.defaultTitle');
+        : t('meta.defaultTitle');
     const title = `${titlePrefix} | Soff.uz`;
 
-    let description = t('meta.freelancers.description');
+    let description = t('meta.description');
     if (directionValue) {
-        description += ' ' + t('meta.freelancers.directionDescription', { direction: directionValue });
+        description +=
+            ' ' +
+            t('meta.directionDescription', {
+                direction: directionValue,
+            });
     }
     if (position) {
-        description += ' ' + t('meta.freelancers.positionDescription', { position });
+        description += ' ' + t('meta.positionDescription', { position });
     }
     if (keyword) {
-        description += ' ' + t('meta.freelancers.keywordDescription', { keyword });
+        description += ' ' + t('meta.keywordDescription', { keyword });
     }
 
     const dynamicKeywords = parts.flatMap((part) => [
-        `${part} frilanserlar`,
-        `${part} frilanser`,
-        `${part} mutaxassisi`,
-        `${part} xizmatlari`,
-        `${part} ish`,
-        `${part} topish`,
-        `frilanser ${part}`,
+        t('meta.keywords.freelancers', { part }),
+        t('meta.keywords.freelancer', { part }),
+        t('meta.keywords.specialist', { part }),
+        t('meta.keywords.services', { part }),
+        t('meta.keywords.job', { part }),
+        t('meta.keywords.finding', { part }),
+        t('meta.keywords.freelancerPrefix', { part }),
     ]);
+
+    const baseKeywords = [
+        t('meta.keywords.base.0'),
+        t('meta.keywords.base.1'),
+        t('meta.keywords.base.2'),
+        t('meta.keywords.base.3'),
+        t('meta.keywords.base.4'),
+    ];
 
     const keywords = [...dynamicKeywords, ...baseKeywords];
 
@@ -62,7 +68,11 @@ const generateMetaTags = (query, t) => {
     };
 };
 
-function FreelancersPage({ data, metaTags }) {
+function FreelancersPage({ data }) {
+    const { t } = useTranslation('freelancers');
+    const router = useRouter();
+    const metaTags = generateMetaTags(router.query, t);
+
     return (
         <PageLayout>
             <Meta {...metaTags} />
@@ -88,35 +98,6 @@ export async function getServerSideProps(context) {
         limit: limit.toString(),
         offset: offset.toString(),
     });
-
-    // Load translations for server-side use
-    const fs = require('fs');
-    const path = require('path');
-    const translationPath = path.join(process.cwd(), 'public', 'locales', locale, 'orders.json');
-    let translations = {};
-    try {
-        const translationContent = fs.readFileSync(translationPath, 'utf8');
-        translations = JSON.parse(translationContent);
-    } catch (error) {
-        console.error('Error loading translations:', error);
-    }
-    
-    // Helper function to get translation
-    const getTranslation = (key, params = {}) => {
-        const keys = key.split('.');
-        let value = translations;
-        for (const k of keys) {
-            value = value?.[k];
-        }
-        if (typeof value === 'string') {
-            return Object.keys(params).reduce((str, param) => {
-                return str.replace(new RegExp(`{{${param}}}`, 'g'), params[param]);
-            }, value);
-        }
-        return value || key;
-    };
-
-    const metaTags = generateMetaTags(query, getTranslation);
 
     if (keyword) params.append('search', keyword);
 
@@ -144,30 +125,30 @@ export async function getServerSideProps(context) {
     try {
         const data = await fetchJson(url);
         return {
-            props: { 
-                data, 
-                metaTags,
+            props: {
+                data,
                 ...(await serverSideTranslations(locale, [
                     'header',
                     'footer',
                     'common',
-                    'orders',
+                    'card',
                     'modals',
+                    'freelancers',
                 ])),
             },
         };
     } catch (error) {
         console.error('❌ SSR fetch error:', error);
         return {
-            props: { 
-                data: [], 
-                metaTags,
+            props: {
+                data: [],
                 ...(await serverSideTranslations(locale, [
                     'header',
                     'footer',
                     'common',
-                    'orders',
+                    'card',
                     'modals',
+                    'freelancers',
                 ])),
             },
         };

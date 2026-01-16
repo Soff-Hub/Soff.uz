@@ -3,8 +3,9 @@ import { FaRegCheckCircle } from 'react-icons/fa';
 import { FaRegStopCircle } from 'react-icons/fa';
 import { FaExclamationCircle } from 'react-icons/fa';
 import styles from './style.module.scss';
+import { useTranslation } from 'next-i18next';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
-import { STATUS_MAP } from '../../config/status-map';
+import { OrderStatusKey } from '../../config/status-map';
 import { SizeType } from '~/shared/types/size';
 
 type OrderPaymentStatusProps = {
@@ -39,8 +40,9 @@ function OrderPaymentStatus({
     order,
     size = 'large',
 }: OrderPaymentStatusProps) {
+    const { t } = useTranslation('card');
     const orderStatus = (order?.order_status_doing?.status ||
-        'pending') as keyof typeof STATUS_MAP;
+        'pending') as OrderStatusKey;
     const isCancelled = orderStatus === 'cancelled';
     const price = order.service?.price ?? order.budget ?? 0;
     const isFullyPaid = order?.approved_transaction_amount >= price;
@@ -64,25 +66,28 @@ function OrderPaymentStatus({
         return (
             <span className={styles.paymentRejected} style={textStyle}>
                 <FaExclamationCircle style={iconStyle} />
-                To'lov qaytarildi
+                {t('orderCard.paymentRefunded')}
             </span>
         );
     } else if (!isCancelled && isFullyPaid) {
         return (
             <span className={styles.paymentApproved} style={textStyle}>
                 <FaRegCheckCircle style={iconStyle} />
-                To'lov qabul qilindi
+                {t('orderCard.paymentAccepted')}
             </span>
         );
     } else if (isPartiallyPaid) {
         return (
             <span className={styles.paymentHalfApproved} style={textStyle}>
                 <FaRegStopCircle style={iconStyle} />
-                To'lovning {formatCurrencyWithSpace(notPaidAmount)} so'm qismi
-                amalga oshirilmagan
+                {t('orderCard.paymentPartial', {
+                    amount: formatCurrencyWithSpace(notPaidAmount),
+                })}
             </span>
         );
     }
+
+    return null;
 }
 
 export default OrderPaymentStatus;

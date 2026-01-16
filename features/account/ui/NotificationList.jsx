@@ -7,7 +7,7 @@ import SidebarLayout from '~/widgets/sidebar/SidebarLayout';
 import { useTranslation } from 'next-i18next';
 
 export default function NotificationList() {
-    const { t } = useTranslation('account');
+    const { t, i18n } = useTranslation('account');
     const { user } = useSelector((state) => state.auth);
 
     const { data, isLoading, isError } = useQuery({
@@ -47,6 +47,7 @@ export default function NotificationList() {
                         notification={el?.notification}
                         link={el?.link}
                         index={i}
+                        language={i18n.language}
                     />
                 ))}
             </div>
@@ -69,8 +70,9 @@ export default function NotificationList() {
     );
 }
 
-const Notification = ({ notification, link, index }) => {
+const Notification = ({ notification, link, index, language }) => {
     const { title, created_at, body } = notification || {};
+    const { t } = useTranslation('account');
     return (
         <div className="border shadow-sm mb-4 bg-success-subtle rounded-4 p-4">
             <div className="d-flex justify-content-between align-items-center mb-2">
@@ -78,7 +80,7 @@ const Notification = ({ notification, link, index }) => {
                     {index + 1}. {title}{' '}
                 </h3>
                 <small className="text-muted">
-                    {new Date(created_at).toLocaleDateString('uz-UZ')}
+                    {new Date(created_at).toLocaleDateString(language)}
                 </small>
             </div>
 

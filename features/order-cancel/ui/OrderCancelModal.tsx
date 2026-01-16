@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { Form, Modal, Select, message } from 'antd';
+import { useTranslation, Trans } from 'next-i18next';
 import useCancelOrder from '../model/useCancelOrder';
 import useGetReasons from '../model/useGetReasons';
 import { useQueryClient } from '@tanstack/react-query';
@@ -19,6 +20,7 @@ const OrderCancelModal = ({
     selectedOrder,
     onClose,
 }: OrderCancelModalProps) => {
+    const { t } = useTranslation('modals');
     const queryClient = useQueryClient();
     const [form] = Form.useForm();
     const { data: dataReasons } = useGetReasons();
@@ -36,7 +38,7 @@ const OrderCancelModal = ({
         const { reason } = values;
 
         if (!reason) {
-            message.warning('Iltimos, sababni tanlang');
+            message.warning(t('orderCancel.reasonRequired'));
             return;
         }
 
@@ -45,16 +47,14 @@ const OrderCancelModal = ({
                 { id: selectedOrder.id, reason },
                 {
                     onSuccess: () => {
-                        message.success(
-                            'Buyurtma muvaffaqiyatli bekor qilindi!'
-                        );
+                        message.success(t('orderCancel.success'));
                         queryClient.invalidateQueries({ queryKey: ['orders'] });
 
                         form.resetFields();
                         onClose();
                     },
                     onError: (error) => {
-                        message.error('Bekor qilishda xatolik yuz berdi');
+                        message.error(t('orderCancel.error'));
                         console.error('Cancel order error:', error);
                     },
                 }
@@ -74,27 +74,34 @@ const OrderCancelModal = ({
     return (
         <Modal
             destroyOnClose
-            title="Buyurtmani bekor qilish"
+            title={t('orderCancel.title')}
             open={isOpen}
             onOk={handleOk}
             onCancel={handleCancel}
-            okText="Bekor qilish"
-            cancelText="Yopish"
+            okText={t('orderCancel.okText')}
+            cancelText={t('orderCancel.cancelText')}
             confirmLoading={isCancelling}>
             <Form form={form} layout="vertical" onFinish={onFinish}>
                 <p>
-                    Haqiqatan ham "<strong>{selectedOrder?.title}</strong>"
-                    buyurtmasini bekor qilmoqchimisiz?
+                    <Trans
+                        t={t}
+                        i18nKey="orderCancel.confirmQuestion"
+                        values={{ title: selectedOrder?.title }}
+                        components={{ strong: <strong /> }}
+                    />
                 </p>
                 <Form.Item
                     name="reason"
-                    label="Sababni tanlang"
+                    label={t('orderCancel.reasonLabel')}
                     rules={[
-                        { required: true, message: 'Iltimos, sababni tanlang' },
+                        {
+                            required: true,
+                            message: t('orderCancel.reasonRequired'),
+                        },
                     ]}>
                     <Select
                         className="w-100"
-                        placeholder="Bekor qilish sababini tanlang..."
+                        placeholder={t('orderCancel.reasonPlaceholder')}
                         options={reasonOptions}
                     />
                 </Form.Item>

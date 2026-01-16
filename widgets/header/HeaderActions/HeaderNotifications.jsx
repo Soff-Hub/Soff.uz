@@ -12,7 +12,7 @@ import { useFGet } from '~/shared/hooks/useFApi';
 import { cn } from '~/shared/utilities/cn';
 import { useQueryClient } from '@tanstack/react-query';
 import styles from './header-actions.module.scss';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 
 export default function HeaderNotifications() {
     const queryClient = useQueryClient();

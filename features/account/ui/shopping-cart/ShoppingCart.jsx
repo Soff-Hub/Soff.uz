@@ -150,8 +150,7 @@ function ShoppingCart() {
                                     {item.discount_price ? (
                                         `${addPeriodToThousands(
                                             item.discount_price
-                                        )}
-                                    so'm`
+                                        )} ${t('shoppingCart.currency')}`
                                     ) : (
                                         <p
                                             className="free-product-text"
@@ -172,7 +171,7 @@ function ShoppingCart() {
                                                 {addPeriodToThousands(
                                                     item.price
                                                 )}{' '}
-                                                so'm
+                                                {t('shoppingCart.currency')}
                                             </del>
                                         </sup>
                                     ) : null}
@@ -185,7 +184,7 @@ function ShoppingCart() {
                                     icon={<IoIosClose fontSize={30} />}
                                     onClick={(e) => handleRemoveItem(e, item)}
                                     className={styles.deleteButton}
-                                    aria-label="O'chirish"
+                                    aria-label={t('shoppingCart.delete')}
                                 />
                             </div>
                         </div>
@@ -204,7 +203,8 @@ function ShoppingCart() {
                             <span className={styles.summaryItem}>
                                 {t('shoppingCart.subtotal')}{' '}
                                 <strong>
-                                    {addPeriodToThousands(subtotal)} so'm
+                                    {addPeriodToThousands(subtotal)}{' '}
+                                    {t('shoppingCart.currency')}
                                 </strong>
                             </span>
                             <span className={styles.summaryItem}>
@@ -212,13 +212,15 @@ function ShoppingCart() {
                                     percentage: Math.round(taxPercentage * 100),
                                 })}{' '}
                                 <strong>
-                                    {addPeriodToThousands(tax)} so'm
+                                    {addPeriodToThousands(tax)}{' '}
+                                    {t('shoppingCart.currency')}
                                 </strong>
                             </span>
                             <span className={styles.summaryItem}>
                                 {t('shoppingCart.total')}{' '}
                                 <strong className={styles.totalAmount}>
-                                    {addPeriodToThousands(total)} so'm
+                                    {addPeriodToThousands(total)}{' '}
+                                    {t('shoppingCart.currency')}
                                 </strong>
                             </span>
                         </div>
@@ -226,7 +228,8 @@ function ShoppingCart() {
                             <div className={styles.paymentSummaryAmount}>
                                 {t('shoppingCart.total')}:
                                 <strong className={styles.totalAmount}>
-                                    {addPeriodToThousands(total)} so'm
+                                    {addPeriodToThousands(total)}{' '}
+                                    {t('shoppingCart.currency')}
                                 </strong>
                             </div>
                             {state !== null ? (

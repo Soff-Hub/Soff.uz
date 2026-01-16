@@ -1,40 +1,68 @@
 {
-  "profile": {
-    "title": "Seller Profile",
-    "stats": "Statistics",
-    "openForServices": "Open for services",
-    "location": "Location",
-    "lastActive": "Last active",
-    "joined": "Joined",
-    "notActive": "Not active",
-    "totalIncome": "Total income",
-    "currency": "UZS",
-    "placeOrder": "Place order",
-    "linkCopied": "Link copied!",
-    "linkNotCopied": "Link not copied",
-    "blocked": {
-      "title": "Freelancer temporarily blocked",
-      "description": "Unfortunately, this freelancer's services are temporarily blocked. You can use other freelancer services."
+    "profile": {
+        "title": "Seller Profile",
+        "stats": "Statistics",
+        "openForServices": "Open for services",
+        "location": "Location",
+        "lastActive": "Last active",
+        "joined": "Joined",
+        "notActive": "Not active",
+        "totalIncome": "Total income",
+        "currency": "UZS",
+        "placeOrder": "Place order",
+        "linkCopied": "Link copied!",
+        "linkNotCopied": "Link not copied",
+        "blocked": {
+            "title": "Freelancer temporarily blocked",
+            "description": "Unfortunately, this freelancer's services are temporarily blocked. You can use other freelancer services."
+        },
+        "notOpen": {
+            "title": "Not open for services",
+            "description": "Unfortunately, this freelancer's services are temporarily not open. You can use other freelancer services."
+        },
+        "statsItems": {
+            "inProgress": "In progress jobs",
+            "successful": "Successful jobs",
+            "unsuccessful": "Unsuccessful jobs",
+            "uploaded": "Uploaded products",
+            "sold": "Sold products"
+        }
     },
-    "notOpen": {
-      "title": "Not open for services",
-      "description": "Unfortunately, this freelancer's services are temporarily not open. You can use other freelancer services."
+    "tabs": {
+        "about": "About author",
+        "portfolio": "Portfolio",
+        "services": "Services",
+        "products": "Products",
+        "comments": "Comments"
     },
-    "statsItems": {
-      "inProgress": "In progress jobs",
-      "successful": "Successful jobs",
-      "unsuccessful": "Unsuccessful jobs",
-      "uploaded": "Uploaded products",
-      "sold": "Sold products"
+    "orderPayment": {
+        "title": "Make payment for the order",
+        "securityMessage": "Your payment is securely held by the Soff system. Payment to the specialist will only be made after you review and approve the work.",
+        "proceedToOrder": "Place order",
+        "useBalance": "Use your balance for payment",
+        "balance": "Balance",
+        "back": "Back"
+    },
+    "actions": {
+        "viewAll": "View all"
+    },
+    "createOrder": {
+        "titleForSeller": "Place special order for {{seller}}",
+        "title": "Create special order",
+        "noProfession": "No profession",
+        "placingOrder": "Placing your order...",
+        "placeOrder": "Place order",
+        "confirmTitle": "Confirm order",
+        "confirmNo": "No",
+        "confirmYes": "Yes, send order",
+        "confirmMessage": "Do you really want to place an order for {{seller}}?"
+    },
+    "commentsSection": {
+        "noComments": "No comments yet",
+        "loading": "Loading...",
+        "showMore": "Show more",
+        "showingCount": "Showing {{shown}} of {{total}}",
+        "specialOrder": "Special order"
     }
-  },
-  "tabs": {
-    "about": "About author",
-    "portfolio": "Portfolio",
-    "services": "Services",
-    "products": "Products",
-    "comments": "Comments"
-  }
 }
-
 

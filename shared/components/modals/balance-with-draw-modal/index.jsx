@@ -3,8 +3,10 @@ import React from 'react';
 import styles from './style.module.scss';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '~/repositories/api';
+import { useTranslation } from 'next-i18next';
 
 const BalanceWithDrawModal = ({ open, onClose }) => {
+    const { t } = useTranslation('modals');
     const [form] = Form.useForm();
     const queryClient = useQueryClient();
 
@@ -19,15 +21,14 @@ const BalanceWithDrawModal = ({ open, onClose }) => {
     const { mutate, isPending } = useMutation({
         mutationFn: (data) => api.post('seller/application/', data),
         onSuccess: () => {
-            message.success('So‘rov muvaffaqiyatli yuborildi!');
+            message.success(t('balanceWithdraw.success'));
             form.resetFields();
             onClose();
             queryClient.invalidateQueries({ queryKey: ['getCustomBalance'] });
         },
         onError: (error) => {
             const errMsg =
-                error?.response?.data?.msg ||
-                'Xatolik yuz berdi. Qayta urinib ko‘ring.';
+                error?.response?.data?.msg || t('balanceWithdraw.error');
             message.error(errMsg);
         },
     });
@@ -43,7 +44,7 @@ const BalanceWithDrawModal = ({ open, onClose }) => {
 
     return (
         <Modal
-            title="Balansdan pul yechish"
+            title={t('balanceWithdraw.title')}
             open={open}
             onCancel={() => {
                 form.resetFields();
@@ -60,12 +61,14 @@ const BalanceWithDrawModal = ({ open, onClose }) => {
                     onFinish={handleFinish}
                     className={styles.form}>
                     <Form.Item
-                        label="Karta raqami"
+                        label={t('balanceWithdraw.cardNumber.label')}
                         name="cardNumber"
                         rules={[
                             {
                                 required: true,
-                                message: 'Karta raqamini kiriting',
+                                message: t(
+                                    'balanceWithdraw.cardNumber.required'
+                                ),
                             },
                             {
                                 validator: (_, value) => {
@@ -73,7 +76,9 @@ const BalanceWithDrawModal = ({ open, onClose }) => {
                                         value?.replace(/\s/g, '') || '';
                                     if (digits.length !== 16) {
                                         return Promise.reject(
-                                            'Karta raqami 16 xonali bo‘lishi kerak'
+                                            t(
+                                                'balanceWithdraw.cardNumber.validation_length'
+                                            )
                                         );
                                     }
                                     return Promise.resolve();
@@ -81,7 +86,9 @@ const BalanceWithDrawModal = ({ open, onClose }) => {
                             },
                         ]}>
                         <Input
-                            placeholder="8600 1234 5678 9012"
+                            placeholder={t(
+                                'balanceWithdraw.cardNumber.placeholder'
+                            )}
                             inputMode="numeric"
                             maxLength={19}
                             onChange={(e) => {
@@ -96,26 +103,30 @@ const BalanceWithDrawModal = ({ open, onClose }) => {
                     </Form.Item>
 
                     <Form.Item
-                        label="Yechiladigan summa"
+                        label={t('balanceWithdraw.amount.label')}
                         name="amount"
                         rules={[
                             {
                                 required: true,
-                                message: 'Iltimos summani kiriting',
+                                message: t('balanceWithdraw.amount.required'),
                             },
                             {
                                 validator: (_, value) => {
                                     if (!value) return Promise.resolve();
                                     if (value <= 0)
                                         return Promise.reject(
-                                            'Summani to‘g‘ri kiriting'
+                                            t(
+                                                'balanceWithdraw.amount.validation_invalid'
+                                            )
                                         );
                                     return Promise.resolve();
                                 },
                             },
                         ]}>
                         <InputNumber
-                            placeholder="50 000"
+                            placeholder={t(
+                                'balanceWithdraw.amount.placeholder'
+                            )}
                             min={0}
                             step={1000}
                             style={{
@@ -139,14 +150,14 @@ const BalanceWithDrawModal = ({ open, onClose }) => {
                                 form.resetFields();
                             }}
                             className={styles.cancelBtn}>
-                            Bekor qilish
+                            {t('balanceWithdraw.actions.cancel')}
                         </Button>
                         <Button
                             type="primary"
                             htmlType="submit"
                             loading={isPending}
                             className={styles.submitBtn}>
-                            Tasdiqlash
+                            {t('balanceWithdraw.actions.submit')}
                         </Button>
                     </div>
                 </Form>

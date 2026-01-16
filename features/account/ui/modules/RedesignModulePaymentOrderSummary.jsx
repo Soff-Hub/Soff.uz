@@ -8,8 +8,10 @@ import { Skeleton } from 'antd';
 import useCart from '~/shared/hooks/useCart';
 import { cn, useRcn } from '~/shared/utilities/cn';
 import { fileColors } from '~/features/product-details/ui/actions/file-actions';
+import { useTranslation } from 'next-i18next';
 
 const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
+    const { t } = useTranslation('account');
     const [percentage, setPercentage] = useState(0);
     const { removeCartOneItem } = useCart();
     const dispatch = useDispatch();
@@ -66,7 +68,9 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
                     'px-4',
                     'py-2'
                 )}>
-                {ecomerce.cartDataItems.length} ta mahsulot
+                {t('checkout.productCount', {
+                    count: ecomerce.cartDataItems.length,
+                })}
             </p>
             <div
                 className={cn(
@@ -155,7 +159,8 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
                                             'text-gray-800',
                                             'm-0'
                                         )}>
-                                        {addPeriodToThousands(item.price)} so'm
+                                        {addPeriodToThousands(item.price)}{' '}
+                                        {t('checkout.currency')}
                                     </p>
                                 ) : (
                                     <div
@@ -171,7 +176,7 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
                                                 'md:text-sm'
                                             )}>
                                             {addPeriodToThousands(item.price)}{' '}
-                                            so'm
+                                            {t('checkout.currency')}
                                         </del>
                                         <p
                                             className={cn(
@@ -184,7 +189,7 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
                                             {addPeriodToThousands(
                                                 item.discount_price
                                             )}{' '}
-                                            so'm
+                                            {t('checkout.currency')}
                                         </p>
                                     </div>
                                 )}
@@ -210,10 +215,11 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
                                 'mb-2'
                             )}>
                             <p className={cn('mb-0', 'text-sm')}>
-                                Sayt xizmat haqi uchun:
+                                {t('checkout.serviceFeeLabel')}
                             </p>
                             <p className={cn('mb-0', 'text-sm', 'font-medium')}>
-                                {hisobb} so'm ({percentage * 100}%)
+                                {hisobb} {t('checkout.currency')} (
+                                {percentage * 100}%)
                             </p>
                         </div>
                     )}
@@ -224,10 +230,10 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
                             'items-center'
                         )}>
                         <p className={cn('font-bold', 'mb-0', fontSizeClass)}>
-                            Jami narx:
+                            {t('checkout.totalPrice')}
                         </p>
                         <p className={cn('font-bold', 'mb-0', fontSizeClass)}>
-                            {hisob} so'm
+                            {hisob} {t('checkout.currency')}
                         </p>
                     </div>
                 </div>

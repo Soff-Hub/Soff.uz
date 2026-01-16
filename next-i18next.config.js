@@ -18,7 +18,10 @@ module.exports = {
             : '/locales',
 
     reloadOnPrerender: process.env.NODE_ENV === 'development',
-
+    detection: {
+        order: ['cookie', 'localStorage', 'header', 'navigator'],
+        caches: ['cookie', 'localStorage'],
+    },
     /**
      * @link https://github.com/i18next/next-i18next#6-advanced-configuration
      */

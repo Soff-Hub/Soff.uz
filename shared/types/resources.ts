@@ -25,8 +25,11 @@ import seller from '~/public/locales/uz/seller.json';
 import soffia from '~/public/locales/uz/soffia.json';
 import userAgreement from '~/public/locales/uz/user-agreement.json';
 import videoList from '~/public/locales/uz/video-list.json';
-import modals from '~/public/locales/uz/modals.json';
 import myOrders from '~/public/locales/uz/my-orders.json';
+import freelancers from '~/public/locales/uz/freelancers.json';
+import card from '~/public/locales/uz/card.json';
+import modals from '~/public/locales/uz/modals.json';
+import orderDetail from '~/public/locales/uz/order-detail.json';
 
 const resources = {
     common,
@@ -56,8 +59,11 @@ const resources = {
     soffia,
     'user-agreement': userAgreement,
     'video-list': videoList,
-    modals,
     'my-orders': myOrders,
+    freelancers,
+    card,
+    modals,
+    'order-detail': orderDetail,
 } as const;
 
 export default resources;

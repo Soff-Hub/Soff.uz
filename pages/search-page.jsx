@@ -421,6 +421,7 @@ export async function getServerSideProps(context) {
                         'common',
                         'search',
                         'modals',
+                        'card',
                     ])),
                 },
             };
@@ -439,6 +440,7 @@ export async function getServerSideProps(context) {
                         'common',
                         'search',
                         'modals',
+                        'card',
                     ])),
                 },
             };
@@ -456,6 +458,7 @@ export async function getServerSideProps(context) {
                         'common',
                         'search',
                         'modals',
+                        'card',
                     ])),
                 },
             };
@@ -487,6 +490,7 @@ export async function getServerSideProps(context) {
                         'common',
                         'search',
                         'modals',
+                        'card',
                     ])),
                 },
             };

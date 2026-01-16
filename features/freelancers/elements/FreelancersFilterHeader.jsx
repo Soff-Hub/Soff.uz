@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'next-i18next';
 import { LuSettings2 } from 'react-icons/lu';
 import { AppstoreOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import styles from '../styles/freelancersFilterHeader.module.scss';
@@ -7,25 +8,26 @@ import { useRouter } from 'next/router';
 import { GoSortAsc } from 'react-icons/go';
 import { GoSortDesc } from 'react-icons/go';
 
-const options = [
-    {
-        value: 'average_rating',
-        label: "Reyting bo'yicha",
-    },
-    {
-        value: 'last_active',
-        label: "Faollik bo'yicha",
-    },
-];
-
 function FreelancersFilterHeader({
     toggleCollapsed,
     collapsed,
     viewType,
     onViewChange,
 }) {
+    const { t } = useTranslation('freelancers');
     const router = useRouter();
     const sortOrder = router.query.order || 'desc';
+
+    const options = [
+        {
+            value: 'average_rating',
+            label: t('filter.sortByRating'),
+        },
+        {
+            value: 'last_active',
+            label: t('filter.sortByActivity'),
+        },
+    ];
 
     const handleSortChange = (value) => {
         router.push({
@@ -44,7 +46,7 @@ function FreelancersFilterHeader({
                 icon={<LuSettings2 />}
                 onClick={toggleCollapsed}
                 type={collapsed ? 'primary' : 'default'}>
-                Filterlar
+                {t('filter.title')}
             </Button>
             <div className={styles.controls}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
@@ -53,7 +55,7 @@ function FreelancersFilterHeader({
                         onChange={handleSortChange}
                         options={options}
                         style={{ width: 150 }}
-                        placeholder={'Saralash'}
+                        placeholder={t('filter.sortBy')}
                     />
                     <Button
                         type="dashed"

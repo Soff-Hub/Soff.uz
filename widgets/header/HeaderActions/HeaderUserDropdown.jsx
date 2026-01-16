@@ -11,7 +11,7 @@ import { useFGet } from '~/shared/hooks/useFApi';
 import { CHAT_UNSEENS } from '~/shared/api/end-points';
 import { cn } from '~/shared/utilities/cn';
 import { getAccountLinks } from '../constants/account-links';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 
 const HeaderUserDropdown = (props) => {
     const dispatch = useDispatch();
@@ -106,8 +106,8 @@ const HeaderUserDropdown = (props) => {
                                         user?.role === 'admin'
                                             ? '/account/dashbord'
                                             : user?.role === 'seller'
-                                            ? '/account/sellerproducts'
-                                            : '#'
+                                              ? '/account/sellerproducts'
+                                              : '#'
                                     }>
                                     <div className="m-0">
                                         <h4 className="m-0 fw-normal fs-3">

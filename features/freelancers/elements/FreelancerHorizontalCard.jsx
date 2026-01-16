@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
+import { useTranslation } from 'next-i18next';
 import { Badge, Button, Divider, Skeleton } from 'antd';
 import { FaStar } from 'react-icons/fa';
 import { IoTimeOutline, IoLocationOutline } from 'react-icons/io5';
@@ -17,8 +18,8 @@ import { FaRegCommentDots } from 'react-icons/fa';
 import { FaArrowRightLong } from 'react-icons/fa6';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
 
-const formatLastActive = (lastActive) => {
-    if (!lastActive) return "Noma'lum";
+const formatLastActive = (lastActive, t) => {
+    if (!lastActive) return t('card.unknown');
     const last = new Date(lastActive);
 
     if (isNaN(last.getTime())) return lastActive;
@@ -26,15 +27,16 @@ const formatLastActive = (lastActive) => {
     const now = new Date();
     const diffMinutes = Math.floor((now - last) / 1000 / 60);
 
-    if (diffMinutes < 1) return 'Hozir faol';
-    if (diffMinutes < 60) return `${diffMinutes} daqiqa oldin`;
+    if (diffMinutes < 1) return t('card.activeNow');
+    if (diffMinutes < 60) return `${diffMinutes} ${t('card.minutesAgo')}`;
     const diffHours = Math.floor(diffMinutes / 60);
-    if (diffHours < 24) return `${diffHours} soat oldin`;
+    if (diffHours < 24) return `${diffHours} ${t('card.hoursAgo')}`;
     const diffDays = Math.floor(diffHours / 24);
-    return `${diffDays} kun oldin`;
+    return `${diffDays} ${t('card.daysAgo')}`;
 };
 
 const FreelancerHorizontalCard = ({ seller, onCreateChat }) => {
+    const { t } = useTranslation('freelancers');
     const { isMobile, isDesktop } = useResponsive();
     const { startTimeout } = useTimeManager();
     const [isCustomServicesLoading, setIsCustomServicesLoading] =
@@ -61,7 +63,7 @@ const FreelancerHorizontalCard = ({ seller, onCreateChat }) => {
                 <span className={styles.statIcon}>↻</span>
             </div>
             <div className={styles.statCardContent}>
-                <span className={styles.statLabel}>Jarayondagi ishlar</span>
+                <span className={styles.statLabel}>{t('card.inProgressJobs')}</span>
                 <span className={styles.statValue}>
                     {seller?.progress_jobs_count || 0}
                 </span>
@@ -72,7 +74,7 @@ const FreelancerHorizontalCard = ({ seller, onCreateChat }) => {
                 <span className={styles.statIconSuccess}>✓</span>
             </div>
             <div className={styles.statCardContent}>
-                <span className={styles.statLabel}>Muvaffaqiyatli ishlar</span>
+                <span className={styles.statLabel}>{t('card.completedJobs')}</span>
                 <span className={styles.statValueSuccess}>
                     {seller?.completed_orders_count || 0}
                 </span>
@@ -83,7 +85,7 @@ const FreelancerHorizontalCard = ({ seller, onCreateChat }) => {
                 <AiOutlineRise className={styles.statIconSuccessRate} />
             </div>
             <div className={styles.statCardContent}>
-                <span className={styles.statLabel}>Muvaffaqiyat darajasi</span>
+                <span className={styles.statLabel}>{t('card.successRate')}</span>
                 <span className={styles.statValueSuccessRate}>
                     {seller?.success_rate || 0} %
                 </span>
@@ -98,14 +100,14 @@ const FreelancerHorizontalCard = ({ seller, onCreateChat }) => {
                 onClick={() => onCreateChat(seller?.seller_id)}>
                 <span>
                     <FaRegCommentDots style={{ marginRight: '6px' }} />
-                    Xabar
+                    {t('card.message')}
                 </span>
             </Button>
             <Link href={`/seller/${seller?.seller_id}`}>
                 <a>
                     <Button type="primary">
                         <span>
-                            Batafsil
+                            {t('card.details')}
                             <FaArrowRightLong style={{ marginLeft: '6px' }} />
                         </span>
                     </Button>
@@ -133,14 +135,14 @@ const FreelancerHorizontalCard = ({ seller, onCreateChat }) => {
                         <FaStar className={styles.metaStar} />
                         <span>
                             {seller?.average_rating} (
-                            {seller?.feedbacks_count || 0} ta izoh)
+                            {seller?.feedbacks_count || 0} {t('card.reviewsCount')}
                         </span>
                     </div>
                 )}
                 {seller?.last_active && (
                     <div className={styles.metaItem}>
                         <IoTimeOutline className={styles.metaIcon} />
-                        <span>{formatLastActive(seller?.last_active)}</span>
+                        <span>{formatLastActive(seller?.last_active, t)}</span>
                     </div>
                 )}
                 {seller?.location && (
@@ -239,7 +241,7 @@ const FreelancerHorizontalCard = ({ seller, onCreateChat }) => {
             {displayServices.length > 0 ? (
                 <div className={styles.servicesSection}>
                     <div className={styles.servicesHeader}>
-                        <h4 className={styles.servicesTitle}>Xizmatlar</h4>
+                        <h4 className={styles.servicesTitle}>{t('card.services')}</h4>
                         {displayServices.length ? (
                             <div className={styles.servicesNavigation}>
                                 <button
@@ -328,8 +330,7 @@ const FreelancerHorizontalCard = ({ seller, onCreateChat }) => {
                                         className={styles.serviceSlide}>
                                         <div className={styles.card}>
                                             <h3 className={styles.title}>
-                                                {seller.services_length} ta
-                                                xizmatlar topildi
+                                                {seller.services_length} {t('card.servicesFound')}
                                             </h3>
                                             <Link
                                                 href={`/seller/${seller?.seller_id}/?tab=service`}>
@@ -339,7 +340,7 @@ const FreelancerHorizontalCard = ({ seller, onCreateChat }) => {
                                                     }>
                                                     <button
                                                         className={styles.btn}>
-                                                        Barchasini ko'rish
+                                                        {t('card.viewAll')}
                                                     </button>
                                                 </a>
                                             </Link>

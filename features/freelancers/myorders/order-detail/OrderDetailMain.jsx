@@ -10,9 +10,10 @@ import { FaRegCommentDots } from 'react-icons/fa';
 import { useCreateChat } from '~/features/freelancers/chat/api/useCreateChat';
 import Link from 'next/link';
 import { Button, Badge } from 'antd';
+import { useTranslation } from 'next-i18next';
 // import OrderDrawer from './ui/OrderDrawer';
 
-const OrderDetailMain = ({ orderData }) => {
+const OrderDetailMain = () => {
     const router = useRouter();
     const [showStickySeller, setShowStickySeller] = useState(false);
     // const [openDrawer, setOpenDrawer] = useState(false);
@@ -20,7 +21,7 @@ const OrderDetailMain = ({ orderData }) => {
         data: order,
         isError,
         isLoading,
-    } = useGetOrderById(+router.query?.id, orderData, true);
+    } = useGetOrderById(+router.query?.id, true);
 
     if (isLoading) {
         return <Loader />;
@@ -60,6 +61,7 @@ const OrderDetailMain = ({ orderData }) => {
 
 const StickySeller = ({ order, isOpen }) => {
     const { mutate: createChat } = useCreateChat();
+    const { t } = useTranslation('order-detail');
     return (
         <div
             className={`${styles.sellerSticky} ${
@@ -81,7 +83,9 @@ const StickySeller = ({ order, isOpen }) => {
                             href={`/seller/${order?.user?.soff_seller_id}#about_author`}>
                             {order?.user?.full_name || ''}
                         </Link>
-                        <span className="text-muted fs-5">Frilanser</span>
+                        <span className="text-muted fs-5">
+                            {t('freelancer')}
+                        </span>
                     </div>
                 </div>
                 {order?.user?.soff_seller_id && (

@@ -17,14 +17,14 @@ export async function getServerSideProps({ locale }) {
     return {
         props: {
             ...(await serverSideTranslations(locale, [
+                'my-orders',
                 'header',
+                'card',
                 'footer',
                 'common',
-                'orders',
                 'account',
                 'modals',
                 'chat',
-                'my-orders',
             ])),
         },
     };

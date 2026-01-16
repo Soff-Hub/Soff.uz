@@ -2,6 +2,7 @@
     "welcome": "Welcome",
     "title": "Digital products and online services marketplace – Soff.uz",
     "description": "Soff.uz - Intellectual property marketplace, Sell and buy intellectual products.",
+    "securityMessage": "The payment process is reliable, encrypted and secure.",
     "navigation": {
         "home": "Home",
         "products": "Products",
@@ -24,7 +25,8 @@
         "hoursMinutesAgo": "{{hours}} hours {{minutes}} minutes ago",
         "dateTimeFormat": "DD.MM.YYYY HH:mm [was online]",
         "deadlinePassed": "Deadline passed",
-        "daysRemaining": "{{count}} days"
+        "daysRemaining": "{{count}} days",
+        "currency": "UZS"
     },
     "auth": {
         "login": "Login",

@@ -1,0 +1,77 @@
+{
+    "productCard": {
+        "free": "Free",
+        "currency": "UZS",
+        "cardImage": "Product image",
+        "icon": "Icon",
+        "modal": {
+            "title": "Success",
+            "message": "You added the product to cart!",
+            "goToCart": "Go to cart",
+            "continueShopping": "Continue shopping"
+        }
+    },
+    "serviceCard": {
+        "details": "Details",
+        "placeOrder": "Place order",
+        "reviews": "reviews",
+        "currency": "UZS",
+        "addToFavorites": "Add to favorites",
+        "serviceImage": "Service image",
+        "userImage": "User image"
+    },
+    "serviceFirstCard": {
+        "title": "Submit your work to freelancers.",
+        "button": "Place order now"
+    },
+    "pagination": {
+        "itemsPerPage": "Items per page",
+        "items": "services"
+    },
+    "sellerCard": {
+        "unknown": "Unknown",
+        "activeNow": "Active now",
+        "minutesAgo": "Active {{count}} minutes ago",
+        "hoursAgo": "Active {{count}} hours ago",
+        "daysAgo": "Active {{count}} days ago",
+        "reviews": "reviews",
+        "professionNotSpecified": "Profession not specified",
+        "locationNotSpecified": "Location not specified",
+        "details": "Details"
+    },
+    "orderCard": {
+        "cancel": "Cancel",
+        "makePayment": "Make payment",
+        "details": "Details",
+        "viewOffers": "View offers",
+        "orderCancelledWarning": "You have cancelled this order",
+        "language": "Order language",
+        "createdDates": "Created date",
+        "budget": "Budget",
+        "currency": "UZS",
+        "deadline": "Deadline",
+        "noFiles": "No files uploaded yet.",
+        "completionMessage": "The specialist has completed the order and sent you the result. Download the result, review it, and approve or reject it.",
+        "noteTitle": "Note:",
+        "noteDescription": "If you do not change the status of the work within 24 hours, the order will be automatically accepted and the payment will be transferred to the specialist.",
+        "uploadedFiles": "Uploaded files",
+        "reject": "Issues found",
+        "accept": "Accept",
+        "acceptWork": "Accept work",
+        "orderFiles": "Order files",
+        "description": "Order description",
+        "less": "Less",
+        "more": "More",
+        "paymentRefunded": "Payment refunded",
+        "paymentAccepted": "Payment accepted",
+        "paymentPartial": "Payment part of {{amount}} UZS not made",
+        "revisionReturned": "File returned for revision",
+        "download": "Download",
+        "status": {
+            "completed": "Order completed",
+            "inProgress": "Order in progress",
+            "cancelled": "Order cancelled",
+            "pending": "New order"
+        }
+    }
+}

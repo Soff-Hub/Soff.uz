@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 import styles from '~/shared/styles/landingStyles.module.scss';
 import useResponsive from '~/shared/utilities/useResponsive';
 

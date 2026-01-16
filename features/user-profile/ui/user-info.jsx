@@ -10,21 +10,23 @@ import {
 import UserCommentsTabs from './user-comments-tabs';
 import UserShortItems from './user-short-items';
 import useResponsive from '~/shared/utilities/useResponsive';
+import { useTranslation } from 'next-i18next';
 
 const UserInfo = ({ seller, isOrderingClosed, commentRef, sectionRef }) => {
     const { isMobile } = useResponsive();
+    const { t } = useTranslation('seller');
 
     const stats = useMemo(
         () => [
             {
-                title: 'Jarayondagi ishlar',
+                title: t('profile.statsItems.inProgress'),
                 value: seller?.progress_jobs_count || 0,
                 icon: (
                     <SyncOutlined className={cn('text-info', 'text-[26px]')} />
                 ),
             },
             {
-                title: 'Muvaffaqiyatli ishlar',
+                title: t('profile.statsItems.successful'),
                 value: seller?.successful_jobs_count || 0,
                 icon: (
                     <CheckCircleOutlined
@@ -33,7 +35,7 @@ const UserInfo = ({ seller, isOrderingClosed, commentRef, sectionRef }) => {
                 ),
             },
             {
-                title: 'Muvaffaqiyatsiz ishlar',
+                title: t('profile.statsItems.unsuccessful'),
                 value: seller?.unsuccessful_jobs_count || 0,
                 icon: (
                     <CloseCircleOutlined
@@ -42,7 +44,7 @@ const UserInfo = ({ seller, isOrderingClosed, commentRef, sectionRef }) => {
                 ),
             },
             {
-                title: 'Yuklangan mahsulotlar',
+                title: t('profile.statsItems.uploaded'),
                 value: seller?.total_products_count || 0,
                 icon: (
                     <FileTextOutlined
@@ -51,7 +53,7 @@ const UserInfo = ({ seller, isOrderingClosed, commentRef, sectionRef }) => {
                 ),
             },
             {
-                title: 'Sotilgan mahsulotlar',
+                title: t('profile.statsItems.sold'),
                 value: seller?.total_sold_documents || 0,
                 icon: (
                     <ShoppingOutlined
@@ -60,7 +62,7 @@ const UserInfo = ({ seller, isOrderingClosed, commentRef, sectionRef }) => {
                 ),
             },
         ],
-        [seller]
+        [seller, t]
     );
 
     const limit = isMobile ? 2 : 4;
@@ -77,7 +79,7 @@ const UserInfo = ({ seller, isOrderingClosed, commentRef, sectionRef }) => {
                         'w-full'
                     )}>
                     <h3 className={cn('mb-3', 'text-lg', 'font-semibold')}>
-                        Muallif haqida
+                        {t('tabs.about')}
                     </h3>
                     <p className={cn('m-0', 'text-secondary')}>{seller?.bio}</p>
                 </div>

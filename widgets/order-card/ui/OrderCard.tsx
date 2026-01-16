@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Avatar } from 'antd';
+import { useTranslation } from 'next-i18next';
 import OrderBase from '~/entities/order/ui/order-base';
 import styles from './orderCard.module.scss';
 import OrderFiles from '~/entities/order/ui/order-card-files';
@@ -31,6 +32,7 @@ type OrderCardProps = {
 
 function OrderCard(props: OrderCardProps) {
     const { order, infoOnly, orderSize = 'large', onClick, onCancel } = props;
+    const { t } = useTranslation('card');
 
     return (
         <OrderBase
@@ -54,7 +56,7 @@ function OrderCard(props: OrderCardProps) {
                                 color="danger"
                                 className={`${styles.actionButtonReject} ${styles[orderSize]}`}
                                 onClick={() => onCancel(order)}>
-                                Bekor qilish
+                                {t('orderCard.cancel')}
                             </Button>
                         ) : null}
                         {!isCancelled && !infoOnly && (
@@ -62,9 +64,9 @@ function OrderCard(props: OrderCardProps) {
                                 className={`${styles.primary} ${styles[orderSize]}`}
                                 onClick={handlePrimaryClick}>
                                 {!isPartiallyPaid && !isFullyPaid ? (
-                                    "To'lovni amalga oshirish"
+                                    t('orderCard.makePayment')
                                 ) : hasSeller ? (
-                                    'Batafsil'
+                                    t('orderCard.details')
                                 ) : (
                                     <OrderCardDefaultButtonContent
                                         order={order}
@@ -124,6 +126,7 @@ function OrderCard(props: OrderCardProps) {
 }
 
 const OrderCardDefaultButtonContent: React.FC<OrderCardProps> = ({ order }) => {
+    const { t } = useTranslation('card');
     const firstThreeOffers = order?.offers?.slice(0, 3) || [];
     const isThereExtraOffers = order?.offers?.length! > 3;
     const totalExtraOffers = isThereExtraOffers
@@ -132,7 +135,9 @@ const OrderCardDefaultButtonContent: React.FC<OrderCardProps> = ({ order }) => {
 
     return (
         <div className={styles.viewOffersButtonContent}>
-            <span className={styles.viewOffersTitle}>Takliflarni ko'rish</span>
+            <span className={styles.viewOffersTitle}>
+                {t('orderCard.viewOffers')}
+            </span>
             <Avatar.Group>
                 {firstThreeOffers.map((item: any, i: number) => (
                     <Avatar

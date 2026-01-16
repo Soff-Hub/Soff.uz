@@ -34,7 +34,7 @@ export default function TelegramConfigmForm({ isModal, onSuccess }) {
 
     const router = useRouter();
     const dispatch = useDispatch();
-    const { t } = useTranslation('login');
+    const { t } = useTranslation('modals');
 
     const handleSubmit = async ({ code }) => {
         setLoading(true);

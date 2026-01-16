@@ -36,8 +36,9 @@ export default function CodeVerifyForm({ authCode, onClose, slug, onSuccess }) {
     const [secondsRemaining, setSecondsRemaining] = useState(120);
     const [msg, setMsg] = useState(null);
     const router = useRouter();
+    const { locale } = router;
     const dispatch = useDispatch();
-    const { t } = useTranslation('code-verify');
+    const { t } = useTranslation('modals');
 
     useEffect(() => {
         setMsg(localStorage.getItem('msg'));
@@ -109,7 +110,7 @@ export default function CodeVerifyForm({ authCode, onClose, slug, onSuccess }) {
             setLoading(false);
             Modal.error({
                 centered: true,
-                title: t('form.errorTitle'),
+                title: t('codeVerify.errorTitle'),
                 content: err?.response?.data?.msg,
             });
         }
@@ -120,14 +121,22 @@ export default function CodeVerifyForm({ authCode, onClose, slug, onSuccess }) {
         const data = JSON.parse(localStorage.getItem('data'));
 
         try {
-            await Axios.post(baseUrlAuth + 'auth/get-new-code/', {
-                ...data,
-                user: router?.query?.user,
-            });
+            await Axios.post(
+                baseUrlAuth + 'auth/get-new-code/',
+                {
+                    ...data,
+                    user: router?.query?.user,
+                },
+                {
+                    headers: {
+                        'Accept-Language': locale,
+                    },
+                }
+            );
             Modal.success({
                 centered: true,
-                title: t('form.resendSuccessTitle'),
-                content: t('form.resendSuccessMessage'),
+                title: t('codeVerify.resendSuccessTitle'),
+                content: t('codeVerify.resendSuccessMessage'),
             });
 
             setSecondsRemaining(120);
@@ -135,7 +144,7 @@ export default function CodeVerifyForm({ authCode, onClose, slug, onSuccess }) {
         } catch (err) {
             Modal.error({
                 centered: true,
-                title: t('form.errorTitle'),
+                title: t('codeVerify.errorTitle'),
                 content: err?.response?.data?.msg,
             });
         }
@@ -155,7 +164,7 @@ export default function CodeVerifyForm({ authCode, onClose, slug, onSuccess }) {
                             rules={[
                                 {
                                     required: true,
-                                    message: t('form.codeRequired'),
+                                    message: t('codeVerify.codeRequired'),
                                 },
                             ]}>
                             <Input.OTP
@@ -172,11 +181,11 @@ export default function CodeVerifyForm({ authCode, onClose, slug, onSuccess }) {
                                 className="text-xs text-center mb-4"
                                 style={{ color: 'red', cursor: 'pointer' }}
                                 onClick={getRecode}>
-                                {t('form.resendNow')}
+                                {t('codeVerify.resendNow')}
                             </p>
                         ) : (
                             <p className="text-xs text-center mb-4">
-                                {t('form.resendInPrefix')}
+                                {t('codeVerify.resendInPrefix')}
                                 {formatTime(secondsRemaining)}
                             </p>
                         )}
@@ -189,7 +198,7 @@ export default function CodeVerifyForm({ authCode, onClose, slug, onSuccess }) {
                                 {loading ? (
                                     <BeatLoader color="#fff" />
                                 ) : (
-                                    t('form.submit')
+                                    t('codeVerify.submit')
                                 )}
                             </button>
                         </div>

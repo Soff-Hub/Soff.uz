@@ -33,23 +33,6 @@
         "productsNotFound": "Afsuski, izlagan narsangiz topilmadi. Lekin siz o'xshash mahsulotlarni ko'rib chiqishingiz mumkin.",
         "similarProducts": "O'xshash mahsulotlar"
     },
-    "serviceCard": {
-        "details": "Batafsil",
-        "placeOrder": "Buyurtma berish",
-        "reviews": "izoh",
-        "currency": "so'm",
-        "addToFavorites": "Sevimlilarga qo'shish",
-        "serviceImage": "Xizmat rasmi",
-        "userImage": "Foydalanuvchi rasmi"
-    },
-    "serviceFirstCard": {
-        "title": "Ishingizni frilanserlarga topshiring.",
-        "button": "Hoziroq buyurtma berish"
-    },
-    "pagination": {
-        "itemsPerPage": "Sahifada",
-        "items": "ta xizmat"
-    },
     "serviceDetail": {
         "blockedFreelancer": "Frilanser vaqtincha bloklangan",
         "blockedDescription": "Afsuski, ushbu frilanserning xizmatlari vaqtincha bloklangan. Iltimos, keyinroq qayta urinib ko'ring yoki boshqa frilanserni tanlang.",

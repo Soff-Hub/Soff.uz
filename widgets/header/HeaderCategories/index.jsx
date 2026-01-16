@@ -10,7 +10,7 @@ import Link from 'next/link';
 import useOrdersStatus from '~/features/freelancers/myorders/myorder/api/useOrderStatus';
 import { IoSearch } from 'react-icons/io5';
 import SearchModal from '~/shared/components/modals/search-modal/SearchModal';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 
 const getProducts = (t) => [
     {

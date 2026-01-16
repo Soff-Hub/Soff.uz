@@ -8,7 +8,7 @@ import { cn } from '~/shared/utilities/cn';
 import styles from '@/widgets/header/HeaderActions/header-actions.module.scss';
 import ProductOnCart from '~/entities/product/ui/ProductOnCart';
 import { addPeriodToThousands } from '~/features/account/ui/price-formatter';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 
 const flexStyle = {
     display: 'flex',
