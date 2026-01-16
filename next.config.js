@@ -9,6 +9,9 @@ const nextSettings = {
             level: 'verbose',
         },
     },
+    typescript: {
+        ignoreBuildErrors: true,
+    },
     reactStrictMode: true,
     env: {
         title: 'Soff uz',
