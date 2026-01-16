@@ -200,8 +200,9 @@ interface CommentListProps {
 export function CommentList({ slug }: CommentListProps) {
     const [comments, setComments] = useState<{
         count: number;
+        is_document_owner: boolean;
         results: any[];
-    }>({ count: 0, results: [] });
+    }>({ count: 0, is_document_owner: false, results: [] });
     const [nextUrl, setNextUrl] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
 
@@ -217,6 +218,7 @@ export function CommentList({ slug }: CommentListProps) {
 
             setComments((prev) => ({
                 count: data.count,
+                is_document_owner: data.is_document_owner,
                 results:
                     url === `${baseURL}seller/document-reviews/${slug}`
                         ? data.results
@@ -237,7 +239,7 @@ export function CommentList({ slug }: CommentListProps) {
             //     count: sampleData.count,
             //     results: sampleData.results,
             // });
-            setComments({ count: 0, results: [] });
+            setComments({ count: 0, is_document_owner: false, results: [] });
             fetchComments();
         }
     }, [slug]);
@@ -276,6 +278,7 @@ export function CommentList({ slug }: CommentListProps) {
                             key={`${comment.id}-${i}`}
                             comment={comment}
                             slug={slug}
+                            isDocumentOwner={comments.is_document_owner}
                             onRefresh={() => fetchComments()}
                         />
                     ))
