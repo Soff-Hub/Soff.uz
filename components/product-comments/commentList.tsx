@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import styles from './commentList.module.scss';
 import { baseURL } from '~/repositories/api';
 import CommentItem from './commentItem';
+import { useSelector } from 'react-redux';
+import { useAppSelector } from '~/app/store/hooks';
 
 interface CommentListProps {
     slug: string;
@@ -198,6 +200,7 @@ interface CommentListProps {
 // };
 
 export function CommentList({ slug }: CommentListProps) {
+    const { user } = useAppSelector((state) => state.auth);
     const [comments, setComments] = useState<{
         count: number;
         is_document_owner: boolean;
@@ -213,7 +216,11 @@ export function CommentList({ slug }: CommentListProps) {
     ) => {
         try {
             setLoading(true);
-            const res = await fetch(url);
+            const res = await fetch(url, {
+                headers: {
+                    Authorization: user ? `Bearer ${user.access}` : '',
+                },
+            });
             const data = await res.json();
 
             setComments((prev) => ({
