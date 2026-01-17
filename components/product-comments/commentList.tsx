@@ -249,7 +249,7 @@ export function CommentList({ slug }: CommentListProps) {
             setComments({ count: 0, is_document_owner: false, results: [] });
             fetchComments();
         }
-    }, [slug]);
+    }, [slug, user?.access]);
 
     useEffect(() => {
         if (!nextUrl || loading) return;
