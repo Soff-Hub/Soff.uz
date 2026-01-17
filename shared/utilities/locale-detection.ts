@@ -1,10 +1,14 @@
 import { NextRouter } from 'next/router';
 import Cookies from 'js-cookie';
+import { Locale } from '../types/lang';
 
 const defaultLocale = 'uz';
+const VALID_LOCALES = ['uz', 'en', 'ru'];
 
-const setLocaleCookie = (locale: string) => {
+export const setLocaleCookie = (locale: Locale) => {
     if (typeof document === 'undefined') return;
+    if (!VALID_LOCALES.includes(locale)) return;
+
     Cookies.set('user_locale', locale, {
         path: '/',
         expires: 365,
@@ -25,26 +29,14 @@ const runDefaultUserLocale = (router: NextRouter) => {
     });
 };
 
-export const setUserLocale = (locale: string, router: NextRouter) => {
-    if (typeof window === 'undefined') return;
-    if (!['uz', 'en', 'ru'].includes(locale)) return;
-
-    setLocaleCookie(locale);
-    router.push(`/${locale}${router.asPath}`, undefined, {
-        locale: locale,
-        // shallow: false,
-    });
-};
-
 export async function defineUserLocale(router: NextRouter) {
-    const validLocales = ['uz', 'en', 'ru'];
     const routerLocale = router.locale;
     const savedLocale = getLocaleCookie();
 
     console.log({ routerLocale, savedLocale });
 
     // PRIORITY 1: If URL has locale defined, sync it with localStorage
-    if (routerLocale && validLocales.includes(routerLocale)) {
+    if (routerLocale && VALID_LOCALES.includes(routerLocale)) {
         console.log('1 running');
         if (savedLocale !== routerLocale) {
             setLocaleCookie(routerLocale);
@@ -53,7 +45,7 @@ export async function defineUserLocale(router: NextRouter) {
     }
 
     // PRIORITY 2: If URL doesn't have locale but localStorage has value, use it
-    if (savedLocale && validLocales.includes(savedLocale)) {
+    if (savedLocale && VALID_LOCALES.includes(savedLocale)) {
         console.log('2 running');
         router.push(`/${savedLocale}${router.asPath}`, undefined, {
             locale: savedLocale,

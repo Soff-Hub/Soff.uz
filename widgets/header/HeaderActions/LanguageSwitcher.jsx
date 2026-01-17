@@ -3,7 +3,11 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { Dropdown } from 'antd';
 import styles from './language-switcher.module.scss';
-import { setUserLocale } from '~/shared/utilities/locale-detection';
+import {
+    setLocaleCookie,
+    setUserLocale,
+} from '~/shared/utilities/locale-detection';
+import { useTranslation } from 'next-i18next';
 
 const languages = [
     { code: 'uz', name: "O'zbek", flag: '/static/img/uz.png' },
@@ -13,7 +17,8 @@ const languages = [
 
 const LanguageSwitcher = () => {
     const router = useRouter();
-    const { locale, asPath } = router;
+    const { i18n } = useTranslation('translation');
+    const { locale, asPath, query, pathname } = router;
     const currentLanguage =
         languages.find((lang) => lang.code === locale) || languages[0];
 
@@ -35,7 +40,11 @@ const LanguageSwitcher = () => {
                 )}
             </div>
         ),
-        onClick: () => setUserLocale(lang.code, router),
+        onClick: () => {
+            i18n.changeLanguage(lang.code);
+            router.push({ pathname, query }, asPath, { locale: lang.code });
+            setLocaleCookie(lang.code, i18n);
+        },
         className: locale === lang.code ? styles.active : '',
     }));
 
