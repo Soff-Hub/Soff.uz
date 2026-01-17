@@ -24,12 +24,14 @@ interface Comment {
 interface CommentItemProps {
     comment: Comment;
     slug: string;
+    isDocumentOwner?: boolean;
     onRefresh: () => void;
 }
 
 export default function CommentItem({
     comment,
     slug,
+    isDocumentOwner,
     onRefresh,
 }: CommentItemProps) {
     const [isReplying, setIsReplying] = useState(false);
@@ -92,7 +94,7 @@ export default function CommentItem({
                 )}
 
                 {/* Action Buttons */}
-                {comment?.is_document_owner && (
+                {isDocumentOwner && (
                     <div className={styles.actions}>
                         <Button
                             size="small"

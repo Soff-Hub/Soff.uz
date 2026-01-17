@@ -1,22 +1,23 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'next-i18next';
 import CommentForm from './commentForm';
-import Axios from 'axios';
+import axios from 'axios';
 import { baseURL } from '~/repositories/api';
-import Cookies from 'js-cookie';
+import { useSelector } from 'react-redux';
 
 export default function CommentFormWrapper({ slug, id }) {
     const { t } = useTranslation('product-pages');
     const [canReview, setCanReview] = useState(false);
     const [hasFirstComment, setHasFirstComment] = useState(false);
     const [loading, setLoading] = useState(true);
-    const token = Cookies.get('token');
+    const { user } = useSelector((state) => state.auth);
+    const token = user?.access;
 
     useEffect(() => {
         const checkPermission = async () => {
             try {
                 if (token) {
-                    const res = await Axios.get(
+                    const res = await axios.get(
                         `${baseURL}customer/can-review/${slug}`,
                         {
                             headers: {
@@ -35,7 +36,7 @@ export default function CommentFormWrapper({ slug, id }) {
         };
 
         if (slug) checkPermission();
-    }, [slug]);
+    }, [slug, token]);
 
     if (loading) return <p>{t('productDetail.comments.checking')}</p>;
 
@@ -47,5 +48,5 @@ export default function CommentFormWrapper({ slug, id }) {
         );
     }
 
-    return <div></div>;
+    return null;
 }
