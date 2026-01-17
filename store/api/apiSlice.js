@@ -3,7 +3,6 @@ import { d_base_url, f_base_url } from '~/shared/api/base-url';
 import Cookies from 'js-cookie';
 import { logOut } from '~/store/auth/slice';
 import { logout as profileLogout } from '~/store/profile/slice';
-import { setSavedPrfileData } from '~/store/ecomerce/slice';
 
 const getToken = () => {
     if (typeof window !== 'undefined') {
@@ -41,10 +40,9 @@ const baseQueryWithLogout = (baseQuery) => {
             if (typeof window !== 'undefined') {
                 localStorage.clear();
                 Cookies.remove('token');
-                api.dispatch(setSavedPrfileData(null));
                 api.dispatch(logOut());
                 api.dispatch(profileLogout());
-                
+
                 // Navigate to login page if on a protected/account page
                 const currentPath = window.location.pathname;
                 if (

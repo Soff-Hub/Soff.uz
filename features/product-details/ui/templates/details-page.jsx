@@ -4,7 +4,7 @@ import Description from '../actions/description';
 import SellerProfile from '../seller-profile/seller-profile';
 import ImageCarousel from '../actions/imageScroll';
 import Tags from '../actions/tags';
-import { CommentList } from '~/features/comments/ui/commentList';
+import CommentList from '~/components/product-comments';
 import CommentFormWrapper from '~/features/comments/ui/commentWrapper';
 
 function ThreeDesignProductsDetails({ product, template }) {
@@ -51,7 +51,7 @@ function ThreeDesignProductsDetails({ product, template }) {
                         <SellerProfile product={product} />
                     </div>
                     {/* comment section */}
-                    <div>
+                    <div style={{ marginBottom: '32px' }}>
                         <CommentFormWrapper
                             id={product.id}
                             slug={product.slug}

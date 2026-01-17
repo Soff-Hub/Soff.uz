@@ -15,7 +15,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { logOut } from '~/store/auth/slice';
 import { logout as profileLogout } from '~/store/profile/slice';
-import { setSavedPrfileData } from '~/store/ecomerce/slice';
 import useAuth from '~/shared/hooks/useAuth';
 import useResponsive from '~/shared/utilities/useResponsive';
 import useDebounce from '~/shared/hooks/useDebounce';
@@ -52,7 +51,6 @@ function Sidebar({ collapsed, onChangeCollapse }) {
         if (res) {
             dispatch(logOut());
             dispatch(profileLogout());
-            dispatch(setSavedPrfileData(null));
             // Navigate to login page after logout
             const currentPath = router.asPath;
             // Don't redirect if already on login page or auth pages

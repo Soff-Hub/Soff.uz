@@ -1,0 +1,360 @@
+@import '/scss/utils/variable'; /* Matches $color-1st in global variables */
+
+.container {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 24px;
+}
+
+.header {
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    h3 {
+        font-size: 20px;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .count {
+        color: #606060;
+        font-size: 20px;
+        font-weight: 400;
+    }
+}
+
+.commentList {
+    // max-height: 500px;
+    // overflow-y: auto;
+    scrollbar-gutter: stable;
+    padding-right: 10px;
+
+    /* Custom Scrollbar for Webkit */
+    &::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+        border-radius: 4px;
+    }
+}
+
+.commentItem {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 24px;
+    font-family: Roboto, Arial, sans-serif;
+
+    .avatar {
+        width: 40px;
+        height: 40px;
+
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .content {
+        flex: 1;
+        position: relative; /* Establishes positioning context for the thread line */
+
+        .headerInfo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 4px;
+            margin-top: -2px;
+
+            .author {
+                font-size: 13px;
+                font-weight: 600;
+                color: #0f0f0f;
+            }
+
+            .date {
+                font-size: 12px;
+                color: #606060;
+                &:hover {
+                    color: #0f0f0f;
+                }
+            }
+        }
+
+        .rating {
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .text {
+            font-size: 14px;
+            line-height: 20px;
+            color: #0f0f0f;
+            margin: 0;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+
+        .actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-top: 8px;
+        }
+
+        .replyFormContainer {
+            margin-top: 8px;
+        }
+
+        /* Bi-directional Hover Effect:
+           If any reply (or the list area) or the show-replies button is hovered, 
+           highlight the main thread line.
+           Using :has() pseudo-class (Supported in modern browsers: Chrome 105+, Safari 15.4+, FF 121+)
+        */
+        &:has(.repliesList:hover) .threadLine,
+        &:has(.repliesPreview:hover) .threadLine {
+            background-color: $color-1st;
+        }
+    }
+}
+
+/* NEW: Explicit Thread Line */
+.threadLine {
+    position: absolute; /* Anchors to .content (parent) */
+    top: 44px; /* Starts just below the Main Avatar */
+    bottom: 12px; /* Ends near bottom */
+    left: -35px; /* Aligns with center of Main Avatar */
+    width: 2px;
+    z-index: 10;
+    background-color: #e5e5e5;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+
+    /* Add a wider invisible hit area for easier clicking */
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: -4px;
+        width: 10px;
+        background: transparent;
+    }
+
+    &:hover {
+        background-color: $color-1st;
+    }
+}
+
+/* 
+   When Thread Line is hovered, also highlight the curves in siblings (repliesPreview, repliesList)
+   Using the General Sibling Combinator (~)
+*/
+.threadLine:hover ~ .repliesPreview .showRepliesButton::after {
+    border-color: $color-1st;
+}
+
+.threadLine:hover ~ .repliesList .commentItem::after {
+    border-color: $color-1st;
+}
+
+.replyActionButton {
+    border-radius: 18px;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 0 16px;
+}
+
+.viewRepliesBtn {
+    color: $color-1st !important;
+    font-weight: 600 !important;
+    font-size: 13px !important;
+    padding: 0 !important;
+    margin-top: 8px;
+    height: auto !important;
+
+    display: flex !important;
+    align-items: center;
+    gap: 8px;
+    background: transparent !important;
+
+    &:hover {
+        background: transparent !important;
+        opacity: 0.8;
+    }
+
+    span {
+        margin-left: 4px;
+    }
+}
+
+/* NEW: Wrapper for the show replies button to handle layout/line context */
+.repliesPreview {
+    margin-top: 12px;
+
+    /* REMOVED internal ::before line since we now have .threadLine */
+    /* &::before { ... } */
+}
+
+.showRepliesButton {
+    position: relative; /* Position context for the curve and mask */
+    border-radius: 18px;
+    font-size: 12px;
+    font-weight: 600;
+    border: none;
+    background: transparent;
+    color: $color-1st;
+    padding: 6px 12px;
+    height: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: none;
+    z-index: 2; /* Sit above the line */
+    background-color: rgba(0, 164, 79, 0.08);
+
+    &:hover {
+        background-color: $color-1st !important;
+        color: #fff !important;
+    }
+
+    /* The Curved Connector (Matches .repliesList .commentItem::after) */
+    &::after {
+        content: '';
+        position: absolute;
+        top: -14px; /* Start above to connect to vertical line */
+        left: -35px; /* Reach back to the vertical line */
+        width: 36px; /* Width to reach the button content roughly */
+        height: 38px; /* Curve height */
+        border-left: 3px solid #e5e5e5;
+        border-bottom: 3px solid #e5e5e5;
+        border-bottom-left-radius: 16px;
+        transition: border-color 0.2s ease;
+        pointer-events: none;
+    }
+
+    &:hover::after {
+        border-color: $color-1st;
+    }
+}
+
+.repliesList {
+    margin-top: 12px;
+}
+
+.repliesList .commentItem {
+    position: relative;
+    padding: 12px;
+    border-radius: 12px;
+    transition: background-color 0.2s ease;
+    margin-bottom: 12px;
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.03);
+    }
+
+    &::before {
+        display: none;
+    }
+
+    /* The Curved Connector */
+    &::after {
+        content: '';
+        position: absolute;
+        top: -14px;
+        left: -35px;
+        width: 36px;
+        height: 38px;
+        border-left: 3px solid #e5e5e5;
+        border-bottom: 3px solid #e5e5e5;
+        border-bottom-left-radius: 16px;
+        transition: border-color 0.2s ease;
+    }
+
+    &:hover::after {
+        border-left-color: $color-1st;
+        border-bottom-color: $color-1st;
+    }
+}
+
+.noComments {
+    text-align: center;
+    color: #606060;
+    padding: 20px;
+}
+
+.loading {
+    text-align: center;
+    color: #606060;
+    padding: 10px;
+    font-size: 14px;
+}
+
+.replyForm {
+    margin-top: 8px;
+}
+
+.inputContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.textArea {
+    border-radius: 8px !important;
+    padding: 10px !important;
+}
+
+.formActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.formButton {
+    font-size: 13px !important;
+}
+
+@media (max-width: 576px) {
+    .container {
+        padding: 16px;
+    }
+
+    .commentItem {
+        gap: 12px;
+    }
+
+    .threadLine {
+        left: -31px;
+    }
+
+    .showRepliesButton::after {
+        left: -31px;
+    }
+
+    .showRepliesButton::before {
+        left: -34px;
+    }
+
+    .repliesList .commentItem::after {
+        left: -31px;
+    }
+
+    .header h3 {
+        font-size: 18px;
+    }
+
+    .commentItem .content .text {
+        font-size: 13px;
+    }
+
+    .repliesList .commentItem {
+        padding: 8px;
+    }
+}

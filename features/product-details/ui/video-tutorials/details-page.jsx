@@ -5,6 +5,8 @@ import SellerProfile from '../seller-profile/seller-profile';
 import DefaultVideoContent from './default-video';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import Link from 'next/link';
+import CommentFormWrapper from '~/features/comments/ui/commentWrapper';
+import CommentList from '~/components/product-comments';
 
 function VideosProductsDetails({ product, isPlay, setIsPlay }) {
     const type = 'playlists';
@@ -73,6 +75,13 @@ function VideosProductsDetails({ product, isPlay, setIsPlay }) {
                             )}
                             <SellerProfile product={product} />
                         </div>
+                    </div>
+                    <div>
+                        <CommentFormWrapper
+                            id={product.id}
+                            slug={product.slug}
+                        />
+                        <CommentList slug={product.slug} />
                     </div>
                 </div>
             </div>

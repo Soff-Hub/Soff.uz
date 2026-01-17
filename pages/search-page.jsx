@@ -297,7 +297,7 @@ const Search_Results = ({
             <div className="container ">
                 <Tabs
                     className="order_tabs"
-                    destroyInactiveTabPane
+                    destroyOnHidden
                     activeKey={tab}
                     onChange={handleChangeTab}
                     items={tabItems}

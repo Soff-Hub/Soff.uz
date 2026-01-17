@@ -1,22 +1,20 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import { logOut } from '~/store/auth/slice';
 import { logout as profileLogout } from '~/store/profile/slice';
 import useAuth from '~/shared/hooks/useAuth';
 import Router, { useRouter } from 'next/router';
-import { setSavedPrfileData } from '~/store/ecomerce/slice';
 import styles from '~/shared/styles/landingStyles.module.scss';
 import Image from 'next/image';
 import { useFGet } from '~/shared/hooks/useFApi';
 import { CHAT_UNSEENS } from '~/shared/api/end-points';
 import { cn } from '~/shared/utilities/cn';
+import { accountLinks } from '../constants/account-links';
 
 const HeaderUserDropdown = (props) => {
     const dispatch = useDispatch();
-    const { accountLinks, user, isLoggedIn } = useSelector(
-        (state) => state.auth
-    );
+    const { user, isLoggedIn } = useSelector((state) => state.auth);
     const { user: profile } = useSelector((state) => state.profile);
     const refresh = useSelector((state) => state.auth?.user?.refresh);
     const router = useRouter();
@@ -31,7 +29,6 @@ const HeaderUserDropdown = (props) => {
         if (res) {
             dispatch(logOut());
             dispatch(profileLogout());
-            dispatch(setSavedPrfileData(null));
             // Navigate to login page after logout
             const currentPath = router.asPath;
             // Don't redirect if already on login page or auth pages

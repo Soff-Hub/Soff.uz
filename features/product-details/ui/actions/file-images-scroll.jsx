@@ -155,159 +155,166 @@ function FileImagesScroll({ product }) {
             `}</style>
             <div className="ps-product__thumbnail_seller product-short-view">
                 <figure className="figuree">
-                    <div
-                        className="ps-wrapper_seller product-poster "
-                        ref={containerRef}
-                        style={{
-                            paddingBottom: 0,
-                            marginBottom: 0,
-                            position: 'relative',
-                        }}>
-                        {/* Fullscreen button */}
-                        {product?.document?.images?.length > 0 && (
-                            <div
-                                ref={fullscreenButtonRef}
-                                style={{
-                                    position: 'fixed',
-                                    zIndex: 100,
-                                }}>
-                                <ImageLightBox
-                                    gallery={product.document.images}
+                    <div className="figuree_content">
+                        <div
+                            className="ps-wrapper_seller product-poster "
+                            ref={containerRef}
+                            style={{
+                                paddingBottom: 0,
+                                marginBottom: 0,
+                                position: 'relative',
+                            }}>
+                            {/* Fullscreen button */}
+                            {product?.document?.images?.length > 0 && (
+                                <div
+                                    ref={fullscreenButtonRef}
+                                    style={{
+                                        position: 'fixed',
+                                        zIndex: 99,
+                                    }}>
+                                    <ImageLightBox
+                                        gallery={product.document.images}
+                                    />
+                                </div>
+                            )}
+                            {product?.document?.images?.length > 0 ? (
+                                product?.document?.images?.map(
+                                    (item, i) =>
+                                        (item?.image_url ||
+                                            item?.thumbUrl ||
+                                            item?.url) && (
+                                            <Image
+                                                key={i}
+                                                src={
+                                                    item?.image_url ||
+                                                    item?.thumbUrl ||
+                                                    item?.url ||
+                                                    'https://placehold.co/600x400'
+                                                }
+                                                width={785}
+                                                height={614}
+                                                alt={'sellerImage'}
+                                                className={` seller_image_conatiner`}
+                                                objectFit="contain"
+                                                style={{
+                                                    flexShrink: 0,
+                                                    objectFit: 'contain',
+                                                }}
+                                            />
+                                        )
+                                )
+                            ) : (
+                                <Image
+                                    src={'https://placehold.co/600x400'}
+                                    width={1000}
+                                    height={614}
+                                    alt={'sellerImage'}
+                                    className={` seller_image_conatiner`}
+                                    objectFit="contain"
                                 />
-                            </div>
-                        )}
-                        {product?.document?.images?.length > 0 ? (
-                            product?.document?.images?.map(
-                                (item, i) =>
-                                    (item?.image_url ||
-                                        item?.thumbUrl ||
-                                        item?.url) && (
-                                        <Image
-                                            key={i}
-                                            src={
-                                                item?.image_url ||
-                                                item?.thumbUrl ||
-                                                item?.url ||
-                                                'https://placehold.co/600x400'
-                                            }
-                                            width={785}
-                                            height={614}
-                                            alt={'sellerImage'}
-                                            className={` seller_image_conatiner`}
-                                            objectFit="contain"
-                                            style={{
-                                                flexShrink: 0,
-                                                objectFit: 'contain',
-                                            }}
-                                        />
-                                    )
-                            )
-                        ) : (
-                            <Image
-                                src={'https://placehold.co/600x400'}
-                                width={1000}
-                                height={614}
-                                alt={'sellerImage'}
-                                className={` seller_image_conatiner`}
-                                objectFit="contain"
-                            />
-                        )}
-                        {/* Top gradient - shows when scrolled down (can scroll up) */}
-                        <div
-                            style={{
-                                position: 'absolute',
-                                top: 0,
-                                left: 0,
-                                right: 0,
-                                width: '100%',
-                                height: '40px',
-                                background:
-                                    'linear-gradient(rgba(80, 80, 80, 0.6) 0%, rgba(0, 0, 0, 0) 100%)',
-                                pointerEvents: 'none',
-                                transition: 'all 0.3s ease',
-                                opacity: canScrollUp ? 1 : 0,
-                                transform: canScrollUp
-                                    ? 'translateY(0)'
-                                    : 'translateY(-100%)',
-                                visibility: canScrollUp ? 'visible' : 'hidden',
-                                zIndex: 1,
-                            }}
-                        />
-                        {/* Bottom gradient - shows when at top (can scroll down) */}
-                        <div
-                            style={{
-                                position: 'absolute',
-                                bottom: 0,
-                                left: 0,
-                                right: 0,
-                                width: '100%',
-                                height: '40px',
-                                background:
-                                    'linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(80, 80, 80, 0.6) 100%)',
-                                pointerEvents: 'none',
-                                transition: 'all 0.3s ease',
-                                opacity:
-                                    !isScrolledDown && canScrollDown ? 1 : 0,
-                                transform:
-                                    !isScrolledDown && canScrollDown
+                            )}
+                            {/* Top gradient - shows when scrolled down (can scroll up) */}
+                            <div
+                                style={{
+                                    position: 'absolute',
+                                    top: 0,
+                                    left: 0,
+                                    right: 0,
+                                    width: '100%',
+                                    height: '40px',
+                                    background:
+                                        'linear-gradient(rgba(80, 80, 80, 0.6) 0%, rgba(0, 0, 0, 0) 100%)',
+                                    pointerEvents: 'none',
+                                    transition: 'all 0.3s ease',
+                                    opacity: canScrollUp ? 1 : 0,
+                                    transform: canScrollUp
                                         ? 'translateY(0)'
-                                        : 'translateY(100%)',
-                                zIndex: 1,
-                            }}
-                        />
-                    </div>
-                    {/* Scroll buttons - outside scrollable container */}
-                    <div
-                        ref={buttonsRef}
-                        className="scroll-buttons"
-                        style={{
-                            display:
-                                canScrollUp || canScrollDown ? 'flex' : 'none',
-                        }}>
-                        <button
-                            className="scroll-button"
-                            onClick={onClickUp}
-                            disabled={!canScrollUp}
-                            aria-label="Scroll up">
-                            <UpOutlined
-                                style={{
-                                    fontSize: '16px',
-                                    color: '#333',
+                                        : 'translateY(-100%)',
+                                    visibility: canScrollUp
+                                        ? 'visible'
+                                        : 'hidden',
+                                    zIndex: 1,
                                 }}
                             />
-                        </button>
-                        <button
-                            className="scroll-button"
-                            onClick={onClickDown}
-                            disabled={!canScrollDown}
-                            aria-label="Scroll down">
-                            <DownOutlined
+                            {/* Bottom gradient - shows when at top (can scroll down) */}
+                            <div
                                 style={{
-                                    fontSize: '16px',
-                                    color: '#333',
+                                    position: 'absolute',
+                                    bottom: 0,
+                                    left: 0,
+                                    right: 0,
+                                    width: '100%',
+                                    height: '40px',
+                                    background:
+                                        'linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(80, 80, 80, 0.6) 100%)',
+                                    pointerEvents: 'none',
+                                    transition: 'all 0.3s ease',
+                                    opacity:
+                                        !isScrolledDown && canScrollDown
+                                            ? 1
+                                            : 0,
+                                    transform:
+                                        !isScrolledDown && canScrollDown
+                                            ? 'translateY(0)'
+                                            : 'translateY(100%)',
+                                    zIndex: 1,
                                 }}
                             />
-                        </button>
+                        </div>
+                        {/* Scroll buttons - outside scrollable container */}
+                        <div
+                            ref={buttonsRef}
+                            className="scroll-buttons"
+                            style={{
+                                display:
+                                    canScrollUp || canScrollDown
+                                        ? 'flex'
+                                        : 'none',
+                            }}>
+                            <button
+                                className="scroll-button"
+                                onClick={onClickUp}
+                                disabled={!canScrollUp}
+                                aria-label="Scroll up">
+                                <UpOutlined
+                                    style={{
+                                        fontSize: '16px',
+                                        color: '#333',
+                                    }}
+                                />
+                            </button>
+                            <button
+                                className="scroll-button"
+                                onClick={onClickDown}
+                                disabled={!canScrollDown}
+                                aria-label="Scroll down">
+                                <DownOutlined
+                                    style={{
+                                        fontSize: '16px',
+                                        color: '#333',
+                                    }}
+                                />
+                            </button>
+                        </div>
+                        <div className="views">
+                            {' '}
+                            <i className="fa-solid fa-eye"></i>{' '}
+                            <span>{product?.view_count}</span>
+                        </div>
                     </div>
-                    <div className="views">
-                        {' '}
-                        <i className="fa-solid fa-eye"></i>{' '}
-                        <span>{product?.view_count}</span>
-                    </div>
-
-                    <div
-                        className="title_support"
-                        style={{ paddingTop: '50px' }}>
+                    <div className="title_support">
                         <InfoCircleOutlined
                             className="fs-2 "
                             style={{ cursor: 'pointer' }}
+                            aria-label="Mualliflik huquqi buzilgan holatda"
                         />
                         <span>Mualliflik huquqi buzilgan holatda</span>
                         <Link href={`/report/${product.slug}`}>
                             <a>
                                 <strong
                                     className="text-success"
-                                    style={{ cursor: 'pointer' }}>
+                                    style={{ cursor: 'pointer' }}
+                                    aria-label="Shikoyat qiling!">
                                     shikoyat qiling!
                                 </strong>
                             </a>
