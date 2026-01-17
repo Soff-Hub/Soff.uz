@@ -6,9 +6,10 @@ import { Checkbox, Skeleton, Radio } from 'antd';
 
 function useFreelancers(collapsed) {
     const router = useRouter();
+    const { locale } = router;
     const limit = collapsed ? 21 : 20;
     const { data: directions, isFetching: isDirectionsFetching } =
-        useGetDirectionsQuery();
+        useGetDirectionsQuery(`all-directinos - ${locale}`);
 
     const directionsMap = useMemo(() => {
         if (!directions) return {};
@@ -24,8 +25,8 @@ function useFreelancers(collapsed) {
             Array.isArray(router.query.direction)
                 ? router.query.direction.map((v) => v)
                 : router.query.direction
-                ? [router.query.direction]
-                : [],
+                  ? [router.query.direction]
+                  : [],
         [router.query.direction]
     );
 
@@ -104,8 +105,8 @@ function useFreelancers(collapsed) {
             Array.isArray(router.query.position)
                 ? router.query.position.map((v) => v)
                 : router.query.position
-                ? [router.query.position]
-                : [],
+                  ? [router.query.position]
+                  : [],
         [router.query.position]
     );
 
@@ -151,8 +152,8 @@ function useFreelancers(collapsed) {
             directionValue: Array.isArray(vals)
                 ? vals.map((val) => directionsMap[val].label)
                 : directionsMap[vals]
-                ? directionsMap[vals].label
-                : undefined,
+                  ? directionsMap[vals].label
+                  : undefined,
             position: undefined,
         });
     };

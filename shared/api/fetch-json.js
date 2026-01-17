@@ -1,7 +1,10 @@
-export default async function fetchJson(url) {
+export default async function fetchJson(url, locale = 'uz') {
     try {
-        const res = await fetch(url);
-        // if (!res.ok) throw new Error(`Failed to fetch: ${url}`);
+        const res = await fetch(url, {
+            headers: {
+                'Accept-Language': locale,
+            },
+        });
         return await res.json();
     } catch (e) {
         return { error: e.message };

@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useGetDirectionsQuery } from '~/store/profile/slice';
 import { useTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
 
 const getFooterMenu = (t) => ({
     soff: {
@@ -151,8 +152,11 @@ const getAboutUsPages = (t) => [
 ];
 
 export default function Footer() {
+    const { locale } = useRouter();
     const currentYear = new Date().getFullYear();
-    const { data: directions } = useGetDirectionsQuery();
+    const { data: directions } = useGetDirectionsQuery(
+        `all-directinos - ${locale}`
+    );
     const { t } = useTranslation('footer');
 
     const footerMenu = getFooterMenu(t);

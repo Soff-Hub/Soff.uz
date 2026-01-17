@@ -20,10 +20,13 @@ export default function SearchResultsProductsFilter({ total }) {
     const [filterOpen, setFilterOpen] = useState(false);
     const isMounted = useMounted(200);
     const router = useRouter();
+    const { locale } = router;
     const [categoriesList, setCategoriesList] = useState([]);
     const { t } = useTranslation('search');
 
-    const { data: directionsData } = useGetDirectionsQuery();
+    const { data: directionsData } = useGetDirectionsQuery(
+        `all-directinos - ${locale}`
+    );
 
     const directions = useMemo(() => {
         return [

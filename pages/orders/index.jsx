@@ -30,8 +30,11 @@ export default function SoffFreelancerPage({
     search,
 }) {
     const router = useRouter();
+    const { locale } = router;
     const { t } = useTranslation('orders');
-    const { data: directionsData } = useGetDirectionsQuery();
+    const { data: directionsData } = useGetDirectionsQuery(
+        `all-directinos - ${locale}`
+    );
     const directions = directionsData || [];
     const currentPage = Math.floor(offset / limit) + 1;
 
@@ -43,13 +46,13 @@ export default function SoffFreelancerPage({
         directionTitle && categoryTitle && search
             ? t('meta.searchTitle', { search })
             : directionTitle && categoryTitle
-            ? t('meta.directionCategoryTitle', {
-                  direction: directionTitle,
-                  category: categoryTitle,
-              })
-            : directionTitle
-            ? t('meta.directionTitle', { direction: directionTitle })
-            : t('meta.defaultTitle');
+              ? t('meta.directionCategoryTitle', {
+                    direction: directionTitle,
+                    category: categoryTitle,
+                })
+              : directionTitle
+                ? t('meta.directionTitle', { direction: directionTitle })
+                : t('meta.defaultTitle');
 
     const onChangePage = (page, pageSize) => {
         router.push({
@@ -111,7 +114,11 @@ export async function getServerSideProps(context) {
 
     const fetchJson = async (url) => {
         try {
-            const res = await fetch(url);
+            const res = await fetch(url, {
+                headers: {
+                    'Accept-Language': locale,
+                },
+            });
             if (!res.ok) return null;
             return await res.json();
         } catch {

@@ -251,7 +251,7 @@ const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
     const [pageRange, setPageRange] = useState([0, 100]);
     const isEnableChanged = useRef(false);
     const { isMobile } = useResponsive();
-    const { query, push } = useRouter();
+    const { query, locale, push } = useRouter();
 
     const isChildOptionsEnabled =
         open &&
@@ -260,10 +260,15 @@ const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
             isEnableChanged.current);
 
     const { data: childData, isFetchingChildData } = useQuery({
-        queryKey: ['child-categories', selectedCategory?.slug],
+        queryKey: ['child-categories', selectedCategory?.slug, locale],
         queryFn: async () => {
             const res = await fetch(
-                `${baseUrlUseApi}customer/four-child?direction=file&parent__slug=${selectedCategory?.slug}`
+                `${baseUrlUseApi}customer/four-child?direction=file&parent__slug=${selectedCategory?.slug}`,
+                {
+                    headers: {
+                        'Accept-Language': locale,
+                    },
+                }
             );
             isEnableChanged.current = true;
             return await res.json();
@@ -293,6 +298,8 @@ const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
             id: item.id,
         }));
     }, [child, childData]);
+
+    console.log({ child, childData, childOptions });
 
     useEffect(() => {
         if (open) {
@@ -324,8 +331,8 @@ const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
 
     const handleSaveOnClose = () => {
         const filters = {
-            parentCategory: selectedCategory.slug,
-            childCategory: selectedSubCategory.slug,
+            parentCategory: selectedCategory?.slug,
+            childCategory: selectedSubCategory?.slug,
             content_extensions: fileTypes,
             price_from: priceRange[0],
             price_to: priceRange[1],
@@ -335,7 +342,7 @@ const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
         const newQuery = clearEmptyQueries({ ...query, ...filters });
         push({
             pathname: `${path}${
-                selectedSubCategory.slug || selectedCategory.slug || 'all'
+                selectedSubCategory?.slug || selectedCategory?.slug || 'all'
             }`,
             query: newQuery,
         });

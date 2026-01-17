@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 
 const ServiceFirstCard = () => {
-    const { t } = useTranslation('orders');
+    const { t } = useTranslation('card');
     const { isLoggedIn } = useSelector((state) => state.auth);
     const { push, query } = useRouter();
 

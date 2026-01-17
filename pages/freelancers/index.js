@@ -123,7 +123,7 @@ export async function getServerSideProps(context) {
     }/api/v1/users/freelancers/list/?${params.toString()}`;
 
     try {
-        const data = await fetchJson(url);
+        const data = await fetchJson(url, locale);
         return {
             props: {
                 data,

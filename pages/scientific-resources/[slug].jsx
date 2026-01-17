@@ -212,7 +212,11 @@ export async function getServerSideProps(context) {
     if (Number(to_page) < 100) queryParams.append('to_page', to_page);
 
     const fetchJson = async (url) => {
-        const res = await fetch(url);
+        const res = await fetch(url, {
+            headers: {
+                'Accept-Language': locale,
+            },
+        });
         if (!res.ok) {
             return null;
         }
@@ -226,7 +230,7 @@ export async function getServerSideProps(context) {
     const [productsData, fourChildData, childCategoryData] = await Promise.all([
         fetchJson(productsUrl),
         fetchJson(fourChildUrl),
-        fetchJson(childCategoryUrl),
+        parentCategory ? fetchJson(childCategoryUrl) : null,
     ]);
 
     return {
@@ -239,9 +243,9 @@ export async function getServerSideProps(context) {
                 'card',
                 'modals',
             ])),
-            productsData: productsData || null,
-            fourChildData: fourChildData || null,
-            childCategoryData: childCategoryData || null,
+            productsData: productsData,
+            fourChildData: fourChildData,
+            childCategoryData: childCategoryData,
             parentCategory,
             childCategory,
             page,

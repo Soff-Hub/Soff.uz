@@ -14,6 +14,7 @@ import SearchSellerCard from '~/entities/seller/search-seller-card';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { rankingsImg } from '~/shared/constants/rankings-img';
 import { useTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
 
 const link = {
     '3d': '/orders?direction=three_d',
@@ -129,6 +130,7 @@ const Freelance = () => {
 export default Freelance;
 
 const TopFreelanceRankings = () => {
+    const { locale } = useRouter();
     const { t } = useTranslation('index');
     const { isDesktop, isMobile } = useResponsive();
     const [isEnd, setIsEnd] = useState(false);
@@ -140,10 +142,12 @@ const TopFreelanceRankings = () => {
     const sizesOptions = isDesktop
         ? { size: 'large', gap: 20 }
         : isMobile
-        ? { size: 'small', gap: 8 }
-        : { size: 'middle', gap: 10 };
+          ? { size: 'small', gap: 8 }
+          : { size: 'middle', gap: 10 };
 
-    const { data: directions } = useGetDirectionsQuery();
+    const { data: directions } = useGetDirectionsQuery(
+        `all-directinos - ${locale}`
+    );
     const {
         data: sellersData,
         isSuccess,
