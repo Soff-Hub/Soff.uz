@@ -241,7 +241,7 @@ export function CommentList({ slug }: CommentListProps) {
     };
 
     useEffect(() => {
-        if (slug) {
+        if (slug && user?.access) {
             // setComments({
             //     count: sampleData.count,
             //     results: sampleData.results,
