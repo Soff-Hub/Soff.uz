@@ -1,20 +1,22 @@
 import React from 'react';
+import Link from 'next/link';
+import { Button, Skeleton, Spin } from 'antd';
 import { MdOutlineAccessTime } from 'react-icons/md';
 import { IoClose } from 'react-icons/io5';
 import { IoSearch } from 'react-icons/io5';
-import { Button, Skeleton } from 'antd';
 import useHistorySearch from '~/shared/hooks/useHistorySearch';
 import { highlightMatch } from '~/shared/utilities/utils';
-import Link from 'next/link';
-import styles from './search-result.module.scss';
 import { EmptyTab } from '~/widgets/header/HeaderCategories';
 import { useTranslation } from 'next-i18next';
+import styles from './search-result.module.scss';
 
 function SearchResult({
     debouncedSearch,
     handleClickOption,
     options,
     isLoading,
+    isNavigating,
+    setIsNavigating,
 }) {
     const { t } = useTranslation('modals');
     const {
@@ -27,12 +29,7 @@ function SearchResult({
 
     if (!isHistoryLoading && searchHistory.length) {
         historyOptions = (
-            <div
-                style={{
-                    border: '1px solid #e5e7eb',
-                    borderRadius: '10px',
-                    marginBottom: '15px',
-                }}>
+            <div className={styles.historyContainer}>
                 <div className={styles.searchHistoryHeader}>
                     <h4>{t('searchResult.recentResults')}</h4>
                     <Button
@@ -50,10 +47,10 @@ function SearchResult({
                             item.type === 'mahsulotlar'
                                 ? `/search-page/?keyword=${item.value}&tab=1&type=file`
                                 : item.type === 'xizmatlar'
-                                ? `/search-page/?keyword=${item.value}&tab=2&type=all`
-                                : `/search-page/?keyword=${item.value}&tab=3&type=all`
+                                  ? `/search-page/?keyword=${item.value}&tab=2&type=all`
+                                  : `/search-page/?keyword=${item.value}&tab=3&type=all`
                         }>
-                        <a>
+                        <a onClick={() => setIsNavigating(true)}>
                             <div className={styles.searchOption}>
                                 <MdOutlineAccessTime
                                     className={styles.searchOptionIcon}
@@ -89,29 +86,16 @@ function SearchResult({
         filteredDataOptions = Array(10)
             .fill(null)
             .map((_, i) => (
-                <Skeleton
-                    key={i}
-                    active
-                    className="Search_Results_Wrap_skeleton"
-                    style={{
-                        width: '100% !important',
-                        padding: '10px 10px 10px 0',
-                    }}
-                />
+                <Skeleton key={i} active className={styles.skeletonItem} />
             ));
     } else if (options.length) {
         filteredDataOptions = (
-            <div
-                style={{
-                    border: '1px solid #e5e7eb',
-                    borderRadius: '10px',
-                }}>
+            <div className={styles.optionsContainer}>
                 {options.map((option) => (
                     <div
                         key={option.key}
                         className={styles.searchOption}
-                        onClick={() => handleClickOption(option.value)}
-                        style={{ cursor: 'pointer' }}>
+                        onClick={() => handleClickOption(option.value)}>
                         <IoSearch className={styles.searchOptionIcon} />
                         {highlightMatch(option.value, debouncedSearch)}
                     </div>
@@ -125,10 +109,22 @@ function SearchResult({
     }
 
     return (
-        <>
+        <div className={styles.container}>
+            <div
+                className={styles.loadingOverlay}
+                style={{
+                    height: isNavigating ? '300px' : '0px',
+                    opacity: isNavigating ? 1 : 0,
+                    pointerEvents: isNavigating ? 'auto' : 'none',
+                }}>
+                <Spin size="large" />
+                <p className={styles.loadingText}>
+                    Qidiruv sahifasiga o'tilmoqda...
+                </p>
+            </div>
             {historyOptions}
             {filteredDataOptions}
-        </>
+        </div>
     );
 }
 

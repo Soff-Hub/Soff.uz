@@ -445,7 +445,9 @@
     }
 
     :global(.ant-popover-content) {
+        position: relative;
         width: 100% !important;
+        max-width: 600px !important;
         max-height: 300px !important;
         padding-right: 10px;
         overflow-y: scroll;

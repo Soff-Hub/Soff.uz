@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Head from 'next/head';
-import NextImageCard from '~/components/nextImagecard';
+// import NextImageCard from '~/components/nextImagecard';
 import Search_Results_Products from '~/widgets/search-results/products';
 import useDebounce from '~/shared/hooks/useDebounce';
 import { Tabs } from 'antd';
@@ -16,6 +16,7 @@ import { useQuery } from '@tanstack/react-query';
 import { api } from '~/repositories/api';
 import { baseUrlUseApi } from '~/repositories/useApi';
 import { getOrCreateDeviceId } from '~/shared/utilities/device-id';
+import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
@@ -254,11 +255,12 @@ const Search_Results = ({
                     <div className="d-flex align-items-center gap-5 width_full_screen">
                         <Link href="/">
                             <a className="ps-logo">
-                                <NextImageCard
-                                    url="/static/img/soff/logo-dark.png"
-                                    className="logoo"
+                                <Image
+                                    src="/static/img/soff/logo-dark.png"
                                     width="120px"
-                                    height="50px"
+                                    height="35px"
+                                    className="logoo"
+                                    alt="logo"
                                 />
                             </a>
                         </Link>
@@ -300,7 +302,7 @@ const Search_Results = ({
             <div className="container ">
                 <Tabs
                     className="order_tabs"
-                    destroyInactiveTabPane
+                    destroyOnHidden
                     activeKey={tab}
                     onChange={handleChangeTab}
                     items={tabItems}

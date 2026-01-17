@@ -4,11 +4,12 @@ import { Input, Popover } from 'antd';
 import styles from './style.module.scss';
 import useSearch from '~/shared/hooks/useSearch';
 import SearchResult from '~/shared/components/search-result';
+import { useTimeManager } from '~/shared/hooks/useTimeManager';
 import { useTranslation } from 'next-i18next';
 
 function HeroSearchPart() {
     const { t } = useTranslation('index');
-    
+
     const placeholders = {
         mahsulotlar: t('heroSearch.placeholders.products'),
         xizmatlar: t('heroSearch.placeholders.services'),
@@ -24,11 +25,14 @@ function HeroSearchPart() {
         debouncedSearch,
         handleClickOption,
         isLoading,
+        isNavigating,
+        setIsNavigating,
     } = useSearch();
     const [popoverVisible, setPopoverVisible] = useState(false);
     const [popoverWidth, setPopoverWidth] = useState(null);
     const inputRef = useRef(null);
     const searchBoxRef = useRef(null);
+    const { startTimeout } = useTimeManager();
 
     const handleInputChange = (e) => {
         setSearch(e.target.value);
@@ -40,15 +44,49 @@ function HeroSearchPart() {
     };
 
     const handleInputBlur = () => {
-        // Delay hiding to allow clicks on popover items
-        setTimeout(() => {
+        startTimeout(() => {
+            const activeElement = document.activeElement;
+            const portalElement = document.getElementById('my-portal');
+
+            if (
+                activeElement === inputRef.current ||
+                (searchBoxRef.current &&
+                    searchBoxRef.current.contains(activeElement)) ||
+                (portalElement && portalElement.contains(activeElement))
+            ) {
+                return;
+            }
+
             setPopoverVisible(false);
-        }, 200);
+        }, 150);
     };
+
+    useEffect(() => {
+        if (!popoverVisible) return;
+
+        const handleClickOutside = (event) => {
+            const target = event.target;
+            const portalElement = document.getElementById('my-portal');
+
+            if (
+                searchBoxRef.current &&
+                !searchBoxRef.current.contains(target) &&
+                portalElement &&
+                !portalElement.contains(target)
+            ) {
+                setPopoverVisible(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [popoverVisible]);
 
     const handleOptionClick = (value) => {
         handleClickOption(value);
-        setPopoverVisible(false);
     };
 
     useEffect(() => {
@@ -65,12 +103,17 @@ function HeroSearchPart() {
     }, []);
 
     const popoverContent = (
-        <div style={{ width: '100%', maxWidth: '600px', minWidth: '300px' }}>
+        <div
+            onMouseDown={(e) => {
+                e.preventDefault();
+            }}>
             <SearchResult
                 debouncedSearch={debouncedSearch}
                 handleClickOption={handleOptionClick}
                 options={options}
                 isLoading={isLoading}
+                isNavigating={isNavigating}
+                setIsNavigating={setIsNavigating}
             />
         </div>
     );
@@ -85,7 +128,8 @@ function HeroSearchPart() {
                             ? styles.activeHeroBtn
                             : styles.heroBtn
                     }>
-                    <i className="fa-solid fa-download"></i> {t('heroSearch.products')}
+                    <i className="fa-solid fa-download"></i>{' '}
+                    {t('heroSearch.products')}
                 </span>
                 <span
                     onClick={() => setType('xizmatlar')}
@@ -94,7 +138,8 @@ function HeroSearchPart() {
                             ? styles.activeHeroBtn
                             : styles.heroBtn
                     }>
-                    <i className="fa-solid fa-briefcase"></i> {t('heroSearch.services')}
+                    <i className="fa-solid fa-briefcase"></i>{' '}
+                    {t('heroSearch.services')}
                 </span>
                 <span
                     onClick={() => setType('mutaxasislar')}
@@ -103,7 +148,8 @@ function HeroSearchPart() {
                             ? styles.activeHeroBtn
                             : styles.heroBtn
                     }>
-                    <i className="fa-solid fa-users"></i> {t('heroSearch.specialists')}
+                    <i className="fa-solid fa-users"></i>{' '}
+                    {t('heroSearch.specialists')}
                 </span>
             </div>
 
@@ -117,12 +163,14 @@ function HeroSearchPart() {
                     overlayStyle={{
                         ...(popoverWidth ? { width: `${popoverWidth}px` } : {}),
                     }}
-                    getPopupContainer={() =>
-                        document.getElementById('my-portal')
-                    }>
+                    // getPopupContainer={() =>
+                    //     document.getElementById('my-portal')
+                    // }
+                >
                     <div className={styles.searchBox}>
                         <Input
                             ref={inputRef}
+                            disabled={isNavigating}
                             size="large"
                             value={search}
                             onChange={handleInputChange}
@@ -135,12 +183,12 @@ function HeroSearchPart() {
                             onKeyDown={(e) => {
                                 if (e.key === 'Enter') {
                                     handleSearch();
-                                    setPopoverVisible(false);
                                 }
                             }}
                         />
 
                         <span
+                            disabled={isNavigating}
                             className={styles.searchIcon}
                             onClick={handleSearch}>
                             <SearchOutlined />
