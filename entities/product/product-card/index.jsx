@@ -6,6 +6,10 @@ import useCart from '~/shared/hooks/useCart';
 import { Modal } from 'antd';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import Link from 'next/link';
+import { FaRegHeart } from 'react-icons/fa';
+import { FaShoppingCart } from 'react-icons/fa';
+import { FaHeart } from 'react-icons/fa';
+import Image from 'next/image';
 
 const ProductCard = ({ product }) => {
     const { addSavedItem, wishlist, removeSavedItem } = useWishlist();
@@ -61,40 +65,40 @@ const ProductCard = ({ product }) => {
                             <div className={styles.cardActions}>
                                 <div
                                     onClick={handleAddItemToWishlist}
-                                    className={styles.likeIcon}>
+                                    className={styles.actionIcon}>
                                     {wishlist?.some(
                                         (item) =>
                                             Number(item.id) ===
                                             Number(product?.id)
                                     ) ? (
-                                        <i
-                                            style={{ color: '#00a44f' }}
-                                            className="fa-solid fa-heart"></i>
+                                        <FaHeart color="#00a44f" />
                                     ) : (
-                                        <i className="fa-regular fa-heart"></i>
+                                        <FaRegHeart />
                                     )}
                                 </div>
                                 <div
                                     onClick={handleAddItemToCart}
-                                    className={styles.cartIcon}>
+                                    className={styles.actionIcon}>
                                     {basket ? (
-                                        <i
-                                            style={{ color: '#00a44f' }}
-                                            className="fa-solid fa-cart-shopping"></i>
+                                        <FaShoppingCart color="#00a44f" />
                                     ) : (
-                                        <i className="fa-solid fa-cart-shopping"></i>
+                                        <FaShoppingCart />
                                     )}
                                 </div>
                             </div>
                         </div>
-                        <img
-                            className={styles.cardImg}
-                            src={
-                                product?.poster_url ||
-                                '/static/img/no-document.png'
-                            }
-                            alt="card img"
-                        />
+                        <div className={styles.cardImgWrapper}>
+                            <Image
+                                src={
+                                    product?.poster_url ||
+                                    '/static/img/no-document.png'
+                                }
+                                quality={75}
+                                alt={product?.title || 'card img'}
+                                layout="fill"
+                                objectFit="contain"
+                            />
+                        </div>
                     </div>
                     <div className={styles.cardBody}>
                         <h2
@@ -112,7 +116,7 @@ const ProductCard = ({ product }) => {
                     </div>
                     <div className={styles.cardInfo}>
                         {product?.document?.file_size && (
-                            <div className="d-flex gap-1">
+                            <div className={styles.cardInfoItem}>
                                 <img
                                     src="/static/img/card_icons/driver.svg"
                                     alt="icon"
@@ -121,7 +125,7 @@ const ProductCard = ({ product }) => {
                             </div>
                         )}
                         {product?.document?.page_count && (
-                            <div className="d-flex gap-1">
+                            <div className={styles.cardInfoItem}>
                                 <img
                                     src="/static/img/card_icons/document-copy.svg"
                                     alt="icon"
@@ -130,7 +134,7 @@ const ProductCard = ({ product }) => {
                             </div>
                         )}
                         {product?.views_count !== 0 && (
-                            <div className="d-flex gap-1">
+                            <div className={styles.cardInfoItem}>
                                 <img
                                     src="/static/img/card_icons/eye.svg"
                                     alt="icon"

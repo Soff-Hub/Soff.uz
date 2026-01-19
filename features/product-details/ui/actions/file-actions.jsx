@@ -14,6 +14,9 @@ import { useSelector } from 'react-redux';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import AuthModal from '~/features/auth/ui/auth-modal';
+import { FaRegHeart } from 'react-icons/fa';
+import { FaHeart } from 'react-icons/fa';
+import { FaShoppingCart } from 'react-icons/fa';
 
 export const fileColors = {
     '.docx': '#007DFF',
@@ -444,9 +447,9 @@ function FileActions({ product }) {
                                             Number(item.id) ===
                                             Number(product?.id)
                                     ) ? (
-                                        <i className="fa-solid fa-heart"></i>
+                                        <FaHeart />
                                     ) : (
-                                        <i className="fa-regular fa-heart "></i>
+                                        <FaRegHeart />
                                     )
                                 }
                                 size={'large'}></Button>

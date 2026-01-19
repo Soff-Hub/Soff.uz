@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Head from 'next/head';
-// import NextImageCard from '~/components/nextImagecard';
 import Search_Results_Products from '~/widgets/search-results/products';
 import useDebounce from '~/shared/hooks/useDebounce';
 import { Tabs } from 'antd';

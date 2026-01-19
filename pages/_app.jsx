@@ -11,6 +11,7 @@ import { TelegramLink } from '~/shared/components/telegram-link';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
 import '~/shared/utilities/dayjs-locale-uz';
 import Script from 'next/script';
+// import showOfferNotification from '~/shared/components/offer-notification';
 
 function App({ Component, pageProps }) {
     const { tg } = useTelegram();
@@ -29,6 +30,7 @@ function App({ Component, pageProps }) {
         if (utmSource) localStorage.setItem('utm_source', utmSource);
         if (utmMedium) localStorage.setItem('utm_medium', utmMedium);
         if (utmCampaign) localStorage.setItem('utm_campaign', utmCampaign);
+        // showOfferNotification();
 
         startTimeout(() => {
             document?.getElementById('__next')?.classList?.add('loaded');

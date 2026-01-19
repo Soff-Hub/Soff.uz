@@ -1,7 +1,7 @@
 import React from 'react';
 import { formatCurrency } from '~/shared/utilities/product-helper';
 import Link from 'next/link';
-import NextImageCard from '~/components/nextImagecard';
+import Image from 'next/image';
 
 export default function useProduct() {
     return {
@@ -12,12 +12,11 @@ export default function useProduct() {
                         <div
                             style={{ overflow: 'hidden' }}
                             className="responsive-image-card text-center">
-                            <NextImageCard
-                                url={payload?.poster_url}
-                                clasSn="products-image1 m-0"
+                            <Image
+                                src={payload?.poster_url}
                                 width="70px"
                                 height="70px"
-                                payload={payload}
+                                alt={payload?.title}
                             />
                         </div>
                     ) : (
