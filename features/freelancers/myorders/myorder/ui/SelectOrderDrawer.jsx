@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import dynamic from 'next/dynamic';
 import {
     Drawer,
     Button,
@@ -35,7 +36,9 @@ import { MODERATOR_ID } from '~/shared/constants';
 import { IoMdArrowBack } from 'react-icons/io';
 import OffersFilter from './OffersFilter';
 import ModeratorChatCard from './ModeratorChatCard';
-import dynamic from 'next/dynamic';
+import { FaArrowLeft } from 'react-icons/fa6';
+import { FaCreditCard } from 'react-icons/fa6';
+import { FaFileAlt } from 'react-icons/fa';
 
 // Dynamically import OffersWaitingLoader to reduce initial bundle size
 const OffersWaitingLoader = dynamic(() => import('./OffersWaitingLoader'), {
@@ -355,7 +358,7 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                     size="large"
                     className="px-5 py-2"
                     onClick={handleOpenPaymentModal}>
-                    <i class="fa-solid fa-credit-card"></i>
+                    <FaCreditCard />
                     To'lovni amalga oshiring
                 </Button>
             </div>
@@ -368,10 +371,10 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
             ? '90%'
             : '100%'
         : isDesktop
-        ? '70%'
-        : isSmallScreen
-        ? '100%'
-        : '80%';
+          ? '70%'
+          : isSmallScreen
+            ? '100%'
+            : '80%';
 
     const handleCloseDrawer = () => {
         setChatDrawerOpen(false);
@@ -552,7 +555,7 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                     <div className="service-details-box bg-white border rounded p-3 mb-4">
                         <div className="d-flex justify-content-between align-items-center">
                             <div className="d-flex align-items-center">
-                                <i className="fa-solid fa-file-lines text-primary me-3 fs-4"></i>
+                                <FaFileAlt className="text-primary me-3 fs-4" />
                                 <div>
                                     <h5 className="mb-1 fw-bold">
                                         {order?.title}
@@ -594,8 +597,8 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                                         mode && isSufficientBalance
                                             ? styles.orderButtonActive
                                             : mode && !isSufficientBalance
-                                            ? styles.orderButtonWarn
-                                            : styles.orderButtonInactive
+                                              ? styles.orderButtonWarn
+                                              : styles.orderButtonInactive
                                     }
                                     disabled={!balanceDisabled}>
                                     <Switch value={mode} size="small" />
@@ -606,7 +609,7 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                         <Button
                             type="text"
                             className={styles.backButton}
-                            icon={<i className="fa-solid fa-arrow-left"></i>}
+                            icon={<FaArrowLeft />}
                             onClick={handleRetreatDrawer}>
                             Orqaga
                         </Button>
@@ -615,7 +618,7 @@ const SelectOrderDrawer = ({ open, onClose, onOpen, order }) => {
                         <div className="service-details-box bg-white border rounded p-3 my-4">
                             <div className="d-flex justify-content-between align-items-center">
                                 <div className="d-flex align-items-center">
-                                    <i className="fa-solid fa-file-lines text-primary me-3 fs-4"></i>
+                                    <FaFileAlt className="text-primary me-3 fs-4" />
                                     <div>
                                         <h5 className="mb-1 checkout_title fw-bold">
                                             {order?.title}

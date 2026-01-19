@@ -26,6 +26,7 @@ import { Thumbs } from 'swiper/modules';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import { useGetDirectionsQuery } from '~/store/profile/slice';
 import { useTimeManager } from './useTimeManager';
+import { FaPaperclip } from 'react-icons/fa6';
 
 // import Editor from '~/components/Editor';
 
@@ -508,8 +509,7 @@ function useCreateOrder({
                             }
                         }}
                         onRemove={() => setFiles(null)}>
-                        <Button
-                            icon={<i className="fa-solid fa-paperclip"></i>}>
+                        <Button icon={<FaPaperclip />}>
                             Fayl yuklash (ixtiyoriy)
                         </Button>
                     </Upload>

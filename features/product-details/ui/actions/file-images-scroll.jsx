@@ -7,6 +7,7 @@ import {
 } from '@ant-design/icons';
 import Link from 'next/link';
 import ImageLightBox from './image-lightbox';
+import { FaEye } from 'react-icons/fa';
 
 function FileImagesScroll({ product }) {
     const containerRef = useRef(null);
@@ -297,9 +298,7 @@ function FileImagesScroll({ product }) {
                             </button>
                         </div>
                         <div className="views">
-                            {' '}
-                            <i className="fa-solid fa-eye"></i>{' '}
-                            <span>{product?.view_count}</span>
+                            <FaEye /> <span>{product?.view_count}</span>
                         </div>
                     </div>
                     <div className="title_support">

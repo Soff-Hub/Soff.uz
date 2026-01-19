@@ -1,13 +1,17 @@
-import React, { memo } from 'react';
-import styles from './style.module.scss';
+import React from 'react';
+import styles from './portfolio-card.module.scss';
 import Image from 'next/image';
 import { truncateText } from '~/shared/utilities/utils';
 
-const PortfolioCard = ({ portfolio, setPortfolio }) => {
+type PorfolioCardProps = {
+    portfolio: any;
+    setPortfolio: (portfolio: any) => void;
+};
+
+function PorfolioCard({ portfolio, setPortfolio }: PorfolioCardProps) {
     const baseImageUrl =
         portfolio?.portfolio_images?.[0]?.image || '/static/img/orqafon1.avif';
 
-    // Check if the image URL already has a base URL (starts with http/https)
     const imageUrl = baseImageUrl.startsWith('http')
         ? baseImageUrl
         : `https://freelance.soff.uz/media${baseImageUrl}`;
@@ -27,16 +31,12 @@ const PortfolioCard = ({ portfolio, setPortfolio }) => {
 
             <div className={styles.overlay}>
                 <div className={styles.content}>
-                    <h3 className={styles.title}>
-                        {truncateText(portfolio?.title, 20)}
-                    </h3>
-                    <p className={styles.descr}>
-                        {truncateText(portfolio?.description, 40)}
-                    </p>
+                    <h3 className={styles.title}>{portfolio?.title}</h3>
+                    <p className={styles.descr}>{portfolio?.description}</p>
                 </div>
             </div>
         </div>
     );
-};
+}
 
-export default memo(PortfolioCard);
+export default PorfolioCard;

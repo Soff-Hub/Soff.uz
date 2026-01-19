@@ -11,6 +11,9 @@ import {
     getYouTubeEmbed,
     getYouTubeThumbnail,
 } from '~/shared/utilities/youtube-helpers';
+import { FaEye } from 'react-icons/fa';
+import { FaChevronLeft } from 'react-icons/fa';
+import { FaChevronRight } from 'react-icons/fa';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
@@ -105,12 +108,12 @@ const ImageCarousel = ({
                 )}
 
                 {images?.length > 1 && (
-                    <i
+                    <FaChevronLeft
                         ref={prevRef}
                         role="button"
                         tabIndex={0}
                         aria-label="Oldingi rasm"
-                        className="fa-solid fa-chevron-left image_prev_left"
+                        className="image_prev_left"
                         style={{
                             position: 'absolute',
                             left: '10px',
@@ -128,7 +131,7 @@ const ImageCarousel = ({
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                        }}></i>
+                        }}></FaChevronLeft>
                 )}
 
                 <Swiper
@@ -232,12 +235,12 @@ const ImageCarousel = ({
                 </Swiper>
 
                 {images?.length > 1 && (
-                    <i
+                    <FaChevronRight
                         ref={nextRef}
                         role="button"
                         tabIndex={0}
                         aria-label="Keyingi rasm"
-                        className="fa-solid fa-chevron-right image_prev_rigth"
+                        className="image_prev_rigth"
                         style={{
                             position: 'absolute',
                             right: '10px',
@@ -255,7 +258,7 @@ const ImageCarousel = ({
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                        }}></i>
+                        }}></FaChevronRight>
                 )}
 
                 {images?.length > 1 && (
@@ -422,8 +425,7 @@ const ImageCarousel = ({
                 {isProduct && (
                     <>
                         <div className="views mt-2">
-                            <i className="fa-solid fa-eye"></i>{' '}
-                            <span>{views || 0}</span>
+                            <FaEye /> <span>{views || 0}</span>
                         </div>
 
                         <div className="d-flex align-items-center gap-5 mt-2 flex-wrap justify-content-center">

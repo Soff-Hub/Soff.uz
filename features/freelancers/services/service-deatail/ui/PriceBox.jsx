@@ -6,6 +6,9 @@ import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import ServiceOrderModal from './ServiceOrderModal';
 import { sleep } from '~/shared/utilities/sleep';
+import { FaMoneyBillWave } from 'react-icons/fa6';
+import { FaClock } from 'react-icons/fa6';
+import { FaPenToSquare } from 'react-icons/fa6';
 
 const PriceBox = ({ priceBox, requirements }) => {
     const { price, days, revisions, user } = priceBox;
@@ -56,7 +59,7 @@ const PriceBox = ({ priceBox, requirements }) => {
                 {/* --- Narx --- */}
                 <div className={styles.infoRow}>
                     <div className={styles.key}>
-                        <i className="fa-solid fa-money-bill-wave"></i>
+                        <FaMoneyBillWave className={styles.icon} />
                         <span>Narx</span>
                     </div>
                     <div className={styles.value}>
@@ -67,7 +70,7 @@ const PriceBox = ({ priceBox, requirements }) => {
                 {/* --- Yetkazish --- */}
                 <div className={styles.infoRow}>
                     <div className={styles.key}>
-                        <i className="fa-solid fa-clock"></i>
+                        <FaClock className={styles.icon} />
                         <span>Yetkazish</span>
                     </div>
                     <div className={styles.value}>{days} kunda</div>
@@ -76,7 +79,7 @@ const PriceBox = ({ priceBox, requirements }) => {
                 {/* --- Tahrirlash --- */}
                 <div className={styles.infoRow}>
                     <div className={styles.key}>
-                        <i className="fa-solid fa-pen-to-square"></i>
+                        <FaPenToSquare className={styles.icon} />
                         <span>Tahrirlash</span>
                     </div>
                     <div className={styles.value}>{revisions} marta</div>

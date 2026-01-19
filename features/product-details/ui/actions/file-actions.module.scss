@@ -1,0 +1,16 @@
+.infoRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+
+    .infoKey {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+
+        .infoKeyIcon {
+            color: #00a44f;
+        }
+    }
+}

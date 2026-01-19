@@ -17,6 +17,7 @@ import { FaHeadset } from 'react-icons/fa';
 import { FaThumbtack } from 'react-icons/fa';
 import { FaCrown } from 'react-icons/fa';
 import { useViewportContext } from '~/shared/hooks/useViewportContext';
+import { FaArrowLeft } from 'react-icons/fa6';
 import styles from '../style/chat.module.scss';
 
 function BackButton() {
@@ -37,10 +38,7 @@ function BackButton() {
     return (
         <>
             <div ref={backRef}>
-                <Button
-                    onClick={handleBack}
-                    icon={<i className="fa-solid fa-arrow-left"></i>}
-                />
+                <Button onClick={handleBack} icon={<FaArrowLeft />} />
             </div>
         </>
     );

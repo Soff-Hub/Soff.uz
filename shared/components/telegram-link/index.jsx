@@ -12,6 +12,7 @@ import { MODERATOR_ID } from '~/shared/constants';
 import { useSelector } from 'react-redux';
 import axiosInstance from '~/shared/api/freeleanceApi';
 import { useMutation } from '@tanstack/react-query';
+import { FaRegPaperPlane } from 'react-icons/fa6';
 
 const disabledLocations = ['/chat', '/auth', 'shopping-cart', 'search-page'];
 
@@ -123,7 +124,7 @@ export function TelegramLink({ videoUrl }) {
                         isGroupOpen ? (
                             <CloseOutlined fontSize={25} />
                         ) : (
-                            <i className="fa-regular fa-paper-plane" />
+                            <FaRegPaperPlane />
                         )
                     }
                     onClick={() => setIsGroupOpen(!isGroupOpen)}
@@ -203,10 +204,7 @@ export function TelegramLink({ videoUrl }) {
                         className={styles.customFloatButton}
                         onClick={() => setIsGroupOpen(false)}>
                         <div className={styles.iconCircle}>
-                            <i
-                                className="fa-regular fa-paper-plane"
-                                style={{ fontSize: '16px' }}
-                            />
+                            <FaRegPaperPlane />
                         </div>
                         <span className={styles.buttonText}>
                             Telegram kanal

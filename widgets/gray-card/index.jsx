@@ -2,6 +2,8 @@ import React from 'react';
 import styles from './style.module.scss';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
+import { FaArrowRight } from 'react-icons/fa';
+import { FaBox } from 'react-icons/fa';
 
 const GrayCard = ({
     title = '',
@@ -30,7 +32,7 @@ const GrayCard = ({
                 <div className={styles.watermarkBottomRight}>SOFF</div>
                 <div className={styles.iconWrapper}>
                     <div className={styles.iconBox}>
-                        <i className="fa-solid fa-box"></i>
+                        <FaBox className={styles.icon} />
                     </div>
                 </div>
                 <h1 className={styles.title}>{title}</h1>
@@ -43,8 +45,12 @@ const GrayCard = ({
                     target="_blank"
                     className={styles.catalogSeeAll}>
                     {btn}{' '}
-                    <i
-                        className={`fa-solid fa-arrow-right ${styles.arrowIcon}`}></i>
+                    <FaArrowRight
+                        className={styles.arrowIcon}
+                        style={{
+                            marginLeft: '3px',
+                        }}
+                    />
                 </a>
             </div>
         </section>

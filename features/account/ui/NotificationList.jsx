@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import { useQuery } from '@tanstack/react-query';
 import SidebarLayout from '~/widgets/sidebar/SidebarLayout';
+import { FaArrowRight } from 'react-icons/fa6';
 
 export default function NotificationList() {
     const { user } = useSelector((state) => state.auth);
@@ -90,12 +91,16 @@ const Notification = ({ notification, link, index }) => {
 
             {link && (
                 <div className="text-end">
-                    <Link href={link}>
+                    <Link href={link || '#'}>
                         <a
                             target="_blank"
                             className="btn btn-success rounded-pill fs-5 px-4 py-1">
                             Batafsil{' '}
-                            <i className="fa-solid fa-arrow-right ms-1"></i>
+                            <FaArrowRight
+                                style={{
+                                    marginLeft: '3px',
+                                }}
+                            />
                         </a>
                     </Link>
                 </div>

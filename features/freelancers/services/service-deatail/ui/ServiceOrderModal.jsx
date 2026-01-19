@@ -6,6 +6,12 @@ import AuthModal from '~/features/auth/ui/auth-modal';
 import { useRouter } from 'next/router';
 import styles from './styles/service-checkout.module.scss';
 import useGetCustomBalance from '~/features/freelancers/myorders/myorder/api/useGetCustomBalance';
+import { FaArrowRight } from 'react-icons/fa6';
+import { FaArrowLeft } from 'react-icons/fa6';
+import { FaFileAlt } from 'react-icons/fa';
+import { FaShieldHalved } from 'react-icons/fa6';
+import { FaPaperclip } from 'react-icons/fa6';
+
 const { TextArea } = Input;
 
 function ServiceOrderModal({
@@ -118,7 +124,7 @@ function ServiceOrderModal({
                                     styles.securityMessage
                                     // "security-message mb-4 text-center"
                                 }>
-                                <i className="fa-solid fa-shield-halved text-success fs-4 mb-2"></i>
+                                <FaShieldHalved className="text-success fs-4 mb-2" />
                                 <p className="text-muted mb-0">
                                     Sizning to'lovingiz Soff tizimi tomonidan
                                     xavfsiz saqlanadi. Mutaxassisga to'lov faqat
@@ -130,7 +136,7 @@ function ServiceOrderModal({
                             <div className="service-details-box bg-white border rounded p-3 mb-4">
                                 <div className="d-flex justify-content-between align-items-center">
                                     <div className="d-flex align-items-center">
-                                        <i className="fa-solid fa-file-lines text-primary me-3 fs-4"></i>
+                                        <FaFileAlt className="text-primary me-3 fs-4" />
                                         <div>
                                             <h5 className="mb-1 fw-bold">
                                                 {title}
@@ -211,10 +217,7 @@ function ServiceOrderModal({
                                     }
                                 }}
                                 onRemove={() => setFiles(null)}>
-                                <Button
-                                    icon={
-                                        <i className="fa-solid fa-paperclip"></i>
-                                    }>
+                                <Button icon={<FaPaperclip />}>
                                     Fayl yuklash (ixtiyoriy)
                                 </Button>
                             </Upload>
@@ -233,7 +236,11 @@ function ServiceOrderModal({
                                         handleToPaymentPart();
                                     }}>
                                     Buyurtmani rasmiylashtirish
-                                    <i className="fa-solid fa-arrow-right ms-2"></i>
+                                    <FaArrowRight
+                                        style={{
+                                            marginLeft: '6px',
+                                        }}
+                                    />
                                 </Button>
                             </div>
                         </div>
@@ -251,9 +258,9 @@ function ServiceOrderModal({
                                                 mode && isSufficientBalance
                                                     ? styles.orderButtonActive
                                                     : mode &&
-                                                      !isSufficientBalance
-                                                    ? styles.orderButtonWarn
-                                                    : styles.orderButtonInactive
+                                                        !isSufficientBalance
+                                                      ? styles.orderButtonWarn
+                                                      : styles.orderButtonInactive
                                             }
                                             disabled={!balanceDisabled}>
                                             <Switch value={mode} size="small" />
@@ -265,9 +272,7 @@ function ServiceOrderModal({
                                 <Button
                                     type="text"
                                     className={styles.backButton}
-                                    icon={
-                                        <i className="fa-solid fa-arrow-left"></i>
-                                    }
+                                    icon={<FaArrowLeft />}
                                     onClick={() => setShowPayment(false)}>
                                     Orqaga
                                 </Button>

@@ -7,6 +7,7 @@ import { InfoCircleOutlined } from '@ant-design/icons';
 import Link from 'next/link';
 import CommentFormWrapper from '~/features/comments/ui/commentWrapper';
 import CommentList from '~/components/product-comments';
+import { FaEye } from 'react-icons/fa';
 
 function VideosProductsDetails({ product, isPlay, setIsPlay }) {
     const type = 'playlists';
@@ -36,8 +37,7 @@ function VideosProductsDetails({ product, isPlay, setIsPlay }) {
                                 setIsPlay={setIsPlay}
                             />
                             <div className="views">
-                                {' '}
-                                <i className="fa-solid fa-eye"></i>{' '}
+                                <FaEye />{' '}
                                 <span>{product?.view_count || 0}</span>
                             </div>
                             <div className="title_support">

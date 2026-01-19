@@ -221,7 +221,6 @@ const ServiceCheckout = ({
                                     htmlFor="ccn"
                                     className="m-0"
                                     style={{ width: '100%' }}>
-                                    {/* <i className="fa-regular fa-credit-card i"></i> */}
                                     <Input
                                         prefix={
                                             <FaRegCreditCard

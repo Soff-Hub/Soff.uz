@@ -6,6 +6,7 @@ import React from 'react';
 import PageContainer from '~/widgets/layouts/PageContainer';
 import { orginalUrl } from '~/reositoriy-admin/Repository';
 import { useGet } from '~/repositories/https';
+import { FaUser } from 'react-icons/fa';
 
 function Report() {
     const router = useRouter();
@@ -69,7 +70,7 @@ function Report() {
                                         </h5>
                                     </div>
                                     <div className="d-flex align-items-center gap-2 ms-auto">
-                                        <i className="fa fa-user"></i>
+                                        <FaUser />
                                         <h5 className="m-0 fw-medium">
                                             {product?.seller?.first_name}{' '}
                                             {product?.seller?.last_name}

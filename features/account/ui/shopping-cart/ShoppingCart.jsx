@@ -10,13 +10,14 @@ import { addPeriodToThousands } from '~/features/account/ui/price-formatter';
 import { calculateAmount } from '~/shared/utilities/ecomerce-helpers';
 import ProductRepository from '~/repositories/ProductRepository';
 import {
-    fileIcons,
+    fileReactIcons,
     fileColors,
 } from '~/features/product-details/ui/actions/file-actions';
 import { IoIosClose } from 'react-icons/io';
 import styles from './shopping-cart.module.scss';
 import { cn } from '~/shared/utilities/cn';
 import { FaArrowLeft, FaBoxOpen } from 'react-icons/fa6';
+import Icon from '~/shared/ui/Icon';
 
 const breadCrumb = [
     {
@@ -27,17 +28,6 @@ const breadCrumb = [
         text: 'Savat',
     },
 ];
-
-// Extended file colors and icons to include .docx
-const extendedFileColors = {
-    ...fileColors,
-    '.docx': '#007DFF',
-};
-
-const extendedFileIcons = {
-    ...fileIcons,
-    '.docx': 'fa-file-word',
-};
 
 function ShoppingCart() {
     const state = useSelector((state) => state.auth.user);
@@ -122,16 +112,17 @@ function ShoppingCart() {
                                                 className={styles.fileTypeBadge}
                                                 style={{
                                                     backgroundColor:
-                                                        extendedFileColors[
+                                                        fileColors[
                                                             item.file_type
                                                         ] || '#E22C2F',
                                                 }}>
-                                                <i
-                                                    className={`fas ${
-                                                        extendedFileIcons[
+                                                <Icon
+                                                    icon={
+                                                        fileReactIcons[
                                                             item.file_type
-                                                        ] || 'fa-file-pdf'
-                                                    }`}></i>
+                                                        ]
+                                                    }
+                                                />
                                                 <span>{item.file_type}</span>
                                             </div>
                                         </div>

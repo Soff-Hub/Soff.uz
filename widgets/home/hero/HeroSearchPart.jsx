@@ -5,6 +5,9 @@ import styles from './style.module.scss';
 import useSearch from '~/shared/hooks/useSearch';
 import SearchResult from '~/shared/components/search-result';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
+import { FaBriefcase } from 'react-icons/fa6';
+import { FaDownload } from 'react-icons/fa6';
+import { FaUsers } from 'react-icons/fa6';
 
 const placeholders = {
     mahsulotlar: 'Qaysi turdagi tayyor mahsulot qidirmoqdasiz?',
@@ -126,7 +129,8 @@ function HeroSearchPart() {
                             ? styles.activeHeroBtn
                             : styles.heroBtn
                     }>
-                    <i className="fa-solid fa-download"></i> Mahsulotlar
+                    <FaDownload />
+                    Mahsulotlar
                 </span>
                 <span
                     onClick={() => setType('xizmatlar')}
@@ -135,7 +139,7 @@ function HeroSearchPart() {
                             ? styles.activeHeroBtn
                             : styles.heroBtn
                     }>
-                    <i className="fa-solid fa-briefcase"></i> Xizmatlar
+                    <FaBriefcase /> Xizmatlar
                 </span>
                 <span
                     onClick={() => setType('mutaxasislar')}
@@ -144,7 +148,8 @@ function HeroSearchPart() {
                             ? styles.activeHeroBtn
                             : styles.heroBtn
                     }>
-                    <i className="fa-solid fa-users"></i> Mutaxasislar
+                    <FaUsers />
+                    Mutaxasislar
                 </span>
             </div>
 

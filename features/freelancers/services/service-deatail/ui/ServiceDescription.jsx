@@ -123,16 +123,6 @@ const ServiceDescription = ({ description = {}, priceBox = {} }) => {
             )}
 
             <div className={styles.pricing}>
-                <div className={styles.infoBox}>
-                    {/* <p className={styles.info}>
-                        <i className="fa-solid fa-clock"></i> {days} kunda
-                        yetkazish
-                    </p>
-                    <p className={styles.info}>
-                        <i className="fa-solid fa-pen-to-square"></i>{' '}
-                        {revisions} marta tahrirlash huquqi
-                    </p> */}
-                </div>
                 <ServiceOrderModal
                     requirements={requirements}
                     handleAuthSuccess={handleAuthSuccess}

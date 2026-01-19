@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Avatar, Badge, Button } from 'antd';
 import { FaStar, FaRegCommentDots, FaEye } from 'react-icons/fa';
+import { FaSackDollar } from 'react-icons/fa6';
 import { LiaHandshake } from 'react-icons/lia';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import styles from '../style/select-order-drawer.module.scss';
@@ -116,12 +117,12 @@ const OfferCard = ({ offer, onSelect, onCreateChat }) => {
             <div className={styles.cardFooter}>
                 <div className={styles.priceSection}>
                     <div className={styles.priceLabel}>
-                        <i
+                        <FaSackDollar
                             style={{
                                 fontSize: '14px',
                                 color: 'rgba(0,0,0,0.6)',
                             }}
-                            className="fa-solid fa-sack-dollar"></i>
+                        />
                         <span>Taklif narxi:</span>
                     </div>
                     <span className={styles.priceValue}>

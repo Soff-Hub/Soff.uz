@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import { Button, message, Modal } from 'antd';
 import {
     DownloadOutlined,
@@ -9,7 +10,6 @@ import ShareAltOutlined from '@ant-design/icons/ShareAltOutlined';
 import { addPeriodToThousands } from '~/features/account/ui/price-formatter';
 import useWishlist from '~/shared/hooks/useWishlist';
 import useCart from '~/shared/hooks/useCart';
-import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
@@ -17,6 +17,28 @@ import AuthModal from '~/features/auth/ui/auth-modal';
 import { FaRegHeart } from 'react-icons/fa';
 import { FaHeart } from 'react-icons/fa';
 import { FaShoppingCart } from 'react-icons/fa';
+import { FaFileWord, FaS } from 'react-icons/fa6';
+import { FaFileExcel } from 'react-icons/fa6';
+import { FaFilePowerpoint } from 'react-icons/fa6';
+import { FaFilePdf } from 'react-icons/fa6';
+import { FaFileVideo } from 'react-icons/fa6';
+import { FaFileAudio } from 'react-icons/fa6';
+import { FaFileCode } from 'react-icons/fa6';
+import { FaFileArchive } from 'react-icons/fa';
+import { FaFileImage } from 'react-icons/fa6';
+import Icon from '~/shared/ui/Icon';
+import { FaBagShopping } from 'react-icons/fa6';
+import { FaStopwatch } from 'react-icons/fa6';
+import { PiFilesFill } from 'react-icons/pi';
+import { FaDatabase } from 'react-icons/fa';
+import { FaCube } from 'react-icons/fa';
+import { FaRulerVertical } from 'react-icons/fa6';
+import { FaRulerHorizontal } from 'react-icons/fa6';
+import { FaArrowsAltH } from 'react-icons/fa';
+import { FaPalette } from 'react-icons/fa6';
+import { FaLayerGroup } from 'react-icons/fa6';
+import { FaShapes } from 'react-icons/fa6';
+import styles from './file-actions.module.scss';
 
 export const fileColors = {
     '.docx': '#007DFF',
@@ -33,20 +55,29 @@ export const fileColors = {
     '.pptx': '#DD7657',
 };
 
-export const fileIcons = {
-    '.docx': 'fa-file-word', // Word yangi format
-    '.doc': 'fa-file-word', // Word hujjati
-    '.xls': 'fa-file-excel', // Excel eski format
-    '.xlsx': 'fa-file-excel', // Excel yangi format
-    '.ppt': 'fa-file-powerpoint', // PowerPoint
-    '.pdf': 'fa-file-pdf', // PDF
-    '.avi': 'fa-file-video', // Video format
-    '.mp3': 'fa-file-audio', // Audio format
-    '.html': 'fa-file-code', // Kod (html)
-    '.zip': 'fa-file-archive', // Zip arxiv
-    '.psd': 'fa-file-image', // PSD - rasm/foto format
-    '.pptx': 'fa-file-powerpoint', // PowerPoint yangi format
-    '.mp4': 'fas fa-file-video',
+export const fileReactIcons = {
+    '.docx': FaFileWord, // Word yangi format
+    '.doc': FaFileWord, // Word hujjati
+    '.xls': FaFileExcel, // Excel eski format
+    '.xlsx': FaFileExcel, // Excel yangi format
+    '.ppt': FaFilePowerpoint, // PowerPoint
+    '.pptx': FaFilePowerpoint, // PowerPoint yangi format
+    '.pdf': FaFilePdf, // PDF
+    '.avi': FaFileVideo, // Video format
+    '.mp4': FaFileVideo, // Video format
+    '.mp3': FaFileAudio, // Audio format
+    '.html': FaFileCode, // Kod (html)
+    '.zip': FaFileArchive, // Zip arxiv
+    '.rar': FaFileArchive, // RAR arxiv
+    '.psd': FaFileImage, // PSD - rasm/foto format
+    '.png': FaFileImage, // PNG - rasm/foto format
+    '.jpg': FaFileImage, // JPG - rasm/foto format
+    '.jpeg': FaFileImage, // JPEG - rasm/foto format
+    '.gif': FaFileImage, // GIF - rasm/foto format
+    '.bmp': FaFileImage, // BMP - rasm/foto format
+    '.tiff': FaFileImage, // TIFF - rasm/foto format
+    '.svg': FaFileImage, // SVG - rasm/foto format
+    '.ps': FaFileImage, // PS - rasm/foto format
 };
 
 function FileActions({ product }) {
@@ -166,62 +197,54 @@ function FileActions({ product }) {
                     className="fs-2 p-0 d-flex flex-column gap-3"
                     style={{ listStyle: 'none' }}>
                     {product?.sold_count > 0 && (
-                        <li className="w-100 d-flex align-items-center justify-content-between gap-3">
-                            <span>
-                                <i
-                                    className="fas fa-shopping-bag"
-                                    style={{ color: '#00a44f' }}></i>{' '}
-                                Mahsulotni sotilgan soni:
-                            </span>{' '}
+                        <li className={styles.infoRow}>
+                            <div className={styles.infoKey}>
+                                <FaBagShopping className={styles.infoKeyIcon} />{' '}
+                                Mahsulotni sotilgan soni:{' '}
+                            </div>
                             <span>{product?.sold_count} ta</span>
                         </li>
                     )}
                     {product?.document?.content_duration && (
-                        <li className="w-100 d-flex align-items-center justify-content-between gap-3">
-                            <span>
-                                <i
-                                    className="fas fa-stopwatch"
-                                    style={{ color: '#00a44f' }}></i>{' '}
+                        <li className={styles.infoRow}>
+                            <div className={styles.infoKey}>
+                                <FaStopwatch className={styles.infoKeyIcon} />
                                 Video davomiyligi:
-                            </span>{' '}
+                            </div>{' '}
                             <span> {product?.document?.content_duration}</span>
                         </li>
                     )}
                     {product?.document?.page_count && (
-                        <li className="w-100 d-flex align-items-center justify-content-between gap-3">
-                            <span>
-                                <i
-                                    className="fas fa-copy"
-                                    style={{ color: '#00a44f' }}></i>{' '}
+                        <li className={styles.infoRow}>
+                            <div className={styles.infoKey}>
+                                <PiFilesFill className={styles.infoKeyIcon} />{' '}
                                 Betlar soni:
-                            </span>{' '}
+                            </div>
                             <span>{product?.document?.page_count} ta</span>
                         </li>
                     )}
                     {product?.document?.file_size && (
-                        <li className="w-100 d-flex align-items-center justify-content-between gap-3">
-                            <span>
-                                {' '}
-                                <i
-                                    className="fas fa-database"
-                                    style={{ color: '#00a44f' }}></i>{' '}
+                        <li className={styles.infoRow}>
+                            <div className={styles.infoKey}>
+                                <FaDatabase className={styles.infoKeyIcon} />
                                 Fayl hajmi :
-                            </span>{' '}
+                            </div>
                             <span>{product?.document?.file_size}</span>
                         </li>
                     )}
                     {product?.document?.file_type && (
-                        <li className="w-100 d-flex align-items-center justify-content-between gap-3">
-                            <span>
-                                <i
-                                    className={`fas ${
-                                        fileIcons[
+                        <li className={styles.infoRow}>
+                            <div className={styles.infoKey}>
+                                <Icon
+                                    icon={
+                                        fileReactIcons[
                                             product?.document?.file_type
-                                        ] || 'fa-file-archive'
-                                    }`}
-                                    style={{ color: '#00a44f' }}></i>{' '}
+                                        ]
+                                    }
+                                    className={styles.infoKeyIcon}
+                                />
                                 Fayl turi:
-                            </span>{' '}
+                            </div>
                             <span
                                 style={{
                                     color: 'white',
@@ -230,83 +253,78 @@ function FileActions({ product }) {
                                     backgroundColor:
                                         fileColors[
                                             product?.document?.file_type
-                                        ] || '#007DFF',
+                                        ],
                                 }}>
-                                {' '}
                                 {product?.document?.file_type}
                             </span>
                         </li>
                     )}
                     {product?.three_d_features?.style?.name && (
-                        <li className="w-100 d-flex align-items-center justify-content-between gap-3">
-                            <span>
-                                <i
-                                    className="fas fa-cube"
-                                    style={{ color: '#00a44f' }}></i>{' '}
+                        <li className={styles.infoRow}>
+                            <div className={styles.infoKey}>
+                                <FaCube className={styles.infoKeyIcon} />
                                 Uslub:
-                            </span>
-                            <span>{product.three_d_features.style.name}</span>
+                            </div>
+                            <span>{product.three_d_features?.style.name}</span>
                         </li>
                     )}
 
                     {product?.three_d_features?.height_value &&
                         product?.three_d_features?.height_unit && (
-                            <li className="w-100 d-flex align-items-center justify-content-between gap-3">
-                                <span>
-                                    <i
-                                        className="fas fa-ruler-vertical"
-                                        style={{ color: '#00a44f' }}></i>{' '}
+                            <li className={styles.infoRow}>
+                                <div className={styles.infoKey}>
+                                    <FaRulerVertical
+                                        className={styles.infoKeyIcon}
+                                    />
                                     Balandlik:
-                                </span>
+                                </div>
                                 <span>
-                                    {product.three_d_features.height_value}{' '}
-                                    {product.three_d_features.height_unit}
+                                    {product.three_d_features?.height_value}{' '}
+                                    {product.three_d_features?.height_unit}
                                 </span>
                             </li>
                         )}
 
                     {product?.three_d_features?.width_value &&
                         product?.three_d_features?.width_unit && (
-                            <li className="w-100 d-flex align-items-center justify-content-between gap-3">
-                                <span>
-                                    <i
-                                        className="fas fa-arrows-alt-h"
-                                        style={{ color: '#00a44f' }}></i>{' '}
+                            <li className={styles.infoRow}>
+                                <div className={styles.infoKey}>
+                                    <FaArrowsAltH
+                                        className={styles.infoKeyIcon}
+                                    />
                                     Eni:
-                                </span>
+                                </div>
                                 <span>
-                                    {product.three_d_features.width_value}{' '}
-                                    {product.three_d_features.width_unit}
+                                    {product.three_d_features?.width_value}{' '}
+                                    {product.three_d_features?.width_unit}
                                 </span>
                             </li>
                         )}
 
                     {product?.three_d_features?.length_value &&
                         product?.three_d_features?.length_unit && (
-                            <li className="w-100 d-flex align-items-center justify-content-between gap-3">
-                                <span>
-                                    <i
-                                        className="fas fa-ruler-horizontal"
-                                        style={{ color: '#00a44f' }}></i>{' '}
+                            <li className={styles.infoRow}>
+                                <div className={styles.infoKey}>
+                                    <FaRulerHorizontal
+                                        className={styles.infoKeyIcon}
+                                    />
                                     Uzunlik:
-                                </span>
+                                </div>
                                 <span>
-                                    {product.three_d_features.length_value}{' '}
-                                    {product.three_d_features.length_unit}
+                                    {product.three_d_features?.length_value}{' '}
+                                    {product.three_d_features?.length_unit}
                                 </span>
                             </li>
                         )}
 
                     {product?.three_d_features?.colors?.length > 0 && (
-                        <li className="w-100 d-flex align-items-center justify-content-between gap-3">
-                            <span>
-                                <i
-                                    className="fas fa-palette"
-                                    style={{ color: '#00a44f' }}></i>{' '}
+                        <li className={styles.infoRow}>
+                            <div className={styles.infoKey}>
+                                <FaPalette className={styles.infoKeyIcon} />
                                 Rang:
-                            </span>
+                            </div>
                             <span>
-                                {product.three_d_features.colors.map(
+                                {product.three_d_features?.colors?.map(
                                     (color, idx) => (
                                         <span
                                             key={idx}
@@ -326,15 +344,13 @@ function FileActions({ product }) {
                     )}
 
                     {product?.three_d_features?.materials?.length > 0 && (
-                        <li className="w-100 d-flex align-items-center justify-content-between gap-3">
-                            <span>
-                                <i
-                                    className="fas fa-layer-group"
-                                    style={{ color: '#00a44f' }}></i>{' '}
+                        <li className={styles.infoRow}>
+                            <div className={styles.infoKey}>
+                                <FaLayerGroup className={styles.infoKeyIcon} />
                                 Materiallar:
-                            </span>
+                            </div>
                             <span>
-                                {product.three_d_features.materials
+                                {product.three_d_features?.materials
                                     .map((m) => m.name)
                                     .join(', ')}
                             </span>
@@ -342,19 +358,17 @@ function FileActions({ product }) {
                     )}
 
                     {product?.three_d_features?.product_form?.icon && (
-                        <li className="w-100 d-flex align-items-center justify-content-between gap-3">
-                            <span className="d-flex align-items-center gap-2">
-                                <i
-                                    className="fas fa-shapes"
-                                    style={{ color: '#00a44f' }}></i>
+                        <li className={styles.infoRow}>
+                            <span className={styles.infoKey}>
+                                <FaShapes className={styles.infoKeyIcon} />
                                 Shakl:
                             </span>
                             <span>
                                 <img
                                     width="20px"
                                     src={
-                                        product.three_d_features.product_form
-                                            .form_image
+                                        product.three_d_features?.product_form
+                                            ?.form_image
                                     }
                                     alt="icon"
                                 />
@@ -363,16 +377,14 @@ function FileActions({ product }) {
                     )}
 
                     {product?.three_d_features?.render_obj?.length > 0 && (
-                        <li className="w-100 d-flex align-items-center justify-content-between gap-3">
-                            <span className="d-flex align-items-center gap-2">
-                                <i
-                                    className="fas fa-shapes"
-                                    style={{ color: '#00a44f' }}></i>
+                        <li className={styles.infoRow}>
+                            <span className={styles.infoKey}>
+                                <FaShapes className={styles.infoKeyIcon} />
                                 Render:
                             </span>
 
                             <div className="d-flex gap-2 flex-wrap">
-                                {product.three_d_features.render_obj.map(
+                                {product.three_d_features?.render_obj?.map(
                                     (r) => (
                                         <span
                                             key={r.id}
@@ -401,14 +413,12 @@ function FileActions({ product }) {
                     )}
 
                     {product?.three_d_features?.platform && (
-                        <li className="w-100 d-flex align-items-center justify-content-between gap-3">
-                            <span className="d-flex align-items-center gap-2">
-                                <i
-                                    className="fas fa-cube"
-                                    style={{ color: '#00a44f' }}></i>
+                        <li className={styles.infoRow}>
+                            <span className={styles.infoKey}>
+                                <FaCube className={styles.infoKeyIcon} />
                                 Platforma:
                             </span>
-                            <span>{product.three_d_features.platform}</span>
+                            <span>{product.three_d_features?.platform}</span>
                         </li>
                     )}
                 </ul>

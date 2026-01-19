@@ -1,7 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import { Skeleton } from 'antd';
 import { useRouter } from 'next/router';
-import PortfolioCard from '~/entities/portfolio/portfolio-card';
+// import PortfolioCard from '~/entities/portfolio/portfolio-card';
+import PortfolioCard from '~/shared/components/portfolio-card';
 import { SELLER_PORTFOLIOS } from '~/shared/api/end-points';
 import { useFGet } from '~/shared/hooks/useFApi';
 import { cn, useRcn } from '~/shared/utilities/cn';
@@ -9,7 +10,7 @@ import dynamic from 'next/dynamic';
 import ItemsNotFound from './items-not-found';
 
 const PortfolioModal = dynamic(
-    () => import('~/entities/portfolio/portfolio-modal'),
+    () => import('~/shared/components/portfolio-modal'),
     {
         ssr: false,
     }
@@ -69,9 +70,9 @@ const UserPortfolios = () => {
                 <div className={cn('grid', 'gap-4', gridClass)}>
                     {portfolios?.map((portfolio) => (
                         <PortfolioCard
+                            key={portfolio.id}
                             setPortfolio={handleSetPortfolio}
                             portfolio={portfolio}
-                            key={portfolio.id}
                         />
                     ))}
                     {isLoading && <PortfolioSkeletonGrid />}

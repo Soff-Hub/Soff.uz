@@ -7,7 +7,7 @@ import { cn, useRcn } from '~/shared/utilities/cn';
 import { useFGet } from '~/shared/hooks/useFApi';
 import useResponsive from '~/shared/utilities/useResponsive';
 
-import PortfolioCard from '~/entities/portfolio/portfolio-card';
+import PortfolioCard from '~/shared/components/portfolio-card';
 import ServiceCard from '~/entities/service/service-card';
 import ProductCard from '~/entities/product/product-card';
 
@@ -15,7 +15,7 @@ import { SELLER_PORTFOLIOS, SELLER_SERVICES } from '~/shared/api/end-points';
 import { useSellerProducts } from '../api/useSellerProducts';
 
 const PortfolioModal = dynamic(
-    () => import('~/entities/portfolio/portfolio-modal'),
+    () => import('~/shared/components/portfolio-modal'),
     {
         ssr: false,
     }

@@ -10,13 +10,14 @@ import Image from 'next/image';
 import { Button, Modal, Skeleton } from 'antd';
 import { ShoppingCartOutlined, CloseOutlined } from '@ant-design/icons';
 import {
-    fileIcons,
+    fileReactIcons,
     fileColors,
 } from '~/features/product-details/ui/actions/file-actions';
 import { FiDownload } from 'react-icons/fi';
 import styles from './wishlist.module.scss';
 import { FaArrowLeft, FaBoxOpen } from 'react-icons/fa6';
 import FileDownloadLink from '~/shared/ui/file-download-link';
+import Icon from '~/shared/ui/Icon';
 
 const breadCrumb = [
     {
@@ -112,12 +113,13 @@ function Wishlist() {
                                                             item.file_type
                                                         ] || '#E22C2F',
                                                 }}>
-                                                <i
-                                                    className={`fas ${
-                                                        fileIcons[
+                                                <Icon
+                                                    icon={
+                                                        fileReactIcons[
                                                             item.file_type
-                                                        ] || 'fa-file-pdf'
-                                                    }`}></i>
+                                                        ]
+                                                    }
+                                                />
                                                 <span>{item.file_type}</span>
                                             </div>
                                         </div>
