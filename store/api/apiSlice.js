@@ -70,6 +70,7 @@ export const apiSoffSlice = createApi({
             baseUrl: d_base_url,
             prepareHeaders: (headers) => {
                 const token = getToken();
+                headers.set('Accept-Langugage', 'uz');
                 if (token) {
                     headers.set('authorization', `Bearer ${token}`);
                 }
@@ -98,6 +99,8 @@ export const apiFreelanceSlice = createApi({
             baseUrl: f_base_url,
             prepareHeaders: (headers) => {
                 const token = getToken();
+                headers.set('Accept-Language', 'uz');
+
                 if (token) {
                     headers.set('authorization', `Bearer ${token}`);
                 }
