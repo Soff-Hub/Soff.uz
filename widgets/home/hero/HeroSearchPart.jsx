@@ -5,6 +5,9 @@ import styles from './style.module.scss';
 import useSearch from '~/shared/hooks/useSearch';
 import SearchResult from '~/shared/components/search-result';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
+import { FaBriefcase } from 'react-icons/fa6';
+import { FaDownload } from 'react-icons/fa6';
+import { FaUsers } from 'react-icons/fa6';
 import { useTranslation } from 'next-i18next';
 
 function HeroSearchPart() {
@@ -128,8 +131,7 @@ function HeroSearchPart() {
                             ? styles.activeHeroBtn
                             : styles.heroBtn
                     }>
-                    <i className="fa-solid fa-download"></i>{' '}
-                    {t('heroSearch.products')}
+                    <FaDownload /> {t('heroSearch.products')}
                 </span>
                 <span
                     onClick={() => setType('xizmatlar')}
@@ -138,8 +140,7 @@ function HeroSearchPart() {
                             ? styles.activeHeroBtn
                             : styles.heroBtn
                     }>
-                    <i className="fa-solid fa-briefcase"></i>{' '}
-                    {t('heroSearch.services')}
+                    <FaBriefcase /> {t('heroSearch.services')}
                 </span>
                 <span
                     onClick={() => setType('mutaxasislar')}
@@ -148,8 +149,7 @@ function HeroSearchPart() {
                             ? styles.activeHeroBtn
                             : styles.heroBtn
                     }>
-                    <i className="fa-solid fa-users"></i>{' '}
-                    {t('heroSearch.specialists')}
+                    <FaUsers /> {t('heroSearch.specialists')}
                 </span>
             </div>
 

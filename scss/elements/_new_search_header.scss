@@ -1,8 +1,9 @@
 * {
     box-sizing: border-box;
-    font-feature-settings: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-        'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji',
-        'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    font-feature-settings:
+        -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
+        Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
 .search_navbars {
@@ -1086,6 +1087,8 @@
 
             .Search_Results_Products_card_price {
                 color: #7b7b7b;
+                display: inline-flex;
+                align-items: center;
                 font-family: 'Poppins';
                 font-size: 14.285px;
                 font-style: normal;

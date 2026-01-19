@@ -12,6 +12,9 @@ import { cn } from '~/shared/utilities/cn';
 import useOffers from '../../myorder/api/useOffers';
 import ServiceCheckout from '~/features/freelancers/services/service-deatail/ui/auth/serviceCheckout';
 import { useTelegram } from '~/shared/hooks/useTelegram';
+import { FaArrowLeft } from 'react-icons/fa6';
+import { FaSackDollar } from 'react-icons/fa6';
+import { FaFileAlt } from 'react-icons/fa';
 
 // NOTE: on equal payment done
 // {"success":true,"extra_amount":0,"order_id":367,"freelancer_id":281}
@@ -219,12 +222,12 @@ const OrderDrawer = ({
                                                 'items-center',
                                                 'gap-1'
                                             )}>
-                                            <i
+                                            <FaSackDollar
                                                 style={{
                                                     fontSize: '14px',
                                                     color: 'rgba(0,0,0,0.6)',
                                                 }}
-                                                className="fa-solid fa-sack-dollar"></i>
+                                            />
                                             <span
                                                 className={cn(
                                                     'text-[14px]',
@@ -380,7 +383,7 @@ const OrderDrawer = ({
                     <div className="service-details-box bg-white border rounded p-3 mb-4">
                         <div className="d-flex justify-content-between align-items-center">
                             <div className="d-flex align-items-center">
-                                <i className="fa-solid fa-file-lines text-primary me-3 fs-4"></i>
+                                <FaFileAlt className="text-primary me-3 fs-4" />
                                 <div>
                                     <h5 className="mb-1 fw-bold">
                                         {order?.title}
@@ -411,7 +414,7 @@ const OrderDrawer = ({
                     <div className="d-flex justify-content-between align-items-center mb-4">
                         <Button
                             type="text"
-                            icon={<i className="fa-solid fa-arrow-left"></i>}
+                            icon={<FaArrowLeft />}
                             onClick={handleRetreatDrawer}>
                             Orqaga
                         </Button>

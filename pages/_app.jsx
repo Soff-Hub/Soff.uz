@@ -15,6 +15,7 @@ import { useDayjsLocale } from '~/shared/hooks/useDayjsLocale';
 import Script from 'next/script';
 import { useRouter } from 'next/router';
 import { defineUserLocale } from '~/shared/utilities/locale-detection';
+// import showOfferNotification from '~/shared/components/offer-notification';
 
 function App({ Component, pageProps }) {
     const router = useRouter();
@@ -43,6 +44,7 @@ function App({ Component, pageProps }) {
         if (utmSource) localStorage.setItem('utm_source', utmSource);
         if (utmMedium) localStorage.setItem('utm_medium', utmMedium);
         if (utmCampaign) localStorage.setItem('utm_campaign', utmCampaign);
+        // showOfferNotification();
 
         startTimeout(() => {
             document?.getElementById('__next')?.classList?.add('loaded');

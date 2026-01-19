@@ -1,12 +1,27 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'next-i18next';
-import { Button, Input, Modal, Upload, Switch, Radio, Tooltip, message } from 'antd';
+import {
+    Button,
+    Input,
+    Modal,
+    Upload,
+    Switch,
+    Radio,
+    Tooltip,
+    message,
+} from 'antd';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import ServiceCheckout from './auth/serviceCheckout';
 import AuthModal from '~/features/auth/ui/auth-modal';
 import { useRouter } from 'next/router';
 import styles from './styles/service-checkout.module.scss';
 import useGetCustomBalance from '~/features/freelancers/myorders/myorder/api/useGetCustomBalance';
+import { FaArrowRight } from 'react-icons/fa6';
+import { FaArrowLeft } from 'react-icons/fa6';
+import { FaFileAlt } from 'react-icons/fa';
+import { FaShieldHalved } from 'react-icons/fa6';
+import { FaPaperclip } from 'react-icons/fa6';
+
 const { TextArea } = Input;
 
 function ServiceOrderModal({
@@ -120,16 +135,18 @@ function ServiceOrderModal({
                                     styles.securityMessage
                                     // "security-message mb-4 text-center"
                                 }>
-                                <i className="fa-solid fa-shield-halved text-success fs-4 mb-2"></i>
+                                <FaShieldHalved className="text-success fs-4 mb-2" />
                                 <p className="text-muted mb-0">
-                                    {t('serviceDetail.orderModal.securityMessage')}
+                                    {t(
+                                        'serviceDetail.orderModal.securityMessage'
+                                    )}
                                 </p>
                             </div>
 
                             <div className="service-details-box bg-white border rounded p-3 mb-4">
                                 <div className="d-flex justify-content-between align-items-center">
                                     <div className="d-flex align-items-center">
-                                        <i className="fa-solid fa-file-lines text-primary me-3 fs-4"></i>
+                                        <FaFileAlt className="text-primary me-3 fs-4" />
                                         <div>
                                             <h5 className="mb-1 fw-bold">
                                                 {title}
@@ -139,7 +156,9 @@ function ServiceOrderModal({
                                     <div className="text-end">
                                         <h4 className="text-primary mb-0 fw-bold">
                                             {formatCurrencyWithSpace(price)}{' '}
-                                            {t('serviceDetail.orderModal.currency')}
+                                            {t(
+                                                'serviceDetail.orderModal.currency'
+                                            )}
                                         </h4>
                                     </div>
                                 </div>
@@ -150,7 +169,9 @@ function ServiceOrderModal({
                                     <h5
                                         className="mb-3"
                                         style={{ fontWeight: 'semi-bold' }}>
-                                        {t('serviceDetail.orderModal.freelancerNeeds')}
+                                        {t(
+                                            'serviceDetail.orderModal.freelancerNeeds'
+                                        )}
                                     </h5>
                                     <div
                                         style={{
@@ -179,7 +200,9 @@ function ServiceOrderModal({
                                 onChange={(e) => {
                                     setDescription(e.target.value);
                                 }}
-                                placeholder={t('serviceDetail.orderModal.additionalInfo')}
+                                placeholder={t(
+                                    'serviceDetail.orderModal.additionalInfo'
+                                )}
                                 className="mb-4"
                             />
 
@@ -201,7 +224,9 @@ function ServiceOrderModal({
                                         const maxSize = 50 * 1024 * 1024;
                                         if (file.size > maxSize) {
                                             message.error(
-                                                t('serviceDetail.orderModal.fileSizeError')
+                                                t(
+                                                    'serviceDetail.orderModal.fileSizeError'
+                                                )
                                             );
                                             return;
                                         }
@@ -209,10 +234,7 @@ function ServiceOrderModal({
                                     }
                                 }}
                                 onRemove={() => setFiles(null)}>
-                                <Button
-                                    icon={
-                                        <i className="fa-solid fa-paperclip"></i>
-                                    }>
+                                <Button icon={<FaPaperclip />}>
                                     {t('serviceDetail.orderModal.fileUpload')}
                                 </Button>
                             </Upload>
@@ -230,8 +252,14 @@ function ServiceOrderModal({
                                     onClick={() => {
                                         handleToPaymentPart();
                                     }}>
-                                    {t('serviceDetail.orderModal.formalizeOrder')}
-                                    <i className="fa-solid fa-arrow-right ms-2"></i>
+                                    {t(
+                                        'serviceDetail.orderModal.formalizeOrder'
+                                    )}
+                                    <FaArrowRight
+                                        style={{
+                                            marginLeft: '6px',
+                                        }}
+                                    />
                                 </Button>
                             </div>
                         </div>
@@ -240,7 +268,10 @@ function ServiceOrderModal({
                             <div className={styles.orderPaymentHeader}>
                                 {/* NOTE: Balance button temporarily commented */}
                                 {balanceDisabled ? (
-                                    <Tooltip title={t('serviceDetail.orderModal.useBalance')}>
+                                    <Tooltip
+                                        title={t(
+                                            'serviceDetail.orderModal.useBalance'
+                                        )}>
                                         <Button
                                             onClick={() =>
                                                 setMode((pre) => !pre)
@@ -249,13 +280,19 @@ function ServiceOrderModal({
                                                 mode && isSufficientBalance
                                                     ? styles.orderButtonActive
                                                     : mode &&
-                                                      !isSufficientBalance
-                                                    ? styles.orderButtonWarn
-                                                    : styles.orderButtonInactive
+                                                        !isSufficientBalance
+                                                      ? styles.orderButtonWarn
+                                                      : styles.orderButtonInactive
                                             }
                                             disabled={!balanceDisabled}>
                                             <Switch value={mode} size="small" />
-                                            {t('serviceDetail.orderModal.balance')} {leftBalance} {t('serviceDetail.orderModal.currency')}
+                                            {t(
+                                                'serviceDetail.orderModal.balance'
+                                            )}{' '}
+                                            {leftBalance}{' '}
+                                            {t(
+                                                'serviceDetail.orderModal.currency'
+                                            )}
                                         </Button>
                                     </Tooltip>
                                 ) : null}
@@ -263,9 +300,7 @@ function ServiceOrderModal({
                                 <Button
                                     type="text"
                                     className={styles.backButton}
-                                    icon={
-                                        <i className="fa-solid fa-arrow-left"></i>
-                                    }
+                                    icon={<FaArrowLeft />}
                                     onClick={() => setShowPayment(false)}>
                                     {t('serviceDetail.orderModal.back')}
                                 </Button>

@@ -134,7 +134,7 @@
                 align-items: center;
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 
-                i {
+                .icon {
                     font-size: 36px;
                     color: $textColorWhite;
                 }
@@ -211,7 +211,8 @@
             position: relative;
             z-index: 1;
             text-decoration: none;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15),
+            box-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.15),
                 0 0 20px rgba(0, 0, 0, 0.08);
 
             .arrowIcon {
@@ -222,7 +223,8 @@
 
             &:hover {
                 background: darken($textColorWhite, 5%);
-                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25),
+                box-shadow:
+                    0 4px 20px rgba(0, 0, 0, 0.25),
                     0 0 30px rgba(0, 0, 0, 0.12);
                 transform: translateY(-2px) scale(1.05);
 

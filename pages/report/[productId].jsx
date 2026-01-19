@@ -9,6 +9,7 @@ import { orginalUrl } from '~/reositoriy-admin/Repository';
 import { useGet } from '~/repositories/https';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { FaUser } from 'react-icons/fa';
 
 function Report() {
     const { t } = useTranslation('report');
@@ -43,18 +44,13 @@ function Report() {
 
     return (
         <div>
-            <Meta
-                title={t('title')}
-                description={t('meta.description')}
-            />
+            <Meta title={t('title')} description={t('meta.description')} />
             <PageContainer title={t('title')}>
                 <div className="container">
                     <div
                         className="report-page py-5"
                         style={{ maxWidth: '900px', marginTop: '20px' }}>
-                        <p className="fs-3">
-                            {t('description')}
-                        </p>
+                        <p className="fs-3">{t('description')}</p>
 
                         <Link href={`/product/${product?.slug}`}>
                             <a>
@@ -74,7 +70,7 @@ function Report() {
                                         </h5>
                                     </div>
                                     <div className="d-flex align-items-center gap-2 ms-auto">
-                                        <i className="fa fa-user"></i>
+                                        <FaUser />
                                         <h5 className="m-0 fw-medium">
                                             {product?.seller?.first_name}{' '}
                                             {product?.seller?.last_name}
@@ -104,7 +100,9 @@ function Report() {
                                 disabled={loading}
                                 type="submit"
                                 className="btn btn-success fs-3 px-5">
-                                {loading ? t('form.submitting') : t('form.submit')}
+                                {loading
+                                    ? t('form.submitting')
+                                    : t('form.submit')}
                             </button>
                         </form>
                     </div>

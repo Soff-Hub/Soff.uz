@@ -6,6 +6,8 @@ import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import { setActiveIndex } from '~/store/seller/slice';
+import { FaCircleCheck } from 'react-icons/fa6';
+import { FaBriefcase } from 'react-icons/fa6';
 
 function SellerProfile({ product }) {
     const { t } = useTranslation('product-pages');
@@ -50,7 +52,7 @@ function SellerProfile({ product }) {
             </div>
             <div className="w-100 d-flex flex-column gap-3">
                 <div className="w-100 d-flex align-items-center fs-3 gap-2">
-                    <i className="fa-solid text-success fs-3 fa-circle-check"></i>
+                    <FaCircleCheck className="text-success fs-3" />
                     <span>
                         {t('productDetail.sellerProfile.totalProducts')}
                     </span>
@@ -62,7 +64,7 @@ function SellerProfile({ product }) {
                     </span>
                 </div>
                 <div className="w-100 d-flex align-items-center fs-3 gap-2">
-                    <i className="text-success fs-3 fa-solid fa-briefcase"></i>
+                    <FaBriefcase className="text-success fs-3" />
                     <span>{t('productDetail.sellerProfile.soldProducts')}</span>
                     <span>
                         {product.seller.total_sold_documents > 0
@@ -72,16 +74,6 @@ function SellerProfile({ product }) {
                     </span>
                 </div>
             </div>
-            {/* <Button
-                iconPosition="end"
-                style={{ height: '58px', fontSize: '20px' }}
-                type="primary"
-                className="w-100 seller_profile_button"
-                icon={<i className="fa-solid fa-rocket"></i>}
-                size={'large'}
-                onClick={handleOrder}>
-                Buyurtma berish
-            </Button> */}
         </div>
     );
 }

@@ -1,3 +1,11 @@
+@import '/scss/blocks/header';
+
+.shoppingCartWrapper {
+    @extend .container;
+    margin-block: 3rem;
+    height: 100%;
+}
+
 .shoppingCartContent {
     width: 100%;
     background: #fff;

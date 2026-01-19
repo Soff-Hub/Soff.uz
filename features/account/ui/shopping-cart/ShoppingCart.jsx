@@ -10,25 +10,15 @@ import { addPeriodToThousands } from '~/features/account/ui/price-formatter';
 import { calculateAmount } from '~/shared/utilities/ecomerce-helpers';
 import ProductRepository from '~/repositories/ProductRepository';
 import {
-    fileIcons,
+    fileReactIcons,
     fileColors,
 } from '~/features/product-details/ui/actions/file-actions';
 import { IoIosClose } from 'react-icons/io';
 import styles from './shopping-cart.module.scss';
 import { cn } from '~/shared/utilities/cn';
 import { FaArrowLeft, FaBoxOpen } from 'react-icons/fa6';
+import Icon from '~/shared/ui/Icon';
 import { useTranslation } from 'next-i18next';
-
-// Extended file colors and icons to include .docx
-const extendedFileColors = {
-    ...fileColors,
-    '.docx': '#007DFF',
-};
-
-const extendedFileIcons = {
-    ...fileIcons,
-    '.docx': 'fa-file-word',
-};
 
 function ShoppingCart() {
     const { t } = useTranslation('account');
@@ -124,16 +114,17 @@ function ShoppingCart() {
                                                 className={styles.fileTypeBadge}
                                                 style={{
                                                     backgroundColor:
-                                                        extendedFileColors[
+                                                        fileColors[
                                                             item.file_type
                                                         ] || '#E22C2F',
                                                 }}>
-                                                <i
-                                                    className={`fas ${
-                                                        extendedFileIcons[
+                                                <Icon
+                                                    icon={
+                                                        fileReactIcons[
                                                             item.file_type
-                                                        ] || 'fa-file-pdf'
-                                                    }`}></i>
+                                                        ]
+                                                    }
+                                                />
                                                 <span>{item.file_type}</span>
                                             </div>
                                         </div>
@@ -310,15 +301,13 @@ function ShoppingCart() {
     }
 
     return (
-        <div className="ps-page--simple mb-4">
+        <>
             <BreadCrumb breacrumb={breadCrumb} />
-            <div className="ps-shopping-cart">
-                <div className="container my-5 h-100">
-                    <h1 className="page-title">{t('shoppingCart.title')}</h1>
-                    <SidebarLayout>{contentView}</SidebarLayout>
-                </div>
+            <div className={styles.shoppingCartWrapper}>
+                <h1 className="page-title">{t('shoppingCart.title')}</h1>
+                <SidebarLayout>{contentView}</SidebarLayout>
             </div>
-        </div>
+        </>
     );
 }
 

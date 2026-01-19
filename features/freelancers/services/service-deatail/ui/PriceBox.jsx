@@ -7,6 +7,9 @@ import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import ServiceOrderModal from './ServiceOrderModal';
 import { sleep } from '~/shared/utilities/sleep';
+import { FaMoneyBillWave } from 'react-icons/fa6';
+import { FaClock } from 'react-icons/fa6';
+import { FaPenToSquare } from 'react-icons/fa6';
 
 const PriceBox = ({ priceBox, requirements }) => {
     const { t } = useTranslation('orders');
@@ -58,30 +61,35 @@ const PriceBox = ({ priceBox, requirements }) => {
                 {/* --- Narx --- */}
                 <div className={styles.infoRow}>
                     <div className={styles.key}>
-                        <i className="fa-solid fa-money-bill-wave"></i>
+                        <FaMoneyBillWave className={styles.icon} />
                         <span>{t('serviceDetail.priceBox.price')}</span>
                     </div>
                     <div className={styles.value}>
-                        {formatCurrencyWithSpace(price)} {t('serviceDetail.priceBox.currency')}
+                        {formatCurrencyWithSpace(price)}{' '}
+                        {t('serviceDetail.priceBox.currency')}
                     </div>
                 </div>
 
                 {/* --- Yetkazish --- */}
                 <div className={styles.infoRow}>
                     <div className={styles.key}>
-                        <i className="fa-solid fa-clock"></i>
+                        <FaClock className={styles.icon} />
                         <span>{t('serviceDetail.priceBox.delivery')}</span>
                     </div>
-                    <div className={styles.value}>{days} {t('serviceDetail.priceBox.days')}</div>
+                    <div className={styles.value}>
+                        {days} {t('serviceDetail.priceBox.days')}
+                    </div>
                 </div>
 
                 {/* --- Tahrirlash --- */}
                 <div className={styles.infoRow}>
                     <div className={styles.key}>
-                        <i className="fa-solid fa-pen-to-square"></i>
+                        <FaPenToSquare className={styles.icon} />
                         <span>{t('serviceDetail.priceBox.revisions')}</span>
                     </div>
-                    <div className={styles.value}>{revisions} {t('serviceDetail.priceBox.times')}</div>
+                    <div className={styles.value}>
+                        {revisions} {t('serviceDetail.priceBox.times')}
+                    </div>
                 </div>
             </div>
             <ServiceOrderModal
@@ -99,7 +107,9 @@ const PriceBox = ({ priceBox, requirements }) => {
                         }
                         className={!isBlocked && styles.btn}
                         disabled={isBlocked}>
-                        {t('serviceDetail.priceBox.placeOrder')}{formatCurrencyWithSpace(price)} {t('serviceDetail.priceBox.currency')})
+                        {t('serviceDetail.priceBox.placeOrder')}
+                        {formatCurrencyWithSpace(price)}{' '}
+                        {t('serviceDetail.priceBox.currency')}
                     </Button>
                 )}
             </ServiceOrderModal>

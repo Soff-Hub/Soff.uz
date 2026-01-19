@@ -5,6 +5,10 @@ import ServiceCheckout from '~/features/freelancers/services/service-deatail/ui/
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import { useRouter } from 'next/router';
 import useGetCustomBalance from '~/features/freelancers/myorders/myorder/api/useGetCustomBalance';
+import { FaArrowRight } from 'react-icons/fa6';
+import { FaArrowLeft } from 'react-icons/fa6';
+import { FaFileAlt } from 'react-icons/fa';
+import { FaShieldHalved } from 'react-icons/fa6';
 import styles from '../styles/orderPaymentPrompt.module.scss';
 
 function OrderPaymentPrompt({ isOpen, onClose, order }) {
@@ -34,7 +38,7 @@ function OrderPaymentPrompt({ isOpen, onClose, order }) {
                         </h3>
 
                         <div className={styles.securityMessage}>
-                            <i className="fa-solid fa-shield-halved text-success fs-4 mb-2"></i>
+                            <FaShieldHalved className="text-success fs-4 mb-2" />
                             <p className="text-muted mb-0">
                                 {t('orderPayment.securityMessage')}
                             </p>
@@ -43,7 +47,7 @@ function OrderPaymentPrompt({ isOpen, onClose, order }) {
                         <div className="service-details-box bg-white border rounded p-3 mb-4">
                             <div className="d-flex justify-content-between align-items-center">
                                 <div className="d-flex align-items-center">
-                                    <i className="fa-solid fa-file-lines text-primary me-3 fs-4"></i>
+                                    <FaFileAlt className="text-primary me-3 fs-4" />
                                     <div>
                                         <h5 className="mb-1 fw-bold">
                                             {order?.title}
@@ -71,7 +75,11 @@ function OrderPaymentPrompt({ isOpen, onClose, order }) {
                                 }}
                                 onClick={() => setShowPayment(true)}>
                                 {t('orderPayment.proceedToOrder')}
-                                <i className="fa-solid fa-arrow-right ms-2"></i>
+                                <FaArrowRight
+                                    style={{
+                                        marginLeft: '6px',
+                                    }}
+                                />
                             </Button>
                         </div>
                     </div>
@@ -87,8 +95,8 @@ function OrderPaymentPrompt({ isOpen, onClose, order }) {
                                             mode && isSufficientBalance
                                                 ? styles.orderButtonActive
                                                 : mode && !isSufficientBalance
-                                                ? styles.orderButtonWarn
-                                                : styles.orderButtonInactive
+                                                  ? styles.orderButtonWarn
+                                                  : styles.orderButtonInactive
                                         }
                                         disabled={!balanceDisabled}>
                                         <Switch value={mode} size="small" />
@@ -100,9 +108,7 @@ function OrderPaymentPrompt({ isOpen, onClose, order }) {
                             <Button
                                 type="text"
                                 className={styles.backButton}
-                                icon={
-                                    <i className="fa-solid fa-arrow-left"></i>
-                                }
+                                icon={<FaArrowLeft />}
                                 onClick={() => setShowPayment(false)}>
                                 {t('orderPayment.back')}
                             </Button>

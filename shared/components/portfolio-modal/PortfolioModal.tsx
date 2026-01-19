@@ -1,17 +1,24 @@
 import React, { memo, useMemo } from 'react';
 import { useTranslation } from 'next-i18next';
 import { Modal, Descriptions, Tag } from 'antd';
-import useResponsive from '~/shared/utilities/useResponsive';
 import { getYouTubeEmbed } from '~/shared/utilities/youtube-helpers';
-import styles from './style.module.scss';
+import useResponsive from '~/shared/utilities/useResponsive';
+import styles from './portfolio-modal.module.scss';
+import { useDisableWindowScroll } from '~/shared/hooks/useDisableWindowScroll';
 
-const PortfolioModal = ({ open, onClose, portfolio }) => {
+type PortfolioModalProps = {
+    open: boolean;
+    onClose: () => void;
+    portfolio: any;
+};
+
+function PortfolioModal({ open, onClose, portfolio }: PortfolioModalProps) {
     const { t } = useTranslation('modals');
     const { isMobile } = useResponsive();
 
     const galleryImages = useMemo(
         () =>
-            portfolio?.portfolio_images?.map((img) => {
+            portfolio?.portfolio_images?.map((img: any) => {
                 const baseImageUrl = img?.image || '/static/img/orqafon1.avif';
                 const imageUrl = baseImageUrl.startsWith('http')
                     ? baseImageUrl
@@ -26,16 +33,22 @@ const PortfolioModal = ({ open, onClose, portfolio }) => {
         [portfolio?.videos]
     );
 
+    useDisableWindowScroll(open);
+
     return (
         <Modal
             open={open}
             onCancel={onClose}
             footer={null}
+            styles={{
+                content: {
+                    marginBlock: isMobile ? '20px' : '40px',
+                },
+            }}
             title={<span className={styles.title}>{portfolio?.title}</span>}
             width={isMobile ? '100%' : '80%'}
             centered
-            destroyOnHidden
-            bodyStyle={{ maxHeight: '80vh', overflowY: 'auto' }}>
+            destroyOnHidden>
             <div>
                 <Descriptions
                     title={t('portfolio.info')}
@@ -73,7 +86,7 @@ const PortfolioModal = ({ open, onClose, portfolio }) => {
                 )}
                 <div className={styles.galleryBox}>
                     {galleryImages.length > 0 ? (
-                        galleryImages.map((img, idx) => (
+                        galleryImages.map((img: any, idx: number) => (
                             <div key={idx} className={styles.imageWrapper}>
                                 <img
                                     src={
@@ -91,7 +104,7 @@ const PortfolioModal = ({ open, onClose, portfolio }) => {
                         </p>
                     )}
                     {galleryVideos.length > 0 ? (
-                        galleryVideos.map((video, index) => (
+                        galleryVideos.map((video: any, index: number) => (
                             <div className="video-wrapper" key={index}>
                                 <iframe
                                     src={`${getYouTubeEmbed(
@@ -115,6 +128,6 @@ const PortfolioModal = ({ open, onClose, portfolio }) => {
             </div>
         </Modal>
     );
-};
+}
 
-export default memo(PortfolioModal);
+export default PortfolioModal;

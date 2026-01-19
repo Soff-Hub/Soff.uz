@@ -11,6 +11,7 @@ import { CHAT_UNSEENS, wssBaseUrl } from '~/shared/api/end-points';
 import { useFGet } from '~/shared/hooks/useFApi';
 import { cn } from '~/shared/utilities/cn';
 import { useQueryClient } from '@tanstack/react-query';
+import { FaHandPointRight } from 'react-icons/fa';
 import styles from './header-actions.module.scss';
 import { useTranslation } from 'next-i18next';
 
@@ -78,8 +79,7 @@ export default function HeaderNotifications() {
                         )}>
                         <Link href={`/account/notification`}>
                             <a className="yashil">
-                                {t('detailed')}{' '}
-                                <i className="fa-regular fa-hand-point-right"></i>
+                                {t('detailed')} <FaHandPointRight />
                             </a>
                         </Link>
                         <span

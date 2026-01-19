@@ -4,12 +4,13 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import PageContainer from '~/widgets/layouts/PageContainer';
 import Meta from '~/shared/ui/meta';
 import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
-import { getTitleFromSlug } from '~/widgets/home/filters';
 import { useRouter } from 'next/router';
 import { baseUrlUseApi } from '~/repositories/useApi';
 import styles from '~/widgets/home/catalog/style.module.scss';
 import Image from 'next/image';
-import ProductFilterSection from '~/components/elements/product-filter-section/ProductFilterSection';
+import ProductFilterSection, {
+    getTitleFromSlug,
+} from '~/components/elements/product-filter-section/ProductFilterSection';
 import GrayCard from '~/widgets/gray-card';
 
 const metaProps = {

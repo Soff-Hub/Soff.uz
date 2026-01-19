@@ -23,6 +23,7 @@ import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import { useGetDirectionsQuery } from '~/store/profile/slice';
 import { useTimeManager } from './useTimeManager';
 import { useTranslation } from 'next-i18next';
+import { FaPaperclip } from 'react-icons/fa6';
 
 // import Editor from '~/components/Editor';
 
@@ -474,8 +475,7 @@ function useCreateOrder({
                             }
                         }}
                         onRemove={() => setFiles(null)}>
-                        <Button
-                            icon={<i className="fa-solid fa-paperclip"></i>}>
+                        <Button icon={<FaPaperclip />}>
                             {t('form.fileUpload.button')}
                         </Button>
                     </Upload>

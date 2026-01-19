@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Avatar, Badge, Button } from 'antd';
 import { FaStar, FaRegCommentDots, FaEye } from 'react-icons/fa';
+import { FaSackDollar } from 'react-icons/fa6';
 import { LiaHandshake } from 'react-icons/lia';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import { useTranslation } from 'next-i18next';
@@ -109,7 +110,9 @@ const OfferCard = ({ offer, onSelect, onCreateChat }) => {
                                 style={{
                                     marginLeft: isExpanded ? '4px' : '0',
                                 }}>
-                                {isExpanded ? ` ${t('offerCard.collapse')}` : ` ${t('offerCard.expand')}`}
+                                {isExpanded
+                                    ? ` ${t('offerCard.collapse')}`
+                                    : ` ${t('offerCard.expand')}`}
                             </button>
                         )}
                     </span>
@@ -118,16 +121,17 @@ const OfferCard = ({ offer, onSelect, onCreateChat }) => {
             <div className={styles.cardFooter}>
                 <div className={styles.priceSection}>
                     <div className={styles.priceLabel}>
-                        <i
+                        <FaSackDollar
                             style={{
                                 fontSize: '14px',
                                 color: 'rgba(0,0,0,0.6)',
                             }}
-                            className="fa-solid fa-sack-dollar"></i>
+                        />
                         <span>{t('offerCard.offerPrice')}</span>
                     </div>
                     <span className={styles.priceValue}>
-                        {formatCurrencyWithSpace(offer?.money)} {t('balance.currency')}
+                        {formatCurrencyWithSpace(offer?.money)}{' '}
+                        {t('balance.currency')}
                     </span>
                 </div>
                 <div className={styles.actionButtons}>

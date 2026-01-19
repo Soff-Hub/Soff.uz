@@ -13,9 +13,7 @@ const CheckoutPage = () => {
                 title={t('checkout.title')}
                 description={t('checkout.description')}
             />
-            <div className="ps-page--simple">
-                <Checkout />
-            </div>
+            <Checkout />
         </PageContainer>
     );
 };

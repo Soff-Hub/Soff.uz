@@ -6,6 +6,9 @@ import useResponsive from '~/shared/utilities/useResponsive';
 import Link from 'next/link';
 import { formatFileSize } from '~/shared/utilities/utils';
 import { useTranslation } from 'next-i18next';
+import { FaMoneyBillWave } from 'react-icons/fa6';
+import { FaCopy } from 'react-icons/fa6';
+import { FaDatabase } from 'react-icons/fa6';
 
 export default function SearchResultsProducts_Card({ product }) {
     const { isDesktop } = useResponsive();
@@ -112,7 +115,7 @@ export default function SearchResultsProducts_Card({ product }) {
 
                         <div className="Search_Results_Products_card_info">
                             <p className="Search_Results_Products_card_price">
-                                <i className="fas fa-money-bill price_icon"></i>
+                                <FaMoneyBillWave className="price_icon" />
                                 <span className="Search_Results_Products_card_price_boldspan">
                                     {addPeriodToThousands(
                                         product.discount_price
@@ -136,13 +139,13 @@ export default function SearchResultsProducts_Card({ product }) {
                                     </span>
                                 </p>
                                 <p className="Search_Results_Products_card_price">
-                                    <i className="fas fa-copy file_icon "></i>
+                                    <FaCopy className="file_icon" />
                                     <span className="Search_Results_Products_card_price_boldspan">
                                         {product?.page_count}
                                     </span>
                                 </p>
                                 <p className="Search_Results_Products_card_price">
-                                    <i className="fas fa-database price_icon "></i>
+                                    <FaDatabase className="price_icon" />
                                     <span className="Search_Results_Products_card_price_boldspan">
                                         {formatFileSize(product?.file_size)}
                                     </span>

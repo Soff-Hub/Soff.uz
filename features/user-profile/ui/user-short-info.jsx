@@ -18,11 +18,17 @@ import useResponsive from '~/shared/utilities/useResponsive';
 import { useRouter } from 'next/router';
 import OrderPaymentPrompt from './OrderPaymentPrompt';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
-import { FaLink } from 'react-icons/fa6';
+import { FaC, FaLink } from 'react-icons/fa6';
 import styles from '../styles/user-short-info.module.scss';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import { PiMoneyWavyBold } from 'react-icons/pi';
 import { useTranslation } from 'next-i18next';
+import { FaClock } from 'react-icons/fa6';
+import { FaClipboardList } from 'react-icons/fa6';
+import { FaGlobe } from 'react-icons/fa6';
+import { FaRegCalendarCheck } from 'react-icons/fa6';
+import { FaCommentDots } from 'react-icons/fa';
+import { FaCalendar } from 'react-icons/fa6';
 
 const InfoRow = memo(({ icon, label, value }) => (
     <div
@@ -335,7 +341,7 @@ const UserShortInfo = ({ seller }) => {
 
             <div className={cn(marginClass, 'flex', 'flex-col', 'gap-4')}>
                 <InfoRow
-                    icon={<i className="fa-solid fa-clipboard-list"></i>}
+                    icon={<FaClipboardList />}
                     label={t('profile.openForServices')}
                     value={
                         !isOrderingClosed ? (
@@ -351,18 +357,18 @@ const UserShortInfo = ({ seller }) => {
                 />
                 {seller?.location && (
                     <InfoRow
-                        icon={<i className="fa-solid fa-globe"></i>}
+                        icon={<FaGlobe />}
                         label={t('profile.location')}
                         value={seller?.location}
                     />
                 )}
                 <InfoRow
-                    icon={<i className="fa-regular fa-clock"></i>}
+                    icon={<FaClock />}
                     label={t('profile.lastActive')}
                     value={lastActive}
                 />
                 <InfoRow
-                    icon={<i className="fa-regular fa-calendar-check"></i>}
+                    icon={<FaRegCalendarCheck />}
                     label={t('profile.joined')}
                     value={joinedDate}
                 />
@@ -393,15 +399,14 @@ const UserShortInfo = ({ seller }) => {
                     className={cn('border-primary', 'text-primary')}
                     disabled={isOrderingClosed}
                     onClick={handleCreateChat}>
-                    <i className="fa-solid fa-comment-dots"></i>
+                    <FaCommentDots />
                 </Button>
                 <Button
                     type="primary"
                     block
                     onClick={handleCreateOrder}
                     disabled={isOrderingClosed}>
-                    <i className="fa-solid fa-calendar"></i>{' '}
-                    {t('profile.placeOrder')}
+                    <FaCalendar /> {t('profile.placeOrder')}
                 </Button>
             </div>
 
@@ -424,15 +429,14 @@ const UserShortInfo = ({ seller }) => {
                     type="default"
                     className={cn('border-primary', 'text-primary')}
                     onClick={handleCreateChat}>
-                    <i className="fa-solid fa-comment-dots"></i>
+                    <FaCommentDots />
                 </Button>
                 <Button
                     block
                     type="primary"
                     onClick={handleCreateOrder}
                     disabled={isOrderingClosed}>
-                    <i className="fa-solid fa-calendar"></i>{' '}
-                    {t('profile.placeOrder')}
+                    <FaCalendar /> {t('profile.placeOrder')}
                 </Button>
             </div>
 

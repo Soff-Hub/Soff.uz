@@ -12,6 +12,8 @@ import { CHAT_UNSEENS } from '~/shared/api/end-points';
 import { cn } from '~/shared/utilities/cn';
 import { getAccountLinks } from '../constants/account-links';
 import { useTranslation } from 'next-i18next';
+import Icon from '~/shared/ui/Icon';
+import { FaRightFromBracket } from 'react-icons/fa6';
 
 const HeaderUserDropdown = (props) => {
     const dispatch = useDispatch();
@@ -56,7 +58,9 @@ const HeaderUserDropdown = (props) => {
             <Link href={item.url}>
                 <div className="pointer  d-flex pointer p-3 gap-3 align-items-center justify-content-between ">
                     <div className="d-flex gap-2 align-items-center">
-                        <i className={` text-dark fs-4 me-2  ${item.icon}`}></i>{' '}
+                        <Icon
+                            icon={item.icon}
+                            className={` text-dark fs-4 me-2`}></Icon>{' '}
                         <p className="m-0">{item.text}</p>
                     </div>
                     {data?.unread_messages != 0 && item.url == '/chat' && (
@@ -124,8 +128,8 @@ const HeaderUserDropdown = (props) => {
                         <ul className="my-2 list-unstyled">{linksView}</ul>
                         <li className="ps-block__footer">
                             <a href="#" onClick={handleLogout}>
-                                <i
-                                    className={`fa-solid fa-right-from-bracket me-3 mx-2 text-dark fs-4`}></i>{' '}
+                                <FaRightFromBracket
+                                    className={`me-3 mx-2 text-dark fs-4`}></FaRightFromBracket>{' '}
                                 {t('logout')}
                             </a>
                         </li>

@@ -21,6 +21,11 @@ import OrderCard from '~/widgets/order-card';
 import OrderApproveFilesModal from '~/features/order-approve-files';
 import OrderRejected from '~/entities/order/ui/order-base/OrderRejected';
 import { useTranslation } from 'next-i18next';
+import { FaArrowRight } from 'react-icons/fa6';
+import { FaArrowLeft } from 'react-icons/fa6';
+import { FaCreditCard } from 'react-icons/fa6';
+import { FaFileAlt } from 'react-icons/fa';
+import { FaShieldHalved } from 'react-icons/fa6';
 
 // TimerComponent to show time remaining until deadline
 const TimerComponent = ({ deadlineDate }) => {
@@ -231,8 +236,7 @@ const OrderMain = ({ order }) => {
                                 padding: '16px 36px',
                             }}
                             onClick={() => setIsOpen(true)}>
-                            <i className="fa-solid fa-credit-card"></i>{' '}
-                            {t('make_payment')}
+                            <FaCreditCard /> {t('make_payment')}
                         </Button>
                     </div>
                 )}
@@ -418,7 +422,7 @@ const OrderMain = ({ order }) => {
                             </h3>
 
                             <div className={modalStyles.securityMessage}>
-                                <i className="fa-solid fa-shield-halved text-success fs-4 mb-2"></i>
+                                <FaShieldHalved className="text-success fs-4 mb-2" />
                                 <p className="text-muted mb-0">
                                     {t('security_message')}
                                 </p>
@@ -444,7 +448,7 @@ const OrderMain = ({ order }) => {
                                 <div className="service-details-box bg-white border rounded p-3 mb-4">
                                     <div className="d-flex justify-content-between align-items-center">
                                         <div className="d-flex align-items-center">
-                                            <i className="fa-solid fa-file-lines text-primary me-3 fs-4"></i>
+                                            <FaFileAlt className="text-primary me-3 fs-4" />
                                             <div>
                                                 {/* <h5 className="mb-1 fw-bold">{title}</h5> */}
                                                 <p className="text-muted mb-0">
@@ -482,7 +486,11 @@ const OrderMain = ({ order }) => {
                                     }}
                                     onClick={() => setShowPayment(true)}>
                                     {t('order_now')}
-                                    <i className="fa-solid fa-arrow-right ms-2"></i>
+                                    <FaArrowRight
+                                        style={{
+                                            marginLeft: '6px',
+                                        }}
+                                    />
                                 </Button>
                             </div>
                         </div>
@@ -500,9 +508,9 @@ const OrderMain = ({ order }) => {
                                                 mode && isSufficientBalance
                                                     ? modalStyles.orderButtonActive
                                                     : mode &&
-                                                      !isSufficientBalance
-                                                    ? modalStyles.orderButtonWarn
-                                                    : modalStyles.orderButtonInactive
+                                                        !isSufficientBalance
+                                                      ? modalStyles.orderButtonWarn
+                                                      : modalStyles.orderButtonInactive
                                             }
                                             disabled={!balanceDisabled}>
                                             <Switch value={mode} size="small" />
@@ -516,9 +524,7 @@ const OrderMain = ({ order }) => {
                                 <Button
                                     type="text"
                                     className={modalStyles.backButton}
-                                    icon={
-                                        <i className="fa-solid fa-arrow-left"></i>
-                                    }
+                                    icon={<FaArrowLeft />}
                                     onClick={() => setShowPayment(false)}>
                                     {t('back')}
                                 </Button>
