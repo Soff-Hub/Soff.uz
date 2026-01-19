@@ -288,15 +288,13 @@ function ShoppingCart() {
     }
 
     return (
-        <div className="ps-page--simple mb-4">
+        <>
             <BreadCrumb breacrumb={breadCrumb} />
-            <div className="ps-shopping-cart">
-                <div className="container my-5 h-100">
-                    <h1 className="page-title">Savat</h1>
-                    <SidebarLayout>{contentView}</SidebarLayout>
-                </div>
+            <div className={styles.shoppingCartWrapper}>
+                <h1 className="page-title">Savat</h1>
+                <SidebarLayout>{contentView}</SidebarLayout>
             </div>
-        </div>
+        </>
     );
 }
 

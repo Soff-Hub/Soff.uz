@@ -12,9 +12,7 @@ const CheckoutPage = () => {
                     'Xaridni yakunlash va xizmatlardan foydalanish uchun Soff.uz xarid savatiga tashrif buyuring — qulay, tez va xavfsiz to‘lov tizimi.'
                 }
             />
-            <div className="ps-page--simple">
-                <Checkout />
-            </div>
+            <Checkout />
         </PageContainer>
     );
 };

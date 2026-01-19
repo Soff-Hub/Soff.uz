@@ -262,15 +262,13 @@ function Wishlist() {
     }
 
     return (
-        <div className="ps-page--simple">
+        <>
             <BreadCrumb breacrumb={breadCrumb} />
-            <div className="ps-wishlist">
-                <div className="container my-5">
-                    <h1 className="page-title">Tanlanganlar</h1>
-                    <SidebarLayout>{contentView}</SidebarLayout>
-                </div>
+            <div className={styles.wishlistWrapper}>
+                <h1 className="page-title">Tanlanganlar</h1>
+                <SidebarLayout>{contentView}</SidebarLayout>
             </div>
-        </div>
+        </>
     );
 }
 
