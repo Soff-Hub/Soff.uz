@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import '~/scss/boostrap.min.css';
 import '~/scss/style.scss';
 import '~/scss/electronic.scss';
 import '~/widgets/navbar-menu/popover-override.css';

@@ -98,7 +98,7 @@ const nextSettings = {
             },
             // SSR pages cached for 1 minute
             {
-                source: '/:path*',
+                source: '/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|jpg|png|jpeg|gif|ico|webp|avif|jfif|pjpeg|pjp|apng|bmp|tif|tiff|js|css|woff2)).*)',
                 headers: [
                     {
                         key: 'Cache-Control',

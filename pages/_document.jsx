@@ -24,11 +24,6 @@ export default function Document() {
                     href={'/static/img/soff logo.png'}
                 />
 
-                <link
-                    rel="stylesheet"
-                    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
-                />
-
                 <noscript>
                     <div>
                         <img

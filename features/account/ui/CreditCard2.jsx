@@ -192,8 +192,8 @@ const CreditCard2 = ({ document, type }) => {
                 content: ItemsData?.data?.expire_date
                     ? ' Karta amal qilish muddatini kiriting'
                     : ItemsData?.data?.card_number
-                    ? "Karta raqamini to'g'ri kiriting"
-                    : ItemsData?.data?.msg,
+                      ? "Karta raqamini to'g'ri kiriting"
+                      : ItemsData?.data?.msg,
             });
             modal.update;
         }

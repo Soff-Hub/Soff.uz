@@ -11,6 +11,7 @@ import 'swiper/css';
 import SwiperController from './swiperController';
 import { useSelector } from 'react-redux';
 import { FiExternalLink } from 'react-icons/fi';
+import { HeaderDirectionsLoader } from '../header/HeaderLoader';
 
 const NavbarMenu = () => {
     const { data, isLoading } = useFGet('navbar-items', NAVBAR_MENU_CATEGORIES);
@@ -19,29 +20,29 @@ const NavbarMenu = () => {
     const [swiperController, setSwiperController] = useState(null);
     const swiperRef = useRef(null);
 
-    const getMethods = swiperClass => {
+    const getMethods = (swiperClass) => {
         setSwiperController(swiperClass);
     };
 
-    const setEnding = status => {
+    const setEnding = (status) => {
         setIsEnd(status);
     };
-    const setBeginning = status => {
+    const setBeginning = (status) => {
         setIsBeginning(status);
     };
 
-    const updateSwiperState = swiper => {
+    const updateSwiperState = (swiper) => {
         if (swiper) {
             setIsEnd(swiper.isEnd);
             setIsBeginning(swiper.isBeginning);
         }
     };
 
-    const handleSwiperInit = swiper => {
+    const handleSwiperInit = (swiper) => {
         updateSwiperState(swiper);
     };
 
-    const handleSlideChange = swiper => {
+    const handleSlideChange = (swiper) => {
         updateSwiperState(swiper);
     };
 
@@ -68,73 +69,71 @@ const NavbarMenu = () => {
         }
     }, [data]);
 
-    if (isLoading && !data) return null;
+    if (isLoading) {
+        return <HeaderDirectionsLoader />;
+    }
 
     return (
-        <>
-            {data && (
-                <nav className={styles.navSectionBlock}>
-                    <div className="container">
-                        <div className={styles.navbarWrapper}>
-                            <Button
-                                aria-label="previous"
-                                size="large"
-                                shape="circle"
-                                onClick={() => swiperController?.slidePrev()}
-                                color="primary"
-                                style={{
-                                    display: isBeginning ? 'none' : 'flex',
-                                }}
-                                className={styles.swipe_btn}
-                                disabled={isBeginning}>
-                                <IoIosArrowBack />
-                            </Button>
-                            <Swiper
-                                ref={swiperRef}
-                                spaceBetween={20}
-                                navigation={false}
-                                grabCursor={true}
-                                freeMode={true}
-                                slidesPerView={'auto'}
-                                onSwiper={handleSwiperInit}
-                                onSlideChange={handleSlideChange}
-                                className={`categorySwiper ${!isEnd &&
-                                    'categorySwiperEnding'} ${!isBeginning &&
-                                    'categorySwiperBeginning'}`}>
-                                {data.map(item => (
-                                    <SwiperSlide key={item.direction}>
-                                        <MenuItem
-                                            products={item.freelance_categories}
-                                            templates={item.soff_categories}
-                                            label={item.direction}
-                                        />
-                                    </SwiperSlide>
-                                ))}
-
-                                <SwiperController
-                                    getMethods={getMethods}
-                                    setEnding={setEnding}
-                                    setBeginning={setBeginning}
+        <nav className={styles.navSectionBlock}>
+            <div className="container">
+                <div className={styles.navbarWrapper}>
+                    <Button
+                        aria-label="previous"
+                        size="large"
+                        shape="circle"
+                        onClick={() => swiperController?.slidePrev()}
+                        color="primary"
+                        style={{
+                            display: isBeginning ? 'none' : 'flex',
+                        }}
+                        className={styles.swipe_btn}
+                        disabled={isBeginning}>
+                        <IoIosArrowBack />
+                    </Button>
+                    <Swiper
+                        ref={swiperRef}
+                        spaceBetween={20}
+                        navigation={false}
+                        grabCursor={true}
+                        freeMode={true}
+                        slidesPerView={'auto'}
+                        onSwiper={handleSwiperInit}
+                        onSlideChange={handleSlideChange}
+                        className={`categorySwiper ${
+                            !isEnd && 'categorySwiperEnding'
+                        } ${!isBeginning && 'categorySwiperBeginning'}`}>
+                        {data.map((item) => (
+                            <SwiperSlide key={item.direction}>
+                                <MenuItem
+                                    products={item.freelance_categories}
+                                    templates={item.soff_categories}
+                                    label={item.direction}
                                 />
-                            </Swiper>
-                            <Button
-                                aria-label="next"
-                                size="large"
-                                color="primary"
-                                shape="circle"
-                                style={{
-                                    display: isEnd ? 'none' : 'flex',
-                                }}
-                                className={styles.swipeNext}
-                                onClick={() => swiperController?.slideNext()}
-                                disabled={isEnd}>
-                                <IoIosArrowBack />
-                            </Button>
-                        </div>
-                    </div>
-                </nav>
-            )}
-        </>
+                            </SwiperSlide>
+                        ))}
+
+                        <SwiperController
+                            getMethods={getMethods}
+                            setEnding={setEnding}
+                            setBeginning={setBeginning}
+                        />
+                    </Swiper>
+                    <Button
+                        aria-label="next"
+                        size="large"
+                        color="primary"
+                        shape="circle"
+                        style={{
+                            display: isEnd ? 'none' : 'flex',
+                        }}
+                        className={styles.swipeNext}
+                        onClick={() => swiperController?.slideNext()}
+                        disabled={isEnd}>
+                        <IoIosArrowBack />
+                    </Button>
+                </div>
+            </div>
+        </nav>
     );
 };
 
@@ -149,7 +148,7 @@ const templateLink = {
 };
 
 const MenuItem = ({ products, templates, label }) => {
-    const { directions } = useSelector(state => state.profile);
+    const { directions } = useSelector((state) => state.profile);
 
     const option = directions.reduce((acc, item) => {
         acc[item.value] = item.label;
@@ -173,7 +172,7 @@ const MenuItem = ({ products, templates, label }) => {
                 </Link>
 
                 <ul className="details-list">
-                    {templates.map(item => (
+                    {templates.map((item) => (
                         <Link
                             key={item.id}
                             href={`/${templateLink[label]}/${item.slug}?slug=${item.slug}&search=&parentCategory=${item.slug}&title=${item.title}`}>
@@ -202,7 +201,7 @@ const MenuItem = ({ products, templates, label }) => {
                 </Link>
 
                 <ul className="details-list">
-                    {products.map(item => (
+                    {products.map((item) => (
                         <Link
                             key={item.id}
                             href={`/orders?direction=${label}&category_id=${item.id}&title=${item.title}`}>

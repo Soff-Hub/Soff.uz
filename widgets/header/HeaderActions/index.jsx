@@ -17,8 +17,9 @@ const HeaderActions = () => {
     const { wishlist } = useWishlist();
     const { pathname } = useRouter();
     const { isDesktop, size } = useResponsive();
-    const isTabletLimit = !isDesktop && size >= 650 && pathname !== '/';
     const data = useSelector((state) => state.ecomerce?.cartDataItems);
+
+    const isTabletLimit = !isDesktop && size >= 650 && pathname !== '/';
     const isWishlistVisible = wishlist && wishlist.length > 0;
     const isMiniCartVisible = data && data.length > 0;
 

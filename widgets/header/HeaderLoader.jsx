@@ -38,77 +38,58 @@ function HeaderLoader() {
                             <>
                                 <Skeleton.Input
                                     style={{ width: 20, height: 30 }}
-                                    active
                                 />
                                 <Skeleton.Input
                                     style={{ width: 20, height: 30 }}
-                                    active
                                 />
                             </>
                         ) : null}
 
-                        <Skeleton.Image
-                            style={{ width: 30, height: 30 }}
-                            active
-                        />
-                        <Skeleton.Avatar size={30} active />
+                        <Skeleton.Image style={{ width: 30, height: 30 }} />
+                        <Skeleton.Avatar size={30} />
                     </div>
                 </div>
             </div>
-            <div
-                style={{
-                    height: '45px',
-                    paddingBottom: '5px',
-                    borderBottom: '1px solid #f0f0f0',
-                    marginTop: '5px',
-                }}>
-                <div
-                    className="container"
-                    style={{
-                        display: 'flex',
-                        height: '100%',
-                        alignItems: 'center',
-                        gap: '10px',
-                    }}>
-                    {isMobile ? (
-                        <>
-                            <Skeleton.Button
-                                style={{ width: 50, height: 25 }}
-                                active
-                            />
-                            <Skeleton.Button
-                                style={{ width: 100, height: 25 }}
-                                active
-                            />
-                            <Skeleton.Button
-                                style={{ width: 150, height: 25 }}
-                                active
-                            />
-                        </>
-                    ) : (
-                        <>
-                            <Skeleton.Button
-                                style={{ width: 250, height: 25 }}
-                                active
-                            />
-                            <Skeleton.Button
-                                style={{ width: 100, height: 25 }}
-                                active
-                            />
-                            <Skeleton.Button
-                                style={{ width: 150, height: 25 }}
-                                active
-                            />
-                            <Skeleton.Button
-                                style={{ width: 280, height: 25 }}
-                                active
-                            />
-                        </>
-                    )}
-                </div>
-            </div>
+            <HeaderDirectionsLoader />
         </header>
     );
 }
+
+export const HeaderDirectionsLoader = () => {
+    const { isMobile } = useResponsive();
+    return (
+        <div
+            style={{
+                height: '45.6px',
+                paddingBottom: '5px',
+                borderBottom: '1px solid #f0f0f0',
+                marginTop: '5px',
+            }}>
+            <div
+                className="container"
+                style={{
+                    display: 'flex',
+                    height: '100%',
+                    alignItems: 'center',
+                    gap: '10px',
+                }}>
+                {isMobile ? (
+                    <>
+                        <Skeleton.Button style={{ width: 50, height: 25 }} />
+                        <Skeleton.Button style={{ width: 100, height: 25 }} />
+                        <Skeleton.Button style={{ width: 150, height: 25 }} />
+                    </>
+                ) : (
+                    <>
+                        <Skeleton.Button style={{ width: 250, height: 25 }} />
+                        <Skeleton.Button style={{ width: 100, height: 25 }} />
+                        <Skeleton.Button style={{ width: 150, height: 25 }} />
+                        <Skeleton.Button style={{ width: 280, height: 25 }} />
+                    </>
+                )}
+            </div>
+        </div>
+    );
+};
 
 export default HeaderLoader;

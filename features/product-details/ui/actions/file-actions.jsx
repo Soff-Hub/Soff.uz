@@ -532,7 +532,7 @@ const CustomResponsiveLayout = ({ product, handleBuynow }) => {
                         iconPosition="end"
                         style={{ height: '58px', fontSize: '20px' }}
                         type="primary"
-                        className="w-100 bg-success truncate-text text-truncate"
+                        className="w-100 bg-success text-truncate"
                         icon={<DownloadOutlined />}
                         size={'large'}>
                         Hoziroq xarid qilish (

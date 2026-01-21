@@ -194,27 +194,33 @@ const ProductSkeleton = memo(({ limit = 5 }) => {
         <div className="px-2 py-6 mt-4">
             <div className="row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-gap-4">
                 {Array.from({ length: limit * 6 }).map((_, i) => (
-                    <div key={i} className="col d-flex flex-column">
-                        <Skeleton.Image
-                            active
-                            style={{
-                                width: '100%',
-                                height: 180,
-                                borderRadius: '12px',
-                            }}
-                        />
-                        <Skeleton
-                            active
-                            paragraph={{
-                                rows: 3,
-                                width: ['100%', '100%', '100%'],
-                            }}
-                            title={false}
-                            className="mt-4"
-                        />
-                    </div>
+                    <SkeletonCard key={i} />
                 ))}
             </div>
         </div>
     );
 });
+
+export const SkeletonCard = () => {
+    return (
+        <div className="col d-flex flex-column">
+            <Skeleton.Image
+                active
+                style={{
+                    width: '100%',
+                    height: 180,
+                    borderRadius: '12px',
+                }}
+            />
+            <Skeleton
+                active
+                paragraph={{
+                    rows: 3,
+                    width: ['100%', '100%', '100%'],
+                }}
+                title={false}
+                className="mt-4"
+            />
+        </div>
+    );
+};
