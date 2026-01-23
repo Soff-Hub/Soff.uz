@@ -70,7 +70,8 @@ export const apiSoffSlice = createApi({
             baseUrl: d_base_url,
             prepareHeaders: (headers) => {
                 const token = getToken();
-                headers.set('Accept-Langugage', 'uz');
+                headers.set('Accept-Language', 'uz');
+
                 if (token) {
                     headers.set('authorization', `Bearer ${token}`);
                 }
