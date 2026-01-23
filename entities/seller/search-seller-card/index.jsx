@@ -52,6 +52,7 @@ const SearchSellerCard = ({ seller, rankImage }) => {
                         alt={seller?.full_name || 'Seller'}
                         width={100}
                         height={100}
+                        loading="lazy"
                         className={styles.avatar}
                     />
                 </Badge>

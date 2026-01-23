@@ -12,6 +12,7 @@ import SwiperController from './swiperController';
 import { useSelector } from 'react-redux';
 import { FiExternalLink } from 'react-icons/fi';
 import { useTranslation } from 'next-i18next';
+import { HeaderDirectionsLoader } from '../header/HeaderLoader';
 
 const NavbarMenu = () => {
     const { data, isLoading } = useFGet('navbar-items', NAVBAR_MENU_CATEGORIES);
@@ -69,75 +70,71 @@ const NavbarMenu = () => {
         }
     }, [data]);
 
-    if (isLoading && !data) return null;
+    if (isLoading) {
+        return <HeaderDirectionsLoader />;
+    }
 
     return (
-        <>
-            {data && (
-                <nav className={styles.navSectionBlock}>
-                    <div className="container">
-                        <div className={styles.navbarWrapper}>
-                            <Button
-                                aria-label="previous"
-                                size="large"
-                                shape="circle"
-                                onClick={() => swiperController?.slidePrev()}
-                                color="primary"
-                                style={{
-                                    display: isBeginning ? 'none' : 'flex',
-                                }}
-                                className={styles.swipe_btn}
-                                disabled={isBeginning}>
-                                <IoIosArrowBack />
-                            </Button>
-                            <Swiper
-                                ref={swiperRef}
-                                spaceBetween={20}
-                                navigation={false}
-                                grabCursor={true}
-                                freeMode={true}
-                                slidesPerView={'auto'}
-                                onSwiper={handleSwiperInit}
-                                onSlideChange={handleSlideChange}
-                                className={`categorySwiper ${
-                                    !isEnd && 'categorySwiperEnding'
-                                } ${
-                                    !isBeginning && 'categorySwiperBeginning'
-                                }`}>
-                                {data.map((item) => (
-                                    <SwiperSlide key={item.direction}>
-                                        <MenuItem
-                                            products={item.freelance_categories}
-                                            templates={item.soff_categories}
-                                            label={item.direction}
-                                        />
-                                    </SwiperSlide>
-                                ))}
-
-                                <SwiperController
-                                    getMethods={getMethods}
-                                    setEnding={setEnding}
-                                    setBeginning={setBeginning}
+        <nav className={styles.navSectionBlock}>
+            <div className="container">
+                <div className={styles.navbarWrapper}>
+                    <Button
+                        aria-label="previous"
+                        size="large"
+                        shape="circle"
+                        onClick={() => swiperController?.slidePrev()}
+                        color="primary"
+                        style={{
+                            display: isBeginning ? 'none' : 'flex',
+                        }}
+                        className={styles.swipe_btn}
+                        disabled={isBeginning}>
+                        <IoIosArrowBack />
+                    </Button>
+                    <Swiper
+                        ref={swiperRef}
+                        spaceBetween={20}
+                        navigation={false}
+                        grabCursor={true}
+                        freeMode={true}
+                        slidesPerView={'auto'}
+                        onSwiper={handleSwiperInit}
+                        onSlideChange={handleSlideChange}
+                        className={`categorySwiper ${
+                            !isEnd && 'categorySwiperEnding'
+                        } ${!isBeginning && 'categorySwiperBeginning'}`}>
+                        {data.map((item) => (
+                            <SwiperSlide key={item.direction}>
+                                <MenuItem
+                                    products={item.freelance_categories}
+                                    templates={item.soff_categories}
+                                    label={item.direction}
                                 />
-                            </Swiper>
-                            <Button
-                                aria-label="next"
-                                size="large"
-                                color="primary"
-                                shape="circle"
-                                style={{
-                                    display: isEnd ? 'none' : 'flex',
-                                }}
-                                className={styles.swipeNext}
-                                onClick={() => swiperController?.slideNext()}
-                                disabled={isEnd}>
-                                <IoIosArrowBack />
-                            </Button>
-                        </div>
-                    </div>
-                </nav>
-            )}
-        </>
+                            </SwiperSlide>
+                        ))}
+
+                        <SwiperController
+                            getMethods={getMethods}
+                            setEnding={setEnding}
+                            setBeginning={setBeginning}
+                        />
+                    </Swiper>
+                    <Button
+                        aria-label="next"
+                        size="large"
+                        color="primary"
+                        shape="circle"
+                        style={{
+                            display: isEnd ? 'none' : 'flex',
+                        }}
+                        className={styles.swipeNext}
+                        onClick={() => swiperController?.slideNext()}
+                        disabled={isEnd}>
+                        <IoIosArrowBack />
+                    </Button>
+                </div>
+            </div>
+        </nav>
     );
 };
 

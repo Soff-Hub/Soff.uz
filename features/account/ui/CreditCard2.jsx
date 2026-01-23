@@ -204,8 +204,8 @@ const CreditCard2 = ({ document, type }) => {
                 content: ItemsData?.data?.expire_date
                     ? t('checkout.errors.expireDate')
                     : ItemsData?.data?.card_number
-                    ? t('checkout.errors.cardNumber')
-                    : ItemsData?.data?.msg,
+                      ? t('checkout.errors.cardNumber')
+                      : ItemsData?.data?.msg,
             });
             modal.update;
         }

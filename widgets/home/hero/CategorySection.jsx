@@ -1,11 +1,12 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './style.module.scss';
+import { Skeleton } from 'antd';
 import { useTranslation } from 'next-i18next';
 
 const CategorySection = () => {
     const { t } = useTranslation('index');
-    
+
     const readyProducts = [
         {
             href: '/scientific-resources/all',
@@ -76,7 +77,8 @@ const CategorySection = () => {
         <div className={styles.categoryBlock}>
             <div className={styles.titleWrapper}>
                 {showBadge && (
-                    <img
+                    <Image
+                        priority
                         src="/static/img/star.svg"
                         alt="badge"
                         width={30}
@@ -95,6 +97,8 @@ const CategorySection = () => {
                                 alt={item.alt}
                                 width={40}
                                 height={40}
+                                placeholder="blur"
+                                blurDataURL={item.img}
                                 style={{ objectFit: 'contain' }}
                                 loading="lazy"
                             />
@@ -115,10 +119,7 @@ const CategorySection = () => {
                 readyProducts,
                 true
             )}
-            {renderCategoryBlock(
-                t('categorySection.selectService'),
-                services
-            )}
+            {renderCategoryBlock(t('categorySection.selectService'), services)}
         </div>
     );
 };

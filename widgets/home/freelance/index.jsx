@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 import styles from './style.module.scss';
 import cardStyle from './service.module.scss';
 import Link from 'next/link';
 import { IoIosArrowBack } from 'react-icons/io';
 import { Button, Skeleton } from 'antd';
+import { SkeletonCard } from '../last-products';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperController from '~/widgets/navbar-menu/swiperController';
 import 'swiper/css';
@@ -31,6 +33,7 @@ const ranksImg = [
 
 const Freelance = () => {
     const { t } = useTranslation('index');
+
     const items = [
         {
             label: t('freelance.serviceTypes.scientific'),
@@ -84,7 +87,8 @@ const Freelance = () => {
                 <div className={styles.freelance_text}>
                     <div className="d-flex  gap-2 flex-fill">
                         <div className="d-none d-md-flex">
-                            <img
+                            <Image
+                                priority
                                 src={'/static/img/star.svg'}
                                 width={30}
                                 height={30}
@@ -195,15 +199,13 @@ const TopFreelanceRankings = () => {
     let resultsContent = null;
     if (isLoading) {
         resultsContent = (
-            <div className="d-flex gap-3" style={{ marginTop: '30px' }}>
+            <div
+                className={styles.resultsWrapper}
+                style={{ marginTop: '30px' }}>
                 {Array(4)
                     .fill(0)
                     .map((_, i) => (
-                        <Skeleton
-                            key={i}
-                            active
-                            className="Search_Results_Wrap_skeleton"
-                        />
+                        <SkeletonCard key={i} />
                     ))}
             </div>
         );
@@ -300,7 +302,7 @@ const TopFreelanceRankings = () => {
                 <div className={styles.freelance_text}>
                     <div className="d-flex gap-2 flex-fill">
                         <div className="d-none d-md-flex">
-                            <img
+                            <Image
                                 src={'/static/img/star.svg'}
                                 width={30}
                                 height={30}

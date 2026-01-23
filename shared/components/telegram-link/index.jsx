@@ -122,6 +122,7 @@ export function TelegramLink({ videoUrl }) {
                 <FloatButton
                     className={styles.floatButton}
                     type="primary"
+                    aria-label="Yordam va savollar"
                     icon={
                         isGroupOpen ? (
                             <CloseOutlined fontSize={25} />
@@ -151,6 +152,7 @@ export function TelegramLink({ videoUrl }) {
                                 setIsGroupOpen(false);
                             }}
                             role="button"
+                            aria-label="Video ko'rsatma"
                             tabIndex={0}
                             onKeyPress={(e) => {
                                 if (e.key === 'Enter' || e.key === ' ') {
@@ -174,6 +176,7 @@ export function TelegramLink({ videoUrl }) {
                         }`}
                         onClick={handleSupportClick}
                         role="button"
+                        aria-label="Support bilan suhbat"
                         tabIndex={0}
                         style={{
                             opacity: !isLoggedIn || !isGroupOpen ? 0.5 : 1,
@@ -202,6 +205,7 @@ export function TelegramLink({ videoUrl }) {
                     <a
                         href="https://t.me/+M1nwGXAYMzhhNDAy"
                         target="_blank"
+                        aria-label="Telegram kanaliga o\'tish"
                         rel="noopener noreferrer"
                         className={styles.customFloatButton}
                         onClick={() => setIsGroupOpen(false)}>

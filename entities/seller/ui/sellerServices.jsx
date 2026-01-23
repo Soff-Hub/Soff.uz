@@ -42,7 +42,7 @@ export default function SellerServices({ pid }) {
                     <div className="row row-gap-4">
                         {data?.map((item) => (
                             <div key={item?.id} className="col-6 col-md-4 px-2">
-                                <ServiceCard service={item}/>
+                                <ServiceCard service={item} />
                             </div>
                         ))}
                     </div>
