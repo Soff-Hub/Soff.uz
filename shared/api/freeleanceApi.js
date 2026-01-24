@@ -6,6 +6,7 @@ const axiosInstance = (token) => {
         baseURL: `${f_base_url}/api/v1/`,
         headers: {
             Authorization: `Bearer ${token}`,
+            'Accept-Language': 'uz',
         },
     });
 };
