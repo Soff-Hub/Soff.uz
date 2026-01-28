@@ -194,6 +194,13 @@ function FileImagesScroll({ product }) {
                                                 }
                                                 width={785}
                                                 height={614}
+                                                placeholder="blur"
+                                                blurDataURL={
+                                                    item?.image_url ||
+                                                    item?.thumbUrl ||
+                                                    item?.url ||
+                                                    'https://placehold.co/600x400'
+                                                }
                                                 alt={'sellerImage'}
                                                 className={` seller_image_conatiner`}
                                                 objectFit="contain"
@@ -201,17 +208,23 @@ function FileImagesScroll({ product }) {
                                                     flexShrink: 0,
                                                     objectFit: 'contain',
                                                 }}
+                                                loading="lazy"
+                                                priority={false}
                                             />
                                         )
                                 )
                             ) : (
                                 <Image
                                     src={'https://placehold.co/600x400'}
+                                    placeholder="blur"
+                                    blurDataURL={'https://placehold.co/600x400'}
                                     width={1000}
                                     height={614}
                                     alt={'sellerImage'}
-                                    className={` seller_image_conatiner`}
+                                    className={`seller_image_conatiner`}
                                     objectFit="contain"
+                                    loading="lazy"
+                                    priority={false}
                                 />
                             )}
                             {/* Top gradient - shows when scrolled down (can scroll up) */}

@@ -1,5 +1,5 @@
 import React from 'react';
-import FileImagesScroll from '../actions/file-images-scroll';
+import dynamic from 'next/dynamic';
 import FileActions from '../actions/file-actions';
 import SellerProfile from '../seller-profile/seller-profile';
 import Description from '../actions/description';
@@ -7,6 +7,14 @@ import Tags from '../actions/tags';
 import Link from 'next/link';
 import CommentList from '~/components/product-comments';
 import CommentFormWrapper from '~/features/comments/ui/commentWrapper';
+
+const FileImagesScroll = dynamic(
+    () => import('../actions/file-images-scroll'),
+    {
+        loading: () => <div style={{ minHeight: '400px' }} />,
+        ssr: true,
+    }
+);
 
 function FileProductsDetails({ product }) {
     return (

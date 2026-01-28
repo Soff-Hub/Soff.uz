@@ -31,50 +31,44 @@ const ImageCarousel = ({
     const [activeIndex, setActiveIndex] = useState(0);
     const [showLeftGradient, setShowLeftGradient] = useState(false);
     const [showRightGradient, setShowRightGradient] = useState(true);
-    const prevRef = useRef(null);
-    const nextRef = useRef(null);
 
-    // Fix navigation initialization and track active slide
-    useEffect(() => {
-        if (mainSwiper?.params && prevRef.current && nextRef.current) {
-            mainSwiper.params.navigation.prevEl = prevRef.current;
-            mainSwiper.params.navigation.nextEl = nextRef.current;
-            mainSwiper.navigation.init();
-            mainSwiper.navigation.update();
-
-            // Track active slide changes and auto-scroll thumbnails
-            mainSwiper.on('slideChange', () => {
-                const newActiveIndex = mainSwiper.activeIndex;
-                setActiveIndex(newActiveIndex);
-
-                // Auto-scroll thumbnail swiper to keep active thumbnail visible
-                if (thumbsSwiper) {
-                    const slidesPerView =
-                        thumbsSwiper.params.slidesPerView || 3;
-                    const targetSlide = Math.max(
-                        0,
-                        newActiveIndex - Math.floor(slidesPerView / 2)
-                    );
-                    thumbsSwiper.slideTo(targetSlide, 300);
-                }
-            });
-
-            // Also handle manual navigation (arrow clicks)
-            mainSwiper.on('slideChangeTransitionEnd', () => {
-                const newActiveIndex = mainSwiper.activeIndex;
-                setActiveIndex(newActiveIndex);
-
-                if (thumbsSwiper) {
-                    const slidesPerView =
-                        thumbsSwiper.params.slidesPerView || 3;
-                    const targetSlide = Math.max(
-                        0,
-                        newActiveIndex - Math.floor(slidesPerView / 2)
-                    );
-                    thumbsSwiper.slideTo(targetSlide, 300);
-                }
-            });
+    // Handle navigation button clicks
+    const handlePrevClick = () => {
+        if (mainSwiper) {
+            mainSwiper.slidePrev();
         }
+    };
+
+    const handleNextClick = () => {
+        if (mainSwiper) {
+            mainSwiper.slideNext();
+        }
+    };
+
+    // Track active slide changes and auto-scroll thumbnails
+    useEffect(() => {
+        if (!mainSwiper) return;
+
+        const handleSlideChange = () => {
+            const newActiveIndex = mainSwiper.activeIndex;
+            setActiveIndex(newActiveIndex);
+
+            // Auto-scroll thumbnail swiper to keep active thumbnail visible
+            if (thumbsSwiper) {
+                const slidesPerView = thumbsSwiper.params.slidesPerView || 3;
+                const targetSlide = Math.max(
+                    0,
+                    newActiveIndex - Math.floor(slidesPerView / 2)
+                );
+                thumbsSwiper.slideTo(targetSlide, 300);
+            }
+        };
+
+        mainSwiper.on('slideChange', handleSlideChange);
+
+        return () => {
+            mainSwiper.off('slideChange', handleSlideChange);
+        };
     }, [mainSwiper, thumbsSwiper]);
 
     // Handle thumbnail swiper progress to show/hide gradients
@@ -109,7 +103,7 @@ const ImageCarousel = ({
 
                 {images?.length > 1 && (
                     <FaChevronLeft
-                        ref={prevRef}
+                        onClick={handlePrevClick}
                         role="button"
                         tabIndex={0}
                         aria-label="Oldingi rasm"
@@ -131,11 +125,12 @@ const ImageCarousel = ({
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                        }}></FaChevronLeft>
+                        }}
+                    />
                 )}
 
                 <Swiper
-                    modules={[Navigation, Thumbs]}
+                    modules={[Thumbs]}
                     onSwiper={setMainSwiper}
                     thumbs={{
                         swiper:
@@ -143,7 +138,6 @@ const ImageCarousel = ({
                                 ? thumbsSwiper
                                 : null,
                     }}
-                    navigation={false}
                     slidesPerView={1}
                     slidesPerGroup={1}
                     spaceBetween={0}
@@ -236,7 +230,7 @@ const ImageCarousel = ({
 
                 {images?.length > 1 && (
                     <FaChevronRight
-                        ref={nextRef}
+                        onClick={handleNextClick}
                         role="button"
                         tabIndex={0}
                         aria-label="Keyingi rasm"
@@ -258,7 +252,8 @@ const ImageCarousel = ({
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                        }}></FaChevronRight>
+                        }}
+                    />
                 )}
 
                 {images?.length > 1 && (
