@@ -5,7 +5,7 @@ import SellerProfile from '../seller-profile/seller-profile';
 import Description from '../actions/description';
 import Tags from '../actions/tags';
 import Link from 'next/link';
-import CommentList from '~/components/product-comments';
+import CommentList from '~/features/comments/ui/commentList';
 import CommentFormWrapper from '~/features/comments/ui/commentWrapper';
 
 const FileImagesScroll = dynamic(
@@ -17,6 +17,7 @@ const FileImagesScroll = dynamic(
 );
 
 function FileProductsDetails({ product }) {
+    console.log({ product });
     return (
         <div className="seller_container_products_details">
             <div className="ps-container p-0">
@@ -67,7 +68,7 @@ function FileProductsDetails({ product }) {
                             id={product.id}
                             slug={product.slug}
                         />
-                        <CommentList slug={product.slug} />
+                        <CommentList slug={product.slug} id={product.id} />
                     </div>
                 </div>
             </div>

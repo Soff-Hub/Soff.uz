@@ -11,6 +11,7 @@ import * as cookie from 'cookie';
 import Meta from '~/shared/ui/meta';
 import { getOrCreateDeviceId } from '~/shared/utilities/device-id';
 import dynamic from 'next/dynamic';
+import { useTimeManager } from '~/shared/hooks/useTimeManager';
 
 const video_url = 'https://www.youtube.com/watch?v=oJre9mbRE2U';
 
@@ -95,6 +96,7 @@ const productsContentDetails = (contentType) => {
 
 export default function ProductDefaultPage({ defaultProducts }) {
     const [isPlay, setIsPlay] = useState(null);
+    const { startTimeout, stopTimeout } = useTimeManager();
     const [showJoyride, setShowJoyride] = useState(false);
     const similarRef = useRef();
     const lastProductsRef = useRef();
@@ -116,15 +118,18 @@ export default function ProductDefaultPage({ defaultProducts }) {
 
     useEffect(() => {
         if (typeof window === 'undefined') return;
-
-        const hasSeenProductTour = localStorage.getItem(
-            'product-tour-completed'
-        );
-        if (!hasSeenProductTour) {
-            const timer = setTimeout(() => {
-                setShowJoyride(true);
-            }, 2000);
-            return () => clearTimeout(timer);
+        try {
+            const hasSeenProductTour = localStorage.getItem(
+                'product-tour-completed'
+            );
+            if (!hasSeenProductTour) {
+                const timer = startTimeout(() => {
+                    setShowJoyride(true);
+                }, 2000);
+                return () => stopTimeout(timer);
+            }
+        } catch (error) {
+            console.warn('Error accessing localStorage:', error);
         }
     }, []);
 

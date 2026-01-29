@@ -4,10 +4,14 @@ import axios from 'axios';
 import { baseURL } from '~/repositories/api';
 import { Button, message, Input, Rate, Form } from 'antd';
 import useResponsive from '~/shared/utilities/useResponsive';
+import { useQueryClient } from '@tanstack/react-query';
+import { useAppSelector } from '~/app/store/hooks';
 
 const { TextArea } = Input;
+
 export default function CommentForm({
     documentId,
+    slug,
     fComment,
     initialRating = 0,
     onSuccess,
@@ -17,6 +21,8 @@ export default function CommentForm({
     const [loading, setLoading] = useState(false);
     const { isMobile, isTablet } = useResponsive();
     const isModal = mode === 'modal';
+    const queryClient = useQueryClient();
+    const { user } = useAppSelector((state) => state.profile);
 
     // Responsive font size for Rate component
     const getRateFontSize = () => {
@@ -31,6 +37,10 @@ export default function CommentForm({
 
     const handleSubmit = async (values) => {
         const { commentText: text, rating } = values;
+
+        // Debug: Check if rating is being captured
+        console.log('Form values:', values);
+        console.log('Rating:', rating);
 
         const token = Cookies.get('token');
         if (!token) {
@@ -53,6 +63,11 @@ export default function CommentForm({
                     },
                 }
             );
+
+            // Update the query cache by adding new comment to the first page
+            queryClient.invalidateQueries({
+                queryKey: ['document-reviews'],
+            });
 
             form.resetFields();
             form.setFieldsValue({ rating: 0 });

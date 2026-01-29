@@ -4,7 +4,7 @@ import Description from '../actions/description';
 import SellerProfile from '../seller-profile/seller-profile';
 import ImageCarousel from '../actions/imageScroll';
 import Tags from '../actions/tags';
-import CommentList from '~/components/product-comments';
+import CommentList from '~/features/comments/ui/commentList';
 import CommentFormWrapper from '~/features/comments/ui/commentWrapper';
 
 function ThreeDesignProductsDetails({ product, template }) {
@@ -30,6 +30,7 @@ function ThreeDesignProductsDetails({ product, template }) {
                     </div>
                     <div className="ps-product__header_seller_three_design ">
                         <ImageCarousel
+                            imageAlt={product?.title}
                             slug={product?.slug}
                             demo_link={product?.demo_link}
                             images={product?.document?.images}
@@ -56,7 +57,7 @@ function ThreeDesignProductsDetails({ product, template }) {
                             id={product.id}
                             slug={product.slug}
                         />
-                        <CommentList slug={product.slug} />
+                        <CommentList slug={product.slug} id={product.id} />
                     </div>
                 </div>
             </div>

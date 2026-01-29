@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react';
-import { useTranslation } from 'next-i18next';
 import CommentForm from './commentForm';
 import axios from 'axios';
 import { baseURL } from '~/repositories/api';
 import { useSelector } from 'react-redux';
 
 export default function CommentFormWrapper({ slug, id }) {
-    const { t } = useTranslation('product-pages');
     const [canReview, setCanReview] = useState(false);
     const [hasFirstComment, setHasFirstComment] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -38,12 +36,16 @@ export default function CommentFormWrapper({ slug, id }) {
         if (slug) checkPermission();
     }, [slug, token]);
 
-    if (loading) return <p>{t('productDetail.comments.checking')}</p>;
+    if (loading) return <p>Yuklanmoqda...</p>;
 
     if (canReview) {
         return (
             <div>
-                <CommentForm documentId={id} fComment={hasFirstComment} />
+                <CommentForm
+                    documentId={id}
+                    slug={slug}
+                    fComment={hasFirstComment}
+                />
             </div>
         );
     }

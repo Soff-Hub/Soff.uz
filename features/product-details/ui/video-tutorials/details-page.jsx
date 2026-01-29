@@ -6,7 +6,7 @@ import DefaultVideoContent from './default-video';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import Link from 'next/link';
 import CommentFormWrapper from '~/features/comments/ui/commentWrapper';
-import CommentList from '~/components/product-comments';
+import CommentList from '~/features/comments/ui/commentList';
 import { FaEye } from 'react-icons/fa';
 
 function VideosProductsDetails({ product, isPlay, setIsPlay }) {
@@ -81,7 +81,7 @@ function VideosProductsDetails({ product, isPlay, setIsPlay }) {
                             id={product.id}
                             slug={product.slug}
                         />
-                        <CommentList slug={product.slug} />
+                        <CommentList slug={product.slug} id={product.id} />
                     </div>
                 </div>
             </div>

@@ -26,8 +26,8 @@
 }
 
 .commentList {
-    // max-height: 500px;
-    // overflow-y: auto;
+    max-height: 500px;
+    overflow-y: auto;
     scrollbar-gutter: stable;
     padding-right: 10px;
 
@@ -68,7 +68,8 @@
         .headerInfo {
             display: flex;
             align-items: center;
-            gap: 8px;
+            flex-wrap: wrap;
+            column-gap: 8px;
             margin-bottom: 4px;
             margin-top: -2px;
 
@@ -232,8 +233,8 @@
         left: -35px; /* Reach back to the vertical line */
         width: 36px; /* Width to reach the button content roughly */
         height: 38px; /* Curve height */
-        border-left: 3px solid #e5e5e5;
-        border-bottom: 3px solid #e5e5e5;
+        border-left: 2px solid #e5e5e5;
+        border-bottom: 2px solid #e5e5e5;
         border-bottom-left-radius: 16px;
         transition: border-color 0.2s ease;
         pointer-events: none;
@@ -271,8 +272,8 @@
         left: -35px;
         width: 36px;
         height: 38px;
-        border-left: 3px solid #e5e5e5;
-        border-bottom: 3px solid #e5e5e5;
+        border-left: 2px solid #e5e5e5;
+        border-bottom: 2px solid #e5e5e5;
         border-bottom-left-radius: 16px;
         transition: border-color 0.2s ease;
     }
@@ -323,7 +324,11 @@
 
 @media (max-width: 576px) {
     .container {
-        padding: 16px;
+        padding: 16px 5px 16px 16px;
+    }
+
+    .commentList {
+        padding-right: 5px;
     }
 
     .commentItem {

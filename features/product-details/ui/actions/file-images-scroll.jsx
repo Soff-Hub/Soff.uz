@@ -201,7 +201,7 @@ function FileImagesScroll({ product }) {
                                                     item?.url ||
                                                     'https://placehold.co/600x400'
                                                 }
-                                                alt={'sellerImage'}
+                                                alt={product?.title}
                                                 className={` seller_image_conatiner`}
                                                 objectFit="contain"
                                                 style={{

@@ -1,7 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { apiFreelanceSlice, apiSoffSlice } from '../api/apiSlice';
 
-const initialState = {
+const initialState: {
+    user: any;
+    directions: any[];
+    loading: boolean;
+    error: string | null;
+} = {
     user: null,
     directions: [],
     loading: false,
@@ -40,7 +45,7 @@ const extendedSoffSlice = apiSoffSlice.injectEndpoints({
                 try {
                     const { data } = await queryFulfilled;
                     dispatch(userProfile.actions.setUser(data));
-                } catch (error) {
+                } catch (error: any) {
                     dispatch(
                         userProfile.actions.setError(
                             error.message ||
@@ -59,7 +64,7 @@ const extendedFreelanceSlice = apiFreelanceSlice.injectEndpoints({
             query: () => 'api/v1/categories/all-directions',
             providesTags: ['Directions'],
             transformResponse: (response) =>
-                response.map((dir) => ({
+                response.map((dir: any) => ({
                     label: dir.title,
                     value: dir.value,
                 })),
@@ -67,7 +72,7 @@ const extendedFreelanceSlice = apiFreelanceSlice.injectEndpoints({
                 try {
                     const { data } = await queryFulfilled;
                     dispatch(userProfile.actions.setDirections(data));
-                } catch (error) {
+                } catch (error: any) {
                     dispatch(
                         userProfile.actions.setError(
                             error.message ||

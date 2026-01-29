@@ -22,6 +22,7 @@ const ImageCarousel = ({
     images,
     views,
     demo_link,
+    imageAlt,
     isProduct = true,
     slug,
 }) => {
@@ -82,7 +83,7 @@ const ImageCarousel = ({
     };
 
     const dynamicHeight = isDesktop ? '450px' : isTablet ? '350px' : '250px';
-
+    console.log({ images });
     return (
         <div className="overflow-hidden w-100">
             <div
@@ -209,7 +210,7 @@ const ImageCarousel = ({
                                                 item?.thumbUrl ||
                                                 '/static/img/no-document.png'
                                             }
-                                            alt="Product"
+                                            alt={imageAlt}
                                             layout="fill"
                                             objectFit="contain"
                                             className="swiper-image rounded-3"

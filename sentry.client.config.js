@@ -8,27 +8,33 @@ if (process.env.NODE_ENV === 'production') {
             Sentry.replayIntegration({
                 maskAllText: true,
                 maskAllInputs: true,
-                // Only record sessions where an error actually happens
-                // 1.0 means 100% of errors, 0.1 means 10% of errors
-                errorSampleRate: 0.1,
-                sessionSampleRate: 0,
             }),
         ],
-
-        // --- PERFORMANCE FIXES ---
-
-        // Change from 1.0 to 0.1 (Samples 10% of traffic)
-        // 1.0 is far too heavy for a high-traffic production site
-        tracesSampleRate: 0.1,
-
-        // Turn off debug logs in production to save CPU/Memory
+        tracesSampleRate: 0.05,
         enableLogs: false,
-
-        // Disable this unless you specifically need it; it adds overhead
         sendDefaultPii: false,
-
-        // Keeps your bundle smaller by not including Replay code if not needed
         replaysSessionSampleRate: 0,
-        replaysOnErrorSampleRate: 0.1,
+        replaysOnErrorSampleRate: 0.05,
+        ignoreErrors: [
+            // Browser extensions
+            'top.GLOBALS',
+            // Random plugins/extensions
+            'originalCreateNotification',
+            'canvas.contentDocument',
+            'MyApp_RemoveAllHighlights',
+            // Facebook errors
+            'fb_xd_fragment',
+            // Network errors that users can't control
+            'NetworkError',
+            'Failed to fetch',
+            'Load failed',
+        ],
+        beforeSend(event, hint) {
+            // Sample only 50% of non-critical errors
+            if (event.level === 'error' && Math.random() > 0.5) {
+                return null;
+            }
+            return event;
+        },
     });
 }
