@@ -180,8 +180,10 @@ input[type='number']::-webkit-outer-spin-button {
 }
 
 .subcategory_btn {
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.05),
-        -2px -2px 2px rgba(0, 0, 0, 0.05), 2px -2px 2px rgba(0, 0, 0, 0.05),
+    box-shadow:
+        2px 2px 2px rgba(0, 0, 0, 0.05),
+        -2px -2px 2px rgba(0, 0, 0, 0.05),
+        2px -2px 2px rgba(0, 0, 0, 0.05),
         -2px 2px 2px rgba(0, 0, 0, 0.05) !important;
 
     &:hover {
@@ -478,8 +480,10 @@ input[type='number']::-webkit-outer-spin-button {
     .Models_category_btn {
         display: flex;
         align-items: center;
-        box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.05),
-            -2px -2px 2px rgba(0, 0, 0, 0.05), 2px -2px 2px rgba(0, 0, 0, 0.05),
+        box-shadow:
+            2px 2px 2px rgba(0, 0, 0, 0.05),
+            -2px -2px 2px rgba(0, 0, 0, 0.05),
+            2px -2px 2px rgba(0, 0, 0, 0.05),
             -2px 2px 2px rgba(0, 0, 0, 0.05) !important;
         background: #fff;
         border-radius: 7px;
@@ -534,8 +538,10 @@ input[type='number']::-webkit-outer-spin-button {
     .Models_category_btn {
         display: flex;
         align-items: center;
-        box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.05),
-            -2px -2px 2px rgba(0, 0, 0, 0.05), 2px -2px 2px rgba(0, 0, 0, 0.05),
+        box-shadow:
+            2px 2px 2px rgba(0, 0, 0, 0.05),
+            -2px -2px 2px rgba(0, 0, 0, 0.05),
+            2px -2px 2px rgba(0, 0, 0, 0.05),
             -2px 2px 2px rgba(0, 0, 0, 0.05) !important;
         background: #fff;
         border-radius: 7px;
@@ -592,8 +598,10 @@ input[type='number']::-webkit-outer-spin-button {
 .Models_category_btn {
     display: flex;
     align-items: center;
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.05),
-        -2px -2px 2px rgba(0, 0, 0, 0.05), 2px -2px 2px rgba(0, 0, 0, 0.05),
+    box-shadow:
+        2px 2px 2px rgba(0, 0, 0, 0.05),
+        -2px -2px 2px rgba(0, 0, 0, 0.05),
+        2px -2px 2px rgba(0, 0, 0, 0.05),
         -2px 2px 2px rgba(0, 0, 0, 0.05) !important;
     background: #fff;
     border-radius: 7px;

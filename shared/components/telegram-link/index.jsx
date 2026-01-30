@@ -201,7 +201,7 @@ export function TelegramLink({ videoUrl }) {
                         </span>
                     </div>
                     <a
-                        href="https://t.me/+M1nwGXAYMzhhNDAy"
+                        href="https://t.me/soff_uz"
                         target="_blank"
                         aria-label="Telegram kanaliga o\'tish"
                         rel="noopener noreferrer"

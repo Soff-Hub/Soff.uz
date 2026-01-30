@@ -157,6 +157,10 @@ function useSearch() {
     });
 
     const handleClickOption = async (optionValue) => {
+        setSearch(optionValue);
+    };
+
+    const handleNavigateOption = async (optionValue) => {
         try {
             setIsNavigating(true);
             setSearch(optionValue);
@@ -241,6 +245,7 @@ function useSearch() {
         isLoading: productsLoading || servicesLoading || specialistsLoading,
         handleSearch,
         handleClickOption,
+        handleNavigateOption,
         options,
     };
 }

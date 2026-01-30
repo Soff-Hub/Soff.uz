@@ -74,7 +74,7 @@ export default function ProductCategoryScreen({
                 author="Soff.uz"
             />
 
-            <div className="ps-page--shop container p-lg-1">
+            <div className="ps-page--shop container p-lg-1 d-flex flex-column gap-4 my-5">
                 <AISoffiaPresentation />
                 <CategorySearchSection />
                 <CategoryFilterSecion

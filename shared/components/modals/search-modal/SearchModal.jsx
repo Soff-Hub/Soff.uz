@@ -18,7 +18,7 @@ function SearchModal({ onClose, open, defaultType = 'mahsulotlar' }) {
         type,
         setType,
         handleSearch,
-        handleClickOption,
+        handleNavigateOption,
         options,
         isLoading,
         isNavigating,
@@ -144,7 +144,7 @@ function SearchModal({ onClose, open, defaultType = 'mahsulotlar' }) {
                     }}>
                     <SearchResult
                         debouncedSearch={debouncedSearch}
-                        handleClickOption={handleClickOption}
+                        handleNavigateOption={handleNavigateOption}
                         options={options}
                         isLoading={isLoading}
                         isNavigating={isNavigating}

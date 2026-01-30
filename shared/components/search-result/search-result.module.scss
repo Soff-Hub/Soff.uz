@@ -10,6 +10,41 @@
     margin-bottom: 15px;
 }
 
+.searchBoxWrapper {
+    width: 100%;
+    // max-width: 600px;
+    z-index: 10;
+}
+
+.searchPopover {
+    padding: 10px 0 10px 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+
+    :global(.ant-popover) {
+        transform: translate(10px, 10px) !important;
+    }
+
+    :global(.ant-popover-content) {
+        position: relative;
+        width: 100% !important;
+        // max-width: 600px !important;
+        max-height: 300px !important;
+        padding-right: 10px;
+        overflow-y: scroll;
+    }
+
+    :global(.ant-popover-inner) {
+        width: 100% !important;
+        box-shadow: none;
+    }
+
+    :global(.ant-popover-inner-content) {
+        width: 100% !important;
+    }
+}
+
 .searchHistoryHeader {
     display: flex;
     align-items: center;
@@ -31,6 +66,7 @@
     padding: 8px 12px;
     color: #000000e0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    overflow: hidden;
     cursor: pointer;
 
     .searchOptionIcon {

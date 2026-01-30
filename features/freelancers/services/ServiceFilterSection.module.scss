@@ -24,7 +24,6 @@
     }
 }
 
-
 .headlineWrapper {
     position: relative;
     text-align: center;
@@ -118,7 +117,8 @@
     background: #fff;
     position: relative;
     z-index: 2;
-    width: 60%;
+    width: 100%;
+    max-width: 480px;
 
     .input {
         font-size: 15px;
@@ -141,7 +141,7 @@
     }
 
     @media (max-width: 992px) {
-        width: 100%;
+        max-width: 100% !important;
     }
 }
 
@@ -156,7 +156,7 @@
         width: 100%;
         justify-content: flex-start;
     }
-    
+
     @media (max-width: 768px) {
         align-items: stretch;
         gap: 10px;

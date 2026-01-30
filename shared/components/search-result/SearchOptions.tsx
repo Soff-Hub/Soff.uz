@@ -1,5 +1,4 @@
 import React from 'react';
-import Link from 'next/link';
 import { Skeleton } from 'antd';
 import useHistorySearch from '~/shared/hooks/useHistorySearch';
 import { EmptyTab } from '~/widgets/header/HeaderCategories';
@@ -7,18 +6,25 @@ import styles from './search-result.module.scss';
 import {
     SearchHistoryHeader,
     SearchHistoryOption,
-    SearchNavigationProgress,
     SearchOption,
 } from './SearchComponents';
 
-function SearchResult({
+type SearchOptionsProps = {
+    debouncedSearch: string;
+    handleClickOption: (value: string) => void;
+    options: Array<{ key: string; value: string }>;
+    isLoading: boolean;
+    categoryType?: 'mahsulotlar' | 'xizmatlar' | 'mutaxasislar';
+    isNavigating?: boolean;
+};
+
+function SearchOptions({
     debouncedSearch,
-    handleNavigateOption,
+    handleClickOption,
+    categoryType,
     options,
     isLoading,
-    isNavigating,
-    setIsNavigating,
-}) {
+}: SearchOptionsProps) {
     const {
         searchHistory,
         clearHistoryItem,
@@ -27,28 +33,22 @@ function SearchResult({
     } = useHistorySearch(debouncedSearch);
     let historyOptions = null;
 
-    if (!isHistoryLoading && searchHistory.length) {
+    const filteredSearchHistory = searchHistory.filter(
+        (item: any) => !categoryType || item.type === categoryType
+    );
+
+    if (!isHistoryLoading && filteredSearchHistory.length) {
         historyOptions = (
             <div className={styles.historyContainer}>
                 <SearchHistoryHeader clearHistoryItem={clearHistoryItem} />
-                {searchHistory.map((item) => (
-                    <Link
+                {filteredSearchHistory.map((item: any) => (
+                    <SearchHistoryOption
                         key={item.value}
-                        href={
-                            item.type === 'mahsulotlar'
-                                ? `/search-page/?keyword=${item.value}&tab=1&type=file`
-                                : item.type === 'xizmatlar'
-                                  ? `/search-page/?keyword=${item.value}&tab=2&type=all`
-                                  : `/search-page/?keyword=${item.value}&tab=3&type=all`
-                        }>
-                        <a onClick={() => setIsNavigating(true)}>
-                            <SearchHistoryOption
-                                item={item}
-                                debouncedSearch={debouncedSearch}
-                                deleteHistoryItem={deleteHistoryItem}
-                            />
-                        </a>
-                    </Link>
+                        item={item}
+                        debouncedSearch={debouncedSearch}
+                        deleteHistoryItem={deleteHistoryItem}
+                        onClick={() => handleClickOption(item.value)}
+                    />
                 ))}
             </div>
         );
@@ -69,7 +69,7 @@ function SearchResult({
                         key={option.key}
                         option={option}
                         debouncedSearch={debouncedSearch}
-                        onClick={() => handleNavigateOption(option.value)}
+                        onClick={() => handleClickOption(option.value)}
                     />
                 ))}
             </div>
@@ -82,11 +82,10 @@ function SearchResult({
 
     return (
         <div className={styles.container}>
-            <SearchNavigationProgress isNavigating={isNavigating} />
             {historyOptions}
             {filteredDataOptions}
         </div>
     );
 }
 
-export default SearchResult;
+export default SearchOptions;
