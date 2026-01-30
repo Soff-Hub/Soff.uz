@@ -146,7 +146,7 @@ export const AISoffiaPresentationNotFoundProduct = () => {
                             </div>
                             <div className="d-flex">
                                 <a
-                                    href="https://t.me/soffia_ai_bot"
+                                    href="https://www.soffia.uz/"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     style={{ textDecoration: 'none' }}>
