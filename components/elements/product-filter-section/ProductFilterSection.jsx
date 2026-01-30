@@ -7,7 +7,6 @@ import {
     CloseOutlined,
 } from '@ant-design/icons';
 import { useRouter } from 'next/router';
-import useDebounce from '~/shared/hooks/useDebounce';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { baseUrlUseApi } from '~/repositories/useApi';
 import { Button, Checkbox, Drawer, Input, Select, Slider } from 'antd';
@@ -15,6 +14,8 @@ import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import { useDisableWindowScroll } from '~/shared/hooks/useDisableWindowScroll';
 import { LuSettings2 } from 'react-icons/lu';
 import { useQuery } from '@tanstack/react-query';
+import SearchController from '~/shared/components/search-result/SearchController';
+import useSearch from '~/shared/hooks/useSearch';
 
 export const getTitleFromSlug = (array, slug) => {
     let title = null;
@@ -38,16 +39,16 @@ export const clearEmptyQueries = (obj) => {
 };
 
 const ProductFilterSection = ({ child, parent, path, isFile, title }) => {
+    const searchProps = useSearch();
+    const { search, setSearch } = searchProps;
     const [showParentArrow, setShowParentArrow] = useState(false);
     const [showChildArrow, setShowChildArrow] = useState(false);
-    const [search, setSearch] = useState(undefined);
     const [drawerOpen, setDrawerOpen] = useState(false);
     const parentRef = useRef(null);
     const childRef = useRef(null);
     const { isMobile } = useResponsive();
-    const { query, push } = useRouter();
+    const { query, push, isReady } = useRouter();
     const { search: querySearch, parentCategory, childCategory } = query;
-    const debouncedSearch = useDebounce(search, 500);
 
     const handleParent = (slug, id) => {
         const newQuery = clearEmptyQueries(query);
@@ -92,15 +93,19 @@ const ProductFilterSection = ({ child, parent, path, isFile, title }) => {
     }, [parent]);
 
     useEffect(() => {
-        if (debouncedSearch === undefined) return;
-        delete query.similar_documents;
-        push({
-            pathname: query.pathname,
-            query: { ...query, search: debouncedSearch },
-        });
-    }, [debouncedSearch]);
+        if (isReady && querySearch) {
+            setSearch(querySearch);
+        }
+    }, [isReady]);
 
     useDisableWindowScroll(drawerOpen);
+
+    const handleSearch = (search) => {
+        push({
+            pathname: query.pathname,
+            query: { ...query, search },
+        });
+    };
 
     return (
         <div className={`${styles.filter} container`}>
@@ -110,7 +115,7 @@ const ProductFilterSection = ({ child, parent, path, isFile, title }) => {
             <div
                 style={{
                     display: 'flex',
-                    justifyContent: 'space-between',
+                    justifyContent: 'center',
                     alignItems: 'center',
                     gap: 12,
                 }}>
@@ -122,20 +127,58 @@ const ProductFilterSection = ({ child, parent, path, isFile, title }) => {
                         <LuSettings2 fontSize={20} />
                     </Button>
                 )}
-                <div className={`${styles.searchBox} container`}>
-                    <Input
-                        defaultValue={querySearch || ''}
-                        allowClear
-                        variant="borderless"
-                        onChange={(e) => setSearch(e.target.value)}
-                        placeholder="Qanday mahsulot izlamoqdasiz?"
-                        className={styles.input}
-                        type="text"
-                    />
-                    <span className={styles.searchIcon}>
-                        <SearchOutlined />
-                    </span>
-                </div>
+                <SearchController
+                    searchOption="selection"
+                    categoryType="mahsulotlar"
+                    classnames={{
+                        wrapper: styles.searchBoxWrapper,
+                    }}
+                    searchProps={{
+                        ...searchProps,
+                        handleClickOption: handleSearch,
+                    }}>
+                    {(
+                        inputRef,
+                        {
+                            handleInputChange,
+                            handleInputFocus,
+                            handleInputBlur,
+                            handleStoreSearchValue,
+                            handleClose,
+                        }
+                    ) => (
+                        <div className={`${styles.searchBox} container`}>
+                            <Input
+                                ref={inputRef}
+                                value={search}
+                                allowClear
+                                variant="borderless"
+                                onChange={handleInputChange}
+                                onFocus={handleInputFocus}
+                                onBlur={handleInputBlur}
+                                placeholder="Qanday mahsulot izlamoqdasiz?"
+                                className={styles.input}
+                                type="text"
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter') {
+                                        handleSearch(search);
+                                        handleStoreSearchValue(search);
+                                        handleClose();
+                                    }
+                                }}
+                            />
+                            <span
+                                className={styles.searchIcon}
+                                onClick={() => {
+                                    handleSearch(search);
+                                    handleStoreSearchValue(search);
+                                    handleClose();
+                                }}>
+                                <SearchOutlined />
+                            </span>
+                        </div>
+                    )}
+                </SearchController>
             </div>
 
             {/* Parent carousel */}

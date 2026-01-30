@@ -1,71 +1,91 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { SearchOutlined } from '@ant-design/icons';
-import { useQuery } from '@tanstack/react-query';
-import { F_SEARCH_OPTIONS } from '~/shared/api/end-points';
-import useDebounce from '~/shared/hooks/useDebounce';
-import axiosInstance from '~/shared/api/freeleanceApi';
 import { useRouter } from 'next/router';
 import styles from '../styles/freelanceSearchInput.module.scss';
-import dynamic from 'next/dynamic';
 import { Input } from 'antd';
-
-const AutoComplete = dynamic(() => import('antd/es/auto-complete'), {
-    ssr: false,
-    loading: () => <p>Loading...</p>,
-});
+import useSearch from '~/shared/hooks/useSearch';
+import SearchController from '~/shared/components/search-result/SearchController';
 
 function FreelancerSearchInput() {
-    const axios = axiosInstance();
-    const [search, setSearch] = useState('');
-    const router = useRouter();
-    const debounceSearch = useDebounce(search, 500);
-    const { data: freelanceData, isSuccess: freelanceSuccess } = useQuery({
-        queryKey: ['freelanceData', debounceSearch],
-        queryFn: async () => {
-            const { data } = await axios.get(
-                `${F_SEARCH_OPTIONS}${debounceSearch}`
-            );
-            return data;
-        },
-    });
+    const searchProps = useSearch();
+    const { search, setSearch } = searchProps;
+    const { query, push, isReady } = useRouter();
 
-    const options = freelanceSuccess
-        ? freelanceData?.position?.map((item) => ({ value: item }))
-        : [];
+    useEffect(() => {
+        if (!isReady) return;
 
-    const handleSearch = () => {
-        const newQueries = router.query;
+        setSearch(query.search || '');
+    }, [isReady]);
 
-        delete newQueries.position;
-        delete newQueries.direction;
-
-        router.push({
-            pathname: router.pathname,
-            query: { ...newQueries, keyword: search },
+    const handleSearch = (search) => {
+        push({
+            pathname: query.pathname,
+            query: { ...query, search },
         });
     };
 
     return (
-        <div className={styles.searchBox}>
-            <Input
-                allowClear
-                variant="borderless"
-                className={styles.input}
-                placeholder={'Qaysi turdagi mutaxassislar qidirmoqdasiz?'}
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                style={{ width: '100%' }}
-                onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                        handleSearch();
-                    }
-                }}
-            />
+        <SearchController
+            searchOption="selection"
+            categoryType="mutaxasislar"
+            styles={{
+                wrapper: {
+                    maxWidth: '600px',
+                    margin: '0 auto',
+                },
+            }}
+            classnames={{
+                wrapper: styles.searchBoxWrapper,
+            }}
+            searchProps={{
+                ...searchProps,
+                handleClickOption: handleSearch,
+            }}>
+            {(
+                inputRef,
+                {
+                    handleInputChange,
+                    handleInputFocus,
+                    handleInputBlur,
+                    handleStoreSearchValue,
+                    handleClose,
+                }
+            ) => (
+                <div className={styles.searchBox}>
+                    <Input
+                        ref={inputRef}
+                        allowClear
+                        variant="borderless"
+                        className={styles.input}
+                        placeholder={
+                            'Qaysi turdagi mutaxassislar qidirmoqdasiz?'
+                        }
+                        value={search}
+                        onChange={handleInputChange}
+                        onFocus={handleInputFocus}
+                        onBlur={handleInputBlur}
+                        style={{ width: '100%' }}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                handleSearch(search);
+                                handleStoreSearchValue(search);
+                                handleClose();
+                            }
+                        }}
+                    />
 
-            <span className={styles.searchIcon} onClick={handleSearch}>
-                <SearchOutlined />
-            </span>
-        </div>
+                    <span
+                        className={styles.searchIcon}
+                        onClick={() => {
+                            handleSearch(search);
+                            handleStoreSearchValue(search);
+                            handleClose();
+                        }}>
+                        <SearchOutlined />
+                    </span>
+                </div>
+            )}
+        </SearchController>
     );
 }
 

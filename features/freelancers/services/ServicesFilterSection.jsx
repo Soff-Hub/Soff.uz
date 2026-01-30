@@ -8,27 +8,24 @@ import {
     SearchOutlined,
 } from '@ant-design/icons';
 import ServiceSteps from './service-steps';
-import { useTimeManager } from '~/shared/hooks/useTimeManager';
+import useSearch from '~/shared/hooks/useSearch';
+import SearchController from '~/shared/components/search-result/SearchController';
 
 const { Option } = Select;
 
 const ServicesFilterSection = ({ parentCategory, directions }) => {
+    const searchProps = useSearch();
+    const { search, setSearch } = searchProps;
     const router = useRouter();
-    const { query } = router;
-    const { startTimeout, stopTimeout } = useTimeManager();
+    const { query, isReady } = router;
 
     const directionsWithEmpty = [
         { label: 'Barchasi', value: '' },
         ...directions,
     ];
 
-    const [searchValue, setSearchValue] = useState(query.search);
-    const [selectedDirection, setSelectedDirection] = useState(
-        query.direction || ''
-    );
-    const [selectedParentCategory, setSelectedParentCategory] = useState(
-        query.category_id || ''
-    );
+    const [selectedDirection, setSelectedDirection] = useState('');
+    const [selectedParentCategory, setSelectedParentCategory] = useState('');
 
     const updateQuery = (newQuery) => {
         router.push({ pathname: router.pathname, query: newQuery }, undefined, {
@@ -36,29 +33,10 @@ const ServicesFilterSection = ({ parentCategory, directions }) => {
         });
     };
 
-    useEffect(() => {
-        const delay = startTimeout(() => {
-            if (searchValue === undefined) return;
-            const newQuery = {
-                ...router.query,
-                search: searchValue || undefined,
-                direction: selectedDirection || undefined,
-                category_id: selectedParentCategory || undefined,
-                offset: 0,
-            };
-
-            if (JSON.stringify(newQuery) !== JSON.stringify(router.query)) {
-                updateQuery(newQuery);
-            }
-        }, 800);
-
-        return () => stopTimeout(delay);
-    }, [searchValue]);
-
     const updateDirection = (value) => {
         setSelectedDirection(value);
         setSelectedParentCategory('');
-        setSearchValue('');
+        setSearch('');
         router.push({
             pathname: router.pathname,
             query: {
@@ -70,7 +48,7 @@ const ServicesFilterSection = ({ parentCategory, directions }) => {
 
     const onParentCategoryChange = (value) => {
         setSelectedParentCategory(value);
-        setSearchValue('');
+        setSearch('');
         router.push({
             pathname: router.pathname,
             query: {
@@ -82,18 +60,27 @@ const ServicesFilterSection = ({ parentCategory, directions }) => {
     };
 
     const clearFilters = () => {
-        setSearchValue('');
+        setSearch('');
         setSelectedDirection('');
         setSelectedParentCategory('');
         updateQuery({});
     };
 
     useEffect(() => {
-        setSelectedDirection(query.direction);
+        if (!isReady) return;
+        setSelectedDirection(query.direction || '');
         setSelectedParentCategory(
-            query.category_id || query.parent_category_id
+            query.category_id || query.parent_category_id || ''
         );
-    }, [query]);
+        setSearch(query.search || '');
+    }, [isReady]);
+
+    const handleSearch = (search) => {
+        router.push({
+            pathname: query.pathname,
+            query: { ...query, search },
+        });
+    };
 
     return (
         <div className="">
@@ -142,27 +129,70 @@ const ServicesFilterSection = ({ parentCategory, directions }) => {
                         </button>
                     </div>
 
-                    <div className="d-flex justify-content-end gap-3 flex-fill">
-                        <div className={styles.searchBox}>
-                            <input
-                                value={searchValue}
-                                onChange={(e) => setSearchValue(e.target.value)}
-                                placeholder="Qanday xizmat izlamoqdasiz"
-                                className={styles.input}
-                                type="text"
-                            />
-                            <span className={styles.searchIcon}>
-                                <SearchOutlined />
-                            </span>
-                        </div>
-                        <div className="d-flex d-md-none align-items-center">
-                            <button
-                                className={styles.deleteMob}
-                                onClick={clearFilters}>
-                                <DeleteOutlined />
-                            </button>
-                        </div>
-                    </div>
+                    <SearchController
+                        searchOption="selection"
+                        categoryType="xizmatlar"
+                        styles={{
+                            wrapper: {
+                                maxWidth: '480px',
+                            },
+                        }}
+                        classnames={{
+                            wrapper: styles.searchBoxWrapper,
+                        }}
+                        searchProps={{
+                            ...searchProps,
+                            handleClickOption: handleSearch,
+                        }}>
+                        {(
+                            inputRef,
+                            {
+                                handleInputChange,
+                                handleInputFocus,
+                                handleInputBlur,
+                                handleStoreSearchValue,
+                                handleClose,
+                            }
+                        ) => (
+                            <div className="d-flex justify-content-end gap-3 flex-fill">
+                                <div className={styles.searchBox}>
+                                    <input
+                                        ref={inputRef}
+                                        value={search}
+                                        onChange={handleInputChange}
+                                        onFocus={handleInputFocus}
+                                        onBlur={handleInputBlur}
+                                        placeholder="Qanday xizmat izlamoqdasiz"
+                                        className={styles.input}
+                                        type="text"
+                                        onKeyDown={(e) => {
+                                            if (e.key === 'Enter') {
+                                                handleSearch(search);
+                                                handleStoreSearchValue(search);
+                                                handleClose();
+                                            }
+                                        }}
+                                    />
+                                    <span
+                                        className={styles.searchIcon}
+                                        onClick={() => {
+                                            handleSearch(search);
+                                            handleStoreSearchValue(search);
+                                            handleClose();
+                                        }}>
+                                        <SearchOutlined />
+                                    </span>
+                                </div>
+                                <div className="d-flex d-md-none align-items-center">
+                                    <button
+                                        className={styles.deleteMob}
+                                        onClick={clearFilters}>
+                                        <DeleteOutlined />
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+                    </SearchController>
                 </div>
             </div>
         </div>

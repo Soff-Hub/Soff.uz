@@ -34,7 +34,7 @@ const CategoryFilterSecion = ({
     return (
         <div>
             {/* Mobile dropdown */}
-            <div className="d-xl-none d-block my-4 container">
+            <div className="d-xl-none d-block mb-4">
                 <div className="row mx-auto gap-3">
                     <Select
                         className="col-md-6 col-12 p-0 m-0 mr-md-2"

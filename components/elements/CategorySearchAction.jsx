@@ -1,55 +1,64 @@
 import { Input } from 'antd';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { useTimeManager } from '~/shared/hooks/useTimeManager';
-
-function useDebounce(value, delay = 500) {
-    const [debounced, setDebounced] = useState(value);
-    const { startTimeout, stopTimeout } = useTimeManager();
-
-    useEffect(() => {
-        const handler = startTimeout(() => {
-            setDebounced(value);
-        }, delay);
-
-        return () => stopTimeout(handler);
-    }, [value, delay]);
-
-    return debounced;
-}
+import { useEffect } from 'react';
+import SearchController from '~/shared/components/search-result/SearchController';
+import useSearch from '~/shared/hooks/useSearch';
 
 export default function CategorySearchSection() {
-    const [search, setSearch] = useState('');
-    const router = useRouter();
+    const searchProps = useSearch();
+    const { search, setSearch } = searchProps;
+    const { push, query, isReady } = useRouter();
+    const { search: querySearch } = query;
 
-    const debouncedSearch = useDebounce(search, 1000);
+    const handleSearch = (search) => {
+        push({
+            pathname: query.pathname,
+            query: { ...query, search },
+        });
+    };
 
     useEffect(() => {
-        const currentQuery = router.query;
-
-        const updatedQuery = { ...currentQuery };
-        if (debouncedSearch) {
-            updatedQuery.search = debouncedSearch;
-            updatedQuery.page = 1;
-        } else {
-            delete updatedQuery.search;
+        if (isReady && querySearch) {
+            setSearch(querySearch);
         }
-
-        router.replace({
-            pathname: router.pathname,
-            query: updatedQuery,
-        });
-    }, [debouncedSearch]);
+    }, [isReady]);
 
     return (
-        <div className="">
-            <Input.Search
-                placeholder="Mahsulot qidirish..."
-                size="large"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                style={{ height: '50px', fontSize: '18px' }}
-            />
-        </div>
+        <SearchController
+            searchOption="selection"
+            categoryType="mahsulotlar"
+            searchProps={{
+                ...searchProps,
+                handleClickOption: handleSearch,
+            }}>
+            {(
+                inputRef,
+                {
+                    handleInputChange,
+                    handleInputFocus,
+                    handleInputBlur,
+                    handleStoreSearchValue,
+                    handleClose,
+                }
+            ) => (
+                <Input.Search
+                    ref={inputRef}
+                    allowClear
+                    placeholder="Mahsulot qidirish..."
+                    size="large"
+                    value={search}
+                    defaultValue={querySearch || ''}
+                    onChange={handleInputChange}
+                    onFocus={handleInputFocus}
+                    onBlur={handleInputBlur}
+                    style={{ fontSize: '18px' }}
+                    onSearch={() => {
+                        handleSearch(search);
+                        handleStoreSearchValue(search);
+                        handleClose();
+                    }}
+                />
+            )}
+        </SearchController>
     );
 }
