@@ -44,7 +44,7 @@ function PortfolioModal({ open, onClose, portfolio }: PortfolioModalProps) {
                 },
             }}
             title={<span className={styles.title}>{portfolio?.title}</span>}
-            width={isMobile ? '100%' : '80%'}
+            width={'800px'}
             centered
             destroyOnHidden>
             <div>

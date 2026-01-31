@@ -1,5 +1,6 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
+import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
 
 // Configure test to run only on Safari/WebKit
 test.describe('Google OAuth Authentication in Safari', () => {
@@ -152,16 +153,16 @@ test.describe('Google OAuth Authentication in Safari', () => {
         expect(cookiesAfter.length).toBeGreaterThanOrEqual(cookies.length);
     });
 
-    test('should handle Safari localStorage with OAuth tokens', async ({
+    test('should handle Safari safeLocalStorage with OAuth tokens', async ({
         page,
     }) => {
-        // Test localStorage functionality which can be problematic in Safari
+        // Test safeLocalStorage functionality which can be problematic in Safari
         await page.evaluate(() => {
-            localStorage.setItem('test-auth', 'safari-test');
+            safeLocalStorage.setItem('test-auth', 'safari-test');
         });
 
         const storedValue = await page.evaluate(() => {
-            return localStorage.getItem('test-auth');
+            return safeLocalStorage.getItem('test-auth');
         });
 
         expect(storedValue).toBe('safari-test');
@@ -184,7 +185,7 @@ test.describe('Google OAuth Authentication in Safari', () => {
                 access: 'test-access-token',
                 role: 'customer',
             };
-            localStorage.setItem('user', JSON.stringify(mockUser));
+            safeLocalStorage.setItem('user', JSON.stringify(mockUser));
 
             // Dispatch a custom event to simulate OAuth completion
             window.dispatchEvent(
@@ -196,7 +197,7 @@ test.describe('Google OAuth Authentication in Safari', () => {
 
         // Check if token is properly stored
         const userData = await page.evaluate(() => {
-            return localStorage.getItem('user');
+            return safeLocalStorage.getItem('user');
         });
 
         expect(userData).toContain('test-access-token');
@@ -259,8 +260,8 @@ test.describe('Google OAuth Authentication in Safari', () => {
 
         // Check if button is properly sized for touch
         const buttonBox = await googleButton.boundingBox();
-        expect(buttonBox.height).toBeGreaterThan(44); // iOS minimum touch target
-        expect(buttonBox.width).toBeGreaterThan(44);
+        expect(buttonBox?.height).toBeGreaterThan(44); // iOS minimum touch target
+        expect(buttonBox?.width).toBeGreaterThan(44);
 
         // Test tap interaction
         await googleButton.tap();
