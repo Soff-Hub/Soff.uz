@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
 
 const initialState = {
     searchHistory: [],
@@ -9,7 +10,7 @@ export const initSearchHistory = createAsyncThunk(
     'search/initSearchHistory',
     async () => {
         const searchHistory =
-            JSON.parse(localStorage.getItem('searchHistory')) || [];
+            JSON.parse(safeLocalStorage.getItem('searchHistory')) || [];
         return searchHistory;
     }
 );
@@ -20,7 +21,7 @@ const searchSlice = createSlice({
     reducers: {
         setSearchHistory(state, action) {
             state.searchHistory = action.payload;
-            localStorage.setItem(
+            safeLocalStorage.setItem(
                 'searchHistory',
                 JSON.stringify(action.payload)
             );
@@ -31,7 +32,7 @@ const searchSlice = createSlice({
             );
             if (existingIndex === -1) {
                 state.searchHistory.unshift(action.payload);
-                localStorage.setItem(
+                safeLocalStorage.setItem(
                     'searchHistory',
                     JSON.stringify(state.searchHistory)
                 );
@@ -41,14 +42,14 @@ const searchSlice = createSlice({
             state.searchHistory = state.searchHistory.filter(
                 (item) => item.value !== action.payload.value
             );
-            localStorage.setItem(
+            safeLocalStorage.setItem(
                 'searchHistory',
                 JSON.stringify(state.searchHistory)
             );
         },
         clearSearchHistory(state) {
             state.searchHistory = [];
-            localStorage.removeItem('searchHistory');
+            safeLocalStorage.removeItem('searchHistory');
         },
     },
     extraReducers: (builder) => {

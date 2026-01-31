@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import Axios from 'axios';
 import { baseUrlAuth } from '~/repositories/Repository';
 import { login } from '~/store/auth/slice';
+import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
 
 export const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
@@ -41,7 +42,7 @@ export default function TelegramConfigmForm({ isModal, onSuccess }) {
         };
 
         try {
-            const utm_source = localStorage.getItem('utm_source');
+            const utm_source = safeLocalStorage.getItem('utm_source');
             const resp = await Axios.post(
                 baseUrlAuth +
                     `auth/telegram-verify/${
@@ -56,7 +57,7 @@ export default function TelegramConfigmForm({ isModal, onSuccess }) {
                 })
             );
             if (resp.data?.role === 'seller') {
-                localStorage.setItem('is_seller', '1');
+                safeLocalStorage.setItem('is_seller', '1');
             }
 
             if (isModal) {

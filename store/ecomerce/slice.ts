@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { baseUrl } from '~/repositories/Repository';
 import api from '~/shared/api/api';
+import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
 
 export interface EcommerceState {
     cartDataItems: any[];
@@ -30,8 +31,8 @@ export const setWishlistItems = createAsyncThunk(
 export const initLocalCart = createAsyncThunk(
     'ecommerce/initLocalCart',
     async (payload, { rejectWithValue }) => {
-        const localWishlist = localStorage.getItem('wishlist');
-        const localCart = localStorage.getItem('cart');
+        const localWishlist = safeLocalStorage.getItem('wishlist');
+        const localCart = safeLocalStorage.getItem('cart');
 
         const parsedWishlist = localWishlist ? JSON.parse(localWishlist) : [];
         const parsedCartList = localCart ? JSON.parse(localCart) : [];
@@ -72,7 +73,7 @@ export const setCartItems = createAsyncThunk(
     'ecommerce/setCartItems',
     async (payload, { rejectWithValue }) => {
         try {
-            localStorage.setItem('cart', JSON.stringify(payload));
+            safeLocalStorage.setItem('cart', JSON.stringify(payload));
             return payload;
         } catch (error: any) {
             return rejectWithValue(error.message);
@@ -86,14 +87,14 @@ const ecommerceSlice = createSlice({
     reducers: {
         setCartDataItems: (state, action) => {
             const localData = action.payload.map((item: any) => item.id);
-            localStorage.setItem('cart', JSON.stringify(localData));
+            safeLocalStorage.setItem('cart', JSON.stringify(localData));
             state.cartDataItems = action.payload;
         },
         setCartItemDataItems: (state, action) => {
-            const localCart = localStorage.getItem('cart');
+            const localCart = safeLocalStorage.getItem('cart');
             const parsedCart = localCart ? JSON.parse(localCart) : [];
 
-            localStorage.setItem(
+            safeLocalStorage.setItem(
                 'cart',
                 JSON.stringify([...parsedCart, action.payload[0].id])
             );
@@ -102,16 +103,16 @@ const ecommerceSlice = createSlice({
         },
         setSaved: (state, action) => {
             const localData = action.payload.map((item: any) => item.id);
-            localStorage.setItem('wishlist', JSON.stringify(localData));
+            safeLocalStorage.setItem('wishlist', JSON.stringify(localData));
             state.wishlist = action.payload;
         },
         setSavedItem: (state, action) => {
-            const localWishlist = localStorage.getItem('wishlist');
+            const localWishlist = safeLocalStorage.getItem('wishlist');
             const parsedWishlist = localWishlist
                 ? JSON.parse(localWishlist)
                 : [];
 
-            localStorage.setItem(
+            safeLocalStorage.setItem(
                 'wishlist',
                 JSON.stringify([...parsedWishlist, action.payload[0].id])
             );

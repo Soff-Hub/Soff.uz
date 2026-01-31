@@ -3,11 +3,14 @@ import { d_base_url, f_base_url } from '~/shared/api/base-url';
 import Cookies from 'js-cookie';
 import { logOut } from '~/store/auth/slice';
 import { logout as profileLogout } from '~/store/profile/slice';
+import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
 
 const getToken = () => {
     if (typeof window !== 'undefined') {
         const userLocal =
-            typeof window !== 'undefined' ? localStorage.getItem('user') : null;
+            typeof window !== 'undefined'
+                ? safeLocalStorage.getItem('user')
+                : null;
         return userLocal ? JSON.parse(userLocal)?.access : '';
     }
     return null;
@@ -38,7 +41,7 @@ const baseQueryWithLogout = (baseQuery) => {
         // Handle 403 Forbidden errors
         if (result.error && result.error.status === 403) {
             if (typeof window !== 'undefined') {
-                localStorage.clear();
+                safeLocalStorage.clear();
                 Cookies.remove('token');
                 api.dispatch(logOut());
                 api.dispatch(profileLogout());

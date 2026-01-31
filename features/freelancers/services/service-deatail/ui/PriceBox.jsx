@@ -9,6 +9,7 @@ import { sleep } from '~/shared/utilities/sleep';
 import { FaMoneyBillWave } from 'react-icons/fa6';
 import { FaClock } from 'react-icons/fa6';
 import { FaPenToSquare } from 'react-icons/fa6';
+import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
 
 const PriceBox = ({ priceBox, requirements }) => {
     const { price, days, revisions, user } = priceBox;
@@ -21,7 +22,7 @@ const PriceBox = ({ priceBox, requirements }) => {
         if (isLoggedIn) {
             setModalOpen(true);
         } else {
-            localStorage.setItem('openPaymentModal', 'true');
+            safeLocalStorage.setItem('openPaymentModal', 'true');
             setAuthOpen(true);
         }
     };
@@ -40,10 +41,11 @@ const PriceBox = ({ priceBox, requirements }) => {
 
     useEffect(() => {
         if (isLoggedIn) {
-            const shouldOpenModal = localStorage.getItem('openPaymentModal');
+            const shouldOpenModal =
+                safeLocalStorage.getItem('openPaymentModal');
             if (shouldOpenModal === 'true') {
                 setIsOpen(true);
-                localStorage.removeItem('openPaymentModal');
+                safeLocalStorage.removeItem('openPaymentModal');
             }
         }
     }, [isLoggedIn]);

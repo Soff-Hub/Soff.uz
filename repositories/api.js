@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
 export const baseURL = `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/`;
 export const baseURLFreelance = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/`;
 
@@ -14,7 +15,7 @@ export const apiForFreelance = axios.create({
 
 api.interceptors.request.use(
     (config) => {
-        const storedToken = localStorage.getItem('user');
+        const storedToken = safeLocalStorage.getItem('user');
         if (storedToken && JSON.parse(storedToken).access) {
             const token = JSON.parse(storedToken).access;
             config.headers['Authorization'] = `Bearer ${token}`;
@@ -37,7 +38,7 @@ api.interceptors.response.use(
             const hasModalOpen = urlParams.get('modal') === 'open';
 
             if (!hasModalOpen) {
-                localStorage.clear();
+                safeLocalStorage.clear();
                 window.location.href = '/';
             }
         }

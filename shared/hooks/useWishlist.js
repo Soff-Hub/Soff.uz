@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import ProductRepository from '~/repositories/ProductRepository';
 import { setSaved, setSavedItem } from '~/store/ecomerce/slice';
+import { safeLocalStorage } from '../utilities/safe-local-storage';
 export default function useWishlist() {
     const dispatch = useDispatch();
     const { ecomerce } = useSelector((state) => state);
@@ -10,7 +11,7 @@ export default function useWishlist() {
     return {
         wishlist,
         setAllSaved: async () => {
-            const data = JSON.parse(localStorage.getItem('wishlist'));
+            const data = JSON.parse(safeLocalStorage.getItem('wishlist'));
             if (data?.length > 0) {
                 const resp = await ProductRepository.postCartData(data);
                 if (resp?.data) {

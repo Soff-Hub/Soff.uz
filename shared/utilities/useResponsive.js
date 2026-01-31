@@ -2,32 +2,36 @@ import { useEffect, useState } from 'react';
 import useIsomorphicLayoutEffect from '../hooks/useIsomorphicLayoutEffect';
 
 const useResponsive = () => {
-    const [isMobile, setIsMobile] = useState(false);
-    const [isTablet, setIsTablet] = useState(false);
-    const [isDesktop, setIsDesktop] = useState(false);
-    const [size, setSize] = useState(0);
+    const [state, setState] = useState({
+        isMobile: false,
+        isTablet: false,
+        isDesktop: false,
+        size: typeof window !== 'undefined' ? window.innerWidth : 0,
+    });
 
-    useEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         if (typeof window === 'undefined') return;
         const handleResize = () => {
             const { innerWidth } = window;
-            setSize(innerWidth);
-            setIsMobile(innerWidth < 576);
-            setIsTablet(innerWidth >= 576 && innerWidth < 992);
-            setIsDesktop(innerWidth >= 992);
+            setState({
+                size: innerWidth,
+                isMobile: innerWidth < 576,
+                isTablet: innerWidth >= 576 && innerWidth < 992,
+                isDesktop: innerWidth >= 992,
+            });
         };
 
         // Initial call to set the initial state based on window width
         handleResize();
 
         // Add event listener for resize events
-        window.addEventListener('resize', handleResize, { passive: true });
+        window.addEventListener('resize', handleResize);
 
         // Cleanup event listener on unmount
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    return { isMobile, isTablet, isDesktop, size };
+    return state;
 };
 
 export default useResponsive;

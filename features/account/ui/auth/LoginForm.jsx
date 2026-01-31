@@ -7,6 +7,7 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import { baseUrlAuth } from '~/repositories/Repository';
 import { useMutation } from '@tanstack/react-query';
+import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
 
 const formInputs = {
     phone: (
@@ -22,7 +23,7 @@ const formInputs = {
                     message: 'Iltimos, haqiqiy telefon raqam kiriting',
                 },
             ]}
-            normalize={value => value.replace(/\D/g, '').slice(0, 9)}>
+            normalize={(value) => value.replace(/\D/g, '').slice(0, 9)}>
             <Input
                 autoComplete="off"
                 style={{ height: '50px', fontSize: '16px' }}
@@ -86,53 +87,55 @@ export default function LoginForm({
     const [type, setType] = useState('phone'); // phone, email
     const router = useRouter();
 
-    const { mutate: handleSubmit, isPending: loading, isSuccess } = useMutation(
-        {
-            mutationKey: ['auth-register'],
-            mutationFn: async ({ phone, email }) => {
-                const utm_source = localStorage.getItem('utm_source');
-                const data = {
-                    phone_or_email: type === 'phone' ? '+998' + phone : email,
-                    role: 'customer',
-                };
-                const resp = await axios.post(
-                    baseUrlAuth +
-                        `auth/register/${
-                            utm_source ? `?utm_source=${utm_source}` : ''
-                        }`,
-                    data
-                );
-                localStorage.setItem('via_', resp?.data?.via_);
-                localStorage.setItem('msg', resp?.data?.msg);
-                localStorage.setItem('data', JSON.stringify(data));
-                return resp;
-            },
-            onSuccess: resp => {
-                if (isModal) {
-                    onSuccess();
-                    setCode(resp.data?.user);
-                } else {
-                    router.push({
-                        query: {
-                            ...router.query,
-                            user: resp.data?.user,
-                        },
-                        pathname: '/auth/code-verify',
-                    });
-                }
-            },
-            onError: error => {
-                const modal = Modal.error({
-                    centered: true,
-                    title: 'Xatolik',
-                    content:
-                        error?.response?.data?.msg ||
-                        JSON.stringify(error?.response),
+    const {
+        mutate: handleSubmit,
+        isPending: loading,
+        isSuccess,
+    } = useMutation({
+        mutationKey: ['auth-register'],
+        mutationFn: async ({ phone, email }) => {
+            const utm_source = safeLocalStorage.getItem('utm_source');
+            const data = {
+                phone_or_email: type === 'phone' ? '+998' + phone : email,
+                role: 'customer',
+            };
+            const resp = await axios.post(
+                baseUrlAuth +
+                    `auth/register/${
+                        utm_source ? `?utm_source=${utm_source}` : ''
+                    }`,
+                data
+            );
+            safeLocalStorage.setItem('via_', resp?.data?.via_);
+            safeLocalStorage.setItem('msg', resp?.data?.msg);
+            safeLocalStorage.setItem('data', JSON.stringify(data));
+            return resp;
+        },
+        onSuccess: (resp) => {
+            if (isModal) {
+                onSuccess();
+                setCode(resp.data?.user);
+            } else {
+                router.push({
+                    query: {
+                        ...router.query,
+                        user: resp.data?.user,
+                    },
+                    pathname: '/auth/code-verify',
                 });
-                modal.update;
-            },
-        }
-    );
+            }
+        },
+        onError: (error) => {
+            const modal = Modal.error({
+                centered: true,
+                title: 'Xatolik',
+                content:
+                    error?.response?.data?.msg ||
+                    JSON.stringify(error?.response),
+            });
+            modal.update;
+        },
+    });
 
     const disableAllInputs = loading || isSuccess;
 

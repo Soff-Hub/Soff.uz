@@ -12,6 +12,7 @@ import Meta from '~/shared/ui/meta';
 import { getOrCreateDeviceId } from '~/shared/utilities/device-id';
 import dynamic from 'next/dynamic';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
+import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
 
 const video_url = 'https://www.youtube.com/watch?v=oJre9mbRE2U';
 
@@ -118,18 +119,14 @@ export default function ProductDefaultPage({ defaultProducts }) {
 
     useEffect(() => {
         if (typeof window === 'undefined') return;
-        try {
-            const hasSeenProductTour = localStorage.getItem(
-                'product-tour-completed'
-            );
-            if (!hasSeenProductTour) {
-                const timer = startTimeout(() => {
-                    setShowJoyride(true);
-                }, 2000);
-                return () => stopTimeout(timer);
-            }
-        } catch (error) {
-            console.warn('Error accessing localStorage:', error);
+        const hasSeenProductTour = safeLocalStorage.getItem(
+            'product-tour-completed'
+        );
+        if (!hasSeenProductTour) {
+            const timer = startTimeout(() => {
+                setShowJoyride(true);
+            }, 2000);
+            return () => stopTimeout(timer);
         }
     }, []);
 
@@ -178,7 +175,7 @@ export default function ProductDefaultPage({ defaultProducts }) {
 
     const handleJoyrideCallback = useCallback((data) => {
         if (data.status === 'finished' || data.status === 'skipped') {
-            localStorage.setItem('product-tour-completed', 'true');
+            safeLocalStorage.setItem('product-tour-completed', 'true');
             setShowJoyride(false);
         }
     }, []);

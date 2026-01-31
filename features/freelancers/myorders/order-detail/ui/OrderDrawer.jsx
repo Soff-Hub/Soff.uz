@@ -39,7 +39,6 @@ const OrderDrawer = ({
     const { isDesktop } = useResponsive();
     const { push } = useRouter();
     const { offers, setOffers, isConnected } = useOffers(order?.id, open);
-    const { tg } = useTelegram();
     const price = order?.service?.price || order?.budget || 0;
 
     const { data: initialOffers } = useFGet(order?.id, `offer/${order?.id}/`, {

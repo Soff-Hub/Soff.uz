@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie';
+import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
 
 export interface AuthState {
     isLoggedIn: boolean;
@@ -20,12 +21,12 @@ export const login = createAsyncThunk(
     'auth/login',
     async ({ user, data }: any, { rejectWithValue }) => {
         try {
-            localStorage.setItem('user', JSON.stringify(user));
+            safeLocalStorage.setItem('user', JSON.stringify(user));
             Cookies.set('token', user?.access, {
                 expires: jwtDecode(user?.access)?.exp || 8,
             });
             if (data) {
-                localStorage.setItem('data', JSON.stringify(data));
+                safeLocalStorage.setItem('data', JSON.stringify(data));
             }
             return {
                 user,
@@ -42,7 +43,7 @@ export const logOut = createAsyncThunk(
     'auth/logOut',
     async (_, { rejectWithValue }) => {
         try {
-            localStorage.clear();
+            safeLocalStorage.clear();
             Cookies.remove('token');
             return;
         } catch (error: any) {
@@ -55,7 +56,7 @@ export const checkAuthorization = createAsyncThunk(
     'auth/checkAuthorization',
     async (_, { rejectWithValue }) => {
         try {
-            let user: any = localStorage.getItem('user');
+            let user: any = safeLocalStorage.getItem('user');
             user = user ? JSON.parse(user) : '';
             const token = Cookies.get('token');
             if (!token)

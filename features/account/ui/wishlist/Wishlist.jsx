@@ -18,6 +18,7 @@ import styles from './wishlist.module.scss';
 import { FaArrowLeft, FaBoxOpen } from 'react-icons/fa6';
 import FileDownloadLink from '~/shared/ui/file-download-link';
 import Icon from '~/shared/ui/Icon';
+import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
 
 const breadCrumb = [
     {
@@ -38,7 +39,7 @@ function Wishlist() {
 
     useEffect(() => {
         const localWishlist =
-            JSON.parse(localStorage.getItem('wishlist')) || [];
+            JSON.parse(safeLocalStorage.getItem('wishlist')) || [];
         if (localWishlist.length > 0 && (!wishlist || wishlist.length === 0)) {
             setAllSaved();
         }

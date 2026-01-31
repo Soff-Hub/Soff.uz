@@ -8,8 +8,9 @@ import { useDispatch } from 'react-redux';
 import { login } from '~/store/auth/slice';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
 import { isReturnUrlEmpty } from '~/shared/utilities/return-url';
+import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
 
-export const formatTime = seconds => {
+export const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
     const secondsLeft = seconds % 60;
     return `${String(minutes).padStart(2, '0')}:${String(secondsLeft).padStart(
@@ -19,7 +20,7 @@ export const formatTime = seconds => {
 };
 
 // Helper function to validate slug
-const isValidSlug = slug => {
+const isValidSlug = (slug) => {
     return (
         slug &&
         typeof slug === 'string' &&
@@ -38,7 +39,7 @@ export default function CodeVerifyForm({ authCode, onClose, slug, onSuccess }) {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        setMsg(localStorage.getItem('msg'));
+        setMsg(safeLocalStorage.getItem('msg'));
 
         startTimer();
     }, []);
@@ -47,7 +48,7 @@ export default function CodeVerifyForm({ authCode, onClose, slug, onSuccess }) {
         clearAll();
 
         startInterval(() => {
-            setSecondsRemaining(prev => {
+            setSecondsRemaining((prev) => {
                 if (prev > 0) return prev - 1;
                 clearAll();
                 return 0;
@@ -64,11 +65,11 @@ export default function CodeVerifyForm({ authCode, onClose, slug, onSuccess }) {
             dispatch(
                 login({
                     user: { ...resp.data, role: 'customer' },
-                    data: JSON.parse(localStorage.getItem('data')),
+                    data: JSON.parse(safeLocalStorage.getItem('data')),
                 })
             );
             if (resp.data?.role === 'seller') {
-                localStorage.setItem('is_seller', '1');
+                safeLocalStorage.setItem('is_seller', '1');
             }
 
             if (typeof onClose === 'function') {
@@ -115,7 +116,7 @@ export default function CodeVerifyForm({ authCode, onClose, slug, onSuccess }) {
 
     const getRecode = async () => {
         setLoading(true);
-        const data = JSON.parse(localStorage.getItem('data'));
+        const data = JSON.parse(safeLocalStorage.getItem('data'));
 
         try {
             await Axios.post(baseUrlAuth + 'auth/get-new-code/', {

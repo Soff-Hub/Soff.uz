@@ -158,6 +158,12 @@ function useSearch() {
 
     const handleClickOption = async (optionValue) => {
         setSearch(optionValue);
+        await router.push(
+            `/search-page/?keyword=${optionValue}&tab=${
+                type === 'mahsulotlar' ? 1 : type === 'xizmatlar' ? 2 : 3
+            }&type=${type === 'mahsulotlar' ? 'file' : 'all'}`
+        );
+        addSearchHistoryItem({ value: optionValue, type });
     };
 
     const handleNavigateOption = async (optionValue) => {

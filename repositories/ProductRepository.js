@@ -1,3 +1,4 @@
+import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
 import Repository, { baseUrl, serializeQuery } from './Repository';
 
 class ProductRepository {
@@ -38,7 +39,7 @@ class ProductRepository {
         return reponse;
     }
     async WishlistDataDelete(id) {
-        const select = localStorage.getItem('token');
+        const select = safeLocalStorage.getItem('token');
 
         const reponse = await Repository({
             url: `${baseUrl}customer/wishlist/${id}/`,

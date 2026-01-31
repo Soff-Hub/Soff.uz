@@ -3,6 +3,7 @@ import { Alert } from 'antd';
 import TextSlicer from '~/shared/utilities/TextSlicer';
 import useResponsive from '~/shared/utilities/useResponsive';
 import styles from '../../style/chat.module.scss';
+import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
 
 type ChatAlertsProps = {};
 
@@ -23,7 +24,7 @@ export const SafetyAlert = () => {
     const { isMobile } = useResponsive();
 
     useEffect(() => {
-        const dismissed = localStorage.getItem('safetyAlertDismissed');
+        const dismissed = safeLocalStorage.getItem('safetyAlertDismissed');
         if (!dismissed) {
             setVisible(true);
         }
@@ -31,7 +32,7 @@ export const SafetyAlert = () => {
 
     const handleClose = () => {
         setVisible(false);
-        localStorage.setItem('safetyAlertDismissed', 'true');
+        safeLocalStorage.setItem('safetyAlertDismissed', 'true');
     };
 
     if (!visible) return null;

@@ -17,6 +17,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { baseURL } from '~/repositories/api';
 import { downloadFile } from '~/shared/utilities/utils';
+import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
 
 // Default product for testing
 // const DEFAULT_PRODUCT = {
@@ -28,14 +29,14 @@ import { downloadFile } from '~/shared/utilities/utils';
 // };
 
 const getDownloadedProducts = (product) => {
-    const downloadeds = localStorage.getItem('downloadedProducts');
+    const downloadeds = safeLocalStorage.getItem('downloadedProducts');
     const downloadedProducts = downloadeds ? JSON.parse(downloadeds) : [];
     const isAlreadyDownloaded = downloadedProducts.includes(product.id);
     return { downloadedProducts, isAlreadyDownloaded };
 };
 
 const getProductCarts = (product) => {
-    const carts = localStorage.getItem('cart');
+    const carts = safeLocalStorage.getItem('cart');
     const productCarts = carts ? JSON.parse(carts) : [];
     const isAlreadyInCart = productCarts.includes(product.id);
     return { productCarts, isAlreadyInCart };
@@ -48,7 +49,7 @@ const handleDeleteDownloadProduct = (product) => {
         downloadedProducts = downloadedProducts.filter(
             (id) => id !== product.id
         );
-        localStorage.setItem(
+        safeLocalStorage.setItem(
             'downloadedProducts',
             JSON.stringify(downloadedProducts)
         );
@@ -149,7 +150,7 @@ const FastDownloadSection = () => {
 
         if (!isAlreadyDownloaded) {
             const newDownloadedProducts = [...downloadedProducts, product.id];
-            localStorage.setItem(
+            safeLocalStorage.setItem(
                 'downloadedProducts',
                 JSON.stringify(newDownloadedProducts)
             );

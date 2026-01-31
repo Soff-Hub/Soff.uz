@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { PacmanLoader } from 'react-spinners';
 import { login } from '~/store/auth/slice';
 import { isReturnUrlEmpty } from '~/shared/utilities/return-url';
+import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
 
 const Loader = () => {
     const { user } = useSelector((state) => state.auth);
@@ -14,7 +15,7 @@ const Loader = () => {
 
     useEffect(() => {
         let returnUrl = null;
-        const googleRedirectOnSuccess = localStorage.getItem(
+        const googleRedirectOnSuccess = safeLocalStorage.getItem(
             'google_redirect_url'
         );
         if (asPath.split('').length > 10) {
@@ -27,7 +28,7 @@ const Loader = () => {
                 urlParams.get('redirectUrl') ||
                 urlParams.get('returnUrl');
 
-            localStorage.setItem('token', token);
+            safeLocalStorage.setItem('token', token);
 
             const data = {
                 access: token,
@@ -39,13 +40,13 @@ const Loader = () => {
 
         if (googleRedirectOnSuccess) {
             returnUrl = googleRedirectOnSuccess;
-            localStorage.removeItem('google_redirect_url');
+            safeLocalStorage.removeItem('google_redirect_url');
         }
 
         const decodedUrl = decodeURIComponent(returnUrl || '');
 
         if (user?.role === 'admin') {
-            localStorage.setItem('is_seller', '1');
+            safeLocalStorage.setItem('is_seller', '1');
         }
 
         if (decodedUrl && !isReturnUrlEmpty(decodedUrl)) {

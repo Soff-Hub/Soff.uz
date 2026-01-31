@@ -3,6 +3,7 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { PacmanLoader } from 'react-spinners';
+import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
 import { login } from '~/store/auth/slice';
 
 const TgLoader = () => {
@@ -20,7 +21,7 @@ const TgLoader = () => {
                 const token = urlParams.get('token');
                 const returnUrl = urlParams.get('returnUrl');
                 if (token) {
-                    localStorage.setItem('token', token);
+                    safeLocalStorage.setItem('token', token);
 
                     const userData = {
                         access: token,
@@ -45,7 +46,7 @@ const TgLoader = () => {
 
                     if (tokenPart) {
                         const token = tokenPart.split('&')[0];
-                        localStorage.setItem('token', token);
+                        safeLocalStorage.setItem('token', token);
 
                         const data = {
                             access: token,
@@ -59,7 +60,7 @@ const TgLoader = () => {
         }
 
         if (user?.role === 'admin') {
-            localStorage.setItem('is_seller', '1');
+            safeLocalStorage.setItem('is_seller', '1');
         }
 
         if (!asPath.includes('token=') && user?.role) {

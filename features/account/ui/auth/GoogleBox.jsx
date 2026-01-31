@@ -1,5 +1,6 @@
 import Router, { useRouter } from 'next/router';
 import React from 'react';
+import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
 // import useAuth from '~/shared/hooks/useAuth';
 
 export default function GoogleBox({
@@ -15,19 +16,19 @@ export default function GoogleBox({
 
     const handleGoogleClick = async () => {
         // Build the OAuth URL with proper query parameters
-        const utm_source = localStorage.getItem('utm_source');
+        const utm_source = safeLocalStorage.getItem('utm_source');
         const baseUrl = 'https://api.soff.uz/auth/social/login/customer';
         const params = new URLSearchParams();
 
         if (onGoogleSuccessNavigateTo) {
-            localStorage.setItem(
+            safeLocalStorage.setItem(
                 'google_redirect_url',
                 onGoogleSuccessNavigateTo
             );
         }
 
         // Add existing query parameters
-        Object.keys(router.query).forEach(key => {
+        Object.keys(router.query).forEach((key) => {
             if (router.query[key]) {
                 params.append(key, router.query[key]);
             }

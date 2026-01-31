@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { f_base_ws_url } from '~/shared/api/base-url';
+import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
 
 const DELAY_MS = 15000; // 15 seconds
 const IMMEDIATE_THRESHOLD = 3;
@@ -22,13 +23,13 @@ const useOffers = (orderId, isOpen) => {
     const hasDelayBeenApplied = (orderId) => {
         if (typeof window === 'undefined') return false;
         const key = `offer_delay_applied_${orderId}`;
-        return localStorage.getItem(key) === 'true';
+        return safeLocalStorage.getItem(key) === 'true';
     };
 
     const markDelayAsApplied = (orderId) => {
         if (typeof window === 'undefined') return;
         const key = `offer_delay_applied_${orderId}`;
-        localStorage.setItem(key, 'true');
+        safeLocalStorage.setItem(key, 'true');
     };
 
     const flushBufferedOffers = (orderId, markAsApplied = false) => {
@@ -197,7 +198,7 @@ const useOffers = (orderId, isOpen) => {
 export const clearOfferDelayFlag = (orderId) => {
     if (typeof window === 'undefined') return;
     const key = `offer_delay_applied_${orderId}`;
-    localStorage.removeItem(key);
+    safeLocalStorage.removeItem(key);
 };
 
 export default useOffers;

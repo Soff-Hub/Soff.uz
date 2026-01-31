@@ -12,6 +12,7 @@ import { TelegramLink } from '~/shared/components/telegram-link';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
 import '~/shared/utilities/dayjs-locale-uz';
 import Script from 'next/script';
+import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
 // import showOfferNotification from '~/shared/components/offer-notification';
 
 function App({ Component, pageProps }) {
@@ -28,9 +29,9 @@ function App({ Component, pageProps }) {
         const utmMedium = params.get('utm_medium');
         const utmCampaign = params.get('utm_campaign');
 
-        if (utmSource) localStorage.setItem('utm_source', utmSource);
-        if (utmMedium) localStorage.setItem('utm_medium', utmMedium);
-        if (utmCampaign) localStorage.setItem('utm_campaign', utmCampaign);
+        if (utmSource) safeLocalStorage.setItem('utm_source', utmSource);
+        if (utmMedium) safeLocalStorage.setItem('utm_medium', utmMedium);
+        if (utmCampaign) safeLocalStorage.setItem('utm_campaign', utmCampaign);
         // showOfferNotification();
 
         startTimeout(() => {
@@ -71,9 +72,9 @@ function App({ Component, pageProps }) {
             window.removeEventListener('contextmenu', (e) =>
                 e.preventDefault()
             );
-            localStorage.removeItem('utm_source');
-            localStorage.removeItem('utm_medium');
-            localStorage.removeItem('utm_campaign');
+            safeLocalStorage.removeItem('utm_source');
+            safeLocalStorage.removeItem('utm_medium');
+            safeLocalStorage.removeItem('utm_campaign');
         };
     }, []);
 

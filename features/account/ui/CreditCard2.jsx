@@ -13,6 +13,7 @@ import { FaRegCreditCard } from 'react-icons/fa6';
 import { FaRegCalendarDays } from 'react-icons/fa6';
 
 import { IoShieldCheckmarkOutline } from 'react-icons/io5';
+import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
 
 export const SecurePaymentAlert = ({ style, bordered = true, ...rest }) =>
     bordered ? (
@@ -179,7 +180,7 @@ const CreditCard2 = ({ document, type }) => {
             affiliate_code
         );
         if (ItemsData?.status === 201) {
-            localStorage.removeItem('cart');
+            safeLocalStorage.removeItem('cart');
             setMessage(true);
             setOpen(true);
             setCart(ItemsData.data.cart);
@@ -227,7 +228,7 @@ const CreditCard2 = ({ document, type }) => {
         }
         if (dataNews?.status === 200) {
             setOpen(false);
-            localStorage.removeItem('cart');
+            safeLocalStorage.removeItem('cart');
             const modal = Modal.success({
                 centered: true,
                 title: 'Muffaqiyatli!',

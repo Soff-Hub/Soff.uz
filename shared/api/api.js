@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { safeLocalStorage } from '../utilities/safe-local-storage';
 
 const baseURL =
     process.env.NODE_ENV === 'development'
@@ -10,7 +11,7 @@ const api = axios.create({
 });
 
 api.interceptors.request.use((config) => {
-    const storedUser = localStorage.getItem('user');
+    const storedUser = safeLocalStorage.getItem('user');
 
     if (storedUser) {
         config.headers['Authorization'] = `Bearer ${
