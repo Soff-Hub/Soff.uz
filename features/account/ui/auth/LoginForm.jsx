@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Divider, Form, Input, Modal, Segmented } from 'antd';
 import { MailOutlined, PhoneOutlined } from '@ant-design/icons';
 import GoogleBox from './GoogleBox';
@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import { baseUrlAuth } from '~/repositories/Repository';
 import { useMutation } from '@tanstack/react-query';
 import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 
 const formInputs = {
     phone: (
@@ -87,23 +88,25 @@ export default function LoginForm({
     const [type, setType] = useState('phone'); // phone, email
     const router = useRouter();
 
+    const { executeRecaptcha } = useGoogleReCaptcha();
+
     const {
         mutate: handleSubmit,
         isPending: loading,
         isSuccess,
     } = useMutation({
         mutationKey: ['auth-register'],
-        mutationFn: async ({ phone, email }) => {
+        mutationFn: async ({ phone, email, recaptcha_token }) => {
             const utm_source = safeLocalStorage.getItem('utm_source');
             const data = {
                 phone_or_email: type === 'phone' ? '+998' + phone : email,
                 role: 'customer',
+                recaptcha_token,
             };
             const resp = await axios.post(
                 baseUrlAuth +
-                    `auth/register/${
-                        utm_source ? `?utm_source=${utm_source}` : ''
-                    }`,
+                `auth/register/${utm_source ? `?utm_source=${utm_source}` : ''
+                }`,
                 data
             );
             safeLocalStorage.setItem('via_', resp?.data?.via_);
@@ -137,6 +140,30 @@ export default function LoginForm({
         },
     });
 
+    const handleFormSubmit = useCallback(
+        async (values) => {
+            if (!executeRecaptcha) {
+                Modal.warning({
+                    title: 'ReCAPTCHA yuklanmoqda',
+                    content: 'Iltimos, bir oz kutib turing va qayta urinib koʻring.',
+                });
+                return;
+            }
+
+            try {
+                const recaptcha_token = await executeRecaptcha('login');
+                handleSubmit({ ...values, recaptcha_token });
+            } catch (error) {
+                console.error('ReCAPTCHA error:', error);
+                Modal.error({
+                    title: 'Xatolik',
+                    content: 'ReCAPTCHA tekshiruvida xatolik yuz berdi.',
+                });
+            }
+        },
+        [executeRecaptcha, handleSubmit]
+    );
+
     const disableAllInputs = loading || isSuccess;
 
     const submitButtonContent = disableAllInputs ? (
@@ -149,7 +176,7 @@ export default function LoginForm({
         <div style={{ backgroundColor: '#f1f1f1', padding: '50px 20px' }}>
             <div className="container p-0">
                 <div className="ps-form--account">
-                    <Form onFinish={handleSubmit}>
+                    <Form onFinish={handleFormSubmit}>
                         <div className="d-flex justify-content-center align-items-center flex-column mb-4">
                             <span style={{ fontSize: '28px', fontWeight: 700 }}>
                                 Kirish

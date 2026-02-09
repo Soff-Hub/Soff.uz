@@ -18,6 +18,11 @@ body {
     flex-direction: column;
 }
 
+.grecaptcha-badge {
+    visibility: hidden;
+}
+
+
 article,
 aside,
 details,
@@ -195,7 +200,8 @@ legend {
     color: inherit;
     display: table;
     max-width: 100%;
-    padding: 0; /* 3 */
+    padding: 0;
+    /* 3 */
     white-space: normal;
 }
 
