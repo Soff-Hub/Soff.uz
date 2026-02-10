@@ -266,9 +266,8 @@ const PurchasedProductsLayout = ({
                             {/* Product Image */}
                             <div className={styles.productImageWrapper}>
                                 <Link
-                                    href={`/product/${
-                                        item.document?.slug || ''
-                                    }`}>
+                                    href={`/product/${item.document?.slug || ''
+                                        }`}>
                                     <img
                                         src={
                                             item.document?.poster_url ||
@@ -285,9 +284,8 @@ const PurchasedProductsLayout = ({
                                 <div className={styles.productHeader}>
                                     <h3 className={styles.productTitle}>
                                         <Link
-                                            href={`/product/${
-                                                item.document?.slug || ''
-                                            }`}>
+                                            href={`/product/${item.document?.slug || ''
+                                                }`}>
                                             {item.document?.title || "Noma'lum"}
                                         </Link>
                                     </h3>
