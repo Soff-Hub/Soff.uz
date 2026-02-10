@@ -20,7 +20,13 @@
         "clean": "antd-tools run clean && rm -rf es lib coverage dist report.html",
         "compile": "npm run clean && antd-tools",
         "storybook": "storybook dev -p 6006",
-        "build-storybook": "storybook build"
+        "build-storybook": "storybook build",
+        "deploy": "npm run build && npm run deploy:prepare",
+        "deploy:prepare": "npm run deploy:prepare:unix || npm run deploy:prepare:win",
+        "deploy:prepare:unix": "rm -rf ./deploy && cp -r ./.next/standalone ./deploy && cp -r ./.next/static ./deploy/.next/static && cp -r ./public ./deploy/public && mkdir -p ./deploy/scripts && cp -r ./scripts/* ./deploy/scripts/ && (cp .env.local ./deploy/.env || cp .env ./deploy/.env || true)",
+        "deploy:prepare:win": "if exist deploy rmdir /s /q deploy && xcopy /e /i /y .next\\standalone deploy && xcopy /e /i /y .next\\static deploy\\.next\\static && xcopy /e /i /y public deploy\\public && if not exist deploy\\scripts mkdir deploy\\scripts && xcopy /e /i /y scripts deploy\\scripts && (if exist .env.local (copy .env.local deploy\\.env) else (if exist .env copy .env deploy\\.env))",
+        "deploy:win": "npm run build && npm run deploy:prepare:win",
+        "deploy:run": "cd ./deploy && set PORT=7733 && node scripts/start-standalone.js"
     },
     "dependencies": {
         "@ckeditor/ckeditor5-build-classic": "^41.4.2",

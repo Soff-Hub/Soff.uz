@@ -82,7 +82,8 @@ export const API_ROUTES = {
     CHAT_UNSEENS: 'chats/unread_count/',
     CHAT: (chatId: number | string, token: string, reconnectKey?: string) => {
         const reconnect = reconnectKey ? `&_reconnect=${reconnectKey}` : '';
-        return `chat/${chatId}/?token=${token}${reconnect}`;
+        // return `chat/${chatId}/?token=${token}${reconnect}`;
+        return `chat/${chatId}/?token=${token}`;
     },
     CHAT_LIST: (token: string) => `chat/?token=${token}`,
 } as const;
