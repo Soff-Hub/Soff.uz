@@ -1,7 +1,7 @@
 import { Skeleton, Alert } from 'antd';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
-import GetRepository from '~/reositoriy-admin/GetRepository';
+import api from '~/shared/api/api';
 import { useQuery } from '@tanstack/react-query';
 import SidebarLayout from '~/widgets/sidebar/SidebarLayout';
 import { FaArrowRight } from 'react-icons/fa6';
@@ -11,8 +11,10 @@ export default function NotificationList() {
 
     const { data, isLoading, isError } = useQuery({
         queryKey: ['notifications', user?.access],
-        queryFn: async () =>
-            await GetRepository.getNotificationData(user?.access),
+        queryFn: async () => {
+            const { data } = await api.get('api/v1/seller/user-notification/');
+            return data;
+        },
         enabled: !!user?.access,
     });
 
