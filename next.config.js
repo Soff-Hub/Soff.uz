@@ -1,13 +1,9 @@
 const nextSettings = {
     optimizeFonts: true,
     output: 'standalone',
+    optimizeCss: true,
     eslint: {
         ignoreDuringBuilds: true,
-    },
-    experimental: {
-        logging: {
-            level: 'verbose',
-        },
     },
     typescript: {
         ignoreBuildErrors: true,

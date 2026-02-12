@@ -19,7 +19,10 @@ const video_url = 'https://www.youtube.com/watch?v=oJre9mbRE2U';
 // Lazy load ProductVideoBanner
 const ProductVideoBanner = dynamic(
     () => import('~/shared/components/product-video-banner'),
-    { ssr: false }
+    {
+        ssr: false,
+        loading: () => <div style={{ height: '80px', background: '#f0f0f0', marginBottom: '20px', borderRadius: '8px' }} className="container" />
+    }
 );
 
 // Lazy load heavy components
@@ -137,10 +140,9 @@ export default function ProductDefaultPage({ defaultProducts }) {
             defaultProducts?.title || 'Soff.uz - Intellektual mulk marketi';
         const description = defaultProducts?.description
             ? removeHTMLTags(defaultProducts.description)
-            : `${defaultProducts?.title || ''} + ${
-                  defaultProducts?.tag?.map((e) => e?.name)?.join(', ') ||
-                  'soff.uz - Intellektual mulk marketi'
-              }`;
+            : `${defaultProducts?.title || ''} + ${defaultProducts?.tag?.map((e) => e?.name)?.join(', ') ||
+            'soff.uz - Intellektual mulk marketi'
+            }`;
 
         const keywords = [
             { name: defaultProducts?.title },
@@ -252,80 +254,47 @@ export default function ProductDefaultPage({ defaultProducts }) {
     );
 }
 
-export async function getServerSideProps({ query, req, res }) {
-    const { pid } = query;
+export async function getStaticPaths() {
+    return {
+        paths: [], // Build-time'da hech narsa render qilmaymiz
+        fallback: 'blocking', // Birinchi so'rovda serverda generatsiya qilinadi va keshlanadi
+    };
+}
+
+export async function getStaticProps({ params }) {
+    const { pid } = params;
 
     if (!pid) {
         return { notFound: true };
     }
 
-    const cookies = cookie.parse(req.headers.cookie || '');
-    const token = cookies.token;
-    const deviceId = getOrCreateDeviceId({ req, res });
-
+    // ISR jarayonida req/res bo'lmaydi, shuning uchun public fetch qilamiz
     const headers = {
-        'X-Device-ID': deviceId,
-        ...(token && { Authorization: `Bearer ${token}` }),
+        'Accept': 'application/json',
     };
 
     let defaultProducts = null;
 
     try {
-        const request = await fetch(`${baseUrl}customer/documents/${pid}/`, {
+        const response = await fetch(`${baseUrl}customer/documents/${pid}/`, {
             headers,
         });
 
-        if (request.status === 404) {
-            return { notFound: true };
+        if (!response.ok) {
+            if (response.status === 404) return { notFound: true };
+            throw new Error('API request failed');
         }
 
-        if (request.status === 403 || request.status === 401) {
-            // Retry without auth token
-            const retryHeaders = {
-                'X-Device-ID': deviceId,
-            };
-
-            const retryRequest = await fetch(
-                `${baseUrl}customer/documents/${pid}/`,
-                {
-                    headers: retryHeaders,
-                }
-            );
-
-            if (!retryRequest.ok) {
-                return { notFound: true };
-            }
-
-            defaultProducts = await retryRequest.json();
-        } else {
-            if (!request.ok) {
-                return { notFound: true };
-            }
-            defaultProducts = await request.json();
-        }
+        defaultProducts = await response.json();
     } catch (error) {
-        try {
-            const fallbackRequest = await fetch(
-                `${baseUrl}customer/documents/${pid}/`,
-                {
-                    headers: {
-                        'X-Device-ID': deviceId,
-                    },
-                }
-            );
-
-            if (!fallbackRequest.ok) {
-                return { notFound: true };
-            }
-
-            defaultProducts = await fallbackRequest.json();
-        } catch (fallbackError) {
-            console.error('Error fetching product:', fallbackError);
-            return { notFound: true };
-        }
+        console.error('Error fetching product for ISR:', error);
+        return {
+            notFound: true,
+            // Xatolik bo'lsa, 10 soniyadan keyin qayta urinib ko'rish imkoniyati
+            revalidate: 10,
+        };
     }
 
-    // Validate that we have product data
     if (!defaultProducts) {
         return { notFound: true };
     }
@@ -334,5 +303,7 @@ export async function getServerSideProps({ query, req, res }) {
         props: {
             defaultProducts,
         },
+        // Sahifani har 60 soniyada fonda yangilash (ISR)
+        revalidate: 60,
     };
 }

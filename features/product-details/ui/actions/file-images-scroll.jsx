@@ -40,19 +40,16 @@ function FileImagesScroll({ product }) {
                 // Update scroll buttons position
                 if (buttonsRef.current) {
                     buttonsRef.current.style.top = `${centerY}px`;
-                    buttonsRef.current.style.right = `${
-                        window.innerWidth - rect.right + 16
-                    }px`;
+                    buttonsRef.current.style.right = `${window.innerWidth - rect.right + 16
+                        }px`;
                 }
 
                 // Update fullscreen button position
                 if (fullscreenButtonRef.current) {
-                    fullscreenButtonRef.current.style.top = `${
-                        rect.top + 10
-                    }px`;
-                    fullscreenButtonRef.current.style.right = `${
-                        window.innerWidth - rect.right + 10
-                    }px`;
+                    fullscreenButtonRef.current.style.top = `${rect.top + 10
+                        }px`;
+                    fullscreenButtonRef.current.style.right = `${window.innerWidth - rect.right + 10
+                        }px`;
                 }
 
                 // More precise check for top - account for small rounding differences
@@ -194,13 +191,6 @@ function FileImagesScroll({ product }) {
                                                 }
                                                 width={785}
                                                 height={614}
-                                                placeholder="blur"
-                                                blurDataURL={
-                                                    item?.image_url ||
-                                                    item?.thumbUrl ||
-                                                    item?.url ||
-                                                    'https://placehold.co/600x400'
-                                                }
                                                 alt={product?.title}
                                                 className={` seller_image_conatiner`}
                                                 objectFit="contain"
@@ -208,8 +198,8 @@ function FileImagesScroll({ product }) {
                                                     flexShrink: 0,
                                                     objectFit: 'contain',
                                                 }}
-                                                loading="lazy"
-                                                priority={false}
+                                                loading={i === 0 ? "eager" : "lazy"}
+                                                priority={i === 0}
                                             />
                                         )
                                 )

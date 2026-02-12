@@ -238,7 +238,7 @@ function FileActions({ product }) {
                                 <Icon
                                     icon={
                                         fileReactIcons[
-                                            product?.document?.file_type
+                                        product?.document?.file_type
                                         ]
                                     }
                                     className={styles.infoKeyIcon}
@@ -252,7 +252,7 @@ function FileActions({ product }) {
                                     borderRadius: '4px',
                                     backgroundColor:
                                         fileColors[
-                                            product?.document?.file_type
+                                        product?.document?.file_type
                                         ],
                                 }}>
                                 {product?.document?.file_type}
@@ -511,11 +511,10 @@ const CustomResponsiveLayout = ({ product, handleBuynow }) => {
     return (
         <>
             <div
-                className={`d-flex flex-column gap-3 ${
-                    isMobile ? 'sticky-bottom-btn' : ''
-                }`}>
+                className={`d-flex flex-column gap-3 ${isMobile ? 'sticky-bottom-btn' : ''
+                    }`}>
                 {product?.document?.file_url ? (
-                    <a href={product?.document?.file_url} target="_blank">
+                    <a href={product?.document?.file_url} target="_blank" rel="noreferrer">
                         <Button
                             iconPosition="end"
                             style={{ height: '58px', fontSize: '20px' }}
@@ -543,7 +542,7 @@ const CustomResponsiveLayout = ({ product, handleBuynow }) => {
             {isMobile && (
                 <div className={`d-flex flex-column gap-3 `}>
                     {product?.document?.file_url ? (
-                        <a href={product?.document?.file_url} target="_blank">
+                        <a href={product?.document?.file_url} target="_blank" rel="noreferrer">
                             <Button
                                 iconPosition="end"
                                 style={{
@@ -566,13 +565,12 @@ const CustomResponsiveLayout = ({ product, handleBuynow }) => {
                             className="w-100 bg-success"
                             icon={<DownloadOutlined />}
                             size={'large'}>
-                            {`Hoziroq xarid qilish ${
-                                size >= 360
+                            {`Hoziroq xarid qilish ${size >= 360
                                     ? `(${formatCurrencyWithSpace(
-                                          product?.price
-                                      )} so'm)`
+                                        product?.price
+                                    )} so'm)`
                                     : ''
-                            }`}
+                                }`}
                         </Button>
                     )}
                 </div>

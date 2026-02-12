@@ -55,6 +55,7 @@ function ProductVideoBanner({
                                 e.stopPropagation();
                                 handleClick();
                             }}
+                            aria-label="Videoni tomosha qilish"
                             className={buttonStyles.animatedButton}
                             style={{
                                 margin: 0,

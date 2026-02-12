@@ -10,18 +10,18 @@ export default function Document() {
                 <link
                     rel="icon"
                     type="image/png"
-                    href={'/static/img/soff logo.png'}
+                    href={'/static/img/soff%20logo.png'}
                     sizes="32x32"
                 />
                 <link
                     rel="icon"
                     type="image/png"
-                    href={'/static/img/soff logo.png'}
+                    href={'/static/img/soff%20logo.png'}
                     sizes="192x192"
                 />
                 <link
                     rel="apple-touch-icon-precomposed"
-                    href={'/static/img/soff logo.png'}
+                    href={'/static/img/soff%20logo.png'}
                 />
 
                 <noscript>

@@ -127,54 +127,23 @@ function App({ Component, pageProps }) {
                 <>
                     <Script
                         src="https://www.googletagmanager.com/gtag/js?id=G-H60GJQ0WF2"
-                        strategy="afterInteractive"
-                        // onLoad={() =>
-                        //     console.log('✅ Google Analytics loader loaded')
-                        // }
-                        // onError={(e) => console.error('❌ GA loader error:', e)}
+                        strategy="lazyOnload"
                     />
                     <Script
                         src="/scripts/google-analytics-init.js"
-                        strategy="afterInteractive"
-                        // onLoad={() => {
-                        //     console.log('✅ Google Analytics init loaded');
-                        //     console.log('gtag:', typeof gtag);
-                        //     console.log('dataLayer:', typeof dataLayer);
-                        // }}
-                        // onError={(e) => console.error('❌ GA init error:', e)}
+                        strategy="lazyOnload"
                     />
                     <Script
                         src="/scripts/yandex-metrika-init.js"
-                        strategy="afterInteractive"
-                        // onLoad={() => {
-                        //     console.log('✅ Yandex Metrika loaded');
-                        //     console.log('ym:', typeof ym);
-                        // }}
-                        // onError={(e) =>
-                        //     console.error('❌ Yandex Metrika error:', e)
-                        // }
+                        strategy="lazyOnload"
                     />
                     <Script
                         src="/scripts/facebook-pixel-init.js"
-                        strategy="afterInteractive"
-                        // onLoad={() => {
-                        //     console.log('✅ Facebook Pixel loaded');
-                        //     console.log('fbq:', typeof fbq);
-                        // }}
-                        // onError={(e) =>
-                        //     console.error('❌ Facebook Pixel error:', e)
-                        // }
+                        strategy="lazyOnload"
                     />
                     <Script
                         src="/scripts/yandex-context-init.js"
-                        strategy="afterInteractive"
-                        // onLoad={() => {
-                        //     console.log('✅ Yandex Context loaded');
-                        //     console.log('yaContextCb:', window.yaContextCb);
-                        // }}
-                        // onError={(e) =>
-                        //     console.error('❌ Yandex Context error:', e)
-                        // }
+                        strategy="lazyOnload"
                     />
                 </>
             )}
