@@ -17,7 +17,6 @@ const FileImagesScroll = dynamic(
 );
 
 function FileProductsDetails({ product }) {
-    console.log({ product });
     return (
         <div className="seller_container_products_details">
             <div className="ps-container p-0">

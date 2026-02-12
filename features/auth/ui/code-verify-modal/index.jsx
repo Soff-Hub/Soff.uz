@@ -4,8 +4,8 @@ import CodeVerifyForm from '~/features/account/ui/auth/CodeVerifyForm.jsx';
 
 const CodeVerifyModal = ({ open, onClose, authCode, slug, onSuccess }) => {
     return (
-        <Modal className="custom-auth-modal" open={open}  onCancel={onClose} footer={null} centered>
-            <CodeVerifyForm slug={slug} onClose={onClose} authCode={authCode} onSuccess={onSuccess}/>
+        <Modal className="custom-auth-modal" open={open} onCancel={onClose} footer={null} centered destroyOnClose>
+            <CodeVerifyForm slug={slug} onClose={onClose} authCode={authCode} onSuccess={onSuccess} />
         </Modal>
     );
 };

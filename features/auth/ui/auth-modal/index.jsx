@@ -19,6 +19,7 @@ const AuthModal = ({
         setCodeModalOpen(false);
         setTelegramCodeModalOpen(false);
         onClose();
+        setCode(null);
     };
 
     const handleSuccessOnTelegram = () => {
@@ -32,9 +33,10 @@ const AuthModal = ({
             <Modal
                 className="custom-auth-modal"
                 open={open && !codeModalOpen && !telegramCodeModalOpen}
-                onCancel={onClose}
+                onCancel={closeAllModals}
                 footer={null}
-                centered>
+                centered
+                destroyOnClose>
                 <LoginForm
                     setCode={setCode}
                     openTelegram={() => {

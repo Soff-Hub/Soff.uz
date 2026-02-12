@@ -9,7 +9,8 @@ const CodeVerifyModal = ({ open, onClose, onSuccess }) => {
             open={open}
             onCancel={onClose}
             footer={null}
-            centered>
+            centered
+            destroyOnClose>
             <TelegramConfirmForm isModal={true} onSuccess={onSuccess} />
         </Modal>
     );
