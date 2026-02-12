@@ -140,8 +140,8 @@ const TopFreelanceRankings = () => {
     const sizesOptions = isDesktop
         ? { size: 'large', gap: 20 }
         : isMobile
-          ? { size: 'small', gap: 8 }
-          : { size: 'middle', gap: 10 };
+            ? { size: 'small', gap: 8 }
+            : { size: 'middle', gap: 10 };
 
     const { data: directions } = useGetDirectionsQuery();
     const {
@@ -150,8 +150,7 @@ const TopFreelanceRankings = () => {
         isLoading,
     } = useFGet(
         ['customer/sellers', rankingCategory],
-        `users/freelancers/list/?limit=3&offset=0${
-            rankingCategory ? `&direction=${rankingCategory}` : ''
+        `users/freelancers/list/?limit=3&offset=0${rankingCategory ? `&direction=${rankingCategory}` : ''
         }`
     );
 
@@ -329,9 +328,8 @@ const TopFreelanceRankings = () => {
                     slidesPerView={'auto'}
                     onSwiper={handleSwiperInit}
                     onSlideChange={handleSlideChange}
-                    className={` ${!isEnd && styles.categorySwiperEnding} ${
-                        !isBeginning && styles.categorySwiperBeginning
-                    }`}>
+                    className={` ${!isEnd && styles.categorySwiperEnding} ${!isBeginning && styles.categorySwiperBeginning
+                        }`}>
                     {directions?.map((item) => (
                         <SwiperSlide key={item.value}>
                             <Button
@@ -380,39 +378,34 @@ const ServiceCard = ({ content_type = 'file', items = {} }) => {
             <a>
                 <div className={cardStyle.catalogCard}>
                     <div className={cardStyle.cardImageBlock}>
-                        <div
-                            className={cardStyle.cardBlockLeft}
-                            style={{
-                                backgroundImage: `url(${
-                                    items.left || '/static/img/not-found.png'
-                                })`,
-                                backgroundSize: 'cover',
-                                backgroundRepeat: 'no-repeat',
-                                backgroundPosition: 'center',
-                            }}></div>
+                        <div className={cardStyle.cardBlockLeft}>
+                            <Image
+                                src={items.left || '/static/img/not-found.png'}
+                                layout="fill"
+                                objectFit="cover"
+                                alt={title[content_type]}
+                                loading="lazy"
+                            />
+                        </div>
                         <div className={cardStyle.cardBlockRight}>
-                            <div
-                                className={cardStyle.cardBlockRightBottom}
-                                style={{
-                                    backgroundImage: `url(${
-                                        items.rightTop ||
-                                        '/static/img/not-found.png'
-                                    })`,
-                                    backgroundSize: 'cover',
-                                    backgroundRepeat: 'no-repeat',
-                                    backgroundPosition: 'center',
-                                }}></div>
-                            <div
-                                className={cardStyle.cardBlockRightBottom}
-                                style={{
-                                    backgroundImage: `url(${
-                                        items.rightBot ||
-                                        '/static/img/not-found.png'
-                                    })`,
-                                    backgroundSize: 'cover',
-                                    backgroundRepeat: 'no-repeat',
-                                    backgroundPosition: 'center',
-                                }}></div>
+                            <div className={cardStyle.cardBlockRightBottom}>
+                                <Image
+                                    src={items.rightTop || '/static/img/not-found.png'}
+                                    layout="fill"
+                                    objectFit="cover"
+                                    alt={title[content_type]}
+                                    loading="lazy"
+                                />
+                            </div>
+                            <div className={cardStyle.cardBlockRightBottom}>
+                                <Image
+                                    src={items.rightBot || '/static/img/not-found.png'}
+                                    layout="fill"
+                                    objectFit="cover"
+                                    alt={title[content_type]}
+                                    loading="lazy"
+                                />
+                            </div>
                         </div>
                     </div>
                     <div className="d-flex flex-column flex-fill">

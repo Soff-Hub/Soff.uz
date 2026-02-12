@@ -94,10 +94,9 @@ const CategorySection = () => {
                                 alt={item.alt}
                                 width={40}
                                 height={40}
-                                placeholder="blur"
-                                blurDataURL={item.img}
                                 style={{ objectFit: 'contain' }}
-                                loading="lazy"
+                                loading={index < 4 ? "eager" : "lazy"}
+                                priority={index < 4}
                             />
                             <span>{item.label}</span>
                         </div>

@@ -83,12 +83,10 @@
             border-radius: 50%;
             top: 200px;
             z-index: 3;
-            background-image: radial-gradient(
-                circle,
-                #a3e4c3 0%,
-                #9ecdb4 60%,
-                #ecf3f0 100%
-            );
+            background-image: radial-gradient(circle,
+                    #a3e4c3 0%,
+                    #9ecdb4 60%,
+                    #ecf3f0 100%);
 
             filter: blur(80px);
             opacity: 1;
@@ -186,6 +184,7 @@
 
             .heroButtons {
                 .heroFilterButtons {
+
                     .heroBtn,
                     .activeHeroBtn {
                         padding: 5px 8px !important;
@@ -219,6 +218,7 @@
 
             .heroButtons {
                 .heroFilterButtons {
+
                     .heroBtn,
                     .activeHeroBtn {
                         padding: 5px 8px !important;
@@ -298,6 +298,7 @@
         .heroInfoSection {
             .heroButtons {
                 .heroFilterButtons {
+
                     .heroBtn,
                     .activeHeroBtn {
                         flex: 1;

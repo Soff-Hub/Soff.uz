@@ -83,7 +83,6 @@ const ImageCarousel = ({
     };
 
     const dynamicHeight = isDesktop ? '450px' : isTablet ? '350px' : '250px';
-    console.log({ images });
     return (
         <div className="overflow-hidden w-100">
             <div
@@ -345,11 +344,10 @@ const ImageCarousel = ({
                                         flexShrink: 0,
                                     }}>
                                     <div
-                                        className={`thumbnail-wrapper ${
-                                            activeIndex === index
+                                        className={`thumbnail-wrapper ${activeIndex === index
                                                 ? 'active'
                                                 : ''
-                                        }`}
+                                            }`}
                                         style={{
                                             width: '75px',
                                             height: '50px',
@@ -381,10 +379,10 @@ const ImageCarousel = ({
                                                         Math.max(
                                                             0,
                                                             index -
-                                                                Math.floor(
-                                                                    slidesPerView /
-                                                                        2
-                                                                )
+                                                            Math.floor(
+                                                                slidesPerView /
+                                                                2
+                                                            )
                                                         );
                                                     thumbsSwiper.slideTo(
                                                         targetSlide

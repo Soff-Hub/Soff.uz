@@ -1,17 +1,35 @@
 import React from 'react';
 import Hero from './hero';
-import Freelance from './freelance';
-import LastServices from './last-services';
-import Info from './info';
-import Statistics from './statistics';
-import Title from './title';
-import TwoCard from './two-card';
 import dynamic from 'next/dynamic';
 
-const Bests = dynamic(() => import('./bests'), { ssr: false });
-const LastProducts = dynamic(() => import('./last-products'), { ssr: false });
-const Faqs = dynamic(() => import('./faqs'), { ssr: false });
-const YoutubeVid = dynamic(() => import('./youtube-vid'), { ssr: false });
+const Bests = dynamic(() => import('./bests'), {
+    ssr: false,
+    loading: () => <div style={{ minHeight: '400px' }} />
+});
+const LastProducts = dynamic(() => import('./last-products'), {
+    ssr: false,
+    loading: () => <div style={{ minHeight: '400px' }} />
+});
+const Faqs = dynamic(() => import('./faqs'), {
+    ssr: false,
+    loading: () => <div style={{ minHeight: '300px' }} />
+});
+const YoutubeVid = dynamic(() => import('./youtube-vid'), {
+    ssr: false,
+    loading: () => <div style={{ minHeight: '250px', backgroundColor: '#f0f0f0' }} />
+});
+const Statistics = dynamic(() => import('./statistics'), { ssr: false });
+const TwoCard = dynamic(() => import('./two-card'), { ssr: false });
+const Freelance = dynamic(() => import('./freelance'), {
+    ssr: false,
+    loading: () => <div style={{ minHeight: '500px' }} />
+});
+const LastServices = dynamic(() => import('./last-services'), {
+    ssr: false,
+    loading: () => <div style={{ minHeight: '400px' }} />
+});
+const Info = dynamic(() => import('./info'), { ssr: false });
+const Title = dynamic(() => import('./title'), { ssr: false });
 
 const Home = () => {
     return (

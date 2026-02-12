@@ -173,11 +173,10 @@ export default function Footer() {
                             {footerMenu.social.items.map((item, index) => (
                                 <div
                                     key={item.url}
-                                    className={`${styles.socialIcon} ${
-                                        index === 1
+                                    className={`${styles.socialIcon} ${index === 1
                                             ? styles.socialIconLarge
                                             : ''
-                                    }`}>
+                                        }`}>
                                     <a
                                         href={item.url}
                                         target="_blank"

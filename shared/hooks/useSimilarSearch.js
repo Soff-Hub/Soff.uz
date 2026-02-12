@@ -127,13 +127,6 @@ function useSimilarSearch({ defaultData, defaultType = 'file' }) {
         };
     }, [defaultData, filteredSimilarDocuments, isFetchingSimilarDocuments]);
 
-    // console.log({
-    //     similarDocuments,
-    //     defaultData,
-    //     mergedData,
-    //     isFetchingSimilarDocuments,
-    //     similarDocumentsEnabled,
-    // });
 
     useEffect(() => {
         if (

@@ -78,7 +78,6 @@ const OfferCard = ({ item }) => {
                     shape="circle"
                     size="small"
                     icon={<ArrowRightOutlined />}
-                    onClick={() => console.log('Navigate to', item.id)}
                 />
             </div>
         </div>

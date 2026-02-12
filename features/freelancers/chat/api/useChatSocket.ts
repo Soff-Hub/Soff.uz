@@ -20,17 +20,6 @@ export function useChatSocket({ chatId, user }: useChatSocketProps) {
         readyState,
         getWebSocket,
     } = useWebSocket(wsUrl, {
-        onOpen: () => {
-            console.log('✅ WebSocket opened, reconnectKey:', reconnectKey);
-        },
-        onClose: (event) => {
-            console.log(
-                '🔴 WebSocket closed, reconnectKey:',
-                reconnectKey,
-                'code:',
-                event.code
-            );
-        },
         onError: (error) => {
             console.error('❌ Chat WebSocket error:', error, { chatId });
         },

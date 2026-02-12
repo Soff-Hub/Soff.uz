@@ -685,7 +685,6 @@ const VerificationCodeModal = forwardRef(
                         if (onClose) onClose();
                     },
                     onError: (error) => {
-                        console.log('❌ Verify code error:', error);
                         const errorMessage = error?.response?.data || {
                             detail: "Noma'lum xato",
                         };

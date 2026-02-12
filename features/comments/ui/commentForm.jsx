@@ -38,10 +38,6 @@ export default function CommentForm({
     const handleSubmit = async (values) => {
         const { commentText: text, rating } = values;
 
-        // Debug: Check if rating is being captured
-        console.log('Form values:', values);
-        console.log('Rating:', rating);
-
         const token = Cookies.get('token');
         if (!token) {
             message.error('Token topilmadi. Iltimos, tizimga kiring.');
