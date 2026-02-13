@@ -1,7 +1,6 @@
 const nextSettings = {
     optimizeFonts: true,
     output: 'standalone',
-    optimizeCss: true,
     eslint: {
         ignoreDuringBuilds: true,
     },

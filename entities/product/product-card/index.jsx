@@ -110,8 +110,8 @@ const ProductCard = ({ product }) => {
                             {product?.price === 0 || !product?.price
                                 ? 'Bepul'
                                 : `${formatCurrencyWithSpace(
-                                      product?.price
-                                  )} so’m`}
+                                    product?.price
+                                )} so’m`}
                         </h3>
                     </div>
                     <div className={styles.cardInfo}>

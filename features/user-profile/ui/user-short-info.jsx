@@ -1,7 +1,9 @@
 import dayjs from 'dayjs';
 import Image from 'next/image';
 import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
-import { cn, useRcn } from '~/shared/utilities/cn';
+import dynamic from 'next/dynamic';
+import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 import { Button, Divider, Alert, message } from 'antd';
 import {
     CheckCircleOutlined,
@@ -10,41 +12,27 @@ import {
     FileTextOutlined,
     ShoppingOutlined,
 } from '@ant-design/icons';
-import AuthModal from '~/features/auth/ui/auth-modal';
-import CreateOrderModal from '~/shared/components/modals/create-order-modal/CreateOrderModal';
-import { useSelector } from 'react-redux';
-import { useCreateChat } from '~/features/freelancers/chat/api/useCreateChat';
-import useResponsive from '~/shared/utilities/useResponsive';
-import { useRouter } from 'next/router';
-import OrderPaymentPrompt from './OrderPaymentPrompt';
-import { useTimeManager } from '~/shared/hooks/useTimeManager';
-import { FaC, FaLink } from 'react-icons/fa6';
-import styles from '../styles/user-short-info.module.scss';
-import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
+import { FaLink, FaClock, FaClipboardList, FaGlobe, FaRegCalendarCheck, FaCommentDots, FaCalendar } from 'react-icons/fa6';
 import { PiMoneyWavyBold } from 'react-icons/pi';
-import { FaClock } from 'react-icons/fa6';
-import { FaClipboardList } from 'react-icons/fa6';
-import { FaGlobe } from 'react-icons/fa6';
-import { FaRegCalendarCheck } from 'react-icons/fa6';
-import { FaCommentDots } from 'react-icons/fa';
-import { FaCalendar } from 'react-icons/fa6';
+import { useCreateChat } from '~/features/freelancers/chat/api/useCreateChat';
+import { useTimeManager } from '~/shared/hooks/useTimeManager';
+import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
+import styles from '../styles/user-short-info.module.scss';
+
+
+const AuthModal = dynamic(() => import('~/features/auth/ui/auth-modal'), { ssr: false });
+const CreateOrderModal = dynamic(() => import('~/shared/components/modals/create-order-modal/CreateOrderModal'), { ssr: false });
+const OrderPaymentPrompt = dynamic(() => import('./OrderPaymentPrompt'), { ssr: false });
 
 const InfoRow = memo(({ icon, label, value }) => (
-    <div
-        className={cn(
-            'flex',
-            'items-start',
-            'justify-between',
-            'gap-2',
-            'text-[18px]'
-        )}>
-        <div className={cn('flex', 'items-center', 'gap-2')}>
-            <div className={cn('w-[20px]', 'flex', 'justify-center')}>
+    <div className={styles.infoRow}>
+        <div className={styles.infoRowLeft}>
+            <div className={styles.infoRowIcon}>
                 {icon}
             </div>
-            <span className={cn('text-[12px]', 'text-secondary')}>{label}</span>
+            <span className={styles.infoRowLabel}>{label}</span>
         </div>
-        <span className={cn('text-[14px]', 'text-right')}>{value}</span>
+        <span className={styles.infoRowValue}>{value}</span>
     </div>
 ));
 
@@ -52,7 +40,6 @@ const UserShortInfo = ({ seller }) => {
     const router = useRouter();
     const { isLoggedIn, status } = useSelector((state) => state?.auth);
     const { mutate: createChat } = useCreateChat();
-    const { isMobile } = useResponsive();
     const { startTimeout } = useTimeManager();
     const [activeModal, setActiveModal] = useState(null);
     const [authModal, setAuthModal] = useState(false);
@@ -64,8 +51,6 @@ const UserShortInfo = ({ seller }) => {
     const isFreelancer = seller?.has_portfolio && seller?.has_service;
     const isOpenToAcceptOrders = seller?.accepting_orders;
     const isBlocked = seller?.is_blocked;
-    // NOTE: for testing purposes only
-    // const isBlocked = true;
     const isLockedForService = !(isFreelancer && isOpenToAcceptOrders);
     const isOrderingClosed = isLockedForService || isBlocked;
 
@@ -82,31 +67,13 @@ const UserShortInfo = ({ seller }) => {
         [seller?.created_at]
     );
 
-    const flexClass = useRcn({
-        mobile: 'flex',
-        tablet: 'flex',
-        desktop: 'flex',
-    });
-
-    const hiddenClass = useRcn({
-        mobile: 'flex',
-        tablet: 'hidden',
-        desktop: 'hidden',
-    });
-
-    const marginClass = useRcn({
-        mobile: 'mt-4',
-        tablet: 'mt-4',
-        desktop: 'mt-4',
-    });
-
     const sellerStats = useMemo(
         () => [
             {
                 title: 'Jarayondagi ishlar',
                 value: seller?.progress_jobs_count,
                 icon: (
-                    <SyncOutlined className={cn('text-info', 'text-[15px]')} />
+                    <SyncOutlined className="text-info" style={{ fontSize: '15px' }} />
                 ),
                 color: 'text-info',
             },
@@ -115,7 +82,8 @@ const UserShortInfo = ({ seller }) => {
                 value: seller?.successful_jobs_count,
                 icon: (
                     <CheckCircleOutlined
-                        className={cn('text-primary', 'text-[15px]')}
+                        className="text-primary"
+                        style={{ fontSize: '15px' }}
                     />
                 ),
                 color: 'text-primary',
@@ -125,7 +93,8 @@ const UserShortInfo = ({ seller }) => {
                 value: seller?.unsuccessful_jobs_count,
                 icon: (
                     <CloseCircleOutlined
-                        className={cn('text-danger', 'text-[15px]')}
+                        className="text-danger"
+                        style={{ fontSize: '15px' }}
                     />
                 ),
                 color: 'text-danger',
@@ -135,7 +104,8 @@ const UserShortInfo = ({ seller }) => {
                 value: seller?.total_products_count,
                 icon: (
                     <FileTextOutlined
-                        className={cn('text-purple', 'text-[15px]')}
+                        className="text-purple"
+                        style={{ fontSize: '15px' }}
                     />
                 ),
                 color: 'text-purple',
@@ -145,7 +115,8 @@ const UserShortInfo = ({ seller }) => {
                 value: seller?.total_sold_documents,
                 icon: (
                     <ShoppingOutlined
-                        className={cn('text-warning', 'text-[15px]')}
+                        className="text-warning"
+                        style={{ fontSize: '15px' }}
                     />
                 ),
                 color: 'text-warning',
@@ -196,14 +167,8 @@ const UserShortInfo = ({ seller }) => {
         );
     };
 
-    const imageSrc = useMemo(
-        () => seller?.image || '/static/img/ozodbek.png',
-        [seller?.image]
-    );
-    const imageAlt = useMemo(
-        () => seller?.full_name || 'User image',
-        [seller?.full_name]
-    );
+    const imageSrc = seller?.image || '/static/img/ozodbek.png';
+    const imageAlt = seller?.full_name || 'User image';
 
     const handleSuccessAuth = () => {
         if (activeModal === 'createOrder') {
@@ -248,59 +213,28 @@ const UserShortInfo = ({ seller }) => {
     }, [router.query]);
 
     return (
-        <div className={cn('bg-light', 'p-3', 'shadow', 'rounded-xl')}>
-            <div
-                className={cn(
-                    'flex',
-                    'flex-col',
-                    'items-center',
-                    'justify-center'
-                )}>
-                <div
-                    style={{
-                        width: 125,
-                        height: 125,
-                        position: 'relative',
-                        overflow: 'hidden',
-                    }}
-                    className={cn('rounded-full')}>
+        <div className={styles.userShortInfo}>
+            <div className={styles.avatarContainer}>
+                <div className={styles.avatarImageWrapper}>
                     <Image
                         src={imageSrc}
                         alt={imageAlt}
-                        priority={!isMobile}
-                        loading={isMobile ? 'lazy' : 'eager'}
-                        placeholder="blur"
+                        priority
+                        loading="eager"
                         layout="fill"
-                        blurDataURL="data:image/webp;base64,UklGRiIAAABXRUJQVlA4IBIAAAAvAAAAAA..."
-                        className={cn('rounded-full', 'object-cover')}
+                        objectFit="cover"
+                        className={styles.avatarImage}
                     />
                 </div>
-                <h2
-                    className={cn(
-                        'text-[18px]',
-                        'font-semibold',
-                        'text-center',
-                        'mb-1',
-                        'mt-2'
-                    )}>
+                <h2 className={styles.fullName}>
                     {seller?.full_name}
                 </h2>
-                <h4
-                    className={cn(
-                        'text-[14px]',
-                        'font-normal',
-                        'text-center',
-                        'text-secondary',
-                        'mb-1'
-                    )}>
+                <h4 className={styles.position}>
                     {seller?.position}
                 </h4>
                 {Boolean(seller?.total_income) && (
                     <div className={styles.totalIncome}>
                         <div className={styles.card}>
-                            {/* <div className={styles.iconBg}>
-                                <FaDollarSign className={styles.icon} />
-                                </div> */}
                             <div className={styles.right}>
                                 <PiMoneyWavyBold className={styles.icon} />
                             </div>
@@ -324,29 +258,25 @@ const UserShortInfo = ({ seller }) => {
                     type="primary"
                     shape="round"
                     iconPosition="end"
-                    variant="solid"
-                    style={{
-                        padding: '6px',
-                        position: 'absolute',
-                        top: '10px',
-                        right: '10px',
-                    }}
+                    className={styles.copyLinkBtn}
                     icon={<FaLink fontSize={18} />}
                     onClick={handleCopyLink}></Button>
             </div>
 
-            <div className={cn(marginClass, 'flex', 'flex-col', 'gap-4')}>
+            <div className={styles.infoRows}>
                 <InfoRow
                     icon={<FaClipboardList />}
                     label="Xizmatlar uchun ochiq"
                     value={
                         !isOrderingClosed ? (
                             <CheckCircleOutlined
-                                className={cn('text-primary', 'text-[16px]')}
+                                className="text-primary"
+                                style={{ fontSize: '16px' }}
                             />
                         ) : (
                             <CloseCircleOutlined
-                                className={cn('text-danger', 'text-[16px]')}
+                                className="text-danger"
+                                style={{ fontSize: '16px' }}
                             />
                         )
                     }
@@ -389,10 +319,10 @@ const UserShortInfo = ({ seller }) => {
                     showIcon
                 />
             )}
-            <div className={cn(marginClass, flexClass, 'gap-3')}>
+            <div className={styles.actionButtons}>
                 <Button
                     type="default"
-                    className={cn('border-primary', 'text-primary')}
+                    className={styles.chatBtn}
                     disabled={isOrderingClosed}
                     onClick={handleCreateChat}>
                     <FaCommentDots />
@@ -406,24 +336,10 @@ const UserShortInfo = ({ seller }) => {
                 </Button>
             </div>
 
-            <div
-                className={cn(
-                    'fixed',
-                    'bottom-0',
-                    'w-full',
-                    'bg-light',
-                    'p-3',
-                    'flex',
-                    'gap-3',
-                    'justify-center',
-                    hiddenClass,
-                    'shadow',
-                    'z-50',
-                    'left-0'
-                )}>
+            <div className={styles.mobileOnlyActions}>
                 <Button
                     type="default"
-                    className={cn('border-primary', 'text-primary')}
+                    className={styles.chatBtn}
                     onClick={handleCreateChat}>
                     <FaCommentDots />
                 </Button>
@@ -437,43 +353,22 @@ const UserShortInfo = ({ seller }) => {
             </div>
 
             <Divider size="small" style={{ marginBlock: '16px' }} />
-            <div className={cn(marginClass)}>
-                <span
-                    className={cn(
-                        'block',
-                        'mb-3',
-                        'font-semibold',
-                        'text-[16px]'
-                    )}>
+            <div className={styles.statsSection}>
+                <span className={styles.statsTitle}>
                     Statistikalar
                 </span>
-                <div className={cn('flex', 'flex-col', 'gap-2')}>
+                <div className={styles.statsList}>
                     {sellerStats.map((stat) => (
                         <div
                             key={stat.title}
-                            className={cn(
-                                'flex',
-                                'items-center',
-                                'gap-4',
-                                'justify-between'
-                            )}>
-                            <div
-                                className={cn('flex', 'items-center', 'gap-4')}>
+                            className={styles.statItem}>
+                            <div className={styles.statItemLabel}>
                                 {stat.icon}
-                                <span
-                                    className={cn(
-                                        'text-secondary',
-                                        'text-[15px]'
-                                    )}>
+                                <span className={styles.statTitleText}>
                                     {stat.title}
                                 </span>
                             </div>
-                            <span
-                                className={cn(
-                                    stat.color,
-                                    'font-semibold',
-                                    'text-[15px]'
-                                )}>
+                            <span className={`${styles.statValueText} ${stat.color}`}>
                                 {stat.value || 0}
                             </span>
                         </div>
@@ -481,25 +376,31 @@ const UserShortInfo = ({ seller }) => {
                 </div>
             </div>
 
-            <AuthModal
-                open={authModal}
-                onClose={() => setAuthModal(false)}
-                onSuccess={handleSuccessAuth}
-            />
-            <CreateOrderModal
-                open={createOrderModal}
-                onClose={cancelCreateOrder}
-                onSuccess={onOrderCreateSuccess}
-                seller={seller?.full_name}
-                defaultDirection={seller?.direction}
-                id={seller?.id}
-                sellerInfo={seller}
-            />
-            <OrderPaymentPrompt
-                isOpen={orderPaymentPromptModal}
-                onClose={() => setOrderPaymentPromptModal(false)}
-                order={latelyCreatedOrder}
-            />
+            {authModal && (
+                <AuthModal
+                    open={authModal}
+                    onClose={() => setAuthModal(false)}
+                    onSuccess={handleSuccessAuth}
+                />
+            )}
+            {createOrderModal && (
+                <CreateOrderModal
+                    open={createOrderModal}
+                    onClose={cancelCreateOrder}
+                    onSuccess={onOrderCreateSuccess}
+                    seller={seller?.full_name}
+                    defaultDirection={seller?.direction}
+                    id={seller?.id}
+                    sellerInfo={seller}
+                />
+            )}
+            {orderPaymentPromptModal && (
+                <OrderPaymentPrompt
+                    isOpen={orderPaymentPromptModal}
+                    onClose={() => setOrderPaymentPromptModal(false)}
+                    order={latelyCreatedOrder}
+                />
+            )}
         </div>
     );
 };

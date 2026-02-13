@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import PortfolioCard from '~/shared/components/portfolio-card';
 import { SELLER_PORTFOLIOS } from '~/shared/api/end-points';
 import { useFGet } from '~/shared/hooks/useFApi';
-import { cn, useRcn } from '~/shared/utilities/cn';
+import styles from '../styles/user-tab-content.module.scss';
 import dynamic from 'next/dynamic';
 import ItemsNotFound from './items-not-found';
 
@@ -31,43 +31,21 @@ const UserPortfolios = () => {
         }
     );
 
-    const gridClass = useRcn({
-        mobile: 'grid-cols-2',
-        tablet: 'grid-cols-3',
-        desktop: 'grid-cols-4',
-    });
-
     const notFound = !isLoading && (!portfolios || portfolios?.length === 0);
 
     const handleSetPortfolio = useCallback((item) => setPortfolio(item), []);
 
     if (notFound)
         return (
-            <div
-                className={cn('w-full', 'flex', 'flex-col', 'gap-4', 'flex-1')}>
+            <div className={styles.tabContentContainer}>
                 <ItemsNotFound type="portfolio" />
             </div>
         );
 
     return (
-        <div
-            className={cn(
-                'w-full',
-                'h-full',
-                'flex',
-                'flex-col',
-                'gap-4',
-                'flex-1'
-            )}>
-            <div
-                className={cn(
-                    'bg-light',
-                    'p-3',
-                    'shadow',
-                    'rounded-xl',
-                    'h-full'
-                )}>
-                <div className={cn('grid', 'gap-4', gridClass)}>
+        <div className={styles.tabContentContainer}>
+            <div className={styles.contentWrapper}>
+                <div className={styles.itemsGrid}>
                     {portfolios?.map((portfolio) => (
                         <PortfolioCard
                             key={portfolio.id}

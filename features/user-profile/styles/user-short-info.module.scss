@@ -87,3 +87,159 @@
 
     padding: 8px 12px !important;
 }
+
+.mobileOnlyActions {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #f9fafb;
+    padding: 0.75rem;
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1);
+    z-index: 50;
+
+    @media (min-width: 992px) {
+        display: none !important;
+    }
+}
+
+.userShortInfo {
+    background-color: #f9fafb; // bg-light
+    padding: 0.75rem; // p-3
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06); // shadow
+    border-radius: 0.75rem; // rounded-xl
+}
+
+.avatarContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.avatarImageWrapper {
+    width: 125px;
+    height: 125px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 9999px; // rounded-full
+}
+
+.avatarImage {
+    border-radius: 9999px;
+    object-fit: cover;
+}
+
+.fullName {
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 4px;
+    margin-top: 8px;
+}
+
+.position {
+    font-size: 14px;
+    font-weight: 400;
+    text-align: center;
+    color: #6b7280; // text-secondary
+    margin-bottom: 4px;
+}
+
+.copyLinkBtn {
+    padding: 6px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.infoRows {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.infoRow {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.5rem;
+    font-size: 18px;
+}
+
+.infoRowLeft {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.infoRowIcon {
+    width: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.infoRowLabel {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.infoRowValue {
+    font-size: 14px;
+    text-align: right;
+}
+
+.actionButtons {
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.75rem;
+}
+
+.chatBtn {
+    border-color: #00a44f !important;
+    color: #00a44f !important;
+}
+
+.statsSection {
+    margin-top: 1rem;
+}
+
+.statsTitle {
+    display: block;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.statsList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.statItem {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    justify-content: space-between;
+}
+
+.statItemLabel {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.statTitleText {
+    color: #6b7280;
+    font-size: 15px;
+}
+
+.statValueText {
+    font-weight: 600;
+    font-size: 15px;
+}

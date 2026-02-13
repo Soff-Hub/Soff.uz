@@ -174,8 +174,8 @@ export default function Footer() {
                                 <div
                                     key={item.url}
                                     className={`${styles.socialIcon} ${index === 1
-                                            ? styles.socialIconLarge
-                                            : ''
+                                        ? styles.socialIconLarge
+                                        : ''
                                         }`}>
                                     <a
                                         href={item.url}

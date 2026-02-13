@@ -1,6 +1,5 @@
 import React, { memo, useMemo } from 'react'
 import { Collapse } from 'antd'
-import { cn } from '~/shared/utilities/cn'
 import styles from "./style.module.scss"
 import UserInfo from '../user-info'
 import UserPortfolios from '../user-portfolios'
@@ -16,19 +15,11 @@ const UserAccordians = ({ seller }) => {
         { key: "portfolio", label: "Portfolio", content: <UserPortfolios /> },
         { key: "services", label: "Xizmatlar", content: <UserServices /> },
         { key: "products", label: "Mahsulotlar", content: <UserProducts id={seller?.id} /> },
-        { key: "comments", label: "Izohlar", content: <UserCommentsTabs id={seller?.id}/> },
+        { key: "comments", label: "Izohlar", content: <UserCommentsTabs id={seller?.id} /> },
     ], [seller])
 
-    const panelStyle = {
-        marginBottom: 10,
-        background: 'rgba(254, 254, 254, 1)',
-        borderRadius: 10,
-        border: 'none',
-        boxShadow: '5px 10px 30px 0px rgba(0, 0, 0, 0.05)',
-    }
-
     return (
-        <div className={cn("mt-4")}>
+        <div className={styles.accordionContainer}>
             <Collapse
                 className={styles.customCollapse}
                 accordion
@@ -46,10 +37,9 @@ const UserAccordians = ({ seller }) => {
             >
                 {items.map((item) => (
                     <Panel
-                        style={panelStyle}
                         key={item.key}
-                        header={<span className="font-semibold text-base text-gray-800">{item.label}</span>}
-                        className={styles.customPanel}
+                        header={<span className={styles.headerLabel}>{item.label}</span>}
+                        className={styles.panelWrapper}
                     >
                         <div className="p-3">{item.content}</div>
                     </Panel>

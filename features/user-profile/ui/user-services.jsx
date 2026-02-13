@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import ServiceCard from '~/entities/service/service-card';
 import { SELLER_SERVICES } from '~/shared/api/end-points';
 import { useFGet } from '~/shared/hooks/useFApi';
-import { cn, useRcn } from '~/shared/utilities/cn';
+import styles from '../styles/user-tab-content.module.scss';
 import ItemsNotFound from './items-not-found';
 
 const UserServices = ({ isOrderingClosed }) => {
@@ -21,48 +21,19 @@ const UserServices = ({ isOrderingClosed }) => {
         }
     );
 
-    const gridClass = useRcn({
-        mobile: 'grid-cols-2',
-        tablet: 'grid-cols-3',
-        desktop: 'grid-cols-4',
-    });
-
     const notFound = !isLoading && (!Array.isArray(data) || data.length === 0);
 
     if (notFound)
         return (
-            <div
-                className={cn(
-                    'w-full',
-                    'h-full',
-                    'flex',
-                    'flex-col',
-                    'gap-4',
-                    'flex-1'
-                )}>
+            <div className={styles.tabContentContainer}>
                 <ItemsNotFound type="service" />
             </div>
         );
 
     return (
-        <div
-            className={cn(
-                'w-full',
-                'h-full',
-                'flex',
-                'flex-col',
-                'gap-4',
-                'flex-1'
-            )}>
-            <div
-                className={cn(
-                    'bg-light',
-                    'p-3',
-                    'shadow',
-                    'rounded-xl',
-                    'h-full'
-                )}>
-                <div className={cn('grid', 'gap-4', gridClass)}>
+        <div className={styles.tabContentContainer}>
+            <div className={styles.contentWrapper}>
+                <div className={styles.itemsGrid}>
                     {data?.map((service) => (
                         <ServiceCard
                             key={service.id}

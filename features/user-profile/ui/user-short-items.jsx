@@ -3,16 +3,14 @@ import { Skeleton, Button } from 'antd';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import { ArrowRightOutlined } from '@ant-design/icons';
-import { cn, useRcn } from '~/shared/utilities/cn';
 import { useFGet } from '~/shared/hooks/useFApi';
-import useResponsive from '~/shared/utilities/useResponsive';
-
-import PortfolioCard from '~/shared/components/portfolio-card';
-import ServiceCard from '~/entities/service/service-card';
-import ProductCard from '~/entities/product/product-card';
-
+import styles from '../styles/user-short-items.module.scss';
 import { SELLER_PORTFOLIOS, SELLER_SERVICES } from '~/shared/api/end-points';
 import { useSellerProducts } from '../api/useSellerProducts';
+
+const PortfolioCard = dynamic(() => import('~/shared/components/portfolio-card'), { ssr: true });
+const ServiceCard = dynamic(() => import('~/entities/service/service-card'), { ssr: true });
+const ProductCard = dynamic(() => import('~/entities/product/product-card'), { ssr: true });
 
 const PortfolioModal = dynamic(
     () => import('~/shared/components/portfolio-modal'),
@@ -29,7 +27,6 @@ const UserShortItems = ({
     sectionRef,
     direction,
 }) => {
-    const { isDesktop } = useResponsive();
     const router = useRouter();
     const [selected, setSelected] = useState(null);
 
@@ -79,25 +76,19 @@ const UserShortItems = ({
     const data = isProduct ? productData : otherData;
     const isLoading = isProduct ? productLoading : otherLoading;
 
-    const gridClass = useRcn({
-        mobile: 'grid-cols-2',
-        tablet: 'grid-cols-3',
-        desktop: 'grid-cols-4',
-    });
-
     const items = useMemo(() => {
         if (!data) return [];
 
         if (isProduct && Array.isArray(data.results)) {
-            return data.results.slice(0, limit);
+            return data.results.slice(0, 4); // Always take up to 4, handle hiding in CSS
         }
 
         if (Array.isArray(data)) {
-            return data.slice(0, limit);
+            return data.slice(0, 4);
         }
 
         return [];
-    }, [data, limit, isProduct]);
+    }, [data, isProduct]);
 
     const handleClick = useCallback(
         (item) => {
@@ -137,53 +128,44 @@ const UserShortItems = ({
     if (!isLoading && items.length === 0) return null;
 
     return (
-        <div className={cn('w-full')}>
-            <div
-                className={cn(
-                    'bg-light',
-                    'p-3',
-                    'shadow',
-                    'rounded-xl',
-                    'flex',
-                    'flex-col',
-                    'gap-3',
-                    isDesktop ? 'h-min-90' : ''
-                )}>
+        <div className={styles.itemsContainer}>
+            <div className={styles.itemsWrapper}>
                 {/* Title */}
-                <h2 className={cn('text-lg', 'font-semibold', 'px-1')}>
+                <h2 className={styles.title}>
                     {titles[type]}
                 </h2>
 
                 {/* Grid */}
-                <div className={cn('grid', 'gap-4', gridClass)}>
+                <div className={styles.itemsGrid}>
                     {isLoading && <SkeletonGrid count={limit} type={type} />}
                     {!isLoading &&
                         items.map((item) => (
-                            <Card
-                                key={item.id}
-                                {...(type === 'portfolio'
-                                    ? {
-                                          portfolio: item,
-                                          setPortfolio: handleClick,
-                                      }
-                                    : {})}
-                                {...(type === 'service'
-                                    ? {
-                                          service: item,
-                                          hasFooter: false,
-                                          disabled: isOrderingClosed,
-                                      }
-                                    : {})}
-                                {...(type === 'product'
-                                    ? { product: item }
-                                    : {})}
-                            />
+                            <div key={item.id} className={styles.itemCard}>
+                                <Card
+                                    {...(type === 'portfolio'
+                                        ? {
+                                            portfolio: item,
+                                            setPortfolio: handleClick,
+                                        }
+                                        : {})}
+                                    {...(type === 'service'
+                                        ? {
+                                            service: item,
+                                            hasFooter: false,
+                                            disabled: isOrderingClosed,
+                                        }
+                                        : {})}
+                                    {...(type === 'product'
+                                        ? { product: item }
+                                        : {})}
+                                />
+                            </div>
                         ))}
                 </div>
 
                 {/* Button */}
 
-                <div className={cn('flex', 'justify-center', 'mt-2', 'px-1')}>
+                <div className={styles.buttonContainer}>
                     <Button
                         type="primary"
                         shape="round"
@@ -214,11 +196,12 @@ const SkeletonGrid = memo(({ type, count }) => {
     return (
         <>
             {Array.from({ length: count }).map((_, i) => (
-                <Skeleton.Image
-                    key={i}
-                    active
-                    style={{ width: '100%', height, borderRadius: '12px' }}
-                />
+                <div key={i} className={styles.itemCard}>
+                    <Skeleton.Image
+                        active
+                        style={{ width: '100%', height, borderRadius: '12px' }}
+                    />
+                </div>
             ))}
         </>
     );

@@ -49,7 +49,14 @@ const OptimizedImage = ({
     };
 
     if (fill) {
-        return <Image {...imageProps} fill sizes={sizes || '100vw'} />;
+        return (
+            <Image
+                {...imageProps}
+                layout="fill"
+                objectFit={objectFit}
+                sizes={sizes || '100vw'}
+            />
+        );
     }
 
     return (

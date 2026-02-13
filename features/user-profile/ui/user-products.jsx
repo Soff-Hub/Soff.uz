@@ -1,12 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
-import { cn, useRcn } from '~/shared/utilities/cn';
+import styles from '../styles/user-tab-content.module.scss';
 import { useSellerProducts } from '../api/useSellerProducts';
 import { Skeleton, Select, Pagination, Input } from 'antd';
 import ProductCard from '~/entities/product/product-card';
 import { digitalDirections } from '~/shared/constants';
 import ItemsNotFound from './items-not-found';
-import useResponsive from '~/shared/utilities/useResponsive';
 import useDebounce from '~/shared/hooks/useDebounce';
 
 const UserProducts = ({ id, direction }) => {
@@ -23,23 +22,10 @@ const UserProducts = ({ id, direction }) => {
         type,
         debounceSearch
     );
-    const { isMobile } = useResponsive();
 
     const notFound = data?.results?.length === 0 && !isLoading && !isFetching;
     const products = data?.results || [];
     const total = data?.count || 0;
-
-    const gridClass = useRcn({
-        mobile: 'grid-cols-2',
-        tablet: 'grid-cols-3',
-        desktop: 'grid-cols-4',
-    });
-
-    const flexClass = useRcn({
-        mobile: 'flex-col',
-        tablet: 'flex-row',
-        desktop: 'flex-row',
-    });
 
     const handleTypeChange = useCallback(
         (value) => {
@@ -105,26 +91,10 @@ const UserProducts = ({ id, direction }) => {
     }, [debounceSearch, searchQuery, router]);
 
     return (
-        <div
-            className={cn(
-                'w-full',
-                'h-full',
-                'flex-1',
-                'flex',
-                'flex-col',
-                'gap-4'
-            )}>
-            <div
-                className={cn(
-                    // 'mb-4',
-                    'flex',
-                    'justify-between',
-                    'items-center',
-                    'gap-2',
-                    flexClass
-                )}>
+        <div className={styles.tabContentContainer}>
+            <div className={styles.filtersWrapper}>
                 <Input.Search
-                    className={cn('flex-1')}
+                    className={styles.searchField}
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)}
                     placeholder="Mahsulot qidirish..."
@@ -133,44 +103,29 @@ const UserProducts = ({ id, direction }) => {
                     options={digitalDirections}
                     value={type}
                     onChange={handleTypeChange}
-                    className={cn('flex-1', 'w-full')}
+                    className={styles.typeSelect}
                 />
             </div>
 
             {notFound && <ItemsNotFound type="product" />}
 
             {!isLoading && !isFetching && products.length !== 0 && (
-                <div
-                    className={cn(
-                        'rounded-xl',
-                        'bg-light',
-                        'p-3',
-                        'shadow',
-                        'flex-1'
-                        // 'h-min-80'
-                    )}>
-                    <div className={cn('grid', 'gap-2', gridClass)}>
+                <div className={styles.contentWrapper}>
+                    <div className={styles.itemsGrid}>
                         {renderedProducts}
                     </div>
                 </div>
             )}
             {(isLoading || isFetching) && (
-                <div
-                    className={cn(
-                        'rounded-xl',
-                        !isMobile ? 'bg-light' : '',
-                        !isMobile ? 'p-3' : '',
-                        !isMobile ? 'shadow' : '',
-                        'flex-1'
-                    )}>
-                    <div className={cn('grid', 'gap-2', gridClass)}>
+                <div className={`${styles.contentWrapper} ${styles.mobileSkeleton}`}>
+                    <div className={styles.itemsGrid}>
                         <ProductSkeletonGrid />
                     </div>
                 </div>
             )}
 
             {total > 1 ? (
-                <div className={cn('flex', 'justify-center')}>
+                <div className={styles.paginationContainer}>
                     <Pagination
                         current={page}
                         total={total}
@@ -191,15 +146,7 @@ const ProductSkeletonGrid = () => {
     return Array.from({ length: 8 }).map((_, i) => (
         <div
             key={i}
-            className={cn(
-                'bg-white',
-                'rounded-xl',
-                'shadow-sm',
-                'p-3',
-                'w-full',
-                'flex',
-                'flex-col'
-            )}>
+            className="bg-white rounded-xl shadow-sm p-3 w-full flex flex-col">
             <Skeleton.Image
                 active
                 style={{

@@ -1,6 +1,6 @@
 import { Tabs } from 'antd';
 import React, { memo, useCallback, useMemo, useState } from 'react';
-import { cn } from '~/shared/utilities/cn';
+import styles from '../styles/user-comments-tabs.module.scss';
 import ProductComments from './product-comments';
 import ServiceComments from './service-comments';
 
@@ -23,16 +23,8 @@ const UserCommentsTabs = ({ id }) => {
     const onChange = useCallback((key) => setActiveKey(key), []);
 
     return (
-        <div
-            className={cn(
-                'rounded-xl',
-                'w-full',
-                // 'mt-4',
-                'p-4',
-                'bg-light',
-                'shadow'
-            )}>
-            <span className={cn('font-bold', 'text-[20px]', 'mb-3', 'block')}>
+        <div className={styles.commentsContainer}>
+            <span className={styles.commentsTitle}>
                 Izohlar
             </span>
             <Tabs

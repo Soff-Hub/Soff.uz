@@ -46,12 +46,12 @@ const handleDeleteDownloadProduct = (product) => {
     const { downloadedProducts, isAlreadyDownloaded } =
         getDownloadedProducts(product);
     if (isAlreadyDownloaded) {
-        downloadedProducts = downloadedProducts.filter(
+        const updatedDownloadedProducts = downloadedProducts.filter(
             (id) => id !== product.id
         );
         safeLocalStorage.setItem(
             'downloadedProducts',
-            JSON.stringify(downloadedProducts)
+            JSON.stringify(updatedDownloadedProducts)
         );
     }
 };
@@ -64,6 +64,7 @@ const FastDownloadSection = () => {
     const { removeAll } = useCart();
     const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
     const [selectedRating, setSelectedRating] = useState(0);
+    const [isDismissed, setIsDismissed] = useState(false);
 
     let {
         data: product,
@@ -95,6 +96,23 @@ const FastDownloadSection = () => {
             handleDeleteDownloadProduct(product);
         } catch (error) {
             console.error('Download error:', error);
+        }
+    };
+
+    const handleClose = async (id) => {
+        try {
+            setIsDismissed(true);
+            await fetchProductDowload(id);
+            queryClient.invalidateQueries({
+                queryKey: ['fast-download'],
+                exact: false,
+            });
+            // We don't call handleDeleteDownloadProduct here to prevent 
+            // re-triggering the download from useEffect if the same 
+            // product is refetched before state updates.
+        } catch (error) {
+            console.error('Close error:', error);
+            setIsDismissed(true);
         }
     };
 
@@ -142,6 +160,8 @@ const FastDownloadSection = () => {
     useEffect(() => {
         if (!product?.id) return;
 
+        setIsDismissed(false);
+
         const { isAlreadyInCart } = getProductCarts(product);
         if (isAlreadyInCart) removeAll();
 
@@ -159,7 +179,8 @@ const FastDownloadSection = () => {
     }, [product]);
 
     if (!isLoggedIn || isLoading) return null;
-    if (isError || !product || Object.keys(product).length == 0) return null;
+    if (isError || !product || Object.keys(product).length == 0 || isDismissed)
+        return null;
 
     const rateBox = (
         <div
@@ -233,7 +254,7 @@ const FastDownloadSection = () => {
                     <Button
                         className={styles.closeBtn}
                         size="middle"
-                        onClick={() => handleDowload(product?.id)}>
+                        onClick={() => handleClose(product?.id)}>
                         <IoMdClose />
                     </Button>
                 </div>

@@ -1,6 +1,6 @@
 import React, { memo, useMemo, useCallback, useState } from 'react'
 import { Skeleton, Button, Divider, Rate } from 'antd'
-import { cn } from '~/shared/utilities/cn'
+import styles from '../styles/user-comments.module.scss'
 import { useProductComments } from '../api/useProductComments'
 import { DownOutlined } from '@ant-design/icons'
 import { useRouter } from 'next/router'
@@ -21,16 +21,16 @@ const ProductComments = memo(({ id }) => {
     }, [comments.length, totalCount])
 
     return (
-        <div className={cn("mt-4")}>
+        <div className={styles.commentsList}>
             {isLoading && <Skeleton active paragraph={{ rows: 4 }} />}
 
             {notFound && (
-                <div className={cn("flex", "justify-center", "items-center", "my-[30px]")}>
-                    <span className={cn("text-primary")}>Hozircha izohlar mavjud emas</span>
+                <div className={`${styles.commentsList} ${styles.centered}`}>
+                    <span className={styles.notFoundText}>Hozircha izohlar mavjud emas</span>
                 </div>
             )}
 
-            <div className={cn("flex", "flex-col", "gap-3")}>
+            <div className={styles.commentsList}>
                 {comments.map((item, idx) => (
                     <React.Fragment key={item.id}>
                         <CommentCard item={item} />
@@ -40,7 +40,7 @@ const ProductComments = memo(({ id }) => {
             </div>
 
             {comments.length < totalCount && (
-                <div className={cn("flex", "justify-center", "mt-4")}>
+                <div className={styles.showMoreContainer}>
                     <Button
                         onClick={handleShowMore}
                         loading={isFetching}
@@ -49,7 +49,7 @@ const ProductComments = memo(({ id }) => {
                         {isFetching ? (
                             'Yuklanmoqda...'
                         ) : (
-                            <div className={cn("flex", "items-center", "gap-2")}>
+                            <div className={styles.showMoreButton}>
                                 Ko‘proq ko‘rsatish <DownOutlined />
                             </div>
                         )}
@@ -59,7 +59,7 @@ const ProductComments = memo(({ id }) => {
 
             {comments.length > 0 && (
                 <Divider size='small'>
-                    <p className={cn("mt-3", "text-[12px]", "text-center", "mb-0")}>
+                    <p className={styles.countText}>
                         {totalCount} tadan {comments.length} ta ko‘rsatilgan
                     </p>
                 </Divider>
@@ -75,35 +75,32 @@ const CommentCard = memo(({ item }) => {
     const date = useMemo(() => item.created_at?.split('T')[0], [item.created_at])
     const { push } = useRouter()
     return (
-        <div className={cn("flex", "flex-col", "gap-2")}>
-            <div className={cn("flex", "flex-col", "gap-1")}>
-                <div className={cn("flex", "items-center", "gap-3")}>
-                    <span className={cn("font-semibold", "text-[14px]")}>
+        <div className={styles.cardContainer}>
+            <div className={styles.cardHeader}>
+                <div className={styles.userInfoRow}>
+                    <span className={styles.userName}>
                         {item.user_full_name}
                     </span>
                     {item.rating > 0 && (
-                        <Rate disabled value={item.rating} className={cn("text-[12px]")} />
+                        <Rate disabled value={item.rating} className={styles.ratingStars} />
                     )}
                 </div>
-                <span className={cn("text-[13px]", "text-secondary")}>
+                <span className={styles.metaInfo}>
                     {date} |{" "}
                     <span
-                        className={cn("cursor-pointer", "hover-text-primary")}
+                        className={styles.documentLink}
                         onClick={() => push(`/product/${item?.document_slug}`)}
                     >
                         {item.document_title}
                     </span>
                 </span>
                 {item.text && (
-                    <p className={cn("text-[14px]", "text-dark", "mt-1")}>{item.text}</p>
+                    <p className={styles.commentText}>{item.text}</p>
                 )}
             </div>
 
             {item.replies?.length > 0 && (
-                <div style={{
-                    borderLeft: '1px solid #e5e5e5',
-                }}
-                    className={`${cn("ml-4", "pl-4", "mt-2", "space-y-3")}`}>
+                <div className={styles.repliesContainer}>
                     {item.replies.map((reply) => (
                         <CommentCard key={reply.id} item={reply} />
                     ))}

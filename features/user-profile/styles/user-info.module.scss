@@ -1,0 +1,63 @@
+.userInfoContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    flex: 1;
+}
+
+.bioCard {
+    background-color: #f9fafb;
+    padding: 1rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 0.75rem;
+    width: 100%;
+}
+
+.bioTitle {
+    margin-bottom: 0.75rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+
+.bioText {
+    margin: 0;
+    color: #6b7280;
+}
+
+.statsWrapper {
+    display: none;
+    flex-wrap: wrap;
+    gap: 1rem;
+
+    @media (min-width: 992px) {
+        display: flex;
+    }
+}
+
+.statCard {
+    background-color: #f9fafb;
+    padding: 0.75rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 180px;
+    flex: 1;
+}
+
+.statIcon {
+    font-size: 26px;
+}
+
+.statLabel {
+    font-size: 10px;
+    color: #6b7280;
+    margin: 0;
+}
+
+.statValue {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0;
+}

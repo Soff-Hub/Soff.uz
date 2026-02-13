@@ -9,12 +9,22 @@ import React, {
     useRef,
     useState,
 } from 'react';
-import { cn } from '~/shared/utilities/cn';
-import UserInfo from './user-info';
-import UserPortfolios from './user-portfolios';
-import UserServices from './user-services';
-import UserProducts from './user-products';
+import styles from '../styles/user-tabs.module.scss';
+import dynamic from 'next/dynamic';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
+
+const UserInfo = dynamic(() => import('./user-info'), {
+    loading: () => <div className="min-h-[400px]" />,
+});
+const UserPortfolios = dynamic(() => import('./user-portfolios'), {
+    loading: () => <div className="min-h-[400px]" />,
+});
+const UserServices = dynamic(() => import('./user-services'), {
+    loading: () => <div className="min-h-[400px]" />,
+});
+const UserProducts = dynamic(() => import('./user-products'), {
+    loading: () => <div className="min-h-[400px]" />,
+});
 
 const UserTabs = ({ seller }) => {
     const router = useRouter();
@@ -23,13 +33,6 @@ const UserTabs = ({ seller }) => {
 
     const commentRef = useRef(null);
     const sectionRef = useRef(null);
-
-    // const isFreelancer = seller?.has_portfolio && seller?.has_service;
-    // const isOpenToAcceptOrders = seller?.accepting_orders;
-    // NOTE: for testing purposes only
-    // const isBlocked = true;
-    // const isLockedForService = !(isFreelancer && isOpenToAcceptOrders);
-    // const isOrderingClosed = isLockedForService || isBlocked;
     const isBlocked = seller?.is_blocked;
 
     useEffect(() => {
@@ -145,7 +148,7 @@ const UserTabs = ({ seller }) => {
     }, [activeKey]);
 
     return (
-        <div className={cn('h-full', 'flex', 'flex-col', 'gap-4', 'w-full')}>
+        <div className={styles.tabsContainer}>
             <DynamicTabs
                 ref={sectionRef}
                 items={items}
@@ -162,9 +165,8 @@ export default memo(UserTabs);
 const DynamicTabs = forwardRef(({ activeKey, onChange, items }, ref) => {
     return (
         <div
-            style={{ scrollMarginTop: '150px' }}
             ref={ref}
-            className={cn('bg-light', 'shadow', 'rounded-xl', 'w-full')}>
+            className={styles.tabsWrapper}>
             <Tabs
                 className="user_tabs"
                 items={items}
