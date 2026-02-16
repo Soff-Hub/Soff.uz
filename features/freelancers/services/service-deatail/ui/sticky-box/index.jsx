@@ -46,7 +46,7 @@ const StickyBox = ({ data }) => {
             {({ setAuthOpen, setActionTracker, setModalOpen }) => (
                 <div className={styles.stickyBox}>
                     <div className={styles.wrapper}>
-                        <Button
+                        {/* <Button
                             type="default"
                             icon={<MessageOutlined />}
                             className={styles.customBtn}
@@ -57,7 +57,7 @@ const StickyBox = ({ data }) => {
                                 })
                             }>
                             <span className={styles.chatTitle}>Chat</span>
-                        </Button>
+                        </Button> */}
 
                         <Button
                             type="primary"

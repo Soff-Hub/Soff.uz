@@ -73,13 +73,13 @@ const UserBox = ({ pushUser, priceBox, rating, feedbacks }) => {
                         </p>
                     </div>
                 </div>
-                <Button
+                {/* <Button
                     onClick={handleClick}
                     icon={<MessageOutlined />}
                     className="w-100"
                     disabled={isBlocked}>
                     Xabar yuborish
-                </Button>
+                </Button> */}
             </div>
             <AuthModal open={open} onClose={() => setOpen(false)} />
         </>

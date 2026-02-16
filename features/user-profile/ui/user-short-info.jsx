@@ -320,13 +320,13 @@ const UserShortInfo = ({ seller }) => {
                 />
             )}
             <div className={styles.actionButtons}>
-                <Button
+                {/* <Button
                     type="default"
                     className={styles.chatBtn}
                     disabled={isOrderingClosed}
                     onClick={handleCreateChat}>
                     <FaCommentDots />
-                </Button>
+                </Button> */}
                 <Button
                     type="primary"
                     block
@@ -337,12 +337,12 @@ const UserShortInfo = ({ seller }) => {
             </div>
 
             <div className={styles.mobileOnlyActions}>
-                <Button
+                {/* <Button
                     type="default"
                     className={styles.chatBtn}
                     onClick={handleCreateChat}>
                     <FaCommentDots />
-                </Button>
+                </Button> */}
                 <Button
                     block
                     type="primary"
