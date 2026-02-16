@@ -38,8 +38,8 @@ export default function ProductCategoryScreen({
         title && subTitle
             ? `${title} - ${subTitle}`
             : title
-              ? title
-              : 'Ilmiy ishlar kategoriyasi';
+                ? title
+                : 'Ilmiy ishlar kategoriyasi';
 
     return (
         <PageContainer>
