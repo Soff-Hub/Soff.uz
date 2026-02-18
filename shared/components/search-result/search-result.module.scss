@@ -122,3 +122,61 @@
     font-size: 14px;
     margin: 0;
 }
+
+.soffiaAiSuggestion {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: linear-gradient(135deg, rgba(0, 164, 79, 0.05), rgba(0, 164, 79, 0.02));
+    border: 1px dashed rgba(0, 164, 79, 0.3);
+    border-radius: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none !important;
+
+    &:hover {
+        background: linear-gradient(135deg, rgba(0, 164, 79, 0.1), rgba(0, 164, 79, 0.05));
+        border-color: rgba(0, 164, 79, 0.5);
+        transform: translateY(-1px);
+    }
+
+    .aiIcon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        // background: #00a44f;
+        border-radius: 50%;
+        flex-shrink: 0;
+
+        svg {
+            width: 18px;
+            height: 18px;
+        }
+    }
+
+    .aiText {
+        display: flex;
+        flex-direction: column;
+
+        .aiLabel {
+            font-size: 14px;
+            font-weight: 600;
+            color: #00a44f;
+        }
+
+        .aiDesc {
+            font-size: 12px;
+            color: #666;
+        }
+    }
+
+    .aiArrow {
+        margin-left: auto;
+        color: #00a44f;
+        font-size: 18px;
+    }
+}

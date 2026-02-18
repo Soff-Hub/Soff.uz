@@ -98,3 +98,31 @@
         padding: 0;
     }
 }
+
+.soffiaAiLabel {
+    @extend .label;
+    color: $color-1st !important;
+    font-weight: 600 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px;
+    padding-left: 5px !important;
+    padding-right: 15px !important;
+    transition: all 0.3s ease;
+
+    .newBadge {
+        background: $color-1st;
+        color: #fff;
+        font-size: 9px;
+        font-weight: 800;
+        padding: 2px 6px;
+        border-radius: 6px;
+        letter-spacing: 0.5px;
+        line-height: 1;
+    }
+
+    &:hover {
+        transform: translateY(-1px);
+        text-shadow: 0 0 10px rgba(0, 164, 79, 0.2);
+    }
+}

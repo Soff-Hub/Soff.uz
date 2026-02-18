@@ -9,6 +9,7 @@ import {
     SearchHistoryOption,
     SearchNavigationProgress,
     SearchOption,
+    SearchSoffiaAIOption,
 } from './SearchComponents';
 
 function SearchResult({
@@ -38,8 +39,8 @@ function SearchResult({
                             item.type === 'mahsulotlar'
                                 ? `/search-page/?keyword=${item.value}&tab=1&type=file`
                                 : item.type === 'xizmatlar'
-                                  ? `/search-page/?keyword=${item.value}&tab=2&type=all`
-                                  : `/search-page/?keyword=${item.value}&tab=3&type=all`
+                                    ? `/search-page/?keyword=${item.value}&tab=2&type=all`
+                                    : `/search-page/?keyword=${item.value}&tab=3&type=all`
                         }>
                         <a onClick={() => setIsNavigating(true)}>
                             <SearchHistoryOption
@@ -85,6 +86,9 @@ function SearchResult({
             <SearchNavigationProgress isNavigating={isNavigating} />
             {historyOptions}
             {filteredDataOptions}
+            {debouncedSearch && (
+                <SearchSoffiaAIOption debouncedSearch={debouncedSearch} />
+            )}
         </div>
     );
 }

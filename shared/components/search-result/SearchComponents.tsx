@@ -2,8 +2,34 @@ import React, { FC } from 'react';
 import styles from './search-result.module.scss';
 import { Button, Spin } from 'antd';
 import { MdOutlineAccessTime } from 'react-icons/md';
-import { IoClose, IoSearch } from 'react-icons/io5';
+import { IoClose, IoSearch, IoArrowForward } from 'react-icons/io5';
 import { highlightMatch } from '~/shared/utilities/utils';
+import { soffiaIconSVG } from '~/widgets/header/HeaderActions/HeaderAIIcon';
+
+type SearchSoffiaAIOptionProps = {
+    debouncedSearch: string;
+};
+
+export const SearchSoffiaAIOption: FC<SearchSoffiaAIOptionProps> = ({
+    debouncedSearch,
+}) => {
+    return (
+        <a
+            href="https://soffia.uz"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.soffiaAiSuggestion}>
+            <div className={styles.aiIcon}>{soffiaIconSVG}</div>
+            <div className={styles.aiText}>
+                <span className={styles.aiLabel}>Soffia AI orqali yaratish</span>
+                <span className={styles.aiDesc}>
+                    "{debouncedSearch}" haqida AI dan so'rab ko'ring
+                </span>
+            </div>
+            <IoArrowForward className={styles.aiArrow} />
+        </a>
+    );
+};
 
 type SearchHistoryHeaderProps = {
     clearHistoryItem: () => void;

@@ -7,6 +7,7 @@ import {
     SearchHistoryHeader,
     SearchHistoryOption,
     SearchOption,
+    SearchSoffiaAIOption,
 } from './SearchComponents';
 
 type SearchOptionsProps = {
@@ -84,6 +85,9 @@ function SearchOptions({
         <div className={styles.container}>
             {historyOptions}
             {filteredDataOptions}
+            {debouncedSearch && (
+                <SearchSoffiaAIOption debouncedSearch={debouncedSearch} />
+            )}
         </div>
     );
 }
