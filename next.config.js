@@ -59,6 +59,11 @@ const nextSettings = {
                         key: 'Permissions-Policy',
                         value: 'camera=(), microphone=(), geolocation=()',
                     },
+                    // BIZ QO'SHGAN XAVFSIZLIK DEVORI (CSP)
+                    {
+                        key: 'Content-Security-Policy',
+                        value: "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://use.fontawesome.com https://fonts.googleapis.com; img-src 'self' blob: data: https://eu2.contabostorage.com https://d2co7bxjtnp5o.cloudfront.net https://api.soff.uz https://test-soffuz.s3.amazonaws.com http://176.96.241.219 https://encrypted-tbn0.gstatic.com http://www.bukhari.uz http://localhost http://192.168.1.15 https://media.licdn.com https://freelance.soff.uz https://freelance.ilmiyish.uz https://placehold.co https://freelance-media.s3.amazonaws.com https://img.youtube.com; font-src 'self' data: https://cdnjs.cloudflare.com https://use.fontawesome.com https://fonts.gstatic.com; connect-src 'self' https://api.soff.uz wss://api.soff.uz https://freelance.soff.uz wss://freelance.soff.uz *.sentry.io; frame-src 'self' https://www.youtube.com;"
+                    }
                 ],
             },
             // Caching static files for 1 year
