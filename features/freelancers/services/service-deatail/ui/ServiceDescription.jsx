@@ -11,6 +11,7 @@ import { GoPencil } from 'react-icons/go';
 import { cn, useRcn } from '~/shared/utilities/cn';
 import { sleep } from '~/shared/utilities/sleep';
 import ServiceOrderModal from './ServiceOrderModal';
+import { sanitizeHtml } from '~/shared/utilities/sanitize-html';
 
 const ServiceDescription = ({ description = {}, priceBox = {} }) => {
     const { price, days, revisions, title, category, user } = priceBox;
@@ -86,7 +87,7 @@ const ServiceDescription = ({ description = {}, priceBox = {} }) => {
             {descText && (
                 <div
                     style={{ borderBottom: '1px solid rgba(0,0,0,0.04)' }}
-                    dangerouslySetInnerHTML={{ __html: descText }}
+                    dangerouslySetInnerHTML={{ __html: sanitizeHtml(descText) }}
                 />
             )}
 
@@ -94,7 +95,7 @@ const ServiceDescription = ({ description = {}, priceBox = {} }) => {
             {requirements && (
                 <div
                     style={{ borderBottom: '1px solid rgba(0,0,0,0.04)' }}
-                    dangerouslySetInnerHTML={{ __html: requirements }}
+                    dangerouslySetInnerHTML={{ __html: sanitizeHtml(requirements) }}
                 />
             )}
             {file && (

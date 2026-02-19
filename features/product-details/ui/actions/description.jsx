@@ -1,7 +1,8 @@
 import React from 'react'
+import { sanitizeHtml } from '~/shared/utilities/sanitize-html';
 
 function Description({ description }) {
-    
+
     return (
         <div className='ps-product__thumbnail_seller_secound product-description'>
             <h3 style={{
@@ -14,7 +15,7 @@ function Description({ description }) {
 
             {
                 description?.length > 0 ? (
-                    <div dangerouslySetInnerHTML={{ __html: description }} />
+                    <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(description) }} />
                 ) : (
                     <div className="text-center">
                         <img

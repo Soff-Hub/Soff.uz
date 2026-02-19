@@ -25,6 +25,7 @@ import { FaArrowLeft } from 'react-icons/fa6';
 import { FaCreditCard } from 'react-icons/fa6';
 import { FaFileAlt } from 'react-icons/fa';
 import { FaShieldHalved } from 'react-icons/fa6';
+import { sanitizeHtml } from '~/shared/utilities/sanitize-html';
 
 // TimerComponent to show time remaining until deadline
 const TimerComponent = ({ deadlineDate }) => {
@@ -220,9 +221,8 @@ const OrderMain = ({ order }) => {
                     <div className={styles.orderPayCardFlex}>
                         <div className={styles.orderPayCardInfo}>
                             <h5
-                                className={`mb-0 ${
-                                    !isDesktop && 'text-center'
-                                }`}>
+                                className={`mb-0 ${!isDesktop && 'text-center'
+                                    }`}>
                                 Frilanser ish boshlashiga to'lov qiling.
                             </h5>
                         </div>
@@ -273,43 +273,43 @@ const OrderMain = ({ order }) => {
                 )}
                 {(order?.order_status_doing?.status === 'approved' ||
                     order?.order_status_doing?.status ===
-                        'requirement_file_rejected') && (
-                    <div className={styles.orderPayCardFlex}>
-                        <div>
-                            <h3 className={styles.orderNameLink}>
-                                Buyurtma talablari kutilmoqda
-                            </h3>
-                            {order?.order_status_doing?.status ===
-                                'approved' && (
-                                <p>
-                                    Siz to‘lovni amalga oshirdingiz. Endi
-                                    mutahasis ishni boshlashi uchun kerakli
-                                    materiallar va ko‘rsatmalarni yuboring.
-                                </p>
-                            )}
-                            {order?.order_status_doing?.status ===
-                                'requirement_file_rejected' && (
-                                <p>
-                                    Siz yuborgan materiallar yoki ko‘rsatmalar
-                                    yetarli emasligi sababli mutahasis ularni
-                                    rad etdi. Iltimos, ishni boshlash uchun
-                                    barcha kerakli fayllar va aniq
-                                    ko‘rsatmalarni qayta yuboring.
-                                </p>
-                            )}
+                    'requirement_file_rejected') && (
+                        <div className={styles.orderPayCardFlex}>
+                            <div>
+                                <h3 className={styles.orderNameLink}>
+                                    Buyurtma talablari kutilmoqda
+                                </h3>
+                                {order?.order_status_doing?.status ===
+                                    'approved' && (
+                                        <p>
+                                            Siz to‘lovni amalga oshirdingiz. Endi
+                                            mutahasis ishni boshlashi uchun kerakli
+                                            materiallar va ko‘rsatmalarni yuboring.
+                                        </p>
+                                    )}
+                                {order?.order_status_doing?.status ===
+                                    'requirement_file_rejected' && (
+                                        <p>
+                                            Siz yuborgan materiallar yoki ko‘rsatmalar
+                                            yetarli emasligi sababli mutahasis ularni
+                                            rad etdi. Iltimos, ishni boshlash uchun
+                                            barcha kerakli fayllar va aniq
+                                            ko‘rsatmalarni qayta yuboring.
+                                        </p>
+                                    )}
+                            </div>
+                            <Button
+                                type="primary"
+                                style={{
+                                    backgroundColor: '#00a44f',
+                                    borderColor: '#00a44f',
+                                    padding: '16px 28px',
+                                }}
+                                onClick={() => setOpen(true)}>
+                                Talablarni yuborish
+                            </Button>
                         </div>
-                        <Button
-                            type="primary"
-                            style={{
-                                backgroundColor: '#00a44f',
-                                borderColor: '#00a44f',
-                                padding: '16px 28px',
-                            }}
-                            onClick={() => setOpen(true)}>
-                            Talablarni yuborish
-                        </Button>
-                    </div>
-                )}
+                    )}
 
                 {order?.order_status_doing?.status == 'order_file_sent' && (
                     <OrderFiles
@@ -368,26 +368,26 @@ const OrderMain = ({ order }) => {
                                     whiteSpace: 'pre-line',
                                 }}
                                 dangerouslySetInnerHTML={{
-                                    __html: order.order_requirement[0]
-                                        ?.order_requirement_description,
+                                    __html: sanitizeHtml(order.order_requirement[0]
+                                        ?.order_requirement_description),
                                 }}
                             />
                             {/* Fayl bo‘lsa tugma chiqadi */}
                             {order.order_requirement[0]
                                 ?.order_requirement_file && (
-                                <div className="d-flex justify-content-md-end justify-content-start w-md-auto">
-                                    <Button
-                                        icon={<DownloadOutlined />}
-                                        onClick={() =>
-                                            downloadFile(
-                                                order.order_requirement[0]
-                                                    .order_requirement_file
-                                            )
-                                        }>
-                                        Faylni yuklab olish
-                                    </Button>
-                                </div>
-                            )}
+                                    <div className="d-flex justify-content-md-end justify-content-start w-md-auto">
+                                        <Button
+                                            icon={<DownloadOutlined />}
+                                            onClick={() =>
+                                                downloadFile(
+                                                    order.order_requirement[0]
+                                                        .order_requirement_file
+                                                )
+                                            }>
+                                            Faylni yuklab olish
+                                        </Button>
+                                    </div>
+                                )}
                         </div>
                     </div>
                 )}
@@ -521,8 +521,8 @@ const OrderMain = ({ order }) => {
                                                     ? modalStyles.orderButtonActive
                                                     : mode &&
                                                         !isSufficientBalance
-                                                      ? modalStyles.orderButtonWarn
-                                                      : modalStyles.orderButtonInactive
+                                                        ? modalStyles.orderButtonWarn
+                                                        : modalStyles.orderButtonInactive
                                             }
                                             disabled={!balanceDisabled}>
                                             <Switch value={mode} size="small" />

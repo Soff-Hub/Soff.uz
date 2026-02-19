@@ -3,6 +3,7 @@ import { FaRegPenToSquare } from 'react-icons/fa6';
 import styles from './style.module.scss';
 import Icon from '~/shared/ui/Icon';
 import { SizeType } from '~/shared/types/size';
+import { sanitizeHtml } from '~/shared/utilities/sanitize-html';
 
 type OrderDescriptionProps = {
     order: any;
@@ -103,7 +104,7 @@ function OrderDescription({ order, size = 'large' }: OrderDescriptionProps) {
                         lineHeight: sizeStyles.lineHeight,
                     }}
                     dangerouslySetInnerHTML={{
-                        __html: order.description,
+                        __html: sanitizeHtml(order.description),
                     }}
                 />
             </div>

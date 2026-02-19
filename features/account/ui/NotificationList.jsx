@@ -5,6 +5,7 @@ import api from '~/shared/api/api';
 import { useQuery } from '@tanstack/react-query';
 import SidebarLayout from '~/widgets/sidebar/SidebarLayout';
 import { FaArrowRight } from 'react-icons/fa6';
+import { sanitizeHtml } from '~/shared/utilities/sanitize-html';
 
 export default function NotificationList() {
     const { user } = useSelector((state) => state.auth);
@@ -88,7 +89,7 @@ const Notification = ({ notification, link, index }) => {
             {body && (
                 <div
                     className="m-0 text-dark-emphasis mb-3"
-                    dangerouslySetInnerHTML={{ __html: body }}></div>
+                    dangerouslySetInnerHTML={{ __html: sanitizeHtml(body) }}></div>
             )}
 
             {link && (

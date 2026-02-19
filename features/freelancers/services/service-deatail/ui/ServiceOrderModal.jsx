@@ -11,6 +11,7 @@ import { FaArrowLeft } from 'react-icons/fa6';
 import { FaFileAlt } from 'react-icons/fa';
 import { FaShieldHalved } from 'react-icons/fa6';
 import { FaPaperclip } from 'react-icons/fa6';
+import { sanitizeHtml } from '~/shared/utilities/sanitize-html';
 
 const { TextArea } = Input;
 
@@ -168,7 +169,7 @@ function ServiceOrderModal({
                                             paddingBottom: '15px',
                                         }}
                                         dangerouslySetInnerHTML={{
-                                            __html: requirements,
+                                            __html: sanitizeHtml(requirements),
                                         }}
                                     />
                                 </>
@@ -259,8 +260,8 @@ function ServiceOrderModal({
                                                     ? styles.orderButtonActive
                                                     : mode &&
                                                         !isSufficientBalance
-                                                      ? styles.orderButtonWarn
-                                                      : styles.orderButtonInactive
+                                                        ? styles.orderButtonWarn
+                                                        : styles.orderButtonInactive
                                             }
                                             disabled={!balanceDisabled}>
                                             <Switch value={mode} size="small" />
