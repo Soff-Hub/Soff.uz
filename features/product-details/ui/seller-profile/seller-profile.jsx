@@ -1,4 +1,3 @@
-import { Button, Rate } from 'antd';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
@@ -31,43 +30,35 @@ function SellerProfile({ product }) {
                         width={200}
                     />
                 </div>
-                <div>
-                    <span
-                        style={{
-                            color: 'gray',
-                        }}>
-                        Muallif:
-                    </span>
+                <div className="d-flex flex-column justify-content-center">
                     <Link href={`/seller/${product?.seller?.id}`}>
                         <a>
-                            <h3 className="sellerNameHover">
+                            <h3 className="sellerNameHover mb-1">
                                 {product?.seller?.first_name}{' '}
                                 {product?.seller?.last_name}
                             </h3>
                         </a>
                     </Link>
-                </div>
-            </div>
-            <div className="w-100 d-flex flex-column gap-3">
-                <div className="w-100 d-flex align-items-center fs-3 gap-2">
-                    <FaCircleCheck className="text-success fs-3" />
-                    <span>Jami mahsulotlar soni:</span>
-                    <span>
-                        {product.seller.total_approved_documents
-                            ? product.seller.total_approved_documents
-                            : 0}{' '}
-                        ta
-                    </span>
-                </div>
-                <div className="w-100 d-flex align-items-center fs-3 gap-2">
-                    <FaBriefcase className="text-success fs-3" />
-                    <span>Sotilgan mahsulotlar soni:</span>
-                    <span>
-                        {product.seller.total_sold_documents > 0
-                            ? product.seller.total_sold_documents
-                            : 0}{' '}
-                        ta
-                    </span>
+                    <div className="d-flex align-items-center gap-3 text-muted mt-1" style={{ fontSize: '15px' }}>
+                        <div className="d-flex align-items-center gap-1" title="Jami mahsulotlar">
+                            <FaCircleCheck className="text-success" />
+                            <span className="fw-medium">
+                                {product.seller.total_approved_documents
+                                    ? product.seller.total_approved_documents
+                                    : 0}{' '}
+                                ta
+                            </span>
+                        </div>
+                        <div className="d-flex align-items-center gap-1" title="Sotilgan mahsulotlar">
+                            <FaBriefcase className="text-success" />
+                            <span className="fw-medium">
+                                {product.seller.total_sold_documents > 0
+                                    ? product.seller.total_sold_documents
+                                    : 0}{' '}
+                                ta
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
