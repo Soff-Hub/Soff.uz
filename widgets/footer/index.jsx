@@ -3,6 +3,10 @@ import styles from './style.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useGetDirectionsQuery } from '~/store/profile/slice';
+import useResponsive from '~/shared/utilities/useResponsive';
+import { Collapse } from 'antd';
+
+const { Panel } = Collapse;
 
 const footerMenu = {
     soff: {
@@ -149,6 +153,39 @@ const aboutUsPages = [
     { key: '5', link: '/page/oferta', label: 'Oferta' },
 ];
 
+const FooterCollapse = ({ title, children, defaultOpen = false }) => {
+    const { isMobile } = useResponsive();
+
+    if (!isMobile) {
+        return (
+            <div className={styles.sectionMargin}>
+                <h5 className={styles.sectionTitle}>{title}</h5>
+                {children}
+            </div>
+        );
+    }
+
+    return (
+        <Collapse
+            ghost
+            expandIconPosition="end"
+            className={styles.mobileCollapse}
+            defaultActiveKey={defaultOpen ? ['1'] : []}
+        >
+            <Panel
+                header={
+                    <h5 className={styles.sectionTitle} style={{ margin: 0, fontSize: '18px' }}>
+                        {title}
+                    </h5>
+                }
+                key="1"
+            >
+                {children}
+            </Panel>
+        </Collapse>
+    );
+};
+
 export default function Footer() {
     const currentYear = new Date().getFullYear();
     const { data: directions } = useGetDirectionsQuery();
@@ -187,10 +224,7 @@ export default function Footer() {
                             ))}
                         </div>
                         {/* Xizmatlar (Aloqa) */}
-                        <div className={styles.sectionMargin}>
-                            <h5 className={styles.sectionTitle}>
-                                {footerMenu.services.title}
-                            </h5>
+                        <FooterCollapse title={footerMenu.services.title} defaultOpen={true}>
                             <ul>
                                 {footerMenu.services.links.map((link, i) =>
                                     link.link ? (
@@ -212,13 +246,10 @@ export default function Footer() {
                                     )
                                 )}
                             </ul>
-                        </div>
+                        </FooterCollapse>
                     </div>
                     <div className={styles.footerLinksSection}>
-                        <div>
-                            <h5 className={styles.sectionTitle}>
-                                Tayyor mahsulotlar
-                            </h5>
+                        <FooterCollapse title="Tayyor mahsulotlar">
                             <ul>
                                 {products.map((link) => (
                                     <li key={link.key}>
@@ -233,11 +264,8 @@ export default function Footer() {
                                     </li>
                                 ))}
                             </ul>
-                        </div>
-                        <div>
-                            <h5 className={styles.sectionTitle}>
-                                Xizmat turlari
-                            </h5>
+                        </FooterCollapse>
+                        <FooterCollapse title="Xizmat turlari">
                             <ul>
                                 {directions?.map((link) => (
                                     <li key={link.value}>
@@ -253,11 +281,8 @@ export default function Footer() {
                                     </li>
                                 ))}
                             </ul>
-                        </div>
-                        <div>
-                            <h5 className={styles.sectionTitle}>
-                                Asosiy sahifalar
-                            </h5>
+                        </FooterCollapse>
+                        <FooterCollapse title="Asosiy sahifalar">
                             <ul>
                                 {mainPages.map((link) => (
                                     <li key={link.key}>
@@ -272,11 +297,8 @@ export default function Footer() {
                                     </li>
                                 ))}
                             </ul>
-                        </div>
-                        <div>
-                            <h5 className={styles.sectionTitle}>
-                                Biz haqimizda
-                            </h5>
+                        </FooterCollapse>
+                        <FooterCollapse title="Biz haqimizda">
                             <ul>
                                 {aboutUsPages.map((link) => (
                                     <li key={link.value}>
@@ -291,7 +313,7 @@ export default function Footer() {
                                     </li>
                                 ))}
                             </ul>
-                        </div>
+                        </FooterCollapse>
                     </div>
                 </div>
                 <div className={styles.footerBottom}>

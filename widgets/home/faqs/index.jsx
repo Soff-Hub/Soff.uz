@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './style.module.scss';
 import { Collapse } from 'antd';
 import { faqs } from '~/shared/constants';
+import { DownOutlined } from '@ant-design/icons';
 
 const { Panel } = Collapse;
 
 const Faqs = () => {
+    const [activeKey, setActiveKey] = useState(null);
     const panelStyle = {
         marginBottom: 24,
         background: 'rgba(254, 254, 254, 1)',
@@ -27,13 +29,14 @@ const Faqs = () => {
             <Collapse
                 accordion
                 bordered={false}
+                activeKey={activeKey}
+                onChange={(key) => setActiveKey(key)}
                 expandIcon={({ isActive }) => (
                     <img
                         src="/static/img/star.svg"
                         alt="badge"
-                        className={`${styles.custom_expand_icon} ${
-                            isActive ? styles.active : ''
-                        }`}
+                        className={`${styles.custom_expand_icon} ${isActive ? styles.active : ''
+                            }`}
                     />
                 )}
                 style={{ background: 'transparent' }}>
@@ -41,11 +44,21 @@ const Faqs = () => {
                     <Panel
                         className={styles.accordion}
                         header={
-                            <h1 className={styles.accordionTitle}>
-                                {item.question}
-                            </h1>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                                <h1 className={styles.accordionTitle}>
+                                    {item.question}
+                                </h1>
+                                <DownOutlined
+                                    style={{
+                                        transition: 'transform 0.3s ease',
+                                        transform: (Array.isArray(activeKey) ? activeKey.includes(String(idx)) : activeKey === String(idx) || activeKey === idx) ? 'rotate(180deg)' : 'rotate(0deg)',
+                                        color: 'rgba(36, 40, 43, 1)',
+                                        fontSize: '18px'
+                                    }}
+                                />
+                            </div>
                         }
-                        key={idx}
+                        key={String(idx)}
                         style={panelStyle}>
                         <p className={styles.accordionText}>{item.answer}</p>
                     </Panel>
