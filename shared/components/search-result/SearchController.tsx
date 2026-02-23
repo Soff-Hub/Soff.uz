@@ -186,18 +186,14 @@ function SearchController({
             <Popover
                 content={popoverContent}
                 open={popoverVisible}
-                classNames={{ root: styles.searchPopover }}
+                overlayClassName={styles.searchPopover}
                 placement={popoverPlacement}
-                styles={{
-                    root: {
-                        ...(popoverWidth ? { width: `${popoverWidth}px` } : {}),
-                    },
-                    body: { padding: 0 },
-                }}
+                overlayStyle={{ ...(popoverWidth ? { width: popoverWidth, maxWidth: popoverWidth } : {}) }}
+                overlayInnerStyle={{ ...(popoverWidth ? { width: popoverWidth, maxWidth: popoverWidth } : {}) }}
 
-                // getPopupContainer={() =>
-                //     document.getElementById('my-portal')
-                // }
+            // getPopupContainer={() =>
+            //     document.getElementById('my-portal')
+            // }
             >
                 {children(inputRef, {
                     handleInputChange,

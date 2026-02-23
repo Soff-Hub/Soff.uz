@@ -68,6 +68,8 @@ export const SearchHistoryOption: FC<SearchHistoryOptionProps> = ({
         <div className={styles.searchOption} {...props}>
             <MdOutlineAccessTime className={styles.searchOptionIcon} />
 
+            <span className={styles.searchOptionText}>{highlightMatch(item.value, debouncedSearch)}</span>
+
             <Button
                 type="text"
                 className={styles.deleteHistoryBtn}
@@ -78,9 +80,7 @@ export const SearchHistoryOption: FC<SearchHistoryOptionProps> = ({
                 }}
                 icon={<IoClose fontSize={18} />}
                 size="small"
-                style={{ marginLeft: 'auto' }}
             />
-            <span>{highlightMatch(item.value, debouncedSearch)}</span>
         </div>
     );
 };
@@ -98,7 +98,7 @@ export const SearchOption: FC<SearchOptionProps> = ({
     return (
         <div className={styles.searchOption} {...props}>
             <IoSearch className={styles.searchOptionIcon} />
-            {highlightMatch(option.value, debouncedSearch)}
+            <span className={styles.searchOptionText}>{highlightMatch(option.value, debouncedSearch)}</span>
         </div>
     );
 };

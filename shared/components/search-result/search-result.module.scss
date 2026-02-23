@@ -33,15 +33,18 @@
         max-height: 300px !important;
         padding-right: 10px;
         overflow-y: scroll;
+        overflow-x: hidden;
     }
 
     :global(.ant-popover-inner) {
         width: 100% !important;
         box-shadow: none;
+        overflow-x: hidden;
     }
 
     :global(.ant-popover-inner-content) {
         width: 100% !important;
+        overflow-x: hidden;
     }
 }
 
@@ -66,20 +69,30 @@
     padding: 8px 12px;
     color: #000000e0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    overflow: hidden;
     cursor: pointer;
+    display: flex;
+    align-items: center;
 
     .searchOptionIcon {
         color: #888;
         margin-right: 8px;
         font-size: 18px;
-        float: left;
+        flex-shrink: 0;
     }
 
     .deleteHistoryBtn {
-        float: right;
         font-size: 14px;
         padding: 0;
+        flex-shrink: 0;
+        margin-left: auto;
+    }
+
+    .searchOptionText {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        flex-grow: 1;
+        min-width: 0;
     }
 
     &:hover {

@@ -199,11 +199,10 @@ const ProductFilterSection = ({ child, parent, path, isFile, title }) => {
                         <span
                             key={cat.id}
                             onClick={() => handleParent(cat.slug, cat.id)}
-                            className={`${styles.parentCat} ${
-                                (parentCategory === cat.slug ||
+                            className={`${styles.parentCat} ${(parentCategory === cat.slug ||
                                     query.slug === cat.slug) &&
                                 styles.active
-                            }`}>
+                                }`}>
                             {cat.name}
                         </span>
                     ))}
@@ -235,11 +234,10 @@ const ProductFilterSection = ({ child, parent, path, isFile, title }) => {
                             <span
                                 key={cat.slug}
                                 onClick={() => handleChild(cat?.slug, cat?.id)}
-                                className={`${styles.childCat} ${
-                                    (childCategory === cat.slug ||
+                                className={`${styles.childCat} ${(childCategory === cat.slug ||
                                         query.slug === cat.slug) &&
                                     styles.active
-                                }`}>
+                                    }`}>
                                 {cat?.name}
                             </span>
                         ))}
@@ -374,9 +372,8 @@ const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
         };
         const newQuery = clearEmptyQueries({ ...query, ...filters });
         push({
-            pathname: `${path}${
-                selectedSubCategory.slug || selectedCategory.slug || 'all'
-            }`,
+            pathname: `${path}${selectedSubCategory.slug || selectedCategory.slug || 'all'
+                }`,
             query: newQuery,
         });
         onClose();
