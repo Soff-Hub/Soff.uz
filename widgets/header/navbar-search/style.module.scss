@@ -16,8 +16,9 @@
         font-size: 15px;
         outline: none;
         border: none;
-        background-color: #fff !important;
+        background-color: transparent !important;
         width: 100%;
+        padding-left: 15px;
         // margin-left: 9px;
         // margin-top: 5px;
         z-index: 3;
@@ -90,5 +91,27 @@
 
     button {
         font-size: 14px;
+    }
+}
+
+.stickyWrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: #fff;
+    padding: 10px 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+    }
+
+    to {
+        transform: translateY(0);
     }
 }

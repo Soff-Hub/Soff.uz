@@ -39,21 +39,27 @@
 
 .servicesSpace {
     height: 300px;
+
     @media (max-width: 992px) {
         height: 250px;
     }
+
     @media (max-width: 768px) {
         height: 200px;
     }
+
     @media (max-width: 576px) {
         height: 150px;
     }
 }
+
 .servicesOrders {
     height: 200px;
+
     @media (max-width: 992px) {
         height: 150;
     }
+
     @media (max-width: 768px) {
         height: 100px;
     }
@@ -100,6 +106,7 @@
     @media (max-width: 992px) {
         margin: 14px 0px;
     }
+
     @media (max-width: 576px) {
         border-top: 1px solid #ccc;
         margin: 0px 0px;
@@ -179,6 +186,7 @@
     0% {
         opacity: 0;
     }
+
     100% {
         opacity: 1;
     }
@@ -314,5 +322,16 @@
             margin: 0;
             border-left: 3px solid transparent;
         }
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .site-header.non-sticky-mobile {
+        position: relative !important;
+        transform: none !important;
+        opacity: 1 !important;
+        animation: none !important;
+        z-index: 1000;
+        background-color: #fff;
     }
 }

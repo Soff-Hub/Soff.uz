@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useRouter } from 'next/router';
 import HeaderTop from './HeaderTop';
 import HeaderLogo from './HeaderLogo';
 import HeaderActions from './HeaderActions';
@@ -15,6 +16,8 @@ const Header = () => {
     const { headerRef } = useViewportContext();
     const { isMobile } = useResponsive();
     const dispatch = useDispatch();
+    const router = useRouter();
+    const isHomePage = router.pathname === '/';
 
     useEffect(() => {
         const initFunctions = () => {
@@ -25,7 +28,7 @@ const Header = () => {
     }, []);
 
     return (
-        <header className="site-header" ref={headerRef}>
+        <header className={`site-header ${!isHomePage && isMobile ? 'non-sticky-mobile' : ''}`} ref={headerRef}>
             <div className={`header-bottom top-0 bg-white`}>
                 <div className="container">
                     <HeaderTop />
