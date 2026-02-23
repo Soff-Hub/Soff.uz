@@ -345,8 +345,8 @@ const ImageCarousel = ({
                                     }}>
                                     <div
                                         className={`thumbnail-wrapper ${activeIndex === index
-                                                ? 'active'
-                                                : ''
+                                            ? 'active'
+                                            : ''
                                             }`}
                                         style={{
                                             width: '75px',
@@ -418,7 +418,7 @@ const ImageCarousel = ({
                 )}
                 {isProduct && (
                     <>
-                        <div className="views mt-2">
+                        <div style={{ zIndex: 10 }} className="views mt-2">
                             <FaEye /> <span>{views || 0}</span>
                         </div>
 

@@ -40,7 +40,8 @@ export default function GoogleBox({
 
         // Add return URL for modals
         if (isModal) {
-            params.append('returnUrl', encodeURIComponent(router.asPath));
+            const redirectUrl = onGoogleSuccessNavigateTo || router.asPath;
+            params.append('returnUrl', encodeURIComponent(redirectUrl));
             // onSuccess();
         }
 

@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { IoDocumentsSharp } from 'react-icons/io5';
 
-const Search_Results_NotFound = forwardRef(({ isSearchPage = true }, ref) => {
+const Search_Results_NotFound = forwardRef(({ isSearchPage = true, type }, ref) => {
     const { isLoggedIn } = useSelector(state => state.auth);
     const { data, isLoading } = useFGet(
         'top-services',
@@ -34,9 +34,11 @@ const Search_Results_NotFound = forwardRef(({ isSearchPage = true }, ref) => {
                     className="Search_Results_not_found_img"
                 />
                 <p className="Search_Results_not_found_title">
-                    {isSearchPage
-                        ? 'Afsuski, izlagan narsangiz topilmadi. Ammo siz uni buyurtma qilishingiz mumkin.👇'
-                        : 'Afsuski, izlagan xizmatingiz topilmadi. Ammo siz uni buyurtma qilishingiz mumkin.👇'}
+                    {type === 'specialist'
+                        ? 'Afsuski, izlagan mutaxassisingiz topilmadi. Ammo siz o\'z ishingiz bo\'yicha buyurtma yaratishingiz mumkin.👇'
+                        : isSearchPage
+                            ? 'Afsuski, izlagan narsangiz topilmadi. Ammo siz uni buyurtma qilishingiz mumkin.👇'
+                            : 'Afsuski, izlagan xizmatingiz topilmadi. Ammo siz uni buyurtma qilishingiz mumkin.👇'}
                 </p>
                 <p className="Search_Results_not_found_subtitle">
                     <span
@@ -51,26 +53,26 @@ const Search_Results_NotFound = forwardRef(({ isSearchPage = true }, ref) => {
                 <div className="row row-gap-2 mt-4">
                     {isLoading
                         ? Array.from({ length: 9 }).map((_, i) => (
-                              <div
-                                  key={i}
-                                  className="col-6 col-sm-6 col-md-4 px-1">
-                                  <Skeleton.Input
-                                      active
-                                      block
-                                      style={{
-                                          height: 200,
-                                          borderRadius: 12,
-                                      }}
-                                  />
-                              </div>
-                          ))
+                            <div
+                                key={i}
+                                className="col-6 col-sm-6 col-md-4 px-1">
+                                <Skeleton.Input
+                                    active
+                                    block
+                                    style={{
+                                        height: 200,
+                                        borderRadius: 12,
+                                    }}
+                                />
+                            </div>
+                        ))
                         : data?.items?.map(service => (
-                              <div
-                                  key={service.id}
-                                  className="col-6 col-sm-6 col-md-4 px-1">
-                                  <ServiceCard service={service} />
-                              </div>
-                          ))}
+                            <div
+                                key={service.id}
+                                className="col-6 col-sm-6 col-md-4 px-1">
+                                <ServiceCard service={service} />
+                            </div>
+                        ))}
                 </div>
             )}
         </div>

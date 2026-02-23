@@ -61,7 +61,7 @@ export default function Search_Results_Specialists({
             </>
         );
     } else {
-        resultsContent = <Search_Results_NotFound ref={notFoundRef} />;
+        resultsContent = <Search_Results_NotFound type="specialist" ref={notFoundRef} />;
     }
 
     useEffect(() => {

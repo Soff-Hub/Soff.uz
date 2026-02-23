@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import { Button, message, Modal } from 'antd';
+import { Button, message } from 'antd';
 import {
     DownloadOutlined,
     HeartOutlined,
@@ -82,7 +82,6 @@ export const fileReactIcons = {
 
 function FileActions({ product }) {
     const { addSavedItem, wishlist, removeSavedItem } = useWishlist();
-    const [open, setOpen] = useState(false);
     const [authModal, setAuthModal] = useState(false);
     const Router = useRouter();
     const pid = Router.asPath;
@@ -92,7 +91,6 @@ function FileActions({ product }) {
     const state = useSelector((state) => state.auth.user?.access);
 
     function handleAddItemToCart(e) {
-        showModal();
         e.preventDefault();
         if (basket) {
             removeCartOneItem(product.id);
@@ -110,18 +108,6 @@ function FileActions({ product }) {
             removeSavedItem(product.id);
         }
     }
-
-    const showModal = () => {
-        setOpen(true);
-    };
-
-    const hideModal = () => {
-        setOpen(false);
-    };
-    const hideModalOk = () => {
-        setOpen(false);
-        Router.push('/account/shopping-cart');
-    };
 
     // Nusxa olish
     const infoSuccess = (url) => {
@@ -473,27 +459,6 @@ function FileActions({ product }) {
                 </div>
             </div>
 
-            <Modal
-                title="Muvaffaqqiyatli"
-                open={open}
-                onOk={hideModalOk}
-                onCancel={hideModal}
-                cancelButtonProps={{
-                    style: {
-                        color: '#000',
-                    },
-                }}
-                okButtonProps={{
-                    style: {
-                        color: '#fff',
-                    },
-                }}
-                okText="Savatga o'tish"
-                cancelText="Xaridlarni davom etirish">
-                <p></p>
-                <p>Mahsulotingizni savatga qo'shdingiz!</p>
-                <p></p>
-            </Modal>
             <AuthModal
                 open={authModal}
                 onClose={() => setAuthModal(false)}
@@ -566,10 +531,10 @@ const CustomResponsiveLayout = ({ product, handleBuynow }) => {
                             icon={<DownloadOutlined />}
                             size={'large'}>
                             {`Hoziroq xarid qilish ${size >= 360
-                                    ? `(${formatCurrencyWithSpace(
-                                        product?.price
-                                    )} so'm)`
-                                    : ''
+                                ? `(${formatCurrencyWithSpace(
+                                    product?.price
+                                )} so'm)`
+                                : ''
                                 }`}
                         </Button>
                     )}
