@@ -7,6 +7,7 @@ export default function useCart() {
     const dispatch = useDispatch();
     const cartItems = useSelector((state) => state.ecomerce.cartDataItems);
     return {
+        cartItems,
         setAllCartItem: async () => {
             const data = JSON.parse(safeLocalStorage.getItem('cart'));
             if (data?.length > 0) {
@@ -35,6 +36,6 @@ export default function useCart() {
             dispatch(setCartDataItems([]));
         },
 
-        removeItems: () => {},
+        removeItems: () => { },
     };
 }

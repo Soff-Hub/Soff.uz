@@ -8,7 +8,7 @@ import ServiceOrderModal from './ServiceOrderModal';
 import { sleep } from '~/shared/utilities/sleep';
 import { FaMoneyBillWave } from 'react-icons/fa6';
 import { FaClock } from 'react-icons/fa6';
-import { FaPenToSquare } from 'react-icons/fa6';
+import { FaPenToSquare, FaPhone } from 'react-icons/fa6';
 import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
 
 const PriceBox = ({ priceBox, requirements }) => {
@@ -93,17 +93,33 @@ const PriceBox = ({ priceBox, requirements }) => {
                 order={priceBox}
                 externalOpenModal={isOpen}>
                 {({ setAuthOpen, setModalOpen }) => (
-                    <Button
-                        onClick={() =>
-                            handleClick({
-                                setModalOpen,
-                                setAuthOpen,
-                            })
-                        }
-                        className={!isBlocked && styles.btn}
-                        disabled={isBlocked}>
-                        Buyurtma berish ({formatCurrencyWithSpace(price)} so'm)
-                    </Button>
+                    <div style={{ display: 'flex', gap: '8px' }}>
+                        <a href="tel:+998910086789" style={{ display: 'block' }}>
+                            <Button
+                                className={!isBlocked && styles.btn}
+                                style={{
+                                    padding: '0 18px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    height: '100%'
+                                }}>
+                                <FaPhone fontSize={20} />
+                            </Button>
+                        </a>
+                        <Button
+                            onClick={() =>
+                                handleClick({
+                                    setModalOpen,
+                                    setAuthOpen,
+                                })
+                            }
+                            className={!isBlocked && styles.btn}
+                            disabled={isBlocked}
+                            style={{ flex: 1 }}>
+                            Buyurtma berish ({formatCurrencyWithSpace(price)} so'm)
+                        </Button>
+                    </div>
                 )}
             </ServiceOrderModal>
         </div>

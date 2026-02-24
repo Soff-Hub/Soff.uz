@@ -56,7 +56,7 @@ export default function AISoffiaPresentation() {
                                 color: '#312f30',
                                 fontSize: '18px',
                             }}>
-                            AI yordamida prezentatsiya yarating
+                            AI yordamida 2 daqiqada yarating
                         </h3>
                         <p
                             className="d-md-block d-none"
@@ -65,8 +65,7 @@ export default function AISoffiaPresentation() {
                                 color: '#312f30a0',
                                 fontSize: '14px',
                             }}>
-                            Prezentatsiya tayyorlashni aqlli botga topshiring –
-                            tez, qulay va samarali.
+                            Kerakli fayllarni Soffia ai yordamida tayyorlang – tez, qulay va samarali.
                         </p>
                     </a>
                 </div>
@@ -146,7 +145,7 @@ export const AISoffiaPresentationNotFoundProduct = () => {
                             </div>
                             <div className="d-flex">
                                 <a
-                                    href="https://soffia.uz"
+                                    href="https://soffia.uz/?ref=ref_YT_60FE9C73"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     style={{ textDecoration: 'none' }}>
@@ -156,7 +155,7 @@ export const AISoffiaPresentationNotFoundProduct = () => {
                                             color: '#312f30',
                                             fontSize: '18px',
                                         }}>
-                                        AI yordamida prezentatsiya yarating
+                                        AI yordamida 2 daqiqada yarating
                                     </h3>
                                     <p
                                         style={{
@@ -164,8 +163,7 @@ export const AISoffiaPresentationNotFoundProduct = () => {
                                             color: '#312f30a0',
                                             fontSize: '14px',
                                         }}>
-                                        Prezentatsiya tayyorlashni aqlli botga
-                                        topshiring – tez, qulay va samarali.
+                                        Kerakli fayllarni aqlli bot yordamida tayyorlang – tez, qulay va samarali.
                                     </p>
                                 </a>
                             </div>

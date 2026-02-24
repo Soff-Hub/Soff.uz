@@ -48,9 +48,7 @@ function LastAddedProducts({ contentType }) {
     }, []);
 
     // Memoize limit based on contentType
-    const limit = useMemo(() => {
-        return contentType === '3d' ? 4 : 6;
-    }, [contentType]);
+    const limit = 6
 
     const { data: lastAdded, isLoading: lastLoading } = useQuery({
         queryKey: ['last-products', contentType],

@@ -85,20 +85,20 @@ function FileActions({ product }) {
     const [authModal, setAuthModal] = useState(false);
     const Router = useRouter();
     const pid = Router.asPath;
-    const { setCartOneItem, removeCartOneItem } = useCart();
-    const [basket, setBasket] = useState(false);
+    const { setCartOneItem, removeCartOneItem, cartItems } = useCart();
+    const isAddedToCart = cartItems?.some(
+        (item) => Number(item.id) === Number(product?.id)
+    );
     const [messageApi, contextHolder] = message.useMessage();
     const state = useSelector((state) => state.auth.user?.access);
 
     function handleAddItemToCart(e) {
         e.preventDefault();
-        if (basket) {
+        if (isAddedToCart) {
             removeCartOneItem(product.id);
         } else {
             setCartOneItem(product.id);
         }
-
-        setBasket((prev) => !prev);
     }
 
     function handleAddItemToWishlist(e) {
@@ -417,12 +417,15 @@ function FileActions({ product }) {
                                     onClick={handleAddItemToCart}
                                     iconPosition="end"
                                     style={{ height: '58px', fontSize: '20px' }}
-                                    type="text"
+                                    type={isAddedToCart ? "primary" : "text"}
                                     variant="solid"
-                                    className="w-100 border-2 border-success text-success button_hover"
+                                    className={`w-100 button_hover ${isAddedToCart
+                                            ? 'bg-success text-white'
+                                            : 'border-2 border-success text-success'
+                                        }`}
                                     icon={<ShoppingCartOutlined />}
                                     size={'large'}>
-                                    Savatga qo’shish
+                                    {isAddedToCart ? "Savatga qo’shilgan" : "Savatga qo’shish"}
                                 </Button>
                             )}
                             <Button
