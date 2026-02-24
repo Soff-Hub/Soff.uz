@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import HeaderTop from './HeaderTop';
 import HeaderLogo from './HeaderLogo';
@@ -19,6 +19,9 @@ const Header = () => {
     const router = useRouter();
     const isHomePage = router.pathname === '/';
 
+    const [scrollDirection, setScrollDirection] = useState('up');
+    const [isScrolled, setIsScrolled] = useState(false);
+
     useEffect(() => {
         const initFunctions = () => {
             dispatch(initLocalCart());
@@ -27,8 +30,36 @@ const Header = () => {
         initFunctions();
     }, []);
 
+    useEffect(() => {
+        let lastScrollY = window.pageYOffset;
+        const handleScroll = () => {
+            const currentScrollY = Math.max(0, window.pageYOffset);
+            setIsScrolled(currentScrollY > 70);
+
+            if (currentScrollY > lastScrollY && currentScrollY > 70) {
+                setScrollDirection('down');
+            } else if (currentScrollY < lastScrollY) {
+                setScrollDirection('up');
+            }
+            lastScrollY = currentScrollY;
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    const isScrolledUp = isScrolled && scrollDirection === 'up';
+    let headerClassName = `site-header`;
+    if (!isHomePage && isMobile) {
+        if (isScrolledUp) {
+            headerClassName += ` smart-sticky-up`;
+        } else {
+            headerClassName += ` non-sticky-mobile`;
+        }
+    }
+
     return (
-        <header className={`site-header ${!isHomePage && isMobile ? 'non-sticky-mobile' : ''}`} ref={headerRef}>
+        <header className={headerClassName} ref={headerRef}>
             <div className={`header-bottom top-0 bg-white`}>
                 <div className="container">
                     <HeaderTop />
@@ -39,7 +70,7 @@ const Header = () => {
                         </div>
                     </div>
                 </div>
-                {isMobile ? <NavbarSearch /> : <NavbarMenu />}
+                {isMobile ? <NavbarSearch isScrolledUp={isScrolledUp} /> : <NavbarMenu />}
                 <FastDownloadSection />
             </div>
         </header>

@@ -18,12 +18,15 @@ function VideosProductsDetails({ product, isPlay, setIsPlay }) {
                 <div className="ps-product--detail_seller_videos">
                     <div>
                         <p
+                            className="titleh3"
                             style={{
                                 fontWeight: 600,
                                 fontSize: '25px',
                                 lineHeight: '37.5px',
                                 color: '#312F30',
                                 margin: 0,
+                                wordBreak: 'break-word',
+                                overflowWrap: 'break-word',
                             }}>
                             {product?.title}
                         </p>

@@ -22,7 +22,7 @@ function FileProductsDetails({ product }) {
             <div className="ps-container p-0">
                 <div className="ps-product--detail_seller">
                     <div>
-                        <h1 className="titleh3">
+                        <h1 className="titleh3" style={{ wordBreak: 'break-word', overflowWrap: 'break-word' }}>
                             {product?.title || (
                                 <span className="invisible-text">
                                     Mahsulot nomi

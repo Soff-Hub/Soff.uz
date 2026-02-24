@@ -8,7 +8,7 @@ import SearchModal from '~/shared/components/modals/search-modal/SearchModal';
 
 const { Option } = Select;
 
-const NavbarSearch = () => {
+const NavbarSearch = ({ isScrolledUp }) => {
     const location = useRouter().pathname;
     const { isMobile } = useResponsive();
     const [type, setType] = useState('mahsulotlar');
@@ -41,14 +41,16 @@ const NavbarSearch = () => {
         setOpenSearchModal(false);
     };
 
+    const shouldKeepFixed = isSticky && !isScrolledUp;
+
     return (
         <>
-            {isSticky && <div style={{ height: '54px', width: '100%' }}></div>}
-            <div className={isSticky ? styles.stickyWrapper : ''}>
+            {shouldKeepFixed && <div style={{ height: '54px', width: '100%' }}></div>}
+            <div className={shouldKeepFixed ? styles.stickyWrapper : ''}>
                 <div className="container">
                     <div
                         className={styles.searchBox}
-                        style={{ marginBottom: isSticky ? '0px' : '10px' }}
+                        style={{ marginBottom: shouldKeepFixed ? '0px' : '10px' }}
                     >
                         <div className="d-flex w-100">
                             {!isMobile && (

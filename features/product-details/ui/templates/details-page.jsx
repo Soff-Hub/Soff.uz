@@ -21,6 +21,8 @@ function ThreeDesignProductsDetails({ product, template }) {
                                 lineHeight: '37.5px',
                                 color: '#312F30',
                                 margin: 0,
+                                wordBreak: 'break-word',
+                                overflowWrap: 'break-word',
                             }}>
                             {product?.title}
                         </p>

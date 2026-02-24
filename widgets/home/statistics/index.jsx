@@ -2,10 +2,10 @@ import React from 'react';
 import styles from './style.module.scss';
 
 const stats = [
-    { title: 'Raqamli mahsulotlar', value: 250000 },
-    { title: 'Oylik faol foydalanuvchilar', value: 500000 },
-    { title: 'Tranzaksiyalar', value: 86000 },
-    { title: 'Mutaxassislar soni', value: 11000 },
+    { title: 'Raqamli mahsulotlar', value: 1000000 },
+    { title: 'Oylik faol foydalanuvchilar', value: 600000 },
+    { title: 'Tranzaksiyalar', value: 200000 },
+    { title: 'Mutaxassislar soni', value: 30000 },
 ];
 
 const Statistics = () => {

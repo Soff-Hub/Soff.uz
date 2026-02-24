@@ -334,4 +334,29 @@
         z-index: 1000;
         background-color: #fff;
     }
+
+    .site-header.smart-sticky-up {
+        position: fixed !important;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1050 !important;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        transform: translateY(0) !important;
+        opacity: 1 !important;
+        animation: slideDownHeader 0.3s ease-out forwards !important;
+        background-color: #fff;
+    }
+}
+
+@keyframes slideDownHeader {
+    from {
+        transform: translateY(-100%);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
