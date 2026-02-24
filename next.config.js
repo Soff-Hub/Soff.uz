@@ -34,6 +34,18 @@ const nextSettings = {
         ],
     },
     async headers() {
+        // Analytics va Metrikalar ruxsatlari bilan (Google, Yandex, Facebook) toza va tartibli CSP (Content Security Policy) qoidalari
+        const cspHeader = [
+            "default-src 'self'",
+            "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cdnjs.cloudflare.com https://mc.yandex.ru https://yastatic.net https://www.googletagmanager.com https://www.google-analytics.com https://connect.facebook.net https://an.yandex.ru",
+            "style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://use.fontawesome.com https://fonts.googleapis.com",
+            "img-src 'self' blob: data: https://eu2.contabostorage.com https://d2co7bxjtnp5o.cloudfront.net https://api.soff.uz https://test-soffuz.s3.amazonaws.com http://176.96.241.219 https://encrypted-tbn0.gstatic.com http://www.bukhari.uz http://localhost http://192.168.1.15 https://media.licdn.com https://freelance.soff.uz https://freelance.ilmiyish.uz https://placehold.co https://freelance-media.s3.amazonaws.com https://img.youtube.com https://mc.yandex.ru https://www.google-analytics.com https://www.facebook.com",
+            "font-src 'self' data: https://cdnjs.cloudflare.com https://use.fontawesome.com https://fonts.gstatic.com",
+            "connect-src 'self' https://api.soff.uz wss://api.soff.uz https://freelance.soff.uz wss://freelance.soff.uz *.sentry.io https://mc.yandex.ru https://www.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net",
+            "frame-src 'self' https://www.youtube.com https://mc.yandex.ru https://yandex.ru",
+            "child-src 'self' https://www.youtube.com https://mc.yandex.ru https://yandex.ru"
+        ].join('; ');
+
         return [
             // Security headers for Lighthouse Best Practices
             {
@@ -62,7 +74,7 @@ const nextSettings = {
                     // BIZ QO'SHGAN XAVFSIZLIK DEVORI (CSP)
                     {
                         key: 'Content-Security-Policy',
-                        value: "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://use.fontawesome.com https://fonts.googleapis.com; img-src 'self' blob: data: https://eu2.contabostorage.com https://d2co7bxjtnp5o.cloudfront.net https://api.soff.uz https://test-soffuz.s3.amazonaws.com http://176.96.241.219 https://encrypted-tbn0.gstatic.com http://www.bukhari.uz http://localhost http://192.168.1.15 https://media.licdn.com https://freelance.soff.uz https://freelance.ilmiyish.uz https://placehold.co https://freelance-media.s3.amazonaws.com https://img.youtube.com; font-src 'self' data: https://cdnjs.cloudflare.com https://use.fontawesome.com https://fonts.gstatic.com; connect-src 'self' https://api.soff.uz wss://api.soff.uz https://freelance.soff.uz wss://freelance.soff.uz *.sentry.io; frame-src 'self' https://www.youtube.com;"
+                        value: cspHeader,
                     }
                 ],
             },

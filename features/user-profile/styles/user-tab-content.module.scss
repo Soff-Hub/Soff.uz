@@ -5,6 +5,7 @@
     flex-direction: column;
     gap: 1rem;
     flex: 1;
+    min-width: 0;
 }
 
 .filtersWrapper {
@@ -38,6 +39,7 @@
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
     border-radius: 0.75rem;
     height: 100%;
+    min-width: 0;
 
     &.mobileSkeleton {
         @media (max-width: 767px) {

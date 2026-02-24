@@ -5,6 +5,7 @@ import {
     DownloadOutlined,
     HeartOutlined,
     ShoppingCartOutlined,
+    DeleteOutlined,
 } from '@ant-design/icons';
 import ShareAltOutlined from '@ant-design/icons/ShareAltOutlined';
 import { addPeriodToThousands } from '~/features/account/ui/price-formatter';
@@ -418,14 +419,14 @@ function FileActions({ product }) {
                                     iconPosition="end"
                                     style={{ height: '58px', fontSize: '20px' }}
                                     type={isAddedToCart ? "primary" : "text"}
-                                    variant="solid"
+                                    danger={isAddedToCart}
                                     className={`w-100 button_hover ${isAddedToCart
-                                        ? 'bg-success text-white'
+                                        ? ''
                                         : 'border-2 border-success text-success'
                                         }`}
-                                    icon={<ShoppingCartOutlined />}
+                                    icon={isAddedToCart ? <DeleteOutlined /> : <ShoppingCartOutlined />}
                                     size={'large'}>
-                                    {isAddedToCart ? "Savatg" : "Savatga qo’shish"}
+                                    {isAddedToCart ? "Savatdan olib tashlash" : "Savatga qo’shish"}
                                 </Button>
                             )}
                             <Button

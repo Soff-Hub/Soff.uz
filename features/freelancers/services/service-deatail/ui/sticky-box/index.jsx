@@ -6,9 +6,11 @@ import { useCreateChat } from '~/features/freelancers/chat/api/useCreateChat';
 import { useSelector } from 'react-redux';
 import { sleep } from '~/shared/utilities/sleep';
 import ServiceOrderModal from '../ServiceOrderModal';
+import { FaPhone } from 'react-icons/fa6';
 
 const StickyBox = ({ data }) => {
     const { mutate: createChat } = useCreateChat();
+    const isBlocked = data?.user?.[0]?.is_blocked;
     const { isLoggedIn } = useSelector((state) => state.auth);
 
     const handleCreateChat = ({ setAuthOpen, setActionTracker }) => {
@@ -58,6 +60,20 @@ const StickyBox = ({ data }) => {
                             }>
                             <span className={styles.chatTitle}>Chat</span>
                         </Button> */}
+
+                        <a href="tel:+998910086789" style={{ display: 'block' }}>
+                            <Button
+                                className={!isBlocked && styles.customBtn}
+                                style={{
+                                    padding: '0 18px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    height: '100%'
+                                }}>
+                                <FaPhone fontSize={20} />
+                            </Button>
+                        </a>
 
                         <Button
                             type="primary"
