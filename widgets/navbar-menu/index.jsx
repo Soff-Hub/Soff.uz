@@ -112,7 +112,7 @@ const NavbarMenu = () => {
                             </SwiperSlide>
                         ))}
 
-                        <SwiperSlide style={{ width: 'auto' }}>
+                        {/* <SwiperSlide style={{ width: 'auto' }}>
                             <div className={menuItemStyle.menuItem}>
                                 <a
                                     href="https://soffia.uz"
@@ -129,7 +129,7 @@ const NavbarMenu = () => {
                                     </span>
                                 </a>
                             </div>
-                        </SwiperSlide>
+                        </SwiperSlide> */}
 
                         <SwiperController
                             getMethods={getMethods}

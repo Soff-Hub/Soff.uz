@@ -4,8 +4,8 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import { setActiveIndex } from '~/store/seller/slice';
-import { FaCircleCheck } from 'react-icons/fa6';
-import { FaBriefcase } from 'react-icons/fa6';
+import { FaCircleCheck, FaBriefcase, FaArrowRight } from 'react-icons/fa6';
+import { Button } from 'antd';
 
 function SellerProfile({ product }) {
     const router = useRouter();
@@ -17,7 +17,7 @@ function SellerProfile({ product }) {
     };
 
     return (
-        <div className="seller_products_actions_secound">
+        <div className="seller_products_actions_secound d-flex flex-column gap-3">
             <div className="seller_profile">
                 <div className="img_container">
                     <Image
@@ -61,6 +61,21 @@ function SellerProfile({ product }) {
                     </div>
                 </div>
             </div>
+
+            <Button
+                onClick={handleOrder}
+                className="w-100 mt-2"
+                size="large"
+                style={{
+                    borderRadius: '8px',
+                    color: '#00A44F',
+                    borderColor: '#00A44F',
+                    fontWeight: '500'
+                }}
+            >
+                Profiliga o'tish
+                <FaArrowRight style={{ fontSize: '14px', marginLeft: '6px' }} />
+            </Button>
         </div>
     );
 }

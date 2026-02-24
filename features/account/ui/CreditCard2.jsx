@@ -88,6 +88,15 @@ const CreditCard2 = ({ document, type }) => {
     const [percentage, setPercentage] = useState(0);
     const inputRef = useRef(null);
     const cursorRef = useRef(null);
+    const otpInputRef = useRef(null);
+
+    useEffect(() => {
+        if (open) {
+            setTimeout(() => {
+                otpInputRef.current?.focus();
+            }, 100);
+        }
+    }, [open]);
 
     const affiliate_code = affiliateId;
     const numberTyper = (value) => {
@@ -193,8 +202,8 @@ const CreditCard2 = ({ document, type }) => {
                 content: ItemsData?.data?.expire_date
                     ? ' Karta amal qilish muddatini kiriting'
                     : ItemsData?.data?.card_number
-                      ? "Karta raqamini to'g'ri kiriting"
-                      : ItemsData?.data?.msg,
+                        ? "Karta raqamini to'g'ri kiriting"
+                        : ItemsData?.data?.msg,
             });
             modal.update;
         }
@@ -452,8 +461,14 @@ const CreditCard2 = ({ document, type }) => {
                                 {resData?.data?.phone_number}
                             </p>
                             <input
-                                onChange={(e) => setCode(e.target.value)}
-                                type="tel"
+                                ref={otpInputRef}
+                                value={code || ''}
+                                onChange={(e) => {
+                                    const val = e.target.value.replace(/\D/g, '').slice(0, 6);
+                                    setCode(val);
+                                }}
+                                type="text"
+                                inputMode="numeric"
                                 placeholder="000000"
                                 maxLength={6}
                                 className="form-control text-center rounded-3 fs-3"

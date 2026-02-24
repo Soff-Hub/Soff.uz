@@ -2,10 +2,10 @@ import React from 'react';
 import Hero from './hero';
 import dynamic from 'next/dynamic';
 
-const Bests = dynamic(() => import('./bests'), {
-    ssr: false,
-    loading: () => <div style={{ minHeight: '400px' }} />
-});
+// const Bests = dynamic(() => import('./bests'), {
+//     ssr: false,
+//     loading: () => <div style={{ minHeight: '400px' }} />
+// });
 const LastProducts = dynamic(() => import('./last-products'), {
     ssr: false,
     loading: () => <div style={{ minHeight: '400px' }} />
@@ -56,7 +56,7 @@ const Home = () => {
                 <div className="container">
                     <LastProducts />
                     <Statistics />
-                    <Bests />
+                    {/* <Bests /> */}
                 </div>
             </div>
             <div style={{ background: '#24282B' }}>
