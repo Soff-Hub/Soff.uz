@@ -82,43 +82,45 @@ export default function CommentForm({
         <Form
             form={form}
             onFinish={handleSubmit}
-            className={isModal ? '' : 'mb-5'}>
+            className={isModal ? '' : 'mb-3'}>
             <div
                 style={{
                     background: '#fff',
                     padding: isModal ? 0 : undefined,
                 }}
-                className={isModal ? 'mb-0' : 'mb-4 p-5 rounded-3'}>
+                className={isModal ? 'mb-0' : 'mb-3 p-3 rounded-3'}>
                 <Form.Item
                     label={null}
                     name="commentText"
+                    style={{ marginBottom: '12px' }}
                     rules={[
                         { required: true, message: 'Iltimos, izoh yozing!' },
                     ]}>
                     <TextArea
                         style={{
-                            borderRadius: '10px',
-                            border: isModal ? undefined : 'none',
-                            background: '#fff',
+                            borderRadius: '8px',
+                            border: isModal ? undefined : '1px solid #e2e8f0',
+                            background: '#f8fafc',
                             width: '100%',
-                            padding: isModal ? '12px' : undefined,
+                            padding: isModal ? '10px' : '12px',
                         }}
-                        className={isModal ? 'fs-4' : 'w-100 fs-4'}
-                        rows="5"
+                        className={isModal ? 'fs-5' : 'w-100 fs-5'}
+                        rows="2"
                         placeholder="Izohingizni yozing..."
                     />
                 </Form.Item>
-                <div className="d-flex justify-content-between align-items-center mt-3">
+                <div className="d-flex justify-content-between align-items-center">
                     {!fComment ? (
                         <Form.Item
                             name="rating"
+                            style={{ marginBottom: 0 }}
                             rules={[
                                 {
                                     required: true,
                                     message: 'Iltimos, baho bering!',
                                 },
                             ]}>
-                            <Rate style={{ fontSize: getRateFontSize() }} />
+                            <Rate style={{ fontSize: isMobile ? 18 : 20 }} />
                         </Form.Item>
                     ) : (
                         <div></div>
@@ -126,8 +128,8 @@ export default function CommentForm({
                     <Button
                         htmlType="submit"
                         type="primary"
-                        variant="primary"
                         loading={loading}
+                        style={{ padding: '0 24px', height: '36px' }}
                         className="rounded-5">
                         {loading ? 'Yuborilmoqda...' : "Jo'natish"}
                     </Button>

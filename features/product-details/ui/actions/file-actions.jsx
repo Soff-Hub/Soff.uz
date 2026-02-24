@@ -420,12 +420,12 @@ function FileActions({ product }) {
                                     type={isAddedToCart ? "primary" : "text"}
                                     variant="solid"
                                     className={`w-100 button_hover ${isAddedToCart
-                                            ? 'bg-success text-white'
-                                            : 'border-2 border-success text-success'
+                                        ? 'bg-success text-white'
+                                        : 'border-2 border-success text-success'
                                         }`}
                                     icon={<ShoppingCartOutlined />}
                                     size={'large'}>
-                                    {isAddedToCart ? "Savatga qo’shilgan" : "Savatga qo’shish"}
+                                    {isAddedToCart ? "Savatg" : "Savatga qo’shish"}
                                 </Button>
                             )}
                             <Button
