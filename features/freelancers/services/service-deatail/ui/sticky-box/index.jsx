@@ -63,14 +63,9 @@ const StickyBox = ({ data }) => {
 
                         <a href="tel:+998910086789" style={{ display: 'block' }}>
                             <Button
-                                className={!isBlocked && styles.customBtn}
-                                style={{
-                                    padding: '0 18px',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    height: '100%'
-                                }}>
+                                type="primary"
+                                className={`${styles.customBtn} ${styles.customBtnShine} ${styles.customBtnGlow}`}
+                            >
                                 <FaPhone fontSize={20} />
                             </Button>
                         </a>

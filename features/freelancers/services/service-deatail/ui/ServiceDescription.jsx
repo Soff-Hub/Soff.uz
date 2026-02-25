@@ -4,7 +4,7 @@ import { DownloadOutlined } from '@ant-design/icons';
 import styles from '../styles/detail.module.scss';
 import { useSelector } from 'react-redux';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
-import { FaCheck } from 'react-icons/fa6';
+import { FaCheck, FaPhone } from 'react-icons/fa6';
 import { AiOutlineDollar } from 'react-icons/ai';
 import { IoTimeOutline } from 'react-icons/io5';
 import { GoPencil } from 'react-icons/go';
@@ -129,10 +129,24 @@ const ServiceDescription = ({ description = {}, priceBox = {} }) => {
                     handleAuthSuccess={handleAuthSuccess}
                     order={priceBox}>
                     {({ setAuthOpen, setModalOpen }) => (
-                        <div className={styles.btnWrapper}>
+                        <div className={styles.btnWrapper} style={{ display: 'flex', gap: '8px' }}>
+                            <a href="tel:+998910086789" style={{ display: 'block' }}>
+                                <Button
+                                    className={!isBlocked && styles.btn}
+                                    style={{
+                                        padding: '0 18px',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        height: '100%'
+                                    }}>
+                                    <FaPhone fontSize={20} />
+                                </Button>
+                            </a>
                             <Button
                                 className={!isBlocked && styles.btn}
                                 disabled={isBlocked}
+                                style={{ flex: 1 }}
                                 onClick={() =>
                                     handleOrderClick({
                                         setAuthOpen,
@@ -140,7 +154,7 @@ const ServiceDescription = ({ description = {}, priceBox = {} }) => {
                                     })
                                 }>
                                 Buyurtma berish (
-                                {formatCurrencyWithSpace(price)}so'm)
+                                {formatCurrencyWithSpace(price)} so'm)
                             </Button>
                         </div>
                     )}
