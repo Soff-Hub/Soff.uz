@@ -254,21 +254,13 @@ export default function ProductDefaultPage({ defaultProducts }) {
     );
 }
 
-export async function getStaticPaths() {
-    return {
-        paths: [], // Build-time'da hech narsa render qilmaymiz
-        fallback: 'blocking', // Birinchi so'rovda serverda generatsiya qilinadi va keshlanadi
-    };
-}
-
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
     const { pid } = params;
 
     if (!pid) {
         return { notFound: true };
     }
 
-    // ISR jarayonida req/res bo'lmaydi, shuning uchun public fetch qilamiz
     const headers = {
         'Accept': 'application/json',
     };
@@ -287,11 +279,9 @@ export async function getStaticProps({ params }) {
 
         defaultProducts = await response.json();
     } catch (error) {
-        console.error('Error fetching product for ISR:', error);
+        console.error('Error fetching product for SSR:', error);
         return {
             notFound: true,
-            // Xatolik bo'lsa, 10 soniyadan keyin qayta urinib ko'rish imkoniyati
-            revalidate: 10,
         };
     }
 
@@ -303,7 +293,5 @@ export async function getStaticProps({ params }) {
         props: {
             defaultProducts,
         },
-        // Sahifani har 60 soniyada fonda yangilash (ISR)
-        revalidate: 60,
     };
 }

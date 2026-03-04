@@ -46,7 +46,7 @@ export default function AISoffiaPresentation() {
                 </div>
                 <div>
                     <a
-                        href="https://soffia.uz"
+                        href="https://soffia.uz/?ref=ref_YT_60FE9C73"
                         target="_blank"
                         rel="noopener noreferrer"
                         style={{ textDecoration: 'none' }}>
@@ -73,7 +73,7 @@ export default function AISoffiaPresentation() {
 
             <div style={{ flexShrink: 0 }} className="d-md-block d-none">
                 <a
-                    href="https://soffia.uz"
+                    href="https://soffia.uz/?ref=ref_YT_60FE9C73"
                     target="_blank"
                     rel="noopener noreferrer">
                     <Button
