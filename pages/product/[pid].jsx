@@ -7,9 +7,9 @@ import React, {
 } from 'react';
 import PageContainer from '~/widgets/layouts/PageContainer';
 import { baseUrl } from '~/repositories/Repository';
-import * as cookie from 'cookie';
 import Meta from '~/shared/ui/meta';
-import { getOrCreateDeviceId } from '~/shared/utilities/device-id';
+// import * as cookie from 'cookie';
+// import { getOrCreateDeviceId } from '~/shared/utilities/device-id';
 import dynamic from 'next/dynamic';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
 import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
@@ -39,6 +39,11 @@ const SimilarProducts = dynamic(
 const AISoffiaPresentation = dynamic(() => import('~/widgets/home/ai-soffia'), {
     ssr: false,
 });
+
+const PurchaseRecommendations = dynamic(
+    () => import('~/features/product-details/ui/purchase-recommendations'),
+    { ssr: false }
+);
 
 // Conditionally load Joyride only when needed (first visit)
 const Joyride = dynamic(() => import('react-joyride'), {
@@ -104,7 +109,6 @@ export default function ProductDefaultPage({ defaultProducts }) {
     const [showJoyride, setShowJoyride] = useState(false);
     const similarRef = useRef();
     const lastProductsRef = useRef();
-
     const contentType = useMemo(
         () => defaultProducts?.document?.content_type,
         [defaultProducts?.document?.content_type]
@@ -205,6 +209,8 @@ export default function ProductDefaultPage({ defaultProducts }) {
                                 />
                             </div>
                             {shouldShowAISoffia && <AISoffiaPresentation />}
+                            <PurchaseRecommendations />
+
                             <div ref={similarRef} className="my-5">
                                 <h3
                                     style={{
@@ -288,7 +294,6 @@ export async function getServerSideProps({ params }) {
     if (!defaultProducts) {
         return { notFound: true };
     }
-
     return {
         props: {
             defaultProducts,
