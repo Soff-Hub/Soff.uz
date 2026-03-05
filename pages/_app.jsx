@@ -142,6 +142,10 @@ function App({ Component, pageProps }) {
                         strategy="lazyOnload"
                     />
                     <Script
+                        src="/scripts/facebook-pixel-init-2.js"
+                        strategy="lazyOnload"
+                    />
+                    <Script
                         src="/scripts/yandex-context-init.js"
                         strategy="lazyOnload"
                     />
