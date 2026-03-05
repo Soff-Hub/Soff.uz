@@ -43,6 +43,18 @@
 }
 
 
+.itemCard {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    & > * {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+}
+
 @media (max-width: 575px) {
     .itemCard:nth-child(n+3) {
         display: none;
