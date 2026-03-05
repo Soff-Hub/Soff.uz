@@ -6,8 +6,8 @@ import {
     HeartOutlined,
     ShoppingCartOutlined,
     DeleteOutlined,
+    ShareAltOutlined,
 } from '@ant-design/icons';
-import ShareAltOutlined from '@ant-design/icons/ShareAltOutlined';
 import { addPeriodToThousands } from '~/features/account/ui/price-formatter';
 import useWishlist from '~/shared/hooks/useWishlist';
 import useCart from '~/shared/hooks/useCart';
@@ -18,7 +18,7 @@ import AuthModal from '~/features/auth/ui/auth-modal';
 import { FaRegHeart } from 'react-icons/fa';
 import { FaHeart } from 'react-icons/fa';
 import { FaShoppingCart } from 'react-icons/fa';
-import { FaFileWord, FaS } from 'react-icons/fa6';
+import { FaFileWord } from 'react-icons/fa6';
 import { FaFileExcel } from 'react-icons/fa6';
 import { FaFilePowerpoint } from 'react-icons/fa6';
 import { FaFilePdf } from 'react-icons/fa6';
@@ -54,6 +54,7 @@ export const fileColors = {
     '.zip': '#E4BD3E',
     '.psd': '#0053BD',
     '.pptx': '#DD7657',
+    '.mov': '#6EB5E9',
 };
 
 export const fileReactIcons = {
@@ -79,6 +80,7 @@ export const fileReactIcons = {
     '.tiff': FaFileImage, // TIFF - rasm/foto format
     '.svg': FaFileImage, // SVG - rasm/foto format
     '.ps': FaFileImage, // PS - rasm/foto format
+    '.mov': FaFileVideo, // MOV video format
 };
 
 function FileActions({ product }) {
@@ -226,7 +228,7 @@ function FileActions({ product }) {
                                     icon={
                                         fileReactIcons[
                                         product?.document?.file_type
-                                        ]
+                                        ] || FaFileVideo
                                     }
                                     className={styles.infoKeyIcon}
                                 />
