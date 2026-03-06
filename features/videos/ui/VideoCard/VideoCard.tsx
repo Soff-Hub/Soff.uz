@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import { Video } from '~/features/videos/model/types';
 import styles from './VideoCard.module.scss';
-import { PlayCircleOutlined, StarFilled, EyeOutlined, ClockCircleOutlined, FireOutlined } from '@ant-design/icons';
+import { StarFilled, EyeOutlined, ClockCircleOutlined, FireOutlined, CaretRightFilled } from '@ant-design/icons';
 
 interface Props {
     video: Video;
@@ -59,6 +59,11 @@ const VideoCard: React.FC<Props> = ({ video, onClick, variant = 'vertical' }) =>
                     <ClockCircleOutlined />
                     <span>{duration}</span>
                 </div>
+                <div className={styles.playOverlay}>
+                    <div className={styles.playIconCircle}>
+                        <CaretRightFilled className={styles.playIconTriangle} />
+                    </div>
+                </div>
             </div>
 
             <div className={styles.content}>
@@ -98,9 +103,6 @@ const VideoCard: React.FC<Props> = ({ video, onClick, variant = 'vertical' }) =>
                             </span>
                         </div>
                     )}
-                </div>
-                <div className={styles.action}>
-                    <PlayCircleOutlined className={styles.playIcon} />
                 </div>
             </div>
         </div>

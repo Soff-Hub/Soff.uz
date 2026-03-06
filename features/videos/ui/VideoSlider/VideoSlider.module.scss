@@ -1,11 +1,13 @@
 .sliderSection {
     margin-bottom: 48px;
+    position: relative;
 
     .header {
         display: flex;
         align-items: center;
         justify-content: space-between;
         margin-bottom: 24px;
+        padding: 0 4px;
 
         .title {
             font-size: 24px;
@@ -30,33 +32,104 @@
         }
     }
 
-    :global(.swiper) {
-        padding: 10px 5px 30px 5px;
-        margin: -10px -5px -30px -5px;
+    .sliderWrapper {
+        position: relative;
+        padding: 0 4px;
 
-        :global(.swiper-slide) {
-            height: auto;
-            max-width: 320px;
-            /* Prevent huge stretch on vertical */
+        .scrollContainer {
+            display: grid;
+            grid-auto-flow: column;
+            grid-auto-columns: calc((100% - (4 * 20px)) / 5); // Desktop format
+            gap: 20px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none; // Firefox
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 20px;
+            margin-bottom: -20px; // Hide the extra scroll padding
+
+            &::-webkit-scrollbar {
+                display: none; // Chrome, Safari
+            }
+
+            @media (max-width: 1440px) {
+                grid-auto-columns: calc((100% - (4 * 20px)) / 5);
+            }
+
+            @media (max-width: 1280px) {
+                grid-auto-columns: calc((100% - (3 * 20px)) / 4.2); // 4 cards + hint
+            }
+
+            @media (max-width: 1024px) {
+                grid-auto-columns: calc((100% - (2 * 15px)) / 3.2); // 3 cards + hint
+            }
+
+            @media (max-width: 768px) {
+                grid-auto-columns: calc((100% - (1 * 15px)) / 2.2); // 2 cards + hint
+                gap: 15px;
+            }
+
+            @media (max-width: 480px) {
+                grid-auto-columns: calc((100% - 10px) / 1.15); // Almost full width mobile
+                gap: 12px;
+            }
+        }
+
+        .slide {
+            scroll-snap-align: start;
+            width: 100%;
+        }
+
+        .navButton {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #fff;
+            border: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.2s;
+            color: #1a1a1a;
+            font-size: 16px;
+
+            &:hover {
+                background: #f0f2f5;
+                box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+            }
+
+            &.prevButton {
+                left: -20px;
+            }
+
+            &.nextButton {
+                right: -20px;
+            }
+
+            @media (max-width: 768px) {
+                display: none; // Mobileda tugmalarni olib tashlaymiz, faqat touch
+            }
         }
     }
 
-    &.horizontalSlider :global(.swiper-slide) {
-        max-width: 480px;
-        /* Prevent huge stretch on horizontal */
-    }
+    &.horizontalSlider {
+        .scrollContainer {
+            grid-auto-columns: calc((100% - (2 * 20px)) / 3);
 
-    :global(.swiper-pagination-bullet-active) {
-        background: #1890ff;
-    }
+            @media (max-width: 1024px) {
+                grid-auto-columns: calc((100% - 20px) / 2.2);
+            }
 
-    :global(.swiper-button-next),
-    :global(.swiper-button-prev) {
-        color: #1890ff;
-
-        &::after {
-            font-size: 20px;
-            font-weight: bold;
+            @media (max-width: 640px) {
+                grid-auto-columns: 85%;
+            }
         }
     }
 }
