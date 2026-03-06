@@ -1,6 +1,8 @@
 .sliderSection {
     margin-bottom: 48px;
     position: relative;
+    width: 100%;
+    // overflow: hidden; // Tugmalar kesilmasligi uchun buni olib tashlaymiz
 
     .header {
         display: flex;
@@ -14,6 +16,10 @@
             font-weight: 700;
             color: #1a1a1a;
             margin: 0;
+
+            @media (max-width: 768px) {
+                font-size: 20px;
+            }
         }
 
         .seeAll {
@@ -25,53 +31,84 @@
             gap: 6px;
             cursor: pointer;
             transition: color 0.2s;
+            white-space: nowrap;
 
             &:hover {
                 color: #40a9ff;
+            }
+
+            @media (max-width: 480px) {
+                font-size: 13px;
             }
         }
     }
 
     .sliderWrapper {
         position: relative;
-        padding: 0 4px;
+        // Padding beramizki tugmalar uchun joy bo'lsin
+        padding: 0 10px;
+
+        @media (min-width: 1200px) {
+            padding: 0 20px;
+        }
+
+        @media (max-width: 768px) {
+            padding: 0 16px;
+            margin: 0 -16px; // Paddingni qoplash uchun
+        }
 
         .scrollContainer {
             display: grid;
             grid-auto-flow: column;
-            grid-auto-columns: calc((100% - (4 * 20px)) / 5); // Desktop format
+            grid-auto-columns: calc((100% - (4 * 20px)) / 5);
             gap: 20px;
             overflow-x: auto;
             scroll-behavior: smooth;
             scroll-snap-type: x mandatory;
-            scrollbar-width: none; // Firefox
-            -webkit-overflow-scrolling: touch;
-            padding-bottom: 20px;
-            margin-bottom: -20px; // Hide the extra scroll padding
+
+            // Scrollbar yashirishning senior darajasi (aggressive hiding)
+            scrollbar-width: none !important; // Firefox
+            -ms-overflow-style: none !important; // IE and Edge
 
             &::-webkit-scrollbar {
-                display: none; // Chrome, Safari
+                display: none !important; // Chrome, Safari, Opera
+                width: 0 !important;
+                height: 0 !important;
             }
+
+            // iOS uchun silliq scroll
+            -webkit-overflow-scrolling: touch;
+
+            // "Clipping" usuli: element tagida joy ochamiz va uni kesib tashlaymiz
+            padding-bottom: 20px;
+            margin-bottom: -20px;
+            clip-path: inset(0 0 20px 0);
+
+            // Scroll padding so'nggi element to'liq ko'rinishi uchun
+            scroll-padding: 0 4px;
 
             @media (max-width: 1440px) {
                 grid-auto-columns: calc((100% - (4 * 20px)) / 5);
             }
 
             @media (max-width: 1280px) {
-                grid-auto-columns: calc((100% - (3 * 20px)) / 4.2); // 4 cards + hint
+                grid-auto-columns: calc((100% - (3 * 20px)) / 4.2); // Hint effekti
             }
 
             @media (max-width: 1024px) {
-                grid-auto-columns: calc((100% - (2 * 15px)) / 3.2); // 3 cards + hint
+                grid-auto-columns: calc((100% - (2 * 16px)) / 3.2);
+                gap: 16px;
             }
 
             @media (max-width: 768px) {
-                grid-auto-columns: calc((100% - (1 * 15px)) / 2.2); // 2 cards + hint
-                gap: 15px;
+                grid-auto-columns: calc((100% - (1 * 16px)) / 2.2);
+                gap: 16px;
+                padding-left: 16px; // Birinchi element chetda turmasligi uchun
+                padding-right: 16px; // Oxirgi element chetda turmasligi uchun
             }
 
             @media (max-width: 480px) {
-                grid-auto-columns: calc((100% - 10px) / 1.15); // Almost full width mobile
+                grid-auto-columns: 82%; // Mobil uchun ideal o'lcham - keyingi karta ko'rinib turadi
                 gap: 12px;
             }
         }
@@ -103,18 +140,43 @@
             &:hover {
                 background: #f0f2f5;
                 box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+                transform: translateY(-50%) scale(1.05);
             }
 
             &.prevButton {
-                left: -20px;
+                left: 0;
             }
 
             &.nextButton {
-                right: -20px;
+                right: 0;
+            }
+
+            @media (min-width: 1440px) {
+                &.prevButton {
+                    left: -10px;
+                }
+
+                &.nextButton {
+                    right: -10px;
+                }
+            }
+
+            @media (max-width: 1024px) {
+                // Planshetlarda tugmalarni biroz kichiklashtiramiz yoki yashiramiz
+                width: 32px;
+                height: 32px;
+
+                &.prevButton {
+                    left: -10px;
+                }
+
+                &.nextButton {
+                    right: -10px;
+                }
             }
 
             @media (max-width: 768px) {
-                display: none; // Mobileda tugmalarni olib tashlaymiz, faqat touch
+                display: none; // Mobil qurilmada faqat gesture ishlatiladi
             }
         }
     }
@@ -124,11 +186,13 @@
             grid-auto-columns: calc((100% - (2 * 20px)) / 3);
 
             @media (max-width: 1024px) {
-                grid-auto-columns: calc((100% - 20px) / 2.2);
+                grid-auto-columns: calc((100% - 16px) / 2.2);
+                gap: 16px;
             }
 
             @media (max-width: 640px) {
-                grid-auto-columns: 85%;
+                grid-auto-columns: 88%;
+                gap: 12px;
             }
         }
     }

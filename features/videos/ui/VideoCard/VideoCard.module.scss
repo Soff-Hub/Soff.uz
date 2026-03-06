@@ -154,7 +154,7 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            margin-bottom: 8px;
+            margin-bottom: 0; // Removed margin to align with views in meta
 
             .avatar {
                 width: 20px;
@@ -174,29 +174,19 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-top: auto;
-
-            .rating {
-                display: flex;
-                align-items: center;
-                gap: 3px;
-                font-size: 12px;
-                font-weight: 600;
-                color: #faad14;
-
-                .count {
-                    color: #8c8c8c;
-                    font-weight: 400;
-                    margin-left: 2px;
-                }
-            }
+            margin-top: 8px;
+            width: 100%;
 
             .views {
                 font-size: 11px;
                 color: #8c8c8c;
                 display: flex;
                 align-items: center;
-                gap: 3px;
+                gap: 4px;
+
+                svg {
+                    font-size: 13px;
+                }
             }
         }
     }
@@ -283,13 +273,28 @@
         .footer {
             border: none;
             position: absolute;
-            bottom: 0;
+            bottom: 6px; // Pastga yaqinroq
             right: 0;
             left: 180px;
-            padding: 0 12px 10px 12px;
+            padding: 0 12px;
+            display: flex;
+            justify-content: flex-start;
 
-            .priceWrapper .price {
-                font-size: 14px;
+            .priceWrapper {
+                .priceContainer {
+                    flex-direction: row; // Narxlarni yonma-yon qilamiz
+                    align-items: baseline; // Bir xil chiziqda turishi uchun
+                    gap: 8px; // Ularni bir-biriga yaqinlashtiramiz
+
+                    .oldPrice {
+                        font-size: 11px;
+                        margin-bottom: 0;
+                    }
+
+                    .price {
+                        font-size: 15px;
+                    }
+                }
             }
         }
     }

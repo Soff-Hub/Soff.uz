@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import { Video } from '~/features/videos/model/types';
 import styles from './VideoCard.module.scss';
-import { StarFilled, EyeOutlined, ClockCircleOutlined, FireOutlined, CaretRightFilled } from '@ant-design/icons';
+import { EyeOutlined, FireOutlined, CaretRightFilled } from '@ant-design/icons';
 
 interface Props {
     video: Video;
@@ -22,10 +22,7 @@ const VideoCard: React.FC<Props> = ({ video, onClick, variant = 'vertical' }) =>
     const thumbnail = video.poster || `https://picsum.photos/seed/${video.slug}/640/360`;
     const sellerAvatar = video.seller_image || `https://ui-avatars.com/api/?name=${encodeURIComponent(video.seller_name)}&background=random`;
 
-    // Numeric constants for UI stability
-    const rating = video.stars?.toFixed(1) || '4.5';
-    const totalReviews = video.reviews_count || 120;
-    const duration = video.duration || '12h 20m';
+
 
     return (
         <div
@@ -55,10 +52,7 @@ const VideoCard: React.FC<Props> = ({ video, onClick, variant = 'vertical' }) =>
                     </div>
                 )}
 
-                <div className={styles.duration}>
-                    <ClockCircleOutlined />
-                    <span>{duration}</span>
-                </div>
+
                 <div className={styles.playOverlay}>
                     <div className={styles.playIconCircle}>
                         <CaretRightFilled className={styles.playIconTriangle} />
@@ -69,23 +63,15 @@ const VideoCard: React.FC<Props> = ({ video, onClick, variant = 'vertical' }) =>
             <div className={styles.content}>
                 <h3 className={styles.title}>{video.title}</h3>
 
-                <div className={styles.sellerInfo}>
-                    <img src={sellerAvatar} alt={video.seller_name} className={styles.avatar} />
-                    <span className={styles.name}>{video.seller_name}</span>
-                </div>
-
                 <div className={styles.meta}>
-                    <div className={styles.rating}>
-                        <StarFilled />
-                        <span className={styles.score}>{rating}</span>
-                        <span className={styles.count}>({totalReviews})</span>
+                    <div className={styles.sellerInfo}>
+                        <img src={sellerAvatar} alt={video.seller_name} className={styles.avatar} />
+                        <span className={styles.name}>{video.seller_name}</span>
                     </div>
-                    {variant === 'vertical' && (
-                        <div className={styles.views}>
-                            <EyeOutlined />
-                            <span>{video.view_count}</span>
-                        </div>
-                    )}
+                    <div className={styles.views}>
+                        <EyeOutlined />
+                        <span>{video.view_count}</span>
+                    </div>
                 </div>
             </div>
 
@@ -105,7 +91,7 @@ const VideoCard: React.FC<Props> = ({ video, onClick, variant = 'vertical' }) =>
                     )}
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 
