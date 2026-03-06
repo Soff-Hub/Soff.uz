@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { fetchPurchaseRecommendations, Video } from '~/features/videos';
 import VideoCard from '../VideoCard/VideoCard';
@@ -31,13 +31,27 @@ const PurchaseRecommendations: React.FC<Props> = ({ slug }) => {
         return () => observer.disconnect();
     }, []);
 
-    const { data: recommendations, isLoading } = useQuery({
+    const { data: rawRecommendations, isLoading } = useQuery({
         queryKey: ['video-purchase-recommendations', slug],
         queryFn: () => fetchPurchaseRecommendations(slug),
         enabled: isVisible && !!slug,
     });
 
-    const displayedVideos: Video[] = recommendations?.results || recommendations || [];
+    const displayedVideos: Video[] = useMemo(() => {
+        const rawData = rawRecommendations?.results || rawRecommendations || [];
+        if (!Array.isArray(rawData)) return [];
+
+        return rawData.map((item: any) => ({
+            ...item,
+            view_count: item.views_count ?? item.view_count ?? 0,
+            poster: item.poster_url ?? item.poster ?? null,
+            seller_name: item.seller?.first_name
+                ? `${item.seller.first_name} ${item.seller.last_name || ''}`.trim()
+                : (item.seller_name || 'Soff.uz'),
+            seller_image: item.seller?.image_url ?? item.seller_image ?? null,
+            category: item.category || { id: 0, name: 'Video', slug: 'video' }
+        }));
+    }, [rawRecommendations]);
 
     if (isVisible && !isLoading && displayedVideos.length === 0) return null;
 

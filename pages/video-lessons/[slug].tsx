@@ -30,12 +30,27 @@ interface Props {
 }
 
 const VideoDetailPage: React.FC<Props> = ({ video }) => {
+    const [mounted, setMounted] = React.useState(false);
     const [showVideo, setShowVideo] = useState(false);
+
+    React.useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    const formatPrice = (price: number) => {
+        return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    };
+
     const formattedPrice = video.price === 0
         ? 'Bepul'
-        : `${video.price.toLocaleString('uz-UZ')} UZS`;
+        : `${formatPrice(video.price)} UZS`;
 
     const isFree = video.price === 0;
+
+    // Stable category name for SSR consistency
+    const categoryName = video.category.name.includes('|')
+        ? video.category.name.split('|').pop()?.trim()
+        : video.category.name;
 
     return (
         <PageContainer withFooter={true}>
@@ -54,15 +69,19 @@ const VideoDetailPage: React.FC<Props> = ({ video }) => {
                     <div className="container">
                         <div className={styles.heroContent}>
                             <div className={styles.breadcrumb}>
-                                <Link href="/video-lessons">Video darslar</Link>
+                                <Link href="/video-lessons">
+                                    <a>Video darslar</a>
+                                </Link>
                                 <span>/</span>
-                                <Link href={`/video-lessons/category/${video.category.slug}`}>{video.category.name.split('|').pop()?.trim()}</Link>
+                                <Link href={`/video-lessons/category/${video.category.slug}`}>
+                                    <a>{categoryName}</a>
+                                </Link>
                             </div>
 
                             <h1 className={styles.title}>{video.title}</h1>
 
                             <div className={styles.meta}>
-                                <div className={styles.viewCount}>
+                                <div className={styles.viewCount} suppressHydrationWarning>
                                     <EyeOutlined /> {video.view_count} marta ko'rilgan
                                 </div>
                             </div>
@@ -149,7 +168,7 @@ const VideoDetailPage: React.FC<Props> = ({ video }) => {
                                     </div>
 
                                     <div className={styles.priceInfo}>
-                                        <span className={styles.price}>{formattedPrice}</span>
+                                        <span className={styles.price} suppressHydrationWarning>{formattedPrice}</span>
 
                                         <div className={styles.buttons}>
                                             <button className={styles.btnPrimary}>
@@ -165,7 +184,7 @@ const VideoDetailPage: React.FC<Props> = ({ video }) => {
                                         <div className={styles.featuresList}>
                                             <h4 className={styles.listTitle}>Kurs o'z ichiga oladi:</h4>
 
-                                            <div className={styles.featureItem}>
+                                            <div className={styles.featureItem} suppressHydrationWarning>
                                                 <PlaySquareOutlined />
                                                 <span>{video.document.content_duration} video darslar</span>
                                             </div>
