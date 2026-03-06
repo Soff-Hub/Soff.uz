@@ -31,6 +31,8 @@ const nextSettings = {
             'placehold.co',
             'freelance-media.s3.amazonaws.com',
             'img.youtube.com',
+            'picsum.photos',
+            'ui-avatars.com',
         ],
     },
     async headers() {
