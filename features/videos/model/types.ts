@@ -20,11 +20,6 @@ export interface Video {
     poster: string | null;
     playlist: Playlist | null;
     category: Category;
-    // UI related fields (computed or optional)
-    duration?: string;
-    stars?: number;
-    reviews_count?: number;
-    is_bestseller?: boolean;
 }
 
 export interface Tag {
@@ -51,7 +46,7 @@ export interface DocumentInfo {
     short_content_url: string;
     content_duration: string;
     content_type: string;
-    file_url: string;
+    file_url: string | null;
 }
 
 export interface VideoDetail {
