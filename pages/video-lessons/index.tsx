@@ -17,7 +17,7 @@ const VideoLessonsPage: React.FC = () => {
     const router = useRouter();
 
     const handleVideoClick = (slug: string) => {
-        router.push(`/video-lessons/${slug}`);
+        router.push(`/product/${slug}`);
     };
 
     const handleSeeAll = (categorySlug: string) => {

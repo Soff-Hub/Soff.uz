@@ -9,3 +9,4 @@ export { default as CategoryFilters } from './ui/CategoryFilters/CategoryFilters
 export { default as CategorySlider } from './ui/CategorySlider/CategorySlider';
 export { default as PurchaseRecommendations } from './ui/PurchaseRecommendations/PurchaseRecommendations';
 export { default as SimilarVideos } from './ui/SimilarVideos/SimilarVideos';
+export { default as VideoDetails } from './ui/VideoDetails/VideoDetails';

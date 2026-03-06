@@ -61,7 +61,7 @@ const ThreeDesignProductDetails = dynamic(
 );
 
 const VideosProductDetails = dynamic(
-    () => import('~/features/product-details/ui/video-tutorials/details-page'),
+    () => import('~/features/videos/ui/VideoDetails/VideoDetails'),
     { ssr: true }
 );
 
@@ -197,41 +197,50 @@ export default function ProductDefaultPage({ defaultProducts }) {
                 />
                 {/* Video helper banner */}
                 <div
-                    className="container mb-5"
+                    className={contentType === 'video' ? 'mb-5' : 'container mb-5'}
                     style={{ position: 'relative' }}>
-                    <div className={containerClassName}>
-                        <div className="ps-container p-0">
-                            <div className="ps-page__container">
-                                <DetailComponent
-                                    product={defaultProducts}
-                                    isPlay={isPlay}
-                                    setIsPlay={setIsPlay}
-                                />
+                    <div className={contentType === 'video' ? '' : containerClassName}>
+                        <div className={contentType === 'video' ? '' : 'ps-container p-0'}>
+                            <div className={contentType === 'video' ? '' : 'ps-page__container'}>
+                                {contentType === 'video' ? (
+                                    <DetailComponent video={defaultProducts} />
+                                ) : (
+                                    <DetailComponent
+                                        product={defaultProducts}
+                                        isPlay={isPlay}
+                                        setIsPlay={setIsPlay}
+                                    />
+                                )}
                             </div>
-                            {shouldShowAISoffia && <AISoffiaPresentation />}
-                            <PurchaseRecommendations />
 
-                            <div ref={similarRef} className="my-5">
-                                <h3
-                                    style={{
-                                        fontSize: '25px',
-                                        fontWeight: 400,
-                                    }}
-                                    className="py-4 similar_title">
-                                    O'xshash mahsulotlar
-                                </h3>
-                                <SimilarProducts />
-                            </div>
-                            <div ref={lastProductsRef}>
-                                <h3
-                                    style={{
-                                        fontSize: '25px',
-                                        fontWeight: 400,
-                                    }}
-                                    className="py-4 similar_title">
-                                    So'ngi yuklangan mahsulotlar
-                                </h3>
-                                <LastAddedProducts contentType={contentType} />
+                            <div className={contentType === 'video' ? 'container' : ''}>
+                                {shouldShowAISoffia && <AISoffiaPresentation />}
+                                {contentType !== 'video' && <PurchaseRecommendations />}
+
+                                {contentType !== 'video' && (
+                                    <div ref={similarRef} className="my-5">
+                                        <h3
+                                            style={{
+                                                fontSize: '25px',
+                                                fontWeight: 400,
+                                            }}
+                                            className="py-4 similar_title">
+                                            O'xshash mahsulotlar
+                                        </h3>
+                                        <SimilarProducts />
+                                    </div>
+                                )}
+                                <div ref={lastProductsRef}>
+                                    <h3
+                                        style={{
+                                            fontSize: '25px',
+                                            fontWeight: 400,
+                                        }}
+                                        className="py-4 similar_title">
+                                        So'ngi yuklangan mahsulotlar
+                                    </h3>
+                                    <LastAddedProducts contentType={contentType} />
+                                </div>
                             </div>
                         </div>
                     </div>
