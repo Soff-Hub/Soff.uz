@@ -1,0 +1,62 @@
+.sliderSection {
+    margin-bottom: 48px;
+
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 24px;
+
+        .title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin: 0;
+        }
+
+        .seeAll {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1890ff;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: color 0.2s;
+
+            &:hover {
+                color: #40a9ff;
+            }
+        }
+    }
+
+    :global(.swiper) {
+        padding: 10px 5px 30px 5px;
+        margin: -10px -5px -30px -5px;
+
+        :global(.swiper-slide) {
+            height: auto;
+            max-width: 320px;
+            /* Prevent huge stretch on vertical */
+        }
+    }
+
+    &.horizontalSlider :global(.swiper-slide) {
+        max-width: 480px;
+        /* Prevent huge stretch on horizontal */
+    }
+
+    :global(.swiper-pagination-bullet-active) {
+        background: #1890ff;
+    }
+
+    :global(.swiper-button-next),
+    :global(.swiper-button-prev) {
+        color: #1890ff;
+
+        &::after {
+            font-size: 20px;
+            font-weight: bold;
+        }
+    }
+}
