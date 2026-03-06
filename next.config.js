@@ -125,29 +125,3 @@ const nextSettings = {
 };
 
 module.exports = nextSettings;
-
-if (process.env.NODE_ENV === 'production') {
-    const { withSentryConfig } = require('@sentry/nextjs');
-
-    module.exports = withSentryConfig(module.exports, {
-        org: 'for-personal-use-jw',
-        project: 'javascript-nextjs',
-
-        hideSourceMaps: true,
-        disableLogger: true,
-        widenClientFileUpload: true,
-        silent: true,
-        webpack: (config) => {
-            return {
-                ...config,
-                treeshake: {
-                    removeDebugLogging: true,
-                    removeTracing: false,
-                },
-            };
-        },
-
-        tunnelRoute: '/monitoring',
-        automaticVercelMonitors: true,
-    });
-}
