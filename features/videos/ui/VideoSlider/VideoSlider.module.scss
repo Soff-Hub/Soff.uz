@@ -1,5 +1,5 @@
 .sliderSection {
-    margin-bottom: 48px;
+    margin-bottom: 20px;
     position: relative;
     width: 100%;
     // overflow: hidden; // Tugmalar kesilmasligi uchun buni olib tashlaymiz
@@ -8,7 +8,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-bottom: 24px;
+        margin-bottom: 14px;
         padding: 0 4px;
 
         .title {
@@ -45,15 +45,9 @@
 
     .sliderWrapper {
         position: relative;
-        // Padding beramizki tugmalar uchun joy bo'lsin
-        padding: 0 10px;
-
-        @media (min-width: 1200px) {
-            padding: 0 20px;
-        }
+        padding: 0;
 
         @media (max-width: 768px) {
-            padding: 0 16px;
             margin: 0 -16px; // Paddingni qoplash uchun
         }
 

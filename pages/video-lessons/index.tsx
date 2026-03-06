@@ -3,7 +3,7 @@ import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import PageContainer from '~/widgets/layouts/PageContainer';
 import Meta from '~/shared/ui/meta';
-import { fetchCategories, fetchVideos, Category, Video, VideoSlider } from '~/features/videos';
+import { fetchCategories, fetchVideos, Category, Video, VideoSlider, VideoGrid } from '~/features/videos';
 
 interface CategoryWithVideos {
     category: Category;
@@ -12,21 +12,18 @@ interface CategoryWithVideos {
 
 interface Props {
     popularVideos: Video[];
+    allVideos: Video[];
     categoriesWithVideos: CategoryWithVideos[];
 }
 
-const VideoLessonsPage: React.FC<Props> = ({ popularVideos, categoriesWithVideos }) => {
+const VideoLessonsPage: React.FC<Props> = ({ popularVideos, allVideos, categoriesWithVideos }) => {
     const router = useRouter();
-    console.log(popularVideos, 'popularVideos');
-    console.log(categoriesWithVideos, 'categoriesWithVideos');
     const handleVideoClick = (slug: string) => {
-        router.push(`/video-lessons/${slug}`);
+        router.push(`/product/${slug}`);
     };
 
     const handleSeeAll = (categorySlug: string) => {
-        // Navigate to a filtered view or dedicated category page if needed
-        // For now, staying on the same page structure
-        router.push(`/video-lessons?category=${categorySlug}`);
+        router.push(`/video-lessons/category/${categorySlug}`);
     };
 
     return (
@@ -38,13 +35,12 @@ const VideoLessonsPage: React.FC<Props> = ({ popularVideos, categoriesWithVideos
                 image="https://soff.uz/static/img/video-darsliklar-2.png"
             />
 
-            <div className="container py-5">
+            <div className="container py-3">
                 {/* Popular Videos Section */}
                 <VideoSlider
                     title="Eng ommabop"
                     videos={popularVideos}
                     onVideoClick={handleVideoClick}
-                    autoplay={true}
                     variant="horizontal"
                 />
 
@@ -58,6 +54,13 @@ const VideoLessonsPage: React.FC<Props> = ({ popularVideos, categoriesWithVideos
                         onVideoClick={handleVideoClick}
                     />
                 ))}
+
+                {/* All Videos Grid Section */}
+                <VideoGrid
+                    title="Barchasi"
+                    videos={allVideos}
+                    onVideoClick={handleVideoClick}
+                />
             </div>
         </PageContainer>
     );
@@ -72,8 +75,12 @@ export const getServerSideProps: GetServerSideProps = async () => {
         const popularResponse = await fetchVideos({ order_by_views: '-view_count', page_size: 15 });
         const popularVideos = popularResponse?.results || [];
 
-        // 3. Fetch videos for top 8 categories to keep server load balanced
-        const topCategories = categories.slice(0, 8);
+        // 3. Fetch all videos for the grid (latest)
+        const allResponse = await fetchVideos({ page_size: 100 });
+        const allVideos = allResponse?.results || [];
+
+        // 4. Fetch videos for top categories
+        const topCategories = categories.slice(0, 10);
 
         const categoriesWithVideos: CategoryWithVideos[] = await Promise.all(
             topCategories.map(async (category) => {
@@ -91,6 +98,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
         return {
             props: {
                 popularVideos,
+                allVideos,
                 categoriesWithVideos: filteredCategoriesWithVideos,
             },
         };
@@ -99,6 +107,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
         return {
             props: {
                 popularVideos: [],
+                allVideos: [],
                 categoriesWithVideos: [],
             },
         };

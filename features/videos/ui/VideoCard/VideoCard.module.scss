@@ -7,6 +7,7 @@
     cursor: pointer;
     position: relative;
     height: 100%;
+    width: 100%; // Fill the grid column
     display: flex;
     flex-direction: column;
     border: 1px solid #f0f2f5;
@@ -148,6 +149,8 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
             height: 2.8em;
+            word-break: break-word; // Fix for long unbreakable titles
+            overflow-wrap: break-word;
         }
 
         .sellerInfo {
