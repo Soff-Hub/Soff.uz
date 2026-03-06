@@ -2,6 +2,12 @@ import React, { useState } from 'react';
 import { GetServerSideProps } from 'next';
 import { Modal } from 'antd';
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
+import { message } from 'antd';
+import useCart from '~/shared/hooks/useCart';
+import useWishlist from '~/shared/hooks/useWishlist';
+import AuthModal from '~/features/auth/ui/auth-modal';
 import PageContainer from '~/widgets/layouts/PageContainer';
 import Meta from '~/shared/ui/meta';
 import {
@@ -17,7 +23,11 @@ import {
     PlaySquareOutlined,
     ClockCircleOutlined,
     ArrowLeftOutlined,
-    CloseOutlined
+    CloseOutlined,
+    HeartOutlined,
+    HeartFilled,
+    ShoppingCartOutlined,
+    DeleteOutlined
 } from '@ant-design/icons';
 import styles from './VideoDetail.module.scss';
 import Link from 'next/link';
@@ -30,8 +40,18 @@ interface Props {
 }
 
 const VideoDetailPage: React.FC<Props> = ({ video }) => {
+    const router = useRouter();
+    const { cartItems, setCartOneItem, removeCartOneItem } = useCart();
+    const { wishlist, addSavedItem, removeSavedItem } = useWishlist();
+    const isLoggedIn = useSelector((state: any) => !!state.auth.user?.access);
+
     const [mounted, setMounted] = React.useState(false);
     const [showVideo, setShowVideo] = useState(false);
+    const [authModal, setAuthModal] = useState(false);
+
+    const isAddedToCart = cartItems?.some((item: any) => Number(item.id) === Number(video.id));
+    const isAddedToWishlist = wishlist?.some((item: any) => Number(item.id) === Number(video.id));
+    const hasAccess = !!video.document.file_url;
 
     React.useEffect(() => {
         setMounted(true);
@@ -52,6 +72,58 @@ const VideoDetailPage: React.FC<Props> = ({ video }) => {
         ? video.category.name.split('|').pop()?.trim()
         : video.category.name;
 
+    const handleAddToCart = (e: React.MouseEvent) => {
+        e.preventDefault();
+        if (isAddedToCart) {
+            removeCartOneItem(video.id);
+            message.success('Savatdan olib tashlandi');
+        } else {
+            setCartOneItem(video.id);
+            message.success('Savatga qo\'shildi');
+        }
+    };
+
+    const handleAddToWishlist = (e: React.MouseEvent) => {
+        e.preventDefault();
+        if (isAddedToWishlist) {
+            removeSavedItem(video.id);
+        } else {
+            addSavedItem(video.id);
+        }
+    };
+
+    const handleStartOrBuy = (e: React.MouseEvent) => {
+        e.preventDefault();
+        if (hasAccess) {
+            setShowVideo(true);
+        } else {
+            if (isFree) {
+                // For free videos, typically we still need to "order" them or just add to cart and checkout
+                setCartOneItem(video.id);
+                if (isLoggedIn) {
+                    router.push(`/account/checkout?id=${video.id}`);
+                } else {
+                    setAuthModal(true);
+                }
+            } else {
+                setCartOneItem(video.id);
+                if (isLoggedIn) {
+                    router.push(`/account/checkout?id=${video.id}`);
+                } else {
+                    setAuthModal(true);
+                }
+            }
+        }
+    };
+
+    const handlePreviewClick = () => {
+        if (hasAccess) {
+            setShowVideo(true);
+        } else {
+            message.info('To\'liq videoni ko\'rish uchun mahsulotni sotib oling');
+        }
+    };
+
     return (
         <PageContainer withFooter={true}>
             <Meta
@@ -67,32 +139,40 @@ const VideoDetailPage: React.FC<Props> = ({ video }) => {
                     style={{ backgroundImage: `url(${video.poster_url})` }}
                 >
                     <div className="container">
-                        <div className={styles.heroContent}>
-                            <div className={styles.breadcrumb}>
-                                <Link href="/video-lessons">
-                                    <a>Video darslar</a>
-                                </Link>
-                                <span>/</span>
-                                <Link href={`/video-lessons/category/${video.category.slug}`}>
-                                    <a>{categoryName}</a>
-                                </Link>
-                            </div>
+                        <div className={styles.heroWrapper}>
+                            <div className={styles.heroContent}>
+                                <div className={styles.breadcrumb}>
+                                    <Link href="/video-lessons">
+                                        <a>Video darslar</a>
+                                    </Link>
+                                    <span>/</span>
+                                    <Link href={`/video-lessons/category/${video.category.slug}`}>
+                                        <a>{categoryName}</a>
+                                    </Link>
+                                </div>
 
-                            <h1 className={styles.title}>{video.title}</h1>
+                                <h1 className={styles.title}>{video.title}</h1>
 
-                            <div className={styles.meta}>
-                                <div className={styles.viewCount} suppressHydrationWarning>
-                                    <EyeOutlined /> {video.view_count} marta ko'rilgan
+                                <div className={styles.meta}>
+                                    <div className={styles.viewCount} suppressHydrationWarning>
+                                        <EyeOutlined /> {video.view_count} marta ko'rilgan
+                                    </div>
+                                </div>
+
+                                <div className={styles.authorInfo}>
+                                    <span>Muallif: </span>
+                                    <Link href={`/seller/${video.seller.id}`}>
+                                        <a className={styles.authorName}>
+                                            {video.seller.first_name} {video.seller.last_name}
+                                        </a>
+                                    </Link>
                                 </div>
                             </div>
 
-                            <div className={styles.authorInfo}>
-                                <span>Muallif: </span>
-                                <Link href={`/seller/${video.seller.id}`}>
-                                    <a className={styles.authorName}>
-                                        {video.seller.first_name} {video.seller.last_name}
-                                    </a>
-                                </Link>
+                            <div className={styles.heroPlayBtn} onClick={handlePreviewClick}>
+                                <div className={styles.playIconWrapper}>
+                                    <PlayCircleFilled />
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -158,7 +238,7 @@ const VideoDetailPage: React.FC<Props> = ({ video }) => {
                                 <div className={styles.stickyCard}>
                                     <div
                                         className={styles.preview}
-                                        onClick={() => setShowVideo(true)}
+                                        onClick={handlePreviewClick}
                                     >
                                         <img src={video.poster_url} alt={video.title} className={styles.poster} />
                                         <div className={styles.playOverlay}>
@@ -168,15 +248,30 @@ const VideoDetailPage: React.FC<Props> = ({ video }) => {
                                     </div>
 
                                     <div className={styles.priceInfo}>
-                                        <span className={styles.price} suppressHydrationWarning>{formattedPrice}</span>
+                                        <div className="d-flex justify-content-between align-items-center mb-3">
+                                            <span className={styles.price} suppressHydrationWarning>{formattedPrice}</span>
+                                            <button
+                                                className={`${styles.wishlistBtn} ${isAddedToWishlist ? styles.active : ''}`}
+                                                onClick={handleAddToWishlist}
+                                            >
+                                                {isAddedToWishlist ? <HeartFilled /> : <HeartOutlined />}
+                                            </button>
+                                        </div>
 
                                         <div className={styles.buttons}>
-                                            <button className={styles.btnPrimary}>
-                                                {isFree ? "Darsni boshlash" : "Hozir sotib olish"}
+                                            <button
+                                                className={styles.btnPrimary}
+                                                onClick={handleStartOrBuy}
+                                            >
+                                                {hasAccess ? (isFree ? "Darsni boshlash" : "Kursni ko'rish") : (isFree ? "Darsni boshlash" : "Hozir sotib olish")}
                                             </button>
-                                            {!isFree && (
-                                                <button className={styles.btnSecondary}>
-                                                    Savatga qo'shish
+                                            {!hasAccess && !isFree && (
+                                                <button
+                                                    className={`${styles.btnSecondary} ${isAddedToCart ? styles.inCart : ''}`}
+                                                    onClick={handleAddToCart}
+                                                >
+                                                    {isAddedToCart ? <DeleteOutlined /> : <ShoppingCartOutlined />}
+                                                    {isAddedToCart ? "Savatdan olish" : "Savatga qo'shish"}
                                                 </button>
                                             )}
                                         </div>
@@ -247,6 +342,16 @@ const VideoDetailPage: React.FC<Props> = ({ video }) => {
                         </video>
                     </div>
                 </Modal>
+
+                <AuthModal
+                    open={authModal}
+                    onClose={() => setAuthModal(false)}
+                    slug={video.slug}
+                    onGoogleSuccessNavigateTo={`/account/checkout?id=${video.id}`}
+                    onSuccess={() => {
+                        router.push(`/account/checkout?id=${video.id}`);
+                    }}
+                />
             </div>
         </PageContainer>
     );
