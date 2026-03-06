@@ -1,5 +1,5 @@
 import { $api } from '~/shared/api';
-import { Category, VideoFilters, VideoResponse } from '~/features/videos/model/types';
+import { Category, VideoDetail, VideoFilters, VideoResponse } from '~/features/videos/model/types';
 
 export const fetchVideos = async (params: VideoFilters): Promise<VideoResponse> => {
     const { data } = await $api.get<VideoResponse>('/api/v1/customer/videos/', {
@@ -19,4 +19,9 @@ export const fetchCategories = async (direction: string = 'video', parent_slug?:
     const { data } = await $api.get(url);
     // If the structure is { results: Category[] }
     return data.results || data;
+};
+
+export const fetchVideoBySlug = async (slug: string): Promise<VideoDetail> => {
+    const { data } = await $api.get<VideoDetail>(`/api/v1/customer/documents/${slug}/`);
+    return data;
 };

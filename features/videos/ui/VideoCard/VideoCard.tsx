@@ -95,4 +95,4 @@ const VideoCard: React.FC<Props> = ({ video, onClick, variant = 'vertical' }) =>
     );
 };
 
-export default VideoCard;
+export default React.memo(VideoCard);

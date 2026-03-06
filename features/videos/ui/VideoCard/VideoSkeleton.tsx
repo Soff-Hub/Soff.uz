@@ -27,4 +27,4 @@ const VideoSkeleton: React.FC<Props> = ({ variant = 'vertical' }) => {
     );
 };
 
-export default VideoSkeleton;
+export default React.memo(VideoSkeleton);
