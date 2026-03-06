@@ -102,7 +102,7 @@ const LastProducts = () => {
         },
         {
             title: 'Video ishlanmalar',
-            href: '/video-lessons/all',
+            href: '/video-lessons',
             data: videoData?.results,
         },
         {

@@ -110,7 +110,7 @@ const products = [
                 height={20}
             />
         ),
-        link: '/video-lessons/all?slug=all',
+        link: '/video-lessons',
         label: 'Video darsliklar',
     },
     {

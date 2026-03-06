@@ -35,7 +35,7 @@ const readyProducts = [
         label: 'Shablonlar',
     },
     {
-        href: '/video-lessons/all',
+        href: '/video-lessons',
         img: '/static/img/HomePage/video1.webp',
         alt: 'Video darsliklar',
         label: 'Video darsliklar',

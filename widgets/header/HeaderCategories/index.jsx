@@ -97,7 +97,7 @@ const products = [
         label: (
             <a
                 className={`ms-3 ${styles.dropLabel}`}
-                href="/video-lessons/all?slug=all">
+                href="/video-lessons">
                 Video darsliklar
             </a>
         ),
