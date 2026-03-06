@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { GetServerSideProps } from 'next';
+import { Modal } from 'antd';
 import PageContainer from '~/widgets/layouts/PageContainer';
 import Meta from '~/shared/ui/meta';
 import { fetchVideoBySlug, VideoDetail } from '~/features/videos';
@@ -12,7 +13,8 @@ import {
     PlaySquareOutlined,
     ClockCircleOutlined,
     SafetyCertificateOutlined,
-    ArrowLeftOutlined
+    ArrowLeftOutlined,
+    CloseOutlined
 } from '@ant-design/icons';
 import styles from './VideoDetail.module.scss';
 import Link from 'next/link';
@@ -22,6 +24,7 @@ interface Props {
 }
 
 const VideoDetailPage: React.FC<Props> = ({ video }) => {
+    const [showVideo, setShowVideo] = useState(false);
     const formattedPrice = video.price === 0
         ? 'Bepul'
         : `${video.price.toLocaleString('uz-UZ')} UZS`;
@@ -131,7 +134,10 @@ const VideoDetailPage: React.FC<Props> = ({ video }) => {
                             {/* Right Side: Sidebar */}
                             <aside className={styles.sidebarWrapper}>
                                 <div className={styles.stickyCard}>
-                                    <div className={styles.preview}>
+                                    <div
+                                        className={styles.preview}
+                                        onClick={() => setShowVideo(true)}
+                                    >
                                         <img src={video.poster_url} alt={video.title} className={styles.poster} />
                                         <div className={styles.playOverlay}>
                                             <PlayCircleFilled />
@@ -188,6 +194,30 @@ const VideoDetailPage: React.FC<Props> = ({ video }) => {
                         </a>
                     </Link>
                 </div>
+
+                {/* Video Preview Modal (Ant Design) */}
+                <Modal
+                    open={showVideo}
+                    onCancel={() => setShowVideo(false)}
+                    footer={null}
+                    centered
+                    width={1000}
+                    bodyStyle={{ padding: 0, backgroundColor: '#000', overflow: 'hidden' }}
+                    destroyOnClose
+                    closeIcon={<CloseOutlined style={{ color: '#fff', fontSize: '20px' }} />}
+                >
+                    <div className={styles.aspectRatioWrapper}>
+                        <video
+                            controls
+                            autoPlay
+                            src={video.document.file_url || video.document.short_content_url}
+                            controlsList="nodownload"
+                            style={{ width: '100%', display: 'block' }}
+                        >
+                            Sizning brauzeringiz video qo'llab-quvvatlamaydi.
+                        </video>
+                    </div>
+                </Modal>
             </div>
         </PageContainer>
     );
