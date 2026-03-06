@@ -8,7 +8,8 @@ import {
     fetchCategories,
     Video,
     Category,
-    VideoGrid
+    VideoGrid,
+    CategoryFilters
 } from '~/features/videos';
 import { Pagination, Select } from 'antd';
 import styles from './CategoryPage.module.scss';
@@ -36,7 +37,7 @@ const CategoryPage: React.FC<Props> = ({
 }) => {
     const router = useRouter();
     const { slug } = router.query;
-    console.log(subCategories);
+
     const handleVideoClick = (videoSlug: string) => {
         router.push(`/product/${videoSlug}`);
     };
@@ -58,7 +59,6 @@ const CategoryPage: React.FC<Props> = ({
     };
 
     const handleSubCategoryClick = (subSlug: string) => {
-        // If clicking a subcategory, we navigate to THAT category's page
         router.push(`/video-lessons/category/${subSlug}`);
     };
 
@@ -90,24 +90,13 @@ const CategoryPage: React.FC<Props> = ({
                     </div>
 
                     <div className={styles.filterBar}>
-                        <div className={styles.filters}>
-                            <button
-                                className={`${styles.filterBtn} ${currentFilter === 'all' ? styles.active : ''}`}
-                                onClick={() => handlePriceFilterChange('all')}
-                            >
-                                Barchasi
-                            </button>
-
-                            {/* Dynamic Sub-categories */}
-                            {subCategories?.map((sub) => (
-                                <button
-                                    key={sub.id}
-                                    className={styles.filterBtn}
-                                    onClick={() => handleSubCategoryClick(sub.slug)}
-                                >
-                                    {sub.name.split('|').pop()?.trim() || sub.name}
-                                </button>
-                            ))}
+                        <div className={styles.filtersWrapper}>
+                            <CategoryFilters
+                                subCategories={subCategories}
+                                currentFilter={currentFilter}
+                                onSubCategoryClick={handleSubCategoryClick}
+                                onPriceFilterChange={handlePriceFilterChange}
+                            />
                         </div>
 
                         <div className={styles.sortSection}>

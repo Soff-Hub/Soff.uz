@@ -2,7 +2,7 @@
     margin-bottom: 40px;
 
     .titleSection {
-        margin-bottom: 32px;
+        margin-bottom: 24px;
 
         .title {
             font-size: 32px;
@@ -14,51 +14,23 @@
                 font-size: 24px;
             }
         }
-
-        .description {
-            font-size: 15px;
-            color: #595959;
-            max-width: 900px;
-            line-height: 1.6;
-        }
     }
 
     .filterBar {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         justify-content: space-between;
-        flex-wrap: wrap;
         gap: 20px;
+        flex-wrap: wrap;
 
-        .filters {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
+        @media (max-width: 768px) {
+            flex-direction: column;
+            gap: 16px;
+        }
 
-            .filterBtn {
-                padding: 6px 16px;
-                border-radius: 20px;
-                background: #f0f2f5;
-                border: 1px solid transparent;
-                font-size: 14px;
-                font-weight: 500;
-                color: #595959;
-                cursor: pointer;
-                transition: all 0.2s;
-
-                &:hover {
-                    background: #e6f7ff;
-                    color: #1890ff; // Default hover
-                }
-
-                &.active {
-                    background: #2ecc71; // Primary Green as requested
-                    color: #fff;
-                    border-color: #2ecc71;
-                    box-shadow: 0 4px 10px rgba(46, 204, 113, 0.2);
-                }
-            }
+        .filtersWrapper {
+            flex: 1;
+            width: 100%;
         }
 
         .sortSection {
@@ -66,11 +38,13 @@
             align-items: center;
             gap: 12px;
 
-            .sortLabel {
-                font-size: 12px;
-                color: #8c8c8c;
-                text-transform: uppercase;
-                letter-spacing: 0.5px;
+            @media (max-width: 576px) {
+                width: 100%;
+
+                .sortSelect {
+                    width: 100% !important;
+                    flex: 1;
+                }
             }
 
             .sortSelect {
