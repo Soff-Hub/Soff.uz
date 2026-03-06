@@ -82,6 +82,61 @@
         justify-content: center;
         padding: 12px;
     }
+
+    .categoryBreadcrumbNav {
+        display: flex;
+        align-items: center;
+        height: 48px;
+        gap: 16px;
+
+        .parentCategory {
+            flex-shrink: 0;
+
+            a {
+                font-size: 15px;
+                font-weight: 800; // Bold parent
+                color: #1c1d1f;
+                text-decoration: none;
+
+                &:hover {
+                    color: #2ecc71;
+                }
+            }
+        }
+
+        .separator {
+            display: flex;
+            align-items: center;
+            color: #d1d7dc;
+            font-size: 14px;
+        }
+
+        .subCategoriesWrapper {
+            flex: 1;
+            min-width: 0; // Crucial for swiper inside flex
+
+            .subSwiper {
+                width: 100%;
+            }
+
+            .subItem {
+                padding: 12px 0;
+
+                a {
+                    font-size: 14px;
+                    font-weight: 400;
+                    color: #595959;
+                    text-decoration: none;
+                    white-space: nowrap;
+                    transition: all 0.2s ease;
+
+                    &:hover {
+                        color: #2ecc71;
+                    }
+                }
+            }
+        }
+    }
 }
 
 .dropdownContent {
