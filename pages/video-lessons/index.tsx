@@ -68,19 +68,18 @@ const VideoLessonsPage: React.FC<Props> = ({ popularVideos, allVideos, categorie
 
 export const getServerSideProps: GetServerSideProps = async () => {
     try {
-        // 1. Fetch categories
-        const categories = await fetchCategories();
+        // 1. Initial parallel fetch for core data
+        const [categories, popularResponse, allResponse] = await Promise.all([
+            fetchCategories(),
+            fetchVideos({ order_by_views: '-view_count', page_size: 15 }),
+            fetchVideos({ page_size: 100 })
+        ]);
 
-        // 2. Fetch popular videos
-        const popularResponse = await fetchVideos({ order_by_views: '-view_count', page_size: 15 });
         const popularVideos = popularResponse?.results || [];
-
-        // 3. Fetch all videos for the grid (latest)
-        const allResponse = await fetchVideos({ page_size: 100 });
         const allVideos = allResponse?.results || [];
 
-        // 4. Fetch videos for top categories
-        const topCategories = categories.slice(0, 10);
+        // 2. Fetch videos for top categories (depends on categories result)
+        const topCategories = (categories || []).slice(0, 10);
 
         const categoriesWithVideos: CategoryWithVideos[] = await Promise.all(
             topCategories.map(async (category) => {

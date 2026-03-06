@@ -168,30 +168,29 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const activeSubCategory = (context.query.sub_category as string) || '';
     const pageSize = 12;
 
+    const videoParams: any = {
+        category: activeSubCategory || slug,
+        page: page,
+        page_size: pageSize,
+        order_by_views: sort === '-view_count' ? '-view_count' : undefined,
+    };
+
+    if (sort === '-created_at') videoParams.ordering = '-created_at';
+    if (sort === 'price') videoParams.ordering = 'price';
+    if (sort === '-price') videoParams.ordering = '-price';
+
+    if (filter === 'free') videoParams.is_free = true;
+    if (filter === 'paid') videoParams.is_free = false;
+
     try {
-        // Fetch current category and its subcategories
-        const allMainCategories = await fetchCategories();
-        const currentCategory = allMainCategories.find(c => c.slug === slug) || null;
+        // Parallel fetching for better performance
+        const [allMainCategories, subCategories, response] = await Promise.all([
+            fetchCategories('video'),
+            fetchCategories('video', slug),
+            fetchVideos(videoParams)
+        ]);
 
-        // Fetch sub-categories of the current slug (parent)
-        const subCategories = await fetchCategories('video', slug);
-
-        const videoParams: any = {
-            // If sub_category is selected, use it, otherwise use parent slug
-            category: activeSubCategory || slug,
-            page: page,
-            page_size: pageSize,
-            order_by_views: sort === '-view_count' ? '-view_count' : undefined,
-        };
-
-        if (sort === '-created_at') videoParams.ordering = '-created_at';
-        if (sort === 'price') videoParams.ordering = 'price';
-        if (sort === '-price') videoParams.ordering = '-price';
-
-        if (filter === 'free') videoParams.is_free = true;
-        if (filter === 'paid') videoParams.is_free = false;
-
-        const response = await fetchVideos(videoParams);
+        const currentCategory = allMainCategories.find((c: any) => c.slug === slug) || null;
 
         return {
             props: {
