@@ -1,5 +1,4 @@
 import React from 'react';
-import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import PageContainer from '~/widgets/layouts/PageContainer';
 import Meta from '~/shared/ui/meta';
@@ -11,7 +10,6 @@ import {
     CategorySlider,
     VideoSlider,
     VideoGrid,
-    VideoSkeleton
 } from '~/features/videos';
 import { Spin } from 'antd';
 
@@ -114,12 +112,6 @@ const VideoLessonsPage: React.FC = () => {
             </div>
         </PageContainer>
     );
-};
-
-export const getServerSideProps: GetServerSideProps = async () => {
-    return {
-        props: {}, // Everything is client-side now
-    };
 };
 
 export default VideoLessonsPage;

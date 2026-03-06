@@ -63,10 +63,13 @@ const VideoSlider: React.FC<Props> = ({
 
     return (
         <section className={`${styles.sliderSection} ${variant === 'horizontal' ? styles.horizontalSlider : ''}`}>
-            <div className={styles.header}>
+            <div
+                className={`${styles.header} ${onSeeAll ? styles.clickable : ''}`}
+                onClick={onSeeAll}
+            >
                 <h2 className={styles.title}>{title}</h2>
                 {onSeeAll && (
-                    <div className={styles.seeAll} onClick={onSeeAll}>
+                    <div className={styles.seeAll}>
                         <span>Barchasini ko'rish</span>
                         <RightOutlined />
                     </div>

@@ -9,7 +9,20 @@
         align-items: center;
         justify-content: space-between;
         margin-bottom: 14px;
-        padding: 0 4px;
+
+        &.clickable {
+            cursor: pointer;
+
+            &:hover {
+                .seeAll {
+                    color: #40a9ff;
+                }
+
+                .title {
+                    color: #000;
+                }
+            }
+        }
 
         .title {
             font-size: 24px;
@@ -29,13 +42,8 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            cursor: pointer;
             transition: color 0.2s;
             white-space: nowrap;
-
-            &:hover {
-                color: #40a9ff;
-            }
 
             @media (max-width: 480px) {
                 font-size: 13px;
