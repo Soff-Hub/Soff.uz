@@ -2,14 +2,16 @@ import React, { useRef, useState, useEffect } from 'react';
 import { RightOutlined, LeftOutlined } from '@ant-design/icons';
 import { Video } from '~/features/videos/model/types';
 import VideoCard from '../VideoCard/VideoCard';
+import VideoSkeleton from '../VideoCard/VideoSkeleton';
 import styles from './VideoSlider.module.scss';
 
 interface Props {
     title: string;
-    videos: Video[];
+    videos?: Video[];
     onSeeAll?: () => void;
     onVideoClick?: (slug: string) => void;
     variant?: 'vertical' | 'horizontal';
+    loading?: boolean;
 }
 
 const VideoSlider: React.FC<Props> = ({
@@ -18,6 +20,7 @@ const VideoSlider: React.FC<Props> = ({
     onSeeAll,
     onVideoClick,
     variant = 'vertical',
+    loading = false,
 }) => {
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const [showLeftArrow, setShowLeftArrow] = useState(false);
@@ -56,7 +59,7 @@ const VideoSlider: React.FC<Props> = ({
         }
     };
 
-    if (!videos || videos.length === 0) return null;
+    if (!loading && (!videos || videos.length === 0)) return null;
 
     return (
         <section className={`${styles.sliderSection} ${variant === 'horizontal' ? styles.horizontalSlider : ''}`}>
@@ -85,11 +88,19 @@ const VideoSlider: React.FC<Props> = ({
                     className={styles.scrollContainer}
                     ref={scrollContainerRef}
                 >
-                    {videos.map((video) => (
-                        <div className={styles.slide} key={video.slug}>
-                            <VideoCard video={video} onClick={onVideoClick} variant={variant} />
-                        </div>
-                    ))}
+                    {loading ? (
+                        [...Array(6)].map((_, idx) => (
+                            <div className={styles.slide} key={`skeleton-${idx}`}>
+                                <VideoSkeleton variant={variant} />
+                            </div>
+                        ))
+                    ) : (
+                        videos.map((video) => (
+                            <div className={styles.slide} key={video.slug}>
+                                <VideoCard video={video} onClick={onVideoClick} variant={variant} />
+                            </div>
+                        ))
+                    )}
                 </div>
 
                 {showRightArrow && videos.length > 5 && (

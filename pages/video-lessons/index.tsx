@@ -3,21 +3,21 @@ import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import PageContainer from '~/widgets/layouts/PageContainer';
 import Meta from '~/shared/ui/meta';
-import { fetchCategories, fetchVideos, Category, Video, VideoSlider, VideoGrid } from '~/features/videos';
+import { useQuery, useInfiniteQuery } from '@tanstack/react-query';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import {
+    fetchCategories,
+    fetchVideos,
+    CategorySlider,
+    VideoSlider,
+    VideoGrid,
+    VideoSkeleton
+} from '~/features/videos';
+import { Spin } from 'antd';
 
-interface CategoryWithVideos {
-    category: Category;
-    videos: Video[];
-}
-
-interface Props {
-    popularVideos: Video[];
-    allVideos: Video[];
-    categoriesWithVideos: CategoryWithVideos[];
-}
-
-const VideoLessonsPage: React.FC<Props> = ({ popularVideos, allVideos, categoriesWithVideos }) => {
+const VideoLessonsPage: React.FC = () => {
     const router = useRouter();
+
     const handleVideoClick = (slug: string) => {
         router.push(`/product/${slug}`);
     };
@@ -25,6 +25,35 @@ const VideoLessonsPage: React.FC<Props> = ({ popularVideos, allVideos, categorie
     const handleSeeAll = (categorySlug: string) => {
         router.push(`/video-lessons/category/${categorySlug}`);
     };
+
+    // 1. Fetch Categories
+    const { data: categories, isLoading: isCatsLoading } = useQuery({
+        queryKey: ['categories', 'video'],
+        queryFn: () => fetchCategories('video'),
+    });
+
+    // 2. Fetch Popular Videos
+    const { data: popularData, isLoading: isPopularLoading } = useQuery({
+        queryKey: ['videos', 'popular'],
+        queryFn: () => fetchVideos({ order_by_views: '-view_count', page_size: 15 }),
+    });
+
+    // 3. Infinite Query for All Videos
+    const {
+        data: infiniteData,
+        fetchNextPage,
+        hasNextPage,
+        isLoading: isAllLoading
+    } = useInfiniteQuery({
+        queryKey: ['videos', 'all-infinite'],
+        queryFn: ({ pageParam = 1 }) => fetchVideos({ page: pageParam, page_size: 12 }),
+        getNextPageParam: (lastPage, allPages) => {
+            const currentTotal = allPages.reduce((acc, page) => acc + page.results.length, 0);
+            return currentTotal < lastPage.count ? allPages.length + 1 : undefined;
+        },
+    });
+
+    const allVideos = infiniteData?.pages.flatMap((page) => page.results) || [];
 
     return (
         // @ts-ignore
@@ -39,78 +68,58 @@ const VideoLessonsPage: React.FC<Props> = ({ popularVideos, allVideos, categorie
                 {/* Popular Videos Section */}
                 <VideoSlider
                     title="Eng ommabop"
-                    videos={popularVideos}
+                    videos={popularData?.results || []}
+                    loading={isPopularLoading}
                     onVideoClick={handleVideoClick}
                     variant="horizontal"
                 />
 
-                {/* Categories Sections */}
-                {categoriesWithVideos.map(({ category, videos }) => (
-                    <VideoSlider
-                        key={category.id}
-                        title={category.name.split('|').pop()?.trim() || category.name}
-                        videos={videos}
-                        onSeeAll={() => handleSeeAll(category.slug)}
-                        onVideoClick={handleVideoClick}
-                    />
-                ))}
+                {/* Top Categories Sections - Lazy loaded via CategorySlider */}
+                {isCatsLoading ? (
+                    // Show some skeletons for categories if loading
+                    [...Array(3)].map((_, i) => (
+                        <VideoSlider key={i} title="..." loading={true} />
+                    ))
+                ) : (
+                    categories?.slice(0, 10).map((category) => (
+                        <CategorySlider
+                            key={category.id}
+                            category={category}
+                            onSeeAll={handleSeeAll}
+                            onVideoClick={handleVideoClick}
+                        />
+                    ))
+                )}
 
-                {/* All Videos Grid Section */}
-                <VideoGrid
-                    title="Barchasi"
-                    videos={allVideos}
-                    onVideoClick={handleVideoClick}
-                />
+                {/* All Videos Grid Section with Infinite Scroll */}
+                <div className="mt-5">
+                    <InfiniteScroll
+                        dataLength={allVideos.length}
+                        next={fetchNextPage}
+                        hasMore={!!hasNextPage}
+                        loader={
+                            <div className="d-flex justify-content-center py-4">
+                                <Spin size="large" />
+                            </div>
+                        }
+                    >
+                        <VideoGrid
+                            title="Barchasi"
+                            videos={allVideos}
+                            loading={isAllLoading && allVideos.length === 0}
+                            onVideoClick={handleVideoClick}
+                        />
+                    </InfiniteScroll>
+                </div>
             </div>
         </PageContainer>
     );
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-    try {
-        // 1. Initial parallel fetch for core data
-        const [categories, popularResponse, allResponse] = await Promise.all([
-            fetchCategories(),
-            fetchVideos({ order_by_views: '-view_count', page_size: 15 }),
-            fetchVideos({ page_size: 100 })
-        ]);
-
-        const popularVideos = popularResponse?.results || [];
-        const allVideos = allResponse?.results || [];
-
-        // 2. Fetch videos for top categories (depends on categories result)
-        const topCategories = (categories || []).slice(0, 10);
-
-        const categoriesWithVideos: CategoryWithVideos[] = await Promise.all(
-            topCategories.map(async (category) => {
-                const response = await fetchVideos({ category: category.slug, page_size: 10 });
-                return {
-                    category,
-                    videos: response?.results || [],
-                };
-            })
-        );
-
-        // Filter out categories with no videos
-        const filteredCategoriesWithVideos = categoriesWithVideos.filter(item => item.videos.length > 0);
-
-        return {
-            props: {
-                popularVideos,
-                allVideos,
-                categoriesWithVideos: filteredCategoriesWithVideos,
-            },
-        };
-    } catch (error) {
-        console.error('Error in getServerSideProps:', error);
-        return {
-            props: {
-                popularVideos: [],
-                allVideos: [],
-                categoriesWithVideos: [],
-            },
-        };
-    }
+    return {
+        props: {}, // Everything is client-side now
+    };
 };
 
 export default VideoLessonsPage;
