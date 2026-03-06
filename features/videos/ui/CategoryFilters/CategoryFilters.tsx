@@ -7,6 +7,7 @@ import 'swiper/css';
 interface CategoryFiltersProps {
     subCategories: Category[];
     currentFilter: string;
+    activeSubCategory?: string;
     onSubCategoryClick: (slug: string) => void;
     onPriceFilterChange: (filter: string) => void;
 }
@@ -14,6 +15,7 @@ interface CategoryFiltersProps {
 const CategoryFilters: React.FC<CategoryFiltersProps> = ({
     subCategories,
     currentFilter,
+    activeSubCategory,
     onSubCategoryClick,
     onPriceFilterChange,
 }) => {
@@ -21,12 +23,14 @@ const CategoryFilters: React.FC<CategoryFiltersProps> = ({
     const hasMore = subCategories?.length > 10;
     const visibleSubCategories = isExpanded ? subCategories : subCategories?.slice(0, 10);
 
+    const isAllActive = currentFilter === 'all' && !activeSubCategory;
+
     return (
         <div className={styles.categoryFilters}>
             {/* Desktop View: Grid/Flex with Show More */}
             <div className={styles.desktopFilters}>
                 <button
-                    className={`${styles.filterBtn} ${currentFilter === 'all' ? styles.active : ''}`}
+                    className={`${styles.filterBtn} ${isAllActive ? styles.active : ''}`}
                     onClick={() => onPriceFilterChange('all')}
                 >
                     Barchasi
@@ -35,7 +39,7 @@ const CategoryFilters: React.FC<CategoryFiltersProps> = ({
                 {visibleSubCategories?.map((sub) => (
                     <button
                         key={sub.id}
-                        className={styles.filterBtn}
+                        className={`${styles.filterBtn} ${activeSubCategory === sub.slug ? styles.active : ''}`}
                         onClick={() => onSubCategoryClick(sub.slug)}
                     >
                         {sub.name.split('|').pop()?.trim() || sub.name}
@@ -62,7 +66,7 @@ const CategoryFilters: React.FC<CategoryFiltersProps> = ({
                 >
                     <SwiperSlide className={styles.swiperSlide}>
                         <button
-                            className={`${styles.filterBtn} ${currentFilter === 'all' ? styles.active : ''}`}
+                            className={`${styles.filterBtn} ${isAllActive ? styles.active : ''}`}
                             onClick={() => onPriceFilterChange('all')}
                         >
                             Barchasi
@@ -72,7 +76,7 @@ const CategoryFilters: React.FC<CategoryFiltersProps> = ({
                     {subCategories?.map((sub) => (
                         <SwiperSlide key={sub.id} className={styles.swiperSlide}>
                             <button
-                                className={styles.filterBtn}
+                                className={`${styles.filterBtn} ${activeSubCategory === sub.slug ? styles.active : ''}`}
                                 onClick={() => onSubCategoryClick(sub.slug)}
                             >
                                 {sub.name.split('|').pop()?.trim() || sub.name}

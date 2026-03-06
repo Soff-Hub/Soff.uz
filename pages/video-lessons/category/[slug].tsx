@@ -23,6 +23,7 @@ interface Props {
     pageSize: number;
     currentSort: string;
     currentFilter: string;
+    activeSubCategory: string;
 }
 
 const CategoryPage: React.FC<Props> = ({
@@ -33,7 +34,8 @@ const CategoryPage: React.FC<Props> = ({
     currentPage,
     pageSize,
     currentSort,
-    currentFilter
+    currentFilter,
+    activeSubCategory
 }) => {
     const router = useRouter();
     const { slug } = router.query;
@@ -59,15 +61,31 @@ const CategoryPage: React.FC<Props> = ({
     };
 
     const handleSubCategoryClick = (subSlug: string) => {
-        router.push(`/video-lessons/category/${subSlug}`);
+        const { slug: _slug, ...rest } = router.query;
+        // Toggle subcategory: if already selected, remove it
+        const newSub = activeSubCategory === subSlug ? undefined : subSlug;
+
+        router.push({
+            pathname: `/video-lessons/category/${slug}`,
+            query: { ...rest, sub_category: newSub, page: 1 },
+        });
     };
 
     const handlePriceFilterChange = (filter: string) => {
-        const { slug: _slug, ...rest } = router.query;
+        const { slug: _slug, sub_category: _sub, ...rest } = router.query;
         const newFilter = currentFilter === filter ? 'all' : filter;
+
+        const query: any = { ...rest, filter: newFilter, page: 1 };
+
+        // If clicking 'Barchasi' (all), we DON'T include sub_category.
+        // If clicking other price filters (free/paid), we KEEP the sub_category if it exists.
+        if (filter !== 'all' && activeSubCategory) {
+            query.sub_category = activeSubCategory;
+        }
+
         router.push({
             pathname: `/video-lessons/category/${slug}`,
-            query: { ...rest, filter: newFilter, page: 1 },
+            query,
         });
     };
 
@@ -94,6 +112,7 @@ const CategoryPage: React.FC<Props> = ({
                             <CategoryFilters
                                 subCategories={subCategories}
                                 currentFilter={currentFilter}
+                                activeSubCategory={activeSubCategory}
                                 onSubCategoryClick={handleSubCategoryClick}
                                 onPriceFilterChange={handlePriceFilterChange}
                             />
@@ -146,6 +165,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const page = Number(context.query.page) || 1;
     const sort = (context.query.sort as string) || '-view_count';
     const filter = (context.query.filter as string) || 'all';
+    const activeSubCategory = (context.query.sub_category as string) || '';
     const pageSize = 12;
 
     try {
@@ -153,11 +173,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         const allMainCategories = await fetchCategories();
         const currentCategory = allMainCategories.find(c => c.slug === slug) || null;
 
-        // Fetch sub-categories of the current slug
+        // Fetch sub-categories of the current slug (parent)
         const subCategories = await fetchCategories('video', slug);
 
         const videoParams: any = {
-            category: slug,
+            // If sub_category is selected, use it, otherwise use parent slug
+            category: activeSubCategory || slug,
             page: page,
             page_size: pageSize,
             order_by_views: sort === '-view_count' ? '-view_count' : undefined,
@@ -181,7 +202,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
                 currentPage: page,
                 pageSize: pageSize,
                 currentSort: sort,
-                currentFilter: filter
+                currentFilter: filter,
+                activeSubCategory
             }
         };
     } catch (error) {
@@ -195,7 +217,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
                 currentPage: 1,
                 pageSize: 12,
                 currentSort: '-view_count',
-                currentFilter: 'all'
+                currentFilter: 'all',
+                activeSubCategory: ''
             }
         };
     }
