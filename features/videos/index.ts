@@ -7,3 +7,5 @@ export { default as VideoGrid } from './ui/VideoGrid/VideoGrid';
 export { default as VideoNavbar } from './ui/VideoNavbar/VideoNavbar';
 export { default as CategoryFilters } from './ui/CategoryFilters/CategoryFilters';
 export { default as CategorySlider } from './ui/CategorySlider/CategorySlider';
+export { default as PurchaseRecommendations } from './ui/PurchaseRecommendations/PurchaseRecommendations';
+export { default as SimilarVideos } from './ui/SimilarVideos/SimilarVideos';

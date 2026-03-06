@@ -1,23 +1,29 @@
 import React, { useState } from 'react';
 import { GetServerSideProps } from 'next';
 import { Modal } from 'antd';
+import dynamic from 'next/dynamic';
 import PageContainer from '~/widgets/layouts/PageContainer';
 import Meta from '~/shared/ui/meta';
-import { fetchVideoBySlug, VideoDetail } from '~/features/videos';
+import {
+    fetchVideoBySlug,
+    VideoDetail,
+    PurchaseRecommendations,
+    SimilarVideos
+} from '~/features/videos';
 
 import {
     PlayCircleFilled,
-    GlobalOutlined,
     EyeOutlined,
-    FireOutlined,
     PlaySquareOutlined,
     ClockCircleOutlined,
-    SafetyCertificateOutlined,
     ArrowLeftOutlined,
     CloseOutlined
 } from '@ant-design/icons';
 import styles from './VideoDetail.module.scss';
 import Link from 'next/link';
+
+const CommentList = dynamic(() => import('~/features/comments/ui/commentList'), { ssr: false });
+const CommentFormWrapper = dynamic(() => import('~/features/comments/ui/commentWrapper'), { ssr: false });
 
 interface Props {
     video: VideoDetail;
@@ -58,9 +64,6 @@ const VideoDetailPage: React.FC<Props> = ({ video }) => {
                             <div className={styles.meta}>
                                 <div className={styles.viewCount}>
                                     <EyeOutlined /> {video.view_count} marta ko'rilgan
-                                </div>
-                                <div className={styles.language}>
-                                    <GlobalOutlined /> O'zbek tili
                                 </div>
                             </div>
 
@@ -159,8 +162,6 @@ const VideoDetailPage: React.FC<Props> = ({ video }) => {
                                             )}
                                         </div>
 
-                                        <p className={styles.guaranteeText}>30 kunlik pul qaytarish kafolati</p>
-
                                         <div className={styles.featuresList}>
                                             <h4 className={styles.listTitle}>Kurs o'z ichiga oladi:</h4>
 
@@ -173,16 +174,25 @@ const VideoDetailPage: React.FC<Props> = ({ video }) => {
                                                 <ClockCircleOutlined />
                                                 <span>Umrbod foydalanish imkoniyati</span>
                                             </div>
-
-                                            <div className={styles.featureItem}>
-                                                <SafetyCertificateOutlined />
-                                                <span>Tugatganlik haqida sertifikat</span>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </aside>
                         </div>
+                    </div>
+
+                    <div className="mt-5" style={{ marginBottom: '32px' }}>
+                        <CommentFormWrapper
+                            id={video.id}
+                            slug={video.slug}
+                        />
+                        <CommentList slug={video.slug} id={video.id} />
+                    </div>
+
+                    {/* Related Sections - Lazy Loaded */}
+                    <div className="py-5">
+                        <PurchaseRecommendations slug={video.slug} />
+                        <SimilarVideos slug={video.slug} />
                     </div>
                 </div>
 

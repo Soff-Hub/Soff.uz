@@ -25,3 +25,13 @@ export const fetchVideoBySlug = async (slug: string): Promise<VideoDetail> => {
     const { data } = await $api.get<VideoDetail>(`/api/v1/customer/documents/${slug}/`);
     return data;
 };
+
+export const fetchPurchaseRecommendations = async (slug: string): Promise<any> => {
+    const { data } = await $api.get(`/api/v1/seller/purchase-recommendations/?slug=${slug}`);
+    return data;
+};
+
+export const fetchSimilarVideos = async (slug: string): Promise<any> => {
+    const { data } = await $api.get(`/api/v1/customer/similar/${slug}/`);
+    return data;
+};
