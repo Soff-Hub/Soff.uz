@@ -11,6 +11,7 @@ import NavbarMenu from '~/widgets/navbar-menu';
 import FastDownloadSection from '~/shared/components/fast-dowload/FastDowloadSection';
 import { initSearchHistory } from '~/store/search/slice';
 import { useViewportContext } from '~/shared/hooks/useViewportContext';
+import { VideoNavbar } from '~/features/videos';
 
 const Header = () => {
     const { headerRef } = useViewportContext();
@@ -18,6 +19,7 @@ const Header = () => {
     const dispatch = useDispatch();
     const router = useRouter();
     const isHomePage = router.pathname === '/';
+    const isVideoLessonsPage = router.pathname.startsWith('/video-lessons');
 
     const [scrollDirection, setScrollDirection] = useState('up');
     const [isScrolled, setIsScrolled] = useState(false);
@@ -58,6 +60,18 @@ const Header = () => {
         }
     }
 
+    const renderNavbar = () => {
+        if (isMobile) {
+            return <NavbarSearch isScrolledUp={isScrolledUp} />;
+        }
+
+        if (isVideoLessonsPage) {
+            return <VideoNavbar />;
+        }
+
+        return <NavbarMenu />;
+    };
+
     return (
         <header className={headerClassName} ref={headerRef}>
             <div className={`header-bottom top-0 bg-white`}>
@@ -70,7 +84,7 @@ const Header = () => {
                         </div>
                     </div>
                 </div>
-                {isMobile ? <NavbarSearch isScrolledUp={isScrolledUp} /> : <NavbarMenu />}
+                {renderNavbar()}
                 <FastDownloadSection />
             </div>
         </header>
