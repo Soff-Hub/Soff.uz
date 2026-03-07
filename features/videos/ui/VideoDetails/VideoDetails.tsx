@@ -15,7 +15,9 @@ import {
     DeleteOutlined
 } from '@ant-design/icons';
 import Link from 'next/link';
+import { LockOutlined } from '@ant-design/icons';
 
+import $api from '~/shared/api/axios';
 import useCart from '~/shared/hooks/useCart';
 import useWishlist from '~/shared/hooks/useWishlist';
 import AuthModal from '~/features/auth/ui/auth-modal';
@@ -41,11 +43,29 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
 
     const [showVideo, setShowVideo] = useState(false);
     const [authModal, setAuthModal] = useState(false);
+    const [hasPurchased, setHasPurchased] = useState<boolean | null>(null);
+    const [limitReached, setLimitReached] = useState(false);
+    const [isPortrait, setIsPortrait] = useState(false);
 
     const isAddedToCart = cartItems?.some((item: any) => Number(item.id) === Number(video.id));
     const isAddedToWishlist = wishlist?.some((item: any) => Number(item.id) === Number(video.id));
     const hasAccess = !!video.document.file_url;
     const isFree = video.price === 0;
+
+    const checkPurchaseStatus = async () => {
+        if (!isLoggedIn) {
+            setHasPurchased(false);
+            return;
+        }
+
+        try {
+            const response = await $api.get(`customer/has-purchased/${video.slug}/`);
+            setHasPurchased(response?.data?.has_purchased || false);
+        } catch (error) {
+            console.error('Failed to check purchase status:', error);
+            setHasPurchased(false);
+        }
+    };
 
     const formatNumber = (num: number) => {
         return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
@@ -77,9 +97,11 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
         }
     };
 
-    const handleStartOrBuy = (e: React.MouseEvent) => {
+    const handleStartOrBuy = async (e: React.MouseEvent) => {
         e.preventDefault();
         if (hasAccess) {
+            setLimitReached(false);
+            await checkPurchaseStatus();
             setShowVideo(true);
         } else {
             setCartOneItem(video.id);
@@ -91,12 +113,10 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
         }
     };
 
-    const handlePreviewClick = () => {
-        if (hasAccess) {
-            setShowVideo(true);
-        } else {
-            message.info('To\'liq videoni ko\'rish uchun mahsulotni sotib oling');
-        }
+    const handlePreviewClick = async () => {
+        setLimitReached(false);
+        await checkPurchaseStatus();
+        setShowVideo(true);
     };
     console.log(video)
 
@@ -340,10 +360,13 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
             {/* Video Preview Modal (Ant Design) */}
             <Modal
                 open={showVideo}
-                onCancel={() => setShowVideo(false)}
+                onCancel={() => {
+                    setShowVideo(false);
+                    setLimitReached(false);
+                }}
                 footer={null}
                 centered
-                width={700}
+                width={isPortrait ? 400 : 800}
                 className={styles.previewModal}
                 wrapClassName={styles.previewModalWrapper}
                 bodyStyle={{ padding: 0, backgroundColor: '#1c1d1f', overflow: 'hidden' }}
@@ -356,13 +379,53 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
                         <h2 className={styles.previewTitle}>{video.title}</h2>
                     </div>
 
-                    <div className={styles.videoWrapper}>
+                    <div
+                        className={styles.videoWrapper}
+                        style={{ '--poster-url': `url(${video.poster_url})` } as any}
+                    >
+                        {limitReached && (
+                            <div className={styles.purchaseOverlay}>
+                                <LockOutlined className={styles.lockIcon} />
+                                <h3 className={styles.overlayTitle}>Video darsning davomini ko'rish uchun sotib oling</h3>
+                                <p className={styles.overlayText}>
+                                    Siz hozirgina darsning 10% qismini ko'rdingiz. To'liq darsni va boshqa barcha imkoniyatlarni qo'lga kiritish uchun kursni sotib olishingiz kerak.
+                                </p>
+                                <button
+                                    className={styles.overlayBtn}
+                                    onClick={() => {
+                                        setShowVideo(false);
+                                        router.push(`/account/checkout?id=${video.id}`);
+                                    }}
+                                >
+                                    Kursni sotib olish
+                                </button>
+                            </div>
+                        )}
                         <video
                             controls
                             autoPlay
                             src={video.document.file_url || video.document.short_content_url}
                             controlsList="nodownload"
                             poster={video.poster_url}
+                            className={isPortrait ? styles.portraitVideo : ''}
+                            onLoadedMetadata={(e: React.SyntheticEvent<HTMLVideoElement>) => {
+                                const { videoWidth, videoHeight } = e.currentTarget;
+                                if (videoHeight > videoWidth) {
+                                    setIsPortrait(true);
+                                } else {
+                                    setIsPortrait(false);
+                                }
+                            }}
+                            onTimeUpdate={(e: React.SyntheticEvent<HTMLVideoElement>) => {
+                                const videoElement = e.currentTarget;
+                                if (hasPurchased === false && !isFree && videoElement.duration) {
+                                    const limit = videoElement.duration * 0.1;
+                                    if (videoElement.currentTime >= limit) {
+                                        videoElement.pause();
+                                        setLimitReached(true);
+                                    }
+                                }
+                            }}
                         >
                             Sizning brauzeringiz video qo'llab-quvvatlamaydi.
                         </video>

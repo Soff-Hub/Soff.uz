@@ -38,6 +38,8 @@ if (fs.existsSync(staticDir)) {
 }
 
 // 4. Copy public to deploy/public
+const zipFileName = 'deploy-customer-prod.zip';
+const zipFilePath = path.resolve(process.cwd(), zipFileName);
 const publicDir = 'public';
 const destPublicDir = path.join(deployDir, 'public');
 if (fs.existsSync(publicDir)) {
