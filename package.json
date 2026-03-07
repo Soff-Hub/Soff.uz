@@ -5,9 +5,9 @@
     "author": "Soff Hub",
     "homepage": "https://soff.uz",
     "scripts": {
-        "dev": "next dev -p 2025",
+        "dev": "next dev -p 5050",
         "build": "next build && node scripts/copy-to-standalone.js",
-        "start": "next start -p 2025",
+        "start": "next start -p 5505",
         "type-check": "tsc --noEmit",
         "type-check:watch": "tsc --noEmit --watch"
     },

@@ -190,11 +190,13 @@ export default function ProductDefaultPage({ defaultProducts }) {
         <PageContainer>
             <Meta {...metaProps} />
             <div>
-                <ProductVideoBanner
-                    videoUrl={video_url}
-                    title={`SOFF'da xarid qilishni bilmayapsizmi?`}
-                    subtitle={`Taxminan 1 daqiqalik video: mahsulotni qanday sotib olishni ko'rsatadi.`}
-                />
+                {contentType !== 'video' && (
+                    <ProductVideoBanner
+                        videoUrl={video_url}
+                        title={`SOFF'da xarid qilishni bilmayapsizmi?`}
+                        subtitle={`Taxminan 1 daqiqalik video: mahsulotni qanday sotib olishni ko'rsatadi.`}
+                    />
+                )}
                 {/* Video helper banner */}
                 <div
                     className={contentType === 'video' ? 'mb-5' : 'container mb-5'}

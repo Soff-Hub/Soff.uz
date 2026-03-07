@@ -46,11 +46,11 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
     const hasAccess = !!video.document.file_url;
     const isFree = video.price === 0;
 
-    const formatPrice = (price: number) => {
-        return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    const formatNumber = (num: number) => {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
     };
 
-    const formattedPrice = isFree ? 'Bepul' : `${formatPrice(video.price)} UZS`;
+    const formattedPrice = isFree ? 'Bepul' : `${formatNumber(video.price)} UZS`;
 
     const categoryName = video.category.name.includes('|')
         ? video.category.name.split('|').pop()?.trim()
@@ -122,8 +122,13 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
 
                             <div className={styles.meta}>
                                 <div className={styles.viewCount} suppressHydrationWarning>
-                                    <EyeOutlined /> {video.view_count} marta ko'rilgan
+                                    <EyeOutlined /> {formatNumber(video.view_count)} marta ko'rilgan
                                 </div>
+                                {video.sold_count > 0 && (
+                                    <div className={styles.soldCount} suppressHydrationWarning>
+                                        <ShoppingCartOutlined /> {formatNumber(video.sold_count)} marta sotib olingan
+                                    </div>
+                                )}
                             </div>
 
                             <div className={styles.authorInfo}>

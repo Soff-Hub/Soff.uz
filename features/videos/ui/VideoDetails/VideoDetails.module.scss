@@ -84,6 +84,18 @@
                 }
             }
 
+            .soldCount {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                color: rgba(255, 255, 255, 0.8);
+
+                svg {
+                    color: #2ecc71;
+                    font-size: 16px;
+                }
+            }
+
             .language {
                 display: flex;
                 align-items: center;
