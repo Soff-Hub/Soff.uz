@@ -98,6 +98,7 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
             message.info('To\'liq videoni ko\'rish uchun mahsulotni sotib oling');
         }
     };
+    console.log(video)
 
     return (
         <div className={styles.detailPage}>
@@ -148,11 +149,13 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
                                 {video.description.replace(/<[^>]*>/g, '').slice(0, 160)}...
                             </p>
 
-                            <div className={styles.meta}>
-                                <div className={styles.soldCount} suppressHydrationWarning>
-                                    {formatNumber(video.sold_count || 124)} o'quvchi
+                            {video.sold_count > 0 &&
+                                <div className={styles.meta}>
+                                    <div className={styles.soldCount} suppressHydrationWarning>
+                                        {formatNumber(video.sold_count)} o'quvchi
+                                    </div>
                                 </div>
-                            </div>
+                            }
 
                             <div className={styles.authorInfo}>
                                 <span>Muallif: </span>
@@ -294,8 +297,6 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
                                         )}
                                     </div>
 
-                                    <div className={styles.guarantee}>30-Day Money-Back Guarantee</div>
-
                                     <div className={styles.featuresList}>
                                         <h4 className={styles.listTitle}>Kurs o'z ichiga oladi:</h4>
 
@@ -313,12 +314,6 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
                                             <EyeOutlined />
                                             <span>{formatNumber(video.view_count)} marta ko'rilgan</span>
                                         </div>
-                                    </div>
-
-                                    <div className={styles.sidebarFooter}>
-                                        <button className={styles.shareBtn}>Share</button>
-                                        <button className={styles.giftBtn}>Gift this course</button>
-                                        <button className={styles.couponBtn}>Apply Coupon</button>
                                     </div>
                                 </div>
                             </div>
