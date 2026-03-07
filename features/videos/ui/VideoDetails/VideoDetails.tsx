@@ -135,11 +135,6 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
                             </p>
 
                             <div className={styles.meta}>
-                                <div className={styles.rating}>
-                                    <span className={styles.ratingValue}>5.0</span>
-                                    <div className={styles.stars}>★★★★★</div>
-                                    <span className={styles.ratingCount}>(1 240 reyting)</span>
-                                </div>
                                 <div className={styles.soldCount} suppressHydrationWarning>
                                     {formatNumber(video.sold_count || 124)} o'quvchi
                                 </div>
