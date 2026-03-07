@@ -20,9 +20,7 @@ const VideoCard: React.FC<Props> = ({ video, onClick, variant = 'vertical' }) =>
 
     // Use poster from API or fallback
     const thumbnail = video.poster || `https://picsum.photos/seed/${video.slug}/640/360`;
-    const sellerAvatar = video.seller_image || `https://ui-avatars.com/api/?name=${encodeURIComponent(video.seller_name)}&background=random`;
-
-
+    const sellerAvatar = video.seller_image || `https://ui-avatars.com/api/?name=${encodeURIComponent(video.seller_name || 'S')}&background=random`;
 
     return (
         <div
@@ -64,10 +62,12 @@ const VideoCard: React.FC<Props> = ({ video, onClick, variant = 'vertical' }) =>
                 <h3 className={styles.title}>{video.title}</h3>
 
                 <div className={styles.meta}>
-                    <div className={styles.sellerInfo}>
-                        <img src={sellerAvatar} alt={video.seller_name} className={styles.avatar} />
-                        <span className={styles.name}>{video.seller_name}</span>
-                    </div>
+                    {video.seller_name && (
+                        <div className={styles.sellerInfo}>
+                            <img src={sellerAvatar} alt={video.seller_name} className={styles.avatar} />
+                            <span className={styles.name}>{video.seller_name}</span>
+                        </div>
+                    )}
                     <div className={styles.views}>
                         <EyeOutlined />
                         <span>{video.view_count}</span>

@@ -1,0 +1,62 @@
+.container {
+    margin: 20px 0;
+    border-top: 1px solid #eff1f3;
+
+    .title {
+        font-size: 24px;
+        font-weight: 800;
+        margin-bottom: 24px;
+        color: #1c1d1f;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 20px;
+
+        @media (max-width: 1200px) {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        @media (max-width: 992px) {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        @media (max-width: 768px) {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        @media (max-width: 480px) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    .gridItem {
+        &.mobileOnly {
+            display: none;
+
+            @media (max-width: 768px) {
+                display: block;
+            }
+        }
+    }
+
+    // Hide extra items on desktop to keep exactly 5
+    @media (min-width: 769px) {
+        .gridItem:nth-child(n+6) {
+            display: none;
+        }
+    }
+
+    // Show up to 6 on mobile
+    @media (max-width: 768px) {
+        .gridItem:nth-child(n+7) {
+            display: none;
+        }
+    }
+
+    .skeletonWrapper {
+        width: 100%;
+    }
+}

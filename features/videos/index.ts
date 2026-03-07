@@ -1,5 +1,6 @@
 export * from './api';
 export * from './model/types';
+export * from './model/mappers';
 export { default as VideoCard } from './ui/VideoCard/VideoCard';
 export { default as VideoSkeleton } from './ui/VideoCard/VideoSkeleton';
 export { default as VideoSlider } from './ui/VideoSlider/VideoSlider';
@@ -9,4 +10,5 @@ export { default as CategoryFilters } from './ui/CategoryFilters/CategoryFilters
 export { default as CategorySlider } from './ui/CategorySlider/CategorySlider';
 export { default as PurchaseRecommendations } from './ui/PurchaseRecommendations/PurchaseRecommendations';
 export { default as SimilarVideos } from './ui/SimilarVideos/SimilarVideos';
+export { default as SellerMoreVideos } from './ui/SellerMoreVideos/SellerMoreVideos';
 export { default as VideoDetails } from './ui/VideoDetails/VideoDetails';

@@ -22,6 +22,7 @@ import AuthModal from '~/features/auth/ui/auth-modal';
 import { VideoDetail } from '../../model/types';
 import PurchaseRecommendations from '../PurchaseRecommendations/PurchaseRecommendations';
 import SimilarVideos from '../SimilarVideos/SimilarVideos';
+import SellerMoreVideos from '../SellerMoreVideos/SellerMoreVideos';
 
 import styles from './VideoDetails.module.scss';
 
@@ -277,6 +278,10 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
 
                 {/* Related Sections - Lazy Loaded */}
                 <div className="py-5">
+                    <SellerMoreVideos
+                        sellerId={video.seller.id}
+                        currentVideoId={video.id}
+                    />
                     <PurchaseRecommendations slug={video.slug} />
                     <SimilarVideos slug={video.slug} />
                 </div>

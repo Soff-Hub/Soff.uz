@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { fetchPurchaseRecommendations, Video } from '~/features/videos';
+import { useRouter } from 'next/router';
+import { fetchPurchaseRecommendations, Video, mapToVideo } from '~/features/videos';
 import VideoCard from '../VideoCard/VideoCard';
 import VideoSkeleton from '../VideoCard/VideoSkeleton';
 import styles from './PurchaseRecommendations.module.scss';
@@ -10,6 +11,7 @@ interface Props {
 }
 
 const PurchaseRecommendations: React.FC<Props> = ({ slug }) => {
+    const router = useRouter();
     const containerRef = useRef<HTMLDivElement>(null);
     const [isVisible, setIsVisible] = useState(false);
 
@@ -41,17 +43,13 @@ const PurchaseRecommendations: React.FC<Props> = ({ slug }) => {
         const rawData = rawRecommendations?.results || rawRecommendations || [];
         if (!Array.isArray(rawData)) return [];
 
-        return rawData.map((item: any) => ({
-            ...item,
-            view_count: item.views_count ?? item.view_count ?? 0,
-            poster: item.poster_url ?? item.poster ?? null,
-            seller_name: item.seller?.first_name
-                ? `${item.seller.first_name} ${item.seller.last_name || ''}`.trim()
-                : (item.seller_name || 'Soff.uz'),
-            seller_image: item.seller?.image_url ?? item.seller_image ?? null,
-            category: item.category || { id: 0, name: 'Video', slug: 'video' }
-        }));
+        return rawData.map((item: any) => mapToVideo(item));
     }, [rawRecommendations]);
+
+    const handleVideoClick = (clickedSlug: string) => {
+        if (!clickedSlug) return;
+        router.push(`/video-lessons/${clickedSlug}`);
+    };
 
     if (isVisible && !isLoading && displayedVideos.length === 0) return null;
 
@@ -72,6 +70,7 @@ const PurchaseRecommendations: React.FC<Props> = ({ slug }) => {
                             key={video.slug}
                             video={video}
                             variant="horizontal"
+                            onClick={handleVideoClick}
                         />
                     ))
                 )}

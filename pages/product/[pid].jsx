@@ -232,17 +232,19 @@ export default function ProductDefaultPage({ defaultProducts }) {
                                         <SimilarProducts />
                                     </div>
                                 )}
-                                <div ref={lastProductsRef}>
-                                    <h3
-                                        style={{
-                                            fontSize: '25px',
-                                            fontWeight: 400,
-                                        }}
-                                        className="py-4 similar_title">
-                                        So'ngi yuklangan mahsulotlar
-                                    </h3>
-                                    <LastAddedProducts contentType={contentType} />
-                                </div>
+                                {contentType !== "video" && (
+                                    <div ref={lastProductsRef}>
+                                        <h3
+                                            style={{
+                                                fontSize: '25px',
+                                                fontWeight: 400,
+                                            }}
+                                            className="py-4 similar_title">
+                                            So'ngi yuklangan mahsulotlar
+                                        </h3>
+                                        <LastAddedProducts contentType={contentType} />
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>

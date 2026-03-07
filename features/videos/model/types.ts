@@ -10,8 +10,9 @@ export interface Playlist {
 }
 
 export interface Video {
+    id: number;
     title: string;
-    seller_name: string;
+    seller_name: string | null;
     seller_image: string | null;
     price: number;
     discount_price: number;
