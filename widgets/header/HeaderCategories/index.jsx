@@ -23,21 +23,19 @@ const products = [
             />
         ),
         label: (
-            <a
-                className={`ms-3 ${styles.dropLabel}`}
-                href="/scientific-resources/all?slug=all">
-                Ilmiy ishlar
-            </a>
+            <Link href="/scientific-resources/all?slug=all">
+                <a className={`ms-3 ${styles.dropLabel}`}>Ilmiy ishlar</a>
+            </Link>
         ),
     },
     {
         key: '2',
         label: (
-            <a
-                className={`ms-3 ${styles.dropLabel}`}
-                href="/3d-models-and-interior-designs/all?slug=all">
-                3D Dizayn va Vizualizatsiya
-            </a>
+            <Link href="/3d-models-and-interior-designs/all?slug=all">
+                <a className={`ms-3 ${styles.dropLabel}`}>
+                    3D Dizayn va Vizualizatsiya
+                </a>
+            </Link>
         ),
         icon: (
             <Image
@@ -51,11 +49,11 @@ const products = [
     {
         key: '3',
         label: (
-            <a
-                className={`ms-3 ${styles.dropLabel}`}
-                href="/design-developments/all?slug=all">
-                Dizayn shablonlari
-            </a>
+            <Link href="/design-developments/all?slug=all">
+                <a className={`ms-3 ${styles.dropLabel}`}>
+                    Dizayn shablonlari
+                </a>
+            </Link>
         ),
         icon: (
             <Image
@@ -77,11 +75,11 @@ const products = [
             />
         ),
         label: (
-            <a
-                className={`ms-2 ${styles.dropLabel}`}
-                href="/templates/all?slug=all">
-                Turli sohalar uchun shablonlar
-            </a>
+            <Link href="/templates/all?slug=all">
+                <a className={`ms-2 ${styles.dropLabel}`}>
+                    Turli sohalar uchun shablonlar
+                </a>
+            </Link>
         ),
     },
     {
@@ -95,11 +93,9 @@ const products = [
             />
         ),
         label: (
-            <a
-                className={`ms-3 ${styles.dropLabel}`}
-                href="/video-lessons">
-                Video darsliklar
-            </a>
+            <Link href="/video-lessons">
+                <a className={`ms-3 ${styles.dropLabel}`}>Video darsliklar</a>
+            </Link>
         ),
     },
     {
@@ -113,11 +109,11 @@ const products = [
             />
         ),
         label: (
-            <a
-                className={`ms-3 ${styles.dropLabel}`}
-                href="/websites/all?slug=all">
-                Dasturlash xizmatlari
-            </a>
+            <Link href="/websites/all?slug=all">
+                <a className={`ms-3 ${styles.dropLabel}`}>
+                    Dasturlash xizmatlari
+                </a>
+            </Link>
         ),
     },
 ];
@@ -181,10 +177,21 @@ const HeaderCatergories = () => {
             )}
             <div className={styles.dropBox}>
                 <Dropdown menu={{ items: products }}>
-                    <Space className={styles.dropLabel}>
+                    <button
+                        type="button"
+                        className={styles.dropLabel}
+                        style={{
+                            background: 'none',
+                            border: 'none',
+                            padding: 0,
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '8px'
+                        }}>
                         Mahsulotlar
                         <DownOutlined />
-                    </Space>
+                    </button>
                 </Dropdown>
             </div>
             <div className={`${styles.orderBox} `}>

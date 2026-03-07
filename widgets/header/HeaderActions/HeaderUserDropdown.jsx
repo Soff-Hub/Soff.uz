@@ -53,19 +53,19 @@ const HeaderUserDropdown = (props) => {
     const linksView = accountLinks.map((item, index) => (
         <li key={index} className={styles.hoverAction}>
             <Link href={item.url}>
-                <div className="pointer  d-flex pointer p-3 gap-3 align-items-center justify-content-between ">
+                <a className="pointer d-flex p-3 gap-3 align-items-center justify-content-between text-decoration-none">
                     <div className="d-flex gap-2 align-items-center">
                         <Icon
                             icon={item.icon}
                             className={` text-dark fs-4 me-2`}></Icon>{' '}
-                        <p className="m-0">{item.text}</p>
+                        <p className="m-0 text-dark">{item.text}</p>
                     </div>
                     {data?.unread_messages != 0 && item.url == '/chat' && (
                         <span className={styles.unreadsChatsCount}>
                             {data?.unread_messages}
                         </span>
                     )}
-                </div>
+                </a>
             </Link>
         </li>
     ));
@@ -77,15 +77,17 @@ const HeaderUserDropdown = (props) => {
     if (isLoggedIn === true) {
         return (
             <div className="ps-block--user-account ">
-                <div className="fs-3 d-flex align-items-center gap-3 pointer">
+                <div className="fs-3 d-flex align-items-center gap-3">
                     <Link href={'/account/sellerproducts'}>
-                        <div
+                        <a
+                            className="pointer"
                             style={{
                                 width: '30px',
                                 height: '30px',
                                 position: 'relative',
                                 overflow: 'hidden',
                                 borderRadius: '50%',
+                                display: 'block'
                             }}>
                             <Image
                                 src={
@@ -95,21 +97,21 @@ const HeaderUserDropdown = (props) => {
                                 layout="fill"
                                 alt="user"
                             />
-                        </div>
+                        </a>
                     </Link>
                 </div>
                 <div className="ps-block__content">
                     <ul className="ps-list--arrow order">
-                        <div>
-                            <div className="pointer d-flex pointer mb-3  gap-3 align-items-center ">
-                                <Link
-                                    href={
-                                        user?.role === 'admin'
-                                            ? '/account/dashbord'
-                                            : user?.role === 'seller'
-                                              ? '/account/sellerproducts'
-                                              : '#'
-                                    }>
+                        <li>
+                            <Link
+                                href={
+                                    user?.role === 'admin'
+                                        ? '/account/dashbord'
+                                        : user?.role === 'seller'
+                                            ? '/account/sellerproducts'
+                                            : '#'
+                                }>
+                                <a className="pointer d-flex mb-3 gap-3 align-items-center text-decoration-none text-dark">
                                     <div className="m-0">
                                         <h4 className="m-0 fw-normal fs-3">
                                             {profile?.first_name}{' '}
@@ -118,17 +120,28 @@ const HeaderUserDropdown = (props) => {
                                         <p className="m-0">{profile?.email}</p>
                                         <p className="m-0">{profile?.phone}</p>
                                     </div>
-                                </Link>
-                            </div>
-                        </div>
+                                </a>
+                            </Link>
+                        </li>
 
                         <ul className="my-2 list-unstyled">{linksView}</ul>
                         <li className="ps-block__footer">
-                            <a href="#" onClick={handleLogout}>
-                                <FaRightFromBracket
-                                    className={`me-3 mx-2 text-dark fs-4`}></FaRightFromBracket>{' '}
+                            <button
+                                type="button"
+                                onClick={handleLogout}
+                                style={{
+                                    background: 'none',
+                                    border: 'none',
+                                    padding: 0,
+                                    cursor: 'pointer',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    width: '100%',
+                                    color: 'black'
+                                }}>
+                                <FaRightFromBracket className="me-3 mx-2 text-dark fs-4" />
                                 Chiqish
-                            </a>
+                            </button>
                         </li>
                     </ul>
                 </div>
@@ -136,13 +149,8 @@ const HeaderUserDropdown = (props) => {
         );
     } else {
         return (
-            <Link
-                href={`/auth/login/?returnUrl=${returnUrl}`}
-                onClick={(e) => {
-                    e.preventDefault();
-                    Router.push(`/auth/login/?returnUrl=${returnUrl}`);
-                }}>
-                <p className={`${styles.loginEntrance} m-0`}>Kirish</p>
+            <Link href={`/auth/login/?returnUrl=${returnUrl}`}>
+                <a className={`${styles.loginEntrance} m-0`}>Kirish</a>
             </Link>
         );
     }

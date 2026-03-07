@@ -178,9 +178,9 @@ export default function LoginForm({
                 <div className="ps-form--account">
                     <Form onFinish={handleFormSubmit}>
                         <div className="d-flex justify-content-center align-items-center flex-column mb-4">
-                            <span style={{ fontSize: '28px', fontWeight: 700 }}>
+                            <h2 style={{ fontSize: '28px', fontWeight: 700, margin: 0 }}>
                                 Kirish
-                            </span>
+                            </h2>
                         </div>
                         <GoogleBox
                             isModal={isModal}

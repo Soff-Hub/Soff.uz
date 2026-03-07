@@ -8,6 +8,8 @@ import {
 import { useState } from 'react';
 import SideBarItem from './sidebarItem';
 import { Collapse, Drawer } from 'antd';
+import { useFGet } from '~/shared/hooks/useFApi';
+import { NAVBAR_MENU_CATEGORIES } from '~/shared/api/end-points';
 
 const option = {
     scientific_work: 'Ilmiy va Akademik Xizmatlar',
@@ -15,6 +17,7 @@ const option = {
     web: 'Dasturlash xizmatlari',
     dizayn: 'Dizayn',
     document: 'Shablonlar',
+    video: 'Video darsliklar',
 };
 
 const SideBar = () => {

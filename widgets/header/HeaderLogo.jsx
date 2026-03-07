@@ -6,12 +6,14 @@ export default function HeaderLogo({ mode }) {
     return (
         <div className="d-flex gap-5 align-items-center pointer">
             <Link href="/" style={{ cursor: 'pointer' }}>
-                <Image
-                    src={`/static/img/soff/logo-${mode}.png`}
-                    width={'100px'}
-                    height={'30px'}
-                    alt="Logo of Soff.uz"
-                />
+                <a style={{ display: 'block' }}>
+                    <Image
+                        src={`/static/img/soff/logo-${mode}.png`}
+                        width={'100px'}
+                        height={'30px'}
+                        alt="Logo of Soff.uz"
+                    />
+                </a>
             </Link>
         </div>
     );

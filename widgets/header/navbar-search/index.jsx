@@ -82,9 +82,14 @@ const NavbarSearch = ({ isScrolledUp }) => {
                             />
                         </div>
 
-                        <span className={styles.searchIcon} onClick={handleInputClick}>
+                        <button
+                            type="button"
+                            className={styles.searchIcon}
+                            onClick={handleInputClick}
+                            style={{ background: 'none', border: 'none', cursor: 'pointer' }}
+                        >
                             <SearchOutlined />
-                        </span>
+                        </button>
                     </div>
                 </div>
             </div>

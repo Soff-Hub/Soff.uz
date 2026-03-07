@@ -167,12 +167,13 @@ export default function CodeVerifyForm({ authCode, onClose, slug, onSuccess }) {
                         </Form.Item>
 
                         {secondsRemaining === 0 ? (
-                            <p
-                                className="text-xs text-center mb-4"
+                            <button
+                                type="button"
+                                className="text-xs text-center mb-4 w-100 bg-transparent border-0 p-0"
                                 style={{ color: 'red', cursor: 'pointer' }}
                                 onClick={getRecode}>
                                 Qayta kod yuborish
-                            </p>
+                            </button>
                         ) : (
                             <p className="text-xs text-center mb-4">
                                 Qayta kod olish uchun{' '}
