@@ -34,7 +34,7 @@ const CategorySlider: React.FC<Props> = ({ category, onVideoClick, onSeeAll }) =
 
     const { data: response, isLoading } = useQuery({
         queryKey: ['videos', 'category', category.slug],
-        queryFn: () => fetchVideos({ category: category.slug, page_size: 10 }),
+        queryFn: () => fetchVideos({ category: category.slug, page_size: 50 }),
         // Only fetch if category has a name and slug AND is in view
         enabled: !!category.slug && isInView,
         staleTime: 5 * 60 * 1000, // 5 minutes cache
