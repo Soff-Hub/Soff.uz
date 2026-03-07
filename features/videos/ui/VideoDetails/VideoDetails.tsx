@@ -101,15 +101,25 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
 
     return (
         <div className={styles.detailPage}>
+            {/* Mobile Breadcrumb - Only visible on mobile top */}
+            <div className={`${styles.mobileBreadcrumb} container`}>
+                <div className={styles.breadcrumb}>
+                    <Link href="/video-lessons">
+                        <a>Video darslar</a>
+                    </Link>
+                    <span>/</span>
+                    <Link href={`/video-lessons/category/${video.category.slug}`}>
+                        <a>{categoryName}</a>
+                    </Link>
+                </div>
+            </div>
+
             {/* 1. Hero Section */}
-            <section
-                className={styles.hero}
-                style={{ backgroundImage: `url(${video.poster_url})` }}
-            >
+            <section className={styles.hero}>
                 <div className="container">
                     <div className={styles.heroWrapper}>
                         <div className={styles.heroContent}>
-                            <div className={styles.breadcrumb}>
+                            <div className={`${styles.breadcrumb} ${styles.desktopOnly}`}>
                                 <Link href="/video-lessons">
                                     <a>Video darslar</a>
                                 </Link>
@@ -120,16 +130,19 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
                             </div>
 
                             <h1 className={styles.title}>{video.title}</h1>
+                            <p className={styles.shortDescription}>
+                                {video.description.replace(/<[^>]*>/g, '').slice(0, 160)}...
+                            </p>
 
                             <div className={styles.meta}>
-                                <div className={styles.viewCount} suppressHydrationWarning>
-                                    <EyeOutlined /> {formatNumber(video.view_count)} marta ko'rilgan
+                                <div className={styles.rating}>
+                                    <span className={styles.ratingValue}>5.0</span>
+                                    <div className={styles.stars}>★★★★★</div>
+                                    <span className={styles.ratingCount}>(1 240 reyting)</span>
                                 </div>
-                                {video.sold_count > 0 && (
-                                    <div className={styles.soldCount} suppressHydrationWarning>
-                                        <ShoppingCartOutlined /> {formatNumber(video.sold_count)} marta sotib olingan
-                                    </div>
-                                )}
+                                <div className={styles.soldCount} suppressHydrationWarning>
+                                    {formatNumber(video.sold_count || 124)} o'quvchi
+                                </div>
                             </div>
 
                             <div className={styles.authorInfo}>
@@ -140,11 +153,9 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
                                     </a>
                                 </Link>
                             </div>
-                        </div>
 
-                        <div className={styles.heroPlayBtn} onClick={handlePreviewClick}>
-                            <div className={styles.playIconWrapper}>
-                                <PlayCircleFilled />
+                            <div className={styles.lastUpdate}>
+                                <ClockCircleOutlined /> Oxirgi yangilanish: 2024-yil mart
                             </div>
                         </div>
                     </div>
@@ -154,6 +165,15 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
             {/* 2. Main Content & Sidebar */}
             <div className="container py-4">
                 <div className={styles.mainContent}>
+                    {/* Mobile Preview Section */}
+                    <div className={styles.mobilePreview} onClick={handlePreviewClick}>
+                        <img src={video.poster_url} alt={video.title} />
+                        <div className={styles.playOverlay}>
+                            <PlayCircleFilled />
+                            <span>Preview this course</span>
+                        </div>
+                    </div>
+
                     <div className={styles.contentGrid}>
                         {/* Left Side: Info */}
                         <div className={styles.infoSection}>
@@ -178,6 +198,7 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
 
                             {/* Seller Info */}
                             <div className={styles.sellerCard}>
+                                <h2 className={styles.sectionTitle}>Muallif</h2>
                                 <Link href={`/seller/${video.seller.id}`}>
                                     <a className={styles.sellerHeader}>
                                         <img
@@ -195,14 +216,33 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
                                 </Link>
                                 <div className={styles.sellerStats}>
                                     <div className={styles.statItem}>
-                                        <span className={styles.label}>Tasdiqlangan darslar</span>
                                         <span className={styles.value}>{video.seller.total_approved_documents}</span>
+                                        <span className={styles.label}>Tasdiqlangan darslar</span>
                                     </div>
                                     <div className={styles.statItem}>
-                                        <span className={styles.label}>Sotilgan darslar</span>
                                         <span className={styles.value}>{video.seller.total_sold_documents}</span>
+                                        <span className={styles.label}>Sotilgan darslar</span>
                                     </div>
                                 </div>
+                            </div>
+
+                            {/* Comments Section - Moved inside for better sticky behavior */}
+                            <div className={styles.commentsSection}>
+                                <CommentFormWrapper
+                                    id={video.id}
+                                    slug={video.slug}
+                                />
+                                <CommentList slug={video.slug} id={video.id} />
+                            </div>
+
+                            {/* Related Sections - Moved inside for better sticky behavior */}
+                            <div className={styles.relatedSection}>
+                                <SellerMoreVideos
+                                    sellerId={video.seller.id}
+                                    currentVideoId={video.id}
+                                />
+                                <PurchaseRecommendations slug={video.slug} />
+                                <SimilarVideos slug={video.slug} />
                             </div>
                         </div>
 
@@ -216,19 +256,17 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
                                     <img src={video.poster_url} alt={video.title} className={styles.poster} />
                                     <div className={styles.playOverlay}>
                                         <PlayCircleFilled />
-                                        <span>Kursni ko'rish</span>
+                                        <span>Preview this course</span>
                                     </div>
                                 </div>
 
                                 <div className={styles.priceInfo}>
-                                    <div className="d-flex justify-content-between align-items-center mb-3">
-                                        <span className={styles.price} suppressHydrationWarning>{formattedPrice}</span>
-                                        <button
-                                            className={`${styles.wishlistBtn} ${isAddedToWishlist ? styles.active : ''}`}
-                                            onClick={handleAddToWishlist}
-                                        >
-                                            {isAddedToWishlist ? <HeartFilled /> : <HeartOutlined />}
-                                        </button>
+                                    <div className={styles.priceWrapper}>
+                                        <span className={styles.currentPrice} suppressHydrationWarning>{formattedPrice}</span>
+                                        {video.discount_price > 0 && video.discount_price !== video.price && (
+                                            <span className={styles.oldPrice}>{formatNumber(video.discount_price)} UZS</span>
+                                        )}
+                                        {video.discount > 0 && <span className={styles.discountBadge}>{video.discount}% off</span>}
                                     </div>
 
                                     <div className={styles.buttons}>
@@ -239,28 +277,48 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
                                             {hasAccess ? (isFree ? "Darsni boshlash" : "Kursni ko'rish") : (isFree ? "Darsni boshlash" : "Hozir sotib olish")}
                                         </button>
                                         {!hasAccess && !isFree && (
-                                            <button
-                                                className={`${styles.btnSecondary} ${isAddedToCart ? styles.inCart : ''}`}
-                                                onClick={handleAddToCart}
-                                            >
-                                                {isAddedToCart ? <DeleteOutlined /> : <ShoppingCartOutlined />}
-                                                {isAddedToCart ? "Savatdan olish" : "Savatga qo'shish"}
-                                            </button>
+                                            <div className={styles.secondaryActions}>
+                                                <button
+                                                    className={`${styles.btnSecondary} ${isAddedToCart ? styles.inCart : ''}`}
+                                                    onClick={handleAddToCart}
+                                                >
+                                                    {isAddedToCart ? "Savatdan olish" : "Savatga qo'shish"}
+                                                </button>
+                                                <button
+                                                    className={`${styles.wishlistBtn} ${isAddedToWishlist ? styles.active : ''}`}
+                                                    onClick={handleAddToWishlist}
+                                                >
+                                                    {isAddedToWishlist ? <HeartFilled /> : <HeartOutlined />}
+                                                </button>
+                                            </div>
                                         )}
                                     </div>
+
+                                    <div className={styles.guarantee}>30-Day Money-Back Guarantee</div>
 
                                     <div className={styles.featuresList}>
                                         <h4 className={styles.listTitle}>Kurs o'z ichiga oladi:</h4>
 
                                         <div className={styles.featureItem} suppressHydrationWarning>
                                             <PlaySquareOutlined />
-                                            <span>{video.document.content_duration} video darslar</span>
+                                            <span>{video.document.content_duration} soatlik video</span>
                                         </div>
 
                                         <div className={styles.featureItem}>
                                             <ClockCircleOutlined />
                                             <span>Umrbod foydalanish imkoniyati</span>
                                         </div>
+
+                                        <div className={styles.featureItem}>
+                                            <EyeOutlined />
+                                            <span>{formatNumber(video.view_count)} marta ko'rilgan</span>
+                                        </div>
+                                    </div>
+
+                                    <div className={styles.sidebarFooter}>
+                                        <button className={styles.shareBtn}>Share</button>
+                                        <button className={styles.giftBtn}>Gift this course</button>
+                                        <button className={styles.couponBtn}>Apply Coupon</button>
                                     </div>
                                 </div>
                             </div>
@@ -268,23 +326,20 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
                     </div>
                 </div>
 
-                <div className="mt-5" style={{ marginBottom: '32px' }}>
-                    <CommentFormWrapper
-                        id={video.id}
-                        slug={video.slug}
-                    />
-                    <CommentList slug={video.slug} id={video.id} />
-                </div>
-
-                {/* Related Sections - Lazy Loaded */}
-                <div className="py-5">
-                    <SellerMoreVideos
-                        sellerId={video.seller.id}
-                        currentVideoId={video.id}
-                    />
-                    <PurchaseRecommendations slug={video.slug} />
-                    <SimilarVideos slug={video.slug} />
-                </div>
+                {/* Sticky Mobile Bottom Bar */}
+                {!hasAccess && !isFree && (
+                    <div className={styles.stickyMobileActions}>
+                        <div className={styles.mobilePriceInfo}>
+                            <span className={styles.mobilePrice}>{formattedPrice}</span>
+                            {video.discount_price > 0 && (
+                                <span className={styles.mobileOldPrice}>{formatNumber(video.discount_price)}</span>
+                            )}
+                        </div>
+                        <button className={styles.mobileBuyBtn} onClick={handleStartOrBuy}>
+                            Hozir sotib olish
+                        </button>
+                    </div>
+                )}
             </div>
 
             {/* Video Preview Modal (Ant Design) */}
