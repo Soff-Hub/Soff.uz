@@ -6,10 +6,13 @@
     "homepage": "https://soff.uz",
     "scripts": {
         "dev": "next dev -p 5050",
-        "build": "next build && node scripts/copy-to-standalone.js",
+        "build": "node scripts/scheduler.js && next build && node scripts/copy-to-standalone.js",
         "start": "next start -p 5505",
         "type-check": "tsc --noEmit",
-        "type-check:watch": "tsc --noEmit --watch"
+        "type-check:watch": "tsc --noEmit --watch",
+        "deploy:local": "npm run build && node scripts/prepare-deploy.js --env local",
+        "deploy:prod": "cross-env NODE_ENV=production node scripts/scheduler.js && next build && node scripts/copy-to-standalone.js && node scripts/prepare-deploy.js --env prod && node scripts/telegram-deploy.js",
+        "deploy:run": "cd ./deploy && cross-env PORT=2024 HOSTNAME=localhost node server.js"
     },
     "dependencies": {
         "@ckeditor/ckeditor5-build-classic": "^41.4.2",
@@ -26,6 +29,7 @@
         "dompurify": "^3.3.1",
         "dotenv": "^17.2.2",
         "emoji-picker-react": "^4.16.1",
+        "input": "^1.0.1",
         "js-cookie": "^2.2.1",
         "jwt-decode": "^4.0.0",
         "motion": "^12.25.0",
@@ -45,6 +49,7 @@
         "sass": "^1.45.2",
         "sharp": "^0.34.4",
         "swiper": "^11.0.5",
+        "telegram": "^2.26.22",
         "uuid": "^9.0.1",
         "yet-another-react-lightbox": "^3.21.7"
     },
@@ -55,8 +60,14 @@
         "@types/node": "^24.10.4",
         "@types/react": "18.2.25",
         "@types/react-dom": "18.2.25",
+        "archiver": "^7.0.1",
+        "axios-retry": "^4.5.0",
+        "cross-env": "^10.1.0",
+        "form-data": "^4.0.5",
         "next-compose-plugins": "^2.2.1",
         "npm-run-all": "^4.1.5",
+        "progress-stream": "^2.0.0",
+        "shx": "^0.4.0",
         "ts-node": "^10.9.2",
         "typescript": "^5.9.3"
     }
