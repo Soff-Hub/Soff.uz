@@ -101,6 +101,15 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
 
     return (
         <div className={styles.detailPage}>
+            {/* Mobile Preview Section - Top on mobile */}
+            <div className={styles.mobilePreview} onClick={handlePreviewClick}>
+                <img src={video.poster_url} alt={video.title} />
+                <div className={styles.playOverlay}>
+                    <PlayCircleFilled />
+                    <span>Preview this course</span>
+                </div>
+            </div>
+
             {/* Mobile Breadcrumb - Only visible on mobile top */}
             <div className={`${styles.mobileBreadcrumb} container`}>
                 <div className={styles.breadcrumb}>
@@ -115,7 +124,12 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
             </div>
 
             {/* 1. Hero Section */}
-            <section className={styles.hero}>
+            <section
+                className={styles.hero}
+                style={{
+                    backgroundImage: `linear-gradient(rgba(28, 29, 31, 0.85), rgba(28, 29, 31, 0.95)), url(${video.poster_url})`
+                }}
+            >
                 <div className="container">
                     <div className={styles.heroWrapper}>
                         <div className={styles.heroContent}>
@@ -160,15 +174,6 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
             {/* 2. Main Content & Sidebar */}
             <div className="container py-4">
                 <div className={styles.mainContent}>
-                    {/* Mobile Preview Section */}
-                    <div className={styles.mobilePreview} onClick={handlePreviewClick}>
-                        <img src={video.poster_url} alt={video.title} />
-                        <div className={styles.playOverlay}>
-                            <PlayCircleFilled />
-                            <span>Preview this course</span>
-                        </div>
-                    </div>
-
                     <div className={styles.contentGrid}>
                         {/* Left Side: Info */}
                         <div className={styles.infoSection}>
