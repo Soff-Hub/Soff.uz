@@ -13,20 +13,15 @@ import {
 import { Spin } from 'antd';
 
 const VIDEO_CATEGORIES = [
-    { id: 3217, slug: "video", name: "Video materiallar" },
-    { id: 3804, slug: "matematika-437", name: "Matematika" },
-    { id: 3808, slug: "moliyaviy-savodxonlik", name: "Moliyaviy savodxonlik" },
-    { id: 3802, slug: "ingliz-tili-994", name: "Ingliz tili" },
-    { id: 3803, slug: "rus-tili", name: "Rus tili" },
-    { id: 3810, slug: "foto-video-montaj", name: "Foto & Video montaj" },
-    { id: 3799, slug: "dasturlash-305", name: "Dasturlash" },
-    { id: 3807, slug: "shaxsiy-rivojlanish", name: "Shaxsiy rivojlanish" },
-    { id: 3806, slug: "biznes-va-tadbirkorlik", name: "Biznes va tadbirkorlik" },
     { id: 3811, slug: "smm-va-kontent-yaratuvchilik", name: "SMM va kontent yaratuvchilik" },
-    { id: 3800, slug: "grafik-dizayn", name: "Grafik dizayn" },
-    { id: 3801, slug: "uiux-dizayn", name: "UI/UX dizayn" },
-    { id: 3805, slug: "marketing", name: "Marketing" },
-    { id: 3809, slug: "psixologiya-744", name: "Psixologiya" },
+    { id: 4071, slug: "it-va-dasturlash", name: "IT va Dasturlash" },
+    { id: 4074, slug: "dizayn-va-media", name: "Dizayn va Media" },
+    { id: 4075, slug: "muhandislik", name: "Muhandislik" },
+    { id: 4077, slug: "biznes-va-marketing", name: "Biznes va Marketing" },
+    { id: 4080, slug: "tillar", name: "Tillar" },
+    { id: 4081, slug: "fanlar-va-talim", name: "Fanlar va Ta'lim" },
+    { id: 4082, slug: "sogliq-va-hayot", name: "Sog'liq va Hayot" },
+    { id: 3799, slug: "dasturlash-305", name: "Dasturlash" },
 ];
 
 const VideoLessonsPage: React.FC = () => {
@@ -157,13 +152,3 @@ const VideoLessonsPage: React.FC = () => {
 };
 
 export default VideoLessonsPage;
-
-
-export const getServerSideProps = async () => {
-    return {
-        redirect: {
-            destination: '/video-lessons/all',
-            permanent: false,
-        },
-    };
-};
