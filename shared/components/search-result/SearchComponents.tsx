@@ -15,7 +15,7 @@ export const SearchSoffiaAIOption: FC<SearchSoffiaAIOptionProps> = ({
 }) => {
     return (
         <a
-            href="https://soffia.uz"
+            href="https://soffia.uz/dashboard"
             target="_blank"
             rel="noopener noreferrer"
             className={styles.soffiaAiSuggestion}>

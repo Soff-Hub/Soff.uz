@@ -59,7 +59,7 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
         }
 
         try {
-            const response = await $api.get(`customer/has-purchased/${video.slug}/`);
+            const response = await $api.get(`api/v1/customer/has-purchased/${video.slug}/`);
             setHasPurchased(response?.data?.has_purchased || false);
         } catch (error) {
             console.error('Failed to check purchase status:', error);
@@ -72,6 +72,15 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
     };
 
     const formattedPrice = isFree ? 'Bepul' : `${formatNumber(video.price)} UZS`;
+
+    const handleJoinOrBuy = () => {
+        setCartOneItem(video.id);
+        if (isLoggedIn) {
+            router.push(`/account/checkout?id=${video.id}`);
+        } else {
+            setAuthModal(true);
+        }
+    };
 
     const categoryName = video.category.name.includes('|')
         ? video.category.name.split('|').pop()?.trim()
@@ -104,12 +113,7 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
             await checkPurchaseStatus();
             setShowVideo(true);
         } else {
-            setCartOneItem(video.id);
-            if (isLoggedIn) {
-                router.push(`/account/checkout?id=${video.id}`);
-            } else {
-                setAuthModal(true);
-            }
+            handleJoinOrBuy();
         }
     };
 
@@ -166,7 +170,7 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
 
                             <h1 className={styles.title}>{video.title}</h1>
                             <p className={styles.shortDescription}>
-                                {video.description.replace(/<[^>]*>/g, '').slice(0, 160)}...
+                                {video?.description?.replace(/<[^>]*>/g, '').slice(0, 160)}...
                             </p>
 
                             {video.sold_count > 0 &&
@@ -374,39 +378,39 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
                 closeIcon={<CloseOutlined style={{ color: '#fff', fontSize: '18px' }} />}
             >
                 <div className={styles.modalContent}>
+                    {limitReached && (
+                        <div className={styles.purchaseOverlay}>
+                            <LockOutlined className={styles.lockIcon} />
+                            <h3 className={styles.overlayTitle}>Video darsning davomini ko'rish uchun sotib oling</h3>
+                            <p className={styles.overlayText}>
+                                Siz hozirgina darsning 10% qismini ko'rdungiz. To'liq darsni va boshqa barcha imkoniyatlarni qo'lga kiritish uchun kursni sotib olishingiz kerak.
+                            </p>
+                            <button
+                                className={styles.overlayBtn}
+                                onClick={() => {
+                                    setShowVideo(false);
+                                    handleJoinOrBuy();
+                                }}
+                            >
+                                Kursni sotib olish
+                            </button>
+                        </div>
+                    )}
                     <div className={styles.modalHeader}>
                         <p className={styles.previewLabel}>Kurs preview</p>
-                        <h2 className={styles.previewTitle}>{video.title}</h2>
+                        <h2 className={styles.previewTitle}>{video?.title?.replace(/_/g, ' ')}</h2>
                     </div>
 
                     <div
-                        className={styles.videoWrapper}
-                        style={{ '--poster-url': `url(${video.poster_url})` } as any}
+                        className={`${styles.videoWrapper} ${isPortrait ? styles.isPortrait : ''}`}
+                        style={{ '--poster-url': `url(${video?.poster_url})` } as any}
                     >
-                        {limitReached && (
-                            <div className={styles.purchaseOverlay}>
-                                <LockOutlined className={styles.lockIcon} />
-                                <h3 className={styles.overlayTitle}>Video darsning davomini ko'rish uchun sotib oling</h3>
-                                <p className={styles.overlayText}>
-                                    Siz hozirgina darsning 10% qismini ko'rdingiz. To'liq darsni va boshqa barcha imkoniyatlarni qo'lga kiritish uchun kursni sotib olishingiz kerak.
-                                </p>
-                                <button
-                                    className={styles.overlayBtn}
-                                    onClick={() => {
-                                        setShowVideo(false);
-                                        router.push(`/account/checkout?id=${video.id}`);
-                                    }}
-                                >
-                                    Kursni sotib olish
-                                </button>
-                            </div>
-                        )}
                         <video
                             controls
                             autoPlay
-                            src={video.document.file_url || video.document.short_content_url}
+                            src={video?.document?.file_url || video?.document?.short_content_url}
                             controlsList="nodownload"
-                            poster={video.poster_url}
+                            poster={video?.poster_url}
                             className={isPortrait ? styles.portraitVideo : ''}
                             onLoadedMetadata={(e: React.SyntheticEvent<HTMLVideoElement>) => {
                                 const { videoWidth, videoHeight } = e.currentTarget;
@@ -435,13 +439,13 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
                         <h3 className={styles.sampleTitle}>Bepul darslar:</h3>
                         <div className={`${styles.sampleItem} ${styles.active}`}>
                             <div className={styles.sampleThumbnail}>
-                                <img src={video.poster_url} alt={video.title} />
+                                <img src={video?.poster_url} alt={video?.title} />
                                 <div className={styles.samplePlayOverlay}>
                                     <PlayCircleFilled />
                                 </div>
                             </div>
                             <div className={styles.sampleInfo}>
-                                <p className={styles.sampleName}>{video.title}</p>
+                                <p className={styles.sampleName}>{video?.title?.replace(/_/g, ' ')}</p>
                             </div>
                             {video.document.content_duration && (
                                 <div className={styles.sampleDuration}>

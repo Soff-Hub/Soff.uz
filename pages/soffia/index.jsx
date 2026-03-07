@@ -77,7 +77,7 @@ export default function SoffiaPage() {
                         tayyorlanadi.
                     </p>
                     <a
-                        href="https://soffia.uz"
+                        href="https://soffia.uz/dashboard"
                         target="_blank"
                         rel="noopener noreferrer">
                         <Button
@@ -163,7 +163,7 @@ export default function SoffiaPage() {
                 {/* CTA with hover effect */}
                 <div className="text-center">
                     <a
-                        href="https://soffia.uz"
+                        href="https://soffia.uz/dashboard"
                         target="_blank"
                         rel="noopener noreferrer">
                         <Button

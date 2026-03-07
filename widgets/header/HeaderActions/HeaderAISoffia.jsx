@@ -5,7 +5,7 @@ import styles from './header-actions.module.scss';
 const HeaderAISoffia = () => {
     return (
         <a
-            href="https://soffia.uz"
+            href="https://soffia.uz/dashboard"
             target="_blank"
             rel="noopener noreferrer"
             className={styles.headerAIButton}>
