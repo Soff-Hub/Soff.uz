@@ -562,3 +562,229 @@
         object-fit: contain;
     }
 }
+
+/* Updated Video Preview Modal Styles */
+.modalContent {
+    background: #1c1d1f;
+    color: #fff;
+    font-family: inherit;
+}
+
+.modalHeader {
+    padding: 24px 24px 16px;
+    position: relative;
+
+    @media (max-width: 768px) {
+        padding: 0;
+        margin-bottom: 10px;
+    }
+
+    .previewLabel {
+        font-size: 14px;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 8px;
+        text-transform: capitalize;
+    }
+
+    .previewTitle {
+        font-size: 18px;
+        font-weight: 800;
+        color: #fff;
+        margin: 0;
+        line-height: 1.4;
+        max-width: 90%;
+
+        @media (max-width: 768px) {
+            font-size: 16px;
+        }
+    }
+}
+
+.videoWrapper {
+    width: 100%;
+    background: #000;
+    aspect-ratio: 16 / 9;
+
+    video {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: contain;
+    }
+}
+
+.sampleSection {
+    padding: 24px;
+    background: #1c1d1f;
+
+    .sampleTitle {
+        font-size: 16px;
+        font-weight: 800;
+        margin-bottom: 16px;
+        color: #fff;
+
+        @media (max-width: 768px) {
+            margin-top: 10px;
+        }
+    }
+
+    .sampleItem {
+        display: flex;
+        align-items: center;
+        padding: 12px;
+        gap: 16px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        cursor: pointer;
+        transition: all 0.2s;
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        &.active {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .sampleThumbnail {
+            position: relative;
+            width: 80px;
+            aspect-ratio: 16 / 9;
+            border-radius: 2px;
+            overflow: hidden;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                opacity: 0.6;
+            }
+
+            .samplePlayOverlay {
+                position: absolute;
+                inset: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 24px;
+                color: #fff;
+                z-index: 2;
+            }
+        }
+
+        .sampleInfo {
+            flex: 1;
+            min-width: 0;
+
+            .sampleName {
+                font-size: 14px;
+                font-weight: 700;
+                color: #fff;
+                margin: 0;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+
+        .sampleDuration {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 600;
+        }
+    }
+
+    @media (max-width: 576px) {
+        padding: 0;
+        gap: 12px;
+
+        .sampleThumbnail {
+            width: 60px;
+        }
+
+        .sampleDuration {
+            display: none; // Hide duration on very small screens to save space
+        }
+    }
+}
+
+.previewModalWrapper {
+    @media (max-width: 768px) {
+        padding: 0 !important;
+        margin: 0 !important;
+        background-color: #1c1d1f !important; // Match internal color to hide any leakage
+
+        :global(.ant-modal) {
+            top: 0 !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            height: 100vh !important;
+        }
+
+        :global(.ant-modal-content) {
+            height: 100vh !important;
+            display: flex !important;
+            flex-direction: column !important;
+            background-color: #1c1d1f !important;
+            box-shadow: none !important;
+        }
+
+        :global(.ant-modal-body) {
+            padding: 0 !important;
+            flex: 1 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            background-color: #1c1d1f !important;
+        }
+    }
+}
+
+/* Ant Design Modal Overrides */
+.previewModal {
+    @media (max-width: 768px) {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+
+    :global(.ant-modal-content) {
+        border-radius: 8px !important;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background-color: #1c1d1f !important;
+
+        @media (max-width: 768px) {
+            border-radius: 0 !important; // Boxy look for full-mobile experience
+        }
+    }
+
+    :global(.ant-modal-close) {
+        top: 20px;
+        right: 20px;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: background 0.2s;
+        z-index: 10;
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            top: 12px;
+            right: 12px;
+            background: rgba(255, 255, 255, 0.1); // Visible but subtle
+        }
+    }
+}

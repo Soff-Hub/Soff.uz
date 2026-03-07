@@ -293,21 +293,50 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
                 onCancel={() => setShowVideo(false)}
                 footer={null}
                 centered
-                width={1000}
-                bodyStyle={{ padding: 0, backgroundColor: '#000', overflow: 'hidden' }}
+                width={700}
+                className={styles.previewModal}
+                wrapClassName={styles.previewModalWrapper}
+                bodyStyle={{ padding: 0, backgroundColor: '#1c1d1f', overflow: 'hidden' }}
                 destroyOnClose
-                closeIcon={<CloseOutlined style={{ color: '#fff', fontSize: '20px' }} />}
+                closeIcon={<CloseOutlined style={{ color: '#fff', fontSize: '18px' }} />}
             >
-                <div className={styles.aspectRatioWrapper}>
-                    <video
-                        controls
-                        autoPlay
-                        src={video.document.file_url || video.document.short_content_url}
-                        controlsList="nodownload"
-                        style={{ width: '100%', display: 'block' }}
-                    >
-                        Sizning brauzeringiz video qo'llab-quvvatlamaydi.
-                    </video>
+                <div className={styles.modalContent}>
+                    <div className={styles.modalHeader}>
+                        <p className={styles.previewLabel}>Kurs preview</p>
+                        <h2 className={styles.previewTitle}>{video.title}</h2>
+                    </div>
+
+                    <div className={styles.videoWrapper}>
+                        <video
+                            controls
+                            autoPlay
+                            src={video.document.file_url || video.document.short_content_url}
+                            controlsList="nodownload"
+                            poster={video.poster_url}
+                        >
+                            Sizning brauzeringiz video qo'llab-quvvatlamaydi.
+                        </video>
+                    </div>
+
+                    <div className={styles.sampleSection}>
+                        <h3 className={styles.sampleTitle}>Bepul darslar:</h3>
+                        <div className={`${styles.sampleItem} ${styles.active}`}>
+                            <div className={styles.sampleThumbnail}>
+                                <img src={video.poster_url} alt={video.title} />
+                                <div className={styles.samplePlayOverlay}>
+                                    <PlayCircleFilled />
+                                </div>
+                            </div>
+                            <div className={styles.sampleInfo}>
+                                <p className={styles.sampleName}>{video.title}</p>
+                            </div>
+                            {video.document.content_duration && (
+                                <div className={styles.sampleDuration}>
+                                    {video.document.content_duration}
+                                </div>
+                            )}
+                        </div>
+                    </div>
                 </div>
             </Modal>
 
