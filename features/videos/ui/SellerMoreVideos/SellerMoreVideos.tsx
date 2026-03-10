@@ -13,15 +13,12 @@ interface Props {
 const SellerMoreVideos: React.FC<Props> = ({ sellerId, currentVideoId }) => {
     const router = useRouter();
 
-    // Fetch seller products: page=1, type='video' (mapping 'video' to 'file' logic if needed, but user said type='video')
-    // According to hook: (id, page = 1, type = 'file', search = '')
     const { data, isLoading } = useSellerProducts(sellerId, 1, 'video');
 
     const displayedVideos: Video[] = useMemo(() => {
         const rawData = data?.results || data || [];
         if (!Array.isArray(rawData)) return [];
 
-        // Map and filter out current video
         return rawData
             .map((item: any) => mapToVideo(item))
             .filter((v: Video) => Number(v.id) !== Number(currentVideoId));
