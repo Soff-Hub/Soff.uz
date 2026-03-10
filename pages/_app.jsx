@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import Router from 'next/router';
 import '~/scss/boostrap.min.css';
 import '~/scss/style.scss';
 import '~/scss/electronic.scss';
@@ -18,6 +19,28 @@ import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
 function App({ Component, pageProps }) {
     const { tg } = useTelegram();
     const { startTimeout } = useTimeManager();
+
+    useEffect(() => {
+        // Next.js 12 dagi stillar o'chib ketish muammosini fix qilish
+        const handleRouteChange = () => {
+            const allStyles = document.querySelectorAll(
+                'style[data-n-href], style[data-n-p]'
+            );
+            const copyStyles = Array.from(allStyles);
+            copyStyles.forEach((style) => {
+                style.removeAttribute('data-n-href');
+                style.removeAttribute('data-n-p');
+            });
+        };
+
+        Router.events.on('routeChangeComplete', handleRouteChange);
+        Router.events.on('beforeHistoryChange', handleRouteChange);
+
+        return () => {
+            Router.events.off('routeChangeComplete', handleRouteChange);
+            Router.events.off('beforeHistoryChange', handleRouteChange);
+        };
+    }, []);
 
     useEffect(() => {
         tg?.ready();
