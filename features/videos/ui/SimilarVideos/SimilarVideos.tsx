@@ -33,9 +33,11 @@ const SimilarVideos: React.FC<Props> = ({ slug }) => {
         return () => observer.disconnect();
     }, []);
 
+    const limit = 6
+
     const { data: rawSimilarVideos, isLoading } = useQuery({
-        queryKey: ['similar-videos', slug],
-        queryFn: () => fetchSimilarVideos(slug),
+        queryKey: ['similar-videos', slug, limit],
+        queryFn: () => fetchSimilarVideos(slug, limit),
         enabled: isVisible && !!slug,
     });
 
@@ -55,15 +57,15 @@ const SimilarVideos: React.FC<Props> = ({ slug }) => {
 
     return (
         <div ref={containerRef} className={styles.container}>
-            <h3 className={styles.title}>O'xshash mahsulotlar</h3>
+            <h3 className={styles.title}>O'xshash videolar</h3>
 
             <div className={styles.grid}>
                 {isLoading || !isVisible ? (
-                    Array.from({ length: 4 }).map((_, i) => (
+                    Array.from({ length: limit }).map((_, i) => (
                         <VideoSkeleton key={i} />
                     ))
                 ) : (
-                    displayedVideos.slice(0, 8).map((video) => (
+                    displayedVideos.slice(0, limit).map((video) => (
                         <VideoCard
                             key={video.slug}
                             video={video}

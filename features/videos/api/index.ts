@@ -31,7 +31,9 @@ export const fetchPurchaseRecommendations = async (slug: string): Promise<any> =
     return data;
 };
 
-export const fetchSimilarVideos = async (slug: string): Promise<any> => {
-    const { data } = await $api.get(`/api/v1/customer/similar/${slug}/`);
+export const fetchSimilarVideos = async (slug: string, limit?: number): Promise<any> => {
+    const { data } = await $api.get(`/api/v1/customer/similar/${slug}/`, {
+        params: { limit },
+    });
     return data;
 };
