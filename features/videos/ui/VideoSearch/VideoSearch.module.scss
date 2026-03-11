@@ -1,55 +1,86 @@
 .searchWrapper {
-    width: 350px;
-    position: relative;
+    width: 400px;
+    max-width: 100%;
     transition: all 0.3s ease;
 
     @media (max-width: 768px) {
         width: 100%;
     }
+}
 
-    .searchInput {
-        border-radius: 12px;
-        border: 2px solid #f0f0f0;
-        padding: 8px 16px;
-        font-size: 16px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+.searchContainer {
+    display: flex;
+    align-items: center;
+    background: #ffffff;
+    border: 1.5px solid #00a44f; // Soff green primary color
+    border-radius: 50px; // Pill shape as in reference image
+    padding: 3px 3px 3px 20px;
+    height: 48px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 10px rgba(0, 164, 79, 0.05);
+
+    &:focus-within {
+        box-shadow: 0 4px 15px rgba(0, 164, 79, 0.15);
+        border-color: #00a44f;
         background: #fff;
+    }
+
+    .customInput {
+        flex: 1;
+        border: none;
+        outline: none;
+        background: transparent;
+        font-size: 15px;
+        color: #333;
+        height: 100%;
+        padding: 0;
+        font-family: inherit;
+
+        &::placeholder {
+            color: #999;
+            font-weight: 400;
+        }
+    }
+
+    .actionGroup {
         display: flex;
         align-items: center;
-
-        &:hover {
-            border-color: #e0e0e0;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-        }
-
-        &:focus-within {
-            border-color: #00a44f !important; // Green color from project
-            box-shadow: 0 0 0 4px rgba(0, 164, 79, 0.1) !important;
-        }
-
-        :global(.ant-input) {
-            font-size: 16px;
-        }
-
-        .searchIcon {
-            color: #bfbfbf;
-            font-size: 18px;
-            margin-right: 8px;
-            display: flex;
-            align-items: center;
-        }
+        gap: 12px;
+        height: 100%;
 
         .clearIcon {
             color: #bfbfbf;
+            font-size: 16px;
             cursor: pointer;
             transition: color 0.2s;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
 
             &:hover {
                 color: #8c8c8c;
+            }
+        }
+
+        .searchButton {
+            width: 40px;
+            height: 40px;
+            min-width: 40px;
+            border-radius: 50%;
+            background: #00a44f;
+            color: #ffffff;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 18px;
+
+            &:hover {
+                background: #008f44;
+                transform: scale(1.05);
+            }
+
+            &:active {
+                transform: scale(0.95);
             }
         }
     }
