@@ -9,10 +9,12 @@ import {
     Video,
     Category,
     VideoGrid,
-    CategoryFilters
+    CategoryFilters,
+    VideoSearch,
 } from '~/features/videos';
 import { Pagination, Select } from 'antd';
 import styles from './CategoryPage.module.scss';
+import useDebounce from '~/shared/hooks/useDebounce';
 
 interface Props {
     videos: Video[];
@@ -24,6 +26,7 @@ interface Props {
     currentSort: string;
     currentFilter: string;
     activeSubCategory: string;
+    search: string;
 }
 
 const CategoryPage: React.FC<Props> = ({
@@ -35,13 +38,32 @@ const CategoryPage: React.FC<Props> = ({
     pageSize,
     currentSort,
     currentFilter,
-    activeSubCategory
+    activeSubCategory,
+    search: initialSearch
 }) => {
     const router = useRouter();
     const { slug } = router.query;
+    const [search, setSearch] = React.useState(initialSearch || '');
+    const debouncedSearchTerm = useDebounce(search, 500);
 
     const handleVideoClick = (videoSlug: string) => {
         router.push(`/product/${videoSlug}`);
+    };
+
+    React.useEffect(() => {
+        if (debouncedSearchTerm === initialSearch) return;
+
+        const { slug: _slug, ...rest } = router.query;
+
+        router.push({
+            pathname: `/video-lessons/category/${slug}`,
+            query: { ...rest, search: debouncedSearchTerm, page: 1 },
+        }, undefined, { shallow: false });
+
+    }, [debouncedSearchTerm]);
+
+    const handleSearch = (value: string) => {
+        setSearch(value);
     };
 
     const handlePageChange = (page: number) => {
@@ -104,7 +126,14 @@ const CategoryPage: React.FC<Props> = ({
             <div className="container py-5">
                 <header className={styles.header}>
                     <div className={styles.titleSection}>
-                        <h1 className={styles.title}>{categoryTitle}</h1>
+                        <h1 className={styles.title}>
+                            {search ? `"${search}" bo'yicha qidiruv` : categoryTitle}
+                        </h1>
+                        <VideoSearch
+                            onSearch={handleSearch}
+                            initialValue={search}
+                            placeholder={`${categoryTitle} ichidan izlash...`}
+                        />
                     </div>
 
                     <div className={styles.filterBar}>
@@ -166,6 +195,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const sort = (context.query.sort as string) || '-view_count';
     const filter = (context.query.filter as string) || 'all';
     const activeSubCategory = (context.query.sub_category as string) || '';
+    const search = (context.query.search as string) || '';
     const pageSize = 12;
 
     const videoParams: any = {
@@ -173,6 +203,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         page: page,
         page_size: pageSize,
         order_by_views: sort === '-view_count' ? '-view_count' : undefined,
+        search: search
     };
 
     if (sort === '-created_at') videoParams.ordering = '-created_at';
@@ -202,7 +233,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
                 pageSize: pageSize,
                 currentSort: sort,
                 currentFilter: filter,
-                activeSubCategory
+                activeSubCategory,
+                search
             }
         };
     } catch (error) {
@@ -217,7 +249,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
                 pageSize: 12,
                 currentSort: '-view_count',
                 currentFilter: 'all',
-                activeSubCategory: ''
+                activeSubCategory: '',
+                search: ''
             }
         };
     }

@@ -9,6 +9,7 @@ import {
     CategorySlider,
     VideoSlider,
     VideoGrid,
+    VideoSearch,
 } from '~/features/videos';
 import { Spin } from 'antd';
 
@@ -27,6 +28,8 @@ const VIDEO_CATEGORIES = [
 const VideoLessonsPage: React.FC = () => {
     const router = useRouter();
 
+    const [search, setSearch] = React.useState('');
+
     const handleVideoClick = (slug: string) => {
         router.push(`/product/${slug}`);
     };
@@ -35,6 +38,10 @@ const VideoLessonsPage: React.FC = () => {
         router.push(`/video-lessons/category/${categorySlug}`);
     };
 
+    const handleSearch = React.useCallback((value: string) => {
+        setSearch(value);
+    }, []);
+
     // Static Categories
     const categories = VIDEO_CATEGORIES;
 
@@ -42,6 +49,7 @@ const VideoLessonsPage: React.FC = () => {
     const { data: popularData, isLoading: isPopularLoading } = useQuery({
         queryKey: ['videos', 'popular'],
         queryFn: () => fetchVideos({ order_by_views: '-view_count', page_size: 15 }),
+        enabled: !search, // Skip popular videos if searching
     });
 
     // 3. Infinite Query for All Videos
@@ -49,10 +57,11 @@ const VideoLessonsPage: React.FC = () => {
         data: infiniteData,
         fetchNextPage,
         hasNextPage,
-        isLoading: isAllLoading
+        isLoading: isAllLoading,
+        isFetching: isAllFetching
     } = useInfiniteQuery({
-        queryKey: ['videos', 'all-infinite'],
-        queryFn: ({ pageParam = 1 }) => fetchVideos({ page: pageParam, page_size: 12 }),
+        queryKey: ['videos', 'all-infinite', search],
+        queryFn: ({ pageParam = 1 }) => fetchVideos({ page: pageParam, page_size: 12, search }),
         getNextPageParam: (lastPage, allPages) => {
             const currentTotal = allPages.reduce((acc, page) => acc + page.results.length, 0);
             return currentTotal < lastPage.count ? allPages.length + 1 : undefined;
@@ -103,30 +112,42 @@ const VideoLessonsPage: React.FC = () => {
 
             {/* @ts-ignore */}
             <PageContainer withFooter={true}>
-                <div className="container py-3">
-                    {/* Popular Videos Section */}
-                    <VideoSlider
-                        title="Eng ommabop"
-                        videos={popularData?.results || []}
-                        loading={isPopularLoading}
-                        onVideoClick={handleVideoClick}
-                        variant="horizontal"
-                    />
+                <div className="container py-4">
+                    {/* Search Section */}
+                    <div className="d-flex justify-content-between align-items-center flex-wrap mb-4">
+                        <h1 style={{ fontSize: '28px', fontWeight: 800, margin: 0 }}>
+                            {search ? `Qidiruv natijalari: "${search}"` : 'Video darsliklar'}
+                        </h1>
+                        <VideoSearch onSearch={handleSearch} initialValue={search} />
+                    </div>
 
-                    {/* Top Categories Sections - Lazy loaded via CategorySlider */}
-                    {
-                        categories?.slice(0, 100).map((category) => (
-                            <CategorySlider
-                                key={category.id}
-                                category={category}
-                                onSeeAll={handleSeeAll}
+                    {!search && (
+                        <>
+                            {/* Popular Videos Section */}
+                            <VideoSlider
+                                title="Eng ommabop"
+                                videos={popularData?.results || []}
+                                loading={isPopularLoading}
                                 onVideoClick={handleVideoClick}
+                                variant="horizontal"
                             />
-                        ))
-                    }
+
+                            {/* Top Categories Sections - Lazy loaded via CategorySlider */}
+                            {
+                                categories?.slice(0, 100).map((category) => (
+                                    <CategorySlider
+                                        key={category.id}
+                                        category={category}
+                                        onSeeAll={handleSeeAll}
+                                        onVideoClick={handleVideoClick}
+                                    />
+                                ))
+                            }
+                        </>
+                    )}
 
                     {/* All Videos Grid Section with Infinite Scroll */}
-                    <div className="mt-5">
+                    <div className={!search ? "mt-5" : ""}>
                         <InfiniteScroll
                             dataLength={allVideos.length}
                             next={fetchNextPage}
@@ -138,12 +159,19 @@ const VideoLessonsPage: React.FC = () => {
                             }
                         >
                             <VideoGrid
-                                title="Barchasi"
+                                title={search ? "" : "Barchasi"}
                                 videos={allVideos}
                                 loading={isAllLoading && allVideos.length === 0}
                                 onVideoClick={handleVideoClick}
                             />
                         </InfiniteScroll>
+
+                        {!isAllLoading && search && allVideos.length === 0 && (
+                            <div className="text-center py-5">
+                                <h3 className="text-muted">Hech narsa topilmadi</h3>
+                                <p>Boshqa so'zlar bilan qidirib ko'ring yoki filtrlarni tekshiring.</p>
+                            </div>
+                        )}
                     </div>
                 </div>
             </PageContainer>

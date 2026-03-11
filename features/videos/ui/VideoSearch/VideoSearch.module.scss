@@ -1,0 +1,56 @@
+.searchWrapper {
+    width: 350px;
+    position: relative;
+    transition: all 0.3s ease;
+
+    @media (max-width: 768px) {
+        width: 100%;
+    }
+
+    .searchInput {
+        border-radius: 12px;
+        border: 2px solid #f0f0f0;
+        padding: 8px 16px;
+        font-size: 16px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        background: #fff;
+        display: flex;
+        align-items: center;
+
+        &:hover {
+            border-color: #e0e0e0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        &:focus-within {
+            border-color: #00a44f !important; // Green color from project
+            box-shadow: 0 0 0 4px rgba(0, 164, 79, 0.1) !important;
+        }
+
+        :global(.ant-input) {
+            font-size: 16px;
+        }
+
+        .searchIcon {
+            color: #bfbfbf;
+            font-size: 18px;
+            margin-right: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .clearIcon {
+            color: #bfbfbf;
+            cursor: pointer;
+            transition: color 0.2s;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+
+            &:hover {
+                color: #8c8c8c;
+            }
+        }
+    }
+}

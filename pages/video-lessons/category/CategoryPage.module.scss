@@ -3,15 +3,27 @@
 
     .titleSection {
         margin-bottom: 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
 
         .title {
             font-size: 32px;
             font-weight: 800;
             color: #1a1a1a;
-            margin-bottom: 12px;
+            margin: 0;
 
             @media (max-width: 768px) {
                 font-size: 24px;
+                width: 100%;
+            }
+        }
+
+        :global(.ant-input-affix-wrapper) {
+            @media (max-width: 768px) {
+                width: 100% !important;
             }
         }
     }
