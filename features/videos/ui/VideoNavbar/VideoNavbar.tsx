@@ -88,7 +88,7 @@ const VideoNavbar = () => {
                                         {subCategories.map((sub: any) => (
                                             <SwiperSlide key={sub.id} className={styles.swiperSlide}>
                                                 <div className={styles.subItem}>
-                                                    <Link href={`/video-lessons/category/${sub.slug}`}>
+                                                    <Link href={`/video-lessons/category/${currentSlug}?sub_category=${sub.slug}`}>
                                                         <a>{sub.name.split('|').pop()?.trim() || sub.name}</a>
                                                     </Link>
                                                 </div>
@@ -176,7 +176,7 @@ const VideoMenuItem: React.FC<VideoMenuItemProps> = ({ category }) => {
                 <ul className={styles.subCategoryList}>
                     {subCategories.map((sub) => (
                         <li key={sub.id} className={styles.subCategoryItem}>
-                            <Link href={`/video-lessons/category/${sub.slug}`}>
+                            <Link href={`/video-lessons/category/${category.slug}?sub_category=${sub.slug}`}>
                                 <a>{sub.name.split('|').pop()?.trim() || sub.name}</a>
                             </Link>
                         </li>

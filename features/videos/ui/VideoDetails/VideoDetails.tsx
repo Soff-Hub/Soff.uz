@@ -27,6 +27,7 @@ import SimilarVideos from '../SimilarVideos/SimilarVideos';
 import SellerMoreVideos from '../SellerMoreVideos/SellerMoreVideos';
 
 import styles from './VideoDetails.module.scss';
+import Hls from 'hls.js';
 
 const CommentList = dynamic(() => import('~/features/comments/ui/commentList'), { ssr: false });
 const CommentFormWrapper = dynamic(() => import('~/features/comments/ui/commentWrapper'), { ssr: false });
@@ -36,36 +37,25 @@ interface Props {
 }
 
 const VideoDetails: React.FC<Props> = ({ video }) => {
+    console.log(video)
     const router = useRouter();
     const { cartItems, setCartOneItem, removeCartOneItem } = useCart();
     const { wishlist, addSavedItem, removeSavedItem } = useWishlist();
-    const isLoggedIn = useSelector((state: any) => !!state.auth.user?.access);
+    const token = useSelector((state: any) => state.auth.user?.access);
+    const isLoggedIn = !!token;
 
     const [showVideo, setShowVideo] = useState(false);
     const [authModal, setAuthModal] = useState(false);
-    const [hasPurchased, setHasPurchased] = useState<boolean | null>(null);
     const [limitReached, setLimitReached] = useState(false);
     const [isPortrait, setIsPortrait] = useState(false);
+
+    const [videoElement, setVideoElement] = useState<HTMLVideoElement | null>(null);
+    const hlsRef = React.useRef<Hls | null>(null);
 
     const isAddedToCart = cartItems?.some((item: any) => Number(item.id) === Number(video.id));
     const isAddedToWishlist = wishlist?.some((item: any) => Number(item.id) === Number(video.id));
     const hasAccess = !!video.document.file_url;
     const isFree = video.price === 0;
-
-    const checkPurchaseStatus = async () => {
-        if (!isLoggedIn) {
-            setHasPurchased(false);
-            return;
-        }
-
-        try {
-            const response = await $api.get(`api/v1/customer/has-purchased/${video.slug}/`);
-            setHasPurchased(response?.data?.has_purchased || false);
-        } catch (error) {
-            console.error('Failed to check purchase status:', error);
-            setHasPurchased(false);
-        }
-    };
 
     const formatNumber = (num: number) => {
         return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
@@ -106,22 +96,107 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
         }
     };
 
-    const handleStartOrBuy = async (e: React.MouseEvent) => {
+    const handleStartOrBuy = (e: React.MouseEvent) => {
         e.preventDefault();
         if (hasAccess) {
             setLimitReached(false);
-            await checkPurchaseStatus();
             setShowVideo(true);
         } else {
             handleJoinOrBuy();
         }
     };
 
-    const handlePreviewClick = async () => {
+    const handlePreviewClick = () => {
         setLimitReached(false);
-        await checkPurchaseStatus();
         setShowVideo(true);
     };
+
+    React.useEffect(() => {
+        if (!showVideo || !videoElement) return;
+
+        const videoSrc = video?.document?.file_url || video?.document?.short_content_url;
+
+        if (!videoSrc) return;
+
+        // Clean up previous HLS instance
+        if (hlsRef.current) {
+            hlsRef.current.destroy();
+            hlsRef.current = null;
+        }
+
+        if (Hls.isSupported()) {
+            console.log("[HLS] Hls.js is supported. Initializing...");
+            const hls = new Hls({
+                debug: true, // Enable detailed console logging from hls.js
+                xhrSetup: (xhr, url) => {
+                    // Rewrite local/incorrect backend URLs from m3u8 to the correct API base URL
+                    let finalUrl = url;
+                    if (url.includes('/video-key/')) {
+                        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
+                        if (baseUrl) {
+                            // Extract just the path part after /api/
+                            const basePathMatch = url.match(/\/api\/v1\/.*/);
+                            if (basePathMatch) {
+                                finalUrl = `${baseUrl}${basePathMatch[0]}`;
+                            }
+                        }
+                    }
+
+                    console.log(`[HLS] Requesting URL: ${finalUrl}`);
+                    xhr.open('GET', finalUrl); // We must call open if we changed the URL. Note: hls.js already called open(), by calling it again we override it.
+
+                    if (finalUrl.includes('/video-key/') && token) {
+                        console.log(`[HLS] Adding Authorization header for video-key: ${finalUrl}`);
+                        xhr.setRequestHeader('Authorization', `Bearer ${token}`);
+                    }
+                }
+            });
+
+            console.log(`[HLS] Loading source: ${videoSrc}`);
+            hls.loadSource(videoSrc);
+            hls.attachMedia(videoElement);
+
+            hls.on(Hls.Events.MANIFEST_PARSED, (event, data) => {
+                console.log(`[HLS] Manifest parsed. Levels found: ${data.levels.length}`);
+                videoElement.play().catch(e => console.error("[HLS] Auto-play failed:", e));
+            });
+
+            hls.on(Hls.Events.ERROR, (event, data) => {
+                console.error(`[HLS ERROR] Type: ${data.type}, Details: ${data.details}, Fatal: ${data.fatal}`, data);
+                if (data.fatal) {
+                    switch (data.type) {
+                        case Hls.ErrorTypes.NETWORK_ERROR:
+                            console.error("[HLS ERROR] Fatal network error encountered, trying to recover...");
+                            hls.startLoad();
+                            break;
+                        case Hls.ErrorTypes.MEDIA_ERROR:
+                            console.error("[HLS ERROR] Fatal media error encountered, trying to recover...");
+                            hls.recoverMediaError();
+                            break;
+                        default:
+                            console.error("[HLS ERROR] Cannot recover, destroying HLS instance.");
+                            hls.destroy();
+                            break;
+                    }
+                }
+            });
+
+            hlsRef.current = hls;
+        } else if (videoElement.canPlayType('application/vnd.apple.mpegurl')) {
+            // Safari has native HLS support
+            videoElement.src = videoSrc;
+            videoElement.addEventListener('loadedmetadata', () => {
+                videoElement.play().catch(e => console.error("Playback failed:", e));
+            });
+        }
+
+        return () => {
+            if (hlsRef.current) {
+                hlsRef.current.destroy();
+                hlsRef.current = null;
+            }
+        };
+    }, [showVideo, videoElement, video?.document?.file_url, video?.document?.short_content_url, token]);
     console.log(video)
 
     return (
@@ -324,10 +399,12 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
                                     <div className={styles.featuresList}>
                                         <h4 className={styles.listTitle}>Kurs o'z ichiga oladi:</h4>
 
-                                        <div className={styles.featureItem} suppressHydrationWarning>
-                                            <PlaySquareOutlined />
-                                            <span>{video.document.content_duration} soatlik video</span>
-                                        </div>
+                                        {video.document.content_duration && (
+                                            <div className={styles.featureItem} suppressHydrationWarning>
+                                                <PlaySquareOutlined />
+                                                <span>{video.document.content_duration} soatlik video</span>
+                                            </div>
+                                        )}
 
                                         <div className={styles.featureItem}>
                                             <ClockCircleOutlined />
@@ -406,9 +483,9 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
                         style={{ '--poster-url': `url(${video?.poster_url})` } as any}
                     >
                         <video
+                            ref={setVideoElement}
                             controls
                             autoPlay
-                            src={video?.document?.file_url || video?.document?.short_content_url}
                             controlsList="nodownload"
                             poster={video?.poster_url}
                             className={isPortrait ? styles.portraitVideo : ''}
@@ -420,14 +497,10 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
                                     setIsPortrait(false);
                                 }
                             }}
-                            onTimeUpdate={(e: React.SyntheticEvent<HTMLVideoElement>) => {
-                                const videoElement = e.currentTarget;
-                                if (hasPurchased === false && !isFree && videoElement.duration) {
-                                    const limit = videoElement.duration * 0.1;
-                                    if (videoElement.currentTime >= limit) {
-                                        videoElement.pause();
-                                        setLimitReached(true);
-                                    }
+                            onEnded={() => {
+                                // If playing preview (no file_url) and video ends, suggest purchase
+                                if (!video?.document?.file_url && !isFree) {
+                                    setLimitReached(true);
                                 }
                             }}
                         >

@@ -8,7 +8,7 @@ import React, {
 import PageContainer from '~/widgets/layouts/PageContainer';
 import { baseUrl } from '~/repositories/Repository';
 import Meta from '~/shared/ui/meta';
-// import * as cookie from 'cookie';
+import * as cookie from 'cookie';
 // import { getOrCreateDeviceId } from '~/shared/utilities/device-id';
 import dynamic from 'next/dynamic';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
@@ -273,8 +273,10 @@ export default function ProductDefaultPage({ defaultProducts }) {
     );
 }
 
-export async function getServerSideProps({ params }) {
+export async function getServerSideProps({ req, params }) {
     const { pid } = params;
+    const cookies = cookie.parse(req.headers.cookie || '');
+    const token = cookies.token;
 
     if (!pid) {
         return { notFound: true };
@@ -283,6 +285,10 @@ export async function getServerSideProps({ params }) {
     const headers = {
         'Accept': 'application/json',
     };
+
+    if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+    }
 
     let defaultProducts = null;
 
