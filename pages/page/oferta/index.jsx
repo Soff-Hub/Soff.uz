@@ -139,7 +139,7 @@ export default function Oferta() {
                 </p>
                 <p>
                     5.1.5. Sotuvchining sotilgan mahsulotlari yig’indisidan
-                    platforma ulishining (sotilgan mahsulotning 18% i) qiymatini
+                    platforma ulishining (sotilgan mahsulotning 23% i) qiymatini
                     ayirgan holatda hosil bo’lgan summani o’z kartalariga
                     tashlab olish (5.2.5. shart bajarilgan taqdirda), shu bilan
                     birga platforma o'z xizmat narxlarini yoki komissiya foizini
@@ -207,7 +207,7 @@ export default function Oferta() {
                 </p>
                 <p>
                     5.2.7. Sotuvchi platformada sotilgan har bir mahsulotining
-                    18% ini platforma ma’muriyati olib qolishi shart.
+                    23% ini platforma ma’muriyati olib qolishi shart.
                 </p>
                 <p>
                     5.2.8. Sotuvchi referal havola orqali o’zini-o’zi taklif
