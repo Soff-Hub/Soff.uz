@@ -10,6 +10,8 @@ import {
     VideoDetails
 } from '~/features/videos';
 import Link from 'next/link';
+import * as cookie from 'cookie';
+import { baseUrl } from '~/repositories/Repository';
 
 interface Props {
     video: VideoDetail;
@@ -144,15 +146,34 @@ const VideoDetailPage: React.FC<Props> = ({ video }) => {
     );
 };
 
-export const getServerSideProps: GetServerSideProps<Props> = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps<Props> = async ({ req, params }) => {
     const slug = params?.slug as string;
+    const cookies = cookie.parse(req.headers.cookie || '');
+    const token = cookies.token;
 
     if (!slug) {
         return { notFound: true };
     }
 
+    const headers: Record<string, string> = {
+        'Accept': 'application/json',
+    };
+
+    if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+    }
+
     try {
-        const video = await fetchVideoBySlug(slug);
+        const response = await fetch(`${baseUrl}customer/documents/${slug}/`, {
+            headers,
+        });
+
+        if (!response.ok) {
+            if (response.status === 404) return { notFound: true };
+            throw new Error('API request failed');
+        }
+
+        const video = await response.json();
 
         if (!video) {
             return { notFound: true };
