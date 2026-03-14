@@ -63,6 +63,38 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
 
     const formattedPrice = isFree ? 'Bepul' : `${formatNumber(video.price)} UZS`;
 
+    const formatDurationDisplay = (duration: string) => {
+        if (!duration) return '';
+
+        // If it comes as "8.37s"
+        if (duration.toLowerCase().endsWith('s')) {
+            const value = duration.slice(0, -1);
+            return `${value} soniyalik`;
+        }
+
+        // If it comes as HH:MM:SS or MM:SS
+        if (duration.includes(':')) {
+            const parts = duration.split(':').map(Number);
+            if (parts.length === 3) {
+                const [h, m, s] = parts;
+                let res = [];
+                if (h > 0) res.push(`${h} soat`);
+                if (m > 0) res.push(`${m} daqiqa`);
+                if (s > 0) res.push(`${s} soniya`);
+                return res.join(' ') + 'lik';
+            }
+            if (parts.length === 2) {
+                const [m, s] = parts;
+                let res = [];
+                if (m > 0) res.push(`${m} daqiqa`);
+                if (s > 0) res.push(`${s} soniya`);
+                return res.join(' ') + 'lik';
+            }
+        }
+
+        return duration;
+    };
+
     const handleJoinOrBuy = () => {
         setCartOneItem(video.id);
         if (isLoggedIn) {
@@ -125,7 +157,6 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
         }
 
         if (Hls.isSupported()) {
-            console.log("[HLS] Hls.js is supported. Initializing...");
             const hls = new Hls({
                 debug: true, // Enable detailed console logging from hls.js
                 xhrSetup: (xhr, url) => {
@@ -142,39 +173,31 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
                         }
                     }
 
-                    console.log(`[HLS] Requesting URL: ${finalUrl}`);
                     xhr.open('GET', finalUrl); // We must call open if we changed the URL. Note: hls.js already called open(), by calling it again we override it.
 
                     if (finalUrl.includes('/video-key/') && token) {
-                        console.log(`[HLS] Adding Authorization header for video-key: ${finalUrl}`);
                         xhr.setRequestHeader('Authorization', `Bearer ${token}`);
                     }
                 }
             });
 
-            console.log(`[HLS] Loading source: ${videoSrc}`);
             hls.loadSource(videoSrc);
             hls.attachMedia(videoElement);
 
             hls.on(Hls.Events.MANIFEST_PARSED, (event, data) => {
-                console.log(`[HLS] Manifest parsed. Levels found: ${data.levels.length}`);
                 videoElement.play().catch(e => console.error("[HLS] Auto-play failed:", e));
             });
 
             hls.on(Hls.Events.ERROR, (event, data) => {
-                console.error(`[HLS ERROR] Type: ${data.type}, Details: ${data.details}, Fatal: ${data.fatal}`, data);
                 if (data.fatal) {
                     switch (data.type) {
                         case Hls.ErrorTypes.NETWORK_ERROR:
-                            console.error("[HLS ERROR] Fatal network error encountered, trying to recover...");
                             hls.startLoad();
                             break;
                         case Hls.ErrorTypes.MEDIA_ERROR:
-                            console.error("[HLS ERROR] Fatal media error encountered, trying to recover...");
                             hls.recoverMediaError();
                             break;
                         default:
-                            console.error("[HLS ERROR] Cannot recover, destroying HLS instance.");
                             hls.destroy();
                             break;
                     }
@@ -402,7 +425,7 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
                                         {video.document.content_duration && (
                                             <div className={styles.featureItem} suppressHydrationWarning>
                                                 <PlaySquareOutlined />
-                                                <span>{video.document.content_duration} soatlik video</span>
+                                                <span>{formatDurationDisplay(video.document.content_duration)} video</span>
                                             </div>
                                         )}
 
@@ -447,7 +470,7 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
                 }}
                 footer={null}
                 centered
-                width={isPortrait ? 400 : 800}
+                width={800}
                 className={styles.previewModal}
                 wrapClassName={styles.previewModalWrapper}
                 bodyStyle={{ padding: 0, backgroundColor: '#1c1d1f', overflow: 'hidden' }}
@@ -488,7 +511,6 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
                             autoPlay
                             controlsList="nodownload"
                             poster={video?.poster_url}
-                            className={isPortrait ? styles.portraitVideo : ''}
                             onLoadedMetadata={(e: React.SyntheticEvent<HTMLVideoElement>) => {
                                 const { videoWidth, videoHeight } = e.currentTarget;
                                 if (videoHeight > videoWidth) {

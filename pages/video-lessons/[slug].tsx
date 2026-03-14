@@ -25,7 +25,7 @@ const formatISO8601Duration = (duration: string) => {
     if (parts.length === 3) { [h, m, s] = parts; }
     else if (parts.length === 2) { [m, s] = parts; }
     else { s = parts[0] || 0; }
-    
+
     let iso = 'PT';
     if (h > 0) iso += `${h}H`;
     if (m > 0) iso += `${m}M`;
