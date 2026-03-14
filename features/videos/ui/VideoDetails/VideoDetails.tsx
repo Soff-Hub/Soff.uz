@@ -399,7 +399,7 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
                                             className={styles.btnPrimary}
                                             onClick={handleStartOrBuy}
                                         >
-                                            {hasAccess ? (isFree ? "Darsni boshlash" : "Kursni ko'rish") : (isFree ? "Darsni boshlash" : "Hozir sotib olish")}
+                                            {hasAccess ? (isFree ? "Darsni boshlash" : "Videoni ko'rish") : (isFree ? "Darsni boshlash" : "Hozir sotib olish")}
                                         </button>
                                         {!hasAccess && !isFree && (
                                             <div className={styles.secondaryActions}>
