@@ -11,13 +11,13 @@ import {
     CloseOutlined,
     HeartOutlined,
     HeartFilled,
-    ShoppingCartOutlined,
-    DeleteOutlined
+    SettingOutlined,
+    CheckOutlined
 } from '@ant-design/icons';
+import { Dropdown, Menu } from 'antd';
 import Link from 'next/link';
 import { LockOutlined } from '@ant-design/icons';
 
-import $api from '~/shared/api/axios';
 import useCart from '~/shared/hooks/useCart';
 import useWishlist from '~/shared/hooks/useWishlist';
 import AuthModal from '~/features/auth/ui/auth-modal';
@@ -50,6 +50,9 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
     const [isPortrait, setIsPortrait] = useState(false);
 
     const [videoElement, setVideoElement] = useState<HTMLVideoElement | null>(null);
+    const [qualityLevels, setQualityLevels] = useState<any[]>([]);
+    const [currentQuality, setCurrentQuality] = useState<number>(-1); // -1 is Auto
+    const [activeHeight, setActiveHeight] = useState<number | null>(null);
     const hlsRef = React.useRef<Hls | null>(null);
 
     const isAddedToCart = cartItems?.some((item: any) => Number(item.id) === Number(video.id));
@@ -185,7 +188,15 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
             hls.attachMedia(videoElement);
 
             hls.on(Hls.Events.MANIFEST_PARSED, (event, data) => {
+                setQualityLevels(hls.levels);
                 videoElement.play().catch(e => console.error("[HLS] Auto-play failed:", e));
+            });
+
+            hls.on(Hls.Events.LEVEL_SWITCHED, (event, data) => {
+                const level = hls.levels[data.level];
+                if (level) {
+                    setActiveHeight(level.height);
+                }
             });
 
             hls.on(Hls.Events.ERROR, (event, data) => {
@@ -229,7 +240,7 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
                 <img src={video.poster_url} alt={video.title} />
                 <div className={styles.playOverlay}>
                     <PlayCircleFilled />
-                    <span>Preview this course</span>
+                    <span>Kursni ko'rish</span>
                 </div>
             </div>
 
@@ -528,6 +539,56 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
                         >
                             Sizning brauzeringiz video qo'llab-quvvatlamaydi.
                         </video>
+
+                        {/* Quality Selector Overlay - Only for users who purchased or have access */}
+                        {!limitReached && hasAccess && qualityLevels.length > 0 && (
+                            <div className={styles.qualityContainer}>
+                                <Dropdown
+                                    overlay={
+                                        <Menu
+                                            theme="dark"
+                                            className={styles.qualityMenu}
+                                            selectedKeys={[String(currentQuality)]}
+                                        >
+                                            <Menu.Item
+                                                key="-1"
+                                                onClick={() => {
+                                                    if (hlsRef.current) hlsRef.current.currentLevel = -1;
+                                                    setCurrentQuality(-1);
+                                                }}
+                                                className={currentQuality === -1 ? styles.activeItem : ''}
+                                            >
+                                                Auto {currentQuality === -1 && activeHeight ? `(${activeHeight}p)` : ''}
+                                                {currentQuality === -1 && <CheckOutlined className={styles.checkIcon} />}
+                                            </Menu.Item>
+                                            {qualityLevels.map((level, idx) => (
+                                                <Menu.Item
+                                                    key={idx}
+                                                    onClick={() => {
+                                                        if (hlsRef.current) hlsRef.current.currentLevel = idx;
+                                                        setCurrentQuality(idx);
+                                                        setActiveHeight(level.height);
+                                                    }}
+                                                    className={currentQuality === idx ? styles.activeItem : ''}
+                                                >
+                                                    {level.height}p
+                                                    {currentQuality === idx && <CheckOutlined className={styles.checkIcon} />}
+                                                </Menu.Item>
+                                            ))}
+                                        </Menu>
+                                    }
+                                    trigger={['click']}
+                                    placement="topRight"
+                                >
+                                    <div className={styles.qualityBtn}>
+                                        <SettingOutlined />
+                                        <span>
+                                            {currentQuality === -1 ? (activeHeight ? `${activeHeight}p` : 'Auto') : `${qualityLevels[currentQuality]?.height}p`}
+                                        </span>
+                                    </div>
+                                </Dropdown>
+                            </div>
+                        )}
                     </div>
 
                     <div className={styles.sampleSection}>
