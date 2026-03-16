@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { ArrowLeftOutlined } from '@ant-design/icons';
+import { Spin } from 'antd';
 import PageContainer from '~/widgets/layouts/PageContainer';
 import Meta from '~/shared/ui/meta';
 import {
@@ -44,9 +45,28 @@ const cleanDescription = (html: string) => {
 };
 
 const VideoDetailPage: React.FC<Props> = ({ video }) => {
-    const descriptionPlain = useMemo(() => cleanDescription(video.description), [video.description]);
-    const durationISO = useMemo(() => formatISO8601Duration(video.document.content_duration), [video.document.content_duration]);
-    const pageUrl = `https://soff.uz/video-lessons/${video.slug}`;
+    // Senior-level data validation and fallback
+    const descriptionPlain = useMemo(() => {
+        if (!video?.description) return '';
+        return cleanDescription(video.description);
+    }, [video?.description]);
+
+    const durationISO = useMemo(() => {
+        if (!video?.document?.content_duration) return 'PT0S';
+        return formatISO8601Duration(video.document.content_duration);
+    }, [video?.document?.content_duration]);
+
+    const pageUrl = `https://soff.uz/video-lessons/${video?.slug || ''}`;
+
+    if (!video) {
+        return (
+            <PageContainer withFooter={true}>
+                <div className="container py-5 text-center">
+                    <Spin size="large" />
+                </div>
+            </PageContainer>
+        );
+    }
 
     // VideoObject Schema
     const videoJsonLd = {
@@ -57,8 +77,8 @@ const VideoDetailPage: React.FC<Props> = ({ video }) => {
         "thumbnailUrl": [video.poster_url],
         "uploadDate": new Date().toISOString(), // Fallback to current date if missing from API
         "duration": durationISO,
-        "contentUrl": video.document.file_url || undefined,
-        "embedUrl": video.demo_link || undefined,
+        "contentUrl": video?.document?.file_url || undefined,
+        "embedUrl": video?.demo_link || undefined,
         "interactionStatistic": {
             "@type": "InteractionCounter",
             "interactionType": { "@type": "http://schema.org/WatchAction" },
@@ -115,19 +135,19 @@ const VideoDetailPage: React.FC<Props> = ({ video }) => {
             </Head>
 
             <Meta
-                title={`${video.title} | Soff.uz`}
+                title={`${video?.title || ''} | Soff.uz`}
                 description={descriptionPlain.slice(0, 160)}
-                image={video.poster_url}
+                image={video?.poster_url}
                 url={pageUrl}
                 type="video.other"
-                keywords={video.tag}
+                keywords={video?.tag}
             >
                 {/* Additional SEO meta tags */}
-                <meta property="og:video:duration" content={String(video.document.content_duration || '')} />
+                <meta property="og:video:duration" content={String(video?.document?.content_duration || '')} />
                 <meta name="twitter:label1" content="Davomiyligi" />
-                <meta name="twitter:data1" content={video.document.content_duration} />
+                <meta name="twitter:data1" content={video?.document?.content_duration} />
                 <meta name="twitter:label2" content="Ko'rishlar soni" />
-                <meta name="twitter:data2" content={String(video.view_count)} />
+                <meta name="twitter:data2" content={String(video?.view_count || 0)} />
             </Meta>
 
             <PageContainer withFooter={true}>

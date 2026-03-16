@@ -66,7 +66,6 @@ const PlaylistSlider: React.FC<Props> = ({
             >
                 <div className={styles.titleWrapper}>
                     <h2 className={styles.title}>{title}</h2>
-                    <span className={styles.subtitle}>Maxsus darsliklar to'plami</span>
                 </div>
                 {onSeeAll && (
                     <div className={styles.seeAll}>

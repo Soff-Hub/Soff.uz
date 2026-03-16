@@ -44,6 +44,10 @@ const VideoLessonsPage: React.FC = () => {
         setSearch(value);
     }, []);
 
+    const handleSeeAllPlaylists = () => {
+        router.push(`/video-lessons/playlists`);
+    };
+
     // Static Categories
     const categories = VIDEO_CATEGORIES;
 
@@ -143,6 +147,7 @@ const VideoLessonsPage: React.FC = () => {
 
                             {/* Playlists Section */}
                             <PlaylistSlider
+                                onSeeAll={handleSeeAllPlaylists}
                                 title="Playlistlar"
                                 playlists={playlistsData?.results || []}
                                 loading={isPlaylistsLoading}
