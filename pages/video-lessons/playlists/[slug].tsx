@@ -43,11 +43,20 @@ const PlaylistDetailSkeleton = () => (
 
 const PlaylistDetailPage: React.FC<Props> = ({ playlist }) => {
     const router = useRouter();
-    const { cartItems, setCartOneItem } = useCart();
+    const { 
+        playlistCartItems, 
+        setPlaylistCartOneItem, 
+        removePlaylistCartOneItem 
+    } = useCart();
     const token = useSelector((state: any) => state.auth.user?.access);
     const isLoggedIn = !!token;
 
     const [authModal, setAuthModal] = useState(false);
+
+    // Playlist Cart state
+    const isAddedToCart = useMemo(() => {
+        return playlistCartItems?.some((item: any) => Number(item.id) === Number(playlist?.id));
+    }, [playlistCartItems, playlist?.id]);
 
     // Video Player State
     const [showVideo, setShowVideo] = useState(false);
@@ -82,13 +91,32 @@ const PlaylistDetailPage: React.FC<Props> = ({ playlist }) => {
             setAuthModal(true);
             return;
         }
-        setCartOneItem(playlist.id);
+
+        const playlistWithSlug = { 
+            ...playlist, 
+            slug: playlist.slug || (router.query.slug as string) 
+        };
+
+        if (!isAddedToCart) {
+            setPlaylistCartOneItem(playlistWithSlug);
+        }
         router.push(`/account/checkout?id=${playlist.id}&type=playlist`);
     };
 
     const handleAddToCart = () => {
-        setCartOneItem(playlist.id);
-        message.success('Savatga qo\'shildi');
+        // Ensure slug is present even if SSR injection failed or data was stale
+        const playlistWithSlug = { 
+            ...playlist, 
+            slug: playlist.slug || (router.query.slug as string) 
+        };
+
+        if (isAddedToCart) {
+            removePlaylistCartOneItem(playlist.id);
+            message.success('Savatdan olib tashlandi');
+        } else {
+            setPlaylistCartOneItem(playlistWithSlug);
+            message.success('Savatga qo\'shildi');
+        }
     };
 
     // Video Player Effect
@@ -289,8 +317,11 @@ const PlaylistDetailPage: React.FC<Props> = ({ playlist }) => {
                                                     <button className={styles.btnBuy} onClick={handleBuyNow}>
                                                         Hozir sotib olish
                                                     </button>
-                                                    <button className={styles.btnCart} onClick={handleAddToCart}>
-                                                        Savatga qo'shish
+                                                    <button 
+                                                        className={`${styles.btnCart} ${isAddedToCart ? styles.inCart : ''}`} 
+                                                        onClick={handleAddToCart}
+                                                    >
+                                                        {isAddedToCart ? "Savatdan olish" : "Savatga qo'shish"}
                                                     </button>
                                                 </>
                                             )}
@@ -458,7 +489,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, params }) =>
 
         return {
             props: {
-                playlist,
+                playlist: { ...playlist, slug },
             },
         };
     } catch (error) {

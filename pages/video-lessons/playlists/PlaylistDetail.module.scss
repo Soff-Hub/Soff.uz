@@ -524,10 +524,21 @@
             font-weight: 700;
             font-size: 16px;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: all 0.2s ease;
 
             &:hover {
                 background: #f7f9fa;
+            }
+
+            &.inCart {
+                background: #fff1f0;
+                color: #ff4d4f;
+                border-color: #ff7875;
+
+                &:hover {
+                    background: #fff1f0;
+                    border-color: #ff4d4f;
+                }
             }
         }
     }

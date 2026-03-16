@@ -9,10 +9,13 @@ import useCart from '~/shared/hooks/useCart';
 import { cn, useRcn } from '~/shared/utilities/cn';
 import { fileColors } from '~/features/product-details/ui/actions/file-actions';
 
-const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
+const RedesignModulePaymentOrderSummary = ({ ecomerce, items }) => {
     const [percentage, setPercentage] = useState(0);
-    const { removeCartOneItem } = useCart();
+    const { removeCartOneItem, removePlaylistCartOneItem } = useCart();
     const dispatch = useDispatch();
+
+    // Use items if passed, otherwise fallback to ecomerce.cartDataItems
+    const cartItems = items || (ecomerce && ecomerce.cartDataItems) || [];
 
     const fontSizeClass = useRcn({
         mobile: 'text-sm',
@@ -26,7 +29,7 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
         desktop: 'h-auto',
     });
 
-    let amount = calculateAmount(ecomerce.cartDataItems);
+    let amount = calculateAmount(cartItems);
 
     async function getPercentage() {
         const responseData = await ProductRepository.getOrderPercentage();
@@ -42,7 +45,11 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
 
     const handleRemoveItem = async (e, item) => {
         e.preventDefault();
-        removeCartOneItem(item.id);
+        if (item.cartType === 'playlist') {
+            removePlaylistCartOneItem(item.id);
+        } else {
+            removeCartOneItem(item.id);
+        }
     };
 
     useEffect(() => {
@@ -66,7 +73,7 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
                     'px-4',
                     'py-2'
                 )}>
-                {ecomerce.cartDataItems.length} ta mahsulot
+                {cartItems.length} ta mahsulot
             </p>
             <div
                 className={cn(
@@ -77,10 +84,10 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
                     'py-2',
                     produtsHeightClass
                 )}>
-                {ecomerce.cartDataItems && ecomerce.cartDataItems.length > 0 ? (
-                    ecomerce.cartDataItems.map((item) => (
+                {cartItems && cartItems.length > 0 ? (
+                    cartItems.map((item) => (
                         <div
-                            key={item.id}
+                            key={`${item.cartType || 'product'}-${item.id}`}
                             className={cn(
                                 'flex',
                                 'items-start',
@@ -92,7 +99,12 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
                                 'transition'
                             )}>
                             <div className={cn('flex-1')}>
-                                <Link href={`/product/${item.slug}`}>
+                                <Link
+                                    href={
+                                        item.cartType === 'playlist'
+                                            ? `/video-lessons/playlists/${item.slug}`
+                                            : `/product/${item.slug}`
+                                    }>
                                     <a>
                                         <p
                                             className={cn(
@@ -103,6 +115,17 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
                                                 'line-clamp-2'
                                             )}>
                                             {item.title}
+                                            {item.cartType === 'playlist' && (
+                                                <span
+                                                    style={{
+                                                        fontSize: '12px',
+                                                        color: '#2ecc71',
+                                                        marginLeft: '8px',
+                                                        fontWeight: 'normal',
+                                                    }}>
+                                                    (Kurs)
+                                                </span>
+                                            )}
                                         </p>
                                     </a>
                                 </Link>
@@ -115,10 +138,14 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
                                     )}
                                     style={{
                                         background:
-                                            fileColors[item?.file_type] ||
-                                            '#007DFF',
+                                            item.cartType === 'playlist'
+                                                ? '#2ecc71'
+                                                : fileColors[item?.file_type] ||
+                                                  '#007DFF',
                                     }}>
-                                    {item?.file_type}
+                                    {item.cartType === 'playlist'
+                                        ? 'PLAYLIST'
+                                        : item?.file_type}
                                 </span>
                             </div>
 
@@ -146,7 +173,7 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
                                     />
                                 </button>
 
-                                {item.discount === 0 ? (
+                                {item.discount === 0 || !item.discount ? (
                                     <p
                                         className={cn(
                                             'font-medium',
@@ -155,7 +182,10 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
                                             'text-gray-800',
                                             'm-0'
                                         )}>
-                                        {addPeriodToThousands(item.price)} so'm
+                                        {addPeriodToThousands(
+                                            item.discount_price || item.price
+                                        )}{' '}
+                                        so'm
                                     </p>
                                 ) : (
                                     <div
@@ -199,7 +229,7 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce }) => {
             </div>
 
             {/* Footer */}
-            {ecomerce.cartDataItems && ecomerce.cartDataItems.length > 0 && (
+            {cartItems && cartItems.length > 0 && (
                 <div className={cn('border-t', 'p-4', 'bg-gray-50')}>
                     {percentage > 0 && (
                         <div

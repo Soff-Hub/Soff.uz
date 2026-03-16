@@ -9,13 +9,21 @@ import { Button } from 'antd';
 
 const Checkout = () => {
     const router = useRouter();
-    const { cartDataItems, status } = useSelector(state => state.ecomerce);
+    const { cartDataItems, playlistCartDataItems, status } = useSelector(
+        (state) => state.ecomerce
+    );
     if (!router.isReady) return null;
 
-    const isCartEmpty = !cartDataItems || cartDataItems.length === 0;
+    const allItems = [
+        ...(cartDataItems || []),
+        ...(playlistCartDataItems || []),
+    ];
+
+    const isCartEmpty = allItems.length === 0;
     let checkoutContent = null;
 
     if (isCartEmpty && status !== 'loading') {
+        // ... existing empty cart UI ...
         checkoutContent = (
             <div
                 style={{ height: '80vh' }}
@@ -56,16 +64,29 @@ const Checkout = () => {
             </div>
         );
     } else {
+        const { type: queryType, id } = router.query;
+        
+        // If type is not in URL, try to infer it from cart content
+        // If even one item in cart is a playlist, use 'playlist'
+        const inferredType = queryType || 
+            (playlistCartDataItems?.length > 0 ? 'playlist' : 'document');
+
         checkoutContent = (
             <div className="ps-form__content">
                 <div className="row d-flex justify-content-between my-5">
                     <div className="col-xl-7 col-lg-8 col-md-12 col-12">
                         <RedesignModulePaymentOrderSummary
-                            ecomerce={cartDataItems}
+                            items={allItems}
+                            type={inferredType}
+                            id={id}
                         />
                     </div>
                     <div className="col-xl-5 col-lg-4 col-md-12 col-12">
-                        <FormCheckoutInformation ecomerce={cartDataItems} />
+                        <FormCheckoutInformation
+                            items={allItems}
+                            type={inferredType}
+                            id={id}
+                        />
                     </div>
                 </div>
             </div>

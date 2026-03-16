@@ -18,11 +18,15 @@ const HeaderActions = () => {
     const { wishlist } = useWishlist();
     const { pathname } = useRouter();
     const { isDesktop, size } = useResponsive();
-    const data = useSelector((state) => state.ecomerce?.cartDataItems);
+    const { cartDataItems, playlistCartDataItems } = useSelector(
+        (state) => state.ecomerce
+    );
 
     const isTabletLimit = !isDesktop && size >= 650 && pathname !== '/';
     const isWishlistVisible = wishlist && wishlist.length > 0;
-    const isMiniCartVisible = data && data.length > 0;
+    const isMiniCartVisible =
+        (cartDataItems && cartDataItems.length > 0) ||
+        (playlistCartDataItems && playlistCartDataItems.length > 0);
 
     return (
         <div className={`site-header-actions flex-1`}>

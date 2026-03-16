@@ -31,22 +31,32 @@ const breadCrumb = [
 
 function ShoppingCart() {
     const state = useSelector((state) => state.auth.user);
-    const { cartDataItems, status } = useSelector((state) => state.ecomerce);
-    const { removeCartOneItem } = useCart();
+    const { cartDataItems, playlistCartDataItems, status } = useSelector(
+        (state) => state.ecomerce
+    );
+    const { removeCartOneItem, removePlaylistCartOneItem } = useCart();
     const [taxPercentage, setTaxPercentage] = useState(0.1); // Default 10%
-    const hasItems = cartDataItems && cartDataItems.length;
+
+    // Combine items for calculations
+    const allItems = [
+        ...(cartDataItems || []).map((item) => ({ ...item, cartType: 'product' })),
+        ...(playlistCartDataItems || []).map((item) => ({
+            ...item,
+            cartType: 'playlist',
+        })),
+    ];
+
+    const hasItems = allItems.length > 0;
     const isLoading = status === 'loading';
 
     useEffect(() => {
         async function getTaxPercentage() {
             try {
-                const responseData =
-                    await ProductRepository.getOrderPercentage();
+                const responseData = await ProductRepository.getOrderPercentage();
                 if (responseData?.data?.percentage) {
                     setTaxPercentage(responseData.data.percentage);
                 }
             } catch (error) {
-                // Use default 12% if API fails
                 console.error('Failed to fetch tax percentage:', error);
             }
         }
@@ -54,22 +64,24 @@ function ShoppingCart() {
     }, []);
 
     // Calculate totals
-    const subtotal = hasItems ? calculateAmount(cartDataItems) : 0;
+    const subtotal = hasItems ? calculateAmount(allItems) : 0;
     const tax = Math.floor(subtotal * taxPercentage);
     const total = subtotal + tax;
 
     const handleRemoveItem = (e, item) => {
         e.preventDefault();
-        removeCartOneItem(item.id);
+        if (item.cartType === 'playlist') {
+            removePlaylistCartOneItem(item.id);
+        } else {
+            removeCartOneItem(item.id);
+        }
     };
 
     let contentView;
     if (isLoading) {
         contentView = (
             <div className={styles.shoppingCartContent}>
-                <h2 className={styles.pageTitle}>
-                    Mahsulotlar ({cartDataItems.length})
-                </h2>
+                <h2 className={styles.pageTitle}>Mahsulotlar ({allItems.length})</h2>
                 <div className={styles.productsList}>
                     {Array.from({ length: 4 }).map((_, index) => (
                         <Skeleton.Button
@@ -88,18 +100,23 @@ function ShoppingCart() {
     } else if (hasItems) {
         contentView = (
             <div className={styles.shoppingCartContent}>
-                <h2 className={styles.pageTitle}>
-                    Mahsulotlar ({cartDataItems.length})
-                </h2>
+                <h2 className={styles.pageTitle}>Mahsulotlar ({allItems.length})</h2>
                 <div className={styles.productsList}>
-                    {cartDataItems.map((item) => (
-                        <div key={item.id} className={styles.productCard}>
+                    {allItems.map((item) => (
+                        <div
+                            key={`${item.cartType}-${item.id}`}
+                            className={styles.productCard}>
                             <div className={styles.productThumbnail}>
-                                <Link href={`/product/${item.slug}`}>
+                                <Link
+                                    href={
+                                        item.cartType === 'playlist'
+                                            ? `/video-lessons/playlists/${item.slug || item.id}`
+                                            : `/product/${item.slug || item.id}`
+                                    }>
                                     <a>
                                         <div className={styles.imageWrapper}>
                                             <Image
-                                                src={item.poster_url}
+                                                src={item.poster_url || item.image}
                                                 alt={item.title}
                                                 width={120}
                                                 height={120}
@@ -108,39 +125,68 @@ function ShoppingCart() {
                                                     objectFit: 'cover',
                                                 }}
                                             />
-                                            <div
-                                                className={styles.fileTypeBadge}
-                                                style={{
-                                                    backgroundColor:
-                                                        fileColors[
-                                                            item.file_type
-                                                        ] || '#E22C2F',
-                                                }}>
-                                                <Icon
-                                                    icon={
-                                                        fileReactIcons[
-                                                            item.file_type
-                                                        ]
-                                                    }
-                                                />
-                                                <span>{item.file_type}</span>
-                                            </div>
+                                            {item.cartType === 'product' && (
+                                                <div
+                                                    className={styles.fileTypeBadge}
+                                                    style={{
+                                                        backgroundColor:
+                                                            fileColors[item.file_type] ||
+                                                            '#E22C2F',
+                                                    }}>
+                                                    <Icon
+                                                        icon={
+                                                            fileReactIcons[
+                                                                item.file_type
+                                                            ]
+                                                        }
+                                                    />
+                                                    <span>{item.file_type}</span>
+                                                </div>
+                                            )}
+                                            {item.cartType === 'playlist' && (
+                                                <div
+                                                    className={styles.fileTypeBadge}
+                                                    style={{
+                                                        backgroundColor: '#2ecc71',
+                                                    }}>
+                                                    <Icon
+                                                        icon={fileReactIcons['VIDEO']}
+                                                    />
+                                                    <span>PLAYLIST</span>
+                                                </div>
+                                            )}
                                         </div>
                                     </a>
                                 </Link>
                             </div>
                             <div className={styles.productInfo}>
-                                <Link href={`/product/${item.slug}`}>
+                                <Link
+                                    href={
+                                        item.cartType === 'playlist'
+                                            ? `/video-lessons/playlists/${item.slug}`
+                                            : `/product/${item.slug}`
+                                    }>
                                     <a className={styles.productTitle}>
                                         {item.title}
+                                        {item.cartType === 'playlist' && (
+                                            <span
+                                                style={{
+                                                    fontSize: '12px',
+                                                    color: '#2ecc71',
+                                                    marginLeft: '8px',
+                                                    fontWeight: 'normal',
+                                                }}>
+                                                (Kurs)
+                                            </span>
+                                        )}
                                     </a>
                                 </Link>
                                 <div className={styles.productPrice}>
                                     {item.discount_price ? (
-                                        `${addPeriodToThousands(
-                                            item.discount_price
-                                        )}
+                                        `${addPeriodToThousands(item.discount_price)}
                                     so'm`
+                                    ) : item.price ? (
+                                        `${addPeriodToThousands(item.price)} so'm`
                                     ) : (
                                         <p
                                             className="free-product-text"
@@ -158,10 +204,7 @@ function ShoppingCart() {
                                                     'md:text-sm',
                                                     'ml-2'
                                                 )}>
-                                                {addPeriodToThousands(
-                                                    item.price
-                                                )}{' '}
-                                                so'm
+                                                {addPeriodToThousands(item.price)} so'm
                                             </del>
                                         </sup>
                                     ) : null}
@@ -185,7 +228,7 @@ function ShoppingCart() {
                         <div className={styles.summaryDetails}>
                             <span className={styles.summaryItem}>
                                 Jami mahsulotlar:{' '}
-                                <strong>{cartDataItems.length} ta</strong>
+                                <strong>{allItems.length} ta</strong>
                             </span>
                             <span className={styles.summaryItem}>
                                 Oraliq summa:{' '}
@@ -194,11 +237,8 @@ function ShoppingCart() {
                                 </strong>
                             </span>
                             <span className={styles.summaryItem}>
-                                Xizmat haqi ({Math.round(taxPercentage * 100)}
-                                %):{' '}
-                                <strong>
-                                    {addPeriodToThousands(tax)} so'm
-                                </strong>
+                                Xizmat haqi ({Math.round(taxPercentage * 100)}%):{' '}
+                                <strong>{addPeriodToThousands(tax)} so'm</strong>
                             </span>
                             <span className={styles.summaryItem}>
                                 Jami to'lov:{' '}

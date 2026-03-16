@@ -5,6 +5,7 @@ import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
 
 export interface EcommerceState {
     cartDataItems: any[];
+    playlistCartDataItems: any[]; // New field for playlists
     wishlist: any[];
     status: string;
     error: string | null;
@@ -12,6 +13,7 @@ export interface EcommerceState {
 
 const initialState: EcommerceState = {
     cartDataItems: [],
+    playlistCartDataItems: [], // Initial state
     wishlist: [],
     status: 'loading',
     error: null,
@@ -33,9 +35,16 @@ export const initLocalCart = createAsyncThunk(
     async (payload, { rejectWithValue }) => {
         const localWishlist = safeLocalStorage.getItem('wishlist');
         const localCart = safeLocalStorage.getItem('cart');
+        const localPlaylistCart = safeLocalStorage.getItem('playlistCart'); // Load playlists
 
         const parsedWishlist = localWishlist ? JSON.parse(localWishlist) : [];
         const parsedCartList = localCart ? JSON.parse(localCart) : [];
+        const parsedPlaylistCart =
+            localPlaylistCart ? JSON.parse(localPlaylistCart) : [];
+
+        let wishlistData = [];
+        let cartData = [];
+        let playlistData = parsedPlaylistCart; // Initialized with local data
 
         if (parsedWishlist.length || parsedCartList.length) {
             try {
@@ -45,27 +54,23 @@ export const initLocalCart = createAsyncThunk(
                         documents: [...parsedWishlist, ...parsedCartList],
                     }
                 );
-                return {
-                    wishlist: parsedWishlist.map(
-                        (_el: any, i: number) => resp.data?.data?.[i]
-                    ),
-                    cart: parsedCartList.map(
-                        (_el: any, i: number) =>
-                            resp.data?.data?.[parsedWishlist.length + i]
-                    ),
-                };
+                wishlistData = parsedWishlist.map(
+                    (_el: any, i: number) => resp.data?.data?.[i]
+                );
+                cartData = parsedCartList.map(
+                    (_el: any, i: number) =>
+                        resp.data?.data?.[parsedWishlist.length + i]
+                );
             } catch (error) {
-                return {
-                    wishlist: [],
-                    cart: [],
-                };
+                console.error('Failed to init local cart documents:', error);
             }
-        } else {
-            return {
-                wishlist: [],
-                cart: [],
-            };
         }
+
+        return {
+            wishlist: wishlistData,
+            cart: cartData,
+            playlistCart: playlistData, // Return playlist data
+        };
     }
 );
 
@@ -100,6 +105,16 @@ const ecommerceSlice = createSlice({
             );
 
             state.cartDataItems.push(action.payload[0]);
+        },
+        // Playlist reducers
+        setPlaylistCartDataItems: (state, action) => {
+            safeLocalStorage.setItem('playlistCart', JSON.stringify(action.payload));
+            state.playlistCartDataItems = action.payload;
+        },
+        setPlaylistCartItemDataItems: (state, action) => {
+            const current = [...state.playlistCartDataItems, action.payload];
+            safeLocalStorage.setItem('playlistCart', JSON.stringify(current));
+            state.playlistCartDataItems = current;
         },
         setSaved: (state, action) => {
             const localData = action.payload.map((item: any) => item.id);
@@ -138,6 +153,7 @@ const ecommerceSlice = createSlice({
             .addCase(initLocalCart.fulfilled, (state, action) => {
                 state.wishlist = action.payload.wishlist;
                 state.cartDataItems = action.payload.cart;
+                state.playlistCartDataItems = action.payload.playlistCart || [];
                 state.status = 'idle';
             });
     },
@@ -146,6 +162,8 @@ const ecommerceSlice = createSlice({
 export const {
     setCartDataItems,
     setCartItemDataItems,
+    setPlaylistCartDataItems,
+    setPlaylistCartItemDataItems,
     setSaved,
     setSavedItem,
 } = ecommerceSlice.actions;

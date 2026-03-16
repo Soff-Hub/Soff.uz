@@ -70,7 +70,10 @@ const FormSubmitButton = ({ hisob, message, className, ...rest }) => (
 
 const CreditCard2 = ({ document, type }) => {
     const { user } = useSelector((state) => state.auth);
-    const ecomerce = useSelector((state) => state.ecomerce.cartDataItems);
+    const { cartDataItems, playlistCartDataItems } = useSelector(
+        (state) => state.ecomerce
+    );
+    const ecomerce = [...(cartDataItems || []), ...(playlistCartDataItems || [])];
     const { affiliateId } = useSelector((state) => state.affiliate);
     const { removeAll } = useCart();
     const { startTimeout } = useTimeManager();
@@ -130,17 +133,20 @@ const CreditCard2 = ({ document, type }) => {
     async function handleClickCardPostsclick(e) {
         e.preventDefault();
         setMessage(false);
+        const purchaseType = (playlistCartDataItems?.length > 0 || type === 'playlist') ? 'playlist' : 'document';
+
         const ItemsData = await PostRepository.postClickCardNumber(
             document,
             'click',
-            `${type || 'document'}`,
+            purchaseType,
             user?.access,
             affiliate_code
         );
         if (ItemsData?.status === 201) {
             setMessage(true);
             // localStorage.removeItem('cart');
-            Router.push(ItemsData?.data?.url);
+            // Router.push(ItemsData?.data?.url);
+            window.open(ItemsData?.data?.url, '_blank');
         } else {
             setMessage(true);
             const modal = Modal.error({
@@ -155,10 +161,12 @@ const CreditCard2 = ({ document, type }) => {
     async function handleClickCardPostsPayme(e) {
         e.preventDefault();
         setMessage(false);
+        const purchaseType = (playlistCartDataItems?.length > 0 || type === 'playlist') ? 'playlist' : 'document';
+
         const ItemsData = await PostRepository.postClickCardNumber(
             document,
             'payme',
-            `${type || 'document'}`,
+            purchaseType,
             user?.access,
             affiliate_code
         );
@@ -180,11 +188,13 @@ const CreditCard2 = ({ document, type }) => {
     async function handleClickCardPosts(e) {
         e.preventDefault();
         setMessage(false);
+        const purchaseType = (playlistCartDataItems?.length > 0 || type === 'playlist') ? 'playlist' : 'document';
+
         const ItemsData = await PostRepository.postClickCard(
             document,
             numberCardVal,
             cardDate,
-            `${type || 'document'}`,
+            purchaseType,
             user?.access,
             affiliate_code
         );

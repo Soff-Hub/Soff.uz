@@ -126,5 +126,6 @@ export interface PlaylistDetail {
     price: number;
     created_at: string;
     is_purchased_playlist: boolean;
-    seller: Seller; // From user request, I should check if seller is in the real API
+    seller: Seller;
+    slug?: string;
 }

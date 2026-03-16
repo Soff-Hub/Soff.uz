@@ -114,7 +114,10 @@ class PostRepository {
         const data = {
             documents: documents,
             provider: provider,
-            purchase_type: type,
+        }
+
+        if (type && type !== 'document') {
+            data.purchase_type = type;
         }
 
         if (affiliate_code) {
@@ -143,7 +146,10 @@ class PostRepository {
             expire_date,
             card_number,
             provider: 'card_data',
-            purchase_type: type,
+        }
+
+        if (type && type !== 'document') {
+            data.purchase_type = type;
         }
 
         if (affiliate_code) {

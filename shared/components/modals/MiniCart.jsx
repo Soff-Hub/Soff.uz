@@ -26,18 +26,35 @@ const fullWidthStyle = {
 
 const MiniCart = () => {
     const state = useSelector((state) => state.auth.user);
-    const data = useSelector((state) => state.ecomerce.cartDataItems);
+    const { cartDataItems, playlistCartDataItems } = useSelector(
+        (state) => state.ecomerce
+    );
 
-    const amount = calculateAmount(data);
+    // Combine items
+    const allItems = [
+        ...(cartDataItems || []).map((item) => ({
+            ...item,
+            cartType: 'product',
+        })),
+        ...(playlistCartDataItems || []).map((item) => ({
+            ...item,
+            cartType: 'playlist',
+        })),
+    ];
+
+    const amount = calculateAmount(allItems);
     const hisob = addPeriodToThousands(amount);
 
     // Popover content for cart items
     const cartContent =
-        data && data.length > 0 ? (
+        allItems.length > 0 ? (
             <div className={'ps-basket__content'}>
                 <div className="ps-basket__content__items">
-                    {data?.map((item) => (
-                        <ProductOnCart product={item} key={item?.id} />
+                    {allItems.map((item) => (
+                        <ProductOnCart
+                            product={item}
+                            key={`${item.cartType}-${item.id}`}
+                        />
                     ))}
                 </div>
                 <div className="ps-basket__content__footer">
@@ -122,7 +139,7 @@ const MiniCart = () => {
                         'transition-transform duration-200 hover:scale-105'
                     )}>
                     <a>
-                        <Badge count={data.length}>
+                        <Badge count={allItems.length}>
                             <MdOutlineShoppingCart
                                 className={styles.headerIcon}
                             />
