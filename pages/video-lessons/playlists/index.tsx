@@ -30,7 +30,7 @@ const PlaylistsPage: React.FC = () => {
     const allPlaylists = data?.pages.flatMap((page) => page.results) || [];
 
     const handlePlaylistClick = (slug: string) => {
-        router.push(`/product/${slug}`);
+        router.push(`/video-lessons/playlists/${slug}`);
     };
 
     return (

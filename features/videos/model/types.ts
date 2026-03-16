@@ -110,3 +110,21 @@ export interface VideoFilters {
     order_by_views?: '-view_count' | 'view_count';
     direction?: string;
 }
+export interface PlaylistGroup {
+    id: number;
+    title: string;
+    description: string | null;
+    videos: VideoDetail[];
+}
+
+export interface PlaylistDetail {
+    id: number;
+    title: string;
+    description: string;
+    image: string;
+    playlist_groups: PlaylistGroup[];
+    price: number;
+    created_at: string;
+    is_purchased_playlist: boolean;
+    seller: Seller; // From user request, I should check if seller is in the real API
+}

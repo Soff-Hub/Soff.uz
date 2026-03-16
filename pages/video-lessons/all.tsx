@@ -44,6 +44,10 @@ const VideoLessonsPage: React.FC = () => {
         setSearch(value);
     }, []);
 
+    const handlePlaylistClick = (slug: string) => {
+        router.push(`/video-lessons/playlists/${slug}`);
+    };
+
     const handleSeeAllPlaylists = () => {
         router.push(`/video-lessons/playlists`);
     };
@@ -151,7 +155,7 @@ const VideoLessonsPage: React.FC = () => {
                                 title="Playlistlar"
                                 playlists={playlistsData?.results || []}
                                 loading={isPlaylistsLoading}
-                                onPlaylistClick={handleVideoClick}
+                                onPlaylistClick={handlePlaylistClick}
                             />
 
                             {/* Top Categories Sections - Lazy loaded via CategorySlider */}
