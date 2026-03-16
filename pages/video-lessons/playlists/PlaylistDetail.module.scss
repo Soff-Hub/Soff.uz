@@ -65,6 +65,258 @@
     }
 }
 
+// Preview Modal Styles
+.previewModal {
+    :global(.ant-modal-content) {
+        border-radius: 4px;
+        overflow: hidden;
+        background-color: #1c1d1f;
+        padding: 0 !important;
+    }
+    :global(.ant-modal-mask) {
+        background-color: rgba(0, 0, 0, 0.85) !important;
+    }
+    :global(.ant-modal-close) {
+        top: 20px;
+        right: 20px;
+    }
+}
+
+.modalContent {
+    background: #1c1d1f;
+    display: flex;
+    flex-direction: column;
+
+    .modalHeader {
+        padding: 24px 32px;
+        background: #1c1d1f;
+
+        .previewLabel {
+            color: #d1d7dc;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .previewTitle {
+            color: #fff;
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0;
+        }
+    }
+
+    .playerSection {
+        position: relative;
+        background: #000;
+        aspect-ratio: 16 / 9;
+
+        video {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .qualityOverlay {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+
+        .qualityBtn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(45, 47, 49, 0.8);
+            backdrop-filter: blur(8px);
+            padding: 8px 16px;
+            border-radius: 4px;
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.1);
+            }
+        }
+    }
+
+    .playlistDrawer {
+        max-height: 350px;
+        overflow-y: auto;
+        background: #1c1d1f;
+        padding: 24px 32px;
+
+        .drawerTitle {
+            color: #fff;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .drawerList {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .drawerItem {
+            display: flex;
+            gap: 16px;
+            padding: 8px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s;
+
+            &:hover {
+                background: #2d2f31;
+            }
+
+            &.active {
+                background: #3e4143;
+                .drawerName {
+                    color: #2ecc71;
+                }
+            }
+
+            .drawerThumb {
+                width: 120px;
+                aspect-ratio: 16 / 9;
+                position: relative;
+                flex-shrink: 0;
+                border-radius: 2px;
+                overflow: hidden;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+
+                .playIconOverlay {
+                    position: absolute;
+                    inset: 0;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background: rgba(0, 0, 0, 0.4);
+                    color: #fff;
+                    font-size: 24px;
+                    opacity: 0;
+                    transition: opacity 0.2s;
+                }
+            }
+
+            &:hover .playIconOverlay {
+                opacity: 1;
+            }
+
+            .drawerInfo {
+                flex: 1;
+                .drawerName {
+                    color: #fff;
+                    font-size: 14px;
+                    font-weight: 600;
+                    margin-bottom: 4px;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    line-clamp: 2;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                }
+                .drawerMeta {
+                    color: #d1d7dc;
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+
+    .purchaseOverlay {
+        position: absolute;
+        inset: 0;
+        z-index: 200;
+        background: rgba(28, 29, 31, 1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 40px;
+        text-align: center;
+
+        .lockIcon {
+            font-size: 56px;
+            color: #2ecc71;
+            margin-bottom: 24px;
+        }
+
+        .overlayTitle {
+            color: #fff;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .overlayText {
+            color: #d1d7dc;
+            font-size: 16px;
+            margin-bottom: 32px;
+            max-width: 450px;
+        }
+
+        .overlayBtn {
+            padding: 12px 40px;
+            background: #2ecc71;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+
+            &:hover {
+                background: #27ae60;
+                transform: scale(1.02);
+            }
+        }
+    }
+}
+
+.qualityMenu {
+    background: #1c1d1f !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    padding: 8px !important;
+
+    :global(.ant-dropdown-menu-item) {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        color: #fff !important;
+        padding: 8px 16px !important;
+        border-radius: 4px !important;
+
+        &:hover {
+            background: #2d2f31 !important;
+        }
+
+        &.activeItem {
+            color: #2ecc71 !important;
+            background: rgba(46, 204, 113, 0.1) !important;
+            color: #fff;
+        }
+
+        .checkIcon {
+            color: #2ecc71;
+        }
+    }
+}
+
 .mainSection {
     margin-top: 40px;
 
@@ -150,9 +402,18 @@
     transition: background 0.2s;
     text-decoration: none;
     color: inherit;
+    cursor: pointer;
 
     &:hover {
         background: #f7f9fa;
+    }
+
+    &.active {
+        background: rgba(46, 204, 113, 0.05);
+        .lessonTitle {
+            color: #2ecc71 !important;
+            font-weight: 700;
+        }
     }
 
     .lessonInfo {

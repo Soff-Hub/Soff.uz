@@ -628,6 +628,22 @@
     }
 }
 
+.previewModalWrapper {
+    :global(.ant-modal-content) {
+        background-color: #1c1d1f !important;
+        padding: 0 !important;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+    :global(.ant-modal-mask) {
+        background-color: rgba(0, 0, 0, 0.85) !important;
+    }
+    :global(.ant-modal-close) {
+        top: 20px;
+        right: 20px;
+    }
+}
+
 /* Modal and Preview Video Styles */
 .modalContent {
     background: #1c1d1f;

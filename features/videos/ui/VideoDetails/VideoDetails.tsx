@@ -485,28 +485,11 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
                 className={styles.previewModal}
                 wrapClassName={styles.previewModalWrapper}
                 bodyStyle={{ padding: 0, backgroundColor: '#1c1d1f', overflow: 'hidden' }}
+                maskStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.9)' }}
                 destroyOnClose
                 closeIcon={<CloseOutlined style={{ color: '#fff', fontSize: '18px' }} />}
             >
                 <div className={styles.modalContent}>
-                    {limitReached && (
-                        <div className={styles.purchaseOverlay}>
-                            <LockOutlined className={styles.lockIcon} />
-                            <h3 className={styles.overlayTitle}>Video darsning davomini ko'rish uchun sotib oling</h3>
-                            <p className={styles.overlayText}>
-                                Siz hozirgina darsning 10% qismini ko'rdungiz. To'liq darsni va boshqa barcha imkoniyatlarni qo'lga kiritish uchun kursni sotib olishingiz kerak.
-                            </p>
-                            <button
-                                className={styles.overlayBtn}
-                                onClick={() => {
-                                    setShowVideo(false);
-                                    handleJoinOrBuy();
-                                }}
-                            >
-                                Kursni sotib olish
-                            </button>
-                        </div>
-                    )}
                     <div className={styles.modalHeader}>
                         <p className={styles.previewLabel}>Kurs preview</p>
                         <h2 className={styles.previewTitle}>{video?.title?.replace(/_/g, ' ')}</h2>
@@ -531,10 +514,7 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
                                 }
                             }}
                             onEnded={() => {
-                                // If playing preview (no file_url) and video ends, suggest purchase
-                                if (!video?.document?.file_url && !isFree) {
-                                    setLimitReached(true);
-                                }
+                                // Simply end the preview
                             }}
                         >
                             Sizning brauzeringiz video qo'llab-quvvatlamaydi.
