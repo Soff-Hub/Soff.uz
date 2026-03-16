@@ -6,8 +6,10 @@ import { useQuery, useInfiniteQuery } from '@tanstack/react-query';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {
     fetchVideos,
+    fetchPlaylists,
     CategorySlider,
     VideoSlider,
+    PlaylistSlider,
     VideoGrid,
     VideoSearch,
 } from '~/features/videos';
@@ -50,6 +52,13 @@ const VideoLessonsPage: React.FC = () => {
         queryKey: ['videos', 'popular'],
         queryFn: () => fetchVideos({ order_by_views: '-view_count', page_size: 15 }),
         enabled: !search, // Skip popular videos if searching
+    });
+
+    // Fetch Playlists
+    const { data: playlistsData, isLoading: isPlaylistsLoading } = useQuery({
+        queryKey: ['playlists'],
+        queryFn: () => fetchPlaylists({ page_size: 10 }),
+        enabled: !search,
     });
 
     // 3. Infinite Query for All Videos
@@ -130,6 +139,14 @@ const VideoLessonsPage: React.FC = () => {
                                 loading={isPopularLoading}
                                 onVideoClick={handleVideoClick}
                                 variant="horizontal"
+                            />
+
+                            {/* Playlists Section */}
+                            <PlaylistSlider
+                                title="Playlistlar"
+                                playlists={playlistsData?.results || []}
+                                loading={isPlaylistsLoading}
+                                onPlaylistClick={handleVideoClick}
                             />
 
                             {/* Top Categories Sections - Lazy loaded via CategorySlider */}

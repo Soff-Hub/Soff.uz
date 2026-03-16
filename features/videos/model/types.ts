@@ -7,6 +7,29 @@ export interface Category {
 export interface Playlist {
     id: number;
     title: string;
+    price: number;
+    seller: {
+        id: number;
+        first_name: string;
+        last_name: string;
+        image_url: string | null;
+        last_login: string;
+    };
+    type: string;
+    slug: string;
+    poster_url: string;
+    views_count: number;
+    video_count: number;
+    playlist_group_count: number;
+    preview_url: string | null;
+    created_at: string;
+}
+
+export interface PlaylistResponse {
+    count: number;
+    next: string | null;
+    previous: string | null;
+    results: Playlist[];
 }
 
 export interface Video {

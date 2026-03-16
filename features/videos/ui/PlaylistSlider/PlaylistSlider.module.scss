@@ -1,0 +1,178 @@
+.sliderSection {
+    margin-bottom: 48px;
+    position: relative;
+    padding: 0 4px;
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-bottom: 24px;
+        padding: 0 8px;
+
+        &.clickable {
+            cursor: pointer;
+
+            &:hover .seeAll {
+                color: #2962ff;
+            }
+        }
+
+        .titleWrapper {
+            .title {
+                font-size: 24px;
+                font-weight: 800;
+                color: #1a1a1a;
+                margin: 0;
+                line-height: 1.2;
+            }
+
+            .subtitle {
+                font-size: 14px;
+                color: #8c8c8c;
+                display: block;
+                margin-top: 4px;
+            }
+        }
+
+        .seeAll {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #595959;
+            transition: color 0.2s;
+
+            svg {
+                font-size: 12px;
+            }
+        }
+    }
+
+    .sliderWrapper {
+        position: relative;
+
+        &:hover {
+            .navButton {
+                opacity: 1;
+            }
+        }
+
+        .scrollInnerWrapper {
+            overflow: hidden; // This clips the scrollbar pushed down by scrollContainer
+            width: 100%;
+            position: relative;
+        }
+
+        .scrollContainer {
+            display: grid;
+            grid-auto-flow: column;
+            grid-auto-columns: calc((100% - 60px) / 4); // Perfect 4 items
+            gap: 20px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            scroll-behavior: smooth;
+            padding: 12px 8px 40px; // Extra bottom padding for scrollbar
+            margin: 0 -8px -40px; // Negative margin to pull it back and hide the extra padding
+            
+            // Native hiding as well (fallback)
+            scrollbar-width: none !important;
+            -ms-overflow-style: none !important;
+
+            &::-webkit-scrollbar {
+                display: none !important;
+                width: 0 !important;
+                height: 0 !important;
+            }
+            
+            -webkit-overflow-scrolling: touch;
+
+            .slide {
+                width: 100%; // Fill the grid column
+                min-width: 250px;
+                
+                // Remove restrictive max-width to avoid right-side gaps on wide screens
+                // but keep it reasonable for extremely large displays
+                @media (min-width: 1600px) {
+                    max-width: 400px;
+                }
+
+                @media (max-width: 1400px) {
+                    // grid-auto-columns is already handled by the parent
+                }
+
+                @media (max-width: 1200px) {
+                    // Handled by media query on scrollContainer
+                }
+            }
+        }
+
+        .navButton {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: #ffffff;
+            border: 1px solid #f0f0f0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.2s;
+            opacity: 0;
+
+            &:hover {
+                background: #f8f9fa;
+                box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+                color: #2962ff;
+            }
+
+            &.prevButton {
+                left: -22px;
+            }
+
+            &.nextButton {
+                right: -22px;
+            }
+        }
+    }
+}
+
+// Responsive Grid Columns
+@media (max-width: 1200px) {
+    .sliderSection .sliderWrapper .scrollContainer {
+        grid-auto-columns: calc((100% - 40px) / 3); // 3 items
+    }
+}
+
+@media (max-width: 992px) {
+    .sliderSection .sliderWrapper .scrollContainer {
+        grid-auto-columns: calc((100% - 20px) / 2); // 2 items
+    }
+}
+
+@media (max-width: 576px) {
+    .sliderSection .sliderWrapper .scrollContainer {
+        grid-auto-columns: 85%; // Hint of next card
+        gap: 16px;
+    }
+}
+
+@media (max-width: 768px) {
+    .sliderSection {
+        .header {
+            .title {
+                font-size: 20px;
+            }
+        }
+
+        .navButton {
+            display: none; // Hide arrows on mobile
+        }
+    }
+}

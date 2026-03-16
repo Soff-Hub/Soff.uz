@@ -1,5 +1,5 @@
 import { $api } from '~/shared/api';
-import { Category, VideoDetail, VideoFilters, VideoResponse } from '~/features/videos/model/types';
+import { Category, PlaylistResponse, VideoDetail, VideoFilters, VideoResponse } from '~/features/videos/model/types';
 
 export const fetchVideos = async (params: VideoFilters): Promise<VideoResponse> => {
     const { data } = await $api.get<VideoResponse>('/api/v1/customer/videos/', {
@@ -7,6 +7,13 @@ export const fetchVideos = async (params: VideoFilters): Promise<VideoResponse> 
             ...params,
             direction: 'video',
         },
+    });
+    return data;
+};
+
+export const fetchPlaylists = async (params: any = {}): Promise<PlaylistResponse> => {
+    const { data } = await $api.get<PlaylistResponse>('/api/v1/customer/playlists/', {
+        params
     });
     return data;
 };

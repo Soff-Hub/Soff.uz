@@ -13,3 +13,5 @@ export { default as SimilarVideos } from './ui/SimilarVideos/SimilarVideos';
 export { default as SellerMoreVideos } from './ui/SellerMoreVideos/SellerMoreVideos';
 export { default as VideoDetails } from './ui/VideoDetails/VideoDetails';
 export { default as VideoSearch } from './ui/VideoSearch/VideoSearch';
+export { default as PlaylistCard } from './ui/PlaylistCard/PlaylistCard';
+export { default as PlaylistSlider } from './ui/PlaylistSlider/PlaylistSlider';
