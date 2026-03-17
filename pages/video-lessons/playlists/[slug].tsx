@@ -12,6 +12,7 @@ import {
     HistoryOutlined,
     RightOutlined,
     CloseOutlined,
+    LockOutlined
 } from '@ant-design/icons';
 import { Collapse, message, Spin, Modal } from 'antd';
 import * as cookie from 'cookie';
@@ -56,7 +57,6 @@ const PlaylistDetailPage: React.FC<Props> = ({ playlist }) => {
         return playlistCartItems?.some((item: any) => Number(item.id) === Number(playlist?.id));
     }, [playlistCartItems, playlist?.id]);
 
-    // Video Player State
     const [showVideo, setShowVideo] = useState(false);
     const [activeVideo, setActiveVideo] = useState<any>(null);
     const [limitReached, setLimitReached] = useState(false);
@@ -309,9 +309,12 @@ const PlaylistDetailPage: React.FC<Props> = ({ playlist }) => {
 
                             return (
                                 <PlyrPlayer
+                                    key={activeVideo.id}
                                     videoSrc={videoSrc}
                                     token={token}
                                     poster={activeVideo.poster_url}
+                                    isAccessRestricted={!hasFullAccess}
+                                    onBuyClick={handleBuyNow}
                                 />
                             );
                         })()}

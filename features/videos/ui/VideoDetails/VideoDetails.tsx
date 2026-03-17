@@ -10,7 +10,8 @@ import {
     ClockCircleOutlined,
     CloseOutlined,
     HeartOutlined,
-    HeartFilled
+    HeartFilled,
+    LockOutlined
 } from '@ant-design/icons';
 import Link from 'next/link';
 
@@ -407,10 +408,13 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
                     >
                         {showVideo && (
                             <PlyrPlayer
+                                key={video.id}
                                 videoSrc={video?.document?.file_url || video?.document?.short_content_url}
                                 token={token}
                                 poster={video?.poster_url}
                                 onPortraitStateChange={setIsPortrait}
+                                isAccessRestricted={!hasAccess}
+                                onBuyClick={handleJoinOrBuy}
                             />
                         )}
                     </div>

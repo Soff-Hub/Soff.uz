@@ -4,17 +4,46 @@ import Hls from 'hls.js';
 import Plyr from 'plyr';
 import 'plyr/dist/plyr.css';
 import styles from './PlyrPlayer.module.scss';
+import { LockOutlined } from '@ant-design/icons';
 
 interface PlyrPlayerProps {
     videoSrc: string;
     token?: string;
     poster?: string;
     onPortraitStateChange?: (isPortrait: boolean) => void;
+    onEnded?: () => void;
+    isAccessRestricted?: boolean;
+    onBuyClick?: () => void;
 }
 
-const PlyrPlayer: React.FC<PlyrPlayerProps> = ({ videoSrc, token, poster, onPortraitStateChange }) => {
+const PlyrPlayer: React.FC<PlyrPlayerProps> = ({ 
+    videoSrc, 
+    token, 
+    poster, 
+    onPortraitStateChange, 
+    onEnded,
+    isAccessRestricted,
+    onBuyClick
+}) => {
     const [videoElement, setVideoElement] = useState<HTMLVideoElement | null>(null);
+    const [showCta, setShowCta] = useState(false);
     const hlsRef = React.useRef<Hls | null>(null);
+    const playerRef = React.useRef<Plyr | null>(null);
+
+    useEffect(() => {
+        setShowCta(false); // Reset when src changes
+    }, [videoSrc]);
+
+    const handleVideoEnded = () => {
+        if (isAccessRestricted) {
+            // Exit fullscreen if active to ensure CTA is visible and clickable
+            if (playerRef.current?.fullscreen?.active) {
+                playerRef.current.fullscreen.exit();
+            }
+            setShowCta(true);
+        }
+        if (onEnded) onEnded();
+    };
 
     useEffect(() => {
         if (!videoElement || !videoSrc) return;
@@ -89,9 +118,13 @@ const PlyrPlayer: React.FC<PlyrPlayerProps> = ({ videoSrc, token, poster, onPort
                     },
                 });
 
+                playerRef.current = player;
+
                 player.on('ready', () => {
                     player?.play().catch((e: any) => console.error("[Plyr] Auto-play failed:", e));
                 });
+
+                player.on('ended', handleVideoEnded);
             });
 
             hls.on(Hls.Events.ERROR, (event, data) => {
@@ -115,9 +148,11 @@ const PlyrPlayer: React.FC<PlyrPlayerProps> = ({ videoSrc, token, poster, onPort
             // Safari has native HLS support or MP4 video format etc.
             videoElement.src = videoSrc;
             player = new Plyr(videoElement, defaultOptions);
+            playerRef.current = player;
             videoElement.addEventListener('loadedmetadata', () => {
                 player?.play().catch((e: any) => console.error("Playback failed:", e));
             });
+            player.on('ended', handleVideoEnded);
         }
 
         return () => {
@@ -128,6 +163,7 @@ const PlyrPlayer: React.FC<PlyrPlayerProps> = ({ videoSrc, token, poster, onPort
                 hlsRef.current.destroy();
                 hlsRef.current = null;
             }
+            playerRef.current = null;
         };
     }, [videoElement, videoSrc, token]);
 
@@ -146,6 +182,24 @@ const PlyrPlayer: React.FC<PlyrPlayerProps> = ({ videoSrc, token, poster, onPort
                     }
                 }}
             />
+
+            {showCta && isAccessRestricted && (
+                <div className={styles.ctaOverlay}>
+                    <LockOutlined className={styles.ctaIcon} />
+                    <h3 className={styles.ctaTitle}>Darsning davomi mavjud</h3>
+                    <p className={styles.ctaText}>
+                        Ushbu darsning to'liq variantini ko'rish uchun kursni sotib olishingiz kerak bo'ladi.
+                    </p>
+                    <button 
+                        className={styles.ctaButton} 
+                        onClick={() => {
+                            if (onBuyClick) onBuyClick();
+                        }}
+                    >
+                        To'liq darsni xarid qilish
+                    </button>
+                </div>
+            )}
         </div>
     );
 };
