@@ -11,14 +11,11 @@ import {
     MobileOutlined,
     HistoryOutlined,
     RightOutlined,
-    SettingOutlined,
-    CheckOutlined,
     CloseOutlined,
-    LockOutlined
 } from '@ant-design/icons';
-import { Collapse, message, Spin, Modal, Dropdown, Menu } from 'antd';
+import { Collapse, message, Spin, Modal } from 'antd';
 import * as cookie from 'cookie';
-import Hls from 'hls.js';
+import dynamic from 'next/dynamic';
 
 import PageContainer from '~/widgets/layouts/PageContainer';
 import Meta from '~/shared/ui/meta';
@@ -28,6 +25,7 @@ import useCart from '~/shared/hooks/useCart';
 import AuthModal from '~/features/auth/ui/auth-modal';
 
 import styles from './PlaylistDetail.module.scss';
+const PlyrPlayer = dynamic(() => import('~/features/videos/ui/PlyrPlayer/PlyrPlayer'), { ssr: false });
 
 const { Panel } = Collapse;
 
@@ -61,12 +59,7 @@ const PlaylistDetailPage: React.FC<Props> = ({ playlist }) => {
     // Video Player State
     const [showVideo, setShowVideo] = useState(false);
     const [activeVideo, setActiveVideo] = useState<any>(null);
-    const [videoElement, setVideoElement] = useState<HTMLVideoElement | null>(null);
-    const [qualityLevels, setQualityLevels] = useState<any[]>([]);
-    const [currentQuality, setCurrentQuality] = useState<number>(-1);
-    const [activeHeight, setActiveHeight] = useState<number | null>(null);
     const [limitReached, setLimitReached] = useState(false);
-    const hlsRef = React.useRef<Hls | null>(null);
 
     const formatPrice = (price: number) => {
         return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
@@ -119,65 +112,7 @@ const PlaylistDetailPage: React.FC<Props> = ({ playlist }) => {
         }
     };
 
-    // Video Player Effect
-    React.useEffect(() => {
-        if (!showVideo || !videoElement || !activeVideo) return;
 
-        // Determination of URL: file_url for owners/free, short_content_url for preview
-        const hasFullAccess = !!activeVideo.document.file_url || playlist.is_purchased_playlist;
-        const videoSrc = hasFullAccess 
-            ? activeVideo.document.file_url || activeVideo.document.short_content_url
-            : activeVideo.document.short_content_url;
-
-        if (!videoSrc) return;
-
-        if (hlsRef.current) {
-            hlsRef.current.destroy();
-            hlsRef.current = null;
-        }
-
-        if (Hls.isSupported()) {
-            const hls = new Hls({
-                xhrSetup: (xhr, url) => {
-                    let finalUrl = url;
-                    if (url.includes('/video-key/')) {
-                        const base = process.env.NEXT_PUBLIC_BASE_URL || '';
-                        const match = url.match(/\/api\/v1\/.*/);
-                        if (match) finalUrl = `${base}${match[0]}`;
-                    }
-                    xhr.open('GET', finalUrl);
-                    if (finalUrl.includes('/video-key/') && token) {
-                        xhr.setRequestHeader('Authorization', `Bearer ${token}`);
-                    }
-                }
-            });
-
-            hls.loadSource(videoSrc);
-            hls.attachMedia(videoElement);
-
-            hls.on(Hls.Events.MANIFEST_PARSED, () => {
-                setQualityLevels(hls.levels);
-                videoElement.play().catch(console.error);
-            });
-
-            hls.on(Hls.Events.LEVEL_SWITCHED, (event, data) => {
-                const level = hls.levels[data.level];
-                if (level) setActiveHeight(level.height);
-            });
-
-            hlsRef.current = hls;
-        } else if (videoElement.canPlayType('application/vnd.apple.mpegurl')) {
-            videoElement.src = videoSrc;
-            videoElement.play().catch(console.error);
-        }
-
-        return () => {
-            if (hlsRef.current) {
-                hlsRef.current.destroy();
-                hlsRef.current = null;
-            }
-        };
-    }, [showVideo, videoElement, activeVideo, token, playlist.is_purchased_playlist]);
 
     if (!playlist) return <PlaylistDetailSkeleton />;
 
@@ -366,70 +301,26 @@ const PlaylistDetailPage: React.FC<Props> = ({ playlist }) => {
                     </div>
 
                     <div className={styles.playerSection}>
-                        <video
-                            ref={setVideoElement}
-                            controls
-                            autoPlay
-                            controlsList="nodownload"
-                            poster={activeVideo?.poster_url}
-                             onEnded={() => {
-                                // Simply end the preview
-                            }}
-                        >
-                            Brauzeringiz videoni qo'llab-quvvatlamaydi.
-                        </video>
+                        {showVideo && activeVideo && (() => {
+                            const hasFullAccess = !!activeVideo.document.file_url || playlist.is_purchased_playlist;
+                            const videoSrc = hasFullAccess 
+                                ? activeVideo.document.file_url || activeVideo.document.short_content_url
+                                : activeVideo.document.short_content_url;
 
-                        {/* Quality Selector - Only for purchased content */}
-                        {(playlist.is_purchased_playlist || activeVideo?.document?.file_url) && qualityLevels.length > 0 && (
-                            <div className={styles.qualityOverlay}>
-                                <Dropdown
-                                    overlay={
-                                        <Menu theme="dark" className={styles.qualityMenu}>
-                                            <Menu.Item 
-                                                key="auto" 
-                                                onClick={() => {
-                                                    if (hlsRef.current) hlsRef.current.currentLevel = -1;
-                                                    setCurrentQuality(-1);
-                                                }}
-                                                className={currentQuality === -1 ? styles.activeItem : ''}
-                                            >
-                                                Auto {currentQuality === -1 && activeHeight ? `(${activeHeight}p)` : ''}
-                                                {currentQuality === -1 && <CheckOutlined className={styles.checkIcon} />}
-                                            </Menu.Item>
-                                            {qualityLevels.map((lvl, idx) => (
-                                                <Menu.Item 
-                                                    key={idx}
-                                                    onClick={() => {
-                                                        if (hlsRef.current) hlsRef.current.currentLevel = idx;
-                                                        setCurrentQuality(idx);
-                                                        setActiveHeight(lvl.height);
-                                                    }}
-                                                    className={currentQuality === idx ? styles.activeItem : ''}
-                                                >
-                                                    {lvl.height}p
-                                                    {currentQuality === idx && <CheckOutlined className={styles.checkIcon} />}
-                                                </Menu.Item>
-                                            ))}
-                                        </Menu>
-                                    }
-                                    trigger={['click']}
-                                    placement="topRight"
-                                >
-                                    <div className={styles.qualityBtn}>
-                                        <SettingOutlined />
-                                        <span>
-                                            {currentQuality === -1 ? (activeHeight ? `${activeHeight}p` : 'Auto') : `${qualityLevels[currentQuality]?.height}p`}
-                                        </span>
-                                    </div>
-                                </Dropdown>
-                            </div>
-                        )}
+                            return (
+                                <PlyrPlayer
+                                    videoSrc={videoSrc}
+                                    token={token}
+                                    poster={activeVideo.poster_url}
+                                />
+                            );
+                        })()}
                     </div>
 
                     <div className={styles.playlistDrawer}>
                         <h3 className={styles.drawerTitle}>Playlist darslari:</h3>
                         <div className={styles.drawerList}>
-                            {allPlaylistVideos.map((video, idx) => (
+                            {allPlaylistVideos.map((video: any, idx: number) => (
                                 <div 
                                     key={idx}
                                     className={`${styles.drawerItem} ${activeVideo?.id === video.id ? styles.active : ''}`}
@@ -463,7 +354,7 @@ const PlaylistDetailPage: React.FC<Props> = ({ playlist }) => {
     );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ req, params }) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, params }: any) => {
     const slug = params?.slug as string;
     const cookies = cookie.parse(req.headers.cookie || '');
     const token = cookies.token;

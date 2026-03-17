@@ -3,6 +3,7 @@ import Hls from 'hls.js';
 // @ts-ignore
 import Plyr from 'plyr';
 import 'plyr/dist/plyr.css';
+import styles from './PlyrPlayer.module.scss';
 
 interface PlyrPlayerProps {
     videoSrc: string;
@@ -131,19 +132,21 @@ const PlyrPlayer: React.FC<PlyrPlayerProps> = ({ videoSrc, token, poster, onPort
     }, [videoElement, videoSrc, token]);
 
     return (
-        <video
-            ref={setVideoElement}
-            playsInline
-            crossOrigin="anonymous"
-            controlsList="nodownload"
-            poster={poster}
-            onLoadedMetadata={(e: React.SyntheticEvent<HTMLVideoElement>) => {
-                const { videoWidth, videoHeight } = e.currentTarget;
-                if (onPortraitStateChange) {
-                    onPortraitStateChange(videoHeight > videoWidth);
-                }
-            }}
-        />
+        <div className={styles.playerContainer}>
+            <video
+                ref={setVideoElement}
+                playsInline
+                crossOrigin="anonymous"
+                controlsList="nodownload"
+                poster={poster}
+                onLoadedMetadata={(e: React.SyntheticEvent<HTMLVideoElement>) => {
+                    const { videoWidth, videoHeight } = e.currentTarget;
+                    if (onPortraitStateChange) {
+                        onPortraitStateChange(videoHeight > videoWidth);
+                    }
+                }}
+            />
+        </div>
     );
 };
 
