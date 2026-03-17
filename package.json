@@ -37,6 +37,7 @@
         "next": "^12.3.4",
         "next-progress": "^2.3.1",
         "node-cron": "^3.0.3",
+        "plyr": "^3.8.4",
         "react": "18.2.0",
         "react-confetti": "^6.1.0",
         "react-dom": "18.2.0",

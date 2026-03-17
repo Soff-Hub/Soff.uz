@@ -10,13 +10,9 @@ import {
     ClockCircleOutlined,
     CloseOutlined,
     HeartOutlined,
-    HeartFilled,
-    SettingOutlined,
-    CheckOutlined
+    HeartFilled
 } from '@ant-design/icons';
-import { Dropdown, Menu } from 'antd';
 import Link from 'next/link';
-import { LockOutlined } from '@ant-design/icons';
 
 import useCart from '~/shared/hooks/useCart';
 import useWishlist from '~/shared/hooks/useWishlist';
@@ -27,7 +23,7 @@ import SimilarVideos from '../SimilarVideos/SimilarVideos';
 import SellerMoreVideos from '../SellerMoreVideos/SellerMoreVideos';
 
 import styles from './VideoDetails.module.scss';
-import Hls from 'hls.js';
+const PlyrPlayer = dynamic(() => import('../PlyrPlayer/PlyrPlayer'), { ssr: false });
 
 const CommentList = dynamic(() => import('~/features/comments/ui/commentList'), { ssr: false });
 const CommentFormWrapper = dynamic(() => import('~/features/comments/ui/commentWrapper'), { ssr: false });
@@ -48,12 +44,6 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
     const [authModal, setAuthModal] = useState(false);
     const [limitReached, setLimitReached] = useState(false);
     const [isPortrait, setIsPortrait] = useState(false);
-
-    const [videoElement, setVideoElement] = useState<HTMLVideoElement | null>(null);
-    const [qualityLevels, setQualityLevels] = useState<any[]>([]);
-    const [currentQuality, setCurrentQuality] = useState<number>(-1); // -1 is Auto
-    const [activeHeight, setActiveHeight] = useState<number | null>(null);
-    const hlsRef = React.useRef<Hls | null>(null);
 
     const isAddedToCart = cartItems?.some((item: any) => Number(item.id) === Number(video.id));
     const isAddedToWishlist = wishlist?.some((item: any) => Number(item.id) === Number(video.id));
@@ -146,91 +136,7 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
         setShowVideo(true);
     };
 
-    React.useEffect(() => {
-        if (!showVideo || !videoElement) return;
 
-        const videoSrc = video?.document?.file_url || video?.document?.short_content_url;
-
-        if (!videoSrc) return;
-
-        // Clean up previous HLS instance
-        if (hlsRef.current) {
-            hlsRef.current.destroy();
-            hlsRef.current = null;
-        }
-
-        if (Hls.isSupported()) {
-            const hls = new Hls({
-                debug: true, // Enable detailed console logging from hls.js
-                xhrSetup: (xhr, url) => {
-                    // Rewrite local/incorrect backend URLs from m3u8 to the correct API base URL
-                    let finalUrl = url;
-                    if (url.includes('/video-key/')) {
-                        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
-                        if (baseUrl) {
-                            // Extract just the path part after /api/
-                            const basePathMatch = url.match(/\/api\/v1\/.*/);
-                            if (basePathMatch) {
-                                finalUrl = `${baseUrl}${basePathMatch[0]}`;
-                            }
-                        }
-                    }
-
-                    xhr.open('GET', finalUrl); // We must call open if we changed the URL. Note: hls.js already called open(), by calling it again we override it.
-
-                    if (finalUrl.includes('/video-key/') && token) {
-                        xhr.setRequestHeader('Authorization', `Bearer ${token}`);
-                    }
-                }
-            });
-
-            hls.loadSource(videoSrc);
-            hls.attachMedia(videoElement);
-
-            hls.on(Hls.Events.MANIFEST_PARSED, (event, data) => {
-                setQualityLevels(hls.levels);
-                videoElement.play().catch(e => console.error("[HLS] Auto-play failed:", e));
-            });
-
-            hls.on(Hls.Events.LEVEL_SWITCHED, (event, data) => {
-                const level = hls.levels[data.level];
-                if (level) {
-                    setActiveHeight(level.height);
-                }
-            });
-
-            hls.on(Hls.Events.ERROR, (event, data) => {
-                if (data.fatal) {
-                    switch (data.type) {
-                        case Hls.ErrorTypes.NETWORK_ERROR:
-                            hls.startLoad();
-                            break;
-                        case Hls.ErrorTypes.MEDIA_ERROR:
-                            hls.recoverMediaError();
-                            break;
-                        default:
-                            hls.destroy();
-                            break;
-                    }
-                }
-            });
-
-            hlsRef.current = hls;
-        } else if (videoElement.canPlayType('application/vnd.apple.mpegurl')) {
-            // Safari has native HLS support
-            videoElement.src = videoSrc;
-            videoElement.addEventListener('loadedmetadata', () => {
-                videoElement.play().catch(e => console.error("Playback failed:", e));
-            });
-        }
-
-        return () => {
-            if (hlsRef.current) {
-                hlsRef.current.destroy();
-                hlsRef.current = null;
-            }
-        };
-    }, [showVideo, videoElement, video?.document?.file_url, video?.document?.short_content_url, token]);
     console.log(video)
 
     return (
@@ -499,75 +405,13 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
                         className={`${styles.videoWrapper} ${isPortrait ? styles.isPortrait : ''}`}
                         style={{ '--poster-url': `url(${video?.poster_url})` } as any}
                     >
-                        <video
-                            ref={setVideoElement}
-                            controls
-                            autoPlay
-                            controlsList="nodownload"
-                            poster={video?.poster_url}
-                            onLoadedMetadata={(e: React.SyntheticEvent<HTMLVideoElement>) => {
-                                const { videoWidth, videoHeight } = e.currentTarget;
-                                if (videoHeight > videoWidth) {
-                                    setIsPortrait(true);
-                                } else {
-                                    setIsPortrait(false);
-                                }
-                            }}
-                            onEnded={() => {
-                                // Simply end the preview
-                            }}
-                        >
-                            Sizning brauzeringiz video qo'llab-quvvatlamaydi.
-                        </video>
-
-                        {/* Quality Selector Overlay - Only for users who purchased or have access */}
-                        {!limitReached && hasAccess && qualityLevels.length > 0 && (
-                            <div className={styles.qualityContainer}>
-                                <Dropdown
-                                    overlay={
-                                        <Menu
-                                            theme="dark"
-                                            className={styles.qualityMenu}
-                                            selectedKeys={[String(currentQuality)]}
-                                        >
-                                            <Menu.Item
-                                                key="-1"
-                                                onClick={() => {
-                                                    if (hlsRef.current) hlsRef.current.currentLevel = -1;
-                                                    setCurrentQuality(-1);
-                                                }}
-                                                className={currentQuality === -1 ? styles.activeItem : ''}
-                                            >
-                                                Auto {currentQuality === -1 && activeHeight ? `(${activeHeight}p)` : ''}
-                                                {currentQuality === -1 && <CheckOutlined className={styles.checkIcon} />}
-                                            </Menu.Item>
-                                            {qualityLevels.map((level, idx) => (
-                                                <Menu.Item
-                                                    key={idx}
-                                                    onClick={() => {
-                                                        if (hlsRef.current) hlsRef.current.currentLevel = idx;
-                                                        setCurrentQuality(idx);
-                                                        setActiveHeight(level.height);
-                                                    }}
-                                                    className={currentQuality === idx ? styles.activeItem : ''}
-                                                >
-                                                    {level.height}p
-                                                    {currentQuality === idx && <CheckOutlined className={styles.checkIcon} />}
-                                                </Menu.Item>
-                                            ))}
-                                        </Menu>
-                                    }
-                                    trigger={['click']}
-                                    placement="topRight"
-                                >
-                                    <div className={styles.qualityBtn}>
-                                        <SettingOutlined />
-                                        <span>
-                                            {currentQuality === -1 ? (activeHeight ? `${activeHeight}p` : 'Auto') : `${qualityLevels[currentQuality]?.height}p`}
-                                        </span>
-                                    </div>
-                                </Dropdown>
-                            </div>
+                        {showVideo && (
+                            <PlyrPlayer
+                                videoSrc={video?.document?.file_url || video?.document?.short_content_url}
+                                token={token}
+                                poster={video?.poster_url}
+                                onPortraitStateChange={setIsPortrait}
+                            />
                         )}
                     </div>
 
