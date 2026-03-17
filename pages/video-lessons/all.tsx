@@ -152,7 +152,7 @@ const VideoLessonsPage: React.FC = () => {
                             {/* Playlists Section */}
                             <PlaylistSlider
                                 onSeeAll={handleSeeAllPlaylists}
-                                title="Playlistlar"
+                                title="Videolar to'plami"
                                 playlists={playlistsData?.results || []}
                                 loading={isPlaylistsLoading}
                                 onPlaylistClick={handlePlaylistClick}

@@ -36,8 +36,8 @@ const PlaylistsPage: React.FC = () => {
     return (
         <>
             <Meta
-                title="Barcha Playlistlar | Soff.uz"
-                description="Mutaxassislar tomonidan tayyorlangan maxsus darsliklar to'plami. Barcha playlistlarni bu yerda ko'rishingiz mumkin."
+                title="Barcha Videolar to'plami | Soff.uz"
+                description="Mutaxassislar tomonidan tayyorlangan maxsus darsliklar to'plami. Barcha videolar to'plamini bu yerda ko'rishingiz mumkin."
             />
 
             {/* @ts-ignore */}
@@ -50,12 +50,12 @@ const PlaylistsPage: React.FC = () => {
                         <Breadcrumb.Item>
                             <Link href="/video-lessons/all">Video darsliklar</Link>
                         </Breadcrumb.Item>
-                        <Breadcrumb.Item>Playlistlar</Breadcrumb.Item>
+                        <Breadcrumb.Item>Videolar to'plami</Breadcrumb.Item>
                     </Breadcrumb>
 
                     <div className="mb-5">
                         <h1 style={{ fontSize: '32px', fontWeight: 800, margin: 0, letterSpacing: '-0.5px' }}>
-                            Barcha Playlistlar
+                            Barcha Videolar to'plami
                         </h1>
                         <p style={{ color: '#8c8c8c', marginTop: '8px', fontSize: '16px' }}>
                             Sifatli bilim olish uchun maxsus tanlangan darsliklar to'plami
