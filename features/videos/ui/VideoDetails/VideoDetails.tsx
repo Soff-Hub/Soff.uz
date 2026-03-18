@@ -415,6 +415,7 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
                                 onPortraitStateChange={setIsPortrait}
                                 isAccessRestricted={!hasAccess}
                                 onBuyClick={handleJoinOrBuy}
+                                actualDuration={video.document.content_duration}
                             />
                         )}
                     </div>

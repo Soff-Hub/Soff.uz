@@ -14,6 +14,7 @@ interface PlyrPlayerProps {
     onEnded?: () => void;
     isAccessRestricted?: boolean;
     onBuyClick?: () => void;
+    actualDuration?: string;
 }
 
 const PlyrPlayer: React.FC<PlyrPlayerProps> = ({ 
@@ -23,12 +24,38 @@ const PlyrPlayer: React.FC<PlyrPlayerProps> = ({
     onPortraitStateChange, 
     onEnded,
     isAccessRestricted,
-    onBuyClick
+    onBuyClick,
+    actualDuration
 }) => {
     const [videoElement, setVideoElement] = useState<HTMLVideoElement | null>(null);
     const [showCta, setShowCta] = useState(false);
     const hlsRef = React.useRef<Hls | null>(null);
     const playerRef = React.useRef<Plyr | null>(null);
+
+    const parseDurationToSeconds = (durationStr?: string) => {
+        if (!durationStr) return undefined;
+        
+        // Handle "8.37s"
+        if (durationStr.toLowerCase().endsWith('s')) {
+            return parseFloat(durationStr.slice(0, -1));
+        }
+
+        // Handle "HH:MM:SS" or "MM:SS"
+        if (durationStr.includes(':')) {
+            const parts = durationStr.split(':').map(Number);
+            if (parts.length === 3) {
+                const [h, m, s] = parts;
+                return (h * 3600) + (m * 60) + s;
+            }
+            if (parts.length === 2) {
+                const [m, s] = parts;
+                return (m * 60) + s;
+            }
+        }
+
+        const parsed = parseFloat(durationStr);
+        return isNaN(parsed) ? undefined : parsed;
+    };
 
     useEffect(() => {
         setShowCta(false); // Reset when src changes
@@ -49,6 +76,8 @@ const PlyrPlayer: React.FC<PlyrPlayerProps> = ({
         if (!videoElement || !videoSrc) return;
 
         let player: Plyr | null = null;
+        const durationInSeconds = parseDurationToSeconds(actualDuration);
+
         const defaultOptions: any = {
             controls: [
                 'play-large', 'restart', 'rewind', 'play', 'fast-forward',
@@ -56,6 +85,7 @@ const PlyrPlayer: React.FC<PlyrPlayerProps> = ({
                 'captions', 'settings', 'pip', 'airplay', 'fullscreen'
             ],
             settings: ['quality', 'speed', 'loop'],
+            duration: durationInSeconds,
             i18n: {
                 qualityLabel: {
                     0: 'Auto',
@@ -165,7 +195,7 @@ const PlyrPlayer: React.FC<PlyrPlayerProps> = ({
             }
             playerRef.current = null;
         };
-    }, [videoElement, videoSrc, token]);
+    }, [videoElement, videoSrc, token, actualDuration]);
 
     return (
         <div className={styles.playerContainer}>
