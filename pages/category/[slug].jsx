@@ -112,7 +112,7 @@ export async function getServerSideProps(context) {
     // Agar slug === 'all' bo‘lsa, category bo‘sh bo‘lishi kerak
     const categoryParam = slug === 'all' ? '' : childCategory || slug;
 
-    const productsUrl = `${baseUrlUseApi}customer/products/?direction=file&category=${categoryParam}&page=${page}&page_size=48&search=${search}`;
+    const productsUrl = `${baseUrlUseApi}customer/products/?direction=file&category=${categoryParam}&page=${page}&page_size=50&search=${search}`;
     const fourChildUrl = `${baseUrlUseApi}customer/four-child?direction=file`;
     const childCategoryUrl =
         slug && slug !== 'all'

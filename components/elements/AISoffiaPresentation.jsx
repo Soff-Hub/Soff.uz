@@ -46,7 +46,7 @@ export default function AISoffiaPresentation() {
                 </div>
                 <div>
                     <a
-                        href="https://t.me/soffia_ai_bot"
+                        href="https://soffia.uz/uz/dashboard"
                         target="_blank"
                         rel="noopener noreferrer"
                         style={{ textDecoration: 'none' }}>
@@ -146,7 +146,7 @@ export const AISoffiaPresentationNotFoundProduct = () => {
                             </div>
                             <div className="d-flex">
                                 <a
-                                    href="https://www.soffia.uz/"
+                                    href="https://soffia.uz/uz/dashboard"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     style={{ textDecoration: 'none' }}>
