@@ -11,6 +11,10 @@ import { fileColors } from '~/features/product-details/ui/actions/file-actions';
 
 const RedesignModulePaymentOrderSummary = ({ ecomerce, items }) => {
     const [percentage, setPercentage] = useState(0);
+    const [promotion, setPromotion] = useState({
+        discount_percent: 0,
+        expires_at: null,
+    });
     const { removeCartOneItem, removePlaylistCartOneItem } = useCart();
     const dispatch = useDispatch();
 
@@ -31,17 +35,34 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce, items }) => {
 
     let amount = calculateAmount(cartItems);
 
-    async function getPercentage() {
-        const responseData = await ProductRepository.getOrderPercentage();
-        if (responseData) {
-            setPercentage(Number(responseData?.data?.percentage));
+    async function getData() {
+        try {
+            const [taxResponse, promoResponse] = await Promise.all([
+                ProductRepository.getOrderPercentage(),
+                ProductRepository.getActivePromotion(),
+            ]);
+
+            if (taxResponse) {
+                setPercentage(Number(taxResponse?.data?.percentage));
+            }
+            if (promoResponse) {
+                setPromotion(promoResponse);
+            }
+        } catch (error) {
+            console.error('Failed to fetch summary data:', error);
         }
     }
 
-    const hisob = addPeriodToThousands(
-        amount + Math.floor(amount * percentage)
+    const taxAmount = Math.floor(amount * percentage);
+    const totalWithoutPromo = amount + taxAmount;
+    const discountAmount = Math.floor(
+        totalWithoutPromo * (promotion.discount_percent / 100)
     );
-    const hisobb = addPeriodToThousands(Math.floor(amount * percentage));
+    const finalTotal = totalWithoutPromo - discountAmount;
+
+    const hisob = addPeriodToThousands(finalTotal);
+    const taxFormatted = addPeriodToThousands(taxAmount);
+    const discountFormatted = addPeriodToThousands(discountAmount);
 
     const handleRemoveItem = async (e, item) => {
         e.preventDefault();
@@ -53,7 +74,7 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce, items }) => {
     };
 
     useEffect(() => {
-        getPercentage();
+        getData();
     }, []);
 
     return (
@@ -240,10 +261,26 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce, items }) => {
                                 'mb-2'
                             )}>
                             <p className={cn('mb-0', 'text-sm')}>
-                                Sayt xizmat haqi uchun:
+                                Sayt xizmat haqi:
                             </p>
                             <p className={cn('mb-0', 'text-sm', 'font-medium')}>
-                                {hisobb} so'm ({percentage * 100}%)
+                                {taxFormatted} so'm ({percentage * 100}%)
+                            </p>
+                        </div>
+                    )}
+                    {promotion.discount_percent > 0 && (
+                        <div
+                            className={cn(
+                                'flex',
+                                'justify-between',
+                                'items-center',
+                                'mb-2'
+                            )}>
+                            <p className={cn('mb-0', 'text-sm', 'text-success')}>
+                                Sizning chegirmangiz (-{promotion.discount_percent}%):
+                            </p>
+                            <p className={cn('mb-0', 'text-sm', 'font-medium', 'text-success')}>
+                                -{discountFormatted} so'm
                             </p>
                         </div>
                     )}
@@ -254,7 +291,7 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce, items }) => {
                             'items-center'
                         )}>
                         <p className={cn('font-bold', 'mb-0', fontSizeClass)}>
-                            Jami narx:
+                            Jami to'lov:
                         </p>
                         <p className={cn('font-bold', 'mb-0', fontSizeClass)}>
                             {hisob} so'm

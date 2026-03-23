@@ -113,6 +113,7 @@ export default function ProductDefaultPage({ defaultProducts }) {
         () => defaultProducts?.document?.content_type,
         [defaultProducts?.document?.content_type]
     );
+    console.log(defaultProducts);
 
     const DetailComponent = useMemo(
         () => productsContentDetails(contentType),

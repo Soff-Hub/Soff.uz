@@ -12,6 +12,12 @@ import FastDownloadSection from '~/shared/components/fast-dowload/FastDowloadSec
 import { initSearchHistory } from '~/store/search/slice';
 import { useViewportContext } from '~/shared/hooks/useViewportContext';
 import { VideoNavbar } from '~/features/videos';
+import ProductRepository from '~/repositories/ProductRepository';
+import { useCountTimeBack } from '~/shared/hooks/useCountDown';
+import { useMounted } from '~/shared/hooks/useMounted';
+import { FaClock, FaPercent } from 'react-icons/fa';
+import Link from 'next/link';
+import styles from './header.module.scss';
 
 const Header = () => {
     const { headerRef } = useViewportContext();
@@ -23,6 +29,24 @@ const Header = () => {
 
     const [scrollDirection, setScrollDirection] = useState('up');
     const [isScrolled, setIsScrolled] = useState(false);
+    const [promotion, setPromotion] = useState({
+        discount_percent: 0,
+        expires_at: null,
+    });
+    const isMounted = useMounted();
+    const timeLeft = useCountTimeBack(promotion.expires_at || null);
+
+    useEffect(() => {
+        const fetchPromotion = async () => {
+            try {
+                const res = await ProductRepository.getActivePromotion();
+                if (res) setPromotion(res);
+            } catch (err) {
+                console.error('Promotion fetch failed', err);
+            }
+        };
+        fetchPromotion();
+    }, []);
 
     useEffect(() => {
         const initFunctions = () => {
@@ -72,8 +96,45 @@ const Header = () => {
         return <NavbarMenu />;
     };
 
+    const isExpiring = promotion.expires_at && (timeLeft.minutes > 0 || timeLeft.seconds > 0);
+
+    const renderPromoBanner = () => {
+        if (!isMounted || promotion.discount_percent <= 0) return null;
+
+        return (
+            <div className={styles.promotionBanner}>
+                <div className={styles.mainInfo}>
+                    <div className={styles.iconWrapper}>
+                        <FaPercent size={12} className="text-white" />
+                    </div>
+                    <span className={styles.text}>
+                        MAXSUS TAKLIF: {promotion.discount_percent}% CHEGIRMA BILAN SOTIB OLING!
+                    </span>
+                </div>
+
+                {isExpiring && (
+                    <div className={styles.countdown}>
+                        <FaClock size={12} className="text-white/80" />
+                        <span className={styles.time}>
+                            {String(timeLeft.minutes).padStart(2, '0')}:{String(timeLeft.seconds).padStart(2, '0')}
+                        </span>
+                    </div>
+                )}
+
+                {!isMobile && (
+                    <Link href="/account/shopping-cart">
+                        <a className={styles.cartLink}>
+                            Savatga o'tish
+                        </a>
+                    </Link>
+                )}
+            </div>
+        );
+    };
+
     return (
         <header className={headerClassName} ref={headerRef}>
+            {renderPromoBanner()}
             <div className={`header-bottom top-0 bg-white`}>
                 <div className="container">
                     <HeaderTop />

@@ -1,5 +1,6 @@
 import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
 import Repository, { baseUrl, serializeQuery } from './Repository';
+import { api } from './api';
 
 class ProductRepository {
     async getRecords() {
@@ -67,14 +68,10 @@ class ProductRepository {
         mashhur
     ) {
         const reponse = await Repository.get(
-            `${baseUrl}customer/documents/?page=${page || ''}&id=&category=${
-                chaildID || ''
-            }&created_at=&category_parent_slug=${parentID || ''}&min_price=${
-                min || ''
-            }&max_price=${max || ''}&min_id=&max_id=&order_by_approved_count=${
-                approved_count || ''
-            }&order_by_id=${tartib || ''}&order_by_price=${
-                price || ''
+            `${baseUrl}customer/documents/?page=${page || ''}&id=&category=${chaildID || ''
+            }&created_at=&category_parent_slug=${parentID || ''}&min_price=${min || ''
+            }&max_price=${max || ''}&min_id=&max_id=&order_by_approved_count=${approved_count || ''
+            }&order_by_id=${tartib || ''}&order_by_price=${price || ''
             }&approved_count=${mashhur || ''}`
         )
             .then((response) => {
@@ -96,14 +93,10 @@ class ProductRepository {
         mashhur
     ) {
         const reponse = await Repository.get(
-            `${baseUrl}customer/documents/?page=${page || ''}&id=&category=${
-                chaildID || ''
-            }&created_at=&category_parent_slug=${parentID || ''}&min_price=${
-                min || ''
-            }&max_price=${max || ''}&min_id=&max_id=&order_by_approved_count=${
-                approved_count || ''
-            }&order_by_id=${tartib || ''}&order_by_price=${
-                price || ''
+            `${baseUrl}customer/documents/?page=${page || ''}&id=&category=${chaildID || ''
+            }&created_at=&category_parent_slug=${parentID || ''}&min_price=${min || ''
+            }&max_price=${max || ''}&min_id=&max_id=&order_by_approved_count=${approved_count || ''
+            }&order_by_id=${tartib || ''}&order_by_price=${price || ''
             }&approved_count=${mashhur || ''}`
         )
             .then((response) => {
@@ -126,14 +119,10 @@ class ProductRepository {
         search
     ) {
         const reponse = await Repository.get(
-            `${baseUrl}customer/documents/?page=${page || ''}&id=&category=${
-                chaildID || ''
-            }&created_at=&category_parent_slug=${parentID || ''}&min_price=${
-                min || ''
-            }&max_price=${max || ''}&min_id=&max_id=&order_by_approved_count=${
-                approved_count || ''
-            }&order_by_id=${tartib || ''}&order_by_price=${
-                price || ''
+            `${baseUrl}customer/documents/?page=${page || ''}&id=&category=${chaildID || ''
+            }&created_at=&category_parent_slug=${parentID || ''}&min_price=${min || ''
+            }&max_price=${max || ''}&min_id=&max_id=&order_by_approved_count=${approved_count || ''
+            }&order_by_id=${tartib || ''}&order_by_price=${price || ''
             }&approved_count=${mashhur || ''}&search=${search || ''}`
         )
             .then((response) => {
@@ -315,9 +304,8 @@ class ProductRepository {
     }
 
     async getSellerProductSlugProducts(slug, page, type, search) {
-        const endPoint = `customer/seller-documents/${slug}/?page=${page}&type=${type}&search=${
-            search || ''
-        }`;
+        const endPoint = `customer/seller-documents/${slug}/?page=${page}&type=${type}&search=${search || ''
+            }`;
         const reponse = await Repository.get(baseUrl + endPoint)
             .then((response) => {
                 if (response.data) {
@@ -391,6 +379,15 @@ class ProductRepository {
                 return error.response;
             });
         return reponse;
+    }
+
+    async getActivePromotion() {
+        try {
+            const response = await api.get('customer/active-promotion/');
+            return response.data;
+        } catch (error) {
+            return { discount_percent: 0, expires_at: null };
+        }
     }
 }
 

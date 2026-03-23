@@ -18,6 +18,9 @@ import styles from './shopping-cart.module.scss';
 import { cn } from '~/shared/utilities/cn';
 import { FaArrowLeft, FaBoxOpen } from 'react-icons/fa6';
 import Icon from '~/shared/ui/Icon';
+import { useCountTimeBack } from '~/shared/hooks/useCountDown';
+import { useMounted } from '~/shared/hooks/useMounted';
+import { FaClock } from 'react-icons/fa';
 
 const breadCrumb = [
     {
@@ -36,6 +39,12 @@ function ShoppingCart() {
     );
     const { removeCartOneItem, removePlaylistCartOneItem } = useCart();
     const [taxPercentage, setTaxPercentage] = useState(0.1); // Default 10%
+    const [promotion, setPromotion] = useState({
+        discount_percent: 0,
+        expires_at: null,
+    });
+    const isMounted = useMounted();
+    const timeLeft = useCountTimeBack(promotion.expires_at);
 
     // Combine items for calculations
     const allItems = [
@@ -50,23 +59,34 @@ function ShoppingCart() {
     const isLoading = status === 'loading';
 
     useEffect(() => {
-        async function getTaxPercentage() {
+        async function fetchData() {
             try {
-                const responseData = await ProductRepository.getOrderPercentage();
-                if (responseData?.data?.percentage) {
-                    setTaxPercentage(responseData.data.percentage);
+                const [taxResponse, promoResponse] = await Promise.all([
+                    ProductRepository.getOrderPercentage(),
+                    ProductRepository.getActivePromotion(),
+                ]);
+
+                if (taxResponse?.data?.percentage) {
+                    setTaxPercentage(taxResponse.data.percentage);
+                }
+                if (promoResponse) {
+                    setPromotion(promoResponse);
                 }
             } catch (error) {
-                console.error('Failed to fetch tax percentage:', error);
+                console.error('Failed to fetch data:', error);
             }
         }
-        getTaxPercentage();
+        fetchData();
     }, []);
 
     // Calculate totals
     const subtotal = hasItems ? calculateAmount(allItems) : 0;
     const tax = Math.floor(subtotal * taxPercentage);
-    const total = subtotal + tax;
+    const totalWithoutPromo = subtotal + tax;
+    const discountAmount = Math.floor(
+        totalWithoutPromo * (promotion.discount_percent / 100)
+    );
+    const total = totalWithoutPromo - discountAmount;
 
     const handleRemoveItem = (e, item) => {
         e.preventDefault();
@@ -98,9 +118,46 @@ function ShoppingCart() {
             </div>
         );
     } else if (hasItems) {
+        const isExpiring =
+            promotion.expires_at &&
+            (timeLeft.minutes > 0 || timeLeft.seconds > 0);
+
         contentView = (
             <div className={styles.shoppingCartContent}>
-                <h2 className={styles.pageTitle}>Mahsulotlar ({allItems.length})</h2>
+                <div className="d-flex justify-content-between align-items-center mb-2">
+                    <h2 className={styles.pageTitle} style={{ margin: 0 }}>
+                        Mahsulotlar ({allItems.length})
+                    </h2>
+                    {isMounted && promotion.discount_percent > 0 && (
+                        <div
+                            className={cn(
+                                'px-3 py-2 rounded-lg d-flex align-items-center bg-success text-white',
+                                styles.promoBadge
+                            )}>
+                            <div className="mr-2">
+                                <strong
+                                    className="d-block"
+                                    style={{ fontSize: '14px', lineHeight: 1.2 }}>
+                                    {promotion.discount_percent}% CHEGIRMA!
+                                </strong>
+                                <span style={{ fontSize: '11px' }}>
+                                    {promotion.expires_at
+                                        ? 'Vaqt tugashiga oz qoldi'
+                                        : 'Doimiy mijoz chegirmasi'}
+                                </span>
+                            </div>
+                            {isExpiring && (
+                                <div
+                                    className="ml-2 pl-2 border-left d-flex align-items-center font-bold"
+                                    style={{ fontSize: '16px' }}>
+                                    <FaClock className="mr-1" size={12} />
+                                    {String(timeLeft.minutes).padStart(2, '0')}:
+                                    {String(timeLeft.seconds).padStart(2, '0')}
+                                </div>
+                            )}
+                        </div>
+                    )}
+                </div>
                 <div className={styles.productsList}>
                     {allItems.map((item) => (
                         <div
@@ -240,6 +297,14 @@ function ShoppingCart() {
                                 Xizmat haqi ({Math.round(taxPercentage * 100)}%):{' '}
                                 <strong>{addPeriodToThousands(tax)} so'm</strong>
                             </span>
+                            {promotion.discount_percent > 0 && (
+                                <span className={cn(styles.summaryItem, 'text-success')}>
+                                    Chegirma (-{promotion.discount_percent}%):{' '}
+                                    <strong className="text-success">
+                                        -{addPeriodToThousands(discountAmount)} so'm
+                                    </strong>
+                                </span>
+                            )}
                             <span className={styles.summaryItem}>
                                 Jami to'lov:{' '}
                                 <strong className={styles.totalAmount}>
@@ -249,10 +314,22 @@ function ShoppingCart() {
                         </div>
                         <div className={styles.checkoutButtonWrapper}>
                             <div className={styles.paymentSummaryAmount}>
-                                Jami to'lov:
-                                <strong className={styles.totalAmount}>
-                                    {addPeriodToThousands(total)} so'm
-                                </strong>
+                                {promotion.discount_percent > 0 && (
+                                    <div className="d-flex flex-column align-items-end mr-3">
+                                        <del className="text-muted" style={{ fontSize: '11px' }}>
+                                            {addPeriodToThousands(totalWithoutPromo)} so'm
+                                        </del>
+                                        <span className="text-success" style={{ fontSize: '12px', marginTop: '-4px' }}>
+                                            Xarid chegirmasi (-{promotion.discount_percent}%)
+                                        </span>
+                                    </div>
+                                )}
+                                <div>
+                                    Jami to'lov:
+                                    <strong className={styles.totalAmount}>
+                                        {addPeriodToThousands(total)} so'm
+                                    </strong>
+                                </div>
                             </div>
                             {state !== null ? (
                                 <Link href="/account/checkout">
