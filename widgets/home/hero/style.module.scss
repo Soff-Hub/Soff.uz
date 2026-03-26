@@ -215,9 +215,21 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
         min-height: 280px;
     }
 
+    .heroBgImage {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: right center;
+        z-index: 0;
+    }
+
     .bannerContent {
         max-width: 420px;
-        z-index: 2;
+        position: relative;
+        z-index: 1;
 
         h1 {
             font-size: 34px;
@@ -263,19 +275,29 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
         }
     }
 
-    .heroImage {
-        position: absolute;
-        right: 20px;
-        bottom: 0;
-        height: 85%;
-        width: auto;
-        max-width: 45%;
-        object-fit: contain;
+    .heroImageWrapper {
+        position: relative;
         z-index: 1;
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-end;
+        flex: 1;
+        height: 100%;
 
-        @media (max-width: 768px) {
-            opacity: 0.15;
-            height: 60%;
+        @media screen and (max-width: 768px) {
+            min-height: 200px;
+        }
+
+        .heroSpecialistImage {
+            max-height: 100%;
+            width: auto;
+            max-width: 100%;
+            object-fit: contain;
+            object-position: bottom right;
+
+            @media (max-width: 768px) {
+                max-height: 90%;
+            }
         }
     }
 }

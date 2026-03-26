@@ -140,6 +140,13 @@ const Hero = () => {
                 {/* Right Column: Banner + Categories Grid Stack */}
                 <div className={styles.heroRightColumn}>
                     <section className={styles.heroBanner}>
+                        {/* Full-bleed Background Pattern */}
+                        <img
+                            src="/static/img/HomePage/hero/hero_bg.png"
+                            alt="Background Pattern"
+                            className={styles.heroBgImage}
+                        />
+
                         <div className={styles.bannerContent}>
                             <h1>Onlayn mutaxassislarni osongina toping</h1>
                             <p className={styles.subtitle}>
@@ -152,11 +159,14 @@ const Hero = () => {
                             </Link>
                         </div>
                         {/* Hero Graphic Injection */}
-                        <img
-                            src="/static/img/HomePage/hero/hero.png"
-                            alt="Soff.uz Hero"
-                            className={styles.heroImage}
-                        />
+                        {/* Specialist Layer */}
+                        <div className={styles.heroImageWrapper}>
+                            <img
+                                src="/static/img/HomePage/hero/opa.png"
+                                alt="Specialist"
+                                className={styles.heroSpecialistImage}
+                            />
+                        </div>
                     </section>
 
                     {/* Middle Section: Popular Categories Grid */}
