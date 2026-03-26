@@ -125,7 +125,7 @@ function useSearch() {
             const { data: freelanceData } = await axios.get(
                 `customer/search-page?search=${debouncedSearch}`
             );
-            const { data: specialistsData } = await axios.get(
+            const { data: sellersRes } = await axios.get(
                 `/users/sellers?limit=10&search=${debouncedSearch}`
             );
 
@@ -134,25 +134,27 @@ function useSearch() {
             let freelanceOptions = searchOptions(freelanceData?.position) || [];
 
             data = freelanceOptions.map((item, index) => ({
-                key: index,
+                key: `freelance-${index}`,
                 value: item,
+                sourceType: 'specialist',
+                subtitle: 'Soha boʻyicha qidiruv'
             }));
 
             data = [
                 ...data,
-                ...specialistsData.results.map((item) => ({
+                ...sellersRes.results.map((item) => ({
                     key: item.id || item.soff_seller_id,
-                    value:
-                        item.full_name ||
-                        `${item.first_name || ''} ${
-                            item.last_name || ''
-                        }`.trim(),
+                    value: item.full_name || `${item.first_name || ''} ${item.last_name || ''}`.trim(),
+                    avatar: item.photo_url,
+                    subtitle: item.position?.title || 'Mutaxassis',
+                    sourceType: 'specialist',
+                    id: item.soff_seller_id
                 })),
             ];
 
             return data;
         },
-        enabled: type === 'mutaxasislar',
+        enabled: type === 'mutaxassislar',
         retry: 1,
     });
 
@@ -166,7 +168,7 @@ function useSearch() {
         addSearchHistoryItem({ value: optionValue, type });
     };
 
-    const handleNavigateOption = async (optionValue) => {
+    const handleNavigateOption = async (optionValue, optionData) => {
         try {
             setIsNavigating(true);
             setSearch(optionValue);
@@ -179,10 +181,14 @@ function useSearch() {
                 await router.push(
                     `/search-page/?keyword=${optionValue}&tab=2&type=all`
                 );
-            } else if (type === 'mutaxasislar') {
-                await router.push(
-                    `/search-page/?keyword=${optionValue}&tab=3&type=all`
-                );
+            } else if (type === 'mutaxassislar') {
+                if (optionData?.id) {
+                    await router.push(`/freelancers/${optionData.id}`);
+                } else {
+                    await router.push(
+                        `/search-page/?keyword=${optionValue}&tab=3&type=all`
+                    );
+                }
             }
             addSearchHistoryItem({ value: optionValue, type });
         } catch (error) {
@@ -219,14 +225,13 @@ function useSearch() {
             if (servicesLoading) return [];
             if (servicesSuccess && servicesData.length) return servicesData;
             return staticOptions[type] || [];
-        } else if (type === 'mutaxasislar') {
+        } else if (type === 'mutaxassislar') {
             if (specialistsLoading) return [];
             if (specialistsSuccess && specialistsData.length)
                 return specialistsData;
-            // Return static options if no results
-            return staticOptions[type] || [];
+            return [];
         }
-        return staticOptions[type] || [];
+        return [];
     }, [
         type,
         productsLoading,

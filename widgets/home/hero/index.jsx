@@ -30,12 +30,22 @@ const directionIcons = {
 
 const directionLabels = {
     scientific_work: 'Ilmiy va Akademik xizmatlar',
+    science_resources: 'Ilmiy va Akademik xizmatlar',
     dizayn: 'Dizayn',
-    web: 'Dasturlash xizmatlari',
+    web: 'Veb Dasturlash',
+    it_development: 'Veb Dasturlash',
     three_d: '3D Dizayn va Vizualizatsiya',
+    '3d_design': '3D Dizayn va Vizualizatsiya',
     marketing: 'Marketing va SMM',
+    marketing_smm: 'Marketing va SMM',
     video: 'Audio va Video',
+    audio_video: 'Audio va Video',
     business: 'Biznes',
+};
+
+const formatDirectionLabel = (key) => {
+    if (directionLabels[key]) return directionLabels[key];
+    return key?.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 };
 
 const templateLink = {
@@ -69,7 +79,7 @@ const Hero = () => {
                                 {directionIcons[item.direction] || <MdSettings />}
                             </div>
                             <span className={styles.itemText}>
-                                {directionLabels[item.direction] || item.direction}
+                                {formatDirectionLabel(item.direction)}
                             </span>
                             <MdChevronRight className={styles.arrow} />
                         </div>
@@ -79,46 +89,50 @@ const Hero = () => {
                     {hoveredCategory && (
                         <div className={styles.megaMenu}>
                             {/* Mahsulotlar Section */}
-                            <div className={styles.popoverSection}>
-                                <div className={styles.sectionHeader}>
-                                    <MdWork className={styles.sectionIcon} />
-                                    <div className={styles.headerInfo}>
-                                        <h3>MAHSULOTLAR</h3>
-                                        <p>Tayyor yuklangan mahsulotlar</p>
+                            {hoveredCategory.soff_categories?.length > 0 && (
+                                <div className={styles.popoverSection}>
+                                    <div className={styles.sectionHeader}>
+                                        <MdWork className={styles.sectionIcon} />
+                                        <div className={styles.headerInfo}>
+                                            <h3>MAHSULOTLAR</h3>
+                                            <p>Tayyor yuklangan mahsulotlar</p>
+                                        </div>
+                                    </div>
+                                    <div className={styles.linksGrid}>
+                                        {hoveredCategory.soff_categories?.map((cat) => (
+                                            <Link
+                                                key={cat.id}
+                                                href={`/${templateLink[hoveredCategory.direction] || 'templates'}/${cat.slug}?slug=${cat.slug}&search=&parentCategory=${cat.slug}&title=${cat.title}`}
+                                            >
+                                                <a className={styles.menuLink}>{cat.title}</a>
+                                            </Link>
+                                        ))}
                                     </div>
                                 </div>
-                                <div className={styles.linksGrid}>
-                                    {hoveredCategory.soff_categories?.map((cat) => (
-                                        <Link
-                                            key={cat.id}
-                                            href={`/${templateLink[hoveredCategory.direction] || 'templates'}/${cat.slug}?slug=${cat.slug}&search=&parentCategory=${cat.slug}&title=${cat.title}`}
-                                        >
-                                            <a className={styles.menuLink}>{cat.title}</a>
-                                        </Link>
-                                    ))}
-                                </div>
-                            </div>
+                            )}
 
                             {/* Xizmatlar Section */}
-                            <div className={styles.popoverSection}>
-                                <div className={styles.sectionHeader}>
-                                    <MdSettings className={styles.sectionIcon} />
-                                    <div className={styles.headerInfo}>
-                                        <h3>XIZMATLAR</h3>
-                                        <p>Xizmatni tanlang – buyurtma bering</p>
+                            {hoveredCategory.freelance_categories?.length > 0 && (
+                                <div className={styles.popoverSection}>
+                                    <div className={styles.sectionHeader}>
+                                        <MdSettings className={styles.sectionIcon} />
+                                        <div className={styles.headerInfo}>
+                                            <h3>XIZMATLAR</h3>
+                                            <p>Xizmatni tanlang – buyurtma bering</p>
+                                        </div>
+                                    </div>
+                                    <div className={styles.linksGrid}>
+                                        {hoveredCategory.freelance_categories?.map((cat) => (
+                                            <Link
+                                                key={cat.id}
+                                                href={`/orders?direction=${hoveredCategory.direction}&category_id=${cat.id}&title=${cat.title}`}
+                                            >
+                                                <a className={styles.menuLink}>{cat.title}</a>
+                                            </Link>
+                                        ))}
                                     </div>
                                 </div>
-                                <div className={styles.linksGrid}>
-                                    {hoveredCategory.freelance_categories?.map((cat) => (
-                                        <Link
-                                            key={cat.id}
-                                            href={`/orders?direction=${hoveredCategory.direction}&category_id=${cat.id}&title=${cat.title}`}
-                                        >
-                                            <a className={styles.menuLink}>{cat.title}</a>
-                                        </Link>
-                                    ))}
-                                </div>
-                            </div>
+                            )}
                         </div>
                     )}
                 </aside>
