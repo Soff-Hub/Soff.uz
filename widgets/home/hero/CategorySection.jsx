@@ -1,125 +1,76 @@
+import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import styles from './style.module.scss';
-import { Skeleton } from 'antd';
+import { 
+    MdPalette, 
+    MdCode, 
+    MdTrendingUp, 
+    MdSchool, 
+    MdVideocam, 
+    MdBusinessCenter 
+} from 'react-icons/md';
 
-const readyProducts = [
+const popularCategories = [
     {
-        href: '/scientific-resources/all',
-        img: '/static/img/HomePage/file3.webp',
-        alt: 'Ilmiy ishlar',
-        label: 'Ilmiy ishlar',
-    },
-    {
-        href: '/3d-models-and-interior-designs/all',
-        img: '/static/img/HomePage/3d2.webp',
-        alt: '3D Modellar',
-        label: '3D Modellar',
-    },
-    {
-        href: '/design-developments/all',
-        img: '/static/img/HomePage/design1.webp',
-        alt: 'Dizayn shablonlari',
-        label: 'Dizayn shablonlari',
-    },
-    {
-        href: '/websites/all',
-        img: '/static/img/HomePage/web2.webp',
-        alt: 'Veb saytlar',
-        label: 'Veb saytlar',
-    },
-    {
-        href: '/templates/all',
-        img: '/static/img/HomePage/template2.webp',
-        alt: 'Shablonlar',
-        label: 'Shablonlar',
-    },
-    {
-        href: '/video-lessons',
-        img: '/static/img/HomePage/video1.webp',
-        alt: 'Video darsliklar',
-        label: 'Video darsliklar',
-    },
-];
-
-// 2️⃣ Xizmatlar ro‘yxati
-const services = [
-    {
-        href: '/orders?direction=scientific_work',
-        img: '/static/img/HomePage/file2.webp',
-        alt: 'Ilmiy va Akademik xizmatlar',
-        label: 'Ilmiy va Akademik Xizmatlar',
-    },
-    {
+        title: 'Dizayn',
+        count: '12,400+',
         href: '/orders?direction=dizayn',
-        img: '/static/img/HomePage/design3.webp',
-        alt: 'Dizayn xizmatlari',
-        label: 'Dizayn xizmatlari',
+        icon: <MdPalette />
     },
     {
+        title: 'Dasturlash',
+        count: '8,200+',
         href: '/orders?direction=web',
-        img: '/static/img/HomePage/web3.webp',
-        alt: 'Dasturlash xizmatlari',
-        label: 'Dasturlash xizmatlari',
+        icon: <MdCode />
     },
     {
-        href: '/orders?direction=three_d',
-        img: '/static/img/HomePage/3d.webp',
-        alt: '3D Dizayn va Vizualizatsiya',
-        label: '3D Dizayn va Vizualizatsiya',
+        title: 'Marketing',
+        count: '5,800+',
+        href: '/orders?direction=marketing',
+        icon: <MdTrendingUp />
     },
+    {
+        title: 'Ta’lim',
+        count: '3,900+',
+        href: '/orders?direction=scientific_work',
+        icon: <MdSchool />
+    },
+    {
+        title: 'Video & Audio',
+        count: '2,800+',
+        href: '/orders?direction=video',
+        icon: <MdVideocam />
+    },
+    {
+        title: 'Biznes',
+        count: '4,300+',
+        href: '/orders?direction=business',
+        icon: <MdBusinessCenter />
+    }
 ];
+
 const CategorySection = () => {
-    const renderCategoryBlock = (title, items, showBadge = false) => (
-        <div className={styles.categoryBlock}>
-            <div className={styles.titleWrapper}>
-                {showBadge && (
-                    <Image
-                        priority
-                        src="/static/img/star.svg"
-                        alt="badge"
-                        width={30}
-                        height={30}
-                        className={styles.badge}
-                    />
-                )}
-                <h3>{title}</h3>
+    return (
+        <section className={styles.popularCategories}>
+            <div className={styles.gridHeader}>
+                <h2>Mashhur kategoriyalar</h2>
             </div>
             <div className={styles.categoryGrid}>
-                {items.map((item, index) => (
-                    <Link key={index} href={item.href}>
-                        <div className={styles.categoryItem}>
-                            <Image
-                                src={item.img}
-                                alt={item.alt}
-                                width={40}
-                                height={40}
-                                style={{ objectFit: 'contain' }}
-                                loading={index < 4 ? "eager" : "lazy"}
-                                priority={index < 4}
-                            />
-                            <span>{item.label}</span>
-                        </div>
+                {popularCategories.map((cat, idx) => (
+                    <Link key={idx} href={cat.href}>
+                        <a className={styles.categoryCard}>
+                            <div className={styles.cardIcon}>
+                                {cat.icon}
+                            </div>
+                            <div className={styles.cardInfo}>
+                                <span className={styles.cardTitle}>{cat.title}</span>
+                                <span className={styles.cardCount}>{cat.count}</span>
+                            </div>
+                        </a>
                     </Link>
                 ))}
             </div>
-        </div>
-    );
-
-    return (
-        <div
-            style={{ backgroundColor: 'transparent' }}
-            className={styles.heroCategorySection}>
-            {renderCategoryBlock(
-                'Tayyor yuklangan mahsulotlar',
-                readyProducts,
-                true
-            )}
-            {renderCategoryBlock(
-                'Xizmatni tanlang – Buyurtma bering',
-                services
-            )}
-        </div>
+        </section>
     );
 };
 

@@ -122,6 +122,18 @@ const nextSettings = {
             },
         ];
     },
+    async rewrites() {
+        return [
+            {
+                source: '/videos/:path*',
+                destination: 'http://localhost:3001/videos/:path*',
+            },
+            {
+                source: '/freelance/:path*',
+                destination: 'http://localhost:3000/freelance/:path*',
+            },
+        ];
+    },
 };
 
 module.exports = nextSettings;
