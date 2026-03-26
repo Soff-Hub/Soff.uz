@@ -49,6 +49,14 @@ const categoryTitles = {
     science_resources: 'Ilmiy va Akademik xizmatlar',
 };
 
+const templateLink = {
+    scientific_work: 'scientific-resources',
+    three_d: '3d-models-and-interior-designs',
+    web: 'websites',
+    dizayn: 'design-developments',
+    document: 'templates',
+};
+
 const formatCategoryTitle = (key) => {
     if (categoryTitles[key]) return categoryTitles[key];
     return key?.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
@@ -168,9 +176,12 @@ const Header = () => {
                                                         </div>
                                                     </div>
                                                     <div className={styles.linksGrid}>
-                                                        {activeCategoryData.soff_categories?.map(sub => (
-                                                            <Link key={sub.id} href={`/product/category/${sub.id}`}>
-                                                                <a className={styles.menuLink}>{sub.title}</a>
+                                                        {activeCategoryData.soff_categories?.map(cat => (
+                                                            <Link
+                                                                key={cat.id}
+                                                                href={`/${templateLink[activeCategoryData.direction] || 'templates'}/${cat.slug}?slug=${cat.slug}&search=&parentCategory=${cat.slug}&title=${cat.title}`}
+                                                            >
+                                                                <a className={styles.menuLink}>{cat.title}</a>
                                                             </Link>
                                                         ))}
                                                     </div>
@@ -188,9 +199,12 @@ const Header = () => {
                                                         </div>
                                                     </div>
                                                     <div className={styles.linksGrid}>
-                                                        {activeCategoryData.freelance_categories?.map(sub => (
-                                                            <Link key={sub.id} href={`/freelance/category/${sub.id}`}>
-                                                                <a className={styles.menuLink}>{sub.title}</a>
+                                                        {activeCategoryData.freelance_categories?.map(cat => (
+                                                            <Link
+                                                                key={cat.id}
+                                                                href={`/orders?direction=${activeCategoryData.direction}&category_id=${cat.id}&title=${cat.title}`}
+                                                            >
+                                                                <a className={styles.menuLink}>{cat.title}</a>
                                                             </Link>
                                                         ))}
                                                     </div>
