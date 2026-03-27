@@ -4,48 +4,48 @@ import styles from './style.module.scss';
 import {
     TbPalette,
     TbCode,
-    TbSpeakerphone,
     TbSchool,
     TbVideo,
-    TbBriefcase
+    TbBox,
+    TbLayout
 } from 'react-icons/tb';
 
 const popularCategories = [
     {
-        title: 'Dizayn',
-        count: '12,400+',
-        href: '/orders?direction=dizayn',
-        icon: <TbPalette />
-    },
-    {
-        title: 'Dasturlash',
-        count: '8,200+',
-        href: '/orders?direction=web',
-        icon: <TbCode />
-    },
-    {
-        title: 'Marketing',
-        count: '5,800+',
-        href: '/orders?direction=marketing',
-        icon: <TbSpeakerphone />
-    },
-    {
-        title: 'Ta’lim',
-        count: '3,900+',
-        href: '/orders?direction=scientific_work',
+        title: 'Ilmiy ish',
+        count: '1.5mln +',
+        href: '/scientific-resources',
         icon: <TbSchool />
     },
     {
-        title: 'Video & Audio',
-        count: '2,800+',
-        href: '/orders?direction=audio_video',
+        title: '3D Modellar',
+        count: '500+',
+        href: '/3d-models-and-interior-designs',
+        icon: <TbBox />
+    },
+    {
+        title: 'Dizayn shablonlari',
+        count: '1.5K +',
+        href: '/design-developments',
+        icon: <TbPalette />
+    },
+    {
+        title: 'Videolar',
+        count: '1K +',
+        href: '/video-lessons/all',
         icon: <TbVideo />
     },
     {
-        title: 'Biznes',
-        count: '4,300+',
-        href: '/orders?direction=business',
-        icon: <TbBriefcase />
+        title: 'Veb saytlar',
+        count: '500+',
+        href: '/websites',
+        icon: <TbCode />
+    },
+    {
+        title: 'Shablonlar',
+        count: '2k+',
+        href: '/templates',
+        icon: <TbLayout />
     }
 ];
 

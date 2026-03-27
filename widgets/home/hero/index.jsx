@@ -206,13 +206,17 @@ const Hero = () => {
                                     key={index}
                                     className={`${styles.slide} ${currentSlide === index ? styles.active : ''}`}
                                 >
-                                    <Image
-                                        src={slide}
-                                        alt={`Soff.uz Banner ${index + 1}`}
-                                        layout="fill"
-                                        objectFit="contain"
-                                        priority={index === 0}
-                                    />
+                                    <Link href="/scientific-resources">
+                                        <a style={{ display: 'block', width: '100%', height: '100%', position: 'relative' }}>
+                                            <Image
+                                                src={slide}
+                                                alt={`Soff.uz Banner ${index + 1}`}
+                                                layout="fill"
+                                                objectFit="contain"
+                                                priority={index === 0}
+                                            />
+                                        </a>
+                                    </Link>
                                 </div>
                             ))}
 
