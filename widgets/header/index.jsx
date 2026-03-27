@@ -41,8 +41,25 @@ import {
     TbBriefcase,   // Frilanserlik xizmatlari (portfel)
     TbSparkles,    // AI xizmatlari (yulduzchalar)
     TbVideo,       // Ijodkorlar (kamera)
-    TbUpload       // Sotuvchi bo'lish (qutichadan chiqayotgan strelka)
+    TbUpload,      // Sotuvchi bo'lish (qutichadan chiqayotgan strelka)
+    TbSchool,
+    TbPalette,
+    TbCode,
+    TbBox,
+    TbTool,
+    TbSpeakerphone
 } from "react-icons/tb";
+
+const directionIcons = {
+    scientific_work: <TbSchool size={22} strokeWidth={1.5} />,
+    dizayn: <TbPalette size={22} strokeWidth={1.5} />,
+    web: <TbCode size={22} strokeWidth={1.5} />,
+    three_d: <TbBox size={22} strokeWidth={1.5} />,
+    marketing: <TbSpeakerphone size={22} strokeWidth={1.5} />,
+    video: <TbVideo size={22} strokeWidth={1.5} />,
+    audio_video: <TbVideo size={22} strokeWidth={1.5} />,
+    business: <TbBriefcase size={22} strokeWidth={1.5} />,
+};
 
 const { Option } = Select;
 
@@ -87,6 +104,7 @@ const Header = () => {
     const [megaMenuOpen, setMegaMenuOpen] = useState(false);
     const [hoveredCategory, setHoveredCategory] = useState(null);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [isFocused, setIsFocused] = useState(false);
     const megaMenuRef = useRef(null);
     const searchRef = useRef(null);
 
@@ -221,72 +239,79 @@ const Header = () => {
 
                         {megaMenuOpen && (
                             <div className={styles.megaMenu}>
-                                <div className={styles.megaSidebar}>
-                                    {categoriesData?.map((category) => (
-                                        <div
-                                            key={category.id}
-                                            className={`${styles.sidebarItem} ${hoveredCategory === category.direction ? styles.active : ''}`}
-                                            onMouseEnter={() => setHoveredCategory(category.direction)}
-                                        >
-                                            <span>{formatCategoryTitle(category.direction)}</span>
-                                            <MdKeyboardArrowRight />
-                                        </div>
-                                    ))}
-                                </div>
-                                <div className={styles.megaContent}>
-                                    {activeCategoryData ? (
-                                        <>
-                                            {/* MAHSULOTLAR */}
-                                            {activeCategoryData.soff_categories?.length > 0 && (
-                                                <div className={styles.section}>
-                                                    <div className={styles.sectionHeader}>
-                                                        <div className={styles.iconBox}><MdLayers /></div>
-                                                        <div>
-                                                            <h3>MAHSULOTLAR</h3>
-                                                            <small>Tayyor yuklangan mahsulotlar</small>
+                                <div className="container" style={{ display: 'flex', minHeight: 'inherit' }}>
+                                    <div className={`${styles.megaSidebar}`}>
+                                        {categoriesData?.map((category) => (
+                                            <div
+                                                key={category.id}
+                                                className={`${styles.sidebarItem} ${hoveredCategory === category.direction ? styles.active : ''}`}
+                                                onMouseEnter={() => setHoveredCategory(category.direction)}
+                                            >
+                                                <div className={styles.sidebarItemContent}>
+                                                    <span className={styles.sidebarIconBox}>
+                                                        {directionIcons[category.direction] || <MdLayers size={22} />}
+                                                    </span>
+                                                    <span className={styles.itemText}>{formatCategoryTitle(category.direction)}</span>
+                                                </div>
+                                                <MdKeyboardArrowRight className={styles.arrow} />
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <div className={styles.megaContent}>
+                                        {activeCategoryData ? (
+                                            <>
+                                                {/* MAHSULOTLAR */}
+                                                {activeCategoryData.soff_categories?.length > 0 && (
+                                                    <div className={styles.section}>
+                                                        <div className={styles.sectionHeader}>
+                                                            <div className={styles.iconBox}><TbBox size={22} strokeWidth={1.5} /></div>
+                                                            <div>
+                                                                <h3>MAHSULOTLAR</h3>
+                                                                <p>Tayyor yuklangan mahsulotlar</p>
+                                                            </div>
+                                                        </div>
+                                                        <div className={styles.linksGrid}>
+                                                            {activeCategoryData.soff_categories?.map(cat => (
+                                                                <Link
+                                                                    key={cat.id}
+                                                                    href={`/${templateLink[activeCategoryData.direction] || 'templates'}/${cat.slug}?slug=${cat.slug}&search=&parentCategory=${cat.slug}&title=${cat.title}`}
+                                                                >
+                                                                    <a className={styles.menuLink}>{cat.title}</a>
+                                                                </Link>
+                                                            ))}
                                                         </div>
                                                     </div>
-                                                    <div className={styles.linksGrid}>
-                                                        {activeCategoryData.soff_categories?.map(cat => (
-                                                            <Link
-                                                                key={cat.id}
-                                                                href={`/${templateLink[activeCategoryData.direction] || 'templates'}/${cat.slug}?slug=${cat.slug}&search=&parentCategory=${cat.slug}&title=${cat.title}`}
-                                                            >
-                                                                <a className={styles.menuLink}>{cat.title}</a>
-                                                            </Link>
-                                                        ))}
-                                                    </div>
-                                                </div>
-                                            )}
+                                                )}
 
-                                            {/* XIZMATLAR */}
-                                            {activeCategoryData.freelance_categories?.length > 0 && (
-                                                <div className={styles.section}>
-                                                    <div className={styles.sectionHeader}>
-                                                        <div className={styles.iconBox}><MdEditNote /></div>
-                                                        <div>
-                                                            <h3>XIZMATLAR</h3>
-                                                            <small>Xizmatni tanlang - buyurtma bering</small>
+                                                {/* XIZMATLAR */}
+                                                {activeCategoryData.freelance_categories?.length > 0 && (
+                                                    <div className={styles.section}>
+                                                        <div className={styles.sectionHeader}>
+                                                            <div className={styles.iconBox}><TbTool size={22} strokeWidth={1.5} /></div>
+                                                            <div>
+                                                                <h3>XIZMATLAR</h3>
+                                                                <p>Xizmatni tanlang - buyurtma bering</p>
+                                                            </div>
+                                                        </div>
+                                                        <div className={styles.linksGrid}>
+                                                            {activeCategoryData.freelance_categories?.map(cat => (
+                                                                <Link
+                                                                    key={cat.id}
+                                                                    href={`/orders?direction=${activeCategoryData.direction}&category_id=${cat.id}&title=${cat.title}`}
+                                                                >
+                                                                    <a className={styles.menuLink}>{cat.title}</a>
+                                                                </Link>
+                                                            ))}
                                                         </div>
                                                     </div>
-                                                    <div className={styles.linksGrid}>
-                                                        {activeCategoryData.freelance_categories?.map(cat => (
-                                                            <Link
-                                                                key={cat.id}
-                                                                href={`/orders?direction=${activeCategoryData.direction}&category_id=${cat.id}&title=${cat.title}`}
-                                                            >
-                                                                <a className={styles.menuLink}>{cat.title}</a>
-                                                            </Link>
-                                                        ))}
-                                                    </div>
-                                                </div>
-                                            )}
-                                        </>
-                                    ) : (
-                                        <div className="p-4 text-center text-muted">
-                                            Kategoriyani tanlang
-                                        </div>
-                                    )}
+                                                )}
+                                            </>
+                                        ) : (
+                                            <div className="p-4 text-center text-muted">
+                                                Kategoriyani tanlang
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
                         )}
@@ -311,7 +336,11 @@ const Header = () => {
                                 className={styles.searchInput}
                                 placeholder="Qidiring..."
                                 value={search}
-                                onFocus={() => setIsDropdownOpen(true)}
+                                onFocus={() => {
+                                    setIsDropdownOpen(true);
+                                    setIsFocused(true);
+                                }}
+                                onBlur={() => setIsFocused(false)}
                                 onChange={(e) => setSearch(e.target.value)}
                                 onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
                             />
@@ -325,8 +354,11 @@ const Header = () => {
                         </div>
 
                         {/* Backdrop Focus Effect */}
-                        {isDropdownOpen && search.length > 0 && (
-                            <div className={styles.backdrop} onClick={() => setIsDropdownOpen(false)} />
+                        {(isFocused || (isDropdownOpen && search.length > 0)) && (
+                            <div className={styles.backdrop} onClick={() => {
+                                setIsDropdownOpen(false);
+                                setIsFocused(false);
+                            }} />
                         )}
 
                         {/* Search Suggestions Dropdown */}
