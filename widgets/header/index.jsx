@@ -473,47 +473,48 @@ const Header = () => {
                 </div>
             </div>
 
-            {/* PART 2: BOTTOM SUB-NAV ROW */}
-            <div className={styles.subRow}>
-                <div className="container d-flex justify-content-start gap-1">
-                    <Link href="/scientific-resources/all">
-                        <a className={styles.navLink}>
-                            <TbDownload className={styles.icon} />
-                            Tayyor mahsulotlar
+            {!megaMenuOpen && (
+                <div className={styles.subRow}>
+                    <div className="container d-flex justify-content-start gap-1">
+                        <Link href="/scientific-resources/all">
+                            <a className={styles.navLink}>
+                                <TbDownload className={styles.icon} />
+                                Tayyor mahsulotlar
+                            </a>
+                        </Link>
+                        <Link href="/orders">
+                            <a className={styles.navLink}>
+                                <TbBriefcase className={styles.icon} />
+                                Frilanserlik xizmatlari
+                            </a>
+                        </Link>
+                        <a
+                            href="https://soffia.uz/uz/dashboard"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={styles.navLink}
+                        >
+                            <TbSparkles className={styles.icon} />
+                            AI xizmatlari
                         </a>
-                    </Link>
-                    <Link href="/orders">
-                        <a className={styles.navLink}>
-                            <TbBriefcase className={styles.icon} />
-                            Frilanserlik xizmatlari
+                        <Link href="/freelancers">
+                            <a className={styles.navLink}>
+                                <TbVideo className={styles.icon} />
+                                Ijodkorlar
+                            </a>
+                        </Link>
+                        <a
+                            href="https://seller.soff.uz/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={styles.navLink}
+                        >
+                            <TbUpload className={styles.icon} />
+                            Sotuvchi bo'lish
                         </a>
-                    </Link>
-                    <a
-                        href="https://soffia.uz/uz/dashboard"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={styles.navLink}
-                    >
-                        <TbSparkles className={styles.icon} />
-                        AI xizmatlari
-                    </a>
-                    <Link href="/freelancers">
-                        <a className={styles.navLink}>
-                            <TbVideo className={styles.icon} />
-                            Ijodkorlar
-                        </a>
-                    </Link>
-                    <a
-                        href="https://seller.soff.uz/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={styles.navLink}
-                    >
-                        <TbUpload className={styles.icon} />
-                        Sotuvchi bo'lish
-                    </a>
+                    </div>
                 </div>
-            </div>
+            )}
         </header>
     );
 };
