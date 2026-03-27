@@ -126,11 +126,11 @@ const nextSettings = {
         return [
             {
                 source: '/videos/:path*',
-                destination: 'http://localhost:3001/videos/:path*',
+                destination: 'http://localhost:3000/videos/:path*',
             },
             {
                 source: '/freelance/:path*',
-                destination: 'http://localhost:3000/freelance/:path*',
+                destination: 'http://localhost:3001/freelance/:path*',
             },
         ];
     },

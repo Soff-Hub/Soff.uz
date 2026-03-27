@@ -2,9 +2,26 @@ import React from 'react';
 import { Skeleton } from 'antd';
 import HeaderLogo from './HeaderLogo';
 import useResponsive from '~/shared/utilities/useResponsive';
+import styles from './header.module.scss';
+import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
 
 function HeaderLoader() {
     const { isMobile } = useResponsive();
+    
+    // Senior approach: Only show skeleton if we have a probable session
+    const [hasToken, setHasToken] = React.useState(false);
+    
+    React.useEffect(() => {
+        const storedUser = safeLocalStorage.getItem('user');
+        if (storedUser) {
+            try {
+                const user = JSON.parse(storedUser);
+                if (user && user.access) setHasToken(true);
+            } catch (e) {
+                setHasToken(false);
+            }
+        }
+    }, []);
 
     return (
         <header
@@ -15,6 +32,11 @@ function HeaderLoader() {
                 zIndex: 1000,
                 overflow: 'hidden',
             }}>
+            {hasToken && (
+                <div className={styles.skeletonBanner}>
+                    <Skeleton.Input active size="small" style={{ width: 250 }} />
+                </div>
+            )}
             <div
                 style={{
                     padding: '10px 0',

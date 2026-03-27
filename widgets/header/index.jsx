@@ -19,7 +19,11 @@ import {
     MdGroup,
     MdStorefront
 } from 'react-icons/md';
-import { FaRegHeart } from 'react-icons/fa';
+import { FaRegHeart, FaClock, FaPercent } from 'react-icons/fa';
+
+import ProductRepository from '~/repositories/ProductRepository';
+import { useCountTimeBack } from '~/shared/hooks/useCountDown';
+import { useMounted } from '~/shared/hooks/useMounted';
 
 import { initLocalCart } from '~/store/ecomerce/slice';
 import { initSearchHistory } from '~/store/search/slice';
@@ -28,7 +32,6 @@ import { useFGet } from '~/shared/hooks/useFApi';
 import { NAVBAR_MENU_CATEGORIES } from '~/shared/api/end-points';
 import useSearch from '~/shared/hooks/useSearch';
 import HeaderUserDropdown from './HeaderActions/HeaderUserDropdown';
-import { useMounted } from '~/shared/hooks/useMounted';
 import { highlightMatch } from '~/shared/utilities/utils';
 
 import styles from './header.module.scss';
@@ -79,6 +82,29 @@ const Header = () => {
     const megaMenuRef = useRef(null);
     const searchRef = useRef(null);
 
+    const [promotion, setPromotion] = useState({
+        discount_percent: 0,
+        expires_at: null,
+    });
+    const timeLeft = useCountTimeBack(promotion.expires_at || null);
+
+    useEffect(() => {
+        const fetchPromotion = async () => {
+            try {
+                const res = await ProductRepository.getActivePromotion();
+                if (res) setPromotion(res);
+            } catch (err) {
+                console.error('Promotion fetch failed', err);
+            }
+        };
+
+        if (isMounted && isLoggedIn) {
+            fetchPromotion();
+        } else if (isMounted && !isLoggedIn) {
+            setPromotion({ discount_percent: 0, expires_at: null });
+        }
+    }, [isMounted, isLoggedIn]);
+
     // Fetch Categories for Mega Menu
     const { data: categoriesData } = useFGet('navbar-items', NAVBAR_MENU_CATEGORIES);
 
@@ -119,8 +145,45 @@ const Header = () => {
 
     const activeCategoryData = categoriesData?.find(cat => cat.direction === hoveredCategory);
 
+    const isExpiring = promotion.expires_at && (timeLeft.minutes > 0 || timeLeft.seconds > 0);
+
+    const renderPromoBanner = () => {
+        if (!isMounted || !isLoggedIn || promotion.discount_percent <= 0) return null;
+
+        return (
+            <div className={styles.promotionBanner}>
+                <div className={styles.mainInfo}>
+                    <div className={styles.iconWrapper}>
+                        <FaPercent size={12} className="text-white" />
+                    </div>
+                    <span className={styles.text}>
+                        MAXSUS TAKLIF: {promotion.discount_percent}% CHEGIRMA BILAN SOTIB OLING!
+                    </span>
+                </div>
+
+                {isExpiring && (
+                    <div className={styles.countdown}>
+                        <FaClock size={12} className="text-white/80" />
+                        <span className={styles.time}>
+                            {String(timeLeft.minutes).padStart(2, '0')}:{String(timeLeft.seconds).padStart(2, '0')}
+                        </span>
+                    </div>
+                )}
+
+                {!isMobile && (
+                    <Link href="/account/shopping-cart">
+                        <a className={styles.cartLink}>
+                            Savatga o'tish
+                        </a>
+                    </Link>
+                )}
+            </div>
+        );
+    };
+
     return (
         <header className={styles.headerMainBlock}>
+            {renderPromoBanner()}
             <div className="container">
                 {/* PART 1: TOP ROW */}
                 <div className={styles.topRow}>

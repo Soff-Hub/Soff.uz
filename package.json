@@ -5,7 +5,7 @@
     "author": "Soff Hub",
     "homepage": "https://soff.uz",
     "scripts": {
-        "dev": "next dev -p 5050",
+        "dev": "next dev -p 5505",
         "build": "node scripts/scheduler.js && next build && node scripts/copy-to-standalone.js",
         "start": "next start -p 5505",
         "type-check": "tsc --noEmit",
