@@ -17,7 +17,7 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
         display: grid;
         grid-template-columns: 270px 1fr;
         gap: 16px;
-        align-items: stretch;
+        align-items: start;
         margin-bottom: 30px;
         position: relative;
 
@@ -35,6 +35,25 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
     gap: 16px;
     flex: 1;
     position: relative; // For mega menu boundaries if needed, but topLayout is relative
+}
+
+.iconBox {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background-color: #f1f5f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #475569;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+
+    svg {
+        width: 22px;
+        height: 22px;
+        stroke-width: 1.5;
+    }
 }
 
 // Sidebar
@@ -74,25 +93,6 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
             border-bottom: none;
         }
 
-        .iconBox {
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-            background-color: #f1f5f9;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #475569;
-            transition: all 0.2s ease;
-            flex-shrink: 0;
-
-            svg {
-                width: 22px;
-                height: 22px;
-                stroke-width: 1.5;
-            }
-        }
-
         .itemText {
             flex: 1;
             font-weight: 500;
@@ -111,19 +111,15 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
         &.active,
         &:hover {
             background-color: #f0fdf4;
-            border-left-color: #00A650;
+            border-left-color: #239f71;
 
-            .iconBox {
-                background-color: #f0fdf4;
-                color: #00A650;
-            }
 
             .itemText {
-                color: #00A650;
+                color: #239f71;
             }
 
             .arrow {
-                color: #00A650;
+                color: #239f71;
             }
         }
     }
@@ -156,11 +152,6 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
             padding-bottom: 12px;
             border-bottom: 1px solid #f1f5f9;
 
-            .sectionIcon {
-                font-size: 24px;
-                color: #1e293b;
-            }
-
             .headerInfo {
                 h3 {
                     font-size: 14px;
@@ -173,7 +164,7 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
 
                 p {
                     font-size: 12px;
-                    color: #64748b;
+                    color: #475569;
                     margin: 2px 0 0 0;
                 }
             }
@@ -183,14 +174,15 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 12px 24px;
+            row-gap: 12px;
 
             .menuLink {
                 font-size: 14px;
                 color: #475569;
                 text-decoration: none;
-                padding: 4px 0;
+                padding: 0;
                 transition: color 0.2s ease;
-                line-height: 1.5;
+                line-height: 1.4;
 
                 &:hover {
                     color: #00A650;
@@ -203,7 +195,8 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
 // Swiper Wrapper
 .swiperWrapper {
     width: 100%;
-    height: 100%;
+    height: 275px !important;
+    max-height: 275px;
     position: relative;
     border-radius: 12px;
     overflow: hidden;
@@ -224,8 +217,8 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     position: relative;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    min-height: 320px;
-    height: 100%;
+    height: 275px !important;
+    max-height: 275px;
     display: flex;
     align-items: stretch;
 
@@ -233,19 +226,57 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
         .swiper {
             width: 100%;
             height: 100%;
+
+            &:hover {
+
+                .swiper-button-next,
+                .swiper-button-prev {
+                    opacity: 1;
+                }
+            }
+        }
+
+        // Navigation Arrows
+        .swiper-button-next,
+        .swiper-button-prev {
+            opacity: 0;
+            transition: all 0.3s ease;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background-color: rgba(15, 23, 42, 0.3);
+            backdrop-filter: blur(4px);
+            margin-top: -22px;
+
+            &::after {
+                font-size: 18px !important;
+                color: #ffffff !important;
+                font-weight: 700;
+            }
+
+            &:hover {
+                background-color: rgba(15, 23, 42, 0.5);
+            }
+        }
+
+        // Pagination Dots
+        .swiper-pagination {
+            bottom: 12px !important;
         }
 
         .swiper-pagination-bullet {
-            background: #ffffff;
-            opacity: 0.5;
             width: 8px;
             height: 8px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 1;
             transition: all 0.3s ease;
+            border-radius: 50%;
+            margin: 0 4px !important;
 
             &-active {
-                opacity: 1;
                 width: 24px;
-                border-radius: 4px;
+                border-radius: 8px;
+                background: #ffffff;
             }
         }
     }
@@ -256,7 +287,7 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
     margin-top: 0;
 
     .gridHeader {
-        margin-bottom: 20px;
+        // margin-bottom: 20px;
 
         h2 {
             font-size: 18px;
@@ -268,24 +299,23 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
     .categoryGrid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 16px;
+        gap: 10px;
 
         @media screen and (max-width: 767px) {
             grid-template-columns: repeat(2, 1fr) !important;
-            gap: 12px;
         }
 
         .categoryCard {
             background: #ffffff;
             border: 1px solid #e2e8f0;
-            border-radius: 12px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 12px;
             transition: all 0.2s ease;
             text-decoration: none;
             width: 100%;
-            padding: 16px;
+            padding: 12px;
 
             @media screen and (max-width: 767px) {
                 padding: 12px;
@@ -329,7 +359,6 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
                     display: block;
                     font-size: 12px;
                     color: #94a3b8;
-                    margin-top: 2px;
 
                     @media screen and (max-width: 767px) {
                         font-size: 11px;
@@ -341,11 +370,6 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
                 border-color: #00A650;
                 transform: translateY(-2px);
                 box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
-
-                .cardIcon {
-                    background: #f0fdf4;
-                    color: #00A650;
-                }
 
                 .cardInfo .cardTitle {
                     color: #00A650;
@@ -375,11 +399,10 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
     .statsGrid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        gap: 20px;
+        gap: 10px;
 
         @media (max-width: 768px) {
             grid-template-columns: repeat(2, 1fr);
-            gap: 32px;
         }
 
         .statItem {
