@@ -27,7 +27,7 @@ const HeroSwiper = ({ images = [] }) => {
                 {images.map((img, index) => (
                     <SwiperSlide key={index}>
                         <div className={styles.bannerImageSlide}>
-                            <Image 
+                            <Image
                                 src={img}
                                 alt={`Soff.uz Banner ${index + 1}`}
                                 layout="fill"

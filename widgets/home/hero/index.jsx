@@ -46,9 +46,9 @@ const directionLabels = {
 
 const slides = [
     '/static/img/HomePage/hero/hero_1.jpg',
-    '/static/img/HomePage/hero/hero_2.jpg',
-    '/static/img/HomePage/hero/hero_3.jpg',
-    '/static/img/HomePage/hero/hero_4.jpg',
+    // '/static/img/HomePage/hero/hero_2.jpg',
+    // '/static/img/HomePage/hero/hero_3.jpg',
+    // '/static/img/HomePage/hero/hero_4.jpg',
 ]
 
 const formatDirectionLabel = (key) => {
@@ -216,8 +216,7 @@ const Hero = () => {
                                 </div>
                             ))}
 
-                            {/* Navigation Buttons */}
-                            <button
+                            {/* <button
                                 className={`${styles.navButton} ${styles.prev}`}
                                 onClick={(e) => { e.preventDefault(); prevSlide(); }}
                             >
@@ -230,7 +229,6 @@ const Hero = () => {
                                 <MdChevronRight size={28} />
                             </button>
 
-                            {/* Pagination Dots */}
                             <div className={styles.dotsContainer}>
                                 {slides.map((_, index) => (
                                     <div
@@ -239,7 +237,7 @@ const Hero = () => {
                                         onClick={() => setCurrentSlide(index)}
                                     />
                                 ))}
-                            </div>
+                            </div> */}
                         </div>
                     </section>
 
