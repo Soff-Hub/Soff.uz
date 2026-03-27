@@ -1,13 +1,13 @@
 import React from 'react';
 import Link from 'next/link';
 import styles from './style.module.scss';
-import { 
-    TbPalette, 
-    TbCode, 
-    TbSpeakerphone, 
-    TbSchool, 
-    TbVideo, 
-    TbBriefcase 
+import {
+    TbPalette,
+    TbCode,
+    TbSpeakerphone,
+    TbSchool,
+    TbVideo,
+    TbBriefcase
 } from 'react-icons/tb';
 
 const popularCategories = [
@@ -38,7 +38,7 @@ const popularCategories = [
     {
         title: 'Video & Audio',
         count: '2,800+',
-        href: '/orders?direction=video',
+        href: '/orders?direction=audio_video',
         icon: <TbVideo />
     },
     {

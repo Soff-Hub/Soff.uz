@@ -117,19 +117,20 @@ const Hero = () => {
                     onMouseLeave={handleMenuLeave}
                 >
                     {categoriesData?.map((item) => (
-                        <div
-                            key={item.direction}
-                            className={`${styles.menuItem} ${hoveredCategory?.direction === item.direction ? styles.active : ''}`}
-                            onMouseEnter={() => handleMenuEnter(item)}
-                        >
-                            <div className={styles.iconBox}>
-                                {directionIcons[item.direction] || <MdSettings />}
-                            </div>
-                            <span className={styles.itemText}>
-                                {formatDirectionLabel(item.direction)}
-                            </span>
-                            <TbChevronRight className={styles.arrow} />
-                        </div>
+                        <Link key={item.direction} href={`/orders?direction=${item.direction}`}>
+                            <a
+                                className={`${styles.menuItem} ${hoveredCategory?.direction === item.direction ? styles.active : ''}`}
+                                onMouseEnter={() => handleMenuEnter(item)}
+                            >
+                                <div className={styles.iconBox}>
+                                    {directionIcons[item.direction] || <MdSettings />}
+                                </div>
+                                <span className={styles.itemText}>
+                                    {formatDirectionLabel(item.direction)}
+                                </span>
+                                <TbChevronRight className={styles.arrow} />
+                            </a>
+                        </Link>
                     ))}
 
                 </aside>

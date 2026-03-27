@@ -242,19 +242,21 @@ const Header = () => {
                                 <div className="container" style={{ display: 'flex', minHeight: 'inherit' }}>
                                     <div className={`${styles.megaSidebar}`}>
                                         {categoriesData?.map((category) => (
-                                            <div
-                                                key={category.id}
-                                                className={`${styles.sidebarItem} ${hoveredCategory === category.direction ? styles.active : ''}`}
-                                                onMouseEnter={() => setHoveredCategory(category.direction)}
-                                            >
-                                                <div className={styles.sidebarItemContent}>
-                                                    <span className={styles.sidebarIconBox}>
-                                                        {directionIcons[category.direction] || <MdLayers size={22} />}
-                                                    </span>
-                                                    <span className={styles.itemText}>{formatCategoryTitle(category.direction)}</span>
-                                                </div>
-                                                <MdKeyboardArrowRight className={styles.arrow} />
-                                            </div>
+                                            <Link key={category.id} href={`/orders?direction=${category.direction}`}>
+                                                <a
+                                                    className={`${styles.sidebarItem} ${hoveredCategory === category.direction ? styles.active : ''}`}
+                                                    onMouseEnter={() => setHoveredCategory(category.direction)}
+                                                    onClick={() => setMegaMenuOpen(false)}
+                                                >
+                                                    <div className={styles.sidebarItemContent}>
+                                                        <span className={styles.sidebarIconBox}>
+                                                            {directionIcons[category.direction] || <MdLayers size={22} />}
+                                                        </span>
+                                                        <span className={styles.itemText}>{formatCategoryTitle(category.direction)}</span>
+                                                    </div>
+                                                    <MdKeyboardArrowRight className={styles.arrow} />
+                                                </a>
+                                            </Link>
                                         ))}
                                     </div>
                                     <div className={styles.megaContent}>
@@ -497,12 +499,12 @@ const Header = () => {
                             <TbSparkles className={styles.icon} />
                             AI xizmatlari
                         </a>
-                        <Link href="/freelancers">
+                        {/* <Link href="/freelancers">
                             <a className={styles.navLink}>
                                 <TbVideo className={styles.icon} />
                                 Ijodkorlar
                             </a>
-                        </Link>
+                        </Link> */}
                         <a
                             href="https://seller.soff.uz/"
                             target="_blank"

@@ -40,10 +40,10 @@ export default function SoffFreelancerPage({
         directionTitle && categoryTitle && search
             ? `"${search}" so'rovi bo'yicha xizmatlar - Soff.uz`
             : directionTitle && categoryTitle
-            ? `${directionTitle} - ${categoryTitle} | Soff.uz`
-            : directionTitle
-            ? `${directionTitle} - Soff.uz`
-            : 'Xizmatlarga buyurtma berish - Soff.uz';
+                ? `${directionTitle} - ${categoryTitle} | Soff.uz`
+                : directionTitle
+                    ? `${directionTitle} - Soff.uz`
+                    : 'Xizmatlarga buyurtma berish - Soff.uz';
 
     const onChangePage = (page, pageSize) => {
         router.push({
