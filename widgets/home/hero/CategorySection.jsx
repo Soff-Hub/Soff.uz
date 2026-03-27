@@ -2,50 +2,50 @@ import React from 'react';
 import Link from 'next/link';
 import styles from './style.module.scss';
 import { 
-    MdPalette, 
-    MdCode, 
-    MdTrendingUp, 
-    MdSchool, 
-    MdVideocam, 
-    MdBusinessCenter 
-} from 'react-icons/md';
+    TbPalette, 
+    TbCode, 
+    TbSpeakerphone, 
+    TbSchool, 
+    TbVideo, 
+    TbBriefcase 
+} from 'react-icons/tb';
 
 const popularCategories = [
     {
         title: 'Dizayn',
         count: '12,400+',
         href: '/orders?direction=dizayn',
-        icon: <MdPalette />
+        icon: <TbPalette />
     },
     {
         title: 'Dasturlash',
         count: '8,200+',
         href: '/orders?direction=web',
-        icon: <MdCode />
+        icon: <TbCode />
     },
     {
         title: 'Marketing',
         count: '5,800+',
         href: '/orders?direction=marketing',
-        icon: <MdTrendingUp />
+        icon: <TbSpeakerphone />
     },
     {
         title: 'Ta’lim',
         count: '3,900+',
         href: '/orders?direction=scientific_work',
-        icon: <MdSchool />
+        icon: <TbSchool />
     },
     {
         title: 'Video & Audio',
         count: '2,800+',
         href: '/orders?direction=video',
-        icon: <MdVideocam />
+        icon: <TbVideo />
     },
     {
         title: 'Biznes',
         count: '4,300+',
         href: '/orders?direction=business',
-        icon: <MdBusinessCenter />
+        icon: <TbBriefcase />
     }
 ];
 

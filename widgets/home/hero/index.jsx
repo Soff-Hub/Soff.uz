@@ -5,35 +5,37 @@ import styles from './style.module.scss';
 import { useFGet } from '~/shared/hooks/useFApi';
 import { NAVBAR_MENU_CATEGORIES } from '~/shared/api/end-points';
 import {
-    MdSchool,
-    MdPalette,
-    MdCode,
-    MdLayers,
-    MdTrendingUp,
-    MdVideocam,
-    MdBusinessCenter,
-    MdChevronRight,
-    MdSettings,
-    MdWork
-} from 'react-icons/md';
+    TbSchool,
+    TbPalette,
+    TbCode,
+    TbBox,
+    TbSpeakerphone,
+    TbVideo,
+    TbBriefcase,
+    TbChevronRight
+} from 'react-icons/tb';
+import { MdSettings, MdWork } from 'react-icons/md';
+import { TbSettings, TbWork } from 'react-icons/tb';
+import HeroSwiper from './HeroSwiper';
 import CategorySection from './CategorySection';
 
 const directionIcons = {
-    scientific_work: <MdSchool />,
-    dizayn: <MdPalette />,
-    web: <MdCode />,
-    three_d: <MdLayers />,
-    marketing: <MdTrendingUp />,
-    video: <MdVideocam />,
-    business: <MdBusinessCenter />,
+    scientific_work: <TbSchool size={22} strokeWidth={1.5} />,
+    dizayn: <TbPalette size={22} strokeWidth={1.5} />,
+    web: <TbCode size={22} strokeWidth={1.5} />,
+    three_d: <TbBox size={22} strokeWidth={1.5} />,
+    marketing: <TbSpeakerphone size={22} strokeWidth={1.5} />,
+    video: <TbVideo size={22} strokeWidth={1.5} />,
+    audio_video: <TbVideo size={22} strokeWidth={1.5} />,
+    business: <TbBriefcase size={22} strokeWidth={1.5} />,
 };
 
 const directionLabels = {
     scientific_work: 'Ilmiy va Akademik xizmatlar',
     science_resources: 'Ilmiy va Akademik xizmatlar',
     dizayn: 'Dizayn',
-    web: 'Veb Dasturlash',
-    it_development: 'Veb Dasturlash',
+    web: 'Dasturlash xizmatlari',
+    it_development: 'Dasturlash xizmatlari',
     three_d: '3D Dizayn va Vizualizatsiya',
     '3d_design': '3D Dizayn va Vizualizatsiya',
     marketing: 'Marketing va SMM',
@@ -81,92 +83,75 @@ const Hero = () => {
                             <span className={styles.itemText}>
                                 {formatDirectionLabel(item.direction)}
                             </span>
-                            <MdChevronRight className={styles.arrow} />
+                            <TbChevronRight className={styles.arrow} />
                         </div>
                     ))}
 
-                    {/* Mega Menu Popover */}
-                    {hoveredCategory && (
-                        <div className={styles.megaMenu}>
-                            {/* Mahsulotlar Section */}
-                            {hoveredCategory.soff_categories?.length > 0 && (
-                                <div className={styles.popoverSection}>
-                                    <div className={styles.sectionHeader}>
-                                        <MdWork className={styles.sectionIcon} />
-                                        <div className={styles.headerInfo}>
-                                            <h3>MAHSULOTLAR</h3>
-                                            <p>Tayyor yuklangan mahsulotlar</p>
-                                        </div>
-                                    </div>
-                                    <div className={styles.linksGrid}>
-                                        {hoveredCategory.soff_categories?.map((cat) => (
-                                            <Link
-                                                key={cat.id}
-                                                href={`/${templateLink[hoveredCategory.direction] || 'templates'}/${cat.slug}?slug=${cat.slug}&search=&parentCategory=${cat.slug}&title=${cat.title}`}
-                                            >
-                                                <a className={styles.menuLink}>{cat.title}</a>
-                                            </Link>
-                                        ))}
-                                    </div>
-                                </div>
-                            )}
-
-                            {/* Xizmatlar Section */}
-                            {hoveredCategory.freelance_categories?.length > 0 && (
-                                <div className={styles.popoverSection}>
-                                    <div className={styles.sectionHeader}>
-                                        <MdSettings className={styles.sectionIcon} />
-                                        <div className={styles.headerInfo}>
-                                            <h3>XIZMATLAR</h3>
-                                            <p>Xizmatni tanlang – buyurtma bering</p>
-                                        </div>
-                                    </div>
-                                    <div className={styles.linksGrid}>
-                                        {hoveredCategory.freelance_categories?.map((cat) => (
-                                            <Link
-                                                key={cat.id}
-                                                href={`/orders?direction=${hoveredCategory.direction}&category_id=${cat.id}&title=${cat.title}`}
-                                            >
-                                                <a className={styles.menuLink}>{cat.title}</a>
-                                            </Link>
-                                        ))}
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    )}
                 </aside>
+
+                {/* Mega Menu Popover (Direct child of heroTopLayout for absolute positioning) */}
+                {hoveredCategory && (
+                    <div 
+                        className={styles.megaMenu}
+                        onMouseEnter={() => setHoveredCategory(hoveredCategory)}
+                        onMouseLeave={() => setHoveredCategory(null)}
+                    >
+                        {/* Mahsulotlar Section */}
+                        {hoveredCategory.soff_categories?.length > 0 && (
+                            <div className={styles.popoverSection}>
+                                <div className={styles.sectionHeader}>
+                                    <MdWork className={styles.sectionIcon} />
+                                    <div className={styles.headerInfo}>
+                                        <h3>MAHSULOTLAR</h3>
+                                        <p>Tayyor yuklangan mahsulotlar</p>
+                                    </div>
+                                </div>
+                                <div className={styles.linksGrid}>
+                                    {hoveredCategory.soff_categories?.map((cat) => (
+                                        <Link
+                                            key={cat.id}
+                                            href={`/${templateLink[hoveredCategory.direction] || 'templates'}/${cat.slug}?slug=${cat.slug}&search=&parentCategory=${cat.slug}&title=${cat.title}`}
+                                        >
+                                            <a className={styles.menuLink}>{cat.title}</a>
+                                        </Link>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Xizmatlar Section */}
+                        {hoveredCategory.freelance_categories?.length > 0 && (
+                            <div className={styles.popoverSection}>
+                                <div className={styles.sectionHeader}>
+                                    <MdSettings className={styles.sectionIcon} />
+                                    <div className={styles.headerInfo}>
+                                        <h3>XIZMATLAR</h3>
+                                        <p>Xizmatni tanlang – buyurtma bering</p>
+                                    </div>
+                                </div>
+                                <div className={styles.linksGrid}>
+                                    {hoveredCategory.freelance_categories?.map((cat) => (
+                                        <Link
+                                            key={cat.id}
+                                            href={`/orders?direction=${hoveredCategory.direction}&category_id=${cat.id}&title=${cat.title}`}
+                                        >
+                                            <a className={styles.menuLink}>{cat.title}</a>
+                                        </Link>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                )}
 
                 {/* Right Column: Banner + Categories Grid Stack */}
                 <div className={styles.heroRightColumn}>
                     <section className={styles.heroBanner}>
-                        {/* Full-bleed Background Pattern */}
-                        <img
-                            src="/static/img/HomePage/hero/hero_bg.png"
-                            alt="Background Pattern"
-                            className={styles.heroBgImage}
-                        />
-
-                        <div className={styles.bannerContent}>
-                            <h1>Onlayn mutaxassislarni osongina toping</h1>
-                            <p className={styles.subtitle}>
-                                Tasdiqlangan mutaxassislardan loyihalaringiz uchun foydalaning
-                            </p>
-                            <Link href="/orders">
-                                <button className={styles.ctaButton}>
-                                    Mutaxassis yollash
-                                </button>
-                            </Link>
-                        </div>
-                        {/* Hero Graphic Injection */}
-                        {/* Specialist Layer */}
-                        <div className={styles.heroImageWrapper}>
-                            <img
-                                src="/static/img/HomePage/hero/opa.png"
-                                alt="Specialist"
-                                className={styles.heroSpecialistImage}
-                            />
-                        </div>
+                        {/* Image-only Swiper Banner */}
+                        <HeroSwiper images={[
+                            '/static/img/HomePage/hero/hero_bg.png', 
+                            '/static/img/HomePage/hero/hero_bg.png'
+                        ]} />
                     </section>
 
                     {/* Middle Section: Popular Categories Grid */}
