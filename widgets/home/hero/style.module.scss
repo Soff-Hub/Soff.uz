@@ -13,15 +13,13 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
     font-family: 'Inter', sans-serif;
 
     .heroTopLayout {
-        display: grid;
-        grid-template-columns: 270px 1fr;
+        display: flex; // Using flex for better visibility control
         gap: 16px;
-        align-items: start;
+        align-items: flex-start;
         margin-bottom: 30px;
         position: relative;
 
         @media (max-width: 992px) {
-            display: flex;
             flex-direction: column;
             gap: 15px;
         }
@@ -33,7 +31,9 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
     flex-direction: column;
     gap: 16px;
     flex: 1;
-    position: relative; // For mega menu boundaries if needed, but topLayout is relative
+    width: 100%; // Ensure it fills parent flex
+    min-width: 0; // Prevent flex overflow
+    position: relative;
 }
 
 .iconBox {
@@ -112,6 +112,12 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
             background-color: #f0fdf4;
             border-left-color: #239f71;
 
+            .iconBox {
+
+                svg {
+                    color: #239f71;
+                }
+            }
 
             .itemText {
                 color: #239f71;
@@ -200,6 +206,14 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     background-color: #f1f5f9;
 
+    @media (max-width: 768px) {
+        height: 180px;
+    }
+
+    @media (max-width: 480px) {
+        height: 150px;
+    }
+
     &:hover {
         .navButton {
             opacity: 1;
@@ -281,14 +295,22 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
 
 // Banner Wrapper
 .heroBanner {
-    flex: 1;
+    width: 100%;
     border-radius: 12px;
     overflow: hidden;
     position: relative;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    height: 275px;
+    height: 275px; // Desktop height
     display: flex;
     align-items: stretch;
+
+    @media (max-width: 768px) {
+        height: 180px; 
+    }
+
+    @media (max-width: 480px) {
+        height: 150px; 
+    }
 }
 
 // Popular Categories
@@ -308,45 +330,49 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
     .categoryGrid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
+        gap: 12px;
 
-        @media screen and (max-width: 767px) {
-            grid-template-columns: repeat(2, 1fr) !important;
+        @media screen and (max-width: 992px) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @media screen and (max-width: 576px) {
+            grid-template-columns: repeat(2, 1fr); // Two columns on small mobile
+            gap: 8px; // Tighter gap for small screen 2-col
         }
 
         .categoryCard {
             background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 14px;
+            border: 1px solid #f1f5f9;
+            border-radius: 12px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px; // Slightly less gap
+            padding: 12px; // Match screenshot's compact feel
             transition: all 0.2s ease;
             text-decoration: none;
             width: 100%;
-            padding: 12px;
 
             @media screen and (max-width: 767px) {
-                padding: 12px;
-                gap: 10px;
+                padding: 10px;
             }
 
             .cardIcon {
-                width: 40px;
-                height: 40px;
+                width: 38px;
+                height: 38px;
                 background: #f8fafc;
                 border-radius: 8px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 color: #475569;
-                font-size: 20px;
+                font-size: 18px;
                 flex-shrink: 0;
                 transition: all 0.2s ease;
 
                 @media screen and (max-width: 767px) {
-                    width: 32px;
-                    height: 32px;
+                    width: 34px;
+                    height: 34px;
                     font-size: 16px;
                 }
             }
@@ -354,24 +380,21 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
             .cardInfo {
                 .cardTitle {
                     display: block;
-                    font-size: 15px;
+                    font-size: 14px; // Match screenshot
                     font-weight: 600;
                     color: #1e293b;
                     transition: all 0.2s ease;
-
-                    @media screen and (max-width: 767px) {
-                        font-size: 14px;
+                    
+                    @media (max-width: 768px) {
+                        font-size: 13px;
                     }
                 }
 
                 .cardCount {
                     display: block;
-                    font-size: 12px;
+                    font-size: 11px;
                     color: #94a3b8;
-
-                    @media screen and (max-width: 767px) {
-                        font-size: 11px;
-                    }
+                    margin-top: 1px;
                 }
             }
 

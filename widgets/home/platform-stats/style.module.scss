@@ -23,40 +23,44 @@
 
         @media (max-width: 992px) {
             grid-template-columns: repeat(2, 1fr);
-            gap: 48px 24px;
+            gap: 40px 20px;
         }
 
         @media (max-width: 576px) {
-            grid-template-columns: 1fr;
+            gap: 32px 10px; // Tightened for mobile 2-col
         }
 
         .statItem {
             display: flex;
             flex-direction: column;
             align-items: center;
+            text-align: center;
 
             .val {
                 display: block;
                 font-size: 36px;
-                font-weight: 600;
+                font-weight: 700; // Bold like screenshot
                 color: #0f172a;
-                margin-bottom: 6px;
-                letter-spacing: -0.03em;
+                margin-bottom: 8px;
+                letter-spacing: -0.02em;
                 line-height: 1;
 
-                @media (max-width: 1200px) {
-                    font-size: 38px;
+                @media (max-width: 768px) {
+                    font-size: 28px;
                 }
             }
 
             .name {
                 display: block;
-                font-size: 14px;
-                font-weight: 700;
+                font-size: 13px;
+                font-weight: 600;
                 color: #64748b;
-                line-height: normal;
-                white-space: nowrap;
+                line-height: 1.2;
                 opacity: 0.9;
+                
+                @media (max-width: 768px) {
+                    font-size: 12px;
+                }
             }
         }
     }
