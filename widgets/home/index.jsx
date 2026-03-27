@@ -34,7 +34,7 @@ const Title = dynamic(() => import('./title'), { ssr: false });
 const Home = () => {
     return (
         <div>
-            <div className="bg-white ">
+            <div style={{ background: '#fbfbfc' }}>
                 <div className="container">
                     <Hero />
                 </div>

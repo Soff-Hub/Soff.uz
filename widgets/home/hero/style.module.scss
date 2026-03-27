@@ -103,7 +103,8 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
             margin-left: auto;
         }
 
-        &.active, &:hover {
+        &.active,
+        &:hover {
             color: $primary-green;
             background-color: #ffffff;
             border-left: 3px solid $primary-green;
@@ -142,7 +143,7 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     gap: 24px;
-    border: 1px solid rgba(0,0,0,0.05);
+    border: 1px solid rgba(0, 0, 0, 0.05);
     margin-left: 10px;
 
     .popoverSection {
@@ -152,7 +153,7 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
             gap: 10px;
             margin-bottom: 15px;
             padding-bottom: 10px;
-            border-bottom: 1px solid rgba(0,0,0,0.04);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
 
             .sectionIcon {
                 font-size: 20px;
@@ -168,6 +169,7 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
                     margin: 0;
                     letter-spacing: 0.5px;
                 }
+
                 p {
                     font-size: 11px;
                     color: $text-sub;
@@ -308,6 +310,7 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
 
     .gridHeader {
         margin-bottom: 20px;
+
         h2 {
             font-size: 20px;
             font-weight: 700;
@@ -327,7 +330,7 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
 
         .categoryCard {
             background: #ffffff;
-            border: 1px solid rgba(0,0,0,0.04);
+            border: 1px solid rgba(0, 0, 0, 0.04);
             border-radius: 10px;
             display: flex;
             align-items: center;
@@ -373,11 +376,12 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
                     font-size: 14px;
                     font-weight: 600;
                     color: $text-main;
-                    
+
                     @media screen and (max-width: 767px) {
                         font-size: 13px;
                     }
                 }
+
                 .cardCount {
                     display: block;
                     font-size: 11px;
@@ -428,6 +432,7 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
                 color: $text-main;
                 margin-bottom: 2px;
             }
+
             .name {
                 display: block;
                 font-size: 13px;

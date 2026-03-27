@@ -35,6 +35,14 @@ import HeaderUserDropdown from './HeaderActions/HeaderUserDropdown';
 import { highlightMatch } from '~/shared/utilities/utils';
 
 import styles from './header.module.scss';
+import { FaDownload } from 'react-icons/fa6';
+import {
+    TbDownload,    // Tayyor mahsulotlar (qutichaga tushayotgan strelka)
+    TbBriefcase,   // Frilanserlik xizmatlari (portfel)
+    TbSparkles,    // AI xizmatlari (yulduzchalar)
+    TbVideo,       // Ijodkorlar (kamera)
+    TbUpload       // Sotuvchi bo'lish (qutichadan chiqayotgan strelka)
+} from "react-icons/tb";
 
 const { Option } = Select;
 
@@ -354,7 +362,7 @@ const Header = () => {
                                                     ) : (
                                                         <MdSearch className={styles.searchIcon} />
                                                     )}
-                                                    
+
                                                     <div className={styles.suggestionTextWrapper}>
                                                         <span className={styles.suggestionText}>
                                                             {highlightMatch(option.value, search)}
@@ -368,11 +376,11 @@ const Header = () => {
                                                 </div>
                                                 <div className={`
                                                     ${styles.typeBadge} 
-                                                    ${option.sourceType === 'specialist' ? styles.specialist : 
-                                                      type === 'mahsulotlar' ? styles.product : styles.service}
+                                                    ${option.sourceType === 'specialist' ? styles.specialist :
+                                                        type === 'mahsulotlar' ? styles.product : styles.service}
                                                 `}>
-                                                    {option.sourceType === 'specialist' ? 'Mutaxassis' : 
-                                                     type === 'mahsulotlar' ? 'Mahsulot' : 'Xizmat'}
+                                                    {option.sourceType === 'specialist' ? 'Mutaxassis' :
+                                                        type === 'mahsulotlar' ? 'Mahsulot' : 'Xizmat'}
                                                 </div>
                                             </div>
                                         ))}
@@ -435,16 +443,16 @@ const Header = () => {
 
             {/* PART 2: BOTTOM SUB-NAV ROW */}
             <div className={styles.subRow}>
-                <div className="container d-flex justify-content-start gap-3">
+                <div className="container d-flex justify-content-start gap-1">
                     <Link href="/scientific-resources/all">
                         <a className={styles.navLink}>
-                            <MdLayers className={styles.icon} />
+                            <TbDownload className={styles.icon} />
                             Tayyor mahsulotlar
                         </a>
                     </Link>
                     <Link href="/orders">
                         <a className={styles.navLink}>
-                            <MdTrendingUp className={styles.icon} />
+                            <TbBriefcase className={styles.icon} />
                             Frilanserlik xizmatlari
                         </a>
                     </Link>
@@ -454,12 +462,12 @@ const Header = () => {
                         rel="noopener noreferrer"
                         className={styles.navLink}
                     >
-                        <MdAutoAwesome className={styles.icon} />
+                        <TbSparkles className={styles.icon} />
                         AI xizmatlari
                     </a>
                     <Link href="/freelancers">
                         <a className={styles.navLink}>
-                            <MdGroup className={styles.icon} />
+                            <TbVideo className={styles.icon} />
                             Ijodkorlar
                         </a>
                     </Link>
@@ -469,7 +477,7 @@ const Header = () => {
                         rel="noopener noreferrer"
                         className={styles.navLink}
                     >
-                        <MdStorefront className={styles.icon} />
+                        <TbUpload className={styles.icon} />
                         Sotuvchi bo'lish
                     </a>
                 </div>

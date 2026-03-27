@@ -1,5 +1,5 @@
-$primary-green: #00a44f;
-$secondary-bg: #f4fdf4;
+$primary-green: #239f71;
+$secondary-bg: #e8f5f0;
 $text-main: #24282b;
 $text-sub: #706f6f;
 $border-light: #f1f1f1;
@@ -17,7 +17,7 @@ $shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease;
     z-index: 1001;
     box-shadow: 0 2px 10px rgba(0, 164, 79, 0.1);
-    position: relative; 
+    position: relative;
 
     .mainInfo {
         display: flex;
@@ -43,7 +43,7 @@ $shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
             text-transform: uppercase;
             letter-spacing: 0.5px;
             white-space: nowrap;
-            
+
             @media (max-width: 768px) {
                 font-size: 10px;
                 letter-spacing: 0.1px;
@@ -70,7 +70,7 @@ $shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
             font-weight: bold;
             font-size: 13px;
             min-width: 40px;
-            
+
             @media (max-width: 768px) {
                 font-size: 11px;
             }
@@ -93,7 +93,7 @@ $shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
         }
 
         @media (max-width: 768px) {
-            display: none; 
+            display: none;
         }
     }
 }
@@ -108,9 +108,20 @@ $shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
 @keyframes pulse-promo {
-    0% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.15); opacity: 0.8; }
-    100% { transform: scale(1); opacity: 1; }
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.15);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 @media (max-width: 480px) {
@@ -118,15 +129,16 @@ $shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
         flex-direction: column;
         gap: 4px;
         padding: 4px 8px;
-        
+
         .mainInfo {
             .text {
                 font-size: 9px;
             }
         }
-        
+
         .countdown {
             padding: 1px 8px;
+
             .time {
                 font-size: 10px;
             }
@@ -163,11 +175,11 @@ $shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
 .logoArea {
     flex-shrink: 0;
     cursor: pointer;
-    
+
     @media (max-width: 992px) {
         order: 1;
     }
-    
+
     img {
         object-fit: contain;
     }
@@ -175,7 +187,7 @@ $shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
 
 .catalogArea {
     position: relative;
-    
+
     @media (max-width: 992px) {
         display: none !important;
     }
@@ -205,7 +217,11 @@ $shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
 
     @media (max-width: 600px) {
         padding: 10px;
-        span { display: none; }
+
+        span {
+            display: none;
+        }
+
         gap: 0;
     }
 }
@@ -222,7 +238,7 @@ $shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
     z-index: 1100;
     display: flex;
     overflow: hidden;
-    border: 1px solid rgba(0,0,0,0.05);
+    border: 1px solid rgba(0, 0, 0, 0.05);
 
     @media (max-width: 992px) {
         width: 100vw;
@@ -251,7 +267,8 @@ $shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
         color: $text-main;
         transition: all 0.2s;
 
-        &:hover, &.active {
+        &:hover,
+        &.active {
             background: #ffffff;
             color: $primary-green;
             font-weight: 600;
@@ -343,7 +360,7 @@ $shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
     transition: all 0.2s ease;
     z-index: 1000;
     position: relative;
-    
+
     @media (max-width: 992px) {
         height: 42px;
     }
@@ -355,8 +372,8 @@ $shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
 
     .typeSelect {
         width: 120px;
-        border-right: 1px solid rgba(0,0,0,0.06);
-        
+        border-right: 1px solid rgba(0, 0, 0, 0.06);
+
         :global(.ant-select-selector) {
             background: transparent !important;
             border: none !important;
@@ -443,19 +460,23 @@ $shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
     &::-webkit-scrollbar {
         width: 6px;
     }
+
     &::-webkit-scrollbar-track {
         background: transparent;
     }
+
     &::-webkit-scrollbar-thumb {
         background: #e0e0e0;
         border-radius: 10px;
     }
+
     &::-webkit-scrollbar-thumb:hover {
         background: #bdbdbd;
     }
 
 
-    .loadingState, .emptyState {
+    .loadingState,
+    .emptyState {
         padding: 32px;
         text-align: center;
         color: #888;
@@ -594,13 +615,25 @@ $shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
 @keyframes slideDown {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 // Action Buttons
@@ -618,7 +651,7 @@ $shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
         @media (max-width: 992px) {
             margin: 0;
             padding: 0;
-            
+
             a {
                 width: 28px !important;
                 height: 28px !important;
@@ -628,7 +661,7 @@ $shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
 
     .orderBtn {
         height: 40px;
-        padding: 0 16px;
+        padding: 0 12px;
         border: 1.5px solid #e0e0e0;
         background: #ffffff;
         border-radius: 10px;
@@ -644,6 +677,7 @@ $shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
         &:hover {
             border-color: $primary-green;
             color: $primary-green;
+            background: $secondary-bg;
         }
 
         @media (max-width: 1200px) {
@@ -658,14 +692,14 @@ $shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
         justify-content: center;
         width: 40px;
         height: 40px;
-        border-radius: 50%;
+        border-radius: 10px;
         cursor: pointer;
         transition: all 0.2s;
 
         @media (max-width: 992px) {
             width: 32px;
             height: 32px;
-            
+
             svg {
                 width: 22px;
                 height: 22px;
@@ -674,7 +708,7 @@ $shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
 
         &:hover {
             color: $primary-green;
-            background: $secondary-bg;
+            background: #f3f4f6;
         }
     }
 
@@ -706,7 +740,7 @@ $shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
 // Sub Navigation
 .subRow {
     border-top: 1px solid $border-light;
-    height: 52px;
+    height: 38px;
     display: flex;
     align-items: center;
 
@@ -717,8 +751,8 @@ $shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
     .navLink {
         display: flex;
         align-items: center;
-        gap: 8px;
-        padding: 8px 16px;
+        gap: 4px;
+        padding: 6px 12px;
         border-radius: 10px;
         text-decoration: none;
         font-size: 14px;
@@ -726,7 +760,8 @@ $shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
         color: #333;
         transition: all 0.2s ease;
 
-        &:hover, &.active {
+        &:hover,
+        &.active {
             background: #eef9f2;
             color: $primary-green;
 
@@ -738,7 +773,7 @@ $shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
 
         .icon {
             font-size: 18px;
-            color: #777;
+            color: #333;
             opacity: 0.8;
             transition: all 0.2s;
         }
