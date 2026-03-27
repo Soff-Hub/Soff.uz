@@ -30,6 +30,7 @@ const LastServices = dynamic(() => import('./last-services'), {
 });
 const Info = dynamic(() => import('./info'), { ssr: false });
 const Title = dynamic(() => import('./title'), { ssr: false });
+const PlatformStats = dynamic(() => import('./platform-stats'), { ssr: false });
 
 const Home = () => {
     return (
@@ -43,6 +44,7 @@ const Home = () => {
                 text={'Soff - Raqamli mahsulotlar va onlayn xizmatlar bozori'}
                 videoId={'https://www.youtube.com/watch?v=hn55AZoxWes'}
             />
+            <PlatformStats />
             <div className="container">
                 <Freelance />
             </div>

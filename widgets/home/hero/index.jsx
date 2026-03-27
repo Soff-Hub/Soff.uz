@@ -223,27 +223,6 @@ const Hero = () => {
             </div>
 
             {/* Bottom Stats Section */}
-            <section className={styles.platformStats}>
-                <span className={styles.statsLabel}>Minglab kreatorlar ishongan platforma</span>
-                <div className={styles.statsGrid}>
-                    <div className={styles.statItem}>
-                        <span className={styles.val}>12,000+</span>
-                        <span className={styles.name}>Faol kreatorlar</span>
-                    </div>
-                    <div className={styles.statItem}>
-                        <span className={styles.val}>85,000+</span>
-                        <span className={styles.name}>Raqamli mahsulotlar</span>
-                    </div>
-                    <div className={styles.statItem}>
-                        <span className={styles.val}>$2.4M+</span>
-                        <span className={styles.name}>Kreatorlarga to'langan</span>
-                    </div>
-                    <div className={styles.statItem}>
-                        <span className={styles.val}>4.9/5</span>
-                        <span className={styles.name}>O'rtacha reyting</span>
-                    </div>
-                </div>
-            </section>
         </div>
     );
 };

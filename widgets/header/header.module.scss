@@ -494,6 +494,7 @@ $shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
         align-items: center;
         justify-content: center;
         transition: background 0.2s;
+        border-radius: 0 10px 10px 0;
 
         &:hover {
             background: darken($primary-green, 5%);

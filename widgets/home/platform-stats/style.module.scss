@@ -1,0 +1,63 @@
+.platformStats {
+    border-top: 1px solid #f1f5f9;
+    background: #fbfbfc;
+    padding: 40px 0;
+    width: 100%;
+
+    .statsLabel {
+        text-align: center;
+        font-size: 14px;
+        font-weight: 500;
+        color: #64748b;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-bottom: 32px;
+        display: block;
+        opacity: 0.8;
+    }
+
+    .statsGrid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 40px;
+
+        @media (max-width: 992px) {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 48px 24px;
+        }
+
+        @media (max-width: 576px) {
+            grid-template-columns: 1fr;
+        }
+
+        .statItem {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .val {
+                display: block;
+                font-size: 36px;
+                font-weight: 600;
+                color: #0f172a;
+                margin-bottom: 6px;
+                letter-spacing: -0.03em;
+                line-height: 1;
+
+                @media (max-width: 1200px) {
+                    font-size: 38px;
+                }
+            }
+
+            .name {
+                display: block;
+                font-size: 14px;
+                font-weight: 500;
+                color: #64748b;
+                line-height: normal;
+                white-space: nowrap;
+                opacity: 0.9;
+            }
+        }
+    }
+}
