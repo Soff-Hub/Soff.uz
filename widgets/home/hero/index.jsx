@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './style.module.scss';
@@ -9,14 +9,13 @@ import {
     TbPalette,
     TbCode,
     TbBox,
+    TbTool,
     TbSpeakerphone,
     TbVideo,
     TbBriefcase,
     TbChevronRight
 } from 'react-icons/tb';
-import { MdSettings, MdWork } from 'react-icons/md';
-import { TbSettings, TbWork } from 'react-icons/tb';
-import HeroSwiper from './HeroSwiper';
+import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 import CategorySection from './CategorySection';
 
 const directionIcons = {
@@ -45,6 +44,11 @@ const directionLabels = {
     business: 'Biznes',
 };
 
+const slides = [
+    '/static/img/HomePage/hero/hero-bg.png',
+    '/static/img/HomePage/hero/hero-bg.png'
+]
+
 const formatDirectionLabel = (key) => {
     if (directionLabels[key]) return directionLabels[key];
     return key?.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
@@ -61,6 +65,24 @@ const templateLink = {
 const Hero = () => {
     const { data: categoriesData } = useFGet('navbar-items', NAVBAR_MENU_CATEGORIES);
     const [hoveredCategory, setHoveredCategory] = useState(null);
+    const [currentSlide, setCurrentSlide] = useState(0);
+    const slideInterval = useRef(null);
+
+    const nextSlide = useCallback(() => {
+        setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+    }, []);
+
+    const prevSlide = useCallback(() => {
+        setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
+    }, []);
+
+    useEffect(() => {
+        slideInterval.current = setInterval(() => {
+            nextSlide();
+        }, 5000);
+
+        return () => clearInterval(slideInterval.current);
+    }, [nextSlide]);
 
     return (
         <div className={styles.heroMainBlock}>
@@ -91,7 +113,7 @@ const Hero = () => {
 
                 {/* Mega Menu Popover (Direct child of heroTopLayout for absolute positioning) */}
                 {hoveredCategory && (
-                    <div 
+                    <div
                         className={styles.megaMenu}
                         onMouseEnter={() => setHoveredCategory(hoveredCategory)}
                         onMouseLeave={() => setHoveredCategory(null)}
@@ -100,7 +122,9 @@ const Hero = () => {
                         {hoveredCategory.soff_categories?.length > 0 && (
                             <div className={styles.popoverSection}>
                                 <div className={styles.sectionHeader}>
-                                    <MdWork className={styles.sectionIcon} />
+                                    <div className={styles.iconBox}>
+                                        <TbBox size={22} strokeWidth={1.5} />
+                                    </div>
                                     <div className={styles.headerInfo}>
                                         <h3>MAHSULOTLAR</h3>
                                         <p>Tayyor yuklangan mahsulotlar</p>
@@ -123,7 +147,9 @@ const Hero = () => {
                         {hoveredCategory.freelance_categories?.length > 0 && (
                             <div className={styles.popoverSection}>
                                 <div className={styles.sectionHeader}>
-                                    <MdSettings className={styles.sectionIcon} />
+                                    <div className={styles.iconBox}>
+                                        <TbTool size={22} strokeWidth={1.5} />
+                                    </div>
                                     <div className={styles.headerInfo}>
                                         <h3>XIZMATLAR</h3>
                                         <p>Xizmatni tanlang – buyurtma bering</p>
@@ -147,11 +173,48 @@ const Hero = () => {
                 {/* Right Column: Banner + Categories Grid Stack */}
                 <div className={styles.heroRightColumn}>
                     <section className={styles.heroBanner}>
-                        {/* Image-only Swiper Banner */}
-                        <HeroSwiper images={[
-                            '/static/img/HomePage/hero/hero_bg.png', 
-                            '/static/img/HomePage/hero/hero_bg.png'
-                        ]} />
+                        {/* Custom Image Carousel */}
+                        <div className={styles.carouselContainer}>
+                            {slides.map((slide, index) => (
+                                <div
+                                    key={index}
+                                    className={`${styles.slide} ${currentSlide === index ? styles.active : ''}`}
+                                >
+                                    <Image
+                                        src={slide}
+                                        alt={`Soff.uz Banner ${index + 1}`}
+                                        layout="fill"
+                                        objectFit="cover"
+                                        priority={index === 0}
+                                    />
+                                </div>
+                            ))}
+
+                            {/* Navigation Buttons */}
+                            <button
+                                className={`${styles.navButton} ${styles.prev}`}
+                                onClick={(e) => { e.preventDefault(); prevSlide(); }}
+                            >
+                                <MdChevronLeft size={28} />
+                            </button>
+                            <button
+                                className={`${styles.navButton} ${styles.next}`}
+                                onClick={(e) => { e.preventDefault(); nextSlide(); }}
+                            >
+                                <MdChevronRight size={28} />
+                            </button>
+
+                            {/* Pagination Dots */}
+                            <div className={styles.dotsContainer}>
+                                {slides.map((_, index) => (
+                                    <div
+                                        key={index}
+                                        className={`${styles.dot} ${currentSlide === index ? styles.active : ''}`}
+                                        onClick={() => setCurrentSlide(index)}
+                                    />
+                                ))}
+                            </div>
+                        </div>
                     </section>
 
                     {/* Middle Section: Popular Categories Grid */}
