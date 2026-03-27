@@ -84,7 +84,7 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
         border-left: 3px solid transparent;
         transition: all 0.2s ease;
         border-bottom: 1px solid #f8fafc;
-        color: #1e293b;
+        color: #000;
         text-decoration: none;
         position: relative;
 
@@ -99,6 +99,10 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
             line-height: 1.4;
             color: #1e293b;
             transition: all 0.2s ease;
+        }
+
+        svg {
+            color: #000;
         }
 
         .arrow {
@@ -204,7 +208,7 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
     height: 275px;
     border-radius: 12px;
     overflow: hidden;
-    background-color: #f1f5f9;
+    background-color: #ffffff; // Better for contain gaps
 
     @media (max-width: 768px) {
         height: 180px;
@@ -305,11 +309,11 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
     align-items: stretch;
 
     @media (max-width: 768px) {
-        height: 180px; 
+        height: 180px;
     }
 
     @media (max-width: 480px) {
-        height: 150px; 
+        height: 150px;
     }
 }
 
@@ -384,7 +388,7 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
                     font-weight: 600;
                     color: #1e293b;
                     transition: all 0.2s ease;
-                    
+
                     @media (max-width: 768px) {
                         font-size: 13px;
                     }

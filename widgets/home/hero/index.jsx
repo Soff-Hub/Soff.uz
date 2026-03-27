@@ -208,7 +208,7 @@ const Hero = () => {
                                         src={slide}
                                         alt={`Soff.uz Banner ${index + 1}`}
                                         layout="fill"
-                                        objectFit="cover"
+                                        objectFit="contain"
                                         priority={index === 0}
                                     />
                                 </div>

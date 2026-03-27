@@ -290,6 +290,10 @@ $shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
                 justify-content: center;
                 color: #475569;
                 transition: all 0.2s ease;
+
+                svg {
+                    color: #000;
+                }
             }
 
             .itemText {
@@ -464,10 +468,6 @@ $shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
                 overflow: visible !important;
                 text-overflow: clip !important;
             }
-        }
-
-        @media (max-width: 992px) {
-            display: none !important;
         }
     }
 
