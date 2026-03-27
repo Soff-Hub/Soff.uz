@@ -45,8 +45,10 @@ const directionLabels = {
 };
 
 const slides = [
-    '/static/img/HomePage/hero/hero-bg.png',
-    '/static/img/HomePage/hero/hero-bg.png'
+    '/static/img/HomePage/hero/hero_1.jpg',
+    '/static/img/HomePage/hero/hero_2.jpg',
+    '/static/img/HomePage/hero/hero_3.jpg',
+    '/static/img/HomePage/hero/hero_4.jpg',
 ]
 
 const formatDirectionLabel = (key) => {

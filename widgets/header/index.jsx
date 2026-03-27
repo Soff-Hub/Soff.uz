@@ -33,6 +33,7 @@ import { NAVBAR_MENU_CATEGORIES } from '~/shared/api/end-points';
 import useSearch from '~/shared/hooks/useSearch';
 import HeaderUserDropdown from './HeaderActions/HeaderUserDropdown';
 import { highlightMatch } from '~/shared/utilities/utils';
+import MobileCatalog from './MobileCatalog';
 
 import styles from './header.module.scss';
 import { FaDownload } from 'react-icons/fa6';
@@ -102,6 +103,7 @@ const Header = () => {
 
     // State
     const [megaMenuOpen, setMegaMenuOpen] = useState(false);
+    const [mobileCatalogOpen, setMobileCatalogOpen] = useState(false);
     const [hoveredCategory, setHoveredCategory] = useState(null);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [isFocused, setIsFocused] = useState(false);
@@ -213,18 +215,28 @@ const Header = () => {
             <div className="container">
                 {/* PART 1: TOP ROW */}
                 <div className={styles.topRow}>
-                    {/* Logo */}
-                    <Link href="/">
-                        <a className={styles.logoArea}>
-                            <Image
-                                src="/static/img/soff/logo-dark.png"
-                                alt="Soff.uz"
-                                width={120}
-                                height={32}
-                                priority
-                            />
-                        </a>
-                    </Link>
+                    <div className={styles.leftSide}>
+                        {/* Mobile Hamburger (Only visible via CSS media query) */}
+                        <button
+                            className={styles.mobileHamburger}
+                            onClick={() => setMobileCatalogOpen(true)}
+                        >
+                            <MdMenu />
+                        </button>
+
+                        {/* Logo */}
+                        <Link href="/">
+                            <a className={styles.logoArea}>
+                                <Image
+                                    src="/static/img/soff/logo-dark.png"
+                                    alt="Soff.uz"
+                                    width={120}
+                                    height={32}
+                                    priority
+                                />
+                            </a>
+                        </Link>
+                    </div>
 
                     {/* Catalog Button & Mega Menu */}
                     <div className={styles.catalogArea} ref={megaMenuRef}>
@@ -466,7 +478,7 @@ const Header = () => {
                         ) : (
                             <Link href="/auth/login">
                                 <button className={styles.loginBtn}>
-                                    <MdPersonOutline className={styles.icon} />
+                                    {!isMobile && <MdPersonOutline className={styles.icon} />}
                                     <span>Kirish</span>
                                 </button>
                             </Link>
@@ -474,6 +486,13 @@ const Header = () => {
                     </div>
                 </div>
             </div>
+
+            {/* Mobile Sidebar Catalog */}
+            <MobileCatalog
+                isOpen={mobileCatalogOpen}
+                onClose={() => setMobileCatalogOpen(false)}
+                categoriesData={categoriesData}
+            />
 
             {!megaMenuOpen && (
                 <div className={styles.subRow}>

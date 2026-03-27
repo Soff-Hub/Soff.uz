@@ -15,7 +15,7 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
     .heroTopLayout {
         display: flex; // Using flex for better visibility control
         gap: 16px;
-        align-items: flex-start;
+        align-items: start;
         margin-bottom: 30px;
         position: relative;
 
@@ -23,6 +23,10 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
             flex-direction: column;
             gap: 15px;
         }
+    }
+
+    @media (max-width: 992px) {
+        padding: 10px 0;
     }
 }
 
@@ -57,7 +61,7 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
 
 // Sidebar
 .sidebarContainer {
-    width: 270px;
+    width: 370px;
     background: #ffffff;
     border-radius: 12px;
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
@@ -138,14 +142,14 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
 .megaMenu {
     position: absolute;
     top: 0;
-    left: 286px; // 270px sidebar + 16px gap
+    left: 386px; // 370px sidebar + 16px gap
     right: 0;
     bottom: 0;
     background: #ffffff;
     border-radius: 12px;
     box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
     z-index: 50;
-    padding: 32px;
+    padding: 20px;
     display: flex;
     flex-direction: column;
     gap: 32px;
@@ -157,8 +161,8 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
             display: flex;
             align-items: center;
             gap: 12px;
-            margin-bottom: 20px;
-            padding-bottom: 12px;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
             border-bottom: 1px solid #f1f5f9;
 
             .headerInfo {
@@ -182,7 +186,7 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
         .linksGrid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 12px 24px;
+            // gap: 12px 24px;
             row-gap: 12px;
 
             .menuLink {
@@ -190,11 +194,13 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
                 color: #475569;
                 text-decoration: none;
                 padding: 0;
-                transition: color 0.2s ease;
+                transition: all 0.2s ease;
                 line-height: 1.4;
+
 
                 &:hover {
                     color: #00A650;
+                    transform: translateX(5px);
                 }
             }
         }
@@ -205,17 +211,37 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
 .carouselContainer {
     position: relative;
     width: 100%;
-    height: 275px;
+    height: 385px; // 854 / 2.74 (Standard 1240px container - 370 sidebar - 16 gap)
     border-radius: 12px;
     overflow: hidden;
-    background-color: #ffffff; // Better for contain gaps
+    background-color: #ffffff;
 
-    @media (max-width: 768px) {
-        height: 180px;
+    @media (max-width: 1600px) {
+        height: 370px;
     }
 
-    @media (max-width: 480px) {
-        height: 150px;
+    @media (max-width: 1400px) {
+        height: 370px; // 754 / 2.74
+    }
+
+    @media (max-width: 1200px) {
+        height: 300px; // 574 / 2.74
+    }
+
+    @media (max-width: 992px) {
+        height: 350px; // 960 / 2.74 (Sidebar hidden)
+    }
+
+    @media (max-width: 768px) {
+        height: 262px; // 720 / 2.74
+    }
+
+    @media (max-width: 576px) {
+        height: 197px; // 540 / 2.74
+    }
+
+    @media (max-width: 400px) {
+        height: 140px; // ~380 / 2.74
     }
 
     &:hover {
@@ -304,16 +330,36 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     position: relative;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    height: 275px; // Desktop height
+    height: 312px;
     display: flex;
     align-items: stretch;
 
-    @media (max-width: 768px) {
-        height: 180px;
+    @media (max-width: 1600px) {
+        height: 370px;
     }
 
-    @media (max-width: 480px) {
-        height: 150px;
+    @media (max-width: 1400px) {
+        height: 370px; // 754 / 2.74
+    }
+
+    @media (max-width: 1200px) {
+        height: 300px;
+    }
+
+    @media (max-width: 992px) {
+        height: 350px; // 960 / 2.74 (Sidebar hidden)
+    }
+
+    @media (max-width: 768px) {
+        height: 262px; // 720 / 2.74
+    }
+
+    @media (max-width: 576px) {
+        height: 197px; // 540 / 2.74
+    }
+
+    @media (max-width: 400px) {
+        height: 140px; // ~380 / 2.74
     }
 }
 

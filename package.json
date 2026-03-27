@@ -12,7 +12,7 @@
         "type-check:watch": "tsc --noEmit --watch",
         "deploy:local": "npm run build && node scripts/prepare-deploy.js --env local",
         "deploy:prod": "cross-env NODE_ENV=production node scripts/scheduler.js && next build && node scripts/copy-to-standalone.js && node scripts/prepare-deploy.js --env prod && node scripts/telegram-deploy.js",
-        "deploy:run": "cd ./deploy && cross-env PORT=5505 HOSTNAME=localhost node server.js"
+        "deploy:run": "cd ./deploy && cross-env PORT=5050 HOSTNAME=localhost node server.js"
     },
     "dependencies": {
         "@ckeditor/ckeditor5-build-classic": "^41.4.2",
