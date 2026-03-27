@@ -84,6 +84,29 @@ const Hero = () => {
         return () => clearInterval(slideInterval.current);
     }, [nextSlide]);
 
+    const closeTimeout = useRef(null);
+
+    const handleMenuLeave = () => {
+        closeTimeout.current = setTimeout(() => {
+            setHoveredCategory(null);
+        }, 150); // Small delay to bridge the gap
+    };
+
+    const handleMenuEnter = (item) => {
+        if (closeTimeout.current) clearTimeout(closeTimeout.current);
+        setHoveredCategory(item);
+    };
+
+    const handlePopupEnter = () => {
+        if (closeTimeout.current) clearTimeout(closeTimeout.current);
+    };
+
+    useEffect(() => {
+        return () => {
+            if (closeTimeout.current) clearTimeout(closeTimeout.current);
+        };
+    }, []);
+
     return (
         <div className={styles.heroMainBlock}>
             {/* Top Section: Sidebar + Banner */}
@@ -91,13 +114,13 @@ const Hero = () => {
                 {/* Left Sidebar (Desktop Only via CSS) */}
                 <aside
                     className={styles.sidebarContainer}
-                    onMouseLeave={() => setHoveredCategory(null)}
+                    onMouseLeave={handleMenuLeave}
                 >
                     {categoriesData?.map((item) => (
                         <div
                             key={item.direction}
                             className={`${styles.menuItem} ${hoveredCategory?.direction === item.direction ? styles.active : ''}`}
-                            onMouseEnter={() => setHoveredCategory(item)}
+                            onMouseEnter={() => handleMenuEnter(item)}
                         >
                             <div className={styles.iconBox}>
                                 {directionIcons[item.direction] || <MdSettings />}
@@ -115,8 +138,8 @@ const Hero = () => {
                 {hoveredCategory && (
                     <div
                         className={styles.megaMenu}
-                        onMouseEnter={() => setHoveredCategory(hoveredCategory)}
-                        onMouseLeave={() => setHoveredCategory(null)}
+                        onMouseEnter={handlePopupEnter}
+                        onMouseLeave={handleMenuLeave}
                     >
                         {/* Mahsulotlar Section */}
                         {hoveredCategory.soff_categories?.length > 0 && (

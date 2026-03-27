@@ -1,5 +1,26 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import { motion, useInView, useMotionValue, useTransform, animate } from 'motion/react';
 import styles from './style.module.scss';
+
+const AnimatedValue = ({ value, suffix = "+" }) => {
+    const ref = useRef(null);
+    const inView = useInView(ref, { once: true, margin: "-100px" });
+    const count = useMotionValue(0);
+    const rounded = useTransform(count, (latest) => {
+        return Math.floor(latest).toLocaleString() + suffix;
+    });
+
+    useEffect(() => {
+        if (inView) {
+            animate(count, value, {
+                duration: 2,
+                ease: "easeOut",
+            });
+        }
+    }, [inView, value, count]);
+
+    return <motion.span style={{ fontWeight: 600 }} ref={ref}>{rounded}</motion.span>;
+};
 
 const PlatformStats = () => {
     return (
@@ -8,19 +29,27 @@ const PlatformStats = () => {
                 <span className={styles.statsLabel}>Minglab kreatorlar ishongan platforma</span>
                 <div className={styles.statsGrid}>
                     <div className={styles.statItem}>
-                        <span className={styles.val}>250,000+</span>
+                        <span className={styles.val}>
+                            <AnimatedValue value={250000} />
+                        </span>
                         <span className={styles.name}>Raqamli mahsulotlar</span>
                     </div>
                     <div className={styles.statItem}>
-                        <span className={styles.val}>500,000+</span>
+                        <span className={styles.val}>
+                            <AnimatedValue value={500000} />
+                        </span>
                         <span className={styles.name}>Oylik faol foydalanuvchilar</span>
                     </div>
                     <div className={styles.statItem}>
-                        <span className={styles.val}>86,000+</span>
+                        <span className={styles.val}>
+                            <AnimatedValue value={86000} />
+                        </span>
                         <span className={styles.name}>Tranzaksiyalar</span>
                     </div>
                     <div className={styles.statItem}>
-                        <span className={styles.val}>11,000+</span>
+                        <span className={styles.val}>
+                            <AnimatedValue value={11000} />
+                        </span>
                         <span className={styles.name}>Mutaxassislar soni</span>
                     </div>
                 </div>
