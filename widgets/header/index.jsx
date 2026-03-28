@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Badge, Select } from 'antd';
+import { Badge, Select, Modal } from 'antd';
 import {
     MdMenu,
     MdSearch,
@@ -34,6 +34,11 @@ import useSearch from '~/shared/hooks/useSearch';
 import HeaderUserDropdown from './HeaderActions/HeaderUserDropdown';
 import { highlightMatch } from '~/shared/utilities/utils';
 import MobileCatalog from './MobileCatalog';
+import FastDowloadSection from '~/shared/components/fast-dowload/FastDowloadSection';
+import { 
+    fetchFastDownloadProduct, 
+    fetchProductDowload 
+} from '~/shared/components/fast-dowload/FastDowloadApi';
 
 import styles from './header.module.scss';
 import { FaDownload } from 'react-icons/fa6';
@@ -107,6 +112,8 @@ const Header = () => {
     const [hoveredCategory, setHoveredCategory] = useState(null);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [isFocused, setIsFocused] = useState(false);
+    const [promotionModalVisible, setPromotionModalVisible] = useState(false);
+    const [downloadProduct, setDownloadProduct] = useState(null);
     const megaMenuRef = useRef(null);
     const searchRef = useRef(null);
 
@@ -120,7 +127,11 @@ const Header = () => {
         const fetchPromotion = async () => {
             try {
                 const res = await ProductRepository.getActivePromotion();
-                if (res) setPromotion(res);
+                // if (res) setPromotion(res);
+                setPromotion({
+                    discount_percent: 20,
+                    expires_at: '2026-03-28T23:59:59',
+                });
             } catch (err) {
                 console.error('Promotion fetch failed', err);
             }
@@ -128,10 +139,39 @@ const Header = () => {
 
         if (isMounted && isLoggedIn) {
             fetchPromotion();
-        } else if (isMounted && !isLoggedIn) {
-            setPromotion({ discount_percent: 0, expires_at: null });
         }
     }, [isMounted, isLoggedIn]);
+
+    // Fetch Downloadable Product (Yandex Style)
+    useEffect(() => {
+        const fetchDownload = async () => {
+            try {
+                const data = await fetchFastDownloadProduct();
+                if (data && data.id) {
+                    setDownloadProduct(data);
+                }
+            } catch (err) {
+                console.error('Fast Download fetch failed', err);
+            }
+        };
+        if (isMounted && isLoggedIn) fetchDownload();
+    }, [isMounted, isLoggedIn]);
+
+    // Show Promotion Modal logic (FORCED FOR TESTING)
+    useEffect(() => {
+        if (isMounted && (promotion.discount_percent > 0 || downloadProduct)) {
+            setPromotionModalVisible(true);
+        }
+    }, [isMounted, promotion.discount_percent, downloadProduct]);
+
+    const handleQuickDownload = async (product) => {
+        try {
+            await fetchProductDowload(product.id);
+            window.open(product.url, '_blank');
+        } catch (err) {
+            console.error('Download trigger failed', err);
+        }
+    };
 
     // Fetch Categories for Mega Menu
     const { data: categoriesData } = useFGet('navbar-items', NAVBAR_MENU_CATEGORIES);
@@ -211,6 +251,7 @@ const Header = () => {
 
     return (
         <header className={styles.headerMainBlock}>
+
             {renderPromoBanner()}
             <div className="container">
                 {/* PART 1: TOP ROW */}
@@ -540,6 +581,109 @@ const Header = () => {
                     </div>
                 </div>
             )}
+            <FastDowloadSection />
+
+            <Modal
+                open={promotionModalVisible}
+                onCancel={() => setPromotionModalVisible(false)}
+                footer={null}
+                centered
+                width={downloadProduct ? 600 : 500}
+                className={styles.promotionModal}
+            >
+                <div className={styles.promoModalContent}>
+                    {downloadProduct ? (
+                        <div className={styles.yandexModalBody}>
+                            <div className={styles.productFlex}>
+                                <div className={styles.imageBox}>
+                                    <img src={downloadProduct.poster} alt={downloadProduct.title} />
+                                    <div className={styles.statusBadge}>TAYYOR</div>
+                                </div>
+                                <div className={styles.infoBox}>
+                                    <span className={styles.contextLabel}>SOTIB OLINGAN MAHSULOT</span>
+                                    <h3>{downloadProduct.title}</h3>
+                                    
+                                    <div className={styles.actionGroup}>
+                                        <button 
+                                            className={styles.downloadBtn}
+                                            onClick={() => handleQuickDownload(downloadProduct)}
+                                        >
+                                            <FaDownload /> Yuklab olish
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            {promotion.discount_percent > 0 && (
+                                <div className={styles.promoFooterDetailed}>
+                                    <div className={styles.footerInfoMain}>
+                                        <div className={styles.promotionText}>
+                                            Keyingi xarid uchun <span>{promotion.discount_percent}%</span> chegirmadan foydalaning!
+                                        </div>
+                                        
+                                        {isExpiring && (
+                                            <div className={styles.modalTimerCompact}>
+                                                <FaClock />
+                                                <span>
+                                                    {String(timeLeft.minutes).padStart(2, '0')}:{String(timeLeft.seconds).padStart(2, '0')}
+                                                </span>
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    <Link href="/scientific-resources/all">
+                                        <a 
+                                            className={styles.footerBuyBtnCompact}
+                                            onClick={() => setPromotionModalVisible(false)}
+                                        >
+                                            Yana sotib olish
+                                        </a>
+                                    </Link>
+                                </div>
+                            )}
+                        </div>
+                    ) : (
+                        <>
+                            <div className={styles.promoIcon}>
+                                <FaPercent />
+                            </div>
+                            <h2>MAXSUS TAKLIF!</h2>
+                            <p className={styles.discountText}>
+                                Siz uchun <span>{promotion.discount_percent}%</span> CHEGIRMA!
+                            </p>
+                            
+                            {isExpiring && (
+                                <div className={styles.modalMainTimer}>
+                                    <FaClock />
+                                    <span>
+                                        Tugashiga: {String(timeLeft.minutes).padStart(2, '0')}:{String(timeLeft.seconds).padStart(2, '0')}
+                                    </span>
+                                </div>
+                            )}
+
+                            <p className={styles.subText}>
+                                Sotib oling yana va tejab qoling.
+                            </p>
+                            <div className={styles.modalActions}>
+                                <Link href="/scientific-resources/all">
+                                    <a
+                                        className={styles.buyMoreBtnHighlighted}
+                                        onClick={() => setPromotionModalVisible(false)}
+                                    >
+                                        Sotib oling yana
+                                    </a>
+                                </Link>
+                                <button
+                                    className={styles.closeModalBtn}
+                                    onClick={() => setPromotionModalVisible(false)}
+                                >
+                                    Yopish
+                                </button>
+                            </div>
+                        </>
+                    )}
+                </div>
+            </Modal>
         </header>
     );
 };

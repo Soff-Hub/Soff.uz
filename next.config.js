@@ -101,15 +101,15 @@ const nextSettings = {
                 ],
             },
             // IMPORTANT: Exclude product pages from caching
-            {
-                source: '/product/:path*',
-                headers: [
-                    {
-                        key: 'Cache-Control',
-                        value: 'no-store, no-cache, must-revalidate, private, max-age=0',
-                    },
-                ],
-            },
+            // {
+            //     source: '/product/:path*',
+            //     headers: [
+            //         {
+            //             key: 'Cache-Control',
+            //             value: 'no-store, no-cache, must-revalidate, private, max-age=0',
+            //         },
+            //     ],
+            // },
             // SSR pages cached for 1 minute
             {
                 source: '/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|jpg|png|jpeg|gif|ico|webp|avif|jfif|pjpeg|pjp|apng|bmp|tif|tiff|js|css|woff2)).*)',

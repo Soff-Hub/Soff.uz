@@ -126,21 +126,23 @@ $shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
 
 @media (max-width: 480px) {
     .promotionBanner {
-        flex-direction: column;
-        gap: 4px;
-        padding: 4px 8px;
+        gap: 6px;
+        padding: 4px 6px;
 
         .mainInfo {
+            gap: 4px;
             .text {
                 font-size: 9px;
             }
         }
 
         .countdown {
-            padding: 1px 8px;
+            padding: 1px 6px;
+            gap: 4px;
 
             .time {
                 font-size: 10px;
+                min-width: unset;
             }
         }
     }
@@ -798,24 +800,26 @@ $shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
         height: 40px;
         padding: 0 12px;
         border: 1.5px solid #e0e0e0;
-        background: #ffffff;
         border-radius: 10px;
+        background: #f8fafc;
         display: flex;
         align-items: center;
         gap: 8px;
-        font-size: 14px;
-        font-weight: 600;
-        color: $text-main;
         cursor: pointer;
-        transition: all 0.2s;
+        transition: all 0.2s ease;
+        color: #1e293b;
 
-        &:hover {
-            border-color: $primary-green;
-            color: $primary-green;
-            background: $secondary-bg;
+        span {
+            font-size: 13px;
+            font-weight: 500;
         }
 
-        @media (max-width: 1200px) {
+        &:hover {
+            border-color: #cbd5e1;
+            background: #f1f5f9;
+        }
+
+        @media (max-width: 992px) {
             display: none;
         }
     }
@@ -919,4 +923,321 @@ $shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
             transition: all 0.2s;
         }
     }
+}
+
+// Promotion Modal Styles
+.promotionModal {
+    :global(.ant-modal-content) {
+        border-radius: 24px;
+        overflow: hidden;
+        padding: 0;
+    }
+
+    :global(.ant-modal-close) {
+        top: 20px;
+        right: 20px;
+    }
+}
+
+.promoModalContent {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.yandexModalBody {
+    padding: 0;
+    text-align: left;
+
+    .productFlex {
+        display: flex;
+        gap: 24px;
+        padding: 32px;
+        background: #fff;
+
+        @media (max-width: 576px) {
+            flex-direction: column;
+            padding: 24px;
+            gap: 16px;
+        }
+
+        .imageBox {
+            position: relative;
+            flex-shrink: 0;
+            width: 140px;
+            height: 180px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+
+            @media (max-width: 576px) {
+                width: 100%;
+                height: 200px;
+            }
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .statusBadge {
+                position: absolute;
+                top: 12px;
+                left: 12px;
+                background: #ffcc00;
+                color: #000;
+                padding: 4px 8px;
+                border-radius: 6px;
+                font-size: 11px;
+                font-weight: 800;
+                letter-spacing: 0.5px;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            }
+        }
+
+        .infoBox {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            .contextLabel {
+                font-size: 11px;
+                font-weight: 700;
+                color: #94a3b8;
+                letter-spacing: 1px;
+                margin-bottom: 8px;
+                display: block;
+            }
+
+            h3 {
+                font-size: 20px;
+                font-weight: 700;
+                color: #1e293b;
+                margin-bottom: 24px;
+                line-height: 1.4;
+
+                @media (max-width: 576px) {
+                    text-align: center;
+                    margin-bottom: 16px;
+                }
+            }
+
+            .actionGroup {
+                display: flex;
+                gap: 12px;
+
+                @media (max-width: 576px) {
+                    flex-direction: column;
+                    align-items: center;
+                    width: 100%;
+                }
+
+                .downloadBtn {
+                    background: $primary-green;
+                    color: white;
+                    padding: 0 24px;
+                    height: 48px;
+                    border-radius: 12px;
+                    font-weight: 700;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 8px;
+                    border: none;
+                    cursor: pointer;
+                    transition: all 0.3s;
+                    box-shadow: 0 4px 12px rgba(0, 164, 79, 0.2);
+
+                    @media (max-width: 576px) {
+                        width: 100%;
+                        max-width: 280px;
+                    }
+
+                    &:hover {
+                        background: darken($primary-green, 5%);
+                        transform: translateY(-2px);
+                    }
+                }
+
+                .buyMoreBtnHighlight {
+                    background: #f0fdf4;
+                    color: $primary-green !important;
+                    padding: 0 24px;
+                    height: 48px;
+                    border-radius: 12px;
+                    font-weight: 700;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    text-decoration: none;
+                    transition: all 0.3s;
+                    border: 1.5px solid rgba($primary-green, 0.3);
+                    animation: pulse-light 2s infinite;
+
+                    &:hover {
+                        background: $primary-green;
+                        color: white !important;
+                        border-color: $primary-green;
+                    }
+
+                    @media (max-width: 576px) {
+                        width: 100%;
+                        max-width: 280px;
+                    }
+                }
+            }
+        }
+    }
+
+    .promoFooterDetailed {
+        background: #f8fafc;
+        padding: 12px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 10px;
+        border-top: 1px solid #f1f5f9;
+
+        .footerInfoMain {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            width: 100%;
+
+            .promotionText {
+                font-size: 13px;
+                font-weight: 700;
+                color: #1a1a1a;
+                line-height: 1.2;
+                text-align: left;
+
+                span {
+                    color: $primary-green;
+                    background: rgba($primary-green, 0.1);
+                    padding: 1px 4px;
+                    border-radius: 4px;
+                    font-size: 14px;
+                }
+            }
+
+            .modalTimerCompact {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                background: #fff1f2;
+                color: #e11d48;
+                padding: 6px 0;
+                border-radius: 8px;
+                font-size: 13px;
+                font-weight: 700;
+                border: 1px solid rgba(225, 29, 72, 0.1);
+                flex-shrink: 0;
+                animation: pulse-timer 1s infinite alternate;
+                height: 32px;
+                width: 140px;
+
+                svg {
+                    font-size: 14px;
+                }
+            }
+        }
+
+        .footerBuyBtnCompact {
+            background: $primary-green;
+            color: white !important;
+            padding: 6px 0;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 13px;
+            text-decoration: none;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 10px rgba(0, 164, 79, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            width: 140px;
+            margin: 0;
+            height: 32px;
+
+            &:hover {
+                background: darken($primary-green, 5%);
+                transform: scale(1.03);
+                box-shadow: 0 5px 14px rgba(0, 164, 79, 0.25);
+            }
+
+            @media (max-width: 576px) {
+                width: 100%;
+                padding: 10px;
+            }
+        }
+    }
+}
+
+@keyframes pulse-timer {
+    from { opacity: 0.8; transform: scale(1); }
+    to { opacity: 1; transform: scale(1.02); }
+}
+
+// Support for standard promotion view
+.modalMainTimer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #fff5f5;
+    color: #e53e3e;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    margin: 8px auto 16px;
+    width: fit-content;
+    border: 1px solid rgba(229, 62, 62, 0.1);
+
+    svg {
+        font-size: 14px;
+    }
+}
+
+.buyMoreBtnHighlighted {
+    background: $primary-green;
+    color: white !important;
+    padding: 14px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 16px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 164, 79, 0.3);
+    display: block;
+    animation: pulse-standard 2s infinite;
+
+    &:hover {
+        background: darken($primary-green, 5%);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 164, 79, 0.4);
+    }
+}
+
+@keyframes pulse-light {
+    0% { box-shadow: 0 0 0 0 rgba($primary-green, 0.2); }
+    70% { box-shadow: 0 0 0 10px rgba($primary-green, 0); }
+    100% { box-shadow: 0 0 0 0 rgba($primary-green, 0); }
+}
+
+@keyframes pulse-standard {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+    40% {transform: translateY(-10px);}
+    60% {transform: translateY(-5px);}
 }
