@@ -334,16 +334,18 @@ const Header = () => {
                     {/* Global Search Bar */}
                     <div className={styles.searchContainer}>
                         <div className={styles.searchArea}>
-                            <Select
-                                value={type}
-                                onChange={setType}
-                                className={styles.typeSelect}
-                                bordered={false}
-                            >
-                                <Option value="mahsulotlar">Barchasi</Option>
-                                <Option value="xizmatlar">Xizmatlar</Option>
-                                <Option value="mutaxassislar">Mutaxassislar</Option>
-                            </Select>
+                            {!isMobile && (
+                                <Select
+                                    value={type}
+                                    onChange={setType}
+                                    className={styles.typeSelect}
+                                    bordered={false}
+                                >
+                                    <Option value="mahsulotlar">Barchasi</Option>
+                                    <Option value="xizmatlar">Xizmatlar</Option>
+                                    <Option value="mutaxassislar">Mutaxassislar</Option>
+                                </Select>
+                            )}
                             <input
                                 ref={searchRef}
                                 type="text"
@@ -420,14 +422,16 @@ const Header = () => {
                                                         )}
                                                     </div>
                                                 </div>
-                                                <div className={`
-                                                    ${styles.typeBadge} 
-                                                    ${option.sourceType === 'specialist' ? styles.specialist :
-                                                        type === 'mahsulotlar' ? styles.product : styles.service}
-                                                `}>
-                                                    {option.sourceType === 'specialist' ? 'Mutaxassis' :
-                                                        type === 'mahsulotlar' ? 'Mahsulot' : 'Xizmat'}
-                                                </div>
+                                                {!isMobile && (
+                                                    <div className={`
+                                                        ${styles.typeBadge} 
+                                                        ${option.sourceType === 'specialist' ? styles.specialist :
+                                                            type === 'mahsulotlar' ? styles.product : styles.service}
+                                                    `}>
+                                                        {option.sourceType === 'specialist' ? 'Mutaxassis' :
+                                                            type === 'mahsulotlar' ? 'Mahsulot' : 'Xizmat'}
+                                                    </div>
+                                                )}
                                             </div>
                                         ))}
                                     </div>
