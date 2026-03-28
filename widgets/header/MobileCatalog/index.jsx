@@ -167,22 +167,49 @@ const MobileCatalog = ({ isOpen, onClose, categoriesData }) => {
                                 ))}
                             </div>
 
-                            {/* Additional Links */}
+                            {/* Additional Links (Synchronized with Header SubRow) */}
                             <div className={styles.quickLinks}>
                                 <h4 className={styles.sectionLabel}>Foydali</h4>
+                                
                                 <Link href="/order/create">
                                     <a className={styles.quickLink} onClick={onClose}>
                                         <MdEditNote size={20} />
                                         Buyurtma berish
                                     </a>
                                 </Link>
-                                <a href="https://seller.soff.uz/" target="_blank" className={styles.quickLink}>
-                                    <MdStorefront size={20} />
-                                    Sotuvchi bo'lish
-                                </a>
-                                <a href="https://soffia.uz/" target="_blank" className={styles.quickLink}>
+
+                                <Link href="/scientific-resources/all">
+                                    <a className={styles.quickLink} onClick={onClose}>
+                                        <TbDownload size={20} />
+                                        Tayyor mahsulotlar
+                                    </a>
+                                </Link>
+
+                                <Link href="/orders">
+                                    <a className={styles.quickLink} onClick={onClose}>
+                                        <TbBriefcase size={20} />
+                                        Frilanserlik xizmatlari
+                                    </a>
+                                </Link>
+
+                                <a 
+                                    href="https://soffia.uz/uz/dashboard" 
+                                    target="_blank" 
+                                    rel="noopener noreferrer" 
+                                    className={styles.quickLink}
+                                >
                                     <TbSparkles size={20} />
                                     AI xizmatlari
+                                </a>
+
+                                <a 
+                                    href="https://seller.soff.uz/" 
+                                    target="_blank" 
+                                    rel="noopener noreferrer" 
+                                    className={styles.quickLink}
+                                >
+                                    <TbUpload size={20} />
+                                    Sotuvchi bo'lish
                                 </a>
                             </div>
                         </div>
