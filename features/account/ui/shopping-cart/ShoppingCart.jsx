@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import BreadCrumb from '~/shared/ui/breadcrumb';
-import SidebarLayout from '~/widgets/sidebar/SidebarLayout';
+import Sidebar from '~/widgets/sidebar/Sidebar';
 import Link from 'next/link';
-import Image from 'next/image';
 import { Button, Skeleton } from 'antd';
 import useCart from '~/shared/hooks/useCart';
 import { addPeriodToThousands } from '~/features/account/ui/price-formatter';
@@ -17,20 +15,10 @@ import { IoIosClose } from 'react-icons/io';
 import styles from './shopping-cart.module.scss';
 import { cn } from '~/shared/utilities/cn';
 import { FaArrowLeft, FaBoxOpen } from 'react-icons/fa6';
+import { MdOutlineSecurity } from 'react-icons/md';
 import Icon from '~/shared/ui/Icon';
 import { useCountTimeBack } from '~/shared/hooks/useCountDown';
 import { useMounted } from '~/shared/hooks/useMounted';
-import { FaClock } from 'react-icons/fa';
-
-const breadCrumb = [
-    {
-        text: 'Asosiy sahifa',
-        url: '/',
-    },
-    {
-        text: 'Savat',
-    },
-];
 
 function ShoppingCart() {
     const state = useSelector((state) => state.auth.user);
@@ -43,6 +31,7 @@ function ShoppingCart() {
         discount_percent: 0,
         expires_at: null,
     });
+    const [collapsed, setCollapsed] = useState(false);
     const isMounted = useMounted();
     const timeLeft = useCountTimeBack(promotion.expires_at);
 
@@ -98,23 +87,29 @@ function ShoppingCart() {
         }
     };
 
-    let contentView;
+    const onChangeCollapse = () => {
+        setCollapsed((pre) => !pre);
+    };
+
+    let cartContent;
     if (isLoading) {
-        contentView = (
-            <div className={styles.shoppingCartContent}>
-                <h2 className={styles.pageTitle}>Mahsulotlar ({allItems.length})</h2>
-                <div className={styles.productsList}>
-                    {Array.from({ length: 4 }).map((_, index) => (
-                        <Skeleton.Button
-                            key={index}
-                            active
-                            style={{
-                                width: '100%',
-                                height: '150px',
-                                marginBottom: '16px',
-                            }}
-                        />
-                    ))}
+        cartContent = (
+            <div className={styles.contentWrapper}>
+                <div className={styles.cartItems}>
+                    <div className={styles.columnHeader}>
+                        <h2 className={styles.pageTitle}>Mahsulotlar</h2>
+                    </div>
+                    <div className={styles.itemsList}>
+                        {Array.from({ length: 3 }).map((_, index) => (
+                            <div key={index} className={styles.productRow}>
+                                <Skeleton.Avatar active size={48} shape="square" />
+                                <div style={{ flex: 1, marginLeft: 16 }}>
+                                    <Skeleton.Input active style={{ width: '60%' }} size="small" />
+                                    <Skeleton.Input active style={{ width: '30%', marginTop: 8 }} size="small" />
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
         );
@@ -123,296 +118,167 @@ function ShoppingCart() {
             promotion.expires_at &&
             (timeLeft.minutes > 0 || timeLeft.seconds > 0);
 
-        contentView = (
-            <div className={styles.shoppingCartContent}>
-                <div className="d-flex justify-content-between align-items-center mb-2">
-                    <h2 className={styles.pageTitle} style={{ margin: 0 }}>
-                        Mahsulotlar ({allItems.length})
-                    </h2>
+        cartContent = (
+            <div className={styles.contentWrapper}>
+                {/* LEFT: Items List */}
+                <div className={styles.cartItems}>
+                    <div className={styles.columnHeader}>
+                        <h1 className={styles.pageTitle}>
+                            Savatdagi mahsulotlar ({allItems.length})
+                        </h1>
+                    </div>
+
+                    <div className={styles.itemsList}>
+                        {allItems.map((item) => (
+                            <div key={`${item.cartType}-${item.id}`} className={styles.productRow}>
+                                <div
+                                    className={styles.fileBadge}
+                                    style={{
+                                        backgroundColor: item.cartType === 'playlist'
+                                            ? '#2ecc71'
+                                            : (fileColors[item.file_type] || '#E22C2F')
+                                    }}
+                                >
+                                    <Icon icon={fileReactIcons[item.cartType === 'playlist' ? 'VIDEO' : item.file_type]} />
+                                    <span>{item.cartType === 'playlist' ? 'Кurs' : item.file_type}</span>
+                                </div>
+
+                                <div className={styles.productInfo}>
+                                    <Link href={item.cartType === 'playlist' ? `/video-lessons/playlists/${item.slug || item.id}` : `/product/${item.slug || item.id}`}>
+                                        <a className={styles.productTitle}>{item.title}</a>
+                                    </Link>
+                                    <span className={styles.productMeta}>
+                                        {item.cartType === 'playlist' ? 'To\'liq o\'quv kursi' : 'Tayyor raqamli mahsulot'}
+                                    </span>
+                                </div>
+
+                                <div className={styles.priceAndActions}>
+                                    <div className="text-right">
+                                        {item.discount_price && Number(item.discount_price) < Number(item.price) ? (
+                                            <>
+                                                <span className={styles.currentPrice}>{addPeriodToThousands(item.discount_price)} so'm</span>
+                                                <div className={styles.oldPrice}>{addPeriodToThousands(item.price)} so'm</div>
+                                            </>
+                                        ) : (
+                                            <span className={styles.currentPrice}>
+                                                {item.price && Number(item.price) > 0 
+                                                    ? `${addPeriodToThousands(item.price)} so'm` 
+                                                    : 'Bepul'}
+                                            </span>
+                                        )}
+                                    </div>
+                                    <Button
+                                        type="text"
+                                        icon={<IoIosClose fontSize={24} />}
+                                        onClick={(e) => handleRemoveItem(e, item)}
+                                        className={styles.deleteBtn}
+                                    />
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* RIGHT: Order Summary */}
+                <div className={styles.orderSummary}>
                     {isMounted && promotion.discount_percent > 0 && (
-                        <div
-                            className={cn(
-                                'px-3 py-2 rounded-lg d-flex align-items-center bg-success text-white',
-                                styles.promoBadge
-                            )}>
-                            <div className="mr-2">
-                                <strong
-                                    className="d-block"
-                                    style={{ fontSize: '14px', lineHeight: 1.2 }}>
-                                    {promotion.discount_percent}% CHEGIRMA!
-                                </strong>
-                                <span style={{ fontSize: '11px' }}>
-                                    {promotion.expires_at
-                                        ? 'Vaqt tugashiga oz qoldi'
-                                        : 'Doimiy mijoz chegirmasi'}
-                                </span>
+                        <div className={styles.promoBadge}>
+                            <div>
+                                <div className="font-bold" style={{ fontSize: '14px' }}>{promotion.discount_percent}% CHEGIRMA!</div>
+                                <div style={{ fontSize: '11px' }}>Faqat siz uchun maxsus taklif</div>
                             </div>
                             {isExpiring && (
-                                <div
-                                    className="ml-2 pl-2 border-left d-flex align-items-center font-bold"
-                                    style={{ fontSize: '16px' }}>
-                                    <FaClock className="mr-1" size={12} />
+                                <div className="font-mono font-bold" style={{ fontSize: '15px' }}>
                                     {String(timeLeft.minutes).padStart(2, '0')}:
                                     {String(timeLeft.seconds).padStart(2, '0')}
                                 </div>
                             )}
                         </div>
                     )}
-                </div>
-                <div className={styles.productsList}>
-                    {allItems.map((item) => (
-                        <div
-                            key={`${item.cartType}-${item.id}`}
-                            className={styles.productCard}>
-                            <div className={styles.productThumbnail}>
-                                <Link
-                                    href={
-                                        item.cartType === 'playlist'
-                                            ? `/video-lessons/playlists/${item.slug || item.id}`
-                                            : `/product/${item.slug || item.id}`
-                                    }>
-                                    <a>
-                                        <div className={styles.imageWrapper}>
-                                            <Image
-                                                src={item.poster_url || item.image}
-                                                alt={item.title}
-                                                width={120}
-                                                height={120}
-                                                className={styles.productImage}
-                                                style={{
-                                                    objectFit: 'cover',
-                                                }}
-                                            />
-                                            {item.cartType === 'product' && (
-                                                <div
-                                                    className={styles.fileTypeBadge}
-                                                    style={{
-                                                        backgroundColor:
-                                                            fileColors[item.file_type] ||
-                                                            '#E22C2F',
-                                                    }}>
-                                                    <Icon
-                                                        icon={
-                                                            fileReactIcons[
-                                                                item.file_type
-                                                            ]
-                                                        }
-                                                    />
-                                                    <span>{item.file_type}</span>
-                                                </div>
-                                            )}
-                                            {item.cartType === 'playlist' && (
-                                                <div
-                                                    className={styles.fileTypeBadge}
-                                                    style={{
-                                                        backgroundColor: '#2ecc71',
-                                                    }}>
-                                                    <Icon
-                                                        icon={fileReactIcons['VIDEO']}
-                                                    />
-                                                    <span>PLAYLIST</span>
-                                                </div>
-                                            )}
-                                        </div>
-                                    </a>
-                                </Link>
-                            </div>
-                            <div className={styles.productInfo}>
-                                <Link
-                                    href={
-                                        item.cartType === 'playlist'
-                                            ? `/video-lessons/playlists/${item.slug}`
-                                            : `/product/${item.slug}`
-                                    }>
-                                    <a className={styles.productTitle}>
-                                        {item.title}
-                                        {item.cartType === 'playlist' && (
-                                            <span
-                                                style={{
-                                                    fontSize: '12px',
-                                                    color: '#2ecc71',
-                                                    marginLeft: '8px',
-                                                    fontWeight: 'normal',
-                                                }}>
-                                                (Kurs)
-                                            </span>
-                                        )}
-                                    </a>
-                                </Link>
-                                <div className={styles.productPrice}>
-                                    {item.discount_price ? (
-                                        `${addPeriodToThousands(item.discount_price)}
-                                    so'm`
-                                    ) : item.price ? (
-                                        `${addPeriodToThousands(item.price)} so'm`
-                                    ) : (
-                                        <p
-                                            className="free-product-text"
-                                            style={{ width: 'fit-content' }}>
-                                            Bepul
-                                        </p>
-                                    )}
 
-                                    {item.discount ? (
-                                        <sup>
-                                            <del
-                                                className={cn(
-                                                    'text-gray-400',
-                                                    'text-xs',
-                                                    'md:text-sm',
-                                                    'ml-2'
-                                                )}>
-                                                {addPeriodToThousands(item.price)} so'm
-                                            </del>
-                                        </sup>
-                                    ) : null}
-                                </div>
+                    <div className={styles.receiptCard}>
+                        <div className={styles.receiptHeader}>To'lov ma'lumotlari</div>
+
+                        <div className={styles.receiptBody}>
+                            <div className={styles.receiptRow}>
+                                <span className={styles.label}>Mahsulotlar soni</span>
+                                <span className={styles.value}>{allItems.length} ta</span>
                             </div>
-                            <div className={styles.productActions}>
-                                <Button
-                                    type="default"
-                                    danger
-                                    icon={<IoIosClose fontSize={30} />}
-                                    onClick={(e) => handleRemoveItem(e, item)}
-                                    className={styles.deleteButton}
-                                    aria-label="O'chirish"
-                                />
+                            <div className={styles.receiptRow}>
+                                <span className={styles.label}>Umumiy summa</span>
+                                <span className={styles.value}>{addPeriodToThousands(subtotal)} so'm</span>
                             </div>
-                        </div>
-                    ))}
-                </div>
-                <div className={styles.stickyBottomCard}>
-                    <div className={styles.summaryContent}>
-                        <div className={styles.summaryDetails}>
-                            <span className={styles.summaryItem}>
-                                Jami mahsulotlar:{' '}
-                                <strong>{allItems.length} ta</strong>
-                            </span>
-                            <span className={styles.summaryItem}>
-                                Oraliq summa:{' '}
-                                <strong>
-                                    {addPeriodToThousands(subtotal)} so'm
-                                </strong>
-                            </span>
+
                             {promotion.discount_percent > 0 && (
-                                <span className={cn(styles.summaryItem, 'text-success')}>
-                                    Chegirma (-{promotion.discount_percent}%):{' '}
-                                    <strong className="text-success">
-                                        -{addPeriodToThousands(discountAmount)} so'm
-                                    </strong>
-                                </span>
-                            )}
-                            <span className={styles.summaryItem}>
-                                Xizmat haqi ({Math.round(taxPercentage * 100)}%):{' '}
-                                <strong>{addPeriodToThousands(tax)} so'm</strong>
-                            </span>
-                            <span className={styles.summaryItem}>
-                                Jami to'lov:{' '}
-                                <strong className={styles.totalAmount}>
-                                    {addPeriodToThousands(total)} so'm
-                                </strong>
-                            </span>
-                        </div>
-                        <div className={styles.checkoutButtonWrapper}>
-                            <div className={styles.paymentSummaryAmount}>
-                                {promotion.discount_percent > 0 && (
-                                    <div className="d-flex flex-column align-items-end mr-3">
-                                        <del className="text-muted" style={{ fontSize: '11px' }}>
-                                            {addPeriodToThousands(
-                                                subtotal + Math.floor(subtotal * taxPercentage)
-                                            )} so'm
-                                        </del>
-                                        <span className="text-success" style={{ fontSize: '11px', marginTop: '-4px' }}>
-                                            Xarid chegirmasi
-                                        </span>
-                                    </div>
-                                )}
-                                <div>
-                                    Jami:
-                                    <strong className={styles.totalAmount}>
-                                        {addPeriodToThousands(total)} so'm
-                                    </strong>
+                                <div className={cn(styles.receiptRow, styles.discountRow)}>
+                                    <span className={styles.label}>Aksiya chegirmasi (-{promotion.discount_percent}%)</span>
+                                    <span className={styles.value}>-{addPeriodToThousands(discountAmount)} so'm</span>
                                 </div>
-                            </div>
-                            {state !== null ? (
-                                <Link href="/account/checkout">
-                                    <a>
-                                        <Button
-                                            type="primary"
-                                            size="large"
-                                            className={styles.checkoutButton}>
-                                            To'lovga o'tish
-                                        </Button>
-                                    </a>
-                                </Link>
-                            ) : (
-                                <Link href="/auth/login?returnUrl=/account/checkout">
-                                    <a>
-                                        <Button
-                                            type="primary"
-                                            size="large"
-                                            className={styles.checkoutButton}>
-                                            To'lovga o'tish
-                                        </Button>
-                                    </a>
-                                </Link>
                             )}
+
+                            <div className={styles.receiptRow}>
+                                <span className={styles.label}>Xizmat haqi ({Math.round(taxPercentage * 100)}%)</span>
+                                <span className={styles.value}>{addPeriodToThousands(tax)} so'm</span>
+                            </div>
+
+                            <div className={styles.receiptDivider} />
+
+                            <div className={styles.totalRow}>
+                                <span className={styles.label}>Jami:</span>
+                                <span className={styles.totalValue}>{addPeriodToThousands(total)} so'm</span>
+                            </div>
+                        </div>
+
+                        <Link href={state !== null ? "/account/checkout" : "/auth/login?returnUrl=/account/checkout"}>
+                            <a>
+                                <Button type="primary" className={styles.checkoutBtn}>
+                                    To'lovga o'tish
+                                </Button>
+                            </a>
+                        </Link>
+
+                        <div className={styles.securePayment}>
+                            <Icon icon={MdOutlineSecurity} />
+                            <span>Xavfsiz va tezkor to'lov</span>
                         </div>
                     </div>
                 </div>
             </div>
         );
     } else {
-        contentView = (
-            <div className="ps-section__content w-100 h-100">
-                <div
-                    style={{ height: '100%' }}
-                    className="d-flex justify-content-center flex-column align-items-center">
-                    <div
-                        style={{
-                            borderRadius: '50%',
-                            background: '#7575751c',
-                            width: '130px',
-                            height: '130px',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            marginBottom: '20px',
-                        }}>
-                        <FaBoxOpen
-                            style={{
-                                color: '#00a44f',
-                                fontSize: '70px',
-                            }}
-                        />
-                    </div>
-                    <h3
-                        style={{ fontSize: '30px' }}
-                        className="font-bold mb-2 text-gray-800 text-center">
-                        Savat bo'sh
-                    </h3>
-                    <p className="mb-4 text-center text-muted">
-                        To'lov qilish uchun biror mahsulot qo'shing.
-                    </p>
-                    <Link href={'/scientific-resources/all'}>
-                        <a>
-                            <Button type="primary" size="large">
-                                <FaArrowLeft />
-                                Xarid qilishni boshlash
-                            </Button>
-                        </a>
-                    </Link>
+        cartContent = (
+            <div className={styles.emptyCartWrapper}>
+                <div className={styles.emptyIconBox}>
+                    <FaBoxOpen />
                 </div>
+                <h3 className={styles.emptyTitle}>Savat bo'sh</h3>
+                <p className={styles.emptySubtitle}>
+                    Siz hali birorta mahsulot qo'shmadingiz. O'zingizga kerakli raqamli mahsulotni tanlang va xarid qilishni boshlang.
+                </p>
+                <Link href={'/scientific-resources/all'}>
+                    <a>
+                        <Button type="primary" size="large" className={styles.shopNowBtn}>
+                            <FaArrowLeft size={14} />
+                            Xarid qilishni boshlash
+                        </Button>
+                    </a>
+                </Link>
             </div>
         );
     }
 
     return (
         <>
-            <BreadCrumb breacrumb={breadCrumb} />
-            <div className={styles.shoppingCartWrapper}>
-                <h1 className="page-title">Savat</h1>
-                <SidebarLayout>{contentView}</SidebarLayout>
+            <div className={styles.pageContainer}>
+                <div className={styles.mainLayout}>
+                    <div className={cn(styles.sidebarArea, collapsed && styles.isSidebarCollapsed)}>
+                        <Sidebar
+                            collapsed={collapsed}
+                            onChangeCollapse={onChangeCollapse}
+                        />
+                    </div>
+                    {cartContent}
+                </div>
             </div>
         </>
     );
