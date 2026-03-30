@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import CreditCard2 from '../CreditCard2';
+import styles from '../checkout.module.scss';
 
 function FormCheckoutInformation({ items, type, id: queryId }) {
     const select = useSelector((state) => state.auth.user?.access);
@@ -18,8 +19,11 @@ function FormCheckoutInformation({ items, type, id: queryId }) {
     const ids = extractIds(data);
 
     return (
-        <div className="type_payment p-lg-5 p-md-5 p-4">
-            <h3 className="type_payment_h3">To'lov turini tanlang:</h3>
+        <div className={styles.paymentMethods}>
+            <div className={styles.paymentHeader}>
+                <h3>To'lov usulini tanlang</h3>
+                <p>O'zingizga qulay bo'lgan to'lov tizimidan foydalaning</p>
+            </div>
             <div className="bg-white">
                 <CreditCard2 document={ids} type={type} />
             </div>

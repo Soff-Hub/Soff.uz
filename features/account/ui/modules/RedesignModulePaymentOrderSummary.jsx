@@ -1,306 +1,110 @@
-import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { connect, useDispatch } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { calculateAmount } from '~/shared/utilities/ecomerce-helpers';
-import ProductRepository from '~/repositories/ProductRepository';
-import { addPeriodToThousands } from '../price-formatter';
-import { Skeleton } from 'antd';
 import useCart from '~/shared/hooks/useCart';
-import { cn, useRcn } from '~/shared/utilities/cn';
-import { fileColors } from '~/features/product-details/ui/actions/file-actions';
+import { addPeriodToThousands } from '../price-formatter';
+import styles from '../checkout.module.scss';
+import { IoIosClose } from 'react-icons/io';
+import Icon from '~/shared/ui/Icon';
+import {
+    fileReactIcons,
+    fileColors,
+} from '~/features/product-details/ui/actions/file-actions';
 
-const RedesignModulePaymentOrderSummary = ({ ecomerce, items }) => {
-    const [percentage, setPercentage] = useState(0);
-    const [promotion, setPromotion] = useState({
-        discount_percent: 0,
-        expires_at: null,
-    });
-    const { removeCartOneItem, removePlaylistCartOneItem } = useCart();
-    const dispatch = useDispatch();
+const CheckoutItemRow = ({ product, remove }) => {
+    const isDiscounted = product.discount_price > 0 && Number(product.discount_price) < Number(product.price);
+    const finalPrice = isDiscounted ? product.discount_price : product.price;
+    const isFree = Number(finalPrice) === 0;
 
-    // Use items if passed, otherwise fallback to ecomerce.cartDataItems
-    const cartItems = items || (ecomerce && ecomerce.cartDataItems) || [];
+    const cartType = product.is_video_course || product.playlist_items ? 'playlist' : 'product';
 
-    const fontSizeClass = useRcn({
-        mobile: 'text-sm',
-        tablet: 'text-lg',
-        desktop: 'text-xl',
-    });
+    return (
+        <div className={styles.itemRow}>
+            <div
+                className={styles.fileBadge}
+                style={{
+                    backgroundColor: cartType === 'playlist'
+                        ? '#2ecc71'
+                        : (fileColors[product.file_type] || '#E22C2F')
+                }}
+            >
+                <Icon icon={fileReactIcons[cartType === 'playlist' ? 'VIDEO' : product.file_type]} />
+                <span>{cartType === 'playlist' ? 'Кurs' : product.file_type || 'FIL'}</span>
+            </div>
 
-    const produtsHeightClass = useRcn({
-        mobile: 'max-h-[200px]',
-        tablet: 'max-h-[300px]',
-        desktop: 'h-auto',
-    });
+            <div className={styles.productInfo}>
+                <h4 className={styles.productTitle}>{product.title}</h4>
+                <span className={styles.productMeta}>
+                    {cartType === 'playlist' ? 'To\'liq o\'quv kursi' : 'Tayyor raqamli mahsulot'}
+                </span>
+            </div>
 
-    let amount = calculateAmount(cartItems);
-
-    async function getData() {
-        try {
-            const [taxResponse, promoResponse] = await Promise.all([
-                ProductRepository.getOrderPercentage(),
-                ProductRepository.getActivePromotion(),
-            ]);
-
-            if (taxResponse) {
-                setPercentage(Number(taxResponse?.data?.percentage));
-            }
-            if (promoResponse) {
-                setPromotion(promoResponse);
-            }
-        } catch (error) {
-            console.error('Failed to fetch summary data:', error);
-        }
-    }
-
-    const discountAmount = Math.floor(
-        amount * (promotion.discount_percent / 100)
+            <div className={styles.priceAndActions}>
+                <div className="text-right">
+                    {isDiscounted ? (
+                        <>
+                            <span className={styles.currentPrice}>{addPeriodToThousands(product.discount_price)} so'm</span>
+                            <span className={styles.oldPrice}>{addPeriodToThousands(product.price)} so'm</span>
+                        </>
+                    ) : (
+                        <span className={styles.currentPrice}>
+                            {isFree ? 'Bepul' : `${addPeriodToThousands(product.price)} so'm`}
+                        </span>
+                    )}
+                </div>
+                <button
+                    className={styles.deleteBtn}
+                    onClick={() => remove(product)}
+                >
+                    <IoIosClose />
+                </button>
+            </div>
+        </div>
     );
-    const amountAfterDiscount = amount - discountAmount;
-    const taxAmount = Math.floor(amountAfterDiscount * percentage);
-    const finalTotal = amountAfterDiscount + taxAmount;
+};
 
-    const hisob = addPeriodToThousands(finalTotal);
-    const taxFormatted = addPeriodToThousands(taxAmount);
-    const discountFormatted = addPeriodToThousands(discountAmount);
+const RedesignModulePaymentOrderSummary = () => {
+    const { cartDataItems, playlistCartDataItems } = useSelector((state) => state.ecomerce);
+    const { removeCartOneItem, removePlaylistCartOneItem } = useCart();
+    const ecomerce = [
+        ...(cartDataItems || []).map(item => ({ ...item, cartType: 'product' })),
+        ...(playlistCartDataItems || []).map(item => ({ ...item, cartType: 'playlist' }))
+    ];
 
-    const handleRemoveItem = async (e, item) => {
-        e.preventDefault();
-        if (item.cartType === 'playlist') {
+    const handleRemove = (item) => {
+        if (item.cartType === 'playlist' || item.is_video_course) {
             removePlaylistCartOneItem(item.id);
         } else {
             removeCartOneItem(item.id);
         }
     };
 
-    useEffect(() => {
-        getData();
-    }, []);
+    if (ecomerce.length === 0) {
+        return (
+            <div className={styles.emptyCheckout}>
+                <div className={styles.emptyIcon}>🛒</div>
+                <h3>Savat bo'sh</h3>
+                <p>Buyurtma berish uchun mahsulot tanlang</p>
+                <button
+                    className={styles.submitBtn}
+                    onClick={() => (window.location.href = '/')}
+                    style={{ maxWidth: '200px' }}
+                >
+                    Bosh sahifaga
+                </button>
+            </div>
+        );
+    }
 
     return (
-        <div
-            className={cn(
-                'bg-white',
-                'rounded-xl',
-                'shadow-sm',
-                'flex',
-                'flex-col'
-            )}>
-            <p
-                className={cn(
-                    'text-dark',
-                    'font-semibold',
-                    'm-0',
-                    'px-4',
-                    'py-2'
-                )}>
-                {cartItems.length} ta mahsulot
-            </p>
-            <div
-                className={cn(
-                    'flex-1',
-                    'overflow-y-auto',
-                    'px-4',
-                    'space-y-3',
-                    'py-2',
-                    produtsHeightClass
-                )}>
-                {cartItems && cartItems.length > 0 ? (
-                    cartItems.map((item) => (
-                        <div
-                            key={`${item.cartType || 'product'}-${item.id}`}
-                            className={cn(
-                                'flex',
-                                'items-start',
-                                'justify-between',
-                                'p-3',
-                                'border',
-                                'rounded-lg',
-                                'hover:shadow-md',
-                                'transition'
-                            )}>
-                            <div className={cn('flex-1')}>
-                                <Link
-                                    href={
-                                        item.cartType === 'playlist'
-                                            ? `/video-lessons/playlists/${item.slug}`
-                                            : `/product/${item.slug}`
-                                    }>
-                                    <a>
-                                        <p
-                                            className={cn(
-                                                'font-semibold',
-                                                'text-sm',
-                                                'md:text-base',
-                                                'mb-2',
-                                                'line-clamp-2'
-                                            )}>
-                                            {item.title}
-                                            {item.cartType === 'playlist' && (
-                                                <span
-                                                    style={{
-                                                        fontSize: '12px',
-                                                        color: '#2ecc71',
-                                                        marginLeft: '8px',
-                                                        fontWeight: 'normal',
-                                                    }}>
-                                                    (Kurs)
-                                                </span>
-                                            )}
-                                        </p>
-                                    </a>
-                                </Link>
-                                <span
-                                    className={cn(
-                                        'text-white',
-                                        'px-2',
-                                        'py-1',
-                                        'rounded'
-                                    )}
-                                    style={{
-                                        background:
-                                            item.cartType === 'playlist'
-                                                ? '#2ecc71'
-                                                : fileColors[item?.file_type] ||
-                                                  '#007DFF',
-                                    }}>
-                                    {item.cartType === 'playlist'
-                                        ? 'PLAYLIST'
-                                        : item?.file_type}
-                                </span>
-                            </div>
-
-                            <div
-                                className={cn(
-                                    'flex',
-                                    'flex-col',
-                                    'items-end',
-                                    'gap-2',
-                                    'min-w-[90px]'
-                                )}>
-                                <button
-                                    onClick={(e) => handleRemoveItem(e, item)}
-                                    className={cn(
-                                        'transition',
-                                        'border',
-                                        'rounded-full',
-                                        'p-1',
-                                        'hover:bg-gray-100'
-                                    )}>
-                                    <img
-                                        src="/static/img/xicon.svg"
-                                        alt="delete"
-                                        className="w-4 h-4"
-                                    />
-                                </button>
-
-                                {item.discount === 0 || !item.discount ? (
-                                    <p
-                                        className={cn(
-                                            'font-medium',
-                                            'text-sm',
-                                            'md:text-base',
-                                            'text-gray-800',
-                                            'm-0'
-                                        )}>
-                                        {addPeriodToThousands(
-                                            item.discount_price || item.price
-                                        )}{' '}
-                                        so'm
-                                    </p>
-                                ) : (
-                                    <div
-                                        className={cn(
-                                            'flex',
-                                            'flex-col',
-                                            'items-end'
-                                        )}>
-                                        <del
-                                            className={cn(
-                                                'text-gray-400',
-                                                'text-xs',
-                                                'md:text-sm'
-                                            )}>
-                                            {addPeriodToThousands(item.price)}{' '}
-                                            so'm
-                                        </del>
-                                        <p
-                                            className={cn(
-                                                'font-semibold',
-                                                'text-sm',
-                                                'md:text-base',
-                                                'text-red-500',
-                                                'm-0'
-                                            )}>
-                                            {addPeriodToThousands(
-                                                item.discount_price
-                                            )}{' '}
-                                            so'm
-                                        </p>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                    ))
-                ) : (
-                    <>
-                        <Skeleton active paragraph={{ rows: 7 }} />
-                    </>
-                )}
+        <div className={styles.orderSummaryWrapper}>
+            <div className="flex flex-col">
+                {ecomerce.map((item) => (
+                    <CheckoutItemRow key={item.id} product={item} remove={handleRemove} />
+                ))}
             </div>
-
-            {/* Footer */}
-            {cartItems && cartItems.length > 0 && (
-                <div className={cn('border-t', 'p-4', 'bg-gray-50')}>
-                    {promotion.discount_percent > 0 && (
-                        <div
-                            className={cn(
-                                'flex',
-                                'justify-between',
-                                'items-center',
-                                'mb-2'
-                            )}>
-                            <p className={cn('mb-0', 'text-sm', 'text-success')}>
-                                Sizning chegirmangiz (-{promotion.discount_percent}%):
-                            </p>
-                            <p className={cn('mb-0', 'text-sm', 'font-medium', 'text-success')}>
-                                -{discountFormatted} so'm
-                            </p>
-                        </div>
-                    )}
-                    {percentage > 0 && (
-                        <div
-                            className={cn(
-                                'flex',
-                                'justify-between',
-                                'items-center',
-                                'mb-2'
-                            )}>
-                            <p className={cn('mb-0', 'text-sm')}>
-                                Sayt xizmat haqi:
-                            </p>
-                            <p className={cn('mb-0', 'text-sm', 'font-medium')}>
-                                {taxFormatted} so'm ({percentage * 100}%)
-                            </p>
-                        </div>
-                    )}
-                    <div
-                        className={cn(
-                            'flex',
-                            'justify-between',
-                            'items-center'
-                        )}>
-                        <p className={cn('font-bold', 'mb-0', fontSizeClass)}>
-                            Jami to'lov:
-                        </p>
-                        <p className={cn('font-bold', 'mb-0', fontSizeClass)}>
-                            {hisob} so'm
-                        </p>
-                    </div>
-                </div>
-            )}
         </div>
     );
 };
 
-export default connect((state) => state)(RedesignModulePaymentOrderSummary);
+export default RedesignModulePaymentOrderSummary;

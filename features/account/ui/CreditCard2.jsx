@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Modal, Tabs, Alert, Input } from 'antd';
+import { Modal, Tabs } from 'antd';
 import PostRepository from '~/repositories/PostRepository';
 import { BeatLoader } from 'react-spinners';
 import Router from 'next/router';
@@ -9,63 +9,30 @@ import ProductRepository from '~/repositories/ProductRepository';
 import { calculateAmount } from '~/shared/utilities/ecomerce-helpers';
 import { addPeriodToThousands } from './price-formatter';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
-import { FaRegCreditCard } from 'react-icons/fa6';
-import { FaRegCalendarDays } from 'react-icons/fa6';
-
-import { IoShieldCheckmarkOutline } from 'react-icons/io5';
+import { FaRegCreditCard, FaRegCalendarDays, FaShieldHalved } from 'react-icons/fa6';
 import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
+import styles from './checkout.module.scss';
+import { cn } from '~/shared/utilities/cn';
 
-export const SecurePaymentAlert = ({ style, bordered = true, ...rest }) =>
-    bordered ? (
-        <Alert
-            message="To‘lov jarayoni ishonchli, shifrlangan va xavfsiz tarzda amalga oshiriladi."
-            type="success"
-            showIcon
-            style={{
-                lineHeight: 'normal',
-                color: 'green',
-                marginTop: '10px',
-                ...style,
-            }}
-            icon={<IoShieldCheckmarkOutline fontSize={25} />}
-            {...rest}
-        />
-    ) : (
-        <div style={style} {...rest}>
-            <IoShieldCheckmarkOutline
-                style={{
-                    color: 'green',
-                    fontSize: '20px',
-                    marginRight: '5px',
-                    marginBottom: '4px',
-                }}
-            />
-            <span style={{ color: 'green', fontSize: '13px' }}>
-                To‘lov jarayoni ishonchli, shifrlangan va xavfsiz tarzda amalga
-                oshiriladi.
-            </span>
-        </div>
-    );
-
-const FormSubmitButton = ({ hisob, message, className, ...rest }) => (
-    <div className={`w-100 ${className}`} {...rest}>
-        <button
-            type="submit"
-            className="ps-btn w-100"
-            style={{
-                color: 'white',
-            }}>
-            {message ? `To'lash (${hisob} so'm)` : <BeatLoader color="#fff" />}
-        </button>
-        <button
-            type="submit"
-            className="ps-btn ps-btn--fullwidth w-100 sticky_color_btn"
-            style={{
-                color: 'white',
-            }}>
-            {message ? `To'lash (${hisob} so'm)` : <BeatLoader color="#fff" />}
-        </button>
+export const SecurePaymentAlert = () => (
+    <div className={styles.secureAlert}>
+        <FaShieldHalved />
+        <span>To‘lov jarayoni ishonchli, shifrlangan va xavfsiz tarzda amalga oshiriladi.</span>
     </div>
+);
+
+const FormSubmitButton = ({ hisob, message, loading }) => (
+    <button
+        type="submit"
+        className={styles.submitBtn}
+        disabled={!message}
+    >
+        {message ? (
+            <>To'lash ({hisob} so'm)</>
+        ) : (
+            <BeatLoader color="#fff" size={8} />
+        )}
+    </button>
 );
 
 const CreditCard2 = ({ document, type }) => {
@@ -87,7 +54,6 @@ const CreditCard2 = ({ document, type }) => {
     const [cart, setCart] = useState(0);
     const [resDataCode, setResDataCode] = useState(null);
     const [buttonOk, setButtonOk] = useState(false);
-    const [tab, setTab] = useState(false);
     const [percentage, setPercentage] = useState(0);
     const inputRef = useRef(null);
     const cursorRef = useRef(null);
@@ -101,20 +67,6 @@ const CreditCard2 = ({ document, type }) => {
         }
     }, [open]);
 
-    const affiliate_code = affiliateId;
-    const numberTyper = (value) => {
-        SetNumberCardVal(value);
-        if (!value == 0) {
-            let numberPlaceholder = '';
-            for (let i = 0; i < 16; i++) {
-                if (i > 0 && i % 4 === 0) {
-                    numberPlaceholder += ' ';
-                }
-                numberPlaceholder += value[i] || '●';
-            }
-        }
-    };
-    let amount = calculateAmount(ecomerce);
     async function getPercentage() {
         const responseData = await ProductRepository.getOrderPercentage();
         if (responseData) {
@@ -126,185 +78,10 @@ const CreditCard2 = ({ document, type }) => {
         getPercentage();
     }, []);
 
-    const hisob = addPeriodToThousands(
-        amount + Math.floor(amount * percentage)
-    );
-
-    async function handleClickCardPostsclick(e) {
-        e.preventDefault();
-        setMessage(false);
-        const purchaseType = (playlistCartDataItems?.length > 0 || type === 'playlist') ? 'playlist' : 'document';
-
-        const ItemsData = await PostRepository.postClickCardNumber(
-            document,
-            'click',
-            purchaseType,
-            user?.access,
-            affiliate_code
-        );
-        if (ItemsData?.status === 201) {
-            setMessage(true);
-            // localStorage.removeItem('cart');
-            // Router.push(ItemsData?.data?.url);
-            window.open(ItemsData?.data?.url, '_blank');
-        } else {
-            setMessage(true);
-            const modal = Modal.error({
-                centered: true,
-                title: 'Muvaffaqqiyatli emas',
-                content: ItemsData?.data?.msg,
-            });
-            modal.update;
-        }
-    }
-
-    async function handleClickCardPostsPayme(e) {
-        e.preventDefault();
-        setMessage(false);
-        const purchaseType = (playlistCartDataItems?.length > 0 || type === 'playlist') ? 'playlist' : 'document';
-
-        const ItemsData = await PostRepository.postClickCardNumber(
-            document,
-            'payme',
-            purchaseType,
-            user?.access,
-            affiliate_code
-        );
-        if (ItemsData?.status === 201) {
-            // localStorage.removeItem('cart');
-            setMessage(true);
-            Router.push(ItemsData?.data?.url);
-        } else {
-            setMessage(true);
-            const modal = Modal.error({
-                centered: true,
-                title: 'Muvaffaqqiyatli emas',
-                content: ItemsData?.data?.msg,
-            });
-            modal.update;
-        }
-    }
-
-    async function handleClickCardPosts(e) {
-        e.preventDefault();
-        setMessage(false);
-        const purchaseType = (playlistCartDataItems?.length > 0 || type === 'playlist') ? 'playlist' : 'document';
-
-        const ItemsData = await PostRepository.postClickCard(
-            document,
-            numberCardVal,
-            cardDate,
-            purchaseType,
-            user?.access,
-            affiliate_code
-        );
-        if (ItemsData?.status === 201) {
-            safeLocalStorage.removeItem('cart');
-            setMessage(true);
-            setOpen(true);
-            setCart(ItemsData.data.cart);
-            setResData(ItemsData);
-        } else {
-            setMessage(true);
-            const modal = Modal.error({
-                centered: true,
-                title: 'Muvaffaqqiyatli emas',
-                content: ItemsData?.data?.expire_date
-                    ? ' Karta amal qilish muddatini kiriting'
-                    : ItemsData?.data?.card_number
-                        ? "Karta raqamini to'g'ri kiriting"
-                        : ItemsData?.data?.msg,
-            });
-            modal.update;
-        }
-    }
-
-    async function handleSubmitCode() {
-        setButtonOk(true);
-        const dataNews = await PostRepository.postClickCode(
-            cart,
-            code,
-            user?.access
-        );
-        if (dataNews) {
-            setResDataCode(dataNews);
-            setButtonOk(false);
-        }
-        if (
-            dataNews?.status !== 200 &&
-            dataNews?.data?.msg?.[0] !== 'Parol xato'
-        ) {
-            setOpen(false);
-            const modal = Modal.error({
-                centered: true,
-                title: 'Xatolik!',
-                content: `${dataNews?.data?.msg}`,
-            });
-
-            startTimeout(() => {
-                setResData(null);
-            }, 2000);
-        }
-        if (dataNews?.status === 200) {
-            setOpen(false);
-            safeLocalStorage.removeItem('cart');
-            const modal = Modal.success({
-                centered: true,
-                title: 'Muffaqiyatli!',
-                content: `${dataNews?.data?.msg} `,
-            });
-
-            if (user?.role === 'seller' || user?.role === 'customer') {
-                Router.push('/account/sellerproducts');
-            } else {
-                Router.push('/');
-            }
-            if (document?.length > 1) {
-                removeAll();
-            }
-        }
-    }
-
-    useEffect(() => {
-        if (resData?.status === 201) {
-            setTime(120);
-            const timerID = setInterval(() => {
-                setTime((prevTime) => {
-                    if (prevTime <= 0) {
-                        clearInterval(timerID);
-                        setResData(null);
-                        setOpen(false);
-                        return 0;
-                    } else {
-                        return prevTime - 1;
-                    }
-                });
-            }, 1000);
-
-            return () => clearInterval(timerID);
-        }
-    }, [resData]);
-
-    function handleCancale() {
-        setOpen(false);
-        setResData(null);
-    }
-
-    const formattedTime = new Date(time * 1000).toISOString().substr(14, 5);
-
-    const [formattedCardNumber, setFormattedCardNumber] = useState('');
-    const [numberDate, setNumberDate] = useState('');
-
-    // Add this useEffect to restore cursor position after render
-    useEffect(() => {
-        if (inputRef.current && cursorRef.current !== null) {
-            // Ant Design Input exposes the native input via .input
-            const input = inputRef.current.input || inputRef.current;
-            if (input.setSelectionRange) {
-                input.setSelectionRange(cursorRef.current, cursorRef.current);
-            }
-        }
-    }, [formattedCardNumber]);
+    const amount = calculateAmount(ecomerce);
+    const taxAmount = Math.floor(amount * percentage);
+    const finalTotal = amount + taxAmount;
+    const hisobFormatted = addPeriodToThousands(finalTotal);
 
     const handleCardNumberChange = (e) => {
         const input = e.target;
@@ -341,19 +118,17 @@ const CreditCard2 = ({ document, type }) => {
         }
 
         cursorRef.current = newCursorPos;
-
-        numberTyper(inputValue);
+        SetNumberCardVal(inputValue);
         setFormattedCardNumber(formattedValue);
     };
 
     const handleCardNumberDate = (e) => {
-        const inputValue = e.target.value.replace(/\D/g, ''); // Raqam va probilni olib tashlash
+        const inputValue = e.target.value.replace(/\D/g, '');
         let formattedValue = '';
-
         if (inputValue.length <= 4) {
             for (let i = 0; i < inputValue.length; i++) {
                 if (i > 0 && i % 2 === 0) {
-                    formattedValue += '/'; // Raqamlarni probil bilan ajratish
+                    formattedValue += '/';
                 }
                 formattedValue += inputValue[i];
             }
@@ -362,189 +137,231 @@ const CreditCard2 = ({ document, type }) => {
         setNumberDate(formattedValue);
     };
 
-    const onChange = (key) => {
-        setTab(key);
-    };
+    const [formattedCardNumber, setFormattedCardNumber] = useState('');
+    const [numberDate, setNumberDate] = useState('');
 
-    const items = [
+    useEffect(() => {
+        if (inputRef.current && cursorRef.current !== null) {
+            const input = inputRef.current;
+            if (input.setSelectionRange) {
+                input.setSelectionRange(cursorRef.current, cursorRef.current);
+            }
+        }
+    }, [formattedCardNumber]);
+
+    async function handleClickCardPostsclick(e) {
+        e.preventDefault();
+        setMessage(false);
+        const purchaseType = (playlistCartDataItems?.length > 0 || type === 'playlist') ? 'playlist' : 'document';
+        const ItemsData = await PostRepository.postClickCardNumber(document, 'click', purchaseType, user?.access, affiliateId);
+        if (ItemsData?.status === 201) {
+            setMessage(true);
+            window.open(ItemsData?.data?.url, '_blank');
+        } else {
+            setMessage(true);
+            Modal.error({ centered: true, title: 'Xatolik', content: ItemsData?.data?.msg });
+        }
+    }
+
+    async function handleClickCardPostsPayme(e) {
+        e.preventDefault();
+        setMessage(false);
+        const purchaseType = (playlistCartDataItems?.length > 0 || type === 'playlist') ? 'playlist' : 'document';
+        const ItemsData = await PostRepository.postClickCardNumber(document, 'payme', purchaseType, user?.access, affiliateId);
+        if (ItemsData?.status === 201) {
+            setMessage(true);
+            Router.push(ItemsData?.data?.url);
+        } else {
+            setMessage(true);
+            Modal.error({ centered: true, title: 'Xatolik', content: ItemsData?.data?.msg });
+        }
+    }
+
+    async function handleClickCardPosts(e) {
+        e.preventDefault();
+        setMessage(false);
+        const purchaseType = (playlistCartDataItems?.length > 0 || type === 'playlist') ? 'playlist' : 'document';
+        const ItemsData = await PostRepository.postClickCard(document, numberCardVal, cardDate, purchaseType, user?.access, affiliateId);
+        if (ItemsData?.status === 201) {
+            safeLocalStorage.removeItem('cart');
+            setMessage(true);
+            setOpen(true);
+            setCart(ItemsData.data.cart);
+            setResData(ItemsData);
+        } else {
+            setMessage(true);
+            Modal.error({
+                centered: true,
+                title: 'Xatolik',
+                content: ItemsData?.data?.expire_date
+                    ? 'Muddatni kiriting'
+                    : ItemsData?.data?.card_number
+                        ? 'Karta raqami xato'
+                        : ItemsData?.data?.msg,
+            });
+        }
+    }
+
+    async function handleSubmitCode() {
+        setButtonOk(true);
+        const dataNews = await PostRepository.postClickCode(cart, code, user?.access);
+        setButtonOk(false);
+        if (dataNews?.status === 200) {
+            setOpen(false);
+            safeLocalStorage.removeItem('cart');
+            Modal.success({ centered: true, title: 'Muvaffaqiyatli!', content: dataNews?.data?.msg });
+            if (user?.role === 'seller' || user?.role === 'customer') Router.push('/account/sellerproducts');
+            else Router.push('/');
+            if (document?.length > 1) removeAll();
+        } else {
+            setResDataCode(dataNews);
+            if (dataNews?.data?.msg?.[0] !== 'Parol xato') {
+                setOpen(false);
+                Modal.error({ centered: true, title: 'Xatolik!', content: `${dataNews?.data?.msg}` });
+                startTimeout(() => setResData(null), 2000);
+            }
+        }
+    }
+
+    useEffect(() => {
+        if (resData?.status === 201) {
+            setTime(120);
+            const timerID = setInterval(() => {
+                setTime((prev) => (prev <= 0 ? (clearInterval(timerID), setResData(null), setOpen(false), 0) : prev - 1));
+            }, 1000);
+            return () => clearInterval(timerID);
+        }
+    }, [resData]);
+
+    const formattedTime = new Date(time * 1000).toISOString().substr(14, 5);
+
+    const paymentItems = [
         {
             key: '1',
             label: (
-                <div className="click ">
-                    <img
-                        src="/static/img/uzcard_humo.png"
-                        alt="uzcard_humo_payment_card"
-                    />
+                <div className={styles.paymentIconWrap}>
+                    <img className={styles.iconUzcard} src="/static/img/uzcard_humo.png" alt="uzcard_humo" />
                 </div>
             ),
             children: (
-                <div className="w-100 px-4">
-                    <form
-                        onSubmit={handleClickCardPosts}
-                        style={{ marginInline: '1px' }}
-                        className="pb-3 d-flex align-items-end justify-content-between row gap-4 bg-white">
-                        <div className="col-xl-7 p-0 my-2" style={{ flex: 1 }}>
-                            <p className="cardNumber">Karta raqam</p>
-                            <label htmlFor="ccn" style={{ width: '100%' }}>
-                                <Input
+                <div className="pt-1">
+                    <form onSubmit={handleClickCardPosts}>
+                        <div className={styles.formGroup}>
+                            <label className={styles.inputLabel}>Karta raqami</label>
+                            <div className={styles.customInputWrapper}>
+                                <span className={styles.inputIcon}><FaRegCreditCard /></span>
+                                <input
                                     ref={inputRef}
                                     required
-                                    prefix={
-                                        <FaRegCreditCard
-                                            style={{
-                                                width: '45px',
-                                                fontSize: '20px',
-                                            }}
-                                        />
-                                    }
-                                    style={{
-                                        height: '50px',
-                                    }}
-                                    id="ccn"
+                                    className={styles.customInput}
                                     type="tel"
                                     inputMode="numeric"
-                                    pattern="[0-9\s]{13,19}"
-                                    autoComplete="cc-number"
                                     maxLength="19"
                                     placeholder="0000 0000 0000 0000"
                                     value={formattedCardNumber}
                                     onChange={handleCardNumberChange}
                                 />
-                            </label>
+                            </div>
                         </div>
-                        <div className="col-xl-4 p-0 click-form-item my-2">
-                            <label className="m-0">
-                                <Input
+                        <div className={styles.formGroup}>
+                            <label className={styles.inputLabel}>Amal qilish muddati</label>
+                            <div className={styles.customInputWrapper}>
+                                <span className={styles.inputIcon}><FaRegCalendarDays /></span>
+                                <input
                                     required
-                                    prefix={
-                                        <FaRegCalendarDays
-                                            style={{
-                                                width: '45px',
-                                                fontSize: '20px',
-                                            }}
-                                        />
-                                    }
-                                    id="ccn"
+                                    className={styles.customInput}
                                     inputMode="numeric"
-                                    style={{
-                                        height: '50px',
-                                    }}
-                                    autoComplete="cc-number"
                                     maxLength="5"
                                     placeholder="MM/YY"
                                     value={numberDate}
                                     onChange={handleCardNumberDate}
                                 />
-                            </label>
+                            </div>
                         </div>
-                        <FormSubmitButton
-                            hisob={hisob}
-                            message={message}
-                            className={'col-12 p-0'}
-                        />
+                        <FormSubmitButton hisob={hisobFormatted} message={message} />
                     </form>
-                    <SecurePaymentAlert bordered={false} />
-
-                    <Modal
-                        width={500}
-                        title={'Kodni kiriting!'}
-                        centered
-                        open={open}
-                        onOk={handleSubmitCode}
-                        onCancel={handleCancale}
-                        maskClosable={false}
-                        destroyOnClose
-                        okButtonProps={{
-                            style: { backgroundColor: 'green', color: 'white' },
-                        }}
-                        okText={
-                            buttonOk ? (
-                                <BeatLoader color="#fff" />
-                            ) : (
-                                "To'lov qilish"
-                            )
-                        }
-                        cancelText="Orqaga">
-                        <>
-                            <p>
-                                Kod quyidagi raqamga yuborildi:
-                                {resData?.data?.phone_number}
-                            </p>
-                            <input
-                                ref={otpInputRef}
-                                value={code || ''}
-                                onChange={(e) => {
-                                    const val = e.target.value.replace(/\D/g, '').slice(0, 6);
-                                    setCode(val);
-                                }}
-                                type="text"
-                                inputMode="numeric"
-                                placeholder="000000"
-                                maxLength={6}
-                                className="form-control text-center rounded-3 fs-3"
-                            />
-                            <strong className="text-danger">
-                                {formattedTime}
-                            </strong>
-                            <p className="text-danger">
-                                {resDataCode?.data?.msg?.[0] == 'Parol xato' &&
-                                    resDataCode?.data?.msg}
-                            </p>
-                        </>
-                    </Modal>
                 </div>
             ),
         },
         {
             key: '2',
             label: (
-                <div className="click">
-                    <img src="/static/img/click.png" alt="click_payment" />
+                <div className={styles.paymentIconWrap}>
+                    <img className={styles.iconClick} src="/static/img/click.png" alt="click" />
                 </div>
             ),
             children: (
-                <div className="w-100 px-4">
-                    <form
-                        onSubmit={handleClickCardPostsclick}
-                        className="pt-4 pb-3 d-flex align-items-end justify-content-between">
-                        <FormSubmitButton hisob={hisob} message={message} />
+                <div className="pt-4">
+                    <form onSubmit={handleClickCardPostsclick}>
+                        <FormSubmitButton hisob={hisobFormatted} message={message} />
                     </form>
-                    <SecurePaymentAlert bordered={false} />
                 </div>
             ),
         },
-
         {
             key: '3',
             label: (
-                <div className="click">
-                    <img
-                        src="/static/img/soff/paymee-r.png"
-                        alt="payme_payment"
-                    />
+                <div className={styles.paymentIconWrap}>
+                    <img className={styles.iconPayme} src="/static/img/soff/paymee-r.png" alt="payme" />
                 </div>
             ),
             children: (
-                <div className="w-100 px-4">
-                    <form
-                        onSubmit={handleClickCardPostsPayme}
-                        className="pt-4 pb-3 d-flex align-items-end justify-content-between">
-                        <FormSubmitButton hisob={hisob} message={message} />
+                <div className="pt-4">
+                    <form onSubmit={handleClickCardPostsPayme}>
+                        <FormSubmitButton hisob={hisobFormatted} message={message} />
                     </form>
-                    <SecurePaymentAlert bordered={false} />
                 </div>
             ),
         },
     ];
 
     return (
-        <Tabs
-            className="bg-white  checkoutstep-1"
-            centered
-            defaultActiveKey="1"
-            items={items}
-            onChange={onChange}
-        />
+        <div className="checkout-step-content">
+            <div className={styles.totalBanner}>
+                <span className={styles.label}>Jami to'lov miqdori</span>
+                <span className={styles.value}>{hisobFormatted} so'm</span>
+            </div>
+
+            <Tabs
+                className={styles.paymentTabs}
+                centered
+                defaultActiveKey="1"
+                items={paymentItems}
+            />
+
+            <SecurePaymentAlert />
+
+            <Modal
+                title="SMS kodni kiriting"
+                centered
+                open={open}
+                onOk={handleSubmitCode}
+                onCancel={() => (setOpen(false), setResData(null))}
+                maskClosable={false}
+                okText={buttonOk ? <BeatLoader color="#fff" size={6} /> : "Tasdiqlash"}
+                cancelText="Bekor qilish"
+                okButtonProps={{ disabled: buttonOk, style: { background: '#00a44f' } }}
+            >
+                <div className="text-center py-4">
+                    <p className="text-gray-500 mb-6">
+                        Kod quyidagi raqamga yuborildi:<br/>
+                        <strong className="text-gray-900">{resData?.data?.phone_number}</strong>
+                    </p>
+                    <input
+                        ref={otpInputRef}
+                        value={code || ''}
+                        onChange={(e) => setCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                        className="w-full text-center text-2xl tracking-[12px] h-16 rounded-xl border border-gray-200 outline-none focus:border-green-500 transition-all font-bold"
+                        maxLength={6}
+                        placeholder="000000"
+                    />
+                    <div className="mt-4 font-bold text-red-500">{formattedTime}</div>
+                    {resDataCode?.data?.msg?.[0] === 'Parol xato' && (
+                        <p className="text-red-500 mt-2">Parol xato, qaytadan urinib ko'ring</p>
+                    )}
+                </div>
+            </Modal>
+        </div>
     );
 };
 
