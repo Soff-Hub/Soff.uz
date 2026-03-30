@@ -207,13 +207,11 @@ const Hero = () => {
                                     className={`${styles.slide} ${currentSlide === index ? styles.active : ''}`}
                                 >
                                     <Link href="/scientific-resources">
-                                        <a style={{ display: 'block', width: '100%', height: '100%', position: 'relative' }}>
-                                            <Image
+                                        <a style={{ display: 'block', width: '100%' }}>
+                                            <img
                                                 src={slide}
                                                 alt={`Soff.uz Banner ${index + 1}`}
-                                                layout="fill"
-                                                objectFit="contain"
-                                                priority={index === 0}
+                                                loading={index === 0 ? "eager" : "lazy"}
                                             />
                                         </a>
                                     </Link>

@@ -81,12 +81,13 @@ function ShoppingCart() {
 
     // Calculate totals
     const subtotal = hasItems ? calculateAmount(allItems) : 0;
-    const tax = Math.floor(subtotal * taxPercentage);
-    const totalWithoutPromo = subtotal + tax;
     const discountAmount = Math.floor(
-        totalWithoutPromo * (promotion.discount_percent / 100)
+        subtotal * (promotion.discount_percent / 100)
     );
-    const total = totalWithoutPromo - discountAmount;
+    const amountAfterDiscount = subtotal - discountAmount;
+    const tax = Math.floor(amountAfterDiscount * taxPercentage);
+    const totalWithTax = amountAfterDiscount + tax;
+    const total = totalWithTax;
 
     const handleRemoveItem = (e, item) => {
         e.preventDefault();
@@ -293,10 +294,6 @@ function ShoppingCart() {
                                     {addPeriodToThousands(subtotal)} so'm
                                 </strong>
                             </span>
-                            <span className={styles.summaryItem}>
-                                Xizmat haqi ({Math.round(taxPercentage * 100)}%):{' '}
-                                <strong>{addPeriodToThousands(tax)} so'm</strong>
-                            </span>
                             {promotion.discount_percent > 0 && (
                                 <span className={cn(styles.summaryItem, 'text-success')}>
                                     Chegirma (-{promotion.discount_percent}%):{' '}
@@ -305,6 +302,10 @@ function ShoppingCart() {
                                     </strong>
                                 </span>
                             )}
+                            <span className={styles.summaryItem}>
+                                Xizmat haqi ({Math.round(taxPercentage * 100)}%):{' '}
+                                <strong>{addPeriodToThousands(tax)} so'm</strong>
+                            </span>
                             <span className={styles.summaryItem}>
                                 Jami to'lov:{' '}
                                 <strong className={styles.totalAmount}>
@@ -317,15 +318,17 @@ function ShoppingCart() {
                                 {promotion.discount_percent > 0 && (
                                     <div className="d-flex flex-column align-items-end mr-3">
                                         <del className="text-muted" style={{ fontSize: '11px' }}>
-                                            {addPeriodToThousands(totalWithoutPromo)} so'm
+                                            {addPeriodToThousands(
+                                                subtotal + Math.floor(subtotal * taxPercentage)
+                                            )} so'm
                                         </del>
-                                        <span className="text-success" style={{ fontSize: '12px', marginTop: '-4px' }}>
-                                            Xarid chegirmasi (-{promotion.discount_percent}%)
+                                        <span className="text-success" style={{ fontSize: '11px', marginTop: '-4px' }}>
+                                            Xarid chegirmasi
                                         </span>
                                     </div>
                                 )}
                                 <div>
-                                    Jami to'lov:
+                                    Jami:
                                     <strong className={styles.totalAmount}>
                                         {addPeriodToThousands(total)} so'm
                                     </strong>

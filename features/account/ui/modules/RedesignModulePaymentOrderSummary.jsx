@@ -53,12 +53,12 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce, items }) => {
         }
     }
 
-    const taxAmount = Math.floor(amount * percentage);
-    const totalWithoutPromo = amount + taxAmount;
     const discountAmount = Math.floor(
-        totalWithoutPromo * (promotion.discount_percent / 100)
+        amount * (promotion.discount_percent / 100)
     );
-    const finalTotal = totalWithoutPromo - discountAmount;
+    const amountAfterDiscount = amount - discountAmount;
+    const taxAmount = Math.floor(amountAfterDiscount * percentage);
+    const finalTotal = amountAfterDiscount + taxAmount;
 
     const hisob = addPeriodToThousands(finalTotal);
     const taxFormatted = addPeriodToThousands(taxAmount);
@@ -252,22 +252,6 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce, items }) => {
             {/* Footer */}
             {cartItems && cartItems.length > 0 && (
                 <div className={cn('border-t', 'p-4', 'bg-gray-50')}>
-                    {percentage > 0 && (
-                        <div
-                            className={cn(
-                                'flex',
-                                'justify-between',
-                                'items-center',
-                                'mb-2'
-                            )}>
-                            <p className={cn('mb-0', 'text-sm')}>
-                                Sayt xizmat haqi:
-                            </p>
-                            <p className={cn('mb-0', 'text-sm', 'font-medium')}>
-                                {taxFormatted} so'm ({percentage * 100}%)
-                            </p>
-                        </div>
-                    )}
                     {promotion.discount_percent > 0 && (
                         <div
                             className={cn(
@@ -281,6 +265,22 @@ const RedesignModulePaymentOrderSummary = ({ ecomerce, items }) => {
                             </p>
                             <p className={cn('mb-0', 'text-sm', 'font-medium', 'text-success')}>
                                 -{discountFormatted} so'm
+                            </p>
+                        </div>
+                    )}
+                    {percentage > 0 && (
+                        <div
+                            className={cn(
+                                'flex',
+                                'justify-between',
+                                'items-center',
+                                'mb-2'
+                            )}>
+                            <p className={cn('mb-0', 'text-sm')}>
+                                Sayt xizmat haqi:
+                            </p>
+                            <p className={cn('mb-0', 'text-sm', 'font-medium')}>
+                                {taxFormatted} so'm ({percentage * 100}%)
                             </p>
                         </div>
                     )}
