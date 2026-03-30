@@ -35,9 +35,9 @@ import HeaderUserDropdown from './HeaderActions/HeaderUserDropdown';
 import { highlightMatch } from '~/shared/utilities/utils';
 import MobileCatalog from './MobileCatalog';
 import FastDowloadSection from '~/shared/components/fast-dowload/FastDowloadSection';
-import { 
-    fetchFastDownloadProduct, 
-    fetchProductDowload 
+import {
+    fetchFastDownloadProduct,
+    fetchProductDowload
 } from '~/shared/components/fast-dowload/FastDowloadApi';
 
 import styles from './header.module.scss';
@@ -130,7 +130,7 @@ const Header = () => {
                 // if (res) setPromotion(res);
                 setPromotion({
                     discount_percent: 20,
-                    expires_at: '2026-03-28T23:59:59',
+                    expires_at: '2026-03-31T23:59:59',
                 });
             } catch (err) {
                 console.error('Promotion fetch failed', err);
@@ -224,27 +224,19 @@ const Header = () => {
                     <div className={styles.iconWrapper}>
                         <FaPercent size={12} className="text-white" />
                     </div>
-                    <span className={styles.text}>
-                        MAXSUS TAKLIF: {promotion.discount_percent}% CHEGIRMA BILAN SOTIB OLING!
-                    </span>
+                    <p className={styles.text}>
+                        Keyingi xarid uchun <span>{promotion.discount_percent} % chegirma</span>
+                        {isExpiring && (
+                            <>
+                                <span className={styles.divider}>|</span>
+                                <span className={styles.timerLabel}>qolgan vaqt :</span>
+                                <span className={styles.countdown}>
+                                    {String(timeLeft.minutes).padStart(2, '0')}:{String(timeLeft.seconds).padStart(2, '0')}
+                                </span>
+                            </>
+                        )}
+                    </p>
                 </div>
-
-                {isExpiring && (
-                    <div className={styles.countdown}>
-                        <FaClock size={12} className="text-white/80" />
-                        <span className={styles.time}>
-                            {String(timeLeft.minutes).padStart(2, '0')}:{String(timeLeft.seconds).padStart(2, '0')}
-                        </span>
-                    </div>
-                )}
-
-                {!isMobile && (
-                    <Link href="/account/shopping-cart">
-                        <a className={styles.cartLink}>
-                            Savatga o'tish
-                        </a>
-                    </Link>
-                )}
             </div>
         );
     };
@@ -601,9 +593,9 @@ const Header = () => {
                                 <div className={styles.infoBox}>
                                     <span className={styles.contextLabel}>SOTIB OLINGAN MAHSULOT</span>
                                     <h3>{downloadProduct.title}</h3>
-                                    
+
                                     <div className={styles.actionGroup}>
-                                        <button 
+                                        <button
                                             className={styles.downloadBtn}
                                             onClick={() => handleQuickDownload(downloadProduct)}
                                         >
@@ -612,14 +604,14 @@ const Header = () => {
                                     </div>
                                 </div>
                             </div>
-                            
+
                             {promotion.discount_percent > 0 && (
                                 <div className={styles.promoFooterDetailed}>
                                     <div className={styles.footerInfoMain}>
                                         <div className={styles.promotionText}>
                                             Keyingi xarid uchun <span>{promotion.discount_percent}%</span> chegirmadan foydalaning!
                                         </div>
-                                        
+
                                         {isExpiring && (
                                             <div className={styles.modalTimerCompact}>
                                                 <FaClock />
@@ -631,7 +623,7 @@ const Header = () => {
                                     </div>
 
                                     <Link href="/scientific-resources/all">
-                                        <a 
+                                        <a
                                             className={styles.footerBuyBtnCompact}
                                             onClick={() => setPromotionModalVisible(false)}
                                         >
@@ -650,7 +642,7 @@ const Header = () => {
                             <p className={styles.discountText}>
                                 Siz uchun <span>{promotion.discount_percent}%</span> CHEGIRMA!
                             </p>
-                            
+
                             {isExpiring && (
                                 <div className={styles.modalMainTimer}>
                                     <FaClock />
