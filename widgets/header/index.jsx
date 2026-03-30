@@ -127,11 +127,9 @@ const Header = () => {
         const fetchPromotion = async () => {
             try {
                 const res = await ProductRepository.getActivePromotion();
-                // if (res) setPromotion(res);
-                setPromotion({
-                    discount_percent: 20,
-                    expires_at: '2026-03-31T23:59:59',
-                });
+                if (res && res.discount_percent > 0) {
+                    setPromotion(res);
+                }
             } catch (err) {
                 console.error('Promotion fetch failed', err);
             }
@@ -159,10 +157,10 @@ const Header = () => {
 
     // Show Promotion Modal logic (FORCED FOR TESTING)
     useEffect(() => {
-        if (isMounted && (promotion.discount_percent > 0 || downloadProduct)) {
+        if (isMounted && (promotion.discount_percent > 0)) {
             setPromotionModalVisible(true);
         }
-    }, [isMounted, promotion.discount_percent, downloadProduct]);
+    }, [isMounted, promotion.discount_percent]);
 
     const handleQuickDownload = async (product) => {
         try {
@@ -572,7 +570,8 @@ const Header = () => {
                     </div>
                 </div>
             )}
-            <FastDowloadSection />
+
+            {!megaMenuOpen && <FastDowloadSection />}
 
             <Modal
                 open={promotionModalVisible}
