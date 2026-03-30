@@ -498,7 +498,7 @@ $shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
 
     &:focus-within {
         border-color: $primary-green;
-        box-shadow: 0 0 0 4px rgba(0, 164, 79, 0.1);
+        box-shadow: 0 0 0 4px rgba(35, 159, 113, 0.12);
     }
 
     .typeSelect {
@@ -536,25 +536,34 @@ $shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
     }
 
     .searchBtn {
-        width: 44px;
-        height: 100%;
+        width: 46px;
+        height: calc(100% + 3px);
+        margin: -1.5px -1.5px -1.5px 0;
         background: $primary-green;
         color: #fff;
         border: none;
+        outline: none;
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: background 0.2s;
+        transition: all 0.2s ease;
         border-radius: 0 10px 10px 0;
+        position: relative;
+        z-index: 2;
 
         &:hover {
             background: darken($primary-green, 5%);
         }
 
+        &:active {
+            transform: scale(0.98);
+        }
+
         &:disabled {
             background: #ccc;
             cursor: not-allowed;
+            transform: none;
         }
 
         .icon {

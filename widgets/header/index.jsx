@@ -404,7 +404,6 @@ const Header = () => {
                             <button
                                 className={styles.searchBtn}
                                 onClick={handleSearch}
-                                disabled={searchLoading}
                             >
                                 <MdSearch className={styles.icon} />
                             </button>
