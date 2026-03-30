@@ -332,28 +332,32 @@
     :global(.ant-tabs-nav) {
         margin-bottom: 24px;
         padding: 0 !important;
+        width: 100% !important;
 
         &:before {
             border-bottom: none;
         }
 
+        :global(.ant-tabs-nav-wrap),
         :global(.ant-tabs-nav-list) {
-            width: 100%;
-            display: flex;
+            width: 100% !important;
+            display: flex !important;
         }
     }
 
     :global(.ant-tabs-tab) {
         padding: 0 !important;
         margin: 0 !important;
-        padding-bottom: 10px !important;
-        flex: 1;
-        display: flex;
-        justify-content: center;
+        padding-bottom: 20px !important;
+        flex: 1 !important;
+        display: flex !important;
+        justify-content: center !important;
+        min-width: 0;
 
         :global(.ant-tabs-tab-btn) {
-            width: 100%;
-            padding: 0 6px;
+            width: 100% !important;
+            display: flex;
+            justify-content: center;
         }
 
         &:hover {

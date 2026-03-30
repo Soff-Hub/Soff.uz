@@ -14,7 +14,13 @@ import axiosInstance from '~/shared/api/freeleanceApi';
 import { useMutation } from '@tanstack/react-query';
 import { FaRegPaperPlane } from 'react-icons/fa6';
 
-const disabledLocations = ['/chat', '/auth', 'shopping-cart', 'search-page'];
+const disabledLocations = [
+    '/chat',
+    '/auth',
+    '/account/shopping-cart',
+    '/account/checkout',
+    '/search-page',
+];
 
 const VIDEO_URL_BUY_PRODUCT = 'https://www.youtube.com/watch?v=oJre9mbRE2U';
 const VIDEO_URL_ORDER_CREATE =

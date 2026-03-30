@@ -101,6 +101,7 @@ const Header = () => {
     const router = useRouter();
     const { isMobile } = useResponsive();
     const isMounted = useMounted();
+    const isCheckoutMode = ['/account/checkout', '/account/shopping-cart'].includes(router.pathname);
 
     // Redux selectors
     const { cartDataItems, wishlist } = useSelector((state) => state.ecomerce);
@@ -528,7 +529,7 @@ const Header = () => {
                 categoriesData={categoriesData}
             />
 
-            {!megaMenuOpen && (
+            {!megaMenuOpen && !isCheckoutMode && (
                 <div className={styles.subRow}>
                     <div className="container d-flex justify-content-start gap-1">
                         <Link href="/scientific-resources/all">
@@ -571,7 +572,7 @@ const Header = () => {
                 </div>
             )}
 
-            {!megaMenuOpen && <FastDowloadSection />}
+            {!megaMenuOpen && !isCheckoutMode && <FastDowloadSection />}
 
             <Modal
                 open={promotionModalVisible}

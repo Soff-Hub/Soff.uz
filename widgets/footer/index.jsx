@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './style.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useGetDirectionsQuery } from '~/store/profile/slice';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { Collapse } from 'antd';
@@ -187,8 +188,15 @@ const FooterCollapse = ({ title, children, defaultOpen = false }) => {
 };
 
 export default function Footer() {
+    const router = useRouter();
     const currentYear = new Date().getFullYear();
     const { data: directions } = useGetDirectionsQuery();
+
+    const isCheckoutMode = ['/account/checkout', '/account/shopping-cart'].includes(router.pathname);
+
+    if (isCheckoutMode) {
+        return null;
+    }
 
     return (
         <footer className={styles.mainblock}>
