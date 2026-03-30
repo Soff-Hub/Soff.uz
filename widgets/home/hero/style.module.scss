@@ -265,6 +265,30 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
         transition: all 0.3s ease;
         border: none;
 
+        svg {
+            font-size: 28px;
+            width: 1em;
+            height: 1em;
+        }
+
+        @media (max-width: 768px) {
+            width: 32px;
+            height: 32px;
+            opacity: 0.8 !important; // Visible by default on touch
+
+            svg {
+                font-size: 20px;
+            }
+
+            &.prev {
+                left: 8px;
+            }
+
+            &.next {
+                right: 8px;
+            }
+        }
+
         &:hover {
             background: rgba(15, 23, 42, 0.5);
             transform: translateY(-50%) scale(1.05);

@@ -222,13 +222,13 @@ const Hero = () => {
                                 className={`${styles.navButton} ${styles.prev}`}
                                 onClick={(e) => { e.preventDefault(); prevSlide(); }}
                             >
-                                <MdChevronLeft size={28} />
+                                <MdChevronLeft />
                             </button>
                             <button
                                 className={`${styles.navButton} ${styles.next}`}
                                 onClick={(e) => { e.preventDefault(); nextSlide(); }}
                             >
-                                <MdChevronRight size={28} />
+                                <MdChevronRight />
                             </button>
 
                             <div className={styles.dotsContainer}>
