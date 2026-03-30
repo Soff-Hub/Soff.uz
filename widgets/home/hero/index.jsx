@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import styles from './style.module.scss';
 import { useFGet } from '~/shared/hooks/useFApi';
 import { NAVBAR_MENU_CATEGORIES } from '~/shared/api/end-points';
@@ -45,11 +44,21 @@ const directionLabels = {
 };
 
 const slides = [
-    // '/static/img/HomePage/hero/hero_1.jpg',
-    // '/static/img/HomePage/hero/hero_2.jpg',
-    // '/static/img/HomePage/hero/hero_3.jpg',
-    '/static/img/HomePage/hero/hero_5.png',
-    '/static/img/HomePage/hero/hero_6.jpg',
+    {
+        img: '/static/img/HomePage/hero/hero_1.jpg',
+        link: '/scientific-resources/all',
+        target: '_self'
+    },
+    {
+        img: '/static/img/HomePage/hero/hero_2.jpg',
+        link: 'https://soffia.uz/uz/dashboard',
+        target: '_blank'
+    },
+    {
+        img: '/static/img/HomePage/hero/hero_3.jpg',
+        link: '/orders',
+        target: '_self'
+    },
 ]
 
 const formatDirectionLabel = (key) => {
@@ -207,10 +216,14 @@ const Hero = () => {
                                     key={index}
                                     className={`${styles.slide} ${currentSlide === index ? styles.active : ''}`}
                                 >
-                                    <Link href="/scientific-resources">
-                                        <a style={{ display: 'block', width: '100%' }}>
+                                    <Link href={slide.link}>
+                                        <a
+                                            target={slide.target}
+                                            rel={slide.target === '_blank' ? 'noopener noreferrer' : undefined}
+                                            style={{ display: 'block', width: '100%', height: '100%' }}
+                                        >
                                             <img
-                                                src={slide}
+                                                src={slide.img}
                                                 alt={`Soff.uz Banner ${index + 1}`}
                                                 loading={index === 0 ? "eager" : "lazy"}
                                             />
