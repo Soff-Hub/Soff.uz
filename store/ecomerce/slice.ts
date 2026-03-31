@@ -9,6 +9,10 @@ export interface EcommerceState {
     wishlist: any[];
     status: string;
     error: string | null;
+    activePromotion: {
+        discount_percent: number;
+        expires_at: string | null;
+    };
 }
 
 const initialState: EcommerceState = {
@@ -17,6 +21,10 @@ const initialState: EcommerceState = {
     wishlist: [],
     status: 'loading',
     error: null,
+    activePromotion: {
+        discount_percent: 0,
+        expires_at: null,
+    },
 };
 
 export const setWishlistItems = createAsyncThunk(
@@ -133,6 +141,9 @@ const ecommerceSlice = createSlice({
             );
             state.wishlist.push(action.payload[0]);
         },
+        setActivePromotion: (state, action) => {
+            state.activePromotion = action.payload;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -166,6 +177,7 @@ export const {
     setPlaylistCartItemDataItems,
     setSaved,
     setSavedItem,
+    setActivePromotion,
 } = ecommerceSlice.actions;
 
 export default ecommerceSlice.reducer;

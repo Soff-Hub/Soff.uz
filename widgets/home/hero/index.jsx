@@ -50,14 +50,14 @@ const slides = [
         target: '_self'
     },
     {
-        img: '/static/img/HomePage/hero/hero_2.jpg',
-        link: 'https://soffia.uz/uz/dashboard',
-        target: '_blank'
-    },
-    {
         img: '/static/img/HomePage/hero/hero_3.jpg',
         link: '/orders',
         target: '_self'
+    },
+    {
+        img: '/static/img/HomePage/hero/hero_2.jpg',
+        link: 'https://soffia.uz/uz/dashboard',
+        target: '_blank'
     },
 ]
 
@@ -129,7 +129,14 @@ const Hero = () => {
                     onMouseLeave={handleMenuLeave}
                 >
                     {categoriesData?.map((item) => (
-                        <Link key={item.direction} href={`/orders?direction=${item.direction}`}>
+                        <Link
+                            key={item.direction}
+                            href={
+                                item.soff_categories?.length > 0
+                                    ? `/category/${templateLink[item.direction] || 'templates'}`
+                                    : `/orders?direction=${item.direction}`
+                            }
+                        >
                             <a
                                 className={`${styles.menuItem} ${hoveredCategory?.direction === item.direction ? styles.active : ''}`}
                                 onMouseEnter={() => handleMenuEnter(item)}
@@ -170,7 +177,7 @@ const Hero = () => {
                                     {hoveredCategory.soff_categories?.map((cat) => (
                                         <Link
                                             key={cat.id}
-                                            href={`/${templateLink[hoveredCategory.direction] || 'templates'}/${cat.slug}?slug=${cat.slug}&search=&parentCategory=${cat.slug}&title=${cat.title}`}
+                                            href={`/category/${templateLink[hoveredCategory.direction] || 'templates'}?childCategory=${cat.slug}`}
                                         >
                                             <a className={styles.menuLink}>{cat.title}</a>
                                         </Link>

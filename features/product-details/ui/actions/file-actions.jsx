@@ -93,6 +93,7 @@ function FileActions({ product }) {
         (item) => Number(item.id) === Number(product?.id)
     );
     const [messageApi, contextHolder] = message.useMessage();
+    const { activePromotion } = useSelector((state) => state.ecomerce);
     const state = useSelector((state) => state.auth.user?.access);
 
     function handleAddItemToCart(e) {
@@ -153,6 +154,20 @@ function FileActions({ product }) {
                     <div className="price_container">
                         {product?.discount_price === 0 ? (
                             <h2>Bepul</h2>
+                        ) : activePromotion?.discount_percent > 0 ? (
+                            <div className="d-flex gap-3 align-items-center">
+                                <h2 className="mb-0">
+                                    {addPeriodToThousands(
+                                        Math.round(product.price * (1 - activePromotion.discount_percent / 100))
+                                    )}{' '}
+                                    so'm
+                                </h2>
+                                <del style={{ color: '#999', fontSize: '1.2rem' }}>
+                                    {addPeriodToThousands(product?.price || 0)}{' '}
+                                    so'm
+                                </del>
+                                <span style={{ fontSize: '1.2rem', color: '#fff', padding: '0.5rem', borderRadius: '5px', fontWeight: 'bold' }} className="badge bg-success ">-{activePromotion.discount_percent}%</span>
+                            </div>
                         ) : product?.discount === 0 ? (
                             <h2>
                                 {addPeriodToThousands(
@@ -479,11 +494,16 @@ function FileActions({ product }) {
 
 const CustomResponsiveLayout = ({ product, handleBuynow }) => {
     const { isMobile, size } = useResponsive();
+    const { activePromotion } = useSelector((state) => state.ecomerce);
+
+    const displayPrice = activePromotion?.discount_percent > 0
+        ? Math.round(product?.price * (1 - activePromotion.discount_percent / 100))
+        : product?.price;
+
     return (
         <>
             <div
-                className={`d-flex flex-column gap-3 ${isMobile ? 'sticky-bottom-btn' : ''
-                    }`}>
+                className={`d-flex flex-column gap-3 ${isMobile ? 'sticky-bottom-btn' : ''}`}>
                 {product?.document?.file_url ? (
                     <a href={product?.document?.file_url} target="_blank" rel="noreferrer">
                         <Button
@@ -506,7 +526,7 @@ const CustomResponsiveLayout = ({ product, handleBuynow }) => {
                         icon={<DownloadOutlined />}
                         size={'large'}>
                         Hoziroq xarid qilish (
-                        {formatCurrencyWithSpace(product?.price)} so'm)
+                        {formatCurrencyWithSpace(displayPrice)} so'm)
                     </Button>
                 )}
             </div>
@@ -537,9 +557,7 @@ const CustomResponsiveLayout = ({ product, handleBuynow }) => {
                             icon={<DownloadOutlined />}
                             size={'large'}>
                             {`Hoziroq xarid qilish ${size >= 360
-                                ? `(${formatCurrencyWithSpace(
-                                    product?.price
-                                )} so'm)`
+                                ? `(${formatCurrencyWithSpace(displayPrice)} so'm)`
                                 : ''
                                 }`}
                         </Button>

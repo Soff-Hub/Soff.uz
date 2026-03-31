@@ -52,6 +52,10 @@ const ProductFilterSection = ({ child, parent, path, isFile, title }) => {
 
     const handleParent = (slug, id) => {
         const newQuery = clearEmptyQueries(query);
+        // Senior fix: Clear child category when parent changes
+        delete newQuery.childCategory;
+        delete newQuery.childCategoryId;
+
         push({
             pathname: `${path}${slug}`,
             query: {
@@ -65,7 +69,7 @@ const ProductFilterSection = ({ child, parent, path, isFile, title }) => {
     const handleChild = (slug, id) => {
         const newQuery = clearEmptyQueries(query);
         push({
-            pathname: `${path}${slug}`,
+            pathname: `${path}${query.slug}`,
             query: { ...newQuery, childCategory: slug, childCategoryId: id },
         });
     };
@@ -372,8 +376,7 @@ const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
         };
         const newQuery = clearEmptyQueries({ ...query, ...filters });
         push({
-            pathname: `${path}${selectedSubCategory.slug || selectedCategory.slug || 'all'
-                }`,
+            pathname: `${path}${selectedCategory.slug || 'all'}`,
             query: newQuery,
         });
         onClose();
@@ -431,6 +434,8 @@ const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
                                 slug: val,
                                 id: valObj.id,
                             });
+                            // Clear subcategory when parent changes
+                            setSelectedSubCategory({ slug: null, id: null });
                         }
                     }}
                     options={parentOptions}

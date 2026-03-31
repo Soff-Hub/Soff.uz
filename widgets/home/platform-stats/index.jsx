@@ -30,25 +30,25 @@ const PlatformStats = () => {
                 <div className={styles.statsGrid}>
                     <div className={styles.statItem}>
                         <span className={styles.val}>
-                            <AnimatedValue value={250000} />
+                            <AnimatedValue value={1000000} />
                         </span>
                         <span className={styles.name}>Raqamli mahsulotlar</span>
                     </div>
                     <div className={styles.statItem}>
                         <span className={styles.val}>
-                            <AnimatedValue value={500000} />
+                            <AnimatedValue value={600000} />
                         </span>
                         <span className={styles.name}>Oylik faol foydalanuvchilar</span>
                     </div>
                     <div className={styles.statItem}>
                         <span className={styles.val}>
-                            <AnimatedValue value={86000} />
+                            <AnimatedValue value={200000} />
                         </span>
                         <span className={styles.name}>Tranzaksiyalar</span>
                     </div>
                     <div className={styles.statItem}>
                         <span className={styles.val}>
-                            <AnimatedValue value={11000} />
+                            <AnimatedValue value={30000} />
                         </span>
                         <span className={styles.name}>Mutaxassislar soni</span>
                     </div>

@@ -274,7 +274,6 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
         @media (max-width: 768px) {
             width: 32px;
             height: 32px;
-            opacity: 0.8 !important; // Visible by default on touch
 
             svg {
                 font-size: 20px;

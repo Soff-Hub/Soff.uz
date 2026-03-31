@@ -49,7 +49,7 @@ const categoryTitles = {
 };
 
 const templateLink = {
-    scientific_work: 'scientific-resources',
+    scientific_work: 'category',
     three_d: '3d-models-and-interior-designs',
     web: 'websites',
     dizayn: 'design-developments',
@@ -170,7 +170,7 @@ const MobileCatalog = ({ isOpen, onClose, categoriesData }) => {
                             {/* Additional Links (Synchronized with Header SubRow) */}
                             <div className={styles.quickLinks}>
                                 <h4 className={styles.sectionLabel}>Foydali</h4>
-                                
+
                                 <Link href="/order/create">
                                     <a className={styles.quickLink} onClick={onClose}>
                                         <MdEditNote size={20} />
@@ -192,20 +192,20 @@ const MobileCatalog = ({ isOpen, onClose, categoriesData }) => {
                                     </a>
                                 </Link>
 
-                                <a 
-                                    href="https://soffia.uz/uz/dashboard" 
-                                    target="_blank" 
-                                    rel="noopener noreferrer" 
+                                <a
+                                    href="https://soffia.uz/uz/dashboard"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                     className={styles.quickLink}
                                 >
                                     <TbSparkles size={20} />
                                     AI xizmatlari
                                 </a>
 
-                                <a 
-                                    href="https://seller.soff.uz/" 
-                                    target="_blank" 
-                                    rel="noopener noreferrer" 
+                                <a
+                                    href="https://seller.soff.uz/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                     className={styles.quickLink}
                                 >
                                     <TbUpload size={20} />

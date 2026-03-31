@@ -25,7 +25,7 @@ import ProductRepository from '~/repositories/ProductRepository';
 import { useCountTimeBack } from '~/shared/hooks/useCountDown';
 import { useMounted } from '~/shared/hooks/useMounted';
 
-import { initLocalCart } from '~/store/ecomerce/slice';
+import { initLocalCart, setActivePromotion } from '~/store/ecomerce/slice';
 import { initSearchHistory } from '~/store/search/slice';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { useFGet } from '~/shared/hooks/useFApi';
@@ -130,6 +130,12 @@ const Header = () => {
                 const res = await ProductRepository.getActivePromotion();
                 if (res && res.discount_percent > 0) {
                     setPromotion(res);
+                    dispatch(setActivePromotion(
+                        {
+                            discount_percent: res.discount_percent,
+                            expires_at: res.expires_at,
+                        }
+                    ));
                 }
             } catch (err) {
                 console.error('Promotion fetch failed', err);
@@ -139,7 +145,7 @@ const Header = () => {
         if (isMounted && isLoggedIn) {
             fetchPromotion();
         }
-    }, [isMounted, isLoggedIn]);
+    }, [isMounted, isLoggedIn, dispatch]);
 
     // Fetch Downloadable Product (Yandex Style)
     useEffect(() => {
@@ -286,7 +292,14 @@ const Header = () => {
                                 <div className="container" style={{ display: 'flex', minHeight: 'inherit' }}>
                                     <div className={`${styles.megaSidebar}`}>
                                         {categoriesData?.map((category) => (
-                                            <Link key={category.id} href={`/orders?direction=${category.direction}`}>
+                                            <Link
+                                                key={category.id}
+                                                href={
+                                                    category.soff_categories?.length > 0
+                                                        ? `/category/${templateLink[category.direction] || 'templates'}`
+                                                        : `/orders?direction=${category.direction}`
+                                                }
+                                            >
                                                 <a
                                                     className={`${styles.sidebarItem} ${hoveredCategory === category.direction ? styles.active : ''}`}
                                                     onMouseEnter={() => setHoveredCategory(category.direction)}
@@ -320,7 +333,7 @@ const Header = () => {
                                                             {activeCategoryData.soff_categories?.map(cat => (
                                                                 <Link
                                                                     key={cat.id}
-                                                                    href={`/${templateLink[activeCategoryData.direction] || 'templates'}/${cat.slug}?slug=${cat.slug}&search=&parentCategory=${cat.slug}&title=${cat.title}`}
+                                                                    href={`/category/${templateLink[activeCategoryData.direction] || 'templates'}?childCategory=${cat.slug}`}
                                                                 >
                                                                     <a className={styles.menuLink}>{cat.title}</a>
                                                                 </Link>

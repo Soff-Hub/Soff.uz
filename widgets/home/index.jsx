@@ -18,7 +18,7 @@ const YoutubeVid = dynamic(() => import('./youtube-vid'), {
     ssr: false,
     loading: () => <div style={{ minHeight: '250px', backgroundColor: '#f0f0f0' }} />
 });
-const Statistics = dynamic(() => import('./statistics'), { ssr: false });
+// const Statistics = dynamic(() => import('./statistics'), { ssr: false });
 const TwoCard = dynamic(() => import('./two-card'), { ssr: false });
 const Freelance = dynamic(() => import('./freelance'), {
     ssr: false,
@@ -57,7 +57,7 @@ const Home = () => {
             <div className="bg-white py-1">
                 <div className="container">
                     <LastProducts />
-                    <Statistics />
+                    {/* <Statistics /> */}
                     {/* <Bests /> */}
                 </div>
             </div>

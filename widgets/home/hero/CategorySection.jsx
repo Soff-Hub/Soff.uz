@@ -30,12 +30,6 @@ const popularCategories = [
         icon: <TbPalette />
     },
     {
-        title: 'Videolar',
-        count: '1K +',
-        href: '/video-lessons/all',
-        icon: <TbVideo />
-    },
-    {
         title: 'Veb saytlar',
         count: '500+',
         href: '/websites',
@@ -46,7 +40,13 @@ const popularCategories = [
         count: '2k+',
         href: '/templates',
         icon: <TbLayout />
-    }
+    },
+    {
+        title: 'Videolar',
+        count: '1K +',
+        href: '/video-lessons/all',
+        icon: <TbVideo />
+    },
 ];
 
 const CategorySection = () => {
