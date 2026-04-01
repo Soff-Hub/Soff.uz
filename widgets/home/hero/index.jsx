@@ -133,7 +133,7 @@ const Hero = () => {
                             key={item.direction}
                             href={
                                 item.soff_categories?.length > 0
-                                    ? `/category/${templateLink[item.direction] || 'templates'}`
+                                    ? `/${templateLink[item.direction]}/all`
                                     : `/orders?direction=${item.direction}`
                             }
                         >
@@ -177,7 +177,7 @@ const Hero = () => {
                                     {hoveredCategory.soff_categories?.map((cat) => (
                                         <Link
                                             key={cat.id}
-                                            href={`/category/${templateLink[hoveredCategory.direction] || 'templates'}?childCategory=${cat.slug}`}
+                                            href={`/${hoveredCategory.direction === 'scientific_work' ? 'category' : (templateLink[hoveredCategory.direction] || 'templates')}/${cat.slug}?slug=${cat.slug}&parentCategory=${cat.slug}&title=${cat.title}`}
                                         >
                                             <a className={styles.menuLink}>{cat.title}</a>
                                         </Link>

@@ -296,7 +296,7 @@ const Header = () => {
                                                 key={category.id}
                                                 href={
                                                     category.soff_categories?.length > 0
-                                                        ? `/category/${templateLink[category.direction] || 'templates'}`
+                                                        ? `/${templateLink[category.direction]}/all`
                                                         : `/orders?direction=${category.direction}`
                                                 }
                                             >
@@ -333,7 +333,7 @@ const Header = () => {
                                                             {activeCategoryData.soff_categories?.map(cat => (
                                                                 <Link
                                                                     key={cat.id}
-                                                                    href={`/category/${templateLink[activeCategoryData.direction] || 'templates'}?childCategory=${cat.slug}`}
+                                                                    href={`/${activeCategoryData.direction === 'scientific_work' ? 'category' : (templateLink[activeCategoryData.direction] || 'templates')}/${cat.slug}?slug=${cat.slug}&parentCategory=${cat.slug}&title=${cat.title}`}
                                                                 >
                                                                     <a className={styles.menuLink}>{cat.title}</a>
                                                                 </Link>

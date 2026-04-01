@@ -22,6 +22,11 @@ const AnimatedValue = ({ value, suffix = "+" }) => {
     return <motion.span style={{ fontWeight: 600 }} ref={ref}>{rounded}</motion.span>;
 };
 
+// mahsulotlar - 1.5 mln +
+// oylik faol foydalanuvchilar - 600K
+// tranzaksiyalar - 200K
+// Mutahasislar - 50K
+
 const PlatformStats = () => {
     return (
         <section className={styles.platformStats}>
@@ -30,7 +35,7 @@ const PlatformStats = () => {
                 <div className={styles.statsGrid}>
                     <div className={styles.statItem}>
                         <span className={styles.val}>
-                            <AnimatedValue value={1000000} />
+                            <AnimatedValue value={1500000} />
                         </span>
                         <span className={styles.name}>Raqamli mahsulotlar</span>
                     </div>
@@ -48,7 +53,7 @@ const PlatformStats = () => {
                     </div>
                     <div className={styles.statItem}>
                         <span className={styles.val}>
-                            <AnimatedValue value={30000} />
+                            <AnimatedValue value={50000} />
                         </span>
                         <span className={styles.name}>Mutaxassislar soni</span>
                     </div>

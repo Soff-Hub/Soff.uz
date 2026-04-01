@@ -5,7 +5,6 @@ import { logOut } from '~/store/auth/slice';
 import { logout as profileLogout } from '~/store/profile/slice';
 import useAuth from '~/shared/hooks/useAuth';
 import Router, { useRouter } from 'next/router';
-import styles from '~/shared/styles/landingStyles.module.scss';
 import Image from 'next/image';
 import { useFGet } from '~/shared/hooks/useFApi';
 import { CHAT_UNSEENS } from '~/shared/api/end-points';
@@ -13,8 +12,9 @@ import { cn } from '~/shared/utilities/cn';
 import { accountLinks } from '../constants/account-links';
 import Icon from '~/shared/ui/Icon';
 import { FaRightFromBracket } from 'react-icons/fa6';
+import styles from './HeaderUserDropdown.module.scss';
 
-const HeaderUserDropdown = (props) => {
+const HeaderUserDropdown = () => {
     const dispatch = useDispatch();
     const { user, isLoggedIn } = useSelector((state) => state.auth);
     const { user: profile } = useSelector((state) => state.profile);
@@ -31,9 +31,7 @@ const HeaderUserDropdown = (props) => {
         if (res) {
             dispatch(logOut());
             dispatch(profileLogout());
-            // Navigate to login page after logout
             const currentPath = router.asPath;
-            // Don't redirect if already on login page or auth pages
             if (
                 !currentPath.includes('/auth/login') &&
                 !currentPath.includes('/auth/register') &&
@@ -51,17 +49,15 @@ const HeaderUserDropdown = (props) => {
     });
 
     const linksView = accountLinks.map((item, index) => (
-        <li key={index} className={styles.hoverAction}>
+        <li key={index} className={styles.menuItem}>
             <Link href={item.url}>
-                <a className="pointer d-flex p-3 gap-3 align-items-center justify-content-between text-decoration-none">
-                    <div className="d-flex gap-2 align-items-center">
-                        <Icon
-                            icon={item.icon}
-                            className={` text-dark fs-4 me-2`}></Icon>{' '}
-                        <p className="m-0 text-dark">{item.text}</p>
+                <a className="text-decoration-none">
+                    <div className={styles.icon}>
+                        <Icon icon={item.icon} />
                     </div>
+                    <span className={styles.itemText}>{item.text}</span>
                     {data?.unread_messages != 0 && item.url == '/chat' && (
-                        <span className={styles.unreadsChatsCount}>
+                        <span className={styles.badge}>
                             {data?.unread_messages}
                         </span>
                     )}
@@ -76,23 +72,12 @@ const HeaderUserDropdown = (props) => {
 
     if (isLoggedIn === true) {
         return (
-            <div className="ps-block--user-account ">
-                <div className="fs-3 d-flex align-items-center gap-3">
+            <div className={styles.userAccountContainer}>
+                <div className="d-flex align-items-center">
                     <Link href={'/account/sellerproducts'}>
-                        <a
-                            className="pointer"
-                            style={{
-                                width: '30px',
-                                height: '30px',
-                                position: 'relative',
-                                overflow: 'hidden',
-                                borderRadius: '50%',
-                                display: 'block'
-                            }}>
+                        <a className={styles.avatarWrapper}>
                             <Image
-                                src={
-                                    profile?.image || '/static/img/ozodbek.png'
-                                }
+                                src={profile?.image || '/static/img/ozodbek.png'}
                                 className={cn('object-cover')}
                                 layout="fill"
                                 alt="user"
@@ -100,57 +85,53 @@ const HeaderUserDropdown = (props) => {
                         </a>
                     </Link>
                 </div>
-                <div className="ps-block__content">
-                    <ul className="ps-list--arrow order">
-                        <li>
-                            <Link
-                                href={
-                                    user?.role === 'admin'
-                                        ? '/account/dashbord'
-                                        : user?.role === 'seller'
-                                            ? '/account/sellerproducts'
-                                            : '#'
-                                }>
-                                <a className="pointer d-flex mb-3 gap-3 align-items-center text-decoration-none text-dark">
-                                    <div className="m-0">
-                                        <h4 className="m-0 fw-normal fs-3">
-                                            {profile?.first_name}{' '}
-                                            {profile?.last_name}
-                                        </h4>
-                                        <p className="m-0">{profile?.email}</p>
-                                        <p className="m-0">{profile?.phone}</p>
-                                    </div>
-                                </a>
-                            </Link>
-                        </li>
+                <div className={styles.dropdownContent}>
+                    <div className={styles.profileHeader}>
+                        <Link
+                            href={
+                                user?.role === 'admin'
+                                    ? '/account/dashbord'
+                                    : user?.role === 'seller'
+                                        ? '/account/sellerproducts'
+                                        : '#'
+                            }>
+                            <a className="text-decoration-none">
+                                <h4 className={styles.userName}>
+                                    {profile?.first_name} {profile?.last_name}
+                                </h4>
+                                <div className={styles.userMeta}>
+                                    <p title={profile?.email}>{profile?.email}</p>
+                                    <p>{profile?.phone}</p>
+                                </div>
+                            </a>
+                        </Link>
+                    </div>
 
-                        <ul className="my-2 list-unstyled">{linksView}</ul>
-                        <li className="ps-block__footer">
+                    <ul className={styles.menuList}>
+                        {linksView}
+                    </ul>
+
+                    <div className={styles.footer}>
+                        <div className={styles.menuItem}>
                             <button
                                 type="button"
                                 onClick={handleLogout}
-                                style={{
-                                    background: 'none',
-                                    border: 'none',
-                                    padding: 0,
-                                    cursor: 'pointer',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    width: '100%',
-                                    color: 'black'
-                                }}>
-                                <FaRightFromBracket className="me-3 mx-2 text-dark fs-4" />
+                                className={styles.logoutBtn}
+                            >
+                                <div className={styles.icon}>
+                                    <FaRightFromBracket />
+                                </div>
                                 Chiqish
                             </button>
-                        </li>
-                    </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         );
     } else {
         return (
             <Link href={`/auth/login/?returnUrl=${returnUrl}`}>
-                <a className={`${styles.loginEntrance} m-0`}>Kirish</a>
+                <a className={cn(styles.loginEntrance, "m-0")}>Kirish</a>
             </Link>
         );
     }
