@@ -557,6 +557,12 @@ const Header = () => {
                                 Frilanserlik xizmatlari
                             </a>
                         </Link>
+                        <Link href="/video-lessons">
+                            <a className={styles.navLink}>
+                                <TbVideo className={styles.icon} />
+                                Video darslar
+                            </a>
+                        </Link>
                         <a
                             href="https://soffia.uz/uz/dashboard"
                             target="_blank"
@@ -566,12 +572,6 @@ const Header = () => {
                             <TbSparkles className={styles.icon} />
                             AI xizmatlari
                         </a>
-                        {/* <Link href="/freelancers">
-                            <a className={styles.navLink}>
-                                <TbVideo className={styles.icon} />
-                                Ijodkorlar
-                            </a>
-                        </Link> */}
                         <a
                             href="https://seller.soff.uz/"
                             target="_blank"

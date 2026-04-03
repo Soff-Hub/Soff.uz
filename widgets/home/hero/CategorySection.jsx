@@ -18,6 +18,12 @@ const popularCategories = [
         icon: <TbSchool />
     },
     {
+        title: 'Video darslar',
+        count: '1K +',
+        href: '/video-lessons/all',
+        icon: <TbVideo />
+    },
+    {
         title: '3D Modellar',
         count: '500+',
         href: '/3d-models-and-interior-designs',
@@ -41,12 +47,7 @@ const popularCategories = [
         href: '/templates',
         icon: <TbLayout />
     },
-    {
-        title: 'Videolar',
-        count: '1K +',
-        href: '/video-lessons/all',
-        icon: <TbVideo />
-    },
+
 ];
 
 const CategorySection = () => {

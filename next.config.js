@@ -58,8 +58,8 @@ const nextSettings = {
                         value: 'nosniff',
                     },
                     {
-                        key: 'X-Frame-Options',
-                        value: 'SAMEORIGIN',
+                        key: 'Content-Security-Policy',
+                        value: "frame-ancestors 'self' https://*.yandex.ru https://*.yandex.uz https://*.yandex.kz https://*.yandex.com https://*.webvisor.com blob:;",
                     },
                     {
                         key: 'X-XSS-Protection',

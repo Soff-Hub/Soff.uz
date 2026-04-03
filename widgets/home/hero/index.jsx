@@ -55,10 +55,20 @@ const slides = [
         target: '_self'
     },
     {
+        img: '/static/img/HomePage/hero/hero_4.png',
+        link: '/video-lessons',
+        target: '_self'
+    },
+    {
         img: '/static/img/HomePage/hero/hero_2.jpg',
         link: 'https://soffia.uz/uz/dashboard',
         target: '_blank'
     },
+    {
+        img: '/static/img/HomePage/hero/hero_5.png',
+        link: 'https://seller.soff.uz',
+        target: '_blank'
+    }
 ]
 
 const formatDirectionLabel = (key) => {
