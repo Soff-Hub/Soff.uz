@@ -161,8 +161,7 @@ function useSearch() {
     const handleClickOption = async (optionValue) => {
         setSearch(optionValue);
         await router.push(
-            `/search-page/?keyword=${optionValue}&tab=${
-                type === 'mahsulotlar' ? 1 : type === 'xizmatlar' ? 2 : 3
+            `/search-page/?keyword=${optionValue}&tab=${type === 'mahsulotlar' ? 1 : type === 'xizmatlar' ? 2 : 3
             }&type=${type === 'mahsulotlar' ? 'file' : 'all'}`
         );
         addSearchHistoryItem({ value: optionValue, type });
@@ -183,7 +182,7 @@ function useSearch() {
                 );
             } else if (type === 'mutaxassislar') {
                 if (optionData?.id) {
-                    await router.push(`/freelancers/${optionData.id}`);
+                    await router.push(`/seller/${optionData.id}`);
                 } else {
                     await router.push(
                         `/search-page/?keyword=${optionValue}&tab=3&type=all`

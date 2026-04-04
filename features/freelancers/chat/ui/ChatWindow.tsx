@@ -16,6 +16,7 @@ const ChatWindow: React.FC<ChatWindowProps> = (props) => {
             <Conversation.Header />
             <Conversation.DropOverlay />
             <Conversation.Messages />
+            {/* <Conversation.FAQ /> */}
             <Conversation.Input />
             <Conversation.Modals />
         </Conversation>

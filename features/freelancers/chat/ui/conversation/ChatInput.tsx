@@ -6,6 +6,7 @@ import {
     ArrowDownOutlined,
     PaperClipOutlined,
     SendOutlined,
+    QuestionCircleOutlined,
 } from '@ant-design/icons';
 import styles from '../../style/chat.module.scss';
 import { useConversation } from './Conversation';
@@ -15,7 +16,7 @@ const { TextArea } = Input;
 
 type ChatInputProps = {};
 
-const ChatInput = ({}: ChatInputProps) => {
+const ChatInput = ({ }: ChatInputProps) => {
     const {
         chat,
         edit,
@@ -29,6 +30,9 @@ const ChatInput = ({}: ChatInputProps) => {
         updateMessage,
         droppedFile,
         setDroppedFile,
+        isModerator,
+        isFAQOpen,
+        setIsFAQOpen,
     } = useConversation();
     const [newMessage, setNewMessage] = useState('');
     const [fileList, setFileList] = useState<any>([]);
@@ -84,7 +88,7 @@ const ChatInput = ({}: ChatInputProps) => {
                     onError: (err: any) => {
                         message.error(
                             err?.response?.data?.detail ||
-                                'Faylni yuborishda xatolik yuz berdi'
+                            'Faylni yuborishda xatolik yuz berdi'
                         );
                     },
                 }
@@ -143,10 +147,10 @@ const ChatInput = ({}: ChatInputProps) => {
                 prev.map((f: any) =>
                     f.uid === uid
                         ? {
-                              ...f,
-                              percent: progress,
-                              status: progress >= 100 ? 'done' : 'uploading',
-                          }
+                            ...f,
+                            percent: progress,
+                            status: progress >= 100 ? 'done' : 'uploading',
+                        }
                         : f
                 )
             );
@@ -179,8 +183,8 @@ const ChatInput = ({}: ChatInputProps) => {
 
             customRequest({
                 file,
-                onSuccess: () => {},
-                onProgress: () => {},
+                onSuccess: () => { },
+                onProgress: () => { },
             });
 
             onClearDroppedFile();
@@ -196,7 +200,7 @@ const ChatInput = ({}: ChatInputProps) => {
     const canSubmit = edit
         ? newMessage.trim() !== edit.content && newMessage.trim() !== ''
         : (fileList.length && fileList[0]?.status === 'done') ||
-          newMessage.trim() !== '';
+        newMessage.trim() !== '';
     return (
         <>
             <span
@@ -228,9 +232,8 @@ const ChatInput = ({}: ChatInputProps) => {
                     }
                     return true;
                 }}
-                className={`chat-file-uploader ${
-                    fileList.length ? 'has-files' : 'no-files'
-                }`}>
+                className={`chat-file-uploader ${fileList.length ? 'has-files' : 'no-files'
+                    }`}>
                 <Button
                     type="primary"
                     icon={'🌛'}
@@ -252,6 +255,17 @@ const ChatInput = ({}: ChatInputProps) => {
                         loading={fileList?.[0]?.status == 'uploading'}
                     />
                 </Tooltip>
+                {/* {isModerator && (
+                    <Tooltip title="FAQ">
+                        <Button
+                            icon={<QuestionCircleOutlined />}
+                            type="text"
+                            shape="circle"
+                            onClick={() => setIsFAQOpen(!isFAQOpen)}
+                            className={isFAQOpen ? styles.faq_toggle_active : ''}
+                        />
+                    </Tooltip>
+                )} */}
                 <TextArea
                     value={newMessage}
                     disabled={isBlocked || isMessageWithFilePending}

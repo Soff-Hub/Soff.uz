@@ -39,6 +39,7 @@ import { FaArrowsAltH } from 'react-icons/fa';
 import { FaPalette } from 'react-icons/fa6';
 import { FaLayerGroup } from 'react-icons/fa6';
 import { FaShapes } from 'react-icons/fa6';
+import { HiSparkles } from 'react-icons/hi2';
 import styles from './file-actions.module.scss';
 
 export const fileColors = {
@@ -188,6 +189,13 @@ function FileActions({ product }) {
                                     so'm
                                 </del>
                             </div>
+                        )}
+                        {product?.seller?.id === 69 && (
+                            <div className={styles.aiBadge}>
+                                <HiSparkles className={styles.aiIcon} />
+                                <span className='text-black'>AI orqali yaratilgan</span>
+                            </div>
+
                         )}
                     </div>
 

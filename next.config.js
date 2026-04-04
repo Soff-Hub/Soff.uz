@@ -132,6 +132,14 @@ const nextSettings = {
                 source: '/freelance/:path*',
                 destination: 'http://localhost:3001/freelance/:path*',
             },
+            {
+                source: '/creators',
+                destination: 'http://213.148.23.50:3002/creators',
+            },
+            {
+                source: '/creators/:path*',
+                destination: 'http://213.148.23.50:3002/creators/:path*',
+            },
         ];
     },
 };
