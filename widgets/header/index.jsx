@@ -13,11 +13,7 @@ import {
     MdKeyboardArrowDown,
     MdKeyboardArrowRight,
     MdEditNote,
-    MdTrendingUp,
     MdLayers,
-    MdAutoAwesome,
-    MdGroup,
-    MdStorefront
 } from 'react-icons/md';
 import { FaRegHeart, FaClock, FaPercent } from 'react-icons/fa';
 
@@ -128,8 +124,11 @@ const Header = () => {
         const fetchPromotion = async () => {
             try {
                 const res = await ProductRepository.getActivePromotion();
-                if (res && res.discount_percent > 0) {
-                    setPromotion(res);
+                if (res && res.discount_percent > -1) {
+                    setPromotion({
+                        discount_percent: res.discount_percent,
+                        expires_at: res.expires_at,
+                    });
                     dispatch(setActivePromotion(
                         {
                             discount_percent: res.discount_percent,
@@ -647,44 +646,49 @@ const Header = () => {
                             )}
                         </div>
                     ) : (
-                        <>
-                            <div className={styles.promoIcon}>
-                                <FaPercent />
-                            </div>
-                            <h2>MAXSUS TAKLIF!</h2>
-                            <p className={styles.discountText}>
-                                Siz uchun <span>{promotion.discount_percent}%</span> CHEGIRMA!
-                            </p>
-
-                            {isExpiring && (
-                                <div className={styles.modalMainTimer}>
-                                    <FaClock />
-                                    <span>
-                                        Tugashiga: {String(timeLeft.minutes).padStart(2, '0')}:{String(timeLeft.seconds).padStart(2, '0')}
-                                    </span>
+                        <div className={styles.yandexModalBody}>
+                            <div className={styles.offerFlex}>
+                                <div className={styles.promoIcon}>
+                                    <FaPercent />
                                 </div>
-                            )}
+                                <h2>MAXSUS TAKLIF!</h2>
+                            </div>
 
-                            <p className={styles.subText}>
-                                Sotib oling yana va tejab qoling.
-                            </p>
-                            <div className={styles.modalActions}>
-                                <Link href="/scientific-resources/all">
-                                    <a
-                                        className={styles.buyMoreBtnHighlighted}
+                            <div className={styles.promoFooterDetailed}>
+                                <div className={styles.footerInfoMain}>
+                                    <div className={styles.promotionText}>
+                                        Siz uchun <span>{promotion.discount_percent}%</span> CHEGIRMA!
+                                        <div className={styles.subTextSmall}>Sotib oling yana va tejab qoling.</div>
+                                    </div>
+
+                                    {isExpiring && (
+                                        <div className={styles.modalTimerCompact}>
+                                            <FaClock />
+                                            <span>
+                                                {String(timeLeft.minutes).padStart(2, '0')}:{String(timeLeft.seconds).padStart(2, '0')}
+                                            </span>
+                                        </div>
+                                    )}
+                                </div>
+
+                                <div className={styles.modalActionsCompact}>
+                                    <Link href="/scientific-resources/all">
+                                        <a
+                                            className={styles.footerBuyBtnCompact}
+                                            onClick={() => setPromotionModalVisible(false)}
+                                        >
+                                            Yana sotib olish
+                                        </a>
+                                    </Link>
+                                    <button
+                                        className={styles.closeModalBtn}
                                         onClick={() => setPromotionModalVisible(false)}
                                     >
-                                        Sotib oling yana
-                                    </a>
-                                </Link>
-                                <button
-                                    className={styles.closeModalBtn}
-                                    onClick={() => setPromotionModalVisible(false)}
-                                >
-                                    Yopish
-                                </button>
+                                        Yopish
+                                    </button>
+                                </div>
                             </div>
-                        </>
+                        </div>
                     )}
                 </div>
             </Modal>

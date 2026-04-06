@@ -97,7 +97,7 @@ const ChatFAQ: React.FC = () => {
     return (
         <div className={styles.faq_container}>
             <div className={styles.faq_header}>
-                <div className={styles.faq_header_left}>
+                <div className={`${styles.faq_header_left} ${view !== 'questions' ? styles.centered : ''}`}>
                     {view === 'questions' && (
                         <Button
                             type="text"
