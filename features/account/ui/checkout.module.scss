@@ -265,26 +265,50 @@
     }
 }
 
-.totalBanner {
+.priceBreakdown {
     background: #f9fafb;
     border-radius: 12px;
-    padding: 14px 16px;
-    margin-bottom: 20px;
+    padding: 16px;
+    margin-bottom: 24px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    gap: 8px;
     border: 1px solid #f3f4f6;
 
-    .label {
-        font-size: 13px;
-        font-weight: 600;
-        color: #6b7280;
+    .priceRow {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .label {
+            font-size: 13px;
+            font-weight: 500;
+            color: #6b7280;
+        }
+
+        .value {
+            font-size: 13px;
+            font-weight: 600;
+            color: #111827;
+        }
     }
 
-    .value {
-        font-size: 19px;
-        font-weight: 800;
-        color: #00a44f;
+    .totalRow {
+        margin-top: 4px;
+        padding-top: 12px;
+        border-top: 1px dashed #e5e7eb;
+
+        .label {
+            font-size: 14px;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .valueLarge {
+            font-size: 20px;
+            font-weight: 800;
+            color: #00a44f;
+        }
     }
 }
 

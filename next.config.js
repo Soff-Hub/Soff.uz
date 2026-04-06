@@ -1,3 +1,11 @@
+/** @type {import('next').NextConfig} */
+
+// Micro-service internal endpoints (Proxies/Rewrites)
+// Defaults to localhost for development if .env variables are missing
+const SERVICE_URL_VIDEO = process.env.SERVICE_URL_VIDEO || 'http://localhost:3000';
+const SERVICE_URL_FREELANCE = process.env.SERVICE_URL_FREELANCE || 'http://localhost:3001';
+const SERVICE_URL_CREATORS = process.env.SERVICE_URL_CREATORS || 'http://213.148.23.50:3002';
+
 const nextSettings = {
     optimizeFonts: true,
     output: 'standalone',
@@ -36,18 +44,6 @@ const nextSettings = {
         ],
     },
     async headers() {
-        // Analytics va Metrikalar ruxsatlari bilan (Google, Yandex, Facebook) toza va tartibli CSP (Content Security Policy) qoidalari
-        // const cspHeader = [
-        //     "default-src 'self'",
-        //     "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cdnjs.cloudflare.com https://mc.yandex.ru https://yastatic.net https://www.googletagmanager.com https://www.google-analytics.com https://connect.facebook.net https://an.yandex.ru https://www.google.com https://www.gstatic.com https://www.recaptcha.net",
-        //     "style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://use.fontawesome.com https://fonts.googleapis.com",
-        //     "img-src 'self' blob: data: https://eu2.contabostorage.com https://d2co7bxjtnp5o.cloudfront.net https://api.soff.uz https://test-soffuz.s3.amazonaws.com http://176.96.241.219 https://encrypted-tbn0.gstatic.com http://www.bukhari.uz http://localhost http://192.168.1.15 https://media.licdn.com https://freelance.soff.uz https://freelance.ilmiyish.uz https://placehold.co https://freelance-media.s3.amazonaws.com https://img.youtube.com https://mc.yandex.ru https://www.google-analytics.com https://www.facebook.com",
-        //     "font-src 'self' data: https://cdnjs.cloudflare.com https://use.fontawesome.com https://fonts.gstatic.com",
-        //     "connect-src 'self' https://api.soff.uz wss://api.soff.uz https://freelance.soff.uz wss://freelance.soff.uz *.sentry.io https://mc.yandex.ru wss://mc.yandex.ru https://www.google-analytics.com wss://www.google-analytics.com https://analytics.google.com wss://analytics.google.com https://stats.g.doubleclick.net https://www.google.com https://www.gstatic.com https://www.recaptcha.net",
-        //     "frame-src 'self' https://www.youtube.com https://mc.yandex.ru https://yandex.ru https://www.google.com https://recaptcha.google.com https://www.recaptcha.net",
-        //     "child-src 'self' https://www.youtube.com https://mc.yandex.ru https://yandex.ru https://www.google.com https://recaptcha.google.com https://www.recaptcha.net"
-        // ].join('; ');
-
         return [
             // Security headers for Lighthouse Best Practices
             {
@@ -73,11 +69,6 @@ const nextSettings = {
                         key: 'Permissions-Policy',
                         value: 'camera=(), microphone=(), geolocation=()',
                     },
-                    // BIZ QO'SHGAN XAVFSIZLIK DEVORI (CSP)
-                    // {
-                    //     key: 'Content-Security-Policy',
-                    //     value: cspHeader,
-                    // }
                 ],
             },
             // Caching static files for 1 year
@@ -100,16 +91,6 @@ const nextSettings = {
                     },
                 ],
             },
-            // IMPORTANT: Exclude product pages from caching
-            // {
-            //     source: '/product/:path*',
-            //     headers: [
-            //         {
-            //             key: 'Cache-Control',
-            //             value: 'no-store, no-cache, must-revalidate, private, max-age=0',
-            //         },
-            //     ],
-            // },
             // SSR pages cached for 1 minute
             {
                 source: '/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|jpg|png|jpeg|gif|ico|webp|avif|jfif|pjpeg|pjp|apng|bmp|tif|tiff|js|css|woff2)).*)',
@@ -126,19 +107,15 @@ const nextSettings = {
         return [
             {
                 source: '/videos/:path*',
-                destination: 'http://localhost:3000/videos/:path*',
+                destination: `${SERVICE_URL_VIDEO}/videos/:path*`,
             },
             {
                 source: '/freelance/:path*',
-                destination: 'http://localhost:3001/freelance/:path*',
+                destination: `${SERVICE_URL_FREELANCE}/freelance/:path*`,
             },
             {
                 source: '/creators',
-                destination: 'http://213.148.23.50:3002/creators',
-            },
-            {
-                source: '/creators/:path*',
-                destination: 'http://213.148.23.50:3002/creators/:path*',
+                destination: `${SERVICE_URL_CREATORS}/creators`,
             },
         ];
     },

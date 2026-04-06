@@ -317,9 +317,19 @@ const CreditCard2 = ({ document, type }) => {
 
     return (
         <div className="checkout-step-content">
-            <div className={styles.totalBanner}>
-                <span className={styles.label}>Jami to'lov miqdori</span>
-                <span className={styles.value}>{hisobFormatted} so'm</span>
+            <div className={styles.priceBreakdown}>
+                <div className={styles.priceRow}>
+                    <span className={styles.label}>Mahsulotlar narxi</span>
+                    <span className={styles.value}>{addPeriodToThousands(amount)} so'm</span>
+                </div>
+                <div className={styles.priceRow}>
+                    <span className={styles.label}>Soff.uz xizmat haqi ({Math.round(percentage * 100)}%)</span>
+                    <span className={styles.value}>{addPeriodToThousands(taxAmount)} so'm</span>
+                </div>
+                <div className={cn(styles.priceRow, styles.totalRow)}>
+                    <span className={styles.label}>Jami to‘lov</span>
+                    <span className={styles.valueLarge}>{hisobFormatted} so'm</span>
+                </div>
             </div>
 
             <Tabs
