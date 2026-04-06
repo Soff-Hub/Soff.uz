@@ -55,4 +55,4 @@ export const digitalDirections = [
     { value: 'website', label: 'Dasturlash xizmatlar' },
 ];
 
-export const MODERATOR_ID = 144900; // 163672
+export const MODERATOR_ID = 163672; // 144900

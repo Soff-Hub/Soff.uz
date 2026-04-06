@@ -255,7 +255,7 @@ const ChatInput = ({ }: ChatInputProps) => {
                         loading={fileList?.[0]?.status == 'uploading'}
                     />
                 </Tooltip>
-                {/* {isModerator && (
+                {isModerator && (
                     <Tooltip title="FAQ">
                         <Button
                             icon={<QuestionCircleOutlined />}
@@ -265,7 +265,7 @@ const ChatInput = ({ }: ChatInputProps) => {
                             className={isFAQOpen ? styles.faq_toggle_active : ''}
                         />
                     </Tooltip>
-                )} */}
+                )}
                 <TextArea
                     value={newMessage}
                     disabled={isBlocked || isMessageWithFilePending}
