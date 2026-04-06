@@ -117,6 +117,10 @@ const nextSettings = {
                 source: '/creators',
                 destination: `${SERVICE_URL_CREATORS}/creators`,
             },
+            {
+                source: '/creators/:path*',
+                destination: `${SERVICE_URL_CREATORS}/creators/:path*`,
+            },
         ];
     },
 };

@@ -14,11 +14,41 @@ import { useTimeManager } from '~/shared/hooks/useTimeManager';
 import '~/shared/utilities/dayjs-locale-uz';
 import Script from 'next/script';
 import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
+import Cookies from 'js-cookie';
 // import showOfferNotification from '~/shared/components/offer-notification';
 
 function App({ Component, pageProps }) {
     const { tg } = useTelegram();
     const { startTimeout } = useTimeManager();
+
+    useEffect(() => {
+        // Sync logout across tabs/apps on the same origin
+        const handleStorageChange = (e) => {
+            if ((e.key === 'auth-storage' || e.key === 'user' || e.key === 'data') && !e.newValue) {
+                // If auth data is cleared elsewhere, refresh to update UI state
+                window.location.reload();
+            }
+        };
+
+        const checkSession = () => {
+            const token = Cookies.get('token');
+            const user = safeLocalStorage.getItem('user');
+            if (user && !token) {
+                // Session expired or logged out elsewhere
+                safeLocalStorage.removeItem('user');
+                safeLocalStorage.removeItem('data');
+                window.location.reload();
+            }
+        };
+
+        window.addEventListener('storage', handleStorageChange);
+        window.addEventListener('focus', checkSession);
+
+        return () => {
+            window.removeEventListener('storage', handleStorageChange);
+            window.removeEventListener('focus', checkSession);
+        };
+    }, []);
 
     useEffect(() => {
         // Next.js 12 dagi stillar o'chib ketish muammosini fix qilish

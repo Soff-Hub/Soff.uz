@@ -43,8 +43,14 @@ export const logOut = createAsyncThunk(
     'auth/logOut',
     async (_, { rejectWithValue }) => {
         try {
-            safeLocalStorage.clear();
-            Cookies.remove('token');
+            safeLocalStorage.removeItem('user');
+            safeLocalStorage.removeItem('data');
+            // Using / path for cookie to ensure same-origin apps can see the change
+            Cookies.remove('token', { path: '/' });
+            
+            if (typeof window !== 'undefined') {
+                window.location.href = 'https://soff.uz/auth/login';
+            }
             return;
         } catch (error: any) {
             return rejectWithValue(error.message);
