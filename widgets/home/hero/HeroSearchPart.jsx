@@ -11,7 +11,7 @@ import SearchController from '~/shared/components/search-result/SearchController
 const placeholders = {
     mahsulotlar: 'Qaysi turdagi tayyor mahsulot qidirmoqdasiz?',
     xizmatlar: 'Qaysi turdagi  xizmat  qidirmoqdasiz?',
-    mutaxasislar: 'Qaysi turdagi mutaxassislar qidirmoqdasiz?',
+    mutaxassislar: 'Qaysi turdagi mutaxassislar qidirmoqdasiz?',
 };
 
 function HeroSearchPart() {
@@ -41,14 +41,14 @@ function HeroSearchPart() {
                     <FaBriefcase /> Xizmatlar
                 </span>
                 <span
-                    onClick={() => setType('mutaxasislar')}
+                    onClick={() => setType('mutaxassislar')}
                     className={
-                        type === 'mutaxasislar'
+                        type === 'mutaxassislar'
                             ? styles.activeHeroBtn
                             : styles.heroBtn
                     }>
                     <FaUsers />
-                    Mutaxasislar
+                    Mutaxassislar
                 </span>
             </div>
             <SearchController

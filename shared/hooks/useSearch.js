@@ -22,7 +22,7 @@ const staticOptions = {
         { value: 'SEO Optimization' },
         { value: 'Logo Dizayn' },
     ],
-    mutaxasislar: [
+    mutaxassislar: [
         { value: 'Frontend Dasturchi' },
         { value: 'Backend Dasturchi' },
         { value: 'Fullstack Dasturchi' },
@@ -31,7 +31,7 @@ const staticOptions = {
     ],
 };
 
-function useSearch() {
+function useSearch(categoryId = null) {
     const router = useRouter();
     const [search, setSearch] = useState('');
     const [isNavigating, setIsNavigating] = useState(false);
@@ -55,13 +55,14 @@ function useSearch() {
         isSuccess,
         isFetching: productsLoading,
     } = useQuery({
-        queryKey: ['searchResults', debouncedSearch, type],
+        queryKey: ['searchResults', debouncedSearch, type, categoryId],
         queryFn: async () => {
             const searchParam = debouncedSearch
                 ? `&search=${debouncedSearch}`
                 : ``;
+            const categoryParam = categoryId ? `&category=${categoryId}` : '';
             const res = await fetch(
-                `${baseUrlUseApi}customer/same-google-search/?type=file&limit=10${searchParam}`
+                `${baseUrlUseApi}customer/same-google-search/?type=file&limit=10${searchParam}${categoryParam}`
             );
             const json = await res.json();
             return json;

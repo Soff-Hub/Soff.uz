@@ -39,7 +39,31 @@ export const clearEmptyQueries = (obj) => {
 };
 
 const ProductFilterSection = ({ child, parent, path, isFile, title }) => {
-    const searchProps = useSearch();
+    const { query, push, isReady } = useRouter();
+    const { search: querySearch, parentCategory, childCategory } = query;
+
+    const activeCategoryId = useMemo(() => {
+        const activeSlug = childCategory || parentCategory || query.slug;
+        if (!activeSlug || activeSlug === 'all') return null;
+
+        const foundChild = child?.find((c) => c.slug === activeSlug);
+        if (foundChild) return foundChild.id;
+
+        const foundParent = parent?.find((p) => p.slug === activeSlug);
+        if (foundParent) return foundParent.id;
+
+        return query.childCategoryId || query.parentCategoryId || null;
+    }, [
+        childCategory,
+        parentCategory,
+        query.slug,
+        child,
+        parent,
+        query.childCategoryId,
+        query.parentCategoryId,
+    ]);
+
+    const searchProps = useSearch(activeCategoryId);
     const { search, setSearch } = searchProps;
     const [showParentArrow, setShowParentArrow] = useState(false);
     const [showChildArrow, setShowChildArrow] = useState(false);
@@ -47,8 +71,6 @@ const ProductFilterSection = ({ child, parent, path, isFile, title }) => {
     const parentRef = useRef(null);
     const childRef = useRef(null);
     const { isMobile } = useResponsive();
-    const { query, push, isReady } = useRouter();
-    const { search: querySearch, parentCategory, childCategory } = query;
 
     const handleParent = (slug, id) => {
         const newQuery = clearEmptyQueries(query);

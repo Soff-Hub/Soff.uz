@@ -15,7 +15,7 @@ type SearchOptionsProps = {
     handleClickOption: (value: string) => void;
     options: Array<{ key: string; value: string }>;
     isLoading: boolean;
-    categoryType?: 'mahsulotlar' | 'xizmatlar' | 'mutaxasislar';
+    categoryType?: 'mahsulotlar' | 'xizmatlar' | 'mutaxassislar';
     isNavigating?: boolean;
 };
 
