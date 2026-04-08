@@ -37,6 +37,39 @@ const directionIcons = {
     business: <TbBriefcase size={22} strokeWidth={1.5} />,
 };
 
+const links = [
+    {
+        href: "/scientific-resources/all",
+        label: "Tayyor mahsulotlar",
+        icon: <TbDownload size={20} />,
+        isExternal: false,
+    },
+    {
+        href: "/orders",
+        label: "Frilanserlik xizmatlari",
+        icon: <TbBriefcase size={20} />,
+        isExternal: false,
+    },
+    {
+        href: "/videos",
+        label: "Video darsliklar",
+        icon: <TbVideo size={20} />,
+        isExternal: false,
+    },
+    {
+        href: "https://soffia.uz/uz/dashboard",
+        label: "AI xizmatlari",
+        icon: <TbSparkles size={20} />,
+        isExternal: true,
+    },
+    {
+        href: "https://seller.soff.uz/",
+        label: "Sotuvchi bo'lish",
+        icon: <TbUpload size={20} />,
+        isExternal: true,
+    },
+];
+
 const categoryTitles = {
     audio_video: 'Audio va Video',
     marketing: 'Marketing va SMM',
@@ -171,46 +204,31 @@ const MobileCatalog = ({ isOpen, onClose, categoriesData }) => {
                             <div className={styles.quickLinks}>
                                 <h4 className={styles.sectionLabel}>Foydali</h4>
 
-                                <Link href="/order/create">
-                                    <a className={styles.quickLink} onClick={onClose}>
-                                        <MdEditNote size={20} />
-                                        Buyurtma berish
-                                    </a>
-                                </Link>
+                                {links.map((link, index) => {
+                                    if (link.isExternal) {
+                                        return (
+                                            <a
+                                                key={index}
+                                                href={link.href}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className={styles.quickLink}
+                                            >
+                                                {link.icon}
+                                                {link.label}
+                                            </a>
+                                        );
+                                    }
 
-                                <Link href="/scientific-resources/all">
-                                    <a className={styles.quickLink} onClick={onClose}>
-                                        <TbDownload size={20} />
-                                        Tayyor mahsulotlar
-                                    </a>
-                                </Link>
-
-                                <Link href="/orders">
-                                    <a className={styles.quickLink} onClick={onClose}>
-                                        <TbBriefcase size={20} />
-                                        Frilanserlik xizmatlari
-                                    </a>
-                                </Link>
-
-                                <a
-                                    href="https://soffia.uz/uz/dashboard"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className={styles.quickLink}
-                                >
-                                    <TbSparkles size={20} />
-                                    AI xizmatlari
-                                </a>
-
-                                <a
-                                    href="https://seller.soff.uz/"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className={styles.quickLink}
-                                >
-                                    <TbUpload size={20} />
-                                    Sotuvchi bo'lish
-                                </a>
+                                    return (
+                                        <Link key={index} href={link.href}>
+                                            <a className={styles.quickLink} onClick={onClose}>
+                                                {link.icon}
+                                                {link.label}
+                                            </a>
+                                        </Link>
+                                    );
+                                })}
                             </div>
                         </div>
 

@@ -4,7 +4,6 @@ import Head from 'next/head';
 import { useDispatch, useSelector } from 'react-redux';
 import { checkAuthorization } from '~/store/auth/slice';
 import { useRouter } from 'next/router';
-import { GoogleLogin } from '@react-oauth/google';
 import {
     useGetDirectionsQuery,
     useGetProfileQuery,
@@ -36,10 +35,6 @@ const PageLayout = ({ children, title, withFooter = true }) => {
         skip: !user?.access,
     });
     useGetDirectionsQuery();
-
-    async function handleLogin(googleData) {
-        Router.push(`/oauth/?token=${googleData}&returnUrl=${Router.asPath}`);
-    }
 
     const defaultRoutePage = () => {
         dispatch(checkAuthorization());
@@ -79,16 +74,7 @@ const PageLayout = ({ children, title, withFooter = true }) => {
 
             {!isValideUser && (
                 <div style={{ height: 0, overflow: 'hidden' }}>
-                    <GoogleLogin
-                        onSuccess={(credentialResponse) => {
-                            handleLogin(credentialResponse?.credential);
-                        }}
-                        intermediate_iframe_close_callback={(e) =>
-                            e.preventDefault()
-                        }
-                        useOneTap
-                        prompt="select_account"
-                    />
+                    {/* Legacy Google One Tap removed in favor of NextAuth */}
                 </div>
             )}
         </ViewportContextProvider>

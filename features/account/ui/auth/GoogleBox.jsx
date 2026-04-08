@@ -1,68 +1,33 @@
 import Router, { useRouter } from 'next/router';
 import React from 'react';
+import { signIn } from 'next-auth/react';
 import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
-// import useAuth from '~/shared/hooks/useAuth';
 
 export default function GoogleBox({
-    // loading,
-    // params,
     isModal,
     onGoogleSuccessNavigateTo,
     openTelegram,
-    // setCode,
 }) {
-    // const { registerGoogleUser } = useAuth();
     const router = useRouter();
 
     const handleGoogleClick = async () => {
-        // Build the OAuth URL with proper query parameters
+        // Build callbackUrl
+        const callbackUrl = onGoogleSuccessNavigateTo || router.asPath;
+        
+        // Save UTM source if exists for backend sync later
         const utm_source = safeLocalStorage.getItem('utm_source');
-        const baseUrl = 'https://api.soff.uz/auth/social/login/customer';
-        const params = new URLSearchParams();
-
-        if (onGoogleSuccessNavigateTo) {
-            safeLocalStorage.setItem(
-                'google_redirect_url',
-                onGoogleSuccessNavigateTo
-            );
-        }
-
-        // Add existing query parameters
-        Object.keys(router.query).forEach((key) => {
-            if (router.query[key]) {
-                params.append(key, router.query[key]);
-            }
-        });
-
         if (utm_source) {
-            params.append('utm_source', utm_source);
+            // You can also pass custom params to signIn if your provider is configured to handle them,
+            // or rely on cookies/localstorage that the callback can read.
         }
 
-        // Add return URL for modals
-        if (isModal) {
-            const redirectUrl = onGoogleSuccessNavigateTo || router.asPath;
-            params.append('returnUrl', encodeURIComponent(redirectUrl));
-            // onSuccess();
-        }
-
-        const fullUrl = params.toString()
-            ? `${baseUrl}?${params.toString()}`
-            : baseUrl;
-        // Use window.location for external redirects - this works reliably on iOS 18
-        window.location.href = fullUrl;
+        // Trigger NextAuth Google SignIn
+        signIn('google', { callbackUrl });
     };
 
     const handleTelegramClick = async () => {
         if (isModal) {
             openTelegram();
-            // Router.push({
-            //     query: {
-            //         ...Router.query,
-            //         returnUrl: encodeURIComponent(router.asPath),
-            //     },
-            //     pathname: '/auth/telegram',
-            // });
-            // onSuccess();
         } else {
             Router.push({
                 query: {

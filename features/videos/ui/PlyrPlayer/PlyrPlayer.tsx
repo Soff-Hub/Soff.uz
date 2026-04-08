@@ -17,11 +17,11 @@ interface PlyrPlayerProps {
     actualDuration?: string;
 }
 
-const PlyrPlayer: React.FC<PlyrPlayerProps> = ({ 
-    videoSrc, 
-    token, 
-    poster, 
-    onPortraitStateChange, 
+const PlyrPlayer: React.FC<PlyrPlayerProps> = ({
+    videoSrc,
+    token,
+    poster,
+    onPortraitStateChange,
     onEnded,
     isAccessRestricted,
     onBuyClick,
@@ -34,7 +34,7 @@ const PlyrPlayer: React.FC<PlyrPlayerProps> = ({
 
     const parseDurationToSeconds = (durationStr?: string) => {
         if (!durationStr) return undefined;
-        
+
         // Handle "8.37s"
         if (durationStr.toLowerCase().endsWith('s')) {
             return parseFloat(durationStr.slice(0, -1));
@@ -216,17 +216,17 @@ const PlyrPlayer: React.FC<PlyrPlayerProps> = ({
             {showCta && isAccessRestricted && (
                 <div className={styles.ctaOverlay}>
                     <LockOutlined className={styles.ctaIcon} />
-                    <h3 className={styles.ctaTitle}>Darsning davomi mavjud</h3>
+                    <h3 className={styles.ctaTitle}>Davomi mavjud</h3>
                     <p className={styles.ctaText}>
-                        Ushbu darsning to'liq variantini ko'rish uchun kursni sotib olishingiz kerak bo'ladi.
+                        To'liq variantni ko'rish uchun xarid qilishingiz kerak bo'ladi.
                     </p>
-                    <button 
-                        className={styles.ctaButton} 
+                    <button
+                        className={styles.ctaButton}
                         onClick={() => {
                             if (onBuyClick) onBuyClick();
                         }}
                     >
-                        To'liq darsni xarid qilish
+                        Xarid qilish
                     </button>
                 </div>
             )}

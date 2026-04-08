@@ -17,7 +17,6 @@
     "dependencies": {
         "@ckeditor/ckeditor5-build-classic": "^41.4.2",
         "@ckeditor/ckeditor5-react": "^11.0.0",
-        "@react-oauth/google": "^0.12.1",
         "@reduxjs/toolkit": "^2.11.2",
         "@tanstack/react-query": "^4.36.1",
         "ant-design": "^1.0.0",
@@ -32,9 +31,9 @@
         "hls.js": "^1.6.15",
         "input": "^1.0.1",
         "js-cookie": "^2.2.1",
-        "jwt-decode": "^4.0.0",
         "motion": "^12.25.0",
         "next": "^12.3.4",
+        "next-auth": "^4.24.13",
         "next-progress": "^2.3.1",
         "node-cron": "^3.0.3",
         "plyr": "^3.8.4",

@@ -9,6 +9,7 @@ import { login } from '~/store/auth/slice';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
 import { isReturnUrlEmpty } from '~/shared/utilities/return-url';
 import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
+import { signIn } from 'next-auth/react';
 
 export const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
@@ -68,6 +69,12 @@ export default function CodeVerifyForm({ authCode, onClose, slug, onSuccess }) {
                     data: JSON.parse(safeLocalStorage.getItem('data')),
                 })
             );
+
+            // Sync with NextAuth session
+            await signIn('credentials', {
+                user: JSON.stringify({ ...resp.data, role: 'customer' }),
+                redirect: false,
+            });
             if (resp.data?.role === 'seller') {
                 safeLocalStorage.setItem('is_seller', '1');
             }

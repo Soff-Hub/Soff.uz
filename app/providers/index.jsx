@@ -1,7 +1,7 @@
 import { Provider as ReduxProvider } from 'react-redux';
 import { store } from '../store';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { GoogleOAuthProvider } from '@react-oauth/google';
+import { SessionProvider } from 'next-auth/react';
 import AntdProvider from './AntdProvider';
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 
@@ -26,7 +26,7 @@ const queryClient = new QueryClient({
     },
 });
 
-export const Providers = ({ children }) => (
+export const Providers = ({ children, session }) => (
     <ReduxProvider store={store}>
         <GoogleReCaptchaProvider
             reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
@@ -38,9 +38,9 @@ export const Providers = ({ children }) => (
             }}
         >
             <QueryClientProvider client={queryClient}>
-                <GoogleOAuthProvider clientId="203103939049-2ste634q2uc1io9oaup8gt35tsmucru0.apps.googleusercontent.com">
+                <SessionProvider session={session}>
                     <AntdProvider>{children}</AntdProvider>
-                </GoogleOAuthProvider>
+                </SessionProvider>
             </QueryClientProvider>
         </GoogleReCaptchaProvider>
     </ReduxProvider>

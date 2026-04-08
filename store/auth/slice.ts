@@ -1,7 +1,15 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie';
 import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
+
+// Simple function to parse JWT without library
+const parseJwt = (token: string) => {
+    try {
+        return JSON.parse(atob(token.split('.')[1]));
+    } catch (e) {
+        return null;
+    }
+};
 
 export interface AuthState {
     isLoggedIn: boolean;
@@ -22,8 +30,9 @@ export const login = createAsyncThunk(
     async ({ user, data }: any, { rejectWithValue }) => {
         try {
             safeLocalStorage.setItem('user', JSON.stringify(user));
+            const decoded = parseJwt(user?.access);
             Cookies.set('token', user?.access, {
-                expires: jwtDecode(user?.access)?.exp || 8,
+                expires: (decoded?.exp ? new Date(decoded.exp * 1000) : 8) as any,
             });
             if (data) {
                 safeLocalStorage.setItem('data', JSON.stringify(data));
@@ -65,10 +74,12 @@ export const checkAuthorization = createAsyncThunk(
             let user: any = safeLocalStorage.getItem('user');
             user = user ? JSON.parse(user) : '';
             const token = Cookies.get('token');
-            if (!token)
+            if (!token && user?.access) {
+                const decoded = parseJwt(user?.access);
                 Cookies.set('token', user?.access, {
-                    expires: jwtDecode(user?.access)?.exp || 8,
+                    expires: (decoded?.exp ? new Date(decoded.exp * 1000) : 8) as any,
                 });
+            }
             if (user?.access) {
                 return { isLoggedIn: true, user, status: 'succeeded' };
             } else {
