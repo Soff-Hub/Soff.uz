@@ -3,10 +3,12 @@ import PageContainer from '~/widgets/layouts/PageContainer';
 import Meta from '~/shared/ui/meta';
 import { useRouter } from 'next/router';
 import { baseUrlUseApi } from '~/repositories/useApi';
+import { buildSearchUrl, normalizeProducts, resolveCategoryId } from '~/shared/utilities/api-helpers';
 import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
 import ProductFilterSection, {
     getTitleFromSlug,
 } from '~/components/elements/product-filter-section/ProductFilterSection';
+import fetchJson from '~/shared/api/fetch-json';
 
 const type = 'website';
 const defaultTitle = 'Veb saytlar';
@@ -64,6 +66,8 @@ export default function Websites({
 }
 
 export async function getServerSideProps(context) {
+    const type = 'website';
+    const pathSlug = context.params.slug || 'all';
     const {
         page = 1,
         parentCategory = '',
@@ -73,35 +77,29 @@ export async function getServerSideProps(context) {
         search = '',
     } = context.query;
 
-    const fetchJson = async (url) => {
-        const res = await fetch(url);
-        if (!res.ok) {
-            return null;
-        }
-        return res.json();
-    };
-
-    const categoryParam = childCategory ? childCategory : parentCategory;
-
-    const queryParams = new URLSearchParams({
-        direction: type,
-        page,
-        page_size: 50,
-    });
-    if (search) queryParams.append('search', search);
-    if (categoryParam) queryParams.append('category', categoryParam);
-    if (price_from) queryParams.append('price_from', price_from);
-    if (price_to) queryParams.append('price_to', price_to);
-
-    const productsUrl = `${baseUrlUseApi}customer/products/?${queryParams.toString()}`;
+    const productsUrl = buildSearchUrl(context.query, 'website', 50);
     const fourChildUrl = `${baseUrlUseApi}customer/four-child?direction=${type}`;
     const childCategoryUrl = `${baseUrlUseApi}customer/four-child?direction=${type}&parent__slug=${parentCategory}`;
 
-    const [productsData, fourChildData, childCategoryData] = await Promise.all([
-        fetchJson(productsUrl),
+    const [productsDataRaw, fourChildData, childCategoryData] = await Promise.all([
+        null, // Initial fetch deferred until IDs are resolved
         fetchJson(fourChildUrl),
         fetchJson(childCategoryUrl),
     ]);
+
+    // Resolve numeric IDs from slugs
+    const resolvedParentId = resolveCategoryId(parentCategory || pathSlug, fourChildData);
+    const resolvedChildId = resolveCategoryId(childCategory, childCategoryData);
+
+    // Build URL with numeric IDs
+    const finalProductsUrl = buildSearchUrl({
+        ...context.query,
+        parentCategoryId: resolvedParentId,
+        childCategoryId: resolvedChildId
+    }, type, 50);
+
+    const productsDataRawFinal = await fetchJson(finalProductsUrl);
+    const productsData = normalizeProducts(productsDataRawFinal);
 
     return {
         props: {

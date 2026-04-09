@@ -4,6 +4,7 @@ import ProductsByCategory from '~/components/partials/category/ProductsByCategor
 import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
 import { baseUrlUseApi } from '~/repositories/useApi';
+import { buildSearchUrl, normalizeProducts, resolveCategoryId } from '~/shared/utilities/api-helpers';
 import Meta from '~/shared/ui/meta';
 import Image from 'next/image';
 import ProductFilterSection, { getTitleFromSlug } from '~/components/elements/product-filter-section/ProductFilterSection';
@@ -200,19 +201,30 @@ export async function getServerSideProps(context) {
         search = '',
     } = query;
 
-    const categoryParam = pathSlug === 'all' ? '' : childCategory || pathSlug;
+    const queryWithSlug = { ...query, parentCategory: pathSlug === 'all' ? '' : pathSlug };
+    const productsUrl = buildSearchUrl(queryWithSlug, 'file', 24);
 
-    const productsUrl = `${baseUrlUseApi}customer/products/?direction=file&category=${categoryParam}&page=${page}&page_size=24&search=${search}`;
-
-    // SSR fetch for SEO metadata only
+    // SSR fetch for SEO and ID resolution
     const activeCategoryUrl = pathSlug !== 'all'
         ? `${baseUrlUseApi}customer/four-child?direction=file&slug=${pathSlug}`
         : null;
 
-    const [productsData, activeCategoryData] = await Promise.all([
-        fetchJson(productsUrl),
+    const [activeCategoryData] = await Promise.all([
         fetchJson(activeCategoryUrl),
     ]);
+
+    // Resolve numeric IDs from slugs
+    const resolvedParentId = resolveCategoryId(pathSlug, activeCategoryData);
+    const resolvedChildId = resolveCategoryId(childCategory, activeCategoryData);
+
+    const finalProductsUrl = buildSearchUrl({
+        ...query,
+        parentCategoryId: resolvedParentId,
+        childCategoryId: resolvedChildId
+    }, 'file', 24);
+
+    const productsDataRawFinal = await fetchJson(finalProductsUrl);
+    const productsData = normalizeProducts(productsDataRawFinal);
 
     // Senior fix: Find exact match in results list
     const matchedCategory = activeCategoryData?.results?.find(item => item.slug === pathSlug);

@@ -369,10 +369,10 @@ const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
                 id: query.childCategoryId,
             });
             setFileTypes(
-                query.content_extensions
-                    ? Array.isArray(query.content_extensions)
-                        ? query.content_extensions
-                        : [query.content_extensions]
+                query.file_type || query.content_extensions
+                    ? Array.isArray(query.file_type || query.content_extensions)
+                        ? (query.file_type || query.content_extensions)
+                        : [(query.file_type || query.content_extensions)]
                     : []
             );
             setPriceRange([
@@ -380,35 +380,44 @@ const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
                 query.price_to ? Number(query.price_to) : 500000,
             ]);
             setPageRange([
-                query.from_page ? Number(query.from_page) : 0,
-                query.to_page ? Number(query.to_page) : 100,
+                query.page_from || query.from_page ? Number(query.page_from || query.from_page) : 0,
+                query.page_to || query.to_page ? Number(query.page_to || query.to_page) : 100,
             ]);
         }
     }, [open]);
 
     const handleSaveOnClose = () => {
         const filters = {
-            parentCategory: selectedCategory.slug,
-            childCategory: selectedSubCategory.slug,
-            content_extensions: fileTypes,
+            parentCategory: selectedCategory?.slug || query.parentCategory,
+            childCategory: selectedSubCategory?.slug || query.childCategory,
+            file_type: fileTypes, // Now using API standard name
             price_from: priceRange[0],
             price_to: priceRange[1],
-            from_page: pageRange[0],
-            to_page: pageRange[1],
+            page_from: pageRange[0], // Now using API standard name
+            page_to: pageRange[1],   // Now using API standard name
         };
-        const newQuery = clearEmptyQueries({ ...query, ...filters });
+
+        const currentParams = clearEmptyQueries(query);
+        const newQuery = clearEmptyQueries({ ...currentParams, ...filters });
+        
+        // Remove empty values and ensure slug is handled correctly
+        const targetSlug = selectedCategory?.slug || query.slug || 'all';
+        
         push({
-            pathname: `${path}${selectedCategory.slug || 'all'}`,
+            pathname: `${path}${targetSlug}`,
             query: newQuery,
-        });
+        }, undefined, { scroll: false });
+        
         onClose();
     };
 
     const handleClear = () => {
+        // Clear all filter specific queries but keep search if necessary
+        const { search } = query;
         push({
             pathname: `${path}all`,
-            query: {},
-        });
+            query: search ? { search } : {},
+        }, undefined, { scroll: false });
         onClose();
     };
 

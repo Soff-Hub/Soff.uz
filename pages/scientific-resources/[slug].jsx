@@ -4,12 +4,14 @@ import Meta from '~/shared/ui/meta';
 import ProductsByCategory from '~/components/partials/category/ProductsByCategory';
 import { useRouter } from 'next/router';
 import { baseUrlUseApi } from '~/repositories/useApi';
+import { buildSearchUrl, normalizeProducts, resolveCategoryId } from '~/shared/utilities/api-helpers';
 import styles from '~/widgets/home/catalog/style.module.scss';
 import Image from 'next/image';
 import ProductFilterSection, {
     getTitleFromSlug,
 } from '~/components/elements/product-filter-section/ProductFilterSection';
 import GrayCard from '~/widgets/gray-card';
+import fetchJson from '~/shared/api/fetch-json';
 
 const metaProps = {
     image: 'https://soff.uz/static/img/ilmiy-ishlar-2.png',
@@ -168,6 +170,7 @@ export default function ProductCategoryScreen({
 }
 
 export async function getServerSideProps(context) {
+    const type = 'file';
     const {
         page = 1,
         parentCategory = '',
@@ -180,47 +183,29 @@ export async function getServerSideProps(context) {
         to_page = '',
     } = context.query;
 
-    const queryParams = new URLSearchParams({
-        direction: type,
-        page,
-        page_size: 50,
-    });
-
-    const categoryParam = childCategory ? childCategory : parentCategory;
-    if (search) queryParams.append('search', search);
-    if (categoryParam) queryParams.append('category', categoryParam);
-    if (content_extensions && content_extensions.length) {
-        const exts = Array.isArray(content_extensions)
-            ? content_extensions
-            : [content_extensions];
-
-        exts.forEach((ext) => {
-            queryParams.append('content_extensions', ext);
-        });
-    }
-
-    if (price_from) queryParams.append('price_from', price_from);
-    if (price_to) queryParams.append('price_to', price_to);
-    if (Number(from_page)) queryParams.append('from_page', from_page);
-    if (Number(to_page) < 100) queryParams.append('to_page', to_page);
-
-    const fetchJson = async (url) => {
-        const res = await fetch(url);
-        if (!res.ok) {
-            return null;
-        }
-        return res.json();
-    };
-
-    const productsUrl = `${baseUrlUseApi}customer/products/?${queryParams.toString()}`;
+    const productsUrl = buildSearchUrl(context.query, 'file', 50);
     const fourChildUrl = `${baseUrlUseApi}customer/four-child?direction=${type}`;
     const childCategoryUrl = `${baseUrlUseApi}customer/four-child?direction=${type}&parent__slug=${parentCategory}`;
 
-    const [productsData, fourChildData, childCategoryData] = await Promise.all([
-        fetchJson(productsUrl),
+    const [productsDataRaw, fourChildData, childCategoryData] = await Promise.all([
+        null, // Initial fetch deferred until IDs are resolved
         fetchJson(fourChildUrl),
         fetchJson(childCategoryUrl),
     ]);
+
+    // Resolve numeric IDs from slugs
+    const resolvedParentId = resolveCategoryId(parentCategory, fourChildData);
+    const resolvedChildId = resolveCategoryId(childCategory, childCategoryData);
+
+    // Build URL with numeric IDs
+    const finalProductsUrl = buildSearchUrl({
+        ...context.query,
+        parentCategoryId: resolvedParentId,
+        childCategoryId: resolvedChildId
+    }, 'file', 50);
+
+    const productsDataRawFinal = await fetchJson(finalProductsUrl);
+    const productsData = normalizeProducts(productsDataRawFinal);
 
     return {
         props: {
