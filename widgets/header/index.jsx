@@ -128,13 +128,13 @@ const Header = () => {
                 const res = await ProductRepository.getActivePromotion();
                 if (res && res.discount_percent > -1) {
                     setPromotion({
-                        discount_percent: 10,
-                        expires_at: "2026-12-31T23:59:59",
+                        discount_percent: res.discount_percent,
+                        expires_at: res.expires_at,
                     });
                     dispatch(setActivePromotion(
                         {
-                            discount_percent: 10,
-                            expires_at: "2026-12-31T23:59:59",
+                            discount_percent: res.discount_percent,
+                            expires_at: res.expires_at,
                         }
                     ));
                 }
