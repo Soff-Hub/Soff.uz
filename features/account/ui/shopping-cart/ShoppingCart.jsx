@@ -22,18 +22,14 @@ import { useMounted } from '~/shared/hooks/useMounted';
 
 function ShoppingCart() {
     const state = useSelector((state) => state.auth.user);
-    const { cartDataItems, playlistCartDataItems, status } = useSelector(
+    const { cartDataItems, playlistCartDataItems, status, activePromotion } = useSelector(
         (state) => state.ecomerce
     );
     const { removeCartOneItem, removePlaylistCartOneItem } = useCart();
     const [taxPercentage, setTaxPercentage] = useState(0.1); // Default 10%
-    const [promotion, setPromotion] = useState({
-        discount_percent: 0,
-        expires_at: null,
-    });
     const [collapsed, setCollapsed] = useState(false);
     const isMounted = useMounted();
-    const timeLeft = useCountTimeBack(promotion.expires_at);
+    const timeLeft = useCountTimeBack(activePromotion.expires_at);
 
     // Combine items for calculations
     const allItems = [
@@ -50,16 +46,9 @@ function ShoppingCart() {
     useEffect(() => {
         async function fetchData() {
             try {
-                const [taxResponse, promoResponse] = await Promise.all([
-                    ProductRepository.getOrderPercentage(),
-                    ProductRepository.getActivePromotion(),
-                ]);
-
+                const taxResponse = await ProductRepository.getOrderPercentage();
                 if (taxResponse?.data?.percentage) {
                     setTaxPercentage(taxResponse.data.percentage);
-                }
-                if (promoResponse) {
-                    setPromotion(promoResponse);
                 }
             } catch (error) {
                 console.error('Failed to fetch data:', error);
@@ -71,12 +60,11 @@ function ShoppingCart() {
     // Calculate totals
     const subtotal = hasItems ? calculateAmount(allItems) : 0;
     const discountAmount = Math.floor(
-        subtotal * (promotion.discount_percent / 100)
+        subtotal * (activePromotion.discount_percent / 100)
     );
     const amountAfterDiscount = subtotal - discountAmount;
     const tax = Math.floor(amountAfterDiscount * taxPercentage);
-    const totalWithTax = amountAfterDiscount + tax;
-    const total = totalWithTax;
+    const total = amountAfterDiscount + tax;
 
     const handleRemoveItem = (e, item) => {
         e.preventDefault();
@@ -115,7 +103,7 @@ function ShoppingCart() {
         );
     } else if (hasItems) {
         const isExpiring =
-            promotion.expires_at &&
+            activePromotion.expires_at &&
             (timeLeft.minutes > 0 || timeLeft.seconds > 0);
 
         cartContent = (
@@ -161,8 +149,8 @@ function ShoppingCart() {
                                             </>
                                         ) : (
                                             <span className={styles.currentPrice}>
-                                                {item.price && Number(item.price) > 0 
-                                                    ? `${addPeriodToThousands(item.price)} so'm` 
+                                                {item.price && Number(item.price) > 0
+                                                    ? `${addPeriodToThousands(item.price)} so'm`
                                                     : 'Bepul'}
                                             </span>
                                         )}
@@ -181,10 +169,10 @@ function ShoppingCart() {
 
                 {/* RIGHT: Order Summary */}
                 <div className={styles.orderSummary}>
-                    {isMounted && promotion.discount_percent > 0 && (
+                    {isMounted && activePromotion.discount_percent > 0 && (
                         <div className={styles.promoBadge}>
                             <div>
-                                <div className="font-bold" style={{ fontSize: '14px' }}>{promotion.discount_percent}% CHEGIRMA!</div>
+                                <div className="font-bold" style={{ fontSize: '14px' }}>{activePromotion.discount_percent}% CHEGIRMA!</div>
                                 <div style={{ fontSize: '11px' }}>Faqat siz uchun maxsus taklif</div>
                             </div>
                             {isExpiring && (
@@ -209,9 +197,9 @@ function ShoppingCart() {
                                 <span className={styles.value}>{addPeriodToThousands(subtotal)} so'm</span>
                             </div>
 
-                            {promotion.discount_percent > 0 && (
+                            {activePromotion.discount_percent > 0 && (
                                 <div className={cn(styles.receiptRow, styles.discountRow)}>
-                                    <span className={styles.label}>Aksiya chegirmasi (-{promotion.discount_percent}%)</span>
+                                    <span className={styles.label}>Chegirma (-{activePromotion.discount_percent}%)</span>
                                     <span className={styles.value}>-{addPeriodToThousands(discountAmount)} so'm</span>
                                 </div>
                             )}

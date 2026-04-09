@@ -52,6 +52,8 @@ import {
     TbSpeakerphone
 } from "react-icons/tb";
 
+const PROMO_MODAL_DISMISSED_KEY = 'soff_promo_modal_dismissed';
+
 const directionIcons = {
     scientific_work: <TbSchool size={22} strokeWidth={1.5} />,
     dizayn: <TbPalette size={22} strokeWidth={1.5} />,
@@ -126,13 +128,13 @@ const Header = () => {
                 const res = await ProductRepository.getActivePromotion();
                 if (res && res.discount_percent > -1) {
                     setPromotion({
-                        discount_percent: res.discount_percent,
-                        expires_at: res.expires_at,
+                        discount_percent: 10,
+                        expires_at: "2026-12-31T23:59:59",
                     });
                     dispatch(setActivePromotion(
                         {
-                            discount_percent: res.discount_percent,
-                            expires_at: res.expires_at,
+                            discount_percent: 10,
+                            expires_at: "2026-12-31T23:59:59",
                         }
                     ));
                 }
@@ -161,12 +163,18 @@ const Header = () => {
         if (isMounted && isLoggedIn) fetchDownload();
     }, [isMounted, isLoggedIn]);
 
-    // Show Promotion Modal logic (FORCED FOR TESTING)
+    // Show Promotion Modal logic with session persistence
     useEffect(() => {
-        if (isMounted && (promotion.discount_percent > 0)) {
+        const isDismissed = sessionStorage.getItem(PROMO_MODAL_DISMISSED_KEY);
+        if (isMounted && promotion.discount_percent > 0 && !isDismissed) {
             setPromotionModalVisible(true);
         }
     }, [isMounted, promotion.discount_percent]);
+
+    const handleClosePromotionModal = () => {
+        sessionStorage.setItem(PROMO_MODAL_DISMISSED_KEY, 'true');
+        setPromotionModalVisible(false);
+    };
 
     const handleQuickDownload = async (product) => {
         try {
@@ -588,7 +596,7 @@ const Header = () => {
 
             <Modal
                 open={promotionModalVisible}
-                onCancel={() => setPromotionModalVisible(false)}
+                onCancel={handleClosePromotionModal}
                 footer={null}
                 centered
                 width={downloadProduct ? 600 : 500}
@@ -637,7 +645,7 @@ const Header = () => {
                                     <Link href="/scientific-resources/all">
                                         <a
                                             className={styles.footerBuyBtnCompact}
-                                            onClick={() => setPromotionModalVisible(false)}
+                                            onClick={handleClosePromotionModal}
                                         >
                                             Yana sotib olish
                                         </a>
@@ -675,14 +683,14 @@ const Header = () => {
                                     <Link href="/scientific-resources/all">
                                         <a
                                             className={styles.footerBuyBtnCompact}
-                                            onClick={() => setPromotionModalVisible(false)}
+                                            onClick={handleClosePromotionModal}
                                         >
                                             Yana sotib olish
                                         </a>
                                     </Link>
                                     <button
                                         className={styles.closeModalBtn}
-                                        onClick={() => setPromotionModalVisible(false)}
+                                        onClick={handleClosePromotionModal}
                                     >
                                         Yopish
                                     </button>

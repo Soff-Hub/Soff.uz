@@ -37,7 +37,7 @@ const FormSubmitButton = ({ hisob, message, loading }) => (
 
 const CreditCard2 = ({ document, type }) => {
     const { user } = useSelector((state) => state.auth);
-    const { cartDataItems, playlistCartDataItems } = useSelector(
+    const { cartDataItems, playlistCartDataItems, activePromotion } = useSelector(
         (state) => state.ecomerce
     );
     const ecomerce = [...(cartDataItems || []), ...(playlistCartDataItems || [])];
@@ -79,8 +79,10 @@ const CreditCard2 = ({ document, type }) => {
     }, []);
 
     const amount = calculateAmount(ecomerce);
-    const taxAmount = Math.floor(amount * percentage);
-    const finalTotal = amount + taxAmount;
+    const discountAmount = Math.floor(amount * (activePromotion.discount_percent / 100));
+    const amountAfterDiscount = amount - discountAmount;
+    const taxAmount = Math.floor(amountAfterDiscount * percentage);
+    const finalTotal = amountAfterDiscount + taxAmount;
     const hisobFormatted = addPeriodToThousands(finalTotal);
 
     const handleCardNumberChange = (e) => {
@@ -322,6 +324,12 @@ const CreditCard2 = ({ document, type }) => {
                     <span className={styles.label}>Mahsulotlar narxi</span>
                     <span className={styles.value}>{addPeriodToThousands(amount)} so'm</span>
                 </div>
+                {activePromotion.discount_percent > 0 && (
+                    <div className={cn(styles.priceRow, styles.discountRow)}>
+                        <span className={styles.label}>Chegirma (-{activePromotion.discount_percent}%)</span>
+                        <span className={styles.value}>-{addPeriodToThousands(discountAmount)} so'm</span>
+                    </div>
+                )}
                 <div className={styles.priceRow}>
                     <span className={styles.label}>Soff.uz xizmat haqi ({Math.round(percentage * 100)}%)</span>
                     <span className={styles.value}>{addPeriodToThousands(taxAmount)} so'm</span>
@@ -354,7 +362,7 @@ const CreditCard2 = ({ document, type }) => {
             >
                 <div className="text-center py-4">
                     <p className="text-gray-500 mb-6">
-                        Kod quyidagi raqamga yuborildi:<br/>
+                        Kod quyidagi raqamga yuborildi:<br />
                         <strong className="text-gray-900">{resData?.data?.phone_number}</strong>
                     </p>
                     <input
