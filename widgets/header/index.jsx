@@ -564,10 +564,10 @@ const Header = () => {
                                 Frilanserlik xizmatlari
                             </a>
                         </Link>
-                        <Link href="/video-lessons">
+                        <Link href="/studio">
                             <a className={styles.navLink}>
                                 <TbVideo className={styles.icon} />
-                                Video darslar
+                                Soff Studio
                             </a>
                         </Link>
                         <a

@@ -51,8 +51,8 @@ const links = [
         isExternal: false,
     },
     {
-        href: "/videos",
-        label: "Video darsliklar",
+        href: "/studio",
+        label: "Soff Studio",
         icon: <TbVideo size={20} />,
         isExternal: false,
     },
