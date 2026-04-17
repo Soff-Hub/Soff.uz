@@ -51,7 +51,8 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
     const hasAccess = !!video.document.file_url;
     const isFree = video.price === 0;
 
-    const formatNumber = (num: number) => {
+    const formatNumber = (num: number | undefined | null) => {
+        if (num === undefined || num === null) return '0';
         return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
     };
 

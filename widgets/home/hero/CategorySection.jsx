@@ -18,9 +18,9 @@ const popularCategories = [
         icon: <TbSchool />
     },
     {
-        title: 'Video darslar',
+        title: 'Soff studio',
         count: '1K +',
-        href: '/video-lessons/all',
+        href: '/studio',
         icon: <TbVideo />
     },
     {
