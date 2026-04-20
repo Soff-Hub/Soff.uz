@@ -314,6 +314,16 @@ export async function getServerSideProps({ req, params }) {
     if (!defaultProducts) {
         return { notFound: true };
     }
+
+    if (defaultProducts?.document?.content_type === 'video') {
+        return {
+            redirect: {
+                destination: `/studio/content/${defaultProducts.slug}`,
+                permanent: false,
+            },
+        };
+    }
+
     return {
         props: {
             defaultProducts,

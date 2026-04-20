@@ -381,6 +381,15 @@ export const getServerSideProps: GetServerSideProps = async ({ req, params }: an
 
         const playlist = await response.json();
 
+        if (playlist) {
+            return {
+                redirect: {
+                    destination: `/studio/playlist/${slug}`,
+                    permanent: false,
+                },
+            };
+        }
+
         return {
             props: {
                 playlist: { ...playlist, slug },

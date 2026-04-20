@@ -199,6 +199,15 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ req, param
             return { notFound: true };
         }
 
+        if (video?.document?.content_type === 'video') {
+            return {
+                redirect: {
+                    destination: `/studio/content/${video.slug}`,
+                    permanent: false,
+                },
+            };
+        }
+
         return {
             props: {
                 video,
