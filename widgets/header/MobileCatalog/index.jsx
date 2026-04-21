@@ -68,6 +68,12 @@ const links = [
         icon: <TbUpload size={20} />,
         isExternal: true,
     },
+    {
+        href: "/order/create",
+        label: "Buyurtma berish",
+        icon: <MdEditNote size={20} />,
+        isExternal: false,
+    }
 ];
 
 const categoryTitles = {

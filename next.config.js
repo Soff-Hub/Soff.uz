@@ -4,7 +4,7 @@
 // Defaults to localhost for development if .env variables are missing
 const SERVICE_URL_VIDEO = process.env.SERVICE_URL_VIDEO || 'http://localhost:3005';
 const SERVICE_URL_FREELANCE = process.env.SERVICE_URL_FREELANCE || 'http://localhost:3006';
-const SERVICE_URL_CREATORS = process.env.SERVICE_URL_CREATORS || 'http://localhost:3001';
+const SERVICE_URL_CREATORS = process.env.SERVICE_URL_CREATORS || 'http://localhost:3000';
 
 const nextSettings = {
     optimizeFonts: true,
