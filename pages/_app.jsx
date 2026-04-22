@@ -125,9 +125,6 @@ function App({ Component, pageProps }) {
             window.removeEventListener('contextmenu', (e) =>
                 e.preventDefault()
             );
-            safeLocalStorage.removeItem('utm_source');
-            safeLocalStorage.removeItem('utm_medium');
-            safeLocalStorage.removeItem('utm_campaign');
         };
     }, []);
 

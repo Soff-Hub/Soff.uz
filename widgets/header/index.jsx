@@ -564,7 +564,7 @@ const Header = () => {
                                 Frilanserlik xizmatlari
                             </a>
                         </Link>
-                        <Link href="/studio">
+                        <Link href="/studio?utm_source=5a6ce4cf6cdb1ea8">
                             <a className={styles.navLink}>
                                 <TbVideo className={styles.icon} />
                                 Soff Studio

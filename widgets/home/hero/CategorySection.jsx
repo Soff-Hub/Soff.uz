@@ -20,7 +20,7 @@ const popularCategories = [
     {
         title: 'Soff studio',
         count: '1K +',
-        href: '/studio',
+        href: '/studio?utm_source=5a6ce4cf6cdb1ea8',
         icon: <TbVideo />
     },
     {
