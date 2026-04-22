@@ -571,7 +571,7 @@ const Header = () => {
                             </a>
                         </Link>
                         <a
-                            href="https://soffia.uz/uz/dashboard"
+                            href="https://soffia.uz/uz/dashboard?ref=ref_YT_60FE9C73"
                             target="_blank"
                             rel="noopener noreferrer"
                             className={styles.navLink}

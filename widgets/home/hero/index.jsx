@@ -61,7 +61,7 @@ const slides = [
     },
     {
         img: '/static/img/HomePage/hero/hero_2.jpg',
-        link: 'https://soffia.uz/uz/dashboard',
+        link: 'https://soffia.uz/uz/dashboard?ref=ref_YT_60FE9C73',
         target: '_blank'
     },
     {

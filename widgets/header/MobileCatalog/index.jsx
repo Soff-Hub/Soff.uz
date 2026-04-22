@@ -57,7 +57,7 @@ const links = [
         isExternal: false,
     },
     {
-        href: "https://soffia.uz/uz/dashboard",
+        href: "https://soffia.uz/uz/dashboard?ref=ref_YT_60FE9C73",
         label: "AI xizmatlari",
         icon: <TbSparkles size={20} />,
         isExternal: true,
