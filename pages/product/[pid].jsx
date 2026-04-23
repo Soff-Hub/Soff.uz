@@ -9,7 +9,7 @@ import PageContainer from '~/widgets/layouts/PageContainer';
 import { baseUrl } from '~/repositories/Repository';
 import Meta from '~/shared/ui/meta';
 import * as cookie from 'cookie';
-// import { getOrCreateDeviceId } from '~/shared/utilities/device-id';
+import { getOrCreateDeviceId } from '~/shared/utilities/device-id';
 import dynamic from 'next/dynamic';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
 import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
@@ -274,8 +274,9 @@ export default function ProductDefaultPage({ defaultProducts }) {
     );
 }
 
-export async function getServerSideProps({ req, params }) {
+export async function getServerSideProps({ req, res, params }) {
     const { pid } = params;
+    const deviceId = getOrCreateDeviceId({ req, res });
     const cookies = cookie.parse(req.headers.cookie || '');
     const token = cookies.token;
 
@@ -285,6 +286,7 @@ export async function getServerSideProps({ req, params }) {
 
     const headers = {
         'Accept': 'application/json',
+        'X-Device-Id': deviceId,
     };
 
     if (token) {
