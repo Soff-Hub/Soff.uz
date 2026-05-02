@@ -56,7 +56,7 @@ const slides = [
     },
     {
         img: '/static/img/HomePage/hero/hero_4.png',
-        link: '/video-lessons',
+        link: '/studio',
         target: '_self'
     },
     {
