@@ -15,6 +15,8 @@ import { useSelector } from 'react-redux';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import AuthModal from '~/features/auth/ui/auth-modal';
+import { api } from '~/repositories/api';
+import FileDownloadLink from '~/shared/ui/file-download-link';
 import { FaRegHeart } from 'react-icons/fa';
 import { FaHeart } from 'react-icons/fa';
 import { FaShoppingCart } from 'react-icons/fa';
@@ -503,27 +505,74 @@ function FileActions({ product }) {
 const CustomResponsiveLayout = ({ product, handleBuynow }) => {
     const { isMobile, size } = useResponsive();
     const { activePromotion } = useSelector((state) => state.ecomerce);
+    const [telegramLoading, setTelegramLoading] = useState(false);
 
     const displayPrice = activePromotion?.discount_percent > 0
         ? Math.round(product?.price * (1 - activePromotion.discount_percent / 100))
         : product?.price;
+
+    const handleDownloadThroughTelegram = async () => {
+        if (!product?.id) return;
+
+        try {
+            setTelegramLoading(true);
+            const { data } = await api.get(
+                `seller/return-telegram-link/${product.id}/`
+            );
+
+            if (data?.link) {
+                window.open(data.link, '_blank');
+                return;
+            }
+
+            message.error('Telegram havolasi topilmadi');
+        } catch (error) {
+            console.error('Telegram download error:', error);
+            message.error('Telegram orqali yuklab olishda xatolik yuz berdi');
+        } finally {
+            setTelegramLoading(false);
+        }
+    };
+
+    const renderPurchasedActions = () => (
+        <>
+            <FileDownloadLink
+                url={product?.document?.file_url}
+                filename={product?.title}
+                className={styles.downloadLink}>
+                <Button
+                    iconPosition="end"
+                    style={{ height: '58px', fontSize: '20px' }}
+                    type="primary"
+                    className="w-100 bg-success"
+                    icon={<DownloadOutlined />}
+                    size={'large'}>
+                    Yuklab olish
+                </Button>
+            </FileDownloadLink>
+            <Button
+                onClick={handleDownloadThroughTelegram}
+                loading={telegramLoading}
+                style={{ height: '58px', fontSize: '20px' }}
+                type="default"
+                className={styles.telegramButton}
+                size={'large'}>
+                <img
+                    src="/static/img/telegram.png"
+                    alt="Telegram"
+                    height={24}
+                />
+                <span>Telegram orqali olish</span>
+            </Button>
+        </>
+    );
 
     return (
         <>
             <div
                 className={`d-flex flex-column gap-3 ${isMobile ? 'sticky-bottom-btn' : ''}`}>
                 {product?.document?.file_url ? (
-                    <a href={product?.document?.file_url} target="_blank" rel="noreferrer">
-                        <Button
-                            iconPosition="end"
-                            style={{ height: '58px', fontSize: '20px' }}
-                            type="primary"
-                            className="w-100 bg-success"
-                            icon={<DownloadOutlined />}
-                            size={'large'}>
-                            Yuklab olish
-                        </Button>
-                    </a>
+                    renderPurchasedActions()
                 ) : (
                     <Button
                         onClick={(e) => handleBuynow(e)}
@@ -541,20 +590,7 @@ const CustomResponsiveLayout = ({ product, handleBuynow }) => {
             {isMobile && (
                 <div className={`d-flex flex-column gap-3 `}>
                     {product?.document?.file_url ? (
-                        <a href={product?.document?.file_url} target="_blank" rel="noreferrer">
-                            <Button
-                                iconPosition="end"
-                                style={{
-                                    height: '58px',
-                                    fontSize: '20px',
-                                }}
-                                type="primary"
-                                className="w-100 bg-success"
-                                icon={<DownloadOutlined />}
-                                size={'large'}>
-                                Yuklab olish
-                            </Button>
-                        </a>
+                        renderPurchasedActions()
                     ) : (
                         <Button
                             onClick={(e) => handleBuynow(e)}

@@ -74,6 +74,35 @@
     }
 }
 
+.downloadLink {
+    display: block;
+    width: 100%;
+}
+
+.telegramButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    color: #229ed9;
+    border: 1px solid #229ed9;
+    background: #fff;
+
+    span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    &:hover,
+    &:focus {
+        color: #1d8ec4 !important;
+        border-color: #1d8ec4 !important;
+        background: #f3fbff !important;
+    }
+}
+
 @keyframes shine {
     0% {
         left: -100%;
