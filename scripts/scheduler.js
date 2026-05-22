@@ -1,35 +1,44 @@
 const fs = require('fs');
 const path = require('path');
 
-async function clearCache() {
-    // Find cache directory - handles both development and standalone mode
-    let cacheDir;
-
-    // Try multiple possible cache locations
+function resolveCacheDir() {
     const possiblePaths = [
-        // Standalone mode: from .next/standalone/scripts/ go up to .next/cache
-        path.resolve(__dirname, '../../.next/cache'),
-        // Or if running from project root
+        // Runtime cwd must win. deploy/server.js calls process.chdir(__dirname),
+        // so this resolves to deploy/.next/cache in deployed builds.
         path.join(process.cwd(), '.next', 'cache'),
-        // Or relative to current working directory
         path.resolve('.next/cache'),
+
+        // Standalone runtime before prepare-deploy:
+        // .next/standalone/scripts -> .next/cache
+        path.resolve(__dirname, '../../cache'),
+
+        // Prepared deploy runtime:
+        // deploy/scripts -> deploy/.next/cache
+        path.resolve(__dirname, '../.next/cache'),
+
+        // Source script runtime:
+        // scripts -> .next/cache
+        path.resolve(__dirname, '../.next/cache'),
     ];
 
-    // Find the first existing cache directory
-    for (const cachePath of possiblePaths) {
-        if (fs.existsSync(cachePath)) {
-            cacheDir = cachePath;
-            break;
-        }
-    }
+    const uniquePaths = [
+        ...new Set(possiblePaths.map((cachePath) => path.resolve(cachePath))),
+    ];
 
-    // If no cache found, use the most likely location
-    if (!cacheDir) {
-        cacheDir = path.resolve(__dirname, '../../.next/cache');
-    }
+    return (
+        uniquePaths.find((cachePath) => fs.existsSync(cachePath)) ||
+        path.join(process.cwd(), '.next', 'cache')
+    );
+}
+
+async function clearCache() {
+    const cacheDir = resolveCacheDir();
 
     if (fs.existsSync(cacheDir)) {
         console.log(`🗑️  Clearing cache at: ${cacheDir}`);
+        console.log(`   cwd: ${process.cwd()}`);
+        console.log(`   script dir: ${__dirname}`);
+
         try {
             await fs.promises.rm(cacheDir, { recursive: true, force: true });
             console.log(
@@ -47,10 +56,8 @@ async function clearCache() {
     }
 }
 
-// Export for use in init-scheduler.js
-module.exports = { clearCache };
+module.exports = { clearCache, resolveCacheDir };
 
-// Only run directly if called as standalone script (for testing)
 if (require.main === module) {
     clearCache()
         .then(() => {

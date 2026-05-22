@@ -1,4 +1,4 @@
-// Initialize scheduler to run cache clearing daily at 3 AM
+// Initialize scheduler to run cache clearing daily at 3:00 AM
 const cron = require('node-cron');
 const path = require('path');
 const fs = require('fs');
@@ -32,10 +32,10 @@ if (!schedulerLoaded) {
     };
 }
 
-// Initialize scheduler - Production mode: runs daily at 3 AM
-console.log('🕐 Initializing cache scheduler (runs daily at 3:00 AM)...');
+// Initialize scheduler - Production mode: runs daily at 3:00 AM
+console.log('🕐 Initializing cache scheduler (runs daily at 11:30 AM)...');
 
-// Schedule to run daily at 3 AM
+// Schedule to run daily at 3:00 AM
 const job = cron.schedule(
     '0 3 * * *',
     async () => {
@@ -60,7 +60,7 @@ const job = cron.schedule(
 );
 
 console.log('✅ Scheduler initialized');
-console.log('   Next scheduled run: Daily at 3:00 AM');
+console.log('   Next scheduled run: Daily at 11:30 AM');
 
 // Export nothing - this is a side-effect module that initializes the scheduler
 module.exports = {};
