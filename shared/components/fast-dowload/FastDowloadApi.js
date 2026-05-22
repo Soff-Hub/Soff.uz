@@ -1,6 +1,10 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { baseURL } from '~/repositories/api';
+import {
+    handleExpiredAuthSession,
+    isAuthErrorStatus,
+} from '~/shared/utilities/auth-session';
 
 const getToken = () => Cookies.get('token');
 
@@ -17,8 +21,8 @@ export const fetchFastDownloadProduct = async () => {
         });
         return res.data;
     } catch (error) {
-        if (error.response && error.response.status === 403) {
-            // Cookies.remove('token'); // tokenni o'chirish
+        if (isAuthErrorStatus(error.response?.status)) {
+            handleExpiredAuthSession();
             throw new Error(
                 'Token invalid yoki muddati o‘tgan. Iltimos, qaytadan tizimga kiring.'
             );
@@ -40,8 +44,8 @@ export const fetchProductDowload = async (id) => {
         });
         return res.data;
     } catch (error) {
-        if (error.response && error.response.status === 401) {
-            Cookies.remove('token');
+        if (isAuthErrorStatus(error.response?.status)) {
+            handleExpiredAuthSession();
             throw new Error('Token invalid yoki muddati o‘tgan.');
         }
         throw error;

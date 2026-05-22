@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { attachAuthErrorInterceptor } from '~/shared/utilities/auth-session';
 
 // BASE DOMAINS
 const baseDomain = `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/`;
@@ -13,10 +14,14 @@ export const customHeaders = {
 
 export const baseUrl = `${baseDomain}`;
 
-export default axios.create({
+const repository = axios.create({
     baseUrl,
     headers: customHeaders,
 });
+
+attachAuthErrorInterceptor(repository);
+
+export default repository;
 
 export const serializeQuery = query => {
     return Object.keys(query)

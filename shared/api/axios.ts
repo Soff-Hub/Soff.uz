@@ -1,5 +1,6 @@
 import axios, { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 import { safeLocalStorage } from '../utilities/safe-local-storage';
+import { handleExpiredAuthSession, isAuthErrorStatus } from '../utilities/auth-session';
 import { API_BASE_URL } from './config';
 
 /**
@@ -73,14 +74,8 @@ const createApiInstance = (): AxiosInstance => {
         async (error: AxiosError<ApiErrorResponse>) => {
             const status = error.response?.status;
 
-            // Handle 401 Unauthorized (Token expired or invalid)
-            if (status === 401) {
-                // Clear authentication and redirect if necessary
-                // safeLocalStorage.removeItem('user');
-                // window.location.href = '/login'; 
-                // Note: Using window.location.href might cause full page reload.
-                // In a real app, you might want to use a state manager (Zustand, Redux) to handle this.
-                console.warn('Unauthorized access detected (401).');
+            if (isAuthErrorStatus(status)) {
+                handleExpiredAuthSession();
             }
 
             // Handle other common errors

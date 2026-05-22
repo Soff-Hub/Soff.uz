@@ -14,6 +14,7 @@ import { useTimeManager } from '~/shared/hooks/useTimeManager';
 import '~/shared/utilities/dayjs-locale-uz';
 import Script from 'next/script';
 import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
+import { configureDefaultAxiosAuthHandling } from '~/shared/utilities/auth-session';
 import Cookies from 'js-cookie';
 // import showOfferNotification from '~/shared/components/offer-notification';
 
@@ -22,6 +23,8 @@ function App({ Component, pageProps }) {
     const { startTimeout } = useTimeManager();
 
     useEffect(() => {
+        configureDefaultAxiosAuthHandling();
+
         // Sync logout across tabs/apps on the same origin
         const handleStorageChange = (e) => {
             if ((e.key === 'auth-storage' || e.key === 'user' || e.key === 'data') && !e.newValue) {

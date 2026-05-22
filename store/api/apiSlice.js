@@ -1,9 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { d_base_url, f_base_url } from '~/shared/api/base-url';
-import Cookies from 'js-cookie';
-import { logOut } from '~/store/auth/slice';
 import { logout as profileLogout } from '~/store/profile/slice';
 import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
+import {
+    handleExpiredAuthSession,
+    isAuthErrorStatus,
+} from '~/shared/utilities/auth-session';
 
 const getToken = () => {
     if (typeof window !== 'undefined') {
@@ -33,32 +35,15 @@ const retryLogic = (failureCount, error) => {
     return false;
 };
 
-// Custom base query wrapper to handle 403 errors
+// Custom base query wrapper to handle expired/invalid auth errors
 const baseQueryWithLogout = (baseQuery) => {
     return async (args, api, extraOptions) => {
         const result = await baseQuery(args, api, extraOptions);
 
-        // Handle 403 Forbidden errors
-        if (result.error && result.error.status === 403) {
+        if (result.error && isAuthErrorStatus(result.error.status)) {
             if (typeof window !== 'undefined') {
-                safeLocalStorage.clear();
-                Cookies.remove('token');
-                api.dispatch(logOut());
                 api.dispatch(profileLogout());
-
-                // Navigate to login page if on a protected/account page
-                const currentPath = window.location.pathname;
-                if (
-                    (currentPath.includes('/account') ||
-                        currentPath.includes('/order') ||
-                        currentPath.includes('/chat')) &&
-                    !currentPath.includes('/auth/login') &&
-                    !currentPath.includes('/auth/register') &&
-                    !currentPath.includes('/auth/reset-password') &&
-                    !currentPath.includes('/oauth')
-                ) {
-                    window.location.href = '/auth/login';
-                }
+                handleExpiredAuthSession();
             }
         }
 
