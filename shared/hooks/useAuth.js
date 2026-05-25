@@ -15,20 +15,6 @@ export default function useAuth() {
 
         return user;
     };
-    const registerGoogleUser = (params, e) => {
-        let user = Repository.get(
-            baseUrlAuth + `auth/social/login/${e}/${params}`
-        )
-            .then((ress) => {
-                return ress;
-            })
-            .catch((error) => {
-                return Promise.reject(error);
-            });
-
-        return user;
-    };
-
     const loginUser = (e) => {
         let endPoint = 'auth/login/';
 
@@ -213,6 +199,5 @@ export default function useAuth() {
         logOutAuth,
         qaytaKodYuborishParol,
         feedbackPost,
-        registerGoogleUser,
     };
 }

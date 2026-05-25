@@ -1,55 +1,107 @@
 import Router, { useRouter } from 'next/router';
 import React from 'react';
 import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
-// import useAuth from '~/shared/hooks/useAuth';
+import { GoogleLogin } from '@react-oauth/google';
+import { Modal } from 'antd';
+import { useDispatch } from 'react-redux';
+import { login } from '~/store/auth/slice';
+import { baseUrlAuth } from '~/repositories/Repository';
 
 export default function GoogleBox({
-    // loading,
-    // params,
     isModal,
     onGoogleSuccessNavigateTo,
     openTelegram,
-    // setCode,
+    params,
 }) {
-    // const { registerGoogleUser } = useAuth();
     const router = useRouter();
+    const dispatch = useDispatch();
 
-    const handleGoogleClick = async () => {
-        // Build the OAuth URL with proper query parameters
-        const utm_source = safeLocalStorage.getItem('utm_source');
-        const baseUrl = 'https://api.soff.uz/auth/social/login/customer';
-        const params = new URLSearchParams();
+    const buildGoogleLoginUrl = () => {
+        const queryParams = new URLSearchParams();
+        const utmSource = safeLocalStorage.getItem('utm_source');
+        const affiliateId = router.query?.id;
 
-        if (onGoogleSuccessNavigateTo) {
-            safeLocalStorage.setItem(
-                'google_redirect_url',
-                onGoogleSuccessNavigateTo
+        if (affiliateId) {
+            queryParams.set('id', String(affiliateId));
+        }
+
+        if (utmSource) {
+            queryParams.set(
+                'utm_source',
+                utmSource.replace(/[^a-zA-Z0-9_-]/g, '')
             );
         }
 
-        // Add existing query parameters
-        Object.keys(router.query).forEach((key) => {
-            if (router.query[key]) {
-                params.append(key, router.query[key]);
+        if (params) {
+            const legacyParams = new URLSearchParams(
+                String(params).replace(/^\?/, '')
+            );
+            legacyParams.forEach((value, key) => {
+                if (value) queryParams.set(key, value);
+            });
+        }
+
+        const queryString = queryParams.toString();
+        return `${baseUrlAuth}auth/new-google-login/customer${
+            queryString ? `?${queryString}` : ''
+        }`;
+    };
+
+    const handleGoogleSuccess = async (credentialResponse) => {
+        const idToken = credentialResponse?.credential;
+
+        if (!idToken) {
+            Modal.error({
+                centered: true,
+                title: 'Google orqali kirishda xatolik',
+                content: 'Google ID token olinmadi. Qayta urinib ko‘ring.',
+            });
+            return;
+        }
+
+        try {
+            const response = await fetch(buildGoogleLoginUrl(), {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ id_token: idToken }),
+            });
+            const data = await response.json();
+
+            if (!response.ok || !data?.success || !data?.access) {
+                throw new Error(
+                    data?.msg || 'Google orqali kirishda xatolik yuz berdi.'
+                );
             }
-        });
 
-        if (utm_source) {
-            params.append('utm_source', utm_source);
+            dispatch(
+                login({
+                    user: data,
+                    data: {
+                        phone_or_email: 'google',
+                        role: data.role || 'customer',
+                    },
+                })
+            );
+
+            const redirectUrl =
+                onGoogleSuccessNavigateTo ||
+                safeLocalStorage.getItem('google_redirect_url') ||
+                (isModal ? router.asPath : '/');
+
+            safeLocalStorage.removeItem('google_redirect_url');
+
+            Router.push(redirectUrl);
+        } catch (error) {
+            Modal.error({
+                centered: true,
+                title: 'Google orqali kirishda xatolik',
+                content:
+                    error?.message ||
+                    'Tarmoqda xatolik yuz berdi. Qayta urinib ko‘ring.',
+            });
         }
-
-        // Add return URL for modals
-        if (isModal) {
-            const redirectUrl = onGoogleSuccessNavigateTo || router.asPath;
-            params.append('returnUrl', encodeURIComponent(redirectUrl));
-            // onSuccess();
-        }
-
-        const fullUrl = params.toString()
-            ? `${baseUrl}?${params.toString()}`
-            : baseUrl;
-        // Use window.location for external redirects - this works reliably on iOS 18
-        window.location.href = fullUrl;
     };
 
     const handleTelegramClick = async () => {
@@ -90,20 +142,51 @@ export default function GoogleBox({
                 <span>Telegram orqali kirish</span>
             </button>
 
-            <button
-                type="button"
-                onClick={handleGoogleClick}
+            <div
                 style={{
-                    border: '1px solid #DB4437',
-                    borderRadius: '10px',
-                    cursor: 'pointer',
-                    background: 'transparent',
+                    position: 'relative',
                     width: '100%',
-                }}
-                className="py-3 px-3 d-flex align-items-center gap-2 justify-content-center">
-                <img src="/static/img/google.png" alt="" height={20} />
-                <span>Google orqali kirish</span>
-            </button>
+                    height: '52px',
+                }}>
+                <button
+                    type="button"
+                    tabIndex={-1}
+                    style={{
+                        border: '1px solid #DB4437',
+                        borderRadius: '10px',
+                        cursor: 'pointer',
+                        background: 'transparent',
+                        width: '100%',
+                        height: '100%',
+                    }}
+                    className=" px-3 d-flex align-items-center gap-2 justify-content-center">
+                    <img src="/static/img/google.png" alt="" height={20} />
+                    <span>Google orqali kirish</span>
+                </button>
+                <div
+                    style={{
+                        position: 'absolute',
+                        inset: 0,
+                        zIndex: 2,
+                        overflow: 'hidden',
+                        opacity: 0.01,
+                    }}>
+                <GoogleLogin
+                    width="100%"
+                    text="signin_with"
+                    locale="uz"
+                    onSuccess={handleGoogleSuccess}
+                    onError={() => {
+                        Modal.error({
+                            centered: true,
+                            title: 'Google orqali kirishda xatolik',
+                            content:
+                                'Google oynasi muvaffaqiyatli yakunlanmadi. Qayta urinib ko‘ring.',
+                        });
+                    }}
+                />
+                </div>
+            </div>
         </div>
     );
 }

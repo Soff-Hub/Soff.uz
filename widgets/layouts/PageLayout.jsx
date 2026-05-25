@@ -2,9 +2,11 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import { useDispatch, useSelector } from 'react-redux';
-import { checkAuthorization } from '~/store/auth/slice';
+import { checkAuthorization, login } from '~/store/auth/slice';
 import { useRouter } from 'next/router';
 import { GoogleLogin } from '@react-oauth/google';
+import { baseUrlAuth } from '~/repositories/Repository';
+import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
 import {
     useGetDirectionsQuery,
     useGetProfileQuery,
@@ -37,8 +39,59 @@ const PageLayout = ({ children, title, withFooter = true }) => {
     });
     useGetDirectionsQuery();
 
-    async function handleLogin(googleData) {
-        Router.push(`/oauth/?token=${googleData}&returnUrl=${Router.asPath}`);
+    const buildGoogleLoginUrl = () => {
+        const queryParams = new URLSearchParams();
+        const utmSource = safeLocalStorage.getItem('utm_source');
+        const affiliateId = Router.query?.id;
+
+        if (affiliateId) {
+            queryParams.set('id', String(affiliateId));
+        }
+
+        if (utmSource) {
+            queryParams.set(
+                'utm_source',
+                utmSource.replace(/[^a-zA-Z0-9_-]/g, '')
+            );
+        }
+
+        const queryString = queryParams.toString();
+        return `${baseUrlAuth}auth/new-google-login/customer${
+            queryString ? `?${queryString}` : ''
+        }`;
+    };
+
+    async function handleLogin(credentialResponse) {
+        const idToken = credentialResponse?.credential;
+
+        if (!idToken) return;
+
+        try {
+            const response = await fetch(buildGoogleLoginUrl(), {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ id_token: idToken }),
+            });
+            const data = await response.json();
+
+            if (!response.ok || !data?.success || !data?.access) {
+                return;
+            }
+
+            dispatch(
+                login({
+                    user: data,
+                    data: {
+                        phone_or_email: 'google',
+                        role: data.role || 'customer',
+                    },
+                })
+            );
+        } catch (error) {
+            console.error('Google one tap login failed:', error);
+        }
     }
 
     const defaultRoutePage = () => {
@@ -80,9 +133,7 @@ const PageLayout = ({ children, title, withFooter = true }) => {
             {!isValideUser && (
                 <div style={{ height: 0, overflow: 'hidden' }}>
                     <GoogleLogin
-                        onSuccess={(credentialResponse) => {
-                            handleLogin(credentialResponse?.credential);
-                        }}
+                        onSuccess={handleLogin}
                         intermediate_iframe_close_callback={(e) =>
                             e.preventDefault()
                         }

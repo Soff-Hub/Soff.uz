@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { baseUrlProfie } from '~/reositoriy-admin/Repository';
-import { jwtDecode } from 'jwt-decode';
 import { useDispatch } from 'react-redux';
 import { login } from '~/store/auth/slice';
 import PageLoader from '~/shared/ui/common/PageLoader';
@@ -17,11 +16,13 @@ function Oauth(props) {
     };
 
     useEffect(() => {
-        if (config) {
+        if (user?.access) {
             dispatch(login(config));
             Router.push(props?.returnUrl || '/?tab=');
+        } else {
+            Router.push('/auth/login');
         }
-    }, [config]);
+    }, []);
 
     return (
         <div>
@@ -33,13 +34,23 @@ function Oauth(props) {
 export async function getServerSideProps(context) {
     const { query } = context;
     const { token, returnUrl } = query;
-    const response = await fetch(`${baseUrlProfie}auth/google-login/customer`, {
+
+    if (!token) {
+        return {
+            redirect: {
+                destination: '/auth/login',
+                permanent: false,
+            },
+        };
+    }
+
+    const response = await fetch(`${baseUrlProfie}auth/new-google-login/customer`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            email: jwtDecode(token)?.email,
+            id_token: token,
         }),
     });
 

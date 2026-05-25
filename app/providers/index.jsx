@@ -38,7 +38,7 @@ export const Providers = ({ children }) => (
             }}
         >
             <QueryClientProvider client={queryClient}>
-                <GoogleOAuthProvider clientId="203103939049-2ste634q2uc1io9oaup8gt35tsmucru0.apps.googleusercontent.com">
+                <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ''}>
                     <AntdProvider>{children}</AntdProvider>
                 </GoogleOAuthProvider>
             </QueryClientProvider>
