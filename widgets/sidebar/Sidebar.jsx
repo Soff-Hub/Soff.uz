@@ -6,6 +6,7 @@ import { FaTruck } from 'react-icons/fa';
 import { PiSignOutBold } from 'react-icons/pi';
 import { FaRegUserCircle } from 'react-icons/fa';
 import { FaRegHeart } from 'react-icons/fa';
+import { FaUser } from 'react-icons/fa';
 import { MdOutlineShoppingCart } from 'react-icons/md';
 import { FaRegCommentDots } from 'react-icons/fa';
 import { FaRegBell } from 'react-icons/fa';
@@ -142,6 +143,18 @@ function Sidebar({ collapsed, onChangeCollapse }) {
                 type: 'divider',
             },
             {
+                key: 'profile',
+                icon: <FaUser size={19} />,
+                disabled: !isAuthorized,
+                label: (
+                    <Link href={'/account/profile'}>
+                        <a style={!isAuthorized ? disableLinkStyle : {}}>
+                            Profil
+                        </a>
+                    </Link>
+                ),
+            },
+            {
                 key: 'logout',
                 icon: <PiSignOutBold size={20} />,
                 disabled: !isAuthorized,
@@ -155,6 +168,9 @@ function Sidebar({ collapsed, onChangeCollapse }) {
 
     const onClickMenuItem = (menuItem) => {
         switch (menuItem.key) {
+            case 'profile':
+                router.push('/account/profile');
+                break;
             case 'sellerproducts':
                 router.push('/account/sellerproducts');
                 break;

@@ -9,7 +9,8 @@ import ProductRepository from '~/repositories/ProductRepository';
 import { calculateAmount } from '~/shared/utilities/ecomerce-helpers';
 import { addPeriodToThousands } from './price-formatter';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
-import { FaRegCreditCard, FaRegCalendarDays, FaShieldHalved } from 'react-icons/fa6';
+import { FaRegCreditCard, FaRegCalendarDays, FaShieldHalved, FaClock } from 'react-icons/fa6';
+import { IoAlertCircle } from 'react-icons/io5';
 import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
 import styles from './checkout.module.scss';
 import { cn } from '~/shared/utilities/cn';
@@ -20,6 +21,77 @@ export const SecurePaymentAlert = () => (
         <span>To‘lov jarayoni ishonchli, shifrlangan va xavfsiz tarzda amalga oshiriladi.</span>
     </div>
 );
+
+const OtpInput = ({ length, value, onChange, inputRef }) => {
+    const boxesRef = useRef([]);
+    const [focusedIndex, setFocusedIndex] = useState(null);
+
+    const digits = (value || '').split('').concat(Array(length).fill('')).slice(0, length);
+
+    const handleChange = (index, char) => {
+        if (!/^\d$/.test(char) && char !== '') return;
+        const newDigits = [...digits];
+        newDigits[index] = char;
+        const newValue = newDigits.join('').slice(0, length);
+        onChange(newValue);
+        if (char && index < length - 1) {
+            boxesRef.current[index + 1]?.focus();
+        }
+    };
+
+    const handleKeyDown = (index, e) => {
+        if (e.key === 'Backspace') {
+            e.preventDefault();
+            const newDigits = [...digits];
+            if (digits[index]) {
+                newDigits[index] = '';
+                onChange(newDigits.join('').slice(0, length));
+            } else if (index > 0) {
+                newDigits[index - 1] = '';
+                onChange(newDigits.join('').slice(0, length));
+                boxesRef.current[index - 1]?.focus();
+            }
+            return;
+        }
+        if (e.key === 'ArrowLeft' && index > 0) {
+            boxesRef.current[index - 1]?.focus();
+        }
+        if (e.key === 'ArrowRight' && index < length - 1) {
+            boxesRef.current[index + 1]?.focus();
+        }
+    };
+
+    const handlePaste = (e) => {
+        e.preventDefault();
+        const pasted = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, length);
+        if (!pasted) return;
+        onChange(pasted);
+        const targetIdx = pasted.length < length ? pasted.length : length - 1;
+        boxesRef.current[targetIdx]?.focus();
+    };
+
+    return (
+        <div className={styles.otpInputRow}>
+            {Array.from({ length }).map((_, i) => (
+                <input
+                    key={i}
+                    ref={(el) => (boxesRef.current[i] = el)}
+                    type="tel"
+                    maxLength={1}
+                    className={`${styles.otpBox} ${digits[i] ? styles.otpBoxFilled : ''}`}
+                    value={digits[i] || ''}
+                    onChange={(e) => handleChange(i, e.target.value)}
+                    onKeyDown={(e) => handleKeyDown(i, e)}
+                    onPaste={i === 0 ? handlePaste : undefined}
+                    onFocus={() => setFocusedIndex(i)}
+                    inputMode="numeric"
+                    autoComplete="one-time-code"
+                    autoFocus={i === 0}
+                />
+            ))}
+        </div>
+    );
+};
 
 const FormSubmitButton = ({ hisob, message, loading }) => (
     <button
@@ -350,7 +422,7 @@ const CreditCard2 = ({ document, type }) => {
             <SecurePaymentAlert />
 
             <Modal
-                title="SMS kodni kiriting"
+                title=""
                 centered
                 open={open}
                 onOk={handleSubmitCode}
@@ -358,24 +430,35 @@ const CreditCard2 = ({ document, type }) => {
                 maskClosable={false}
                 okText={buttonOk ? <BeatLoader color="#fff" size={6} /> : "Tasdiqlash"}
                 cancelText="Bekor qilish"
-                okButtonProps={{ disabled: buttonOk, style: { background: '#00a44f' } }}
+                okButtonProps={{
+                    disabled: buttonOk || (code?.length || 0) < 6,
+                    style: { background: '#00a44f' },
+                }}
+                className={styles.otpModal}
             >
-                <div className="text-center py-4">
-                    <p className="text-gray-500 mb-6">
-                        Kod quyidagi raqamga yuborildi:<br />
-                        <strong className="text-gray-900">{resData?.data?.phone_number}</strong>
+                <div className={styles.otpBody}>
+                    <h3 style={{ fontSize: 20, fontWeight: 700, color: '#111827', margin: '0 0 6px' }}>
+                        SMS kodni kiriting
+                    </h3>
+                    <p className={styles.otpPhone}>
+                        Kod quyidagi raqamga yuborildi<br />
+                        <strong>{resData?.data?.phone_number}</strong>
                     </p>
-                    <input
-                        ref={otpInputRef}
+                    <OtpInput
+                        length={6}
                         value={code || ''}
-                        onChange={(e) => setCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
-                        className="w-full text-center text-2xl tracking-[12px] h-16 rounded-xl border border-gray-200 outline-none focus:border-green-500 transition-all font-bold"
-                        maxLength={6}
-                        placeholder="000000"
+                        onChange={setCode}
+                        inputRef={otpInputRef}
                     />
-                    <div className="mt-4 font-bold text-red-500">{formattedTime}</div>
+                    <div className={styles.otpTimer}>
+                        <FaClock />
+                        {formattedTime}
+                    </div>
                     {resDataCode?.data?.msg?.[0] === 'Parol xato' && (
-                        <p className="text-red-500 mt-2">Parol xato, qaytadan urinib ko'ring</p>
+                        <p className={styles.otpError}>
+                            <IoAlertCircle />
+                            Parol xato, qaytadan urinib ko'ring
+                        </p>
                     )}
                 </div>
             </Modal>

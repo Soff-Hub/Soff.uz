@@ -1,0 +1,181 @@
+.pageContent {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.profileHeader {
+    background: #fff;
+    border-radius: 12px;
+    padding: 28px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.avatarSection {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.avatar {
+    flex-shrink: 0;
+    border: 3px solid #e8e8e8;
+}
+
+.fullName {
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0;
+    color: #1a1a1a;
+}
+
+.userRole {
+    margin: 4px 0 0;
+    color: #888;
+    font-size: 14px;
+}
+
+.bio {
+    margin: 16px 0 0;
+    color: #555;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.location {
+    margin: 4px 0 0;
+    color: #999;
+    font-size: 13px;
+}
+
+.sectionCard {
+    background: #fff;
+    border-radius: 12px;
+    padding: 24px 28px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.sectionTitle {
+    font-size: 17px;
+    font-weight: 600;
+    margin: 0 0 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f0f0f0;
+    color: #1a1a1a;
+}
+
+.sectionBody {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.infoRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #fafafa;
+}
+
+.infoRow:last-child {
+    border-bottom: none;
+}
+
+.infoLabel {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #666;
+    font-size: 14px;
+    flex-shrink: 0;
+    min-width: 160px;
+}
+
+.infoIcon {
+    display: inline-flex;
+    color: #999;
+    font-size: 14px;
+}
+
+.infoValue {
+    text-align: right;
+    font-size: 14px;
+    font-weight: 500;
+    color: #1a1a1a;
+    word-break: break-word;
+    max-width: 60%;
+}
+
+.nullValue {
+    color: #ccc;
+    font-weight: 400;
+}
+
+.phoneDisplay {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.editBtn {
+    background: none;
+    border: 1px solid #d9d9d9;
+    border-radius: 6px;
+    padding: 4px 6px;
+    cursor: pointer;
+    color: #888;
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.2s;
+}
+
+.editBtn:hover {
+    border-color: #00a44f;
+    color: #00a44f;
+    background: #f0fff4;
+}
+
+.phoneEditGroup {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.phoneInput {
+    width: 180px;
+}
+
+@media (max-width: 576px) {
+    .profileHeader {
+        padding: 18px;
+    }
+
+    .avatarSection {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .sectionCard {
+        padding: 16px;
+    }
+
+    .infoRow {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+
+    .infoLabel {
+        min-width: auto;
+    }
+
+    .infoValue {
+        text-align: left;
+        max-width: 100%;
+    }
+
+    .phoneEditGroup {
+        flex-wrap: wrap;
+    }
+}

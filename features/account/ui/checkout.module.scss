@@ -537,3 +537,163 @@
         font-size: 18px;
     }
 }
+
+/* ─── OTP Modal ─── */
+.otpModal {
+    :global(.ant-modal-content) {
+        border-radius: 16px;
+        padding: 32px 28px 28px;
+    }
+
+    :global(.ant-modal-header) {
+        border-bottom: none;
+        padding: 0 0 12px;
+        text-align: center;
+    }
+
+    :global(.ant-modal-title) {
+        font-size: 20px;
+        font-weight: 700;
+        color: #111827;
+    }
+
+    :global(.ant-modal-body) {
+        padding: 0;
+    }
+
+    :global(.ant-modal-footer) {
+        border-top: none;
+        padding: 20px 0 0;
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+    }
+
+    :global(.ant-btn-primary) {
+        background: #00a44f;
+        border: none;
+        border-radius: 10px;
+        height: 44px;
+        padding: 0 32px;
+        font-weight: 600;
+        font-size: 15px;
+        box-shadow: none;
+
+        &:hover {
+            background: #008f44 !important;
+        }
+
+        &:disabled {
+            background: #d1d5db !important;
+            color: #fff;
+        }
+    }
+
+    :global(.ant-btn-default) {
+        border-radius: 10px;
+        height: 44px;
+        padding: 0 24px;
+        font-size: 15px;
+        border-color: #e5e7eb;
+        color: #6b7280;
+
+        &:hover {
+            border-color: #d1d5db;
+            color: #374151;
+        }
+    }
+}
+
+.otpBody {
+    text-align: center;
+    padding: 8px 0 4px;
+}
+
+.otpPhone {
+    color: #6b7280;
+    font-size: 14px;
+    margin: 0 0 24px;
+    line-height: 1.6;
+
+    strong {
+        color: #111827;
+        font-weight: 600;
+    }
+}
+
+.otpInputRow {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+
+    @media (max-width: 400px) {
+        gap: 6px;
+    }
+}
+
+.otpBox {
+    width: 48px;
+    height: 56px;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: #111827;
+    outline: none;
+    transition: all 0.15s;
+    caret-color: transparent;
+
+    &::placeholder {
+        color: #d1d5db;
+        font-weight: 400;
+        font-size: 16px;
+    }
+
+    &:hover {
+        border-color: #d1d5db;
+    }
+
+    &:focus {
+        border-color: #00a44f;
+        box-shadow: 0 0 0 3px rgba(0, 164, 79, 0.12);
+        background: #fafdfb;
+    }
+
+    @media (max-width: 400px) {
+        width: 40px;
+        height: 48px;
+        font-size: 20px;
+    }
+}
+
+.otpBoxFilled {
+    border-color: #00a44f;
+    background: #f6fdf9;
+}
+
+.otpTimer {
+    font-size: 15px;
+    font-weight: 600;
+    color: #ef4444;
+    margin: 4px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+
+    svg {
+        font-size: 16px;
+    }
+}
+
+.otpError {
+    color: #ef4444;
+    font-size: 13px;
+    margin: 12px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}

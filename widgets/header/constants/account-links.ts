@@ -1,7 +1,13 @@
 import { FaBagShopping } from 'react-icons/fa6';
 import { FaTruck } from 'react-icons/fa6';
+import { FaUser } from 'react-icons/fa6';
 
 export const accountLinks = [
+    {
+        text: 'Profil',
+        url: '/account/profile',
+        icon: FaUser,
+    },
     {
         text: 'Sotib olinganlar',
         url: '/account/sellerproducts',
