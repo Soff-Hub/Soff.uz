@@ -527,9 +527,6 @@ const injectedRtkApi = api.injectEndpoints({
                 url: `/api/v1/order/${queryArg.orderId}/send-file`,
                 method: 'POST',
                 body: queryArg.bodySendServiceOrderFileApiV1OrderOrderIdSendFilePost,
-                headers: {
-                    authorization: queryArg.authorization,
-                },
             }),
         }),
         editServiceOrderFileApiV1OrderOrderIdEditFilePatch: build.mutation<
@@ -1564,7 +1561,6 @@ export type SendServiceOrderFileApiV1OrderOrderIdSendFilePostApiResponse =
     /** status 200 Successful Response */ any;
 export type SendServiceOrderFileApiV1OrderOrderIdSendFilePostApiArg = {
     orderId: number;
-    authorization?: string;
     bodySendServiceOrderFileApiV1OrderOrderIdSendFilePost: BodySendServiceOrderFileApiV1OrderOrderIdSendFilePost;
 };
 export type EditServiceOrderFileApiV1OrderOrderIdEditFilePatchApiResponse =

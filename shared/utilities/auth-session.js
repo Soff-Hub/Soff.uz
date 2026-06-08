@@ -3,12 +3,14 @@ import axios from 'axios';
 import { safeLocalStorage } from './safe-local-storage';
 
 const AUTH_ERROR_STATUSES = new Set([401, 403]);
+const RATE_LIMIT_STATUSES = new Set([429, 413]);
 const AUTH_STORAGE_KEYS = ['user', 'data', 'token', 'qayta_token', 'auth-storage'];
 
 let authExpireHandled = false;
 let defaultAxiosInterceptorId = null;
 
 export const isAuthErrorStatus = (status) => AUTH_ERROR_STATUSES.has(Number(status));
+export const isRateLimitStatus = (status) => RATE_LIMIT_STATUSES.has(Number(status));
 
 export const getJwtCookieExpires = (token) => {
     if (!token) return 8;
@@ -61,8 +63,16 @@ export const attachAuthErrorInterceptor = (axiosInstance) => {
     axiosInstance.interceptors.response.use(
         (response) => response,
         (error) => {
-            if (isAuthErrorStatus(error?.response?.status)) {
+            const status = error?.response?.status;
+            if (isAuthErrorStatus(status)) {
                 handleExpiredAuthSession();
+            } else if (isRateLimitStatus(status)) {
+                const detail = error?.response?.data?.detail;
+                if (detail && typeof window !== 'undefined') {
+                    import('antd').then(({ message }) => {
+                        message.error(detail);
+                    });
+                }
             }
 
             return Promise.reject(error);
@@ -76,8 +86,16 @@ export const configureDefaultAxiosAuthHandling = () => {
     defaultAxiosInterceptorId = axios.interceptors.response.use(
         (response) => response,
         (error) => {
-            if (isAuthErrorStatus(error?.response?.status)) {
+            const status = error?.response?.status;
+            if (isAuthErrorStatus(status)) {
                 handleExpiredAuthSession();
+            } else if (isRateLimitStatus(status)) {
+                const detail = error?.response?.data?.detail;
+                if (detail && typeof window !== 'undefined') {
+                    import('antd').then(({ message }) => {
+                        message.error(detail);
+                    });
+                }
             }
 
             return Promise.reject(error);

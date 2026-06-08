@@ -54,7 +54,7 @@ export default function useAuth() {
         const endPoint = 'auth/reset-password-verify/';
         let config = {
             headers: {
-                Authorization: `Bearer ${safeLocalStorage.getItem('qayta_token')} `,
+                Authorization: `Bearer ${safeLocalStorage.getItem('qayta_token')}`,
             },
         };
         let user = Repository.post(baseUrlAuth + endPoint, e, config)
@@ -74,7 +74,7 @@ export default function useAuth() {
         let endPoint = 'auth/get-new-code/';
         // let endPoint = 'auth/get-new-code/';
         let config = {
-            Authorization: `Bearer ${safeLocalStorage.getItem('token')} `,
+            Authorization: `Bearer ${safeLocalStorage.getItem('token')}`,
         };
         let user = Repository({
             url: baseUrlAuth + endPoint,
@@ -97,7 +97,7 @@ export default function useAuth() {
         let endPoint = 'auth/get-new-code/';
         // let endPoint = 'auth/get-new-code/';
         let config = {
-            Authorization: `Bearer ${safeLocalStorage.getItem('qayta_token')} `,
+            Authorization: `Bearer ${safeLocalStorage.getItem('qayta_token')}`,
         };
         let user = Repository({
             url: baseUrlAuth + endPoint,
@@ -137,7 +137,7 @@ export default function useAuth() {
         let endPoint = 'auth/reset-password-confirm/';
         let config = {
             headers: {
-                Authorization: `Bearer ${safeLocalStorage.getItem('qayta_token')} `,
+                Authorization: `Bearer ${safeLocalStorage.getItem('qayta_token')}`,
             },
         };
         let user = Repository.post(baseUrlAuth + endPoint, e, config)
@@ -156,7 +156,7 @@ export default function useAuth() {
         let endPoint = 'auth/logout/';
         let config = {
             headers: {
-                Authorization: `Bearer ${safeLocalStorage.getItem('token')} `,
+                Authorization: `Bearer ${safeLocalStorage.getItem('token')}`,
             },
         };
         let user = Repository.post(baseUrlAuth + endPoint, e, config)

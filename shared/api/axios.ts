@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 import { safeLocalStorage } from '../utilities/safe-local-storage';
-import { handleExpiredAuthSession, isAuthErrorStatus } from '../utilities/auth-session';
+import { handleExpiredAuthSession, isAuthErrorStatus, isRateLimitStatus } from '../utilities/auth-session';
 import { API_BASE_URL } from './config';
 
 /**
@@ -76,6 +76,12 @@ const createApiInstance = (): AxiosInstance => {
 
             if (isAuthErrorStatus(status)) {
                 handleExpiredAuthSession();
+            } else if (isRateLimitStatus(status)) {
+                const detail = (error.response?.data as any)?.detail || error.response?.data?.message;
+                if (detail && typeof window !== 'undefined') {
+                    const { default: antd } = await import('antd');
+                    antd.message.error(detail);
+                }
             }
 
             // Handle other common errors

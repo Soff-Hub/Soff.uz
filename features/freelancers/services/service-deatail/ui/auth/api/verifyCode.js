@@ -18,4 +18,3 @@ export const useVerifyCode = () => {
         mutationFn: ({ transaction_id, code }) => verifyCode({ token, transaction_id, code }),
     });
 };
-const cardNumber = "9860 3501 4326 6863"
