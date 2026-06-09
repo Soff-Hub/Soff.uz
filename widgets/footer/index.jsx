@@ -154,6 +154,17 @@ const aboutUsPages = [
     { key: '5', link: '/page/oferta', label: 'Oferta' },
 ];
 
+const paymentMethods = [
+    {
+        name: 'Click',
+        icon: '/static/img/payment-method/click-logo.png',
+    },
+    {
+        name: 'Payme',
+        icon: '/static/img/payment-method/payme-logo.png',
+    },
+];
+
 const FooterCollapse = ({ title, children, defaultOpen = false }) => {
     const { isMobile } = useResponsive();
 
@@ -255,6 +266,25 @@ export default function Footer() {
                                 )}
                             </ul>
                         </FooterCollapse>
+
+                        <div className={styles.paymentSection}>
+                            <span className={styles.paymentTitle}>
+                                To'lov usullari
+                            </span>
+                            <div className={styles.paymentLogos}>
+                                {paymentMethods.map((method) => (
+                                    <div
+                                        key={method.name}
+                                        className={styles.paymentCard}>
+                                        <img
+                                            src={method.icon}
+                                            alt={method.name}
+                                            loading="lazy"
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
                     </div>
                     <div className={styles.footerLinksSection}>
                         <FooterCollapse title="Tayyor mahsulotlar">
