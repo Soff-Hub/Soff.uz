@@ -538,7 +538,33 @@ export default function UserAgreement() {
                     Veb-sayt: <strong>soff.uz</strong>
                 </p>
 
-                <h4>16. Rekvizitlar</h4>
+                <h4>
+                    16. Visa va Mastercard to'lov tizimlari orqali to'lovlarni
+                    qaytarish
+                </h4>
+                <p>
+                    16.1. Visa va Mastercard xalqaro to'lov tizimlari orqali
+                    amalga oshirilgan to'lovlar bo'yicha mablag'larni qaytarish
+                    ushbu to'lov tizimlarining amaldagi qoidalari va
+                    standartlariga muvofiq amalga oshiriladi.
+                </p>
+                <p>
+                    16.2. Qaytarish tasdiqlangan taqdirda mablag' faqat
+                    dastlabki to'lov amalga oshirilgan Visa yoki Mastercard
+                    kartasiga qaytariladi.
+                </p>
+                <p>
+                    16.3. Mablag' boshqa bank kartasi, elektron hamyon yoki
+                    uchinchi shaxs hisob raqamiga o'tkazilmaydi.
+                </p>
+                <p>
+                    16.4. Foydalanuvchi tomonidan chargeback (to'lov yuzasidan
+                    nizo) jarayoni boshlangan taqdirda, xizmat ko'rsatuvchi
+                    tegishli banklar va xalqaro to'lov tizimlariga zarur
+                    ma'lumot hamda hujjatlarni taqdim etish huquqiga ega.
+                </p>
+
+                <h4>17. Rekvizitlar</h4>
                 <p>
                     Mazkur ommaviy oferta doirasida xizmatlarni taqdim etuvchi
                     tashkilot quyidagi rekvizitlarga ega:

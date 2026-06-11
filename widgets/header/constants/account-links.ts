@@ -4,11 +4,6 @@ import { FaUser } from 'react-icons/fa6';
 
 export const accountLinks = [
     {
-        text: 'Profil',
-        url: '/account/profile',
-        icon: FaUser,
-    },
-    {
         text: 'Sotib olinganlar',
         url: '/account/sellerproducts',
         icon: FaBagShopping,
@@ -17,5 +12,10 @@ export const accountLinks = [
         text: 'Buyurtmalarim',
         url: '/order/my-orders',
         icon: FaTruck,
+    },
+    {
+        text: 'Profil',
+        url: '/account/profile',
+        icon: FaUser,
     },
 ];
