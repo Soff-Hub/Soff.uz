@@ -1,0 +1,167 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches: [main, production-2025]
+  workflow_dispatch: {}
+
+concurrency:
+  group: deploy-prod
+  cancel-in-progress: true
+
+env:
+  # ─────────────────────────────────────────────────────────────────────────
+  # CUSTOMIZE HERE (these are the only values you normally touch)
+  # ─────────────────────────────────────────────────────────────────────────
+  # Release root on the server. The deploy flips "$APP_DIR/current" atomically
+  # and PM2 runs "$APP_DIR/current/server.js".
+  APP_DIR: /root/frontend/customer
+  # PM2 process name (must be stable across deploys)
+  PM2_NAME: soff3001
+  # Local port the standalone Next server listens on (nginx reverse-proxies to it).
+  # Matches `next start -p 5505` in package.json.
+  PORT: 3001
+  # Public URL for the Telegram message
+  PUBLIC_URL: https://soff.uz
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    # Manual approval gate: configure "Required reviewers" on the
+    # `production` environment in repo Settings → Environments.
+    environment: production
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Create build env file
+        # Next 12 inlines NEXT_PUBLIC_* into the bundle at build time, AND
+        # next.config.js evaluates rewrites()/SERVICE_URL_* at build time too,
+        # so the FULL prod env must exist before `next build`.
+        # prepare-deploy.js (--env prod) then copies .env.production -> deploy/.env
+        # for runtime server-only vars.
+        #
+        # Put the whole file in the ENV_FILE_PROD secret, e.g.:
+        #   NEXT_PUBLIC_BASE_URL=https://api.soff.uz
+        #   SERVICE_URL_VIDEO=https://soff.uz   (or the internal upstream)
+        #   SERVICE_URL_FREELANCE=...
+        #   SERVICE_URL_CREATORS=...
+        #   TG_DEPLOY_BOT_TOKEN=... / TG_DEPLOY_CHAT_ID=...   (optional)
+        run: |
+          cat > .env.production <<'ENVEOF'
+          ${{ secrets.ENV_FILE_PROD }}
+          ENVEOF
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build (Next standalone + scheduler injection)
+        # `npm run build` = clear .next/cache + `next build` + copy-to-standalone.js
+        # (copy-to-standalone injects the node-cron scheduler into server.js and
+        # bundles node-cron into .next/standalone/node_modules).
+        run: npm run build
+        env:
+          NODE_ENV: production
+
+      - name: Assemble deploy bundle
+        # Produces a self-contained ./deploy folder: standalone server.js (with the
+        # injected scheduler) + traced node_modules + .next/static + public + .env
+        run: node scripts/prepare-deploy.js --env prod
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "${{ secrets.PROD_DEPLOY_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H "${{ secrets.PROD_DEPLOY_HOST }}" >> ~/.ssh/known_hosts 2>/dev/null
+
+      - name: Upload release
+        run: |
+          RELEASE_DIR="$APP_DIR/releases/${GITHUB_SHA::12}"
+          ssh -i ~/.ssh/id_ed25519 "${{ secrets.PROD_DEPLOY_USER }}@${{ secrets.PROD_DEPLOY_HOST }}" "mkdir -p '$RELEASE_DIR'"
+          rsync -az --delete -e "ssh -i ~/.ssh/id_ed25519" deploy/ "${{ secrets.PROD_DEPLOY_USER }}@${{ secrets.PROD_DEPLOY_HOST }}:$RELEASE_DIR/"
+
+      - name: Activate release (symlink switch + PM2 restart + health check)
+        run: |
+          ssh -i ~/.ssh/id_ed25519 "${{ secrets.PROD_DEPLOY_USER }}@${{ secrets.PROD_DEPLOY_HOST }}" \
+            "APP_DIR='$APP_DIR' RELEASE='${GITHUB_SHA::12}' PORT='$PORT' PM2_NAME='$PM2_NAME' bash -s" <<'REMOTE'
+          set -euo pipefail
+
+          RELEASE_DIR="$APP_DIR/releases/$RELEASE"
+          CURRENT_LINK="$APP_DIR/current"
+
+          # A standalone build must contain the server entry point
+          test -f "$RELEASE_DIR/server.js" || { echo "::error::server.js missing in release"; exit 1; }
+
+          # Remember previous release for rollback
+          PREV_TARGET="$(readlink -f "$CURRENT_LINK" 2>/dev/null || true)"
+
+          # Atomic symlink switch (zero downtime: the running process keeps serving
+          # from the old path until PM2 restarts onto the new one below).
+          ln -sfn "$RELEASE_DIR" "$CURRENT_LINK.tmp" && mv -Tf "$CURRENT_LINK.tmp" "$CURRENT_LINK"
+
+          # (Re)start the Node server under PM2 against the NEW release.
+          # delete+start (not restart) guarantees PM2 runs the freshly-resolved
+          # release path rather than a cached one from a previous deploy.
+          export PORT HOSTNAME=0.0.0.0 NODE_ENV=production
+          pm2 delete "$PM2_NAME" >/dev/null 2>&1 || true
+          ( cd "$RELEASE_DIR" && pm2 start server.js --name "$PM2_NAME" --update-env )
+          pm2 save >/dev/null 2>&1 || true
+
+          # Health check the local Node port directly. Any real HTTP response
+          # (200, or a locale redirect like 307 -> /uz, or even 404) means the
+          # Node server is alive; only connection-refused (000) fails.
+          OK=0
+          for i in $(seq 1 20); do
+            CODE="$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:$PORT" || true)"
+            case "$CODE" in 200|204|301|302|307|308|401|403|404) OK=1; break;; esac
+            sleep 2
+          done
+
+          if [ "$OK" != "1" ]; then
+            echo "::error::Health check failed (last code: $CODE), rolling back"
+            if [ -n "$PREV_TARGET" ] && [ -d "$PREV_TARGET" ] && [ "$PREV_TARGET" != "$RELEASE_DIR" ]; then
+              ln -sfn "$PREV_TARGET" "$CURRENT_LINK.tmp" && mv -Tf "$CURRENT_LINK.tmp" "$CURRENT_LINK"
+              pm2 delete "$PM2_NAME" >/dev/null 2>&1 || true
+              ( cd "$PREV_TARGET" && pm2 start server.js --name "$PM2_NAME" --update-env ) || true
+              pm2 save >/dev/null 2>&1 || true
+            fi
+            exit 1
+          fi
+
+          # Keep only the 5 newest releases
+          cd "$APP_DIR/releases"
+          ls -1t | tail -n +6 | xargs -r rm -rf --
+
+          echo "Deployed $RELEASE successfully"
+          REMOTE
+
+      - name: Telegram notify (success)
+        if: success()
+        run: |
+          TEXT="🚀 Soff.uz (PROD) deployed
+          Branch: ${GITHUB_REF_NAME}
+          Commit: ${GITHUB_SHA::12}
+          By: ${{ github.actor }}
+          ${PUBLIC_URL}"
+          curl -s "https://api.telegram.org/bot${{ secrets.TG_DEPLOY_BOT_TOKEN }}/sendMessage" \
+            --data-urlencode chat_id="${{ secrets.TG_DEPLOY_CHAT_ID }}" \
+            --data-urlencode text="$TEXT" > /dev/null || true
+
+      - name: Telegram notify (failure)
+        if: failure()
+        run: |
+          TEXT="❌ Soff.uz (PROD) deploy FAILED
+          Commit: ${GITHUB_SHA::12}
+          Logs: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          curl -s "https://api.telegram.org/bot${{ secrets.TG_DEPLOY_BOT_TOKEN }}/sendMessage" \
+            --data-urlencode chat_id="${{ secrets.TG_DEPLOY_CHAT_ID }}" \
+            --data-urlencode text="$TEXT" > /dev/null || true

@@ -55,6 +55,7 @@ export const fileColors = {
     '.mp3': '#88549E',
     '.html': '#6D96A',
     '.zip': '#E4BD3E',
+    '.rar': '#9B59B6',
     '.psd': '#0053BD',
     '.pptx': '#DD7657',
     '.mov': '#6EB5E9',
@@ -267,7 +268,7 @@ function FileActions({ product }) {
                                     backgroundColor:
                                         fileColors[
                                         product?.document?.file_type
-                                        ],
+                                        ] || '#007DFF',
                                 }}>
                                 {product?.document?.file_type}
                             </span>
