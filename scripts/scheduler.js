@@ -46,8 +46,16 @@ async function clearCache() {
                 new Date().toISOString()
             );
         } catch (err) {
-            console.error('❌ Failed to clear cache:', err);
-            throw err;
+            console.error('❌ Failed to clear cache:', err.message);
+            console.error(`   cwd: ${process.cwd()}`);
+            console.error(`   cacheDir: ${cacheDir}`);
+            if (err.code === 'EACCES' || err.code === 'EPERM') {
+                console.error('   🔒 Permission denied. Check write access on cache directory.');
+            }
+            const enhanced = new Error(`Cache clear failed at ${cacheDir}: ${err.message}`);
+            enhanced.code = err.code;
+            enhanced.originalError = err;
+            throw enhanced;
         }
     } else {
         console.log(
