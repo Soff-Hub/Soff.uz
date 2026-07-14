@@ -132,7 +132,7 @@ function FileActions({ product }) {
         }
 
         const videoUrl = `https://soff.uz${pid}`;
-        const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(
+        const telegramUrl = `https://telegram.me/share/url?url=${encodeURIComponent(
             videoUrl
         )}`;
 

@@ -121,7 +121,7 @@ export default function TelegramConfigmForm({ isModal, onSuccess }) {
                             <span>Kirish uchun </span>
                             <a
                                 onClick={handleStart}
-                                href="https://t.me/soff_auth_bot?start=new_code"
+                                href="https://telegram.me/soff_auth_bot?start=new_code"
                                 target="_blank"
                                 className="text-success">
                                 @soff_auth_bot

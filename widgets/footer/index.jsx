@@ -20,9 +20,9 @@ const footerMenu = {
         links: [
             { name: 'Sotib olish va moderatsiya bo‘yicha', link: '' },
             { name: '+998 (91) 008 67 89', link: 'tel:+998910086789' },
-            { name: '@soff_moderator', link: 'https://t.me/soff_moderator' },
+            { name: '@soff_moderator', link: 'https://telegram.me/soff_moderator' },
             { name: 'Texnik muammolar uchun', link: 'tel:+998910086789' },
-            { name: '@hr_soffhub', link: 'https://t.me/hr_soffhub' },
+            { name: '@hr_soffhub', link: 'https://telegram.me/hr_soffhub' },
         ],
     },
     social: {
@@ -31,7 +31,7 @@ const footerMenu = {
             {
                 name: 'Telegram',
                 icon: '/static/svg/telegram_.svg',
-                url: 'https://t.me/+y5GpvEz48_hkMzli',
+                url: 'https://telegram.me/+y5GpvEz48_hkMzli',
             },
             {
                 name: 'YouTube',

@@ -437,7 +437,7 @@ export default function UserAgreement() {
                 </p>
                 <p>
                     14.5. Rasmiy Telegram kanalida (
-                    <strong>t.me/soff_uz</strong>) e'lon qilingan har qanday
+                    <strong>telegram.me/soff_uz</strong>) e'lon qilingan har qanday
                     yangilik yoki o'zgarish rasmiy hisoblanadi.
                 </p>
 

@@ -163,7 +163,7 @@ function App({ Component, pageProps }) {
                             url: 'https://soff.uz',
                             logo: 'https://soff.uz/static/img/soff/logo-dark.png',
                             sameAs: [
-                                'https://t.me/soff_uz',
+                                'https://telegram.me/soff_uz',
                                 'https://www.youtube.com/@soffuz',
                                 'https://www.facebook.com/people/Soffuz/61579052952962/',
                             ],

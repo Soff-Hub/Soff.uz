@@ -74,7 +74,7 @@ export default function AISoffiaPresentation() {
 
             <div style={{ flexShrink: 0 }} className="d-md-block d-none">
                 <a
-                    href="https://t.me/soffia_ai_bot"
+                    href="https://telegram.me/soffia_ai_bot"
                     target="_blank"
                     rel="noopener noreferrer">
                     <Button
@@ -173,7 +173,7 @@ export const AISoffiaPresentationNotFoundProduct = () => {
 
                         {/* <div style={{ flexShrink: 0 }} className='d-md-block d-none mt-5 text-center'>
                             <a
-                                href="https://t.me/soffia_ai_bot"
+                                href="https://telegram.me/soffia_ai_bot"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >

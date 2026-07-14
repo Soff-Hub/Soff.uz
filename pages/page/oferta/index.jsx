@@ -409,7 +409,7 @@ export default function Oferta() {
                     o‘zgartirish yoki yangilash huquqiga ega.
                 </p>
                 <p>
-                    - Rasmiy Telegram kanalida (t.me/soff_uz) e’lon qilingan har
+                    - Rasmiy Telegram kanalida (telegram.me/soff_uz) e’lon qilingan har
                     qanday yangilik yoki o‘zgarish rasmiy hisoblanadi.
                 </p>
                 <p>
