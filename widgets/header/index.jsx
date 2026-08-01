@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
@@ -212,6 +212,8 @@ const Header = () => {
         }
     }, [categoriesData, hoveredCategory]);
 
+    const closeMegaMenu = useCallback(() => setMegaMenuOpen(false), []);
+
     // Handle Click Outside for Mega Menu
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -222,6 +224,31 @@ const Header = () => {
         document.addEventListener('mousedown', handleClickOutside);
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
+
+    // Close all overlays on any navigation (link click, back/forward, programmatic push).
+    // Header is a persistent layout element, so it never unmounts on route change.
+    useEffect(() => {
+        const handleRouteChange = () => {
+            setMegaMenuOpen(false);
+            setMobileCatalogOpen(false);
+        };
+        router.events.on('routeChangeStart', handleRouteChange);
+        router.events.on('hashChangeStart', handleRouteChange);
+        return () => {
+            router.events.off('routeChangeStart', handleRouteChange);
+            router.events.off('hashChangeStart', handleRouteChange);
+        };
+    }, [router.events]);
+
+    // Escape closes the mega menu
+    useEffect(() => {
+        if (!megaMenuOpen) return undefined;
+        const handleKeyDown = (event) => {
+            if (event.key === 'Escape') setMegaMenuOpen(false);
+        };
+        document.addEventListener('keydown', handleKeyDown);
+        return () => document.removeEventListener('keydown', handleKeyDown);
+    }, [megaMenuOpen]);
 
     const activeCategoryData = categoriesData?.find(cat => cat.direction === hoveredCategory);
 
@@ -310,7 +337,7 @@ const Header = () => {
                                                 <a
                                                     className={`${styles.sidebarItem} ${hoveredCategory === category.direction ? styles.active : ''}`}
                                                     onMouseEnter={() => setHoveredCategory(category.direction)}
-                                                    onClick={() => setMegaMenuOpen(false)}
+                                                    onClick={closeMegaMenu}
                                                 >
                                                     <div className={styles.sidebarItemContent}>
                                                         <span className={styles.sidebarIconBox}>
@@ -342,7 +369,7 @@ const Header = () => {
                                                                     key={cat.id}
                                                                     href={`/${activeCategoryData.direction === 'scientific_work' ? 'category' : (templateLink[activeCategoryData.direction] || 'templates')}/${cat.slug}?slug=${cat.slug}&parentCategory=${cat.slug}&title=${cat.title}`}
                                                                 >
-                                                                    <a className={styles.menuLink}>{cat.title}</a>
+                                                                    <a className={styles.menuLink} onClick={closeMegaMenu}>{cat.title}</a>
                                                                 </Link>
                                                             ))}
                                                         </div>
@@ -365,7 +392,7 @@ const Header = () => {
                                                                     key={cat.id}
                                                                     href={`/orders?direction=${activeCategoryData.direction}&category_id=${cat.id}&title=${cat.title}`}
                                                                 >
-                                                                    <a className={styles.menuLink}>{cat.title}</a>
+                                                                    <a className={styles.menuLink} onClick={closeMegaMenu}>{cat.title}</a>
                                                                 </Link>
                                                             ))}
                                                         </div>
