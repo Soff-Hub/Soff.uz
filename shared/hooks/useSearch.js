@@ -40,6 +40,10 @@ function useSearch(categoryId = null) {
     const { addSearchHistoryItem } = useHistorySearch();
     const axios = axiosInstance();
 
+    // The 500ms gap after a keystroke, before the query is even enabled.
+    // Without this the UI treats "not asked yet" as "asked and got nothing".
+    const isDebouncing = search.trim() !== debouncedSearch.trim();
+
     const searchOptions = (options) => {
         return options?.filter((option) => {
             if (typeof option !== 'string' || !option) return false;
@@ -57,13 +61,20 @@ function useSearch(categoryId = null) {
     } = useQuery({
         queryKey: ['searchResults', debouncedSearch, type, categoryId],
         queryFn: async () => {
+            // encodeURIComponent is required: titles routinely contain `|`,
+            // `&` and `#`, and an unencoded `&` silently truncates the query.
             const searchParam = debouncedSearch
-                ? `&search=${debouncedSearch}`
+                ? `&search=${encodeURIComponent(debouncedSearch)}`
                 : ``;
-            const categoryParam = categoryId ? `&category=${categoryId}` : '';
+            const categoryParam = categoryId
+                ? `&category=${encodeURIComponent(categoryId)}`
+                : '';
             const res = await fetch(
                 `${baseUrlUseApi}customer/same-google-search/?type=file&limit=10${searchParam}${categoryParam}`
             );
+            if (!res.ok) {
+                throw new Error(`Search request failed: ${res.status}`);
+            }
             const json = await res.json();
             return json;
         },
@@ -160,12 +171,23 @@ function useSearch(categoryId = null) {
     });
 
     const handleClickOption = async (optionValue) => {
-        setSearch(optionValue);
-        await router.push(
-            `/search-page/?keyword=${optionValue}&tab=${type === 'mahsulotlar' ? 1 : type === 'xizmatlar' ? 2 : 3
-            }&type=${type === 'mahsulotlar' ? 'file' : 'all'}`
-        );
-        addSearchHistoryItem({ value: optionValue, type });
+        if (!optionValue?.trim()) return;
+
+        try {
+            // Navigation is the slow part users click on; without this the
+            // search button gave no feedback at all until the page changed.
+            setIsNavigating(true);
+            setSearch(optionValue);
+            await router.push(
+                `/search-page/?keyword=${encodeURIComponent(optionValue)}&tab=${type === 'mahsulotlar' ? 1 : type === 'xizmatlar' ? 2 : 3
+                }&type=${type === 'mahsulotlar' ? 'file' : 'all'}`
+            );
+            addSearchHistoryItem({ value: optionValue, type });
+        } catch (error) {
+            console.error('Error navigating to search page:', error);
+        } finally {
+            setIsNavigating(false);
+        }
     };
 
     const handleNavigateOption = async (optionValue, optionData) => {
@@ -202,9 +224,14 @@ function useSearch(categoryId = null) {
 
     const options = useMemo(() => {
         if (type === 'mahsulotlar') {
-            if (productsLoading) return [];
-            if (isSuccess && data?.results && data.results.length > 0) {
-                // Deduplicate by title, keeping first occurrence
+            // isDebouncing too, otherwise the static list flashes for 500ms
+            // after every keystroke while the query is still disabled.
+            if (productsLoading || isDebouncing) return [];
+            if (isSuccess && data?.results) {
+                // Deduplicate by title, keeping first occurrence.
+                // An empty array is returned as-is so the dropdown can show
+                // "Hech narsa topilmadi". Substituting the static category
+                // list here made a failed search look like a successful one.
                 const seen = new Set();
                 const unique = [];
                 data.results.forEach((item) => {
@@ -219,7 +246,7 @@ function useSearch(categoryId = null) {
                 });
                 return unique;
             }
-            // Return static options if no results
+            // Only before anything has been searched for.
             return staticOptions[type] || [];
         } else if (type === 'xizmatlar') {
             if (servicesLoading) return [];
@@ -253,7 +280,11 @@ function useSearch(categoryId = null) {
         debouncedSearch,
         isNavigating,
         setIsNavigating,
-        isLoading: productsLoading || servicesLoading || specialistsLoading,
+        isLoading:
+            isDebouncing ||
+            productsLoading ||
+            servicesLoading ||
+            specialistsLoading,
         handleSearch,
         handleClickOption,
         handleNavigateOption,

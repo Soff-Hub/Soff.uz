@@ -197,6 +197,7 @@ const Header = () => {
         handleSearch,
         handleNavigateOption,
         options,
+        isNavigating,
         isLoading: searchLoading
     } = useSearch();
 
@@ -442,8 +443,15 @@ const Header = () => {
                             <button
                                 className={styles.searchBtn}
                                 onClick={handleSearch}
+                                disabled={isNavigating}
+                                aria-busy={isNavigating}
+                                aria-label="Qidirish"
                             >
-                                <MdSearch className={styles.icon} />
+                                {isNavigating ? (
+                                    <span className={styles.btnSpinner} />
+                                ) : (
+                                    <MdSearch className={styles.icon} />
+                                )}
                             </button>
                         </div>
 
