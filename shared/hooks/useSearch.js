@@ -70,7 +70,7 @@ function useSearch(categoryId = null) {
                 ? `&category=${encodeURIComponent(categoryId)}`
                 : '';
             const res = await fetch(
-                `${baseUrlUseApi}customer/same-google-search/?type=file&limit=10${searchParam}${categoryParam}`
+                `${baseUrlUseApi}customer/same-google-search/?type=all&limit=10${searchParam}${categoryParam}`
             );
             if (!res.ok) {
                 throw new Error(`Search request failed: ${res.status}`);
@@ -180,7 +180,7 @@ function useSearch(categoryId = null) {
             setSearch(optionValue);
             await router.push(
                 `/search-page/?keyword=${encodeURIComponent(optionValue)}&tab=${type === 'mahsulotlar' ? 1 : type === 'xizmatlar' ? 2 : 3
-                }&type=${type === 'mahsulotlar' ? 'file' : 'all'}`
+                }&type=all`
             );
             addSearchHistoryItem({ value: optionValue, type });
         } catch (error) {
@@ -197,7 +197,7 @@ function useSearch(categoryId = null) {
 
             if (type === 'mahsulotlar') {
                 await router.push(
-                    `/search-page/?keyword=${optionValue}&tab=1&type=file`
+                    `/search-page/?keyword=${optionValue}&tab=1&type=all`
                 );
             } else if (type === 'xizmatlar') {
                 await router.push(
