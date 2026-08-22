@@ -317,14 +317,7 @@ export async function getServerSideProps({ req, res, params }) {
         return { notFound: true };
     }
 
-    if (defaultProducts?.document?.content_type === 'video') {
-        return {
-            redirect: {
-                destination: `/studio/content/${defaultProducts.slug}`,
-                permanent: false,
-            },
-        };
-    }
+
 
     return {
         props: {
