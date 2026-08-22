@@ -1,6 +1,7 @@
 import React from 'react';
 import Hero from './hero';
 import dynamic from 'next/dynamic';
+import styles from './style.module.scss';
 
 // const Bests = dynamic(() => import('./bests'), {
 //     ssr: false,
@@ -50,8 +51,10 @@ const Home = () => {
             </div>
             <div className="bg-white">
                 <div className="container">
-                    <LastServices />
-                    <Info />
+                    <div className={styles.infoServicesRow}>
+                        <Info />
+                        <LastServices compact />
+                    </div>
                 </div>
             </div>
             <div className="bg-white py-1">
