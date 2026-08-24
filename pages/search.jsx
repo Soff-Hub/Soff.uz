@@ -12,7 +12,7 @@ export async function getServerSideProps(ctx) {
                     ? ctx.resolvedUrl.substring(ctx.resolvedUrl.indexOf('?'))
                     : ''
             }`,
-            permanent: false, // Use 302 redirect (temporary)
+            permanent: true,
         },
     };
 }

@@ -37,10 +37,10 @@ function SearchResult({
                         key={item.value}
                         href={
                             item.type === 'mahsulotlar'
-                                ? `/search-page/?keyword=${item.value}&tab=1&type=all`
+                                ? `/search-page?keyword=${encodeURIComponent(item.value)}&tab=1&type=all`
                                 : item.type === 'xizmatlar'
-                                    ? `/search-page/?keyword=${item.value}&tab=2&type=all`
-                                    : `/search-page/?keyword=${item.value}&tab=3&type=all`
+                                    ? `/search-page?keyword=${encodeURIComponent(item.value)}&tab=2&type=all`
+                                    : `/search-page?keyword=${encodeURIComponent(item.value)}&tab=3&type=all`
                         }>
                         <a onClick={() => setIsNavigating(true)}>
                             <SearchHistoryOption

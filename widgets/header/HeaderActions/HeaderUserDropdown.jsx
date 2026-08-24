@@ -130,7 +130,7 @@ const HeaderUserDropdown = () => {
         );
     } else {
         return (
-            <Link href={`/auth/login/?returnUrl=${returnUrl}`}>
+            <Link href={`/auth/login?returnUrl=${returnUrl}`}>
                 <a className={cn(styles.loginEntrance, "m-0")}>Kirish</a>
             </Link>
         );

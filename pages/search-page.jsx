@@ -241,6 +241,12 @@ const Search_Results = ({
                             : "Soff.uz orqali kerakli bo'lgan raqamli mahsulotlarni yuklab olishingiz mumkin"
                     }
                 />
+                <link
+                    rel="canonical"
+                    href={`https://soff.uz/search-page${
+                        keyword ? `?keyword=${encodeURIComponent(keyword)}` : ''
+                    }`}
+                />
             </Head>
 
             {/* Navbar */}

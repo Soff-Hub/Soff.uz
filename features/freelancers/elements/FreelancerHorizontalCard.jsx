@@ -332,7 +332,7 @@ const FreelancerHorizontalCard = ({ seller, onCreateChat }) => {
                                                 xizmatlar topildi
                                             </h3>
                                             <Link
-                                                href={`/seller/${seller?.seller_id}/?tab=service`}>
+                                                href={`/seller/${seller?.seller_id}?tab=service`}>
                                                 <a
                                                     className={
                                                         styles.viewAllButton
