@@ -98,6 +98,12 @@ export default function Search_Results_Products({
                             pathname: router.pathname,
                             query: {
                                 ...router.query,
+                                // Keep similar documents in the SSR result set on
+                                // later pages; the flag is only added on user
+                                // navigation so the landing URL stays stable.
+                                ...(similarDocuments?.results?.length > 0 && {
+                                    similar_documents: 'true',
+                                }),
                                 page: newPage,
                             },
                         });
