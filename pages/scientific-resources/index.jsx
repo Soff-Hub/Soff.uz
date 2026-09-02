@@ -1,16 +1,4 @@
-export default function ScientificResourcesIndex() {
-    return null;
-}
-
-export async function getServerSideProps(ctx) {
-    return {
-        redirect: {
-            destination: `/scientific-resources/all${
-                ctx.resolvedUrl.includes('?')
-                    ? ctx.resolvedUrl.substring(ctx.resolvedUrl.indexOf('?'))
-                    : ''
-            }`,
-            permanent: false, // Use 302 redirect (temporary)
-        },
-    };
-}
+// `/scientific-resources` renders the same listing as `/scientific-resources/all` directly.
+// It used to answer with a 307 redirect, which search engines flagged as a
+// "page with redirect" error. `[slug].jsx` already treats a missing slug as "all".
+export { default, getServerSideProps } from './[slug]';

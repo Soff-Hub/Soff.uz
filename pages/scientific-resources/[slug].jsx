@@ -51,6 +51,9 @@ export default function ProductCategoryScreen({
     page,
 }) {
     const router = useRouter();
+    // `/scientific-resources` and `/scientific-resources/all` serve the same listing;
+    // point search engines at the `/all` URL that internal links use.
+    const canonicalUrl = `https://soff.uz/scientific-resources/${router.query.slug || 'all'}`;
 
     const handlePageChange = (newPage) => {
         router.push({
@@ -72,6 +75,7 @@ export default function ProductCategoryScreen({
     return (
         <PageContainer>
             <Meta
+                canonicalUrl={canonicalUrl}
                 title={finalTitle}
                 description={
                     finalTitle +

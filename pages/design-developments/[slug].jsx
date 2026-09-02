@@ -22,6 +22,9 @@ export default function DesignDevelopments({
     page,
 }) {
     const router = useRouter();
+    // `/design-developments` and `/design-developments/all` serve the same listing;
+    // point search engines at the `/all` URL that internal links use.
+    const canonicalUrl = `https://soff.uz/design-developments/${router.query.slug || 'all'}`;
     const handlePageChange = (newPage) => {
         router.push({
             pathname: router.pathname,
@@ -42,6 +45,7 @@ export default function DesignDevelopments({
     return (
         <PageContainer>
             <Meta
+                canonicalUrl={canonicalUrl}
                 title={finalTitle}
                 description={`Biz siz qidirayotgan mahsulotlarni Soff.uz saytimizning kategoriyasida topdik`}
             />
@@ -67,7 +71,7 @@ export default function DesignDevelopments({
 
 export async function getServerSideProps(context) {
     const type = 'design';
-    const pathSlug = context.params.slug || 'all';
+    const pathSlug = context.params?.slug || 'all';
     const {
         page = 1,
         parentCategory = '',

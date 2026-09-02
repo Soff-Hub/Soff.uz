@@ -179,7 +179,7 @@ function useSearch(categoryId = null) {
             setIsNavigating(true);
             setSearch(optionValue);
             await router.push(
-                `/search-page/?keyword=${encodeURIComponent(optionValue)}&tab=${type === 'mahsulotlar' ? 1 : type === 'xizmatlar' ? 2 : 3
+                `/search-page?keyword=${encodeURIComponent(optionValue)}&tab=${type === 'mahsulotlar' ? 1 : type === 'xizmatlar' ? 2 : 3
                 }&type=all`
             );
             addSearchHistoryItem({ value: optionValue, type });
@@ -197,18 +197,18 @@ function useSearch(categoryId = null) {
 
             if (type === 'mahsulotlar') {
                 await router.push(
-                    `/search-page/?keyword=${optionValue}&tab=1&type=all`
+                    `/search-page?keyword=${optionValue}&tab=1&type=all`
                 );
             } else if (type === 'xizmatlar') {
                 await router.push(
-                    `/search-page/?keyword=${optionValue}&tab=2&type=all`
+                    `/search-page?keyword=${optionValue}&tab=2&type=all`
                 );
             } else if (type === 'mutaxassislar') {
                 if (optionData?.id) {
                     await router.push(`/seller/${optionData.id}`);
                 } else {
                     await router.push(
-                        `/search-page/?keyword=${optionValue}&tab=3&type=all`
+                        `/search-page?keyword=${optionValue}&tab=3&type=all`
                     );
                 }
             }

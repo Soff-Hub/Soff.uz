@@ -22,6 +22,9 @@ export default function Templates({
     page,
 }) {
     const router = useRouter();
+    // `/templates` and `/templates/all` serve the same listing;
+    // point search engines at the `/all` URL that internal links use.
+    const canonicalUrl = `https://soff.uz/templates/${router.query.slug || 'all'}`;
     const handlePageChange = (newPage) => {
         router.push({
             pathname: router.pathname,
@@ -41,6 +44,7 @@ export default function Templates({
     return (
         <PageContainer>
             <Meta
+                canonicalUrl={canonicalUrl}
                 title={finalTitle}
                 description={`Biz siz qidirayotgan mahsulotlarni Soff.uz saytimizning kategoriyasida topdik`}
             />
@@ -66,7 +70,7 @@ export default function Templates({
 
 export async function getServerSideProps(context) {
     const type = 'template';
-    const pathSlug = context.params.slug || 'all';
+    const pathSlug = context.params?.slug || 'all';
     const {
         page = 1,
         parentCategory = '',

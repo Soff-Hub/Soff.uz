@@ -22,6 +22,9 @@ export default function Websites({
     page,
 }) {
     const router = useRouter();
+    // `/websites` and `/websites/all` serve the same listing;
+    // point search engines at the `/all` URL that internal links use.
+    const canonicalUrl = `https://soff.uz/websites/${router.query.slug || 'all'}`;
     const handlePageChange = (newPage) => {
         router.push({
             pathname: router.pathname,
@@ -42,6 +45,7 @@ export default function Websites({
     return (
         <PageContainer>
             <Meta
+                canonicalUrl={canonicalUrl}
                 title={finalTitle}
                 description={`Biz siz qidirayotgan mahsulotlarni Soff.uz saytimizning kategoriyasida topdik`}
             />
@@ -67,7 +71,7 @@ export default function Websites({
 
 export async function getServerSideProps(context) {
     const type = 'website';
-    const pathSlug = context.params.slug || 'all';
+    const pathSlug = context.params?.slug || 'all';
     const {
         page = 1,
         parentCategory = '',

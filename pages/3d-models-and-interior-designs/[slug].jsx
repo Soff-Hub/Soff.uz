@@ -22,6 +22,9 @@ export default function ModelsAndInteriorDesign({
     page,
 }) {
     const router = useRouter();
+    // `/3d-models-and-interior-designs` and `/3d-models-and-interior-designs/all` serve the same listing;
+    // point search engines at the `/all` URL that internal links use.
+    const canonicalUrl = `https://soff.uz/3d-models-and-interior-designs/${router.query.slug || 'all'}`;
     const handlePageChange = (newPage) => {
         router.push({
             pathname: router.pathname,
@@ -42,6 +45,7 @@ export default function ModelsAndInteriorDesign({
     return (
         <PageContainer>
             <Meta
+                canonicalUrl={canonicalUrl}
                 title={finalTitle}
                 description={`3D moddellar va Interier dizaynlar kategoriyasi: Taqdimotlar Tayyor shablonlar Kurs ishlari Diplom ishlari Referatlar Mustaqil ishlar Labaratoriya Ishlari Dissertatsiya ishlari Testlar O'quv qo'llanmalar Dars ishlanmalar Tarqatma materiallar Amaliy ishlar Blankalar Ijodiy Ishlar Loyihalar Plakatlar Maqola Ixtiro patenti Namunaviy hujjatlar Statistika Elektron kitoblar Dasturlash tillari `}
             />
@@ -68,7 +72,7 @@ export default function ModelsAndInteriorDesign({
 
 export async function getServerSideProps(context) {
     const type = '3d';
-    const pathSlug = context.params.slug || 'all';
+    const pathSlug = context.params?.slug || 'all';
     const {
         page = 1,
         parentCategory = '',
