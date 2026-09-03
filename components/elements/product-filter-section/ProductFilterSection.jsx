@@ -77,6 +77,10 @@ const ProductFilterSection = ({ child, parent, path, isFile, title }) => {
         // Senior fix: Clear child category when parent changes
         delete newQuery.childCategory;
         delete newQuery.childCategoryId;
+        // `slug` is already embedded in `pathname` below (a resolved string,
+        // not the `[slug]` route template) — leaving it in `query` duplicates
+        // it as `?slug=...`, e.g. /design-developments/all?slug=all
+        delete newQuery.slug;
 
         push({
             pathname: `${path}${slug}`,
@@ -90,6 +94,7 @@ const ProductFilterSection = ({ child, parent, path, isFile, title }) => {
 
     const handleChild = (slug, id) => {
         const newQuery = clearEmptyQueries(query);
+        delete newQuery.slug;
         push({
             pathname: `${path}${query.slug}`,
             query: { ...newQuery, childCategory: slug, childCategoryId: id },
@@ -127,9 +132,12 @@ const ProductFilterSection = ({ child, parent, path, isFile, title }) => {
     useDisableWindowScroll(drawerOpen);
 
     const handleSearch = (search) => {
+        const newQuery = clearEmptyQueries(query);
+        delete newQuery.slug;
+
         push({
-            pathname: query.pathname,
-            query: { ...query, search },
+            pathname: `${path}${query.slug || 'all'}`,
+            query: { ...newQuery, search },
         });
     };
 
@@ -399,10 +407,13 @@ const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
 
         const currentParams = clearEmptyQueries(query);
         const newQuery = clearEmptyQueries({ ...currentParams, ...filters });
-        
+
         // Remove empty values and ensure slug is handled correctly
         const targetSlug = selectedCategory?.slug || query.slug || 'all';
-        
+        // `slug` is embedded in `pathname` below, not the route template —
+        // drop it from `query` or it duplicates as `?slug=...`
+        delete newQuery.slug;
+
         push({
             pathname: `${path}${targetSlug}`,
             query: newQuery,
