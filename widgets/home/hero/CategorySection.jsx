@@ -5,7 +5,7 @@ import {
     TbPalette,
     TbCode,
     TbSchool,
-    TbVideo,
+    TbSparkles,
     TbBox,
     TbLayout
 } from 'react-icons/tb';
@@ -18,10 +18,10 @@ const popularCategories = [
         icon: <TbSchool />
     },
     {
-        title: 'Soff studio',
+        title: 'AI generatsiyalar',
         count: '1K +',
         href: '/studio?utm_source=5a6ce4cf6cdb1ea8',
-        icon: <TbVideo />
+        icon: <TbSparkles />
     },
     {
         title: '3D Modellar',
