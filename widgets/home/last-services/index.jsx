@@ -15,10 +15,10 @@ const LastServices = ({ compact = false }) => {
     const displayedData = React.useMemo(() => {
         if (!data) return [];
         if (isMobile) return data;
-        return data.slice(0, compact ? 4 : 5);
+        return data.slice(0, compact ? 6 : 5);
     }, [data, isMobile, compact]);
 
-    const count = compact ? 4 : 5;
+    const count = compact ? 6 : 5;
 
     return (
         <section className={styles.lastServicesWrapper}>

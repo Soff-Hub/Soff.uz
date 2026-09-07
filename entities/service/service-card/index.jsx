@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styles from './style.module.scss';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import Link from 'next/link';
@@ -7,6 +7,8 @@ import AuthModal from '~/features/auth/ui/auth-modal';
 import { useRouter } from 'next/router';
 import { StarFilled } from '@ant-design/icons';
 import Image from 'next/image';
+
+const DEFAULT_AVATAR = '/static/img/ozodbek.png';
 
 const isValidSlug = (slug) => {
     return (
@@ -22,6 +24,20 @@ const ServiceCard = ({ service, hasFooter = true, disabled = false }) => {
     const { isLoggedIn } = useSelector((state) => state.auth);
     const [open, setOpen] = useState(false);
     const { push } = useRouter();
+
+    const [avatarUrl, setAvatarUrl] = useState(
+        service?.user?.photo_url || DEFAULT_AVATAR
+    );
+
+    useEffect(() => {
+        setAvatarUrl(service?.user?.photo_url || DEFAULT_AVATAR);
+    }, [service?.user?.photo_url]);
+
+    const handleAvatarError = () => {
+        if (avatarUrl !== DEFAULT_AVATAR) {
+            setAvatarUrl(DEFAULT_AVATAR);
+        }
+    };
 
     const handleOrder = useCallback(
         (e) => {
@@ -132,15 +148,12 @@ const ServiceCard = ({ service, hasFooter = true, disabled = false }) => {
                                 href={`/seller/${service?.user?.soff_seller_id}`}>
                                 <a className={styles.avatarLink}>
                                     <div className={styles.avatarWrapper}>
-                                        <Image
-                                            src={
-                                                service?.user?.photo_url ||
-                                                '/static/img/ozodbek.png'
-                                            }
-                                            alt={service?.user?.full_name || 'seller'}
+                                        <img
+                                            src={avatarUrl}
+                                            alt=""
                                             width={32}
                                             height={32}
-                                            objectFit="cover"
+                                            onError={handleAvatarError}
                                             className={styles.userImg}
                                             loading="lazy"
                                         />

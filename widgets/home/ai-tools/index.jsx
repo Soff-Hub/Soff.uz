@@ -4,7 +4,6 @@ import Image from 'next/image';
 import {
     RiVideoFill,
     RiImageFill,
-    RiImageEditFill,
     RiGraduationCapFill,
     RiPresentationFill,
     RiFileList3Fill,
@@ -20,6 +19,8 @@ const AI_TOOLS_DATA = [
         tag: 'Video',
         icon: RiVideoFill,
         image: '/static/img/ai-tools/ai-video.jpg',
+        video: '/static/img/ai-tools/ai-video.mp4',
+        videoWebm: '/static/img/ai-tools/ai-video.webm',
         link: 'https://soffx.com/app/video',
     },
     {
@@ -29,15 +30,6 @@ const AI_TOOLS_DATA = [
         tag: 'Rasm',
         icon: RiImageFill,
         image: '/static/img/ai-tools/ai-image.jpg',
-        link: 'https://soffx.com/app/image',
-    },
-    {
-        id: 'ai-image-edit',
-        title: 'AI Image Edit',
-        subtitle: 'Rasmni tahrirlash & prompt',
-        tag: 'Tahrirlash',
-        icon: RiImageEditFill,
-        image: '/static/img/ai-tools/ai-image-edit.jpg',
         link: 'https://soffx.com/app/image',
     },
     {
@@ -104,14 +96,36 @@ const AiTools = () => {
                                 rel="noopener noreferrer"
                                 className={styles.toolCard}>
                                 <div className={styles.imageWrapper}>
-                                    <Image
-                                        src={tool.image}
-                                        alt={tool.title}
-                                        layout="fill"
-                                        objectFit="cover"
-                                        className={styles.cardImg}
-                                        quality={85}
-                                    />
+                                    {tool.video ? (
+                                        <video
+                                            autoPlay
+                                            loop
+                                            muted
+                                            playsInline
+                                            preload="auto"
+                                            poster={tool.image}
+                                            className={styles.cardVideo}>
+                                            {tool.videoWebm && (
+                                                <source
+                                                    src={tool.videoWebm}
+                                                    type="video/webm"
+                                                />
+                                            )}
+                                            <source
+                                                src={tool.video}
+                                                type="video/mp4"
+                                            />
+                                        </video>
+                                    ) : (
+                                        <Image
+                                            src={tool.image}
+                                            alt={tool.title}
+                                            layout="fill"
+                                            objectFit="cover"
+                                            className={styles.cardImg}
+                                            quality={85}
+                                        />
+                                    )}
                                     <div className={styles.overlay} />
                                 </div>
 

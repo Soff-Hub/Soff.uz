@@ -37,15 +37,15 @@
 
 .cardsGrid {
     display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    gap: 14px;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 16px;
     width: 100%;
 
     @media (max-width: 1200px) {
         display: flex;
         overflow-x: auto;
-        padding-bottom: 10px;
-        gap: 12px;
+        padding-bottom: 12px;
+        gap: 14px;
         scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
 
@@ -69,9 +69,9 @@
     display: block;
     width: 100%;
     position: relative;
-    aspect-ratio: 1 / 1.15;
-    min-height: 155px;
-    border-radius: 16px;
+    aspect-ratio: 1 / 1.18;
+    min-height: 185px;
+    border-radius: 18px;
     overflow: hidden;
     background: #0f172a;
     border: 1px solid rgba(15, 23, 42, 0.08);
@@ -81,15 +81,16 @@
     isolation: isolate;
 
     @media (max-width: 1200px) {
-        flex: 0 0 155px;
-        min-width: 155px;
+        flex: 0 0 175px;
+        min-width: 175px;
+        min-height: 195px;
         scroll-snap-align: start;
     }
 
     @media (max-width: 576px) {
-        flex: 0 0 140px;
-        min-width: 140px;
-        min-height: 145px;
+        flex: 0 0 150px;
+        min-width: 150px;
+        min-height: 170px;
         border-radius: 14px;
     }
 
@@ -102,6 +103,16 @@
 
         .cardImg {
             transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+        }
+
+        .cardVideo {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            pointer-events: none;
+            transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
         .overlay {
@@ -120,26 +131,26 @@
     /* Envato-style Floating Badge */
     .floatingBadge {
         position: absolute;
-        top: 10px;
-        left: 10px;
+        top: 12px;
+        left: 12px;
         z-index: 4;
         display: inline-flex;
         align-items: center;
-        gap: 6px;
+        gap: 7px;
         background: rgba(255, 255, 255, 0.95);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
-        padding: 3px 9px 3px 3px;
-        border-radius: 9px;
+        padding: 4px 10px 4px 4px;
+        border-radius: 10px;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.14);
         border: 1px solid rgba(255, 255, 255, 0.7);
         transition: transform 0.25s ease;
-        max-width: calc(100% - 20px);
+        max-width: calc(100% - 24px);
 
         .badgeIconBox {
-            width: 22px;
-            height: 22px;
-            border-radius: 6px;
+            width: 24px;
+            height: 24px;
+            border-radius: 7px;
             background: #0f172a;
             color: #ffffff;
             display: flex;
@@ -148,12 +159,12 @@
             flex-shrink: 0;
 
             .badgeIcon {
-                font-size: 13px;
+                font-size: 14px;
             }
         }
 
         .badgeText {
-            font-size: 11.5px;
+            font-size: 12.5px;
             font-weight: 700;
             color: #0f172a;
             letter-spacing: -0.01em;
@@ -170,7 +181,8 @@
         box-shadow: 0 16px 30px -8px rgba(0, 0, 0, 0.2),
             0 4px 16px rgba(0, 164, 79, 0.16);
 
-        .imageWrapper .cardImg {
+        .imageWrapper .cardImg,
+        .imageWrapper .cardVideo {
             transform: scale(1.08);
         }
 

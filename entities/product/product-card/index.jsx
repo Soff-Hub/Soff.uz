@@ -39,48 +39,51 @@ const ProductCard = ({ product }) => {
         }
     }
 
-    const isWishlisted = wishlist?.some(
-        (item) => Number(item.id) === Number(product?.id)
-    );
-
-    const metaText = [
-        product?.document?.file_size,
-        product?.document?.page_count
-            ? `${product.document.page_count} bet`
-            : null,
-        product?.views_count
-            ? `${product.views_count} marta ko‘rildi`
-            : null,
-    ]
-        .filter(Boolean)
-        .join(' · ');
-
     return (
         <Link href={`/product/${product?.slug}`}>
             <div className={styles.card}>
-                <div className={styles.cardImgWrapper}>
-                    <span className={styles.cardType}>
-                        {product?.document?.file_type || '.zip'}
-                    </span>
-                    <div
-                        onClick={handleAddItemToWishlist}
-                        className={styles.wishlistBtn}>
-                        {isWishlisted ? (
-                            <FaHeart color="#00a44f" />
-                        ) : (
-                            <FaRegHeart />
-                        )}
+                <div className={styles.cardHead}>
+                    <div className={styles.cardHeadInfo}>
+                        <span className={styles.cardType}>
+                            {product?.document?.file_type || '.zip'}
+                        </span>
+                        <div className={styles.cardActions}>
+                            <div
+                                onClick={handleAddItemToWishlist}
+                                className={styles.actionIcon}>
+                                {wishlist?.some(
+                                    (item) =>
+                                        Number(item.id) ===
+                                        Number(product?.id)
+                                ) ? (
+                                    <FaHeart color="#00a44f" />
+                                ) : (
+                                    <FaRegHeart />
+                                )}
+                            </div>
+                            <div
+                                onClick={handleAddItemToCart}
+                                className={styles.actionIcon}>
+                                {basket ? (
+                                    <FaShoppingCart color="#00a44f" />
+                                ) : (
+                                    <FaShoppingCart />
+                                )}
+                            </div>
+                        </div>
                     </div>
-                    <Image
-                        src={
-                            product?.poster_url ||
-                            '/static/img/no-document.png'
-                        }
-                        quality={75}
-                        alt={product?.title || 'card img'}
-                        layout="fill"
-                        objectFit="contain"
-                    />
+                    <div className={styles.cardImgWrapper}>
+                        <Image
+                            src={
+                                product?.poster_url ||
+                                '/static/img/no-document.png'
+                            }
+                            quality={75}
+                            alt={product?.title || 'card img'}
+                            layout="fill"
+                            objectFit="contain"
+                        />
+                    </div>
                 </div>
                 <div className={styles.cardBody}>
                     <h2
@@ -88,25 +91,42 @@ const ProductCard = ({ product }) => {
                         className={styles.cardTitle}>
                         {product?.title}
                     </h2>
-                    {metaText && (
-                        <p className={styles.cardMeta}>{metaText}</p>
-                    )}
-                    <div className={styles.cardFooter}>
-                        <h3 className={styles.cardPrice}>
-                            {product?.price === 0 || !product?.price
-                                ? 'Bepul'
-                                : `${formatCurrencyWithSpace(
-                                    product?.price
-                                )} so’m`}
-                        </h3>
-                        <div
-                            onClick={handleAddItemToCart}
-                            className={styles.cartBtn}>
-                            <FaShoppingCart
-                                color={basket ? '#00a44f' : undefined}
+                    <h3 className={styles.cardPrice}>
+                        {product?.price === 0 || !product?.price
+                            ? 'Bepul'
+                            : `${formatCurrencyWithSpace(
+                                product?.price
+                            )} so’m`}
+                    </h3>
+                </div>
+                <div className={styles.cardInfo}>
+                    {product?.document?.file_size && (
+                        <div className={styles.cardInfoItem}>
+                            <img
+                                src="/static/img/card_icons/driver.svg"
+                                alt="icon"
                             />
+                            <span>{product?.document?.file_size}</span>
                         </div>
-                    </div>
+                    )}
+                    {product?.document?.page_count && (
+                        <div className={styles.cardInfoItem}>
+                            <img
+                                src="/static/img/card_icons/document-copy.svg"
+                                alt="icon"
+                            />
+                            <span>{product?.document?.page_count}</span>
+                        </div>
+                    )}
+                    {product?.views_count !== 0 && (
+                        <div className={styles.cardInfoItem}>
+                            <img
+                                src="/static/img/card_icons/eye.svg"
+                                alt="icon"
+                            />
+                            <span>{product?.views_count}</span>
+                        </div>
+                    )}
                 </div>
             </div>
         </Link>
