@@ -21,7 +21,7 @@ const AI_TOOLS_DATA = [
         image: '/static/img/ai-tools/ai-video.jpg',
         video: '/static/img/ai-tools/ai-video.mp4',
         videoWebm: '/static/img/ai-tools/ai-video.webm',
-        link: 'https://soffx.com/app/video',
+        link: 'https://soffx.com/app/video?ref=3561625C',
     },
     {
         id: 'ai-image',
@@ -30,7 +30,7 @@ const AI_TOOLS_DATA = [
         tag: 'Rasm',
         icon: RiImageFill,
         image: '/static/img/ai-tools/ai-image.jpg',
-        link: 'https://soffx.com/app/image',
+        link: 'https://soffx.com/app/image?ref=3561625C',
     },
     {
         id: 'ai-presentation',
@@ -39,7 +39,7 @@ const AI_TOOLS_DATA = [
         tag: 'Taqdimot',
         icon: RiPresentationFill,
         image: '/static/img/ai-tools/tool-presentation.jpg',
-        link: 'https://soffx.com/app/create/presentation',
+        link: 'https://soffx.com/app/create/presentation?ref=3561625C',
     },
     {
         id: 'ai-coursework',
@@ -48,7 +48,7 @@ const AI_TOOLS_DATA = [
         tag: 'Ilmiy',
         icon: RiFileList3Fill,
         image: '/static/img/ai-tools/tool-coursework.jpg',
-        link: 'https://soffx.com/app/create/kursIshi',
+        link: 'https://soffx.com/app/create/kursIshi?ref=3561625C',
     },
     {
         id: 'ai-referat',
@@ -57,7 +57,7 @@ const AI_TOOLS_DATA = [
         tag: 'Referat',
         icon: RiBookOpenFill,
         image: '/static/img/ai-tools/tool-referat.jpg',
-        link: 'https://soffx.com/app/create/report',
+        link: 'https://soffx.com/app/create/report?ref=3561625C',
     },
     {
         id: 'ai-diploma',
@@ -66,7 +66,7 @@ const AI_TOOLS_DATA = [
         tag: 'Diplom',
         icon: RiAwardFill,
         image: '/static/img/ai-tools/tool-diploma.jpg',
-        link: 'https://soffx.com/app/create/diplomIshi',
+        link: 'https://soffx.com/app/create/diplomIshi?ref=3561625C',
     },
     {
         id: 'ai-lesson',
@@ -75,7 +75,7 @@ const AI_TOOLS_DATA = [
         tag: 'Dars',
         icon: RiGraduationCapFill,
         image: '/static/img/ai-tools/tool-academic.jpg',
-        link: 'https://soffx.com/app/create/lesson',
+        link: 'https://soffx.com/app/create/lesson?ref=3561625C',
     },
 ];
 
