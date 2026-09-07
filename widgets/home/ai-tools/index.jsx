@@ -33,22 +33,13 @@ const AI_TOOLS_DATA = [
         link: 'https://soffx.com/app/image',
     },
     {
-        id: 'ai-academic',
-        title: 'Akademik AI',
-        subtitle: '15+ akademik xizmatlar',
-        tag: 'O‘quv',
-        icon: RiGraduationCapFill,
-        image: '/static/img/ai-tools/tool-academic.jpg',
-        link: 'https://soffx.com/app',
-    },
-    {
         id: 'ai-presentation',
         title: 'AI Taqdimot',
         subtitle: 'Slayd va taqdimotlar',
         tag: 'Taqdimot',
         icon: RiPresentationFill,
         image: '/static/img/ai-tools/tool-presentation.jpg',
-        link: 'https://soffx.com/app',
+        link: 'https://soffx.com/app/create/presentation',
     },
     {
         id: 'ai-coursework',
@@ -57,7 +48,7 @@ const AI_TOOLS_DATA = [
         tag: 'Ilmiy',
         icon: RiFileList3Fill,
         image: '/static/img/ai-tools/tool-coursework.jpg',
-        link: 'https://soffx.com/app',
+        link: 'https://soffx.com/app/create/kursIshi',
     },
     {
         id: 'ai-referat',
@@ -66,7 +57,7 @@ const AI_TOOLS_DATA = [
         tag: 'Referat',
         icon: RiBookOpenFill,
         image: '/static/img/ai-tools/tool-referat.jpg',
-        link: 'https://soffx.com/app',
+        link: 'https://soffx.com/app/create/report',
     },
     {
         id: 'ai-diploma',
@@ -75,7 +66,16 @@ const AI_TOOLS_DATA = [
         tag: 'Diplom',
         icon: RiAwardFill,
         image: '/static/img/ai-tools/tool-diploma.jpg',
-        link: 'https://soffx.com/app',
+        link: 'https://soffx.com/app/create/diplomIshi',
+    },
+    {
+        id: 'ai-lesson',
+        title: 'AI Dars ishlanmasi',
+        subtitle: 'Dars ishlanmasi yaratish',
+        tag: 'Dars',
+        icon: RiGraduationCapFill,
+        image: '/static/img/ai-tools/tool-academic.jpg',
+        link: 'https://soffx.com/app/create/lesson',
     },
 ];
 
