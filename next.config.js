@@ -45,6 +45,16 @@ const nextSettings = {
     },
     async headers() {
         return [
+            // Disallow indexing for report pages
+            {
+                source: '/report/:path*',
+                headers: [
+                    {
+                        key: 'X-Robots-Tag',
+                        value: 'noindex, nofollow',
+                    },
+                ],
+            },
             // Security headers for Lighthouse Best Practices
             {
                 source: '/:path*',

@@ -50,7 +50,7 @@ function VideosProductsDetails({ product, isPlay, setIsPlay }) {
                                 />
                                 <span>Mualliflik huquqi buzilgan holatda</span>
                                 <Link href={`/report/${product.slug}`}>
-                                    <a>
+                                    <a rel="nofollow">
                                         <strong
                                             className="text-success"
                                             style={{ cursor: 'pointer' }}>

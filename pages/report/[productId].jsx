@@ -1,6 +1,7 @@
 import { message } from 'antd';
 import Axios from 'axios';
 import Link from 'next/link';
+import Head from 'next/head';
 import Router, { useRouter } from 'next/router';
 import React from 'react';
 import PageContainer from '~/widgets/layouts/PageContainer';
@@ -42,6 +43,10 @@ function Report() {
 
     return (
         <div>
+            <Head>
+                <meta name="robots" content="noindex, nofollow" />
+                <meta name="googlebot" content="noindex, nofollow" />
+            </Head>
             <PageContainer title="Mualliflik huquqini buzish to'g'risida xabar berish">
                 <div className="container">
                     <div

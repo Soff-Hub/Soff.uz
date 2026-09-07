@@ -431,7 +431,7 @@ const ImageCarousel = ({
                                 />
                                 <span>Mualliflik huquqi buzilgan holatda</span>
                                 <Link href={`/report/${slug}`}>
-                                    <a>
+                                    <a rel="nofollow">
                                         <strong
                                             className="text-success"
                                             style={{ cursor: 'pointer' }}>
