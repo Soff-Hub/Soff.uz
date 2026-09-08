@@ -25,7 +25,7 @@ const AI_TOOLS_DATA = [
     },
     {
         id: 'ai-image',
-        title: 'AI Image',
+        title: 'AI rasmlar',
         subtitle: 'Yuqori sifatli rasmlar',
         tag: 'Rasm',
         icon: RiImageFill,
@@ -83,7 +83,7 @@ const AiTools = () => {
     return (
         <section className={styles.aiToolsSection}>
             <div className={styles.containerFull}>
-                <h2 className={styles.title}>AI Tools</h2>
+                <h2 className={styles.title}>AI imkoniyatlar</h2>
 
                 <div className={styles.cardsGrid}>
                     {AI_TOOLS_DATA.map((tool) => {
