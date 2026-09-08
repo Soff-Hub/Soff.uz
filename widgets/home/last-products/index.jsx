@@ -7,6 +7,8 @@ import ProductCard from '~/entities/product/product-card';
 import { LAST_ADDED_PRODUCTS } from '~/shared/api/end-points';
 import { Skeleton } from 'antd';
 import { AiOutlineRight } from 'react-icons/ai';
+import { BsArrowRight } from 'react-icons/bs';
+import { FiFile, FiBox, FiPenTool, FiVideo, FiLayout, FiGlobe } from 'react-icons/fi';
 
 const LastProducts = () => {
     const { isMobile } = useResponsive();
@@ -89,31 +91,37 @@ const LastProducts = () => {
             title: 'Fayllar',
             href: '/scientific-resources/all',
             data: fileData?.results,
+            icon: <FiFile />,
         },
         {
             title: '3D moddellar',
             href: '/3d-models-and-interior-designs/all',
             data: threeDData?.results,
+            icon: <FiBox />,
         },
         {
             title: 'Dizayn shablonlari',
             href: '/design-developments/all',
             data: designData?.results,
+            icon: <FiPenTool />,
         },
         {
             title: 'Video ishlanmalar',
             href: '/video-lessons',
             data: videoData?.results,
+            icon: <FiVideo />,
         },
         {
             title: 'Tayyor shablonlar',
             href: '/templates/all',
             data: templateData?.results,
+            icon: <FiLayout />,
         },
         {
             title: 'Vebsaytlar',
             href: '/websites/all',
             data: websiteData?.results,
+            icon: <FiGlobe />,
         },
     ];
 
@@ -148,7 +156,7 @@ const LastProducts = () => {
             {isLoading && <ProductSkeleton limit={limit} />}
 
             {!isLoading && (
-                <>
+                <div className={styles.sectionsList}>
                     {data
                         .filter((section) => section.data?.length > 0)
                         .map((section, index) => (
@@ -158,10 +166,11 @@ const LastProducts = () => {
                                 title={section.title}
                                 href={section.href}
                                 data={section.data}
+                                icon={section.icon}
                                 delay={index * 0.2}
                             />
                         ))}
-                </>
+                </div>
             )}
         </section>
     );
@@ -169,16 +178,25 @@ const LastProducts = () => {
 
 export default LastProducts;
 
-const ProductSection = memo(({ title, href, data, isVisible, delay }) => (
+const ProductSection = memo(({ title, href, data, isVisible, delay, icon }) => (
     <div
         className={`${styles.productBox} ${isVisible ? styles.fadeIn : ''}`}
         style={{ transitionDelay: `${delay}s` }}>
-        <Link href={href}>
-            <div className={styles.titleBox}>
-                <h3>{title}</h3>
-                <AiOutlineRight style={{ fontSize: '20px' }} />
-            </div>
-        </Link>
+        <div className={styles.titleBox}>
+            <Link href={href}>
+                <a className={styles.titleLeft}>
+                    <span className={styles.iconBadge}>{icon}</span>
+                    <h3>{title}</h3>
+                    <AiOutlineRight className={styles.chevron} />
+                </a>
+            </Link>
+            <Link href={href}>
+                <a className={styles.viewAllLink}>
+                    <span>Barchasini ko‘rish</span>
+                    <BsArrowRight className={styles.viewAllArrow} />
+                </a>
+            </Link>
+        </div>
         <div className="row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-gap-4">
             {data?.map((p) => (
                 <div key={p.id} className="col px-2">

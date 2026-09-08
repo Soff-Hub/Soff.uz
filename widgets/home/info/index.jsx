@@ -6,44 +6,34 @@ const steps = [
         id: 1,
         title: 'Xizmatni tanlang',
         description:
-            'Katalogdan yoki qidiruv orqali sizga kerakli xizmat yoki frilanserni toping.',
+            'Katalogdan yoki qidiruv orqali kerakli xizmat va frilanserni toping.',
     },
     {
         id: 2,
-        title: 'Xizmat tafsiloti bilan tanishing',
-        description:
-            'Talablaringizga mos xizmat ekanligiga amin bo’ling va kerak bo’lsa frilanser bilan muloqot qilib kelishib oling',
+        title: 'Tafsilot bilan tanishing',
+        description: 'Tavsif, narx va frilanser reytingini ko‘rib chiqing.',
     },
     {
         id: 3,
-        title: 'To‘lov qiling - xavfsiz',
+        title: 'To‘lov qiling — xavfsiz',
         description:
-            'To‘lov faqat ish yakunlangandan so‘ng ijrochiga o‘tkaziladi. Sizning pulingiz platforma kafolati ostida saqlanadi.',
+            'To‘lov buyurtma bajarilgunga qadar platformada saqlanadi.',
     },
     {
         id: 4,
-        title: 'Sifatli natijani oling',
+        title: 'Natijani oling',
         description:
-            'Ishni qabul qiling va kerak bo‘lsa tuzatishlar so‘rang. 100% qoniqish kafolati.',
+            'Ishni qabul qiling va natijadan mamnun bo‘lsangiz, to‘lovni tasdiqlang.',
     },
 ];
 
 const Info = () => {
     return (
-        <div>
-            <div className={styles.titleWrapper}>
-                <img src="/static/img/HomePage/icon.png" alt="" />
-                <h2>Xizmatlardan foydalanish juda oson</h2>
-                <h3>SOFF.UZ</h3>
-            </div>
-            <div className={styles.stepsSection}>
+        <div className={styles.infoSection}>
+            <h2 className={styles.title}>Juda oson ishlaydi</h2>
+            <div className={styles.timeline}>
                 {steps.map((step) => (
-                    <InfoCard
-                        key={step.title}
-                        id={step.id}
-                        title={step.title}
-                        subtitle={step.description}
-                    />
+                    <StepRow key={step.id} {...step} />
                 ))}
             </div>
         </div>
@@ -52,37 +42,15 @@ const Info = () => {
 
 export default Info;
 
-const InfoCard = ({ id, title, subtitle }) => {
+const StepRow = ({ id, title, description }) => {
     return (
-        <div className={styles.stepCard}>
-            <div className="d-flex align-items-center gap-2 flex-column">
-                <div className={styles.icon}>
-                    <span className="d-inline">0{id}</span>
-                </div>
-                <h3 className={styles.title}>{title}</h3>
-                <p className={styles.subtitle}>{subtitle}</p>
+        <div className={styles.stepRow}>
+            <span className={styles.stepNumber}>0{id}</span>
+            <span className={styles.dot} />
+            <div className={styles.stepContent}>
+                <h3 className={styles.stepTitle}>{title}</h3>
+                <p className={styles.stepSubtitle}>{description}</p>
             </div>
-            {id == 2 && (
-                <img
-                    className={styles.two}
-                    src={`/static/img/2line.png`}
-                    alt="line"
-                />
-            )}
-            {id == 3 && (
-                <img
-                    className={styles.three}
-                    src={`/static/img/3line.png`}
-                    alt="line"
-                />
-            )}
-            {id == 4 && (
-                <img
-                    className={styles.two}
-                    src={`/static/img/4line.png`}
-                    alt="line"
-                />
-            )}
         </div>
     );
 };

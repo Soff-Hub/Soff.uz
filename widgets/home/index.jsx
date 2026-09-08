@@ -1,6 +1,7 @@
 import React from 'react';
 import Hero from './hero';
 import dynamic from 'next/dynamic';
+import styles from './style.module.scss';
 
 // const Bests = dynamic(() => import('./bests'), {
 //     ssr: false,
@@ -31,6 +32,10 @@ const LastServices = dynamic(() => import('./last-services'), {
 const Info = dynamic(() => import('./info'), { ssr: false });
 const Title = dynamic(() => import('./title'), { ssr: false });
 const PlatformStats = dynamic(() => import('./platform-stats'), { ssr: false });
+const AiTools = dynamic(() => import('./ai-tools'), {
+    ssr: false,
+    loading: () => <div style={{ minHeight: '280px' }} />
+});
 
 const Home = () => {
     return (
@@ -44,14 +49,17 @@ const Home = () => {
                 text={'Soff - Raqamli mahsulotlar va onlayn xizmatlar bozori'}
                 videoId={'https://www.youtube.com/watch?v=hn55AZoxWes'}
             />
+            <AiTools />
             <PlatformStats />
             <div className="container">
                 <Freelance />
             </div>
             <div className="bg-white">
                 <div className="container">
-                    <LastServices />
-                    <Info />
+                    <div className={styles.infoServicesRow}>
+                        <Info />
+                        <LastServices compact />
+                    </div>
                 </div>
             </div>
             <div className="bg-white py-1">
