@@ -108,6 +108,30 @@ jobs:
           RELEASE_DIR="$APP_DIR/releases/$RELEASE"
           CURRENT_LINK="$APP_DIR/current"
 
+          # Remove a directory a live process may still be writing into. The
+          # running release's Next image optimizer keeps creating files under
+          # .next/cache/images, so a plain `rm -rf` unlinks children, the server
+          # recreates some, and the final rmdir dies with ENOTEMPTY — which under
+          # `set -e` kills the whole deploy. Detaching the tree with an atomic
+          # rename first removes the race: later writes land in a directory the
+          # server recreates, and nothing can repopulate what we then delete.
+          # Housekeeping must never fail a deploy, so this always returns 0.
+          safe_purge() {
+            VICTIM="$1"
+            [ -e "$VICTIM" ] || return 0
+            if [ -L "$VICTIM" ]; then
+              rm -f -- "$VICTIM" || true
+              return 0
+            fi
+            TRASH="$(dirname "$VICTIM")/.purge-$$-$RANDOM"
+            if mv -T "$VICTIM" "$TRASH" 2>/dev/null; then
+              rm -rf -- "$TRASH" 2>/dev/null || echo "warn: leftover trash $TRASH"
+            else
+              rm -rf -- "$VICTIM" 2>/dev/null || echo "warn: could not fully remove $VICTIM"
+            fi
+            return 0
+          }
+
           # A standalone build must contain the server entry point
           test -f "$RELEASE_DIR/server.js" || { echo "::error::server.js missing in release"; exit 1; }
 
@@ -122,20 +146,9 @@ jobs:
           # Sharing it also means a new release starts with a warm image cache.
           SHARED_CACHE="$APP_DIR/shared/cache"
           mkdir -p "$SHARED_CACHE"
-          rm -rf "$RELEASE_DIR/.next/cache"
+          safe_purge "$RELEASE_DIR/.next/cache"
           mkdir -p "$RELEASE_DIR/.next"
           ln -sfn "$SHARED_CACHE" "$RELEASE_DIR/.next/cache"
-
-          # Reclaim the per-release caches older deploys already wrote to disk.
-          # `-L` skips the symlink we just created, so the shared cache is safe.
-          for RELEASE_PATH in "$APP_DIR"/releases/*; do
-            [ -d "$RELEASE_PATH" ] || continue
-            CACHE_PATH="$RELEASE_PATH/.next/cache"
-            if [ -d "$CACHE_PATH" ] && [ ! -L "$CACHE_PATH" ]; then
-              echo "Removing stale per-release cache: $CACHE_PATH"
-              rm -rf "$CACHE_PATH"
-            fi
-          done
 
           # PM2 log files are append-only and unrotated by default. This app logs
           # on every request error and on every hourly cache sweep, so without
@@ -181,9 +194,28 @@ jobs:
             exit 1
           fi
 
+          # Housekeeping runs only now that PM2 serves the new release: the old
+          # release's Node process is gone, so nothing is writing into its cache
+          # any more and these purges have no live writer to race against.
+
+          # Reclaim the per-release caches older deploys wrote to disk, plus any
+          # trash left by an interrupted purge. `-L` skips the symlink created
+          # above, so the shared cache is never touched.
+          for RELEASE_PATH in "$APP_DIR"/releases/*; do
+            [ -d "$RELEASE_PATH" ] || continue
+            CACHE_PATH="$RELEASE_PATH/.next/cache"
+            if [ -d "$CACHE_PATH" ] && [ ! -L "$CACHE_PATH" ]; then
+              echo "Removing stale per-release cache: $CACHE_PATH"
+              safe_purge "$CACHE_PATH"
+            fi
+            for LEFTOVER in "$RELEASE_PATH"/.next/.purge-*; do
+              [ -e "$LEFTOVER" ] && rm -rf -- "$LEFTOVER" 2>/dev/null || true
+            done
+          done
+
           # Keep only the N newest releases
           cd "$APP_DIR/releases"
-          ls -1t | tail -n "+$((KEEP_RELEASES + 1))" | xargs -r rm -rf --
+          ls -1t | tail -n "+$((KEEP_RELEASES + 1))" | xargs -r rm -rf -- || true
 
           echo "--- disk after deploy ---"
           df -h "$APP_DIR" | tail -n +2
