@@ -58,6 +58,7 @@ function notifyTelegram(text) {
 }
 
 let clearCache;
+let pruneCache;
 const schedulerPaths = [
     path.join(__dirname, 'scheduler.js'),
     path.join(process.cwd(), 'scripts', 'scheduler.js'),
@@ -67,7 +68,7 @@ let schedulerLoaded = false;
 for (const schedulerPath of schedulerPaths) {
     if (fs.existsSync(schedulerPath)) {
         try {
-            clearCache = require(schedulerPath).clearCache;
+            ({ clearCache, pruneCache } = require(schedulerPath));
             schedulerLoaded = true;
             break;
         } catch (err) {
@@ -80,39 +81,44 @@ if (!schedulerLoaded) {
     console.warn(
         '⚠️  Could not load scheduler script. Cache clearing will be disabled.'
     );
-    clearCache = async () => {
+    const noop = async () => {
         console.log('ℹ️  Scheduler not available');
     };
+    clearCache = noop;
+    pruneCache = noop;
 }
 
-console.log('🕐 Initializing cache scheduler (runs daily at 3:00 AM)...');
+// Every hour, not once a day: on a release serving user-uploaded images the
+// Next 12 optimizer can write several GB between two 3 AM runs, and the disk
+// fills long before the daily job ever fires.
+const PRUNE_CRON = process.env.CACHE_PRUNE_CRON || '0 * * * *';
 
-const job = cron.schedule(
-    '0 3 * * *',
-    async () => {
-        const timestamp = new Date().toISOString();
-        console.log(`[${timestamp}] 🔄 Running scheduled cache clear...`);
-        try {
-            await clearCache();
-            console.log(
-                `[${timestamp}] ✅ Scheduled cache clear completed successfully`
-            );
-        } catch (err) {
-            console.error(
-                `[${timestamp}] ❌ Scheduled cache clear failed:`,
-                err.message
-            );
-            const msg = `[Cache Cleaner] Cache clear fail at ${timestamp}\nServer: ${require('os').hostname()}\nError: ${err.message}\ncwd: ${process.cwd()}\nscript: ${__dirname}`;
-            await notifyTelegram(msg);
-        }
-    },
-    {
-        scheduled: true,
-        timezone: 'Asia/Tashkent',
+async function runMaintenance(trigger) {
+    const timestamp = new Date().toISOString();
+    console.log(`[${timestamp}] 🔄 Cache maintenance (${trigger})...`);
+    try {
+        await pruneCache();
+    } catch (err) {
+        console.error(`[${timestamp}] ❌ Cache maintenance failed:`, err.message);
+        const msg = `[Cache Cleaner] Cache prune fail at ${timestamp}\nServer: ${require('os').hostname()}\nError: ${err.message}\ncwd: ${process.cwd()}\nscript: ${__dirname}`;
+        await notifyTelegram(msg);
     }
-);
+}
+
+console.log(`🕐 Initializing cache scheduler (prune cron: ${PRUNE_CRON}, Asia/Tashkent)...`);
+
+cron.schedule(PRUNE_CRON, () => runMaintenance('scheduled'), {
+    scheduled: true,
+    timezone: 'Asia/Tashkent',
+});
+
+// A restart is the most likely moment for the disk to already be full (a deploy
+// just landed a fresh release), so don't wait up to an hour for the first run.
+// Delayed so it never competes with server start-up.
+setTimeout(() => {
+    runMaintenance('startup');
+}, 60 * 1000).unref();
 
 console.log('✅ Scheduler initialized');
-console.log('   Next scheduled run: Daily at 3:00 AM');
 
-module.exports = {};
+module.exports = { runMaintenance, clearCache, pruneCache };

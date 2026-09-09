@@ -23,6 +23,14 @@ env:
   PORT: 3001
   # Public URL for the Telegram message
   PUBLIC_URL: https://soff.uz
+  # Disk budget for the shared Next.js image cache ($APP_DIR/shared/cache).
+  # The in-process scheduler prunes least-recently-used entries down to 70% of
+  # this every hour.
+  CACHE_MAX_MB: 2048
+  # Cache entries untouched for this many days are dropped even when under budget.
+  CACHE_MAX_AGE_DAYS: 7
+  # Releases kept on disk (each is ~350 MB).
+  KEEP_RELEASES: 3
 
 jobs:
   build-and-deploy:
@@ -92,7 +100,9 @@ jobs:
       - name: Activate release (symlink switch + PM2 restart + health check)
         run: |
           ssh -i ~/.ssh/id_ed25519 "${{ secrets.PROD_DEPLOY_USER }}@${{ secrets.PROD_DEPLOY_HOST }}" \
-            "APP_DIR='$APP_DIR' RELEASE='${GITHUB_SHA::12}' PORT='$PORT' PM2_NAME='$PM2_NAME' bash -s" <<'REMOTE'
+            "APP_DIR='$APP_DIR' RELEASE='${GITHUB_SHA::12}' PORT='$PORT' PM2_NAME='$PM2_NAME' \
+             CACHE_MAX_MB='$CACHE_MAX_MB' CACHE_MAX_AGE_DAYS='$CACHE_MAX_AGE_DAYS' \
+             KEEP_RELEASES='$KEEP_RELEASES' bash -s" <<'REMOTE'
           set -euo pipefail
 
           RELEASE_DIR="$APP_DIR/releases/$RELEASE"
@@ -104,6 +114,39 @@ jobs:
           # Remember previous release for rollback
           PREV_TARGET="$(readlink -f "$CURRENT_LINK" 2>/dev/null || true)"
 
+          # Point this release's Next.js cache at ONE shared directory instead of
+          # letting every release grow its own. The Next 12 image optimizer writes
+          # to <cwd>/.next/cache/images and only ever evicts an entry when that
+          # same image is requested again after its TTL — so a per-release cache
+          # grows without bound and every deploy left another multi-GB copy behind.
+          # Sharing it also means a new release starts with a warm image cache.
+          SHARED_CACHE="$APP_DIR/shared/cache"
+          mkdir -p "$SHARED_CACHE"
+          rm -rf "$RELEASE_DIR/.next/cache"
+          mkdir -p "$RELEASE_DIR/.next"
+          ln -sfn "$SHARED_CACHE" "$RELEASE_DIR/.next/cache"
+
+          # Reclaim the per-release caches older deploys already wrote to disk.
+          # `-L` skips the symlink we just created, so the shared cache is safe.
+          for RELEASE_PATH in "$APP_DIR"/releases/*; do
+            [ -d "$RELEASE_PATH" ] || continue
+            CACHE_PATH="$RELEASE_PATH/.next/cache"
+            if [ -d "$CACHE_PATH" ] && [ ! -L "$CACHE_PATH" ]; then
+              echo "Removing stale per-release cache: $CACHE_PATH"
+              rm -rf "$CACHE_PATH"
+            fi
+          done
+
+          # PM2 log files are append-only and unrotated by default. This app logs
+          # on every request error and on every hourly cache sweep, so without
+          # rotation ~/.pm2/logs alone fills the disk over time.
+          if [ ! -d "$HOME/.pm2/modules/pm2-logrotate" ]; then
+            pm2 install pm2-logrotate >/dev/null 2>&1 || true
+          fi
+          pm2 set pm2-logrotate:max_size 10M    >/dev/null 2>&1 || true
+          pm2 set pm2-logrotate:retain 7        >/dev/null 2>&1 || true
+          pm2 set pm2-logrotate:compress true   >/dev/null 2>&1 || true
+
           # Atomic symlink switch (zero downtime: the running process keeps serving
           # from the old path until PM2 restarts onto the new one below).
           ln -sfn "$RELEASE_DIR" "$CURRENT_LINK.tmp" && mv -Tf "$CURRENT_LINK.tmp" "$CURRENT_LINK"
@@ -112,6 +155,7 @@ jobs:
           # delete+start (not restart) guarantees PM2 runs the freshly-resolved
           # release path rather than a cached one from a previous deploy.
           export PORT HOSTNAME=0.0.0.0 NODE_ENV=production
+          export CACHE_MAX_MB CACHE_MAX_AGE_DAYS
           pm2 delete "$PM2_NAME" >/dev/null 2>&1 || true
           ( cd "$RELEASE_DIR" && pm2 start server.js --name "$PM2_NAME" --update-env )
           pm2 save >/dev/null 2>&1 || true
@@ -137,9 +181,13 @@ jobs:
             exit 1
           fi
 
-          # Keep only the 5 newest releases
+          # Keep only the N newest releases
           cd "$APP_DIR/releases"
-          ls -1t | tail -n +6 | xargs -r rm -rf --
+          ls -1t | tail -n "+$((KEEP_RELEASES + 1))" | xargs -r rm -rf --
+
+          echo "--- disk after deploy ---"
+          df -h "$APP_DIR" | tail -n +2
+          du -sh "$APP_DIR/releases" "$APP_DIR/shared/cache" 2>/dev/null || true
 
           echo "Deployed $RELEASE successfully"
           REMOTE

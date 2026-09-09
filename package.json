@@ -6,12 +6,12 @@
     "homepage": "https://soff.uz",
     "scripts": {
         "dev": "next dev -p 5505",
-        "build": "node scripts/scheduler.js && next build && node scripts/copy-to-standalone.js",
+        "build": "node scripts/scheduler.js --all && next build && node scripts/copy-to-standalone.js",
         "start": "next start -p 5505",
         "type-check": "tsc --noEmit",
         "type-check:watch": "tsc --noEmit --watch",
         "deploy:local": "npm run build && node scripts/prepare-deploy.js --env local",
-        "deploy:prod": "cross-env NODE_ENV=production node scripts/scheduler.js && next build && node scripts/copy-to-standalone.js && node scripts/prepare-deploy.js --env prod && node scripts/telegram-deploy.js",
+        "deploy:prod": "cross-env NODE_ENV=production node scripts/scheduler.js --all && next build && node scripts/copy-to-standalone.js && node scripts/prepare-deploy.js --env prod && node scripts/telegram-deploy.js",
         "deploy:run": "cd ./deploy && cross-env PORT=5505 HOSTNAME=localhost node server.js"
     },
     "dependencies": {
