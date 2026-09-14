@@ -18,7 +18,7 @@ function Oauth(props) {
     useEffect(() => {
         if (user?.access) {
             dispatch(login(config));
-            Router.push(props?.returnUrl || '/?tab=');
+            Router.push(props?.returnUrl || '/');
         } else {
             Router.push('/auth/login');
         }

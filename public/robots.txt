@@ -1,7 +1,6 @@
 User-agent: *
 Disallow: /models/
 Disallow: /*?returnUrl=*
-Disallow: /*?tab=*
 Disallow: /*?edit=*
 Disallow: /*?ref=*
 Disallow: /*?*page=*
