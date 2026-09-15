@@ -175,6 +175,10 @@ $shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
     padding: 0 15px;
     position: static; // Allow absolute children to reach header boundaries
 
+    @media (max-width: 1200px) {
+        gap: 16px;
+    }
+
     @media (max-width: 992px) {
         height: auto;
         padding: 12px 0;
@@ -188,6 +192,7 @@ $shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
     display: flex;
     align-items: center;
     gap: 4px;
+    flex-shrink: 0;
 
     @media (max-width: 992px) {
         order: 1;
@@ -232,6 +237,7 @@ $shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
 
 .catalogArea {
     position: static;
+    flex-shrink: 0;
 
     @media (max-width: 992px) {
         display: none !important;
@@ -249,8 +255,14 @@ $shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
     color: $primary-green;
     font-weight: 600;
     font-size: 15px;
+    white-space: nowrap;
     cursor: pointer;
     transition: all 0.2s ease;
+
+    @media (max-width: 1200px) {
+        padding: 10px 14px;
+        gap: 6px;
+    }
 
     &:hover {
         background: darken($secondary-bg, 2%);
@@ -469,6 +481,7 @@ $shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
 // Search Bar
 .searchContainer {
     flex: 1;
+    min-width: 0;
     max-width: 600px;
     position: relative;
     z-index: 999;
@@ -527,6 +540,7 @@ $shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
 
     .searchInput {
         flex: 1;
+        min-width: 0;
         background: transparent;
         border: none;
         padding: 0 15px;
@@ -800,6 +814,11 @@ $shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
     display: flex;
     align-items: center;
     gap: 16px;
+    flex-shrink: 0;
+
+    @media (max-width: 1200px) {
+        gap: 10px;
+    }
 
     @media (max-width: 992px) {
         order: 2;
@@ -834,6 +853,7 @@ $shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
         span {
             font-size: 13px;
             font-weight: 500;
+            white-space: nowrap;
         }
 
         &:hover {
