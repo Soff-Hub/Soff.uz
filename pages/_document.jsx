@@ -59,6 +59,14 @@ export default function MyDocument() {
                         src="https://www.facebook.com/tr?id=781875518313111&ev=PageView&noscript=1"
                     />
                 </noscript>
+                <noscript>
+                    <img
+                        height="1"
+                        width="1"
+                        style={{ display: 'none' }}
+                        src="https://www.facebook.com/tr?id=1810700816631052&ev=PageView&noscript=1"
+                    />
+                </noscript>
             </Head>
             <body>
                 <Main />
