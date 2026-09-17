@@ -45,9 +45,8 @@ export default function TelegramConfigmForm({ isModal, onSuccess }) {
             const utm_source = safeLocalStorage.getItem('utm_source');
             const resp = await Axios.post(
                 baseUrlAuth +
-                    `auth/telegram-verify/${
-                        utm_source ? `?utm_source=${utm_source}` : ''
-                    }`,
+                `auth/telegram-verify/${utm_source ? `?utm_source=${utm_source}` : ''
+                }`,
                 data
             );
             dispatch(
@@ -178,7 +177,7 @@ export default function TelegramConfigmForm({ isModal, onSuccess }) {
                                 <button
                                     type="submit"
                                     className="ps-btn ps-btn--fullwidth text-white">
-                                    Tasdiqlash
+                                    Tekshirish
                                 </button>
                             )}
                         </div>

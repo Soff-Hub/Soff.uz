@@ -189,7 +189,7 @@ export default function CodeVerifyForm({ authCode, onClose, slug, onSuccess }) {
                                 {loading ? (
                                     <BeatLoader color="#fff" />
                                 ) : (
-                                    'Tasdiqlash'
+                                    'Tekshirish'
                                 )}
                             </button>
                         </div>
