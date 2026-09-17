@@ -139,15 +139,24 @@ function FileActions({ product }) {
         window.open(telegramUrl, '_blank');
     };
 
+    const [buyNowLoading, setBuyNowLoading] = useState(false);
+
     //  Hoziroq xarid qilish
-    function handleBuynow(e) {
+    async function handleBuynow(e) {
         e.preventDefault();
-        setCartOneItem(product.id);
-        if (state) {
-            Router.push(`/account/checkout?id=${product?.id}`);
-        } else {
-            // Router.push(`/auth/login?id=${product?.id}`);
-            setAuthModal(true);
+        if (buyNowLoading) return;
+        try {
+            setBuyNowLoading(true);
+            await setCartOneItem(product?.id);
+            if (state) {
+                await Router.push(`/account/checkout?id=${product?.id}`);
+            } else {
+                setAuthModal(true);
+            }
+        } catch (error) {
+            console.error('Failed to prepare checkout:', error);
+        } finally {
+            setBuyNowLoading(false);
         }
     }
     return (
@@ -487,6 +496,7 @@ function FileActions({ product }) {
                     <CustomResponsiveLayout
                         handleBuynow={handleBuynow}
                         product={product}
+                        buyNowLoading={buyNowLoading}
                     />
                 </div>
             </div>
@@ -494,16 +504,16 @@ function FileActions({ product }) {
             <AuthModal
                 open={authModal}
                 onClose={() => setAuthModal(false)}
-                onGoogleSuccessNavigateTo={'/account/checkout'}
+                onGoogleSuccessNavigateTo={`/account/checkout?id=${product?.id}`}
                 onSuccess={() => {
-                    Router.push('/account/checkout');
+                    Router.push(`/account/checkout?id=${product?.id}`);
                 }}
             />
         </>
     );
 }
 
-const CustomResponsiveLayout = ({ product, handleBuynow }) => {
+const CustomResponsiveLayout = ({ product, handleBuynow, buyNowLoading }) => {
     const { isMobile, size } = useResponsive();
     const { activePromotion } = useSelector((state) => state.ecomerce);
     const [telegramLoading, setTelegramLoading] = useState(false);
@@ -577,6 +587,8 @@ const CustomResponsiveLayout = ({ product, handleBuynow }) => {
                 ) : (
                     <Button
                         onClick={(e) => handleBuynow(e)}
+                        loading={buyNowLoading}
+                        disabled={buyNowLoading}
                         iconPosition="end"
                         style={{ height: '58px', fontSize: '20px' }}
                         type="primary"
@@ -595,6 +607,8 @@ const CustomResponsiveLayout = ({ product, handleBuynow }) => {
                     ) : (
                         <Button
                             onClick={(e) => handleBuynow(e)}
+                            loading={buyNowLoading}
+                            disabled={buyNowLoading}
                             iconPosition="end"
                             style={{ height: '58px', fontSize: '20px' }}
                             type="primary"

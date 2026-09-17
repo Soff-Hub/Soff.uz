@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { FaArrowLeft, FaBoxOpen } from 'react-icons/fa6';
-import { Button } from 'antd';
+import { Button, Spin } from 'antd';
 import RedesignModulePaymentOrderSummary from './modules/RedesignModulePaymentOrderSummary';
 import FormCheckoutInformation from './modules/FormCheckoutInformation';
 import styles from './checkout.module.scss';
@@ -24,7 +24,17 @@ const Checkout = () => {
     const isCartEmpty = allItems.length === 0;
     const isLoading = status === 'loading';
 
-    if (isCartEmpty && !isLoading) {
+    if (isLoading) {
+        return (
+            <div className={styles.pageContainer}>
+                <div className="flex justify-center items-center py-24 min-h-[300px]">
+                    <Spin size="large" />
+                </div>
+            </div>
+        );
+    }
+
+    if (isCartEmpty) {
         return (
             <div className={styles.pageContainer}>
                 <div className={styles.emptyCheckout}>

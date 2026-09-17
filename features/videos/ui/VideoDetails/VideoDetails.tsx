@@ -90,8 +90,8 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
         return duration;
     };
 
-    const handleJoinOrBuy = () => {
-        setCartOneItem(video.id);
+    const handleJoinOrBuy = async () => {
+        await setCartOneItem(video.id);
         if (isLoggedIn) {
             router.push(`/account/checkout?id=${video.id}`);
         } else {
