@@ -88,6 +88,10 @@ export default function ProductCategoryScreen({
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }, [router]);
 
+    const hasFilters = Object.keys(router.query).some(
+        (key) => !['slug', 'page'].includes(key) && router.query[key]
+    );
+
     return (
         <PageContainer>
             <Meta
@@ -96,6 +100,7 @@ export default function ProductCategoryScreen({
                 image="https://soff.uz/static/img/ilmiy-ishlar-2.png"
                 keywords={dynamicKeywords}
                 author="Soff.uz"
+                robots={hasFilters ? 'noindex, follow' : 'index, follow'}
             />
 
             <ProductFilterSection

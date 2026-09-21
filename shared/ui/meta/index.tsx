@@ -16,6 +16,7 @@ type MetaProps = {
     keywords?: Array<{ name: string }>;
     author?: string;
     canonicalUrl?: string;
+    robots?: string;
     children?: React.ReactNode;
 };
 
@@ -28,6 +29,7 @@ const Meta = ({
     keywords,
     author = 'Soff.uz',
     canonicalUrl,
+    robots = 'index, follow',
     children,
 }: MetaProps) => {
     const router = useRouter();
@@ -53,7 +55,7 @@ const Meta = ({
     return (
         <Head>
             <title>{title}</title>
-            <meta name="robots" content="index, follow" />
+            <meta name="robots" content={robots} />
             <meta name="author" content={author} />
             <meta name="description" content={processedDescription} />
             <meta name="keywords" content={keywordsString} />

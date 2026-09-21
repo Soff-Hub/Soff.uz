@@ -232,7 +232,7 @@ const Search_Results = ({
                 <title>
                     {keyword ? `“${keyword}”` : 'Soff.uz - Qidiruv natijalar'}
                 </title>
-                <meta name="robots" content="index, follow" />
+                <meta name="robots" content="noindex, follow" />
                 <meta
                     name="description"
                     content={
