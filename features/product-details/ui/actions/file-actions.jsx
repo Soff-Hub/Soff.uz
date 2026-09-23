@@ -106,6 +106,18 @@ function FileActions({ product }) {
             removeCartOneItem(product.id);
         } else {
             setCartOneItem(product.id);
+            if (typeof window !== 'undefined' && window.gtag) {
+                window.gtag('event', 'add_to_cart', {
+                    event_category: 'ecommerce',
+                    event_label: 'Savatga qo\'shish',
+                    value: product?.price,
+                    items: [{
+                        id: product?.id,
+                        name: product?.title,
+                        price: product?.price
+                    }]
+                });
+            }
         }
     }
 
@@ -147,6 +159,18 @@ function FileActions({ product }) {
         if (buyNowLoading) return;
         try {
             setBuyNowLoading(true);
+            if (typeof window !== 'undefined' && window.gtag) {
+                window.gtag('event', 'buy_now', {
+                    event_category: 'ecommerce',
+                    event_label: 'Hoziroq xarid qilish',
+                    value: product?.price,
+                    items: [{
+                        id: product?.id,
+                        name: product?.title,
+                        price: product?.price
+                    }]
+                });
+            }
             await setCartOneItem(product?.id);
             if (state) {
                 await Router.push(`/account/checkout?id=${product?.id}`);
