@@ -16,6 +16,7 @@ import useResponsive from '~/shared/utilities/useResponsive';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
 import AuthModal from '~/features/auth/ui/auth-modal';
 import { api } from '~/repositories/api';
+import { trackProductEvent } from '~/shared/utilities/analytics';
 import FileDownloadLink from '~/shared/ui/file-download-link';
 import { FaRegHeart } from 'react-icons/fa';
 import { FaHeart } from 'react-icons/fa';
@@ -106,18 +107,11 @@ function FileActions({ product }) {
             removeCartOneItem(product.id);
         } else {
             setCartOneItem(product.id);
-            if (typeof window !== 'undefined' && window.gtag) {
-                window.gtag('event', 'add_to_cart', {
-                    event_category: 'ecommerce',
-                    event_label: 'Savatga qo\'shish',
-                    value: product?.price,
-                    items: [{
-                        id: product?.id,
-                        name: product?.title,
-                        price: product?.price
-                    }]
-                });
-            }
+            trackProductEvent(
+                'add_to_cart',
+                product,
+                activePromotion?.discount_percent
+            );
         }
     }
 
@@ -159,18 +153,11 @@ function FileActions({ product }) {
         if (buyNowLoading) return;
         try {
             setBuyNowLoading(true);
-            if (typeof window !== 'undefined' && window.gtag) {
-                window.gtag('event', 'buy_now', {
-                    event_category: 'ecommerce',
-                    event_label: 'Hoziroq xarid qilish',
-                    value: product?.price,
-                    items: [{
-                        id: product?.id,
-                        name: product?.title,
-                        price: product?.price
-                    }]
-                });
-            }
+            trackProductEvent(
+                'buy_now',
+                product,
+                activePromotion?.discount_percent
+            );
             await setCartOneItem(product?.id);
             if (state) {
                 await Router.push(`/account/checkout?id=${product?.id}`);

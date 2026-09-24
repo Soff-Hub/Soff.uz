@@ -184,7 +184,7 @@ function App({ Component, pageProps }) {
                     />
                     <Script
                         src="/scripts/google-analytics-init.js"
-                        strategy="lazyOnload"
+                        strategy="afterInteractive"
                     />
                     <Script
                         src="/scripts/yandex-metrika-init.js"
