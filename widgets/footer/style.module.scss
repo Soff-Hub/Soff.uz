@@ -283,6 +283,10 @@
                 transform: translateY(-2px);
                 box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
             }
+
+            &.paymentCardSvg img {
+                height: 24px;
+            }
         }
 
         @media (max-width: 576px) {

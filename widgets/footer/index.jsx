@@ -163,6 +163,12 @@ const paymentMethods = [
         name: 'Payme',
         icon: '/static/img/payment-method/payme-logo.png',
     },
+    {
+        name: 'Paynet',
+        icon: '/static/svg/paynet.svg?v=3',
+        // The SVG has no built-in padding, unlike the PNG logos.
+        className: 'paymentCardSvg',
+    },
 ];
 
 const FooterCollapse = ({ title, children, defaultOpen = false }) => {
@@ -275,7 +281,7 @@ export default function Footer() {
                                 {paymentMethods.map((method) => (
                                     <div
                                         key={method.name}
-                                        className={styles.paymentCard}>
+                                        className={`${styles.paymentCard} ${method.className ? styles[method.className] : ''}`}>
                                         <img
                                             src={method.icon}
                                             alt={method.name}

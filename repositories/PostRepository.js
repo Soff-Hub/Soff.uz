@@ -139,6 +139,32 @@ class PostRepository {
             });
         return response;
     }
+    async getHasPurchased(slug, token) {
+        const endPoint = `customer/has-purchased/${slug}/`;
+        const response = await Repository({
+            url: baseUrl + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        })
+            .then((response) => response.data)
+            .catch(() => null);
+        return response;
+    }
+    async getPlaylistDetail(slug, token) {
+        const endPoint = `customer/playlist/${slug}/`;
+        const response = await Repository({
+            url: baseUrl + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        })
+            .then((response) => response.data)
+            .catch(() => null);
+        return response;
+    }
     async postClickCard(documents, card_number, expire_date, type, token, affiliate_code) {
         const endPoint = `seller/payment/create/`;
         const data = {

@@ -107,6 +107,156 @@ const FormSubmitButton = ({ hisob, message, loading }) => (
     </button>
 );
 
+const PAYNET_POLL_INTERVAL = 4000;
+const PAYNET_POLL_TIMEOUT = 10 * 60 * 1000;
+const PAYNET_ORDER_TTL = 30 * 60 * 1000;
+const PAYNET_STORAGE_KEY = 'paynetPendingOrder';
+
+const getStoredPaynetOrder = (orderKey) => {
+    try {
+        const stored = JSON.parse(safeLocalStorage.getItem(PAYNET_STORAGE_KEY));
+        if (stored?.key === orderKey && Date.now() - stored.createdAt < PAYNET_ORDER_TTL) return stored;
+    } catch {}
+    return null;
+};
+
+const openPaynetPage = (url) => {
+    const win = window.open(url, '_blank');
+    if (win) win.opener = null;
+};
+
+const PaynetPayment = ({ document, purchaseType, pollSlug, hisobFormatted, onPaid }) => {
+    const { user } = useSelector((state) => state.auth);
+    const { affiliateId } = useSelector((state) => state.affiliate);
+    const orderKey = `${purchaseType}:${[...(document || [])].map(Number).sort((a, b) => a - b).join(',')}`;
+    const [order, setOrder] = useState(null);
+    const [creating, setCreating] = useState(false);
+    const [checking, setChecking] = useState(false);
+    const [expired, setExpired] = useState(false);
+    const checkingRef = useRef(false);
+    const paidRef = useRef(false);
+
+    // Restore an unpaid order (e.g. the mobile browser reloaded the tab after Paynet) instead of creating a new one.
+    useEffect(() => {
+        const stored = getStoredPaynetOrder(orderKey);
+        setOrder(stored);
+        setExpired(stored ? Date.now() - stored.createdAt > PAYNET_POLL_TIMEOUT : false);
+    }, [orderKey]);
+
+    const checkPurchased = async () => {
+        if (!pollSlug || checkingRef.current || paidRef.current) return false;
+        checkingRef.current = true;
+        try {
+            const purchased = purchaseType === 'playlist'
+                ? (await PostRepository.getPlaylistDetail(pollSlug, user?.access))?.is_purchased_playlist
+                : (await PostRepository.getHasPurchased(pollSlug, user?.access))?.has_purchased;
+            if (purchased && !paidRef.current) {
+                paidRef.current = true;
+                safeLocalStorage.removeItem(PAYNET_STORAGE_KEY);
+                onPaid();
+            }
+            return !!purchased;
+        } finally {
+            checkingRef.current = false;
+        }
+    };
+
+    useEffect(() => {
+        if (!order || expired) return;
+        const stopAt = order.createdAt + PAYNET_POLL_TIMEOUT;
+        const tick = () => {
+            if (Date.now() > stopAt) {
+                setExpired(true);
+                return;
+            }
+            checkPurchased();
+        };
+        const onVisibility = () => {
+            if (window.document.visibilityState === 'visible') tick();
+        };
+        tick();
+        const timerID = setInterval(tick, PAYNET_POLL_INTERVAL);
+        window.document.addEventListener('visibilitychange', onVisibility);
+        return () => {
+            clearInterval(timerID);
+            window.document.removeEventListener('visibilitychange', onVisibility);
+        };
+    }, [order, expired, pollSlug]);
+
+    async function handleCreate(e) {
+        e.preventDefault();
+        if (order) {
+            openPaynetPage(order.url);
+            return;
+        }
+        setCreating(true);
+        const ItemsData = await PostRepository.postClickCardNumber(document, 'paynet', purchaseType, user?.access, affiliateId);
+        setCreating(false);
+        if (ItemsData?.status === 201) {
+            const newOrder = {
+                key: orderKey,
+                cart: ItemsData.data.cart,
+                url: ItemsData.data.url,
+                amount: ItemsData.data.amount,
+                createdAt: Date.now(),
+            };
+            safeLocalStorage.setItem(PAYNET_STORAGE_KEY, JSON.stringify(newOrder));
+            setExpired(false);
+            setOrder(newOrder);
+            openPaynetPage(newOrder.url);
+        } else {
+            Modal.error({ centered: true, title: 'Xatolik', content: ItemsData?.data?.msg });
+        }
+    }
+
+    async function handleManualCheck() {
+        setChecking(true);
+        const purchased = await checkPurchased();
+        setChecking(false);
+        if (!purchased && !paidRef.current) {
+            Modal.info({
+                centered: true,
+                title: "To'lov hali tasdiqlanmadi",
+                content: "To'lovni amalga oshirgan bo'lsangiz, bir necha soniyadan so'ng qayta tekshiring.",
+            });
+        }
+    }
+
+    if (!order) {
+        return (
+            <form onSubmit={handleCreate}>
+                <FormSubmitButton hisob={hisobFormatted} message={!creating} />
+            </form>
+        );
+    }
+
+    return (
+        <div className={styles.paynetWaiting}>
+            {!expired && <BeatLoader color="#00a44f" size={8} />}
+            <p className={styles.paynetTitle}>
+                {expired
+                    ? "To'lov tasdiqlanishi kutilmoqda"
+                    : "To'lov Paynet'da amalga oshirilmoqda… To'lovdan so'ng shu sahifaga qayting."}
+            </p>
+            <div className={styles.paynetDetails}>
+                <span>Buyurtma raqami: <strong>{order.cart}</strong></span>
+                <span>To'lov summasi: <strong>{addPeriodToThousands(order.amount)} so'm</strong></span>
+            </div>
+            {expired && (
+                <p className={styles.paynetNote}>
+                    To'lov amalga oshirilgach, xarid shaxsiy kabinetingizda paydo bo'ladi.
+                </p>
+            )}
+            <button type="button" className={styles.submitBtn} onClick={handleManualCheck} disabled={checking}>
+                {checking ? <BeatLoader color="#fff" size={8} /> : "To'lovni tekshirish"}
+            </button>
+            <a className={styles.paynetLink} href={order.url} target="_blank" rel="noopener noreferrer">
+                Paynet sahifasini ochish
+            </a>
+        </div>
+    );
+};
+
 const CreditCard2 = ({ document, type }) => {
     const { user } = useSelector((state) => state.auth);
     const { cartDataItems, playlistCartDataItems, activePromotion } = useSelector(
@@ -309,6 +459,17 @@ const CreditCard2 = ({ document, type }) => {
 
     const formattedTime = new Date(time * 1000).toISOString().substr(14, 5);
 
+    // The whole order is approved at once, so checking one item is enough.
+    const paynetPurchaseType = (playlistCartDataItems?.length > 0 || type === 'playlist') ? 'playlist' : 'document';
+    const paynetPollItem = paynetPurchaseType === 'playlist'
+        ? (playlistCartDataItems?.[0] || ecomerce[0])
+        : (cartDataItems?.find((item) => Number(item?.id) === Number(document?.[0])) || cartDataItems?.[0]);
+
+    function handlePaynetPaid() {
+        Modal.success({ centered: true, title: 'Muvaffaqiyatli!', content: "To'lov qabul qilindi." });
+        Router.push('/account/sellerproducts').then(() => removeAll());
+    }
+
     const paymentItems = [
         {
             key: '1',
@@ -384,6 +545,25 @@ const CreditCard2 = ({ document, type }) => {
                     <form onSubmit={handleClickCardPostsPayme}>
                         <FormSubmitButton hisob={hisobFormatted} message={message} />
                     </form>
+                </div>
+            ),
+        },
+        {
+            key: '4',
+            label: (
+                <div className={styles.paymentIconWrap}>
+                    <img className={styles.iconPaynet} src="/static/svg/paynet.svg?v=3" alt="paynet" />
+                </div>
+            ),
+            children: (
+                <div className="pt-4">
+                    <PaynetPayment
+                        document={document}
+                        purchaseType={paynetPurchaseType}
+                        pollSlug={paynetPollItem?.slug}
+                        hisobFormatted={hisobFormatted}
+                        onPaid={handlePaynetPaid}
+                    />
                 </div>
             ),
         },
