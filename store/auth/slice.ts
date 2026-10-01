@@ -1,3 +1,4 @@
+import { redirectAfterLogout } from '~/shared/utilities/protected-routes';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie';
@@ -48,10 +49,7 @@ export const logOut = createAsyncThunk(
     async (_, { rejectWithValue }) => {
         try {
             clearAuthStorage();
-            
-            if (typeof window !== 'undefined') {
-                window.location.href = '/auth/login';
-            }
+            redirectAfterLogout();
             return;
         } catch (error: any) {
             return rejectWithValue(error.message);

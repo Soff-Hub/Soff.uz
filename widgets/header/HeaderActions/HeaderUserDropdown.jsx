@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { logOut } from '~/store/auth/slice';
 import { logout as profileLogout } from '~/store/profile/slice';
 import useAuth from '~/shared/hooks/useAuth';
-import Router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { useFGet } from '~/shared/hooks/useFApi';
 import { CHAT_UNSEENS } from '~/shared/api/end-points';
@@ -20,27 +20,13 @@ const HeaderUserDropdown = () => {
     const { user: profile } = useSelector((state) => state.profile);
     const refresh = useSelector((state) => state.auth?.user?.refresh);
     const router = useRouter();
+    const { logOutAuth } = useAuth();
 
-    const handleLogout = () => {
-        const data = {
-            refresh: refresh,
-        };
-        const { logOutAuth } = useAuth();
-        const res = logOutAuth(data);
-
-        if (res) {
-            dispatch(logOut());
-            dispatch(profileLogout());
-            const currentPath = router.asPath;
-            if (
-                !currentPath.includes('/auth/login') &&
-                !currentPath.includes('/auth/register') &&
-                !currentPath.includes('/auth/reset-password') &&
-                !currentPath.includes('/oauth')
-            ) {
-                Router.push('/auth/login');
-            }
-        }
+    const handleLogout = async () => {
+        await logOutAuth({ refresh });
+        dispatch(profileLogout());
+        // Redirects to home from protected pages, otherwise stays on the page.
+        dispatch(logOut());
     };
 
     const { data } = useFGet('unread_messages_count', CHAT_UNSEENS, {

@@ -43,27 +43,11 @@ function Sidebar({ collapsed, onChangeCollapse }) {
         `${user?.first_name || ''} ${user?.last_name || ''}`.trim() ||
         'Foydalanuvchi';
 
-    const handleLogout = () => {
-        const data = {
-            refresh: refresh,
-        };
-        const res = logOutAuth(data);
-
-        if (res) {
-            dispatch(logOut());
-            dispatch(profileLogout());
-            // Navigate to login page after logout
-            const currentPath = router.asPath;
-            // Don't redirect if already on login page or auth pages
-            if (
-                !currentPath.includes('/auth/login') &&
-                !currentPath.includes('/auth/register') &&
-                !currentPath.includes('/auth/reset-password') &&
-                !currentPath.includes('/oauth')
-            ) {
-                router.push('/auth/login');
-            }
-        }
+    const handleLogout = async () => {
+        await logOutAuth({ refresh });
+        dispatch(profileLogout());
+        // Redirects to home from protected pages, otherwise stays on the page.
+        dispatch(logOut());
     };
 
     const items = useMemo(
