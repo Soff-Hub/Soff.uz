@@ -1,0 +1,15 @@
+.hint {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    color: #9ca3af;
+    font-size: 18px;
+    cursor: help;
+    transition: color 0.2s;
+
+    &:hover,
+    &:focus-visible {
+        color: #00a44f;
+    }
+}

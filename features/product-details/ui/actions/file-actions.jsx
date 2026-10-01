@@ -14,6 +14,7 @@ import useCart from '~/shared/hooks/useCart';
 import { useSelector } from 'react-redux';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
+import ServiceFeeHint, { useServiceFeePercentage, withServiceFee } from '~/shared/components/service-fee-hint';
 import AuthModal from '~/features/auth/ui/auth-modal';
 import { api } from '~/repositories/api';
 import { trackProductEvent } from '~/shared/utilities/analytics';
@@ -99,6 +100,8 @@ function FileActions({ product }) {
     );
     const [messageApi, contextHolder] = message.useMessage();
     const { activePromotion } = useSelector((state) => state.ecomerce);
+    const serviceFeePercentage = useServiceFeePercentage();
+    const promotionPrice = Math.round((product?.price || 0) * (1 - (activePromotion?.discount_percent || 0) / 100));
     const state = useSelector((state) => state.auth.user?.access);
 
     function handleAddItemToCart(e) {
@@ -182,12 +185,13 @@ function FileActions({ product }) {
                             <div className="d-flex gap-3 align-items-center">
                                 <h2 className="mb-0">
                                     {addPeriodToThousands(
-                                        Math.round(product.price * (1 - activePromotion.discount_percent / 100))
+                                        withServiceFee(promotionPrice, serviceFeePercentage)
                                     )}{' '}
-                                    so'm
+                                    so'm{' '}
+                                    <ServiceFeeHint price={promotionPrice} />
                                 </h2>
                                 <del style={{ color: '#999', fontSize: '1.2rem' }}>
-                                    {addPeriodToThousands(product?.price || 0)}{' '}
+                                    {addPeriodToThousands(withServiceFee(product?.price, serviceFeePercentage))}{' '}
                                     so'm
                                 </del>
                                 <span style={{ fontSize: '1.2rem', color: '#fff', padding: '0.5rem', borderRadius: '5px', fontWeight: 'bold' }} className="badge bg-success ">-{activePromotion.discount_percent}%</span>
@@ -195,20 +199,22 @@ function FileActions({ product }) {
                         ) : product?.discount === 0 ? (
                             <h2>
                                 {addPeriodToThousands(
-                                    product?.discount_price || 0
+                                    withServiceFee(product?.discount_price, serviceFeePercentage)
                                 )}{' '}
-                                so'm
+                                so'm{' '}
+                                <ServiceFeeHint price={product?.discount_price} />
                             </h2>
                         ) : (
                             <div className="d-flex gap-3">
                                 <h2>
                                     {addPeriodToThousands(
-                                        product?.discount_price || 0
+                                        withServiceFee(product?.discount_price, serviceFeePercentage)
                                     )}{' '}
-                                    so'm
+                                    so'm{' '}
+                                    <ServiceFeeHint price={product?.discount_price} />
                                 </h2>
                                 <del>
-                                    {addPeriodToThousands(product?.price || 0)}{' '}
+                                    {addPeriodToThousands(withServiceFee(product?.price, serviceFeePercentage))}{' '}
                                     so'm
                                 </del>
                             </div>
@@ -529,9 +535,13 @@ const CustomResponsiveLayout = ({ product, handleBuynow, buyNowLoading }) => {
     const { activePromotion } = useSelector((state) => state.ecomerce);
     const [telegramLoading, setTelegramLoading] = useState(false);
 
-    const displayPrice = activePromotion?.discount_percent > 0
-        ? Math.round(product?.price * (1 - activePromotion.discount_percent / 100))
-        : product?.price;
+    const serviceFeePercentage = useServiceFeePercentage();
+    const displayPrice = withServiceFee(
+        activePromotion?.discount_percent > 0
+            ? Math.round(product?.price * (1 - activePromotion.discount_percent / 100))
+            : product?.price,
+        serviceFeePercentage
+    );
 
     const handleDownloadThroughTelegram = async () => {
         if (!product?.id) return;

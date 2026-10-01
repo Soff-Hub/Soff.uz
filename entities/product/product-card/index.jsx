@@ -9,12 +9,14 @@ import { FaRegHeart } from 'react-icons/fa';
 import { FaShoppingCart } from 'react-icons/fa';
 import { FaHeart } from 'react-icons/fa';
 import Image from 'next/image';
+import { useServiceFeePercentage, withServiceFee } from '~/shared/components/service-fee-hint';
 
 const ProductCard = ({ product }) => {
     const { addSavedItem, wishlist, removeSavedItem } = useWishlist();
     const Router = useRouter();
     const { setCartOneItem, removeCartOneItem } = useCart();
     const [basket, setBasket] = useState(false);
+    const serviceFeePercentage = useServiceFeePercentage();
 
     const handleNavigate = () => {
         Router.push(`/product/${product?.slug}`);
@@ -95,7 +97,7 @@ const ProductCard = ({ product }) => {
                         {product?.price === 0 || !product?.price
                             ? 'Bepul'
                             : `${formatCurrencyWithSpace(
-                                product?.price
+                                withServiceFee(product?.price, serviceFeePercentage)
                             )} so’m`}
                     </h3>
                 </div>
