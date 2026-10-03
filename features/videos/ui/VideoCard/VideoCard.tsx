@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { Video } from '~/features/videos/model/types';
+import { SubscriptionBadge } from '~/features/platform-subscription';
 import styles from './VideoCard.module.scss';
 import { EyeOutlined, FireOutlined, CaretRightFilled } from '@ant-design/icons';
 
@@ -50,6 +51,8 @@ const VideoCard: React.FC<Props> = ({ video, onClick, variant = 'vertical' }) =>
                     </div>
                 )}
 
+
+                <SubscriptionBadge product={video} className={styles.subscriptionBadge} />
 
                 <div className={styles.playOverlay}>
                     <div className={styles.playIconCircle}>

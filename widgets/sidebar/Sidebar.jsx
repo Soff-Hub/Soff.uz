@@ -7,7 +7,7 @@ import { PiSignOutBold } from 'react-icons/pi';
 import { FaRegUserCircle } from 'react-icons/fa';
 import { FaRegHeart } from 'react-icons/fa';
 import { FaUser } from 'react-icons/fa';
-import { MdOutlineShoppingCart } from 'react-icons/md';
+import { MdOutlineShoppingCart, MdWorkspacePremium } from 'react-icons/md';
 import { FaRegCommentDots } from 'react-icons/fa';
 import { FaRegBell } from 'react-icons/fa';
 import { MdKeyboardDoubleArrowLeft } from 'react-icons/md';
@@ -72,6 +72,18 @@ function Sidebar({ collapsed, onChangeCollapse }) {
                     <Link href={'/order/my-orders'}>
                         <a style={!isAuthorized ? disableLinkStyle : {}}>
                             Buyurtmalarim
+                        </a>
+                    </Link>
+                ),
+            },
+            {
+                key: 'subscription',
+                icon: <MdWorkspacePremium size={20} />,
+                disabled: !isAuthorized,
+                label: (
+                    <Link href={'/account/subscription'}>
+                        <a style={!isAuthorized ? disableLinkStyle : {}}>
+                            Mening obunam
                         </a>
                     </Link>
                 ),
@@ -160,6 +172,9 @@ function Sidebar({ collapsed, onChangeCollapse }) {
                 break;
             case 'my-orders':
                 router.push('/order/my-orders');
+                break;
+            case 'subscription':
+                router.push('/account/subscription');
                 break;
             case 'wishlist':
                 router.push('/account/wishlist');

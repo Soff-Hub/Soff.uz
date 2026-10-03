@@ -1,0 +1,158 @@
+.page {
+    padding: 32px 0 64px;
+}
+
+.hero {
+    max-width: 640px;
+    margin: 0 auto 32px;
+    text-align: center;
+
+    h1 {
+        font-size: 36px;
+        font-weight: 700;
+        margin-bottom: 12px;
+    }
+
+    p {
+        color: #4b5563;
+        font-size: 16px;
+        margin: 0;
+    }
+}
+
+.error {
+    text-align: center;
+    color: #6b7280;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+    max-width: 1080px;
+    margin: 0 auto;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    padding: 28px 24px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+}
+
+.cardCurrent {
+    border: 2px solid #00a44f;
+}
+
+.cardHead {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    h2 {
+        margin: 0;
+        font-size: 22px;
+        font-weight: 700;
+    }
+}
+
+.currentBadge,
+.scheduledBadge {
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.currentBadge {
+    background: #00a44f;
+    color: #fff;
+}
+
+.scheduledBadge {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.description {
+    margin: 8px 0 0;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.price {
+    margin: 20px 0 12px;
+    color: #6b7280;
+    font-size: 15px;
+
+    strong {
+        color: #111827;
+        font-size: 32px;
+        font-weight: 700;
+    }
+}
+
+.aiBadge {
+    display: inline-flex;
+    align-self: flex-start;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 12px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: #f3e8ff;
+    color: #6b21a8;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.features {
+    flex: 1;
+    margin: 0 0 24px;
+    padding: 0;
+    list-style: none;
+
+    li {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 6px 0;
+        color: #374151;
+        font-size: 15px;
+
+        svg {
+            flex-shrink: 0;
+            margin-top: 4px;
+            color: #00a44f;
+        }
+    }
+}
+
+.action {
+    margin-top: auto;
+}
+
+.primaryBtn {
+    background: #00a44f;
+
+    &:hover {
+        background: #008f44 !important;
+    }
+}
+
+.currentLink {
+    display: block;
+    padding: 8px 0;
+    color: #00a44f;
+    font-weight: 600;
+    text-align: center;
+}
+
+@media (max-width: 576px) {
+    .hero h1 {
+        font-size: 28px;
+    }
+}

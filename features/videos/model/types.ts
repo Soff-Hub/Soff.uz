@@ -44,6 +44,7 @@ export interface Video {
     poster: string | null;
     playlist: Playlist | null;
     category: Category;
+    in_platform_sub?: boolean;
 }
 
 export interface Tag {
@@ -93,6 +94,8 @@ export interface VideoDetail {
     sold_count: number;
     view_count: number;
     three_d_features: any | null;
+    has_purchased?: boolean;
+    in_platform_sub?: boolean;
 }
 
 export interface VideoResponse {

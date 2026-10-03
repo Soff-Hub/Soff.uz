@@ -19,6 +19,7 @@ import AuthModal from '~/features/auth/ui/auth-modal';
 import { api } from '~/repositories/api';
 import { trackProductEvent } from '~/shared/utilities/analytics';
 import FileDownloadLink from '~/shared/ui/file-download-link';
+import { SubscriptionClaim, useIsClaimPrimary } from '~/features/platform-subscription';
 import { FaRegHeart } from 'react-icons/fa';
 import { FaHeart } from 'react-icons/fa';
 import { FaShoppingCart } from 'react-icons/fa';
@@ -103,6 +104,8 @@ function FileActions({ product }) {
     const serviceFeePercentage = useServiceFeePercentage();
     const promotionPrice = Math.round((product?.price || 0) * (1 - (activePromotion?.discount_percent || 0) / 100));
     const state = useSelector((state) => state.auth.user?.access);
+    const isPurchased = Boolean(product?.has_purchased || product?.document?.file_url);
+    const isClaimPrimary = useIsClaimPrimary(product, isPurchased);
 
     function handleAddItemToCart(e) {
         e.preventDefault();
@@ -510,11 +513,18 @@ function FileActions({ product }) {
                         </div>
                     ) : null}
 
+                    {isClaimPrimary && (
+                        <SubscriptionClaim product={product} purchased={isPurchased} />
+                    )}
                     <CustomResponsiveLayout
                         handleBuynow={handleBuynow}
                         product={product}
                         buyNowLoading={buyNowLoading}
+                        secondary={isClaimPrimary}
                     />
+                    {!isClaimPrimary && (
+                        <SubscriptionClaim product={product} purchased={isPurchased} />
+                    )}
                 </div>
             </div>
 
@@ -530,7 +540,7 @@ function FileActions({ product }) {
     );
 }
 
-const CustomResponsiveLayout = ({ product, handleBuynow, buyNowLoading }) => {
+const CustomResponsiveLayout = ({ product, handleBuynow, buyNowLoading, secondary }) => {
     const { isMobile, size } = useResponsive();
     const { activePromotion } = useSelector((state) => state.ecomerce);
     const [telegramLoading, setTelegramLoading] = useState(false);
@@ -612,11 +622,11 @@ const CustomResponsiveLayout = ({ product, handleBuynow, buyNowLoading }) => {
                         disabled={buyNowLoading}
                         iconPosition="end"
                         style={{ height: '58px', fontSize: '20px' }}
-                        type="primary"
-                        className="w-100 bg-success text-truncate"
+                        type={secondary ? 'default' : 'primary'}
+                        className={`w-100 text-truncate ${secondary ? 'border-2 border-success text-success' : 'bg-success'}`}
                         icon={<DownloadOutlined />}
                         size={'large'}>
-                        Hoziroq xarid qilish (
+                        {secondary ? 'Sotib olish' : 'Hoziroq xarid qilish'} (
                         {formatCurrencyWithSpace(displayPrice)} so'm)
                     </Button>
                 )}
@@ -632,11 +642,11 @@ const CustomResponsiveLayout = ({ product, handleBuynow, buyNowLoading }) => {
                             disabled={buyNowLoading}
                             iconPosition="end"
                             style={{ height: '58px', fontSize: '20px' }}
-                            type="primary"
-                            className="w-100 bg-success"
+                            type={secondary ? 'default' : 'primary'}
+                            className={`w-100 ${secondary ? 'border-2 border-success text-success' : 'bg-success'}`}
                             icon={<DownloadOutlined />}
                             size={'large'}>
-                            {`Hoziroq xarid qilish ${size >= 360
+                            {`${secondary ? 'Sotib olish' : 'Hoziroq xarid qilish'} ${size >= 360
                                 ? `(${formatCurrencyWithSpace(displayPrice)} so'm)`
                                 : ''
                                 }`}

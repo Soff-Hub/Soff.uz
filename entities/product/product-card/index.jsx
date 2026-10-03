@@ -10,6 +10,7 @@ import { FaShoppingCart } from 'react-icons/fa';
 import { FaHeart } from 'react-icons/fa';
 import Image from 'next/image';
 import { useServiceFeePercentage, withServiceFee } from '~/shared/components/service-fee-hint';
+import { SubscriptionBadge } from '~/features/platform-subscription';
 
 const ProductCard = ({ product }) => {
     const { addSavedItem, wishlist, removeSavedItem } = useWishlist();
@@ -46,9 +47,12 @@ const ProductCard = ({ product }) => {
             <div className={styles.card}>
                 <div className={styles.cardHead}>
                     <div className={styles.cardHeadInfo}>
-                        <span className={styles.cardType}>
-                            {product?.document?.file_type || '.zip'}
-                        </span>
+                        <div className={styles.cardBadges}>
+                            <span className={styles.cardType}>
+                                {product?.document?.file_type || '.zip'}
+                            </span>
+                            <SubscriptionBadge product={product} />
+                        </div>
                         <div className={styles.cardActions}>
                             <div
                                 onClick={handleAddItemToWishlist}

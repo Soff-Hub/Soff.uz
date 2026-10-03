@@ -1,0 +1,142 @@
+.tabs {
+    :global(.ant-tabs-tab) {
+        font-size: 15px;
+    }
+}
+
+.card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 28px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.empty {
+    text-align: center;
+
+    h2 {
+        font-size: 22px;
+        font-weight: 700;
+    }
+}
+
+.banner {
+    margin-bottom: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.titleRow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+
+    h2 {
+        margin: 0;
+        font-size: 24px;
+        font-weight: 700;
+    }
+}
+
+.muted {
+    margin: 0 0 4px;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.link {
+    color: #00a44f;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.aiBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 8px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: #f3e8ff;
+    color: #6b21a8;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.usage {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.usageRow {
+    display: flex;
+    justify-content: space-between;
+    font-size: 15px;
+    color: #374151;
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.primaryBtn {
+    background: #00a44f;
+
+    &:hover {
+        background: #008f44 !important;
+    }
+}
+
+.soffxBtn {
+    border-color: #a855f7;
+    color: #6b21a8;
+}
+
+.ctaLink {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 10px 24px;
+    border-radius: 10px;
+    background: #00a44f;
+    color: #fff !important;
+    font-weight: 600;
+}
+
+.claimRow {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.claimPoster {
+    width: 56px;
+    height: 56px;
+    object-fit: cover;
+    border-radius: 8px;
+    background: #f3f4f6;
+}
+
+.claimTitle {
+    display: block;
+    color: #111827;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+@media (max-width: 576px) {
+    .card {
+        padding: 20px 16px;
+    }
+}
