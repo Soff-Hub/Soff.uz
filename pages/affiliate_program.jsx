@@ -1,5 +1,6 @@
 import React from 'react';
 import PageLayout from '~/widgets/layouts/PageLayout';
+import AffiliateLeaderboardSection from '~/features/affiliate/ui/AffiliateLeaderboardSection';
 import AffiliateBenefitsSection from '~/features/affiliate/ui/AffiliateBenefitsSection';
 import CreateLinkSection from '~/features/affiliate/ui/CreateLinkSection';
 import HeroSection from '~/features/affiliate/ui/HeroSection';
@@ -14,6 +15,7 @@ const AffiliateProgram = () => {
                 <HeroSection />
             </div>
             <CreateLinkSection />
+            <AffiliateLeaderboardSection />
             <ThreeStepsSection />
             <PromoteOptionsSection />
             <AffiliateBenefitsSection />
