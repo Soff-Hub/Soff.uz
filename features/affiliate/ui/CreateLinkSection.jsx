@@ -8,6 +8,9 @@ import AuthModal from '~/features/auth/ui/auth-modal';
 import { useIsLoggedIn } from '~/shared/hooks/useIsLoggedIn';
 import AffiliateEarningsSection from './AffiliateEarningsSection';
 
+// The backend only accepts soff.uz pages.
+const SOFF_LINK_PATTERN = /^https:\/\/soff\.uz(\/|\?|$)/i;
+
 const CreateLinkSection = () => {
     const [userLink, setUserLink] = useState('');
     const [loading, setLoading] = useState(false);
@@ -24,6 +27,10 @@ const CreateLinkSection = () => {
             message.warning('Iltimos, havolani kiriting!');
             return;
         }
+        if (!SOFF_LINK_PATTERN.test(userLink.trim())) {
+            setInputError("Havola https://soff.uz sahifasi bo'lishi kerak.");
+            return;
+        }
         if (!isLoggedIn) {
             setAuthModalOpen(true);
             return;
@@ -33,7 +40,7 @@ const CreateLinkSection = () => {
         try {
             const response = await Axios.post(
                 `${baseURL}seller/affiliate-create/`,
-                { link: userLink },
+                { link: userLink.trim() },
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,

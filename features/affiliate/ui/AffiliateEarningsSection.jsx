@@ -50,6 +50,14 @@ export default function AffiliateEarningsSection() {
                                 so'm
                             </span>
                         </div>
+                        {earnings.affiliate_sales_count > 0 && (
+                            <div className="text-muted fw-medium">
+                                Havolalaringiz orqali sotuvlar:{' '}
+                                <span className="fw-bold text-black">
+                                    {earnings.affiliate_sales_count} ta
+                                </span>
+                            </div>
+                        )}
                     </div>
                 </div>
 
