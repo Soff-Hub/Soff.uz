@@ -113,6 +113,18 @@ const nextSettings = {
             },
         ];
     },
+    async redirects() {
+        return [
+            // www.soff.uz served every page with 200, giving Google a full
+            // duplicate host. Consolidate it onto the canonical apex domain.
+            {
+                source: '/:path*',
+                has: [{ type: 'host', value: 'www.soff.uz' }],
+                destination: 'https://soff.uz/:path*',
+                permanent: true,
+            },
+        ];
+    },
     async rewrites() {
         return [
             {

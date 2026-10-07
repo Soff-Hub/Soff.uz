@@ -4,7 +4,7 @@ import Description from '../actions/description';
 import SellerProfile from '../seller-profile/seller-profile';
 import DefaultVideoContent from './default-video';
 import { InfoCircleOutlined } from '@ant-design/icons';
-import Link from 'next/link';
+import ReportLink from '../actions/report-link';
 import CommentFormWrapper from '~/features/comments/ui/commentWrapper';
 import CommentList from '~/features/comments/ui/commentList';
 import { FaEye } from 'react-icons/fa';
@@ -49,15 +49,7 @@ function VideosProductsDetails({ product, isPlay, setIsPlay }) {
                                     style={{ cursor: 'pointer' }}
                                 />
                                 <span>Mualliflik huquqi buzilgan holatda</span>
-                                <Link href={`/report/${product.slug}`}>
-                                    <a rel="nofollow">
-                                        <strong
-                                            className="text-success"
-                                            style={{ cursor: 'pointer' }}>
-                                            shikoyat qiling!
-                                        </strong>
-                                    </a>
-                                </Link>
+                                <ReportLink slug={product.slug} />
                             </div>
                         </div>
                         <FileActions product={product} />

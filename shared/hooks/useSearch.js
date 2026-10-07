@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { baseUrlUseApi } from '@/repositories/useApi';
 import { useRouter } from 'next/router';
 import useHistorySearch from './useHistorySearch';
+import { getSearchPageUrl } from '~/shared/utilities/search-url';
 
 const staticOptions = {
     mahsulotlar: [
@@ -179,9 +180,10 @@ function useSearch(categoryId = null) {
             setIsNavigating(true);
             setSearch(optionValue);
             await router.push(
-                `/search-page?keyword=${encodeURIComponent(optionValue)}&tab=${
+                getSearchPageUrl(
+                    optionValue,
                     type === 'mahsulotlar' ? 1 : type === 'xizmatlar' ? 2 : 3
-                }&type=all`
+                )
             );
             addSearchHistoryItem({ value: optionValue, type });
         } catch (error) {
@@ -198,18 +200,18 @@ function useSearch(categoryId = null) {
 
             if (type === 'mahsulotlar') {
                 await router.push(
-                    `/search-page?keyword=${encodeURIComponent(optionValue)}&tab=1&type=all`
+                    getSearchPageUrl(optionValue, 1)
                 );
             } else if (type === 'xizmatlar') {
                 await router.push(
-                    `/search-page?keyword=${encodeURIComponent(optionValue)}&tab=2&type=all`
+                    getSearchPageUrl(optionValue, 2)
                 );
             } else if (type === 'mutaxassislar') {
                 if (optionData?.id) {
                     await router.push(`/seller/${optionData.id}`);
                 } else {
                     await router.push(
-                        `/search-page?keyword=${encodeURIComponent(optionValue)}&tab=3&type=all`
+                        getSearchPageUrl(optionValue, 3)
                     );
                 }
             }

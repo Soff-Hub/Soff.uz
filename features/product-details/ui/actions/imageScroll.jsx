@@ -4,7 +4,7 @@ import { Navigation, Thumbs } from 'swiper/modules';
 import ImageLightBox from './image-lightbox';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import DemoButton from '~/shared/ui/forms/demoBtn';
-import Link from 'next/link';
+import ReportLink from './report-link';
 import Image from 'next/image';
 import useResponsive from '~/shared/utilities/useResponsive';
 import {
@@ -430,15 +430,7 @@ const ImageCarousel = ({
                                     style={{ cursor: 'pointer' }}
                                 />
                                 <span>Mualliflik huquqi buzilgan holatda</span>
-                                <Link href={`/report/${slug}`}>
-                                    <a rel="nofollow">
-                                        <strong
-                                            className="text-success"
-                                            style={{ cursor: 'pointer' }}>
-                                            shikoyat qiling!
-                                        </strong>
-                                    </a>
-                                </Link>
+                                <ReportLink slug={slug} />
                             </div>
                         </div>
                     </>

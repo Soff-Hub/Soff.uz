@@ -5,7 +5,7 @@ import {
     UpOutlined,
     DownOutlined,
 } from '@ant-design/icons';
-import Link from 'next/link';
+import ReportLink from './report-link';
 import ImageLightBox from './image-lightbox';
 import { FaEye } from 'react-icons/fa';
 
@@ -311,16 +311,7 @@ function FileImagesScroll({ product }) {
                             aria-label="Mualliflik huquqi buzilgan holatda"
                         />
                         <span>Mualliflik huquqi buzilgan holatda</span>
-                        <Link href={`/report/${product.slug}`}>
-                            <a rel="nofollow">
-                                <strong
-                                    className="text-success"
-                                    style={{ cursor: 'pointer' }}
-                                    aria-label="Shikoyat qiling!">
-                                    shikoyat qiling!
-                                </strong>
-                            </a>
-                        </Link>
+                        <ReportLink slug={product.slug} aria-label="Shikoyat qiling!" />
                     </div>
                 </figure>
             </div>

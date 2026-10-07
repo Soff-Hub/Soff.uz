@@ -34,6 +34,14 @@ const Search_Results = ({
     const { isLoggedIn } = useSelector((state) => state.auth);
     const tab = router.query.tab || '1';
 
+    // Only the clean "?keyword=<term>" URL with real product results is worth
+    // indexing. Tabs, filters, pagination and empty searches are thin
+    // duplicates of it and only burn crawl budget.
+    const isIndexable =
+        Boolean(keyword?.trim()) &&
+        Object.keys(query).every((key) => key === 'keyword') &&
+        productsInitialData?.count > 0;
+
     const topServicesQuery = new URLSearchParams({
         limit: 6,
         ...((query.direction || query.ts_direction) &&
@@ -128,7 +136,10 @@ const Search_Results = ({
     };
 
     useEffect(() => {
-        if (debouncedSearchTerm !== router.query.keyword) {
+        // Compare against '' when the param is absent: otherwise a bare
+        // /search-page load pushes ?keyword= on mount, which Googlebot reports
+        // as a client-side redirect.
+        if (debouncedSearchTerm !== (router.query.keyword || '')) {
             // When a new search term is entered, reset pagination and filter params
             const omitKeys = ['page', 'offset', 'similar_documents'];
 
@@ -232,7 +243,10 @@ const Search_Results = ({
                 <title>
                     {keyword ? `“${keyword}”` : 'Soff.uz - Qidiruv natijalar'}
                 </title>
-                <meta name="robots" content="index, follow" />
+                <meta
+                    name="robots"
+                    content={isIndexable ? 'index, follow' : 'noindex, follow'}
+                />
                 <meta
                     name="description"
                     content={

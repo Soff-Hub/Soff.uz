@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Skeleton } from 'antd';
 import useHistorySearch from '~/shared/hooks/useHistorySearch';
+import { getSearchPageUrl } from '~/shared/utilities/search-url';
 import { EmptyTab } from '~/widgets/header/HeaderCategories';
 import styles from './search-result.module.scss';
 import {
@@ -37,10 +38,10 @@ function SearchResult({
                         key={item.value}
                         href={
                             item.type === 'mahsulotlar'
-                                ? `/search-page?keyword=${encodeURIComponent(item.value)}&tab=1&type=all`
+                                ? getSearchPageUrl(item.value, 1)
                                 : item.type === 'xizmatlar'
-                                    ? `/search-page?keyword=${encodeURIComponent(item.value)}&tab=2&type=all`
-                                    : `/search-page?keyword=${encodeURIComponent(item.value)}&tab=3&type=all`
+                                    ? getSearchPageUrl(item.value, 2)
+                                    : getSearchPageUrl(item.value, 3)
                         }>
                         <a onClick={() => setIsNavigating(true)}>
                             <SearchHistoryOption
