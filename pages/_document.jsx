@@ -7,6 +7,14 @@ export default function MyDocument() {
     return (
         <Html lang="uz" style={{ overflowX: 'hidden' }}>
             <Head>
+                {/* Auth lives in localStorage, so SSR always renders the guest view.
+                    Flag logged-in visitors before first paint so guest-only blocks
+                    never flash for them. */}
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: "try{if(localStorage.getItem('user'))document.documentElement.setAttribute('data-auth','1')}catch(e){}",
+                    }}
+                />
                 <link rel="shortcut icon" href={'/favicon.ico'} />
                 <link rel="icon" type="image/x-icon" href={'/favicon.ico'} />
                 <link

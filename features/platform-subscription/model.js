@@ -59,14 +59,56 @@ export const useSetMySubscription = () => {
     return (subscription) => queryClient.setQueryData(MY_SUBSCRIPTION_QUERY_KEY, subscription);
 };
 
+const isUsableStatus = (subscription) => ['active', 'cancelled'].includes(subscription?.status);
+
+// Tier code the user can claim with right now, or null (no subscription, or payment failed).
+export const getMyTierCode = (subscription) =>
+    isUsableStatus(subscription) ? subscription.tier?.code || null : null;
+
+// Whether the product's tiers include the user's tier. Lists and detail pages send
+// `platform_sub_tiers`; older responses without it fall back to the period's price cap.
+const isInMyTier = (product, subscription) => {
+    if (Array.isArray(product.platform_sub_tiers)) {
+        return product.platform_sub_tiers.includes(getMyTierCode(subscription));
+    }
+    const cap = subscription.current_period?.max_document_price;
+    return cap == null || (product.price || 0) <= cap;
+};
+
+/**
+ * Where the product stands against the user's subscription (list guide):
+ * - 'none':      not in the subscription → normal buy flow
+ * - 'mine':      included in the user's tier → claim it
+ * - 'higher':    only in a more expensive tier → suggest an upgrade
+ * - 'subscribe': in the subscription but the user has none → suggest subscribing
+ */
+export const getSubscriptionStatus = (product, subscription) => {
+    if (!product?.in_platform_sub) return 'none';
+    if (!getMyTierCode(subscription)) return 'subscribe';
+    return isInMyTier(product, subscription) ? 'mine' : 'higher';
+};
+
+export const useSubscriptionStatus = (product) => {
+    const { subscription } = useMySubscription();
+    return getSubscriptionStatus(product, subscription);
+};
+
+// Cheapest tier that includes the product, e.g. "Pro" for ["pro", "max"].
+export const useUpgradeTierTitle = (product) => {
+    const { data: tiers } = useTiers();
+    const code = product?.platform_sub_tiers?.[0];
+    if (!code) return null;
+    const tier = tiers?.find((item) => item.code === code);
+    return tier?.title || code.charAt(0).toUpperCase() + code.slice(1);
+};
+
 // Whether the user's subscription can claim this product right now, so buying it is pointless.
-// Mirrors the backend claim checks we know about: status, monthly limit and the tier's price cap.
+// Mirrors the backend claim checks we know about: status, tier and the monthly limit.
+// The claim endpoint still has the final say (daily limit, admin changes).
 export const canClaimWithSubscription = (subscription, product) => {
-    if (!product?.in_platform_sub) return false;
-    if (!['active', 'cancelled'].includes(subscription?.status)) return false;
+    if (getSubscriptionStatus(product, subscription) !== 'mine') return false;
     const period = subscription.current_period;
-    if (!period || period.downloads_left <= 0) return false;
-    return period.max_document_price == null || (product.price || 0) <= period.max_document_price;
+    return Boolean(period) && period.downloads_left > 0;
 };
 
 export const useIsCoveredBySubscription = (product, purchased = false) => {

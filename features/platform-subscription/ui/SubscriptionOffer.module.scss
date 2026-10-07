@@ -1,0 +1,126 @@
+$green: #00a44f;
+$green-dark: #008f44;
+$ink: #1f2933;
+$muted: #4b5563;
+
+.offer {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    text-align: left;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: $muted;
+    font-size: 14px;
+
+    &::before,
+    &::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: #e5e7eb;
+    }
+}
+
+.head {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.icon {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    padding: 7px;
+    border-radius: 10px;
+    background: rgba($green, 0.1);
+    color: $green;
+}
+
+.title {
+    margin: 0;
+    color: $ink;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.25;
+    text-wrap: balance;
+}
+
+.price {
+    margin: 2px 0 0;
+    color: $muted;
+    font-size: 15px;
+
+    strong {
+        color: $ink;
+        font-weight: 700;
+    }
+}
+
+.benefits {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        color: $ink;
+        font-size: 15px;
+        line-height: 1.4;
+    }
+
+    svg {
+        flex-shrink: 0;
+        margin-top: 1px;
+        color: $green;
+        font-size: 19px;
+    }
+}
+
+.cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 52px;
+    padding: 0 20px;
+    border: 2px solid $green;
+    border-radius: 8px;
+    color: $green;
+    font-size: 17px;
+    font-weight: 700;
+    transition:
+        background-color 180ms ease-out,
+        color 180ms ease-out;
+
+    &:hover {
+        background: $green;
+        color: #fff;
+    }
+
+    &:focus-visible {
+        outline: 3px solid rgba($green, 0.35);
+        outline-offset: 2px;
+    }
+
+    &:active {
+        background: $green-dark;
+        border-color: $green-dark;
+        color: #fff;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cta {
+        transition: none;
+    }
+}

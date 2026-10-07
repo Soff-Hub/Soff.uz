@@ -45,6 +45,7 @@ export interface Video {
     playlist: Playlist | null;
     category: Category;
     in_platform_sub?: boolean;
+    platform_sub_tiers?: string[];
 }
 
 export interface Tag {
@@ -96,6 +97,7 @@ export interface VideoDetail {
     three_d_features: any | null;
     has_purchased?: boolean;
     in_platform_sub?: boolean;
+    platform_sub_tiers?: string[];
 }
 
 export interface VideoResponse {

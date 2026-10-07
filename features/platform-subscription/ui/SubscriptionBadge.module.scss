@@ -11,3 +11,10 @@
     line-height: 18px;
     white-space: nowrap;
 }
+
+// Included only in a more expensive tier than the user's: muted, not "yours".
+.higher {
+    background: #fff;
+    color: #00a44f;
+    box-shadow: inset 0 0 0 1px #00a44f;
+}

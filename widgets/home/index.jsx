@@ -1,5 +1,6 @@
 import React from 'react';
 import Hero from './hero';
+import SubscriptionPromo from './subscription-promo';
 import dynamic from 'next/dynamic';
 import styles from './style.module.scss';
 
@@ -43,6 +44,7 @@ const Home = () => {
             <div style={{ background: '#fbfbfc' }}>
                 <div className="container">
                     <Hero />
+                    <SubscriptionPromo />
                 </div>
             </div>
             <YoutubeVid

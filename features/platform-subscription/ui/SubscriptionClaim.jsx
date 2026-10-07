@@ -6,7 +6,13 @@ import { useQueryClient } from '@tanstack/react-query';
 import { MdOutlineWorkspacePremium } from 'react-icons/md';
 import FileDownloadLink from '~/shared/ui/file-download-link';
 import { claimDocument, getErrorCode, getErrorMessage } from '../api';
-import { MY_SUBSCRIPTION_QUERY_KEY, SUBSCRIPTION_PAGE_URL, useMySubscription } from '../model';
+import {
+    MY_SUBSCRIPTION_QUERY_KEY,
+    SUBSCRIPTION_PAGE_URL,
+    getSubscriptionStatus,
+    useMySubscription,
+} from '../model';
+import SubscriptionOffer from './SubscriptionOffer';
 import styles from './SubscriptionClaim.module.scss';
 
 /**
@@ -19,15 +25,24 @@ const SubscriptionClaim = ({ product, purchased, className = '' }) => {
     const { subscription, isLoggedIn, isLoading } = useMySubscription();
     const [loading, setLoading] = useState(false);
     const [hidden, setHidden] = useState(false);
+    const status = getSubscriptionStatus(product, subscription);
 
-    if (purchased || hidden || !product?.in_platform_sub) return null;
+    if (purchased || hidden || status === 'none') return null;
     if (isLoggedIn && isLoading) return null;
 
-    if (!subscription) {
+    if (status === 'subscribe') {
+        return <SubscriptionOffer product={product} className={className} />;
+    }
+
+    // Only a more expensive tier includes this file: the user buys it or upgrades.
+    if (status === 'higher') {
         return (
-            <Link href={SUBSCRIPTION_PAGE_URL}>
-                <a className={`${styles.subscribeLink} ${className}`}>yoki obuna bilan oling →</a>
-            </Link>
+            <SubscriptionOffer
+                product={product}
+                variant="upgrade"
+                myTierTitle={subscription.tier?.title}
+                className={className}
+            />
         );
     }
 
@@ -153,7 +168,7 @@ const SubscriptionClaim = ({ product, purchased, className = '' }) => {
 export const useIsClaimPrimary = (product, purchased) => {
     const { subscription } = useMySubscription();
     const left = subscription?.current_period?.downloads_left;
-    return Boolean(!purchased && product?.in_platform_sub && subscription && left !== 0);
+    return Boolean(!purchased && getSubscriptionStatus(product, subscription) === 'mine' && left !== 0);
 };
 
 export default SubscriptionClaim;

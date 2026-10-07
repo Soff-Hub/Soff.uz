@@ -1,0 +1,241 @@
+$green: #00a44f;
+$green-dark: #008f44;
+$green-bright: #3ddc84;
+$banner-bg: #0a2116; // matches the artwork's own background
+$ink: #1f2933;
+$muted: #4b5563;
+$line: #e5e7eb;
+
+.promo {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 320px;
+    gap: 20px;
+    padding: 20px 0 56px;
+
+    // Logged-in visitors are flagged in _document before first paint.
+    :global(html[data-auth]) & {
+        display: none;
+    }
+
+    @media (max-width: 992px) {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+}
+
+.banner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 300px;
+    overflow: hidden;
+    border-radius: 16px;
+    background: $banner-bg;
+
+    @media (max-width: 576px) {
+        min-height: 240px;
+    }
+}
+
+.bannerText {
+    position: relative;
+    z-index: 1;
+    max-width: 520px;
+    padding: 40px;
+
+    @media (max-width: 576px) {
+        padding: 24px 20px;
+    }
+}
+
+// The artwork has its own dark empty left side, so it covers the whole banner.
+// The gradient only matters on narrower banners, where the art slides under the copy.
+.bannerArt {
+    position: absolute;
+    inset: 0;
+    background: url('/static/img/HomePage/subscription-promo.webp') right center / cover no-repeat;
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, $banner-bg 30%, rgba($banner-bg, 0) 52%);
+    }
+
+    @media (max-width: 1200px) {
+        &::before {
+            background: linear-gradient(90deg, $banner-bg 42%, rgba($banner-bg, 0.55) 58%, rgba($banner-bg, 0) 72%);
+        }
+    }
+
+    @media (max-width: 768px) {
+        opacity: 0.45;
+
+        &::before {
+            background: linear-gradient(90deg, $banner-bg 15%, rgba($banner-bg, 0.3) 100%);
+        }
+    }
+}
+
+.lead {
+    margin: 0 0 10px;
+    color: rgba(#fff, 0.82);
+    font-size: 18px;
+    font-weight: 500;
+
+    @media (max-width: 576px) {
+        font-size: 15px;
+    }
+}
+
+.title {
+    margin: 0;
+    color: #fff;
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+
+    @media (max-width: 1200px) {
+        font-size: 34px;
+    }
+
+    @media (max-width: 576px) {
+        font-size: 27px;
+    }
+}
+
+.accent {
+    color: $green-bright;
+}
+
+.sub {
+    max-width: 44ch;
+    margin: 14px 0 0;
+    color: rgba(#fff, 0.78);
+    font-size: 16px;
+    line-height: 1.5;
+
+    @media (max-width: 576px) {
+        font-size: 14px;
+    }
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 24px;
+    border: 1px solid $line;
+    border-radius: 16px;
+    background: #fff;
+}
+
+.priceBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.from {
+    color: $muted;
+    font-size: 14px;
+}
+
+.price {
+    margin: 0;
+    color: $ink;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.15;
+    font-variant-numeric: tabular-nums;
+
+    span {
+        color: $muted;
+        font-size: 16px;
+        font-weight: 500;
+    }
+}
+
+// Same height as .price so the card doesn't jump when tiers load.
+.pricePlaceholder {
+    display: block;
+    width: 170px;
+    height: 34px;
+    border-radius: 6px;
+    background: #f1f3f5;
+}
+
+.benefits {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        color: $ink;
+        font-size: 15px;
+        line-height: 1.4;
+    }
+
+    svg {
+        flex-shrink: 0;
+        margin-top: 1px;
+        color: $green;
+        font-size: 19px;
+    }
+}
+
+.cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    margin-top: auto;
+    border-radius: 10px;
+    background: $green;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    transition: background-color 180ms ease-out;
+
+    &:hover {
+        background: $green-dark;
+        color: #fff;
+    }
+
+    &:focus-visible {
+        outline: 3px solid rgba($green, 0.35);
+        outline-offset: 2px;
+    }
+}
+
+.signIn {
+    margin: -6px 0 0;
+    color: $muted;
+    font-size: 14px;
+    text-align: center;
+
+    a {
+        color: $ink;
+        font-weight: 600;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+
+        &:hover {
+            color: $green;
+        }
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cta {
+        transition: none;
+    }
+}

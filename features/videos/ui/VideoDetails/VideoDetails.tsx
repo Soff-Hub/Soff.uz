@@ -334,9 +334,6 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
                                                 {hasAccess ? (isFree ? "Darsni boshlash" : "Videoni ko'rish") : (isFree ? "Darsni boshlash" : isClaimPrimary ? "Sotib olish" : "Hozir sotib olish")}
                                             </button>
                                         )}
-                                        {!isClaimPrimary && !isFree && (
-                                            <SubscriptionClaim product={video} purchased={isPurchased} />
-                                        )}
                                         {!hasAccess && !isFree && (
                                             <div className={styles.secondaryActions}>
                                                 {!isCovered && (
@@ -354,6 +351,10 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
                                                     {isAddedToWishlist ? <HeartFilled /> : <HeartOutlined />}
                                                 </button>
                                             </div>
+                                        )}
+                                        {/* After the cart row so the subscription offer doesn't split the buy controls. */}
+                                        {!isClaimPrimary && !isFree && (
+                                            <SubscriptionClaim product={video} purchased={isPurchased} />
                                         )}
                                     </div>
 
