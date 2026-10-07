@@ -8,6 +8,10 @@ import styles from './style.module.scss';
 
 const SOFFX_LABELS = { pro: 'Pro', ultra: 'Max' };
 
+// Catalogue size shown in the pitch, like Envato's "29+ million assets".
+// Hardcoded like the home platform stats; update it when the catalogue grows.
+const CATALOGUE_SIZE = '2\u00a0mln+'; // non-breaking space keeps "2 mln+" on one line
+
 const getOffer = (tiers) => {
     if (!tiers?.length) return null;
     const limits = tiers.map((tier) => tier.monthly_limit);
@@ -71,7 +75,12 @@ const SubscriptionPromo = () => {
                 <ul className={styles.benefits}>
                     <li>
                         <TbDownload aria-hidden />
-                        {offer ? `Oyiga ${offer.limitText} tagacha fayl yuklab olish` : 'Har oy yangi fayllar yuklab olish'}
+                        {/* Wrapped in a span: the <li> is a flex row, so bare text and
+                            <strong> would otherwise become separate columns. */}
+                        <span>
+                            {offer ? `Oyiga ${offer.limitText} tagacha fayl` : 'Har oy yangi fayllar'}{' '}
+                            — <strong>{CATALOGUE_SIZE}</strong> tayyor fayllar ichidan
+                        </span>
                     </li>
                     <li>
                         <TbFiles aria-hidden />
