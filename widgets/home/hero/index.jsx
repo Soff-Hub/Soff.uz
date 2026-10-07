@@ -133,7 +133,9 @@ const Hero = () => {
         <div className={styles.heroMainBlock}>
             {/* Top Section: Sidebar + Banner */}
             <div className={styles.heroTopLayout}>
-                {/* Left Sidebar (Desktop Only via CSS) */}
+                {/* Left Sidebar (Desktop Only via CSS). Sidebar and banner are shown to
+                    logged-in visitors only; guests get the subscription promo instead.
+                    Toggled via html[data-auth] in CSS so neither flashes on load. */}
                 <aside
                     className={styles.sidebarContainer}
                     onMouseLeave={handleMenuLeave}
@@ -242,7 +244,7 @@ const Hero = () => {
                                             <img
                                                 src={slide.img}
                                                 alt={`Soff.uz Banner ${index + 1}`}
-                                                loading={index === 0 ? "eager" : "lazy"}
+                                                loading="lazy" // lazy images inside a display:none banner are never fetched for guests
                                             />
                                         </a>
                                     </Link>

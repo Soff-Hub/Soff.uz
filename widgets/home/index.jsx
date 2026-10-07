@@ -43,8 +43,8 @@ const Home = () => {
         <div>
             <div style={{ background: '#fbfbfc' }}>
                 <div className="container">
-                    <Hero />
                     <SubscriptionPromo />
+                    <Hero />
                 </div>
             </div>
             <YoutubeVid

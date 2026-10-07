@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
-import { TbCircleCheck, TbDownload, TbFiles, TbSparkles } from 'react-icons/tb';
+import { TbCircleCheck, TbDownload, TbSparkles } from 'react-icons/tb';
 import { addPeriodToThousands } from '~/features/account/ui/price-formatter';
 import { SUBSCRIPTION_PAGE_URL, useTiers } from '~/features/platform-subscription';
 import styles from './style.module.scss';
@@ -49,13 +49,11 @@ const SubscriptionPromo = () => {
         <section className={styles.promo} aria-labelledby="subscription-promo-title">
             <div className={styles.banner}>
                 <div className={styles.bannerText}>
-                    <p className={styles.lead}>Talabalar va o'qituvchilar uchun</p>
                     <h2 id="subscription-promo-title" className={styles.title}>
-                        Bitta obuna — <span className={styles.accent}>minglab</span> tayyor fayllar
+                        <span className={styles.accent}>{CATALOGUE_SIZE} tayyor fayl</span>
+                        <br />
+                        va Soffia AI bir obunada
                     </h2>
-                    <p className={styles.sub}>
-                        Referat, kurs ishi, taqdimot va shablonlarni har safar alohida sotib olmang.
-                    </p>
                 </div>
                 <div className={styles.bannerArt} aria-hidden />
             </div>
@@ -78,20 +76,22 @@ const SubscriptionPromo = () => {
                         {/* Wrapped in a span: the <li> is a flex row, so bare text and
                             <strong> would otherwise become separate columns. */}
                         <span>
-                            {offer ? `Oyiga ${offer.limitText} tagacha fayl` : 'Har oy yangi fayllar'}{' '}
-                            — <strong>{CATALOGUE_SIZE}</strong> tayyor fayllar ichidan
+                            <strong>{CATALOGUE_SIZE}</strong> tayyor fayldan{' '}
+                            {offer ? (
+                                <>
+                                    oyiga <span className={styles.nowrap}>{offer.limitText}</span> tagacha yuklab olish
+                                </>
+                            ) : (
+                                'yuklab olish'
+                            )}
                         </span>
                     </li>
                     <li>
-                        <TbFiles aria-hidden />
-                        Referat, kurs ishi, taqdimot va boshqalar
+                        <TbSparkles aria-hidden />
+                        {offer?.aiTiers.length > 0
+                            ? `Soffia AI: taqdimot, referat va rasm yaratish (${offer.aiTiers.join(', ')})`
+                            : 'Soffia AI: taqdimot, referat va rasm yaratish'}
                     </li>
-                    {offer?.aiTiers.length > 0 && (
-                        <li>
-                            <TbSparkles aria-hidden />
-                            SoffX AI — {offer.aiTiers.join(' va ')} ta'riflarda
-                        </li>
-                    )}
                     <li>
                         <TbCircleCheck aria-hidden />
                         Istalgan vaqtda bekor qilish
@@ -99,14 +99,8 @@ const SubscriptionPromo = () => {
                 </ul>
 
                 <Link href={SUBSCRIPTION_PAGE_URL}>
-                    <a className={styles.cta}>Obuna bo'lish</a>
+                    <a className={styles.cta}>Obuna bo'lib yuklab olish</a>
                 </Link>
-                <p className={styles.signIn}>
-                    Akkauntingiz bormi?{' '}
-                    <Link href="/auth/login">
-                        <a>Kirish</a>
-                    </Link>
-                </p>
             </div>
         </section>
     );

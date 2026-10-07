@@ -1,7 +1,7 @@
 $green: #00a44f;
 $green-dark: #008f44;
-$green-bright: #3ddc84;
-$banner-bg: #0a2116; // matches the artwork's own background
+$green-text: #008a43; // brand green darkened to stay readable on the light banner
+$banner-bg: #e3f2eb; // matches the artwork's own background
 $ink: #1f2933;
 $muted: #4b5563;
 $line: #e5e7eb;
@@ -10,7 +10,7 @@ $line: #e5e7eb;
     display: grid;
     grid-template-columns: minmax(0, 1fr) 320px;
     gap: 20px;
-    padding: 20px 0 56px;
+    padding-top: 20px;
 
     // Logged-in visitors are flagged in _document before first paint.
     :global(html[data-auth]) & {
@@ -40,7 +40,7 @@ $line: #e5e7eb;
 .bannerText {
     position: relative;
     z-index: 1;
-    max-width: 520px;
+    max-width: 620px;
     padding: 40px;
 
     @media (max-width: 576px) {
@@ -53,13 +53,13 @@ $line: #e5e7eb;
 .bannerArt {
     position: absolute;
     inset: 0;
-    background: url('/static/img/HomePage/subscription-promo.webp') right center / cover no-repeat;
+    background: url('/static/img/HomePage/subscription-promo-v4.webp') right center / cover no-repeat;
 
     &::before {
         content: '';
         position: absolute;
         inset: 0;
-        background: linear-gradient(90deg, $banner-bg 30%, rgba($banner-bg, 0) 52%);
+        background: linear-gradient(90deg, $banner-bg 38%, rgba($banner-bg, 0.6) 48%, rgba($banner-bg, 0) 62%);
     }
 
     @media (max-width: 1200px) {
@@ -77,22 +77,12 @@ $line: #e5e7eb;
     }
 }
 
-.lead {
-    margin: 0 0 10px;
-    color: rgba(#fff, 0.82);
-    font-size: 18px;
-    font-weight: 500;
-
-    @media (max-width: 576px) {
-        font-size: 15px;
-    }
-}
 
 .title {
     margin: 0;
-    color: #fff;
-    font-size: 40px;
-    font-weight: 700;
+    color: $ink;
+    font-size: 42px;
+    font-weight: 600;
     line-height: 1.12;
     letter-spacing: -0.02em;
     text-wrap: balance;
@@ -107,20 +97,9 @@ $line: #e5e7eb;
 }
 
 .accent {
-    color: $green-bright;
+    color: $green-text;
 }
 
-.sub {
-    max-width: 44ch;
-    margin: 14px 0 0;
-    color: rgba(#fff, 0.78);
-    font-size: 16px;
-    line-height: 1.5;
-
-    @media (max-width: 576px) {
-        font-size: 14px;
-    }
-}
 
 .card {
     display: flex;
@@ -216,23 +195,6 @@ $line: #e5e7eb;
     }
 }
 
-.signIn {
-    margin: -6px 0 0;
-    color: $muted;
-    font-size: 14px;
-    text-align: center;
-
-    a {
-        color: $ink;
-        font-weight: 600;
-        text-decoration: underline;
-        text-underline-offset: 3px;
-
-        &:hover {
-            color: $green;
-        }
-    }
-}
 
 @media (prefers-reduced-motion: reduce) {
     .cta {
@@ -242,4 +204,8 @@ $line: #e5e7eb;
 
 .benefits strong {
     font-weight: 700;
+}
+
+.nowrap {
+    white-space: nowrap;
 }
