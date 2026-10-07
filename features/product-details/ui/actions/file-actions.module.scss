@@ -116,3 +116,74 @@
         left: 100%;
     }
 }
+
+// Buy now + compact cart / wishlist icons in one row.
+.buyRow {
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+}
+
+.buyNow {
+    flex: 1;
+    min-width: 0;
+    height: 52px !important;
+    font-size: 18px !important;
+    font-weight: 600;
+}
+
+.iconAction {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border: 2px solid #00a44f;
+    border-radius: 8px;
+    background: #fff;
+    color: #00a44f;
+    font-size: 22px;
+    cursor: pointer;
+    transition:
+        background-color 180ms ease-out,
+        color 180ms ease-out;
+
+    // Explicit size: global mobile styles otherwise shrink button icons.
+    svg {
+        width: 22px;
+        height: 22px;
+    }
+
+    &:hover {
+        background: rgba(#00a44f, 0.08);
+    }
+
+    &:focus-visible {
+        outline: 3px solid rgba(#00a44f, 0.35);
+        outline-offset: 2px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        transition: none;
+    }
+}
+
+// In the cart: filled, so the state reads at a glance.
+.iconActionActive {
+    background: #00a44f;
+    color: #fff;
+
+    &:hover {
+        background: #008f44;
+    }
+}
+
+.iconActionLiked {
+    color: #e5484d;
+    border-color: #e5484d;
+
+    &:hover {
+        background: rgba(#e5484d, 0.08);
+    }
+}

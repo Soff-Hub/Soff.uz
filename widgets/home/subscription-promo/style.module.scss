@@ -117,9 +117,26 @@ $line: #e5e7eb;
     gap: 2px;
 }
 
-.from {
+.tierRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.tierName {
     color: $muted;
     font-size: 14px;
+    font-weight: 600;
+}
+
+.popular {
+    padding: 2px 10px;
+    border-radius: 999px;
+    background: rgba($green, 0.12);
+    color: $green-text;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 18px;
 }
 
 .price {
@@ -208,4 +225,31 @@ $line: #e5e7eb;
 
 .nowrap {
     white-space: nowrap;
+}
+
+.soffx,
+.soffxMark {
+    // A global span rule otherwise drops the headline weight.
+    font: inherit;
+}
+
+.soffx {
+    white-space: nowrap;
+}
+
+.soffxMark {
+    color: $green-text; // same green as "2 mln+ tayyor fayl"
+}
+
+.otherPlans {
+    margin-top: -6px;
+    color: $muted;
+    font-size: 14px;
+    text-align: center;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+
+    &:hover {
+        color: $green-text;
+    }
 }

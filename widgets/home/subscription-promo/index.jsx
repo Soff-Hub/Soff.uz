@@ -1,30 +1,32 @@
 import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
-import { TbCircleCheck, TbDownload, TbSparkles } from 'react-icons/tb';
+import { TbCircleCheck, TbDownload, TbFiles, TbSparkles } from 'react-icons/tb';
 import { addPeriodToThousands } from '~/features/account/ui/price-formatter';
 import { SUBSCRIPTION_PAGE_URL, useTiers } from '~/features/platform-subscription';
 import styles from './style.module.scss';
-
-const SOFFX_LABELS = { pro: 'Pro', ultra: 'Max' };
 
 // Catalogue size shown in the pitch, like Envato's "29+ million assets".
 // Hardcoded like the home platform stats; update it when the catalogue grows.
 const CATALOGUE_SIZE = '2\u00a0mln+'; // non-breaking space keeps "2 mln+" on one line
 
+const FEATURED_TIER_CODE = 'pro';
+const SOFFX_PLAN_TITLES = { pro: 'Pro', ultra: 'Max' };
+
+// "SoffX AI" with the X picked out in the AI accent colour.
+const SoffX = () => (
+    <span className={styles.soffx}>
+        Soff<span className={styles.soffxMark}>x</span> AI
+    </span>
+);
+
+// The card features the Pro tier ("Ommabop"); falls back to the cheapest tier if
+// there is no Pro. The cheapest price is kept for the "other plans" link.
 const getOffer = (tiers) => {
     if (!tiers?.length) return null;
-    const limits = tiers.map((tier) => tier.monthly_limit);
-    const minLimit = Math.min(...limits);
-    const maxLimit = Math.max(...limits);
-    const aiTiers = tiers
-        .filter((tier) => tier.soffx_plan && tier.soffx_plan !== 'none')
-        .map((tier) => tier.title || SOFFX_LABELS[tier.soffx_plan]);
-    return {
-        price: Math.min(...tiers.map((tier) => tier.price)),
-        limitText: minLimit === maxLimit ? `${maxLimit}` : `${minLimit}–${maxLimit}`,
-        aiTiers,
-    };
+    const sorted = [...tiers].sort((a, b) => a.price - b.price);
+    const featured = sorted.find((tier) => tier.code === FEATURED_TIER_CODE) || sorted[0];
+    return { tier: featured, isFeatured: featured.code === FEATURED_TIER_CODE, minPrice: sorted[0].price };
 };
 
 /**
@@ -52,7 +54,7 @@ const SubscriptionPromo = () => {
                     <h2 id="subscription-promo-title" className={styles.title}>
                         <span className={styles.accent}>{CATALOGUE_SIZE} tayyor fayl</span>
                         <br />
-                        va Soffia AI bir obunada
+                        va <SoffX /> bir obunada
                     </h2>
                 </div>
                 <div className={styles.bannerArt} aria-hidden />
@@ -60,11 +62,16 @@ const SubscriptionPromo = () => {
 
             <div className={styles.card}>
                 <div className={styles.priceBlock}>
-                    <span className={styles.from}>Boshlab</span>
                     {offer ? (
-                        <p className={styles.price}>
-                            {addPeriodToThousands(offer.price)} so'm<span>/oy</span>
-                        </p>
+                        <>
+                            <div className={styles.tierRow}>
+                                <span className={styles.tierName}>{offer.tier.title} ta'rifi</span>
+                                {offer.isFeatured && <span className={styles.popular}>Ommabop</span>}
+                            </div>
+                            <p className={styles.price}>
+                                {addPeriodToThousands(offer.tier.price)} so'm<span>/oy</span>
+                            </p>
+                        </>
                     ) : (
                         <span className={styles.pricePlaceholder} />
                     )}
@@ -77,21 +84,29 @@ const SubscriptionPromo = () => {
                             <strong> would otherwise become separate columns. */}
                         <span>
                             <strong>{CATALOGUE_SIZE}</strong> tayyor fayldan{' '}
-                            {offer ? (
-                                <>
-                                    oyiga <span className={styles.nowrap}>{offer.limitText}</span> tagacha yuklab olish
-                                </>
-                            ) : (
-                                'yuklab olish'
-                            )}
+                            {offer ? `oyiga ${offer.tier.monthly_limit} tagacha yuklab olish` : 'yuklab olish'}
                         </span>
                     </li>
-                    <li>
-                        <TbSparkles aria-hidden />
-                        {offer?.aiTiers.length > 0
-                            ? `Soffia AI: taqdimot, referat va rasm yaratish (${offer.aiTiers.join(', ')})`
-                            : 'Soffia AI: taqdimot, referat va rasm yaratish'}
-                    </li>
+                    {offer && (
+                        <li>
+                            <TbFiles aria-hidden />
+                            {offer.tier.max_document_price == null
+                                ? 'Barcha fayllar, narxidan qat\'i nazar'
+                                : `${addPeriodToThousands(offer.tier.max_document_price)} so'mgacha bo'lgan fayllar`}
+                        </li>
+                    )}
+                    {(!offer || offer.tier.soffx_plan !== 'none') && (
+                        <li>
+                            <TbSparkles aria-hidden />
+                            <span>
+                                <SoffX />
+                                {offer && SOFFX_PLAN_TITLES[offer.tier.soffx_plan]
+                                    ? ` ${SOFFX_PLAN_TITLES[offer.tier.soffx_plan]}`
+                                    : ''}
+                                : taqdimot, referat va rasm yaratish
+                            </span>
+                        </li>
+                    )}
                     <li>
                         <TbCircleCheck aria-hidden />
                         Istalgan vaqtda bekor qilish
@@ -99,8 +114,17 @@ const SubscriptionPromo = () => {
                 </ul>
 
                 <Link href={SUBSCRIPTION_PAGE_URL}>
-                    <a className={styles.cta}>Obuna bo'lib yuklab olish</a>
+                    <a className={styles.cta}>
+                        {offer?.isFeatured ? `${offer.tier.title} obunani olish` : "Obuna bo'lib yuklab olish"}
+                    </a>
                 </Link>
+                {offer && offer.minPrice < offer.tier.price && (
+                    <Link href={SUBSCRIPTION_PAGE_URL}>
+                        <a className={styles.otherPlans}>
+                            Boshqa ta'riflar — {addPeriodToThousands(offer.minPrice)} so'mdan
+                        </a>
+                    </Link>
+                )}
             </div>
         </section>
     );

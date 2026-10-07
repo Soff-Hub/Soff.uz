@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { MdCheckCircleOutline, MdOutlineWorkspacePremium } from 'react-icons/md';
+import { MdCheckCircleOutline, MdExpandMore, MdOutlineWorkspacePremium } from 'react-icons/md';
 import { addPeriodToThousands } from '~/features/account/ui/price-formatter';
 import { SUBSCRIPTION_PAGE_URL, useTiers } from '../model';
 import styles from './SubscriptionOffer.module.scss';
@@ -23,56 +23,77 @@ const useOfferTier = (product) => {
 const SubscriptionOffer = ({ product, variant = 'subscribe', myTierTitle, className = '' }) => {
     const tier = useOfferTier(product);
     const isUpgrade = variant === 'upgrade';
+    const [expanded, setExpanded] = useState(false);
 
-    const title = isUpgrade
-        ? `Bu fayl ${tier?.title || 'yuqori'} obunada`
-        : 'Obuna bilan oling';
+    // Only the upgrade case needs a note: it explains why the user's own tier isn't enough.
+    const upgradeNote = isUpgrade
+        ? `Bu fayl ${tier?.title || 'yuqori'} obunasida${myTierTitle ? ` — ${myTierTitle} ta'rifingizga kirmaydi` : ''}`
+        : null;
 
     const benefits = tier
         ? [
-              isUpgrade && myTierTitle
-                  ? `${myTierTitle} ta'rifingizga kirmaydi`
-                  : 'Shu fayl ham obunaga kiradi',
-              `Oyiga ${tier.monthly_limit} tagacha fayl`,
+              `Oyiga ${tier.monthly_limit} ta fayl yuklab olish`,
               tier.max_document_price == null
-                  ? 'Barcha fayllar'
-                  : `${addPeriodToThousands(tier.max_document_price)} so'mgacha bo'lgan fayllar`,
+                  ? 'Narxidan qat\'i nazar barcha fayllar'
+                  : `${addPeriodToThousands(tier.max_document_price)} so'mgacha bo'lgan barcha fayllar`,
               'Istalgan vaqtda bekor qilish',
           ]
         : [];
 
     return (
-        <section className={`${styles.offer} ${className}`} aria-label={title}>
+        <section className={`${styles.offer} ${className}`} aria-label="Obuna taklifi">
             <div className={styles.divider}>
-                <span>yoki</span>
+                <span>yoki obuna bilan oling</span>
             </div>
 
-            <div className={styles.head}>
-                <MdOutlineWorkspacePremium className={styles.icon} aria-hidden />
-                <div>
-                    <h3 className={styles.title}>{title}</h3>
-                    {tier && (
-                        <p className={styles.price}>
-                            {tier.title} ta'rifi — <strong>oyiga {addPeriodToThousands(tier.price)} so'm</strong>
-                        </p>
-                    )}
-                </div>
+            <div className={styles.box}>
+                {upgradeNote && (
+                    <p className={`${styles.status} ${styles.statusUpgrade}`}>
+                        <MdOutlineWorkspacePremium aria-hidden />
+                        {upgradeNote}
+                    </p>
+                )}
+
+                {tier ? (
+                    <h3 className={styles.title}>
+                        {tier.title} obunasi
+                        <span className={styles.price}>
+                            {addPeriodToThousands(tier.price)} so'm<small>/oy</small>
+                        </span>
+                    </h3>
+                ) : (
+                    <span className={styles.titlePlaceholder} />
+                )}
+
+                {/* Only the strongest benefit by default, to keep the buy block short. */}
+                {benefits.length > 0 && (
+                    <ul className={styles.benefits} id="subscription-offer-benefits">
+                        {(expanded ? benefits : benefits.slice(0, 1)).map((text) => (
+                            <li key={text}>
+                                <MdCheckCircleOutline aria-hidden />
+                                {text}
+                            </li>
+                        ))}
+                    </ul>
+                )}
+                {benefits.length > 1 && (
+                    <button
+                        type="button"
+                        className={styles.more}
+                        aria-expanded={expanded}
+                        aria-controls="subscription-offer-benefits"
+                        onClick={() => setExpanded((value) => !value)}>
+                        {expanded ? 'Yopish' : `Yana ${benefits.length - 1} ta afzallik`}
+                        <MdExpandMore aria-hidden className={expanded ? styles.moreOpen : ''} />
+                    </button>
+                )}
+
+                <Link href={SUBSCRIPTION_PAGE_URL}>
+                    <a className={styles.cta}>
+                        {isUpgrade ? `${tier?.title || "Ta'rif"}ga o'tish` : "Obuna bo'lib yuklab olish"}
+                    </a>
+                </Link>
             </div>
-
-            {benefits.length > 0 && (
-                <ul className={styles.benefits}>
-                    {benefits.map((text) => (
-                        <li key={text}>
-                            <MdCheckCircleOutline aria-hidden />
-                            {text}
-                        </li>
-                    ))}
-                </ul>
-            )}
-
-            <Link href={SUBSCRIPTION_PAGE_URL}>
-                <a className={styles.cta}>{isUpgrade ? "Ta'rifni oshirish" : "Obuna bo'lish"}</a>
-            </Link>
         </section>
     );
 };
