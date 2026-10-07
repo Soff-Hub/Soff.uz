@@ -4,5 +4,4 @@ Disallow: /*?returnUrl=*
 Disallow: /*?edit=*
 Disallow: /*?ref=*
 Disallow: /*?*page=*
-Disallow: /report/
 Sitemap: https://soff.uz/sitemap.xml
