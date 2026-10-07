@@ -15,6 +15,41 @@
     }
 }
 
+.avatarFrame {
+    position: relative;
+    display: flex;
+    border-radius: 50%;
+    text-decoration: none;
+}
+
+// Active subscription: green ring around the avatar plus a crown badge.
+.avatarPremium {
+    padding: 2px;
+    background: conic-gradient(from 210deg, $color-1st, #34d399, #a3e635, $color-1st);
+
+    .avatarWrapper {
+        border-color: #fff;
+        border-width: 2px;
+    }
+}
+
+.premiumBadge {
+    position: absolute;
+    right: -4px;
+    bottom: -3px;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: $color-1st;
+    border: 1.5px solid #fff;
+    color: #fff;
+    font-size: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
 .avatarWrapper {
     width: 32px;
     height: 32px;
@@ -76,6 +111,14 @@
     @media (max-width: 992px) {
         width: 190px;
         right: 0;
+    }
+}
+
+.dropdownContent.dropdownWide {
+    width: 280px;
+
+    @media (max-width: 992px) {
+        width: 260px;
     }
 }
 

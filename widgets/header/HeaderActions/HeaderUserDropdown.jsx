@@ -12,6 +12,11 @@ import { cn } from '~/shared/utilities/cn';
 import { accountLinks } from '../constants/account-links';
 import Icon from '~/shared/ui/Icon';
 import { FaRightFromBracket } from 'react-icons/fa6';
+import { MdWorkspacePremium } from 'react-icons/md';
+import { MY_SUBSCRIPTION_URL, useMySubscription } from '~/features/platform-subscription/model';
+import SubscriptionMenuCard, {
+    isSubscriptionUsable,
+} from '~/features/platform-subscription/ui/SubscriptionMenuCard';
 import styles from './HeaderUserDropdown.module.scss';
 
 const HeaderUserDropdown = () => {
@@ -34,7 +39,13 @@ const HeaderUserDropdown = () => {
         token: user?.access,
     });
 
-    const linksView = accountLinks.map((item, index) => (
+    const { subscription } = useMySubscription();
+    const isPremium = isSubscriptionUsable(subscription);
+
+    // The subscription card already links to "Mening obunam".
+    const links = subscription ? accountLinks.filter((item) => item.url !== MY_SUBSCRIPTION_URL) : accountLinks;
+
+    const linksView = links.map((item, index) => (
         <li key={index} className={styles.menuItem}>
             <Link href={item.url}>
                 <a className="text-decoration-none">
@@ -61,17 +72,26 @@ const HeaderUserDropdown = () => {
             <div className={styles.userAccountContainer}>
                 <div className="d-flex align-items-center">
                     <Link href={'/account/sellerproducts'}>
-                        <a className={styles.avatarWrapper}>
-                            <Image
-                                src={profile?.image || '/static/img/ozodbek.png'}
-                                className={cn('object-cover')}
-                                layout="fill"
-                                alt="user"
-                            />
+                        <a
+                            className={cn(styles.avatarFrame, isPremium && styles.avatarPremium)}
+                            title={isPremium ? subscription.tier?.title : undefined}>
+                            <span className={styles.avatarWrapper}>
+                                <Image
+                                    src={profile?.image || '/static/img/ozodbek.png'}
+                                    className={cn('object-cover')}
+                                    layout="fill"
+                                    alt="user"
+                                />
+                            </span>
+                            {isPremium && (
+                                <span className={styles.premiumBadge}>
+                                    <MdWorkspacePremium />
+                                </span>
+                            )}
                         </a>
                     </Link>
                 </div>
-                <div className={styles.dropdownContent}>
+                <div className={cn(styles.dropdownContent, subscription && styles.dropdownWide)}>
                     <div className={styles.profileHeader}>
                         <Link
                             href={
@@ -92,6 +112,8 @@ const HeaderUserDropdown = () => {
                             </a>
                         </Link>
                     </div>
+
+                    <SubscriptionMenuCard subscription={subscription} />
 
                     <ul className={styles.menuList}>
                         {linksView}

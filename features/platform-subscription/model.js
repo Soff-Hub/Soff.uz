@@ -55,6 +55,21 @@ export const useSetMySubscription = () => {
     return (subscription) => queryClient.setQueryData(MY_SUBSCRIPTION_QUERY_KEY, subscription);
 };
 
+// Whether the user's subscription can claim this product right now, so buying it is pointless.
+// Mirrors the backend claim checks we know about: status, monthly limit and the tier's price cap.
+export const canClaimWithSubscription = (subscription, product) => {
+    if (!product?.in_platform_sub) return false;
+    if (!['active', 'cancelled'].includes(subscription?.status)) return false;
+    const period = subscription.current_period;
+    if (!period || period.downloads_left <= 0) return false;
+    return period.max_document_price == null || (product.price || 0) <= period.max_document_price;
+};
+
+export const useIsCoveredBySubscription = (product, purchased = false) => {
+    const { subscription } = useMySubscription();
+    return !purchased && canClaimWithSubscription(subscription, product);
+};
+
 // The backend checks the refund rule again; this only decides whether to show the button.
 export const canRequestRefund = (subscription) => {
     const period = subscription?.current_period;

@@ -19,7 +19,11 @@ import AuthModal from '~/features/auth/ui/auth-modal';
 import { api } from '~/repositories/api';
 import { trackProductEvent } from '~/shared/utilities/analytics';
 import FileDownloadLink from '~/shared/ui/file-download-link';
-import { SubscriptionClaim, useIsClaimPrimary } from '~/features/platform-subscription';
+import {
+    SubscriptionClaim,
+    useIsClaimPrimary,
+    useIsCoveredBySubscription,
+} from '~/features/platform-subscription';
 import { FaRegHeart } from 'react-icons/fa';
 import { FaHeart } from 'react-icons/fa';
 import { FaShoppingCart } from 'react-icons/fa';
@@ -106,6 +110,8 @@ function FileActions({ product }) {
     const state = useSelector((state) => state.auth.user?.access);
     const isPurchased = Boolean(product?.has_purchased || product?.document?.file_url);
     const isClaimPrimary = useIsClaimPrimary(product, isPurchased);
+    // The subscription can claim it, so cart and buy buttons are hidden.
+    const isCovered = useIsCoveredBySubscription(product, isPurchased);
 
     function handleAddItemToCart(e) {
         e.preventDefault();
@@ -470,7 +476,7 @@ function FileActions({ product }) {
                 <div className="d-flex flex-column gap-3 ">
                     {!product?.document?.file_url ? (
                         <div className=" d-flex align-items-center gap-3 justify-content-end">
-                            {product?.discount_price !== 0 && (
+                            {product?.discount_price !== 0 && !isCovered && (
                                 <Button
                                     onClick={handleAddItemToCart}
                                     iconPosition="end"
@@ -516,12 +522,14 @@ function FileActions({ product }) {
                     {isClaimPrimary && (
                         <SubscriptionClaim product={product} purchased={isPurchased} />
                     )}
-                    <CustomResponsiveLayout
-                        handleBuynow={handleBuynow}
-                        product={product}
-                        buyNowLoading={buyNowLoading}
-                        secondary={isClaimPrimary}
-                    />
+                    {!isCovered && (
+                        <CustomResponsiveLayout
+                            handleBuynow={handleBuynow}
+                            product={product}
+                            buyNowLoading={buyNowLoading}
+                            secondary={isClaimPrimary}
+                        />
+                    )}
                     {!isClaimPrimary && (
                         <SubscriptionClaim product={product} purchased={isPurchased} />
                     )}

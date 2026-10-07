@@ -1,4 +1,9 @@
 .tabs {
+    // The global tab reset removes the margin between tabs.
+    :global(.ant-tabs-nav-list) {
+        gap: 28px;
+    }
+
     :global(.ant-tabs-tab) {
         font-size: 15px;
     }
