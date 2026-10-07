@@ -2,8 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { HiSparkles } from 'react-icons/hi2';
 import { MdWorkspacePremium } from 'react-icons/md';
-import { addPeriodToThousands } from '~/features/account/ui/price-formatter';
-import { MY_SUBSCRIPTION_URL, SOFFX_PLAN_LABELS, STATUS_META, formatDate } from '../model';
+import { MY_SUBSCRIPTION_URL, SOFFX_PLAN_LABELS, STATUS_META, formatDate, getTierTheme } from '../model';
 import styles from './SubscriptionMenuCard.module.scss';
 
 // Statuses where the user can still claim files.
@@ -16,13 +15,15 @@ const SubscriptionMenuCard = ({ subscription }) => {
     const { tier, current_period: period, status } = subscription;
     const statusMeta = STATUS_META[status] || { label: status };
     const limit = period?.download_limit || 0;
-    const used = period?.downloads_used || 0;
-    const usedPercent = limit ? Math.min(100, Math.round((used / limit) * 100)) : 0;
+    const left = Math.max(0, period?.downloads_left ?? limit - (period?.downloads_used || 0));
+    // The bar starts full and shrinks as files are claimed.
+    const leftPercent = limit ? Math.min(100, Math.round((left / limit) * 100)) : 0;
+    const level = leftPercent <= 10 ? styles.empty : leftPercent <= 30 ? styles.low : '';
     const aiLabel = SOFFX_PLAN_LABELS[subscription.soffx?.plan];
 
     return (
         <Link href={MY_SUBSCRIPTION_URL}>
-            <a className={`${styles.card} ${styles[status] || ''}`}>
+            <a className={`${styles.card} ${styles[getTierTheme(tier)] || ''} ${styles[status] || ''}`}>
                 <div className={styles.head}>
                     <span className={styles.crown}>
                         <MdWorkspacePremium />
@@ -39,25 +40,19 @@ const SubscriptionMenuCard = ({ subscription }) => {
                 </div>
 
                 {period && (
-                    <div className={styles.usage}>
+                    <div className={`${styles.usage} ${level}`}>
                         <div className={styles.usageRow}>
-                            <span>Bu oy olingan</span>
-                            <span className={styles.usageValue}>
-                                <strong>{used}</strong> / {limit}
-                            </span>
+                            <span>Bu oy qoldi</span>
+                            <strong className={styles.usageValue}>{left} ta</strong>
                         </div>
                         <div className={styles.track}>
-                            <div className={styles.bar} style={{ width: `${usedPercent}%` }} />
+                            <div className={styles.bar} style={{ width: `${leftPercent}%` }} />
                         </div>
-                        <div className={styles.chips}>
-                            <span className={styles.chip}>Qoldi: {period.downloads_left}</span>
-                            {period.daily_limit > 0 && <span className={styles.chip}>Kuniga {period.daily_limit} ta</span>}
-                            <span className={styles.chip}>
-                                {period.max_document_price == null
-                                    ? 'Barcha fayllar'
-                                    : `${addPeriodToThousands(period.max_document_price)} so'mgacha`}
-                            </span>
-                        </div>
+                        {period.daily_limit > 0 && (
+                            <div className={styles.chips}>
+                                <span className={styles.chip}>Kuniga {period.daily_limit} ta</span>
+                            </div>
+                        )}
                     </div>
                 )}
 

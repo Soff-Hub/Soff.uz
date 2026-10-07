@@ -33,6 +33,17 @@ const SubscriptionClaim = ({ product, purchased, className = '' }) => {
 
     const downloadsLeft = subscription.current_period?.downloads_left;
 
+    // Monthly limit used up: the user buys the file instead, so only point to an upgrade.
+    if (downloadsLeft === 0) {
+        return (
+            <Link href={SUBSCRIPTION_PAGE_URL}>
+                <a className={`${styles.subscribeLink} ${className}`}>
+                    Bu oy obuna limiti tugadi — ta'rifni oshirish →
+                </a>
+            </Link>
+        );
+    }
+
     const goToPricing = () => router.push(SUBSCRIPTION_PAGE_URL);
 
     const suggestUpgrade = (title, content) =>
@@ -141,7 +152,8 @@ const SubscriptionClaim = ({ product, purchased, className = '' }) => {
 // Whether the claim button is the primary action, so the buy button can step back.
 export const useIsClaimPrimary = (product, purchased) => {
     const { subscription } = useMySubscription();
-    return Boolean(!purchased && product?.in_platform_sub && subscription);
+    const left = subscription?.current_period?.downloads_left;
+    return Boolean(!purchased && product?.in_platform_sub && subscription && left !== 0);
 };
 
 export default SubscriptionClaim;

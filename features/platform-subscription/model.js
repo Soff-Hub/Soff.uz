@@ -14,6 +14,10 @@ export const SOFFX_PLAN_LABELS = {
     ultra: 'SoffX AI Max',
 };
 
+// Visual theme per tier, keyed by the SoffX plan it includes (none → Start, pro → Pro, ultra → Max).
+const TIER_THEMES = { none: 'start', pro: 'pro', ultra: 'max' };
+export const getTierTheme = (tier) => TIER_THEMES[tier?.soffx_plan] || tier?.code || 'start';
+
 export const STATUS_META = {
     active: { label: 'Faol', color: 'green' },
     cancelled: { label: 'Bekor qilingan', color: 'orange' },

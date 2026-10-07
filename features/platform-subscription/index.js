@@ -8,5 +8,6 @@ export {
     MY_SUBSCRIPTION_URL,
     useMySubscription,
     useIsCoveredBySubscription,
+    getTierTheme,
 } from './model';
 export { default as SubscriptionMenuCard, isSubscriptionUsable } from './ui/SubscriptionMenuCard';

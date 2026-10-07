@@ -13,7 +13,7 @@ import { accountLinks } from '../constants/account-links';
 import Icon from '~/shared/ui/Icon';
 import { FaRightFromBracket } from 'react-icons/fa6';
 import { MdWorkspacePremium } from 'react-icons/md';
-import { MY_SUBSCRIPTION_URL, useMySubscription } from '~/features/platform-subscription/model';
+import { MY_SUBSCRIPTION_URL, getTierTheme, useMySubscription } from '~/features/platform-subscription/model';
 import SubscriptionMenuCard, {
     isSubscriptionUsable,
 } from '~/features/platform-subscription/ui/SubscriptionMenuCard';
@@ -73,8 +73,11 @@ const HeaderUserDropdown = () => {
                 <div className="d-flex align-items-center">
                     <Link href={'/account/sellerproducts'}>
                         <a
-                            className={cn(styles.avatarFrame, isPremium && styles.avatarPremium)}
-                            title={isPremium ? subscription.tier?.title : undefined}>
+                            className={cn(
+                                styles.avatarFrame,
+                                isPremium && styles.avatarPremium,
+                                isPremium && styles[`tier-${getTierTheme(subscription.tier)}`]
+                            )}>
                             <span className={styles.avatarWrapper}>
                                 <Image
                                     src={profile?.image || '/static/img/ozodbek.png'}
