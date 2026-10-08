@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Input, Modal, Skeleton, Tooltip, message } from 'antd';
+import { Alert, Button, Input, Modal, Skeleton, Tooltip, message } from 'antd';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { FaRegCreditCard } from 'react-icons/fa6';
 import { MdAdd, MdCheckCircle, MdDeleteOutline } from 'react-icons/md';
 import { addCard, deleteCard, fetchCards, getErrorMessage, setSubscriptionCard, verifyCard } from '../api';
-import { useMySubscription, useRefreshMySubscription } from '../model';
+import { formatDate, useMySubscription, useRefreshMySubscription } from '../model';
 import styles from './BillingCards.module.scss';
 
 export const CARDS_QUERY_KEY = ['platform-sub-cards'];
@@ -27,7 +27,7 @@ const formatTimer = (seconds) =>
     `${String(Math.floor(seconds / 60)).padStart(2, '0')}:${String(seconds % 60).padStart(2, '0')}`;
 
 // Two steps, like the checkout: card number + expiry → SMS code from the card's bank.
-const AddCardModal = ({ open, onClose, onAdded }) => {
+export const AddCardModal = ({ open, onClose, onAdded, title = "Karta qo'shish", description }) => {
     const [step, setStep] = useState('card');
     const [cardNumber, setCardNumber] = useState('');
     const [expiry, setExpiry] = useState('');
@@ -101,7 +101,8 @@ const AddCardModal = ({ open, onClose, onAdded }) => {
     return (
         <Modal open={open} onCancel={loading ? undefined : onClose} footer={null} centered width={400} destroyOnClose>
             <div className={styles.modal}>
-                <h3>Karta qo'shish</h3>
+                <h3>{title}</h3>
+                {description && step === 'card' && <p className={styles.hint}>{description}</p>}
                 {step === 'card' ? (
                     <form onSubmit={handleAdd}>
                         <label className={styles.field}>
@@ -163,7 +164,7 @@ const AddCardModal = ({ open, onClose, onAdded }) => {
 
 /**
  * Saved cards in the profile ("To'lov ma'lumotlari"). The card the subscription is charged
- * from (`my/` → `card_id`) is marked and can't be deleted; another card can be chosen for it.
+ * from (`my/` → `card_id`) is marked; deleting it asks the user to add another card for the next payment.
  */
 const BillingCards = () => {
     const queryClient = useQueryClient();
@@ -197,16 +198,48 @@ const BillingCards = () => {
         }
     };
 
-    const handleDelete = (card) =>
+    const handleDelete = (card, isSubscriptionCard) =>
         Modal.confirm({
             centered: true,
             title: "Kartani o'chirasizmi?",
-            content: `•••• ${getLast4(card)} kartasi saqlangan kartalardan o'chiriladi.`,
+            content: isSubscriptionCard ? (
+                <div className={styles.deleteWarning}>
+                    <p>
+                        •••• {getLast4(card)} kartasidan obuna to'lovi yechiladi.
+                    </p>
+                    <Alert
+                        type="warning"
+                        showIcon
+                        message={`Obuna ${formatDate(subscription?.ends_at)} da tugagach, avtomatik yangilanmaydi va faol bo'lmaydi.`}
+                        description="Obunani davom ettirish uchun boshqa karta qo'shing va uni obuna uchun tanlang."
+                    />
+                </div>
+            ) : (
+                `•••• ${getLast4(card)} kartasi saqlangan kartalardan o'chiriladi.`
+            ),
             okText: "O'chirish",
             okButtonProps: { danger: true },
             cancelText: 'Ortga',
-            onOk: () => run(getCardId(card), () => deleteCard(getCardId(card)), "Karta o'chirildi"),
+            onOk: () => removeCard(getCardId(card)),
         });
+
+    // DELETE cards/<id>/. If the backend can't delete it (no such card / route), do nothing.
+    const removeCard = async (id) => {
+        setBusyId(id);
+        try {
+            await deleteCard(id);
+            queryClient.setQueryData(CARDS_QUERY_KEY, (prev) =>
+                Array.isArray(prev) ? prev.filter((card) => getCardId(card) !== id) : prev
+            );
+            message.success("Karta o'chirildi");
+            refresh();
+        } catch (err) {
+            const status = err?.response?.status;
+            if (status !== 404 && status !== 405) message.error(getErrorMessage(err));
+        } finally {
+            setBusyId(null);
+        }
+    };
 
     if (!isLoggedIn) return null;
 
@@ -251,15 +284,15 @@ const BillingCards = () => {
                                             Obuna uchun tanlash
                                         </Button>
                                     )}
-                                    <Tooltip title={isSubscriptionCard ? "Obuna to'lanadigan kartani o'chirib bo'lmaydi" : ''}>
+                                    <Tooltip title="Kartani o'chirish">
                                         <Button
                                             size="small"
                                             type="text"
                                             danger
                                             icon={<MdDeleteOutline />}
                                             aria-label="Kartani o'chirish"
-                                            disabled={isSubscriptionCard || busyId === id}
-                                            onClick={() => handleDelete(card)}
+                                            loading={busyId === id}
+                                            onClick={() => handleDelete(card, isSubscriptionCard)}
                                         />
                                     </Tooltip>
                                 </div>

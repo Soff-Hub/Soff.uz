@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import Link from 'next/link';
 import { Alert, Button, Modal, Skeleton, Tabs, message } from 'antd';
 import { HiArrowRight, HiSparkles } from 'react-icons/hi2';
@@ -6,6 +7,7 @@ import { MdWorkspacePremium } from 'react-icons/md';
 import { addPeriodToThousands } from '~/features/account/ui/price-formatter';
 import {
     cancelSubscription,
+    getErrorCode,
     getErrorMessage,
     resumeSubscription,
     soffxLogin,
@@ -19,6 +21,7 @@ import {
     useMySubscription,
     useRefreshMySubscription,
 } from '../model';
+import { AddCardModal, CARDS_QUERY_KEY } from './BillingCards';
 import ClaimsList from './ClaimsList';
 import TierSwitcher from './TierSwitcher';
 import styles from './MySubscription.module.scss';
@@ -67,6 +70,38 @@ const SubscriptionOverview = ({ subscription }) => {
     // The bar starts full and shrinks as files are claimed.
     const leftPercent = limit ? Math.min(100, Math.round((left / limit) * 100)) : 0;
     const level = leftPercent <= 10 ? styles.levelEmpty : leftPercent <= 30 ? styles.levelLow : '';
+
+    const queryClient = useQueryClient();
+    const [addCardOpen, setAddCardOpen] = useState(false);
+
+    // "Saqlangan karta topilmadi": resuming needs a saved card. The code isn't documented,
+    // so the message is checked too.
+    const isMissingCardError = (err) => {
+        const code = getErrorCode(err) || '';
+        return /card/i.test(code) || /karta/i.test(getErrorMessage(err, ''));
+    };
+
+    const resume = async () => {
+        setAction('resume');
+        try {
+            await resumeSubscription();
+            await refreshMySubscription();
+            message.success('Avtomatik yangilanish yoqildi');
+        } catch (err) {
+            if (isMissingCardError(err)) setAddCardOpen(true);
+            else message.error(getErrorMessage(err));
+        } finally {
+            setAction(null);
+        }
+    };
+
+    // No card on the subscription: ask for one first, then resume with it.
+    const handleResume = () => (subscription.card_id ? resume() : setAddCardOpen(true));
+
+    const handleCardAdded = () => {
+        queryClient.invalidateQueries({ queryKey: CARDS_QUERY_KEY });
+        resume();
+    };
 
     const run = async (key, request, successText) => {
         setAction(key);
@@ -171,7 +206,7 @@ const SubscriptionOverview = ({ subscription }) => {
                         type="primary"
                         className={styles.primaryBtn}
                         loading={action === 'resume'}
-                        onClick={() => run('resume', resumeSubscription, 'Avtomatik yangilanish yoqildi')}>
+                        onClick={handleResume}>
                         Qayta yoqish
                     </Button>
                 ) : (
@@ -185,6 +220,14 @@ const SubscriptionOverview = ({ subscription }) => {
                     </Button>
                 )}
             </div>
+
+            <AddCardModal
+                open={addCardOpen}
+                onClose={() => setAddCardOpen(false)}
+                onAdded={handleCardAdded}
+                title="Karta qo'shing"
+                description="Obunani qayta yoqish uchun saqlangan karta kerak. Karta qo'shilgach, avtomatik yangilanish yoqiladi."
+            />
         </div>
     );
 };
