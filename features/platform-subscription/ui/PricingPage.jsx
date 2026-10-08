@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Button, Modal, Skeleton, message } from 'antd';
+import { Button, Skeleton, message } from 'antd';
 import { FaCheck } from 'react-icons/fa6';
 import { HiSparkles } from 'react-icons/hi2';
 import AuthModal from '~/features/auth/ui/auth-modal';
@@ -9,11 +9,11 @@ import { changeTier, getErrorMessage } from '../api';
 import {
     MY_SUBSCRIPTION_URL,
     SOFFX_PLAN_LABELS,
-    formatDate,
     useMySubscription,
     useRefreshMySubscription,
     useTiers,
 } from '../model';
+import ChangeTierModal from './ChangeTierModal';
 import CheckoutModal from './CheckoutModal';
 import styles from './PricingPage.module.scss';
 
@@ -46,6 +46,7 @@ const PricingPage = () => {
     const [checkoutTier, setCheckoutTier] = useState(null);
     const [authTier, setAuthTier] = useState(null);
     const [changingTier, setChangingTier] = useState(null);
+    const [targetTier, setTargetTier] = useState(null);
 
     const currentTierId = subscription?.tier?.id;
     const scheduledTierId = subscription?.scheduled_tier?.id;
@@ -69,17 +70,6 @@ const PricingPage = () => {
         } finally {
             setChangingTier(null);
         }
-    };
-
-    const handleChangeTier = (tier) => {
-        Modal.confirm({
-            centered: true,
-            title: `${tier.title} ta'rifiga o'tish`,
-            content: `Yangi ta'rif keyingi to'lovdan (${formatDate(subscription.ends_at)}) boshlab amal qiladi.`,
-            okText: "O'tish",
-            cancelText: 'Bekor qilish',
-            onOk: () => submitChangeTier(tier, `Keyingi oydan ${tier.title} ta'rifi faollashadi`),
-        });
     };
 
     // Sending the current tier clears the scheduled change.
@@ -113,9 +103,11 @@ const PricingPage = () => {
             );
         }
 
+        // Any other tier opens the modal: it offers "Hozir o'tish" (upgrade/) for a higher
+        // tier and "Keyingi oydan" (change-tier/) for both.
         return (
-            <Button size="large" block loading={changingTier === tier.id} onClick={() => handleChangeTier(tier)}>
-                Keyingi oydan o'tish
+            <Button size="large" block onClick={() => setTargetTier(tier)}>
+                {tier.price > (subscription.tier?.price || 0) ? `${tier.title}'ga o'tish` : "Keyingi oydan o'tish"}
             </Button>
         );
     };
@@ -169,6 +161,8 @@ const PricingPage = () => {
                           );
                       })}
             </div>
+
+            <ChangeTierModal tier={targetTier} open={Boolean(targetTier)} onClose={() => setTargetTier(null)} />
 
             <CheckoutModal open={Boolean(checkoutTier)} tier={checkoutTier} onClose={() => setCheckoutTier(null)} />
 

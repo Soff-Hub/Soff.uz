@@ -24,9 +24,23 @@ export const verifySubscription = (body) => api.post(`${BASE}verify/`, body).the
 export const cancelSubscription = () => api.post(`${BASE}cancel/`).then((res) => res.data);
 export const resumeSubscription = () => api.post(`${BASE}resume/`).then((res) => res.data);
 export const changeTier = (tier) => api.post(`${BASE}change-tier/`, { tier }).then((res) => res.data);
-export const refundSubscription = () => api.post(`${BASE}refund/`).then((res) => res.data);
+// Upgrade right away: charged from the saved card, the new tier starts now.
+export const upgradeNow = (tier) => api.post(`${BASE}upgrade/`, { tier }).then((res) => res.data);
 export const soffxLogin = (redirect) =>
     api.post(`${BASE}soffx-login/`, redirect ? { redirect } : {}).then((res) => res.data);
+// Saved cards. POST cards/ {card_number, expire_date} → {request_id, phone_number, msg};
+// POST cards/verify/ {request_id, code}. The list and card fields are read defensively.
+export const fetchCards = async () => {
+    const { data } = await api.get(`${BASE}cards/`);
+    if (Array.isArray(data)) return data;
+    return data?.results || data?.cards || [];
+};
+export const addCard = (body) => api.post(`${BASE}cards/`, body).then((res) => res.data);
+export const verifyCard = (body) => api.post(`${BASE}cards/verify/`, body).then((res) => res.data);
+export const deleteCard = (id) => api.delete(`${BASE}cards/${id}/`).then((res) => res.data);
+export const setSubscriptionCard = (id) =>
+    api.patch(`${BASE}cards/${id}/`, { is_default: true }).then((res) => res.data);
+
 export const claimDocument = (documentId) => api.post(`${BASE}claim/${documentId}/`).then((res) => res.data);
 
 // `msg` can be a string or (on subscribe/verify validation errors) an array.

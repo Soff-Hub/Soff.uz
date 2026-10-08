@@ -10,6 +10,7 @@ import {
 import { FaMobileScreen } from 'react-icons/fa6';
 import SidebarLayout from '~/widgets/sidebar/SidebarLayout';
 import { apiSoffSlice } from '~/store/api/apiSlice';
+import { BillingCards } from '~/features/platform-subscription';
 import useUpdateProfile from './useUpdateProfile';
 import styles from './profile.module.scss';
 
@@ -213,6 +214,10 @@ export default function ProfilePage() {
                                     icon={<FaMobileScreen />}
                                 />
                             )}
+                        </SectionCard>
+
+                        <SectionCard title="To'lov ma'lumotlari">
+                            <BillingCards />
                         </SectionCard>
                     </div>
                 </SidebarLayout>

@@ -24,8 +24,6 @@ export const STATUS_META = {
     past_due: { label: "To'lov o'tmadi", color: 'red' },
 };
 
-export const REFUND_WINDOW_DAYS = 3;
-
 export const formatDate = (value) => (value ? dayjs(value).format('DD.MM.YYYY') : '—');
 
 export const useTiers = () =>
@@ -114,12 +112,4 @@ export const canClaimWithSubscription = (subscription, product) => {
 export const useIsCoveredBySubscription = (product, purchased = false) => {
     const { subscription } = useMySubscription();
     return !purchased && canClaimWithSubscription(subscription, product);
-};
-
-// The backend checks the refund rule again; this only decides whether to show the button.
-export const canRequestRefund = (subscription) => {
-    const period = subscription?.current_period;
-    if (!period || period.downloads_used !== 0) return false;
-    const paidAt = period.starts_at || subscription.started_at;
-    return Boolean(paidAt) && dayjs().diff(dayjs(paidAt), 'day', true) < REFUND_WINDOW_DAYS;
 };

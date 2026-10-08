@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Alert, Button, Modal, Progress, Skeleton, Tabs, Tag, message } from 'antd';
+import { Alert, Button, Modal, Skeleton, Tabs, message } from 'antd';
 import { HiArrowRight, HiSparkles } from 'react-icons/hi2';
+import { MdWorkspacePremium } from 'react-icons/md';
 import { addPeriodToThousands } from '~/features/account/ui/price-formatter';
 import {
     cancelSubscription,
@@ -14,11 +15,16 @@ import {
     STATUS_META,
     SUBSCRIPTION_PAGE_URL,
     formatDate,
+    getTierTheme,
     useMySubscription,
     useRefreshMySubscription,
 } from '../model';
 import ClaimsList from './ClaimsList';
+import TierSwitcher from './TierSwitcher';
 import styles from './MySubscription.module.scss';
+
+// Saved cards live in the profile's "To'lov ma'lumotlari" section.
+const BILLING_URL = '/account/profile#billing';
 
 const STATUS_BANNERS = {
     past_due: { type: 'error', text: "To'lov o'tmadi, kartangizni tekshiring" },
@@ -60,6 +66,7 @@ const SubscriptionOverview = ({ subscription }) => {
     const left = Math.max(0, period?.downloads_left ?? limit - (period?.downloads_used || 0));
     // The bar starts full and shrinks as files are claimed.
     const leftPercent = limit ? Math.min(100, Math.round((left / limit) * 100)) : 0;
+    const level = leftPercent <= 10 ? styles.levelEmpty : leftPercent <= 30 ? styles.levelLow : '';
 
     const run = async (key, request, successText) => {
         setAction(key);
@@ -86,13 +93,30 @@ const SubscriptionOverview = ({ subscription }) => {
         });
 
     return (
-        <div className={styles.card}>
-            {banner && <Alert className={styles.banner} type={banner.type} message={banner.text} showIcon />}
+        <div className={`${styles.card} ${styles.themed} ${styles[getTierTheme(tier)] || ''} ${styles[status] || ''}`}>
+            {banner && (
+                <Alert
+                    className={styles.banner}
+                    type={banner.type}
+                    message={banner.text}
+                    showIcon
+                    action={
+                        status === 'past_due' && (
+                            <Link href={BILLING_URL}>
+                                <a className={styles.bannerLink}>Kartani o'zgartirish</a>
+                            </Link>
+                        )
+                    }
+                />
+            )}
 
             <div className={styles.header}>
                 <div className={styles.titleRow}>
+                    <span className={styles.crown}>
+                        <MdWorkspacePremium />
+                    </span>
                     <h2>{tier?.title}</h2>
-                    <Tag color={statusMeta.color}>{statusMeta.label}</Tag>
+                    <span className={styles.status}>{statusMeta.label}</span>
                     {SOFFX_PLAN_LABELS[subscription.soffx?.plan] && (
                         <span className={styles.aiBadge}>
                             <HiSparkles /> {SOFFX_PLAN_LABELS[subscription.soffx.plan]}
@@ -101,7 +125,7 @@ const SubscriptionOverview = ({ subscription }) => {
                 </div>
                 <Link href={SUBSCRIPTION_PAGE_URL}>
                     <a className={styles.link}>
-                        Ta'rifni o'zgartirish <HiArrowRight />
+                        Barcha ta'riflar <HiArrowRight />
                     </a>
                 </Link>
             </div>
@@ -111,9 +135,8 @@ const SubscriptionOverview = ({ subscription }) => {
                 <span>
                     {subscription.auto_renew
                         ? `Keyingi to'lov: ${formatDate(subscription.ends_at)}`
-                        : `${formatDate(subscription.ends_at)} gacha amal qiladi`}
+                        : `Obuna ${formatDate(subscription.ends_at)} gacha amal qiladi`}
                 </span>
-                {subscription.card_last4 && <span>Karta •••• {subscription.card_last4}</span>}
                 {subscription.scheduled_tier && (
                     <span>
                         Keyingi oydan: <strong>{subscription.scheduled_tier.title}</strong>
@@ -122,19 +145,14 @@ const SubscriptionOverview = ({ subscription }) => {
             </p>
 
             {period && (
-                <div className={styles.usage}>
+                <div className={`${styles.usage} ${level}`}>
                     <div className={styles.usageRow}>
                         <span>Bu oy qoldi</span>
-                        <span className={left === 0 ? styles.leftEmpty : styles.usageValue}>
-                            {left} ta
-                        </span>
+                        <span className={styles.usageValue}>{left} ta</span>
                     </div>
-                    <Progress
-                        percent={leftPercent}
-                        showInfo={false}
-                        size="small"
-                        strokeColor={left === 0 ? '#d9363e' : '#00a44f'}
-                    />
+                    <div className={styles.track}>
+                        <div className={styles.bar} style={{ width: `${leftPercent}%` }} />
+                    </div>
                     <p className={styles.hint}>
                         {period.daily_limit > 0 && `Kuniga ${period.daily_limit} tagacha · `}
                         {period.max_document_price == null
@@ -143,6 +161,8 @@ const SubscriptionOverview = ({ subscription }) => {
                     </p>
                 </div>
             )}
+
+            <TierSwitcher subscription={subscription} />
 
             <div className={styles.actions}>
                 <SoffxAction soffx={subscription.soffx} />
