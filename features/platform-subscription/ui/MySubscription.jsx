@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Alert, Button, Modal, Progress, Skeleton, Tabs, Tag, message } from 'antd';
-import { HiSparkles } from 'react-icons/hi2';
+import { HiArrowRight, HiSparkles } from 'react-icons/hi2';
 import { addPeriodToThousands } from '~/features/account/ui/price-formatter';
 import {
     cancelSubscription,
-    getErrorCode,
     getErrorMessage,
-    refundSubscription,
     resumeSubscription,
     soffxLogin,
 } from '../api';
@@ -15,7 +13,6 @@ import {
     SOFFX_PLAN_LABELS,
     STATUS_META,
     SUBSCRIPTION_PAGE_URL,
-    canRequestRefund,
     formatDate,
     useMySubscription,
     useRefreshMySubscription,
@@ -27,8 +24,6 @@ const STATUS_BANNERS = {
     past_due: { type: 'error', text: "To'lov o'tmadi, kartangizni tekshiring" },
     cancelled: { type: 'warning', text: "Avtomatik yangilanish o'chirilgan" },
 };
-
-const REFUND_HIDE_CODES = ['window_passed', 'has_claims', 'already_settled'];
 
 const SoffxAction = ({ soffx }) => {
     const [loading, setLoading] = useState(false);
@@ -58,13 +53,13 @@ const SoffxAction = ({ soffx }) => {
 const SubscriptionOverview = ({ subscription }) => {
     const refreshMySubscription = useRefreshMySubscription();
     const [action, setAction] = useState(null);
-    const [refundHidden, setRefundHidden] = useState(false);
     const { tier, current_period: period, status } = subscription;
     const statusMeta = STATUS_META[status] || { label: status, color: 'default' };
     const banner = STATUS_BANNERS[status];
-    const usedPercent = period?.download_limit
-        ? Math.min(100, Math.round((period.downloads_used / period.download_limit) * 100))
-        : 0;
+    const limit = period?.download_limit || 0;
+    const left = Math.max(0, period?.downloads_left ?? limit - (period?.downloads_used || 0));
+    // The bar starts full and shrinks as files are claimed.
+    const leftPercent = limit ? Math.min(100, Math.round((left / limit) * 100)) : 0;
 
     const run = async (key, request, successText) => {
         setAction(key);
@@ -73,7 +68,6 @@ const SubscriptionOverview = ({ subscription }) => {
             await refreshMySubscription();
             message.success(successText);
         } catch (err) {
-            if (key === 'refund' && REFUND_HIDE_CODES.includes(getErrorCode(err))) setRefundHidden(true);
             message.error(getErrorMessage(err));
         } finally {
             setAction(null);
@@ -91,17 +85,6 @@ const SubscriptionOverview = ({ subscription }) => {
             onOk: () => run('cancel', cancelSubscription, "Avtomatik yangilanish o'chirildi"),
         });
 
-    const handleRefund = () =>
-        Modal.confirm({
-            centered: true,
-            title: 'Pulni qaytarish',
-            content: "To'langan summa to'liq qaytariladi va obuna yopiladi. Davom etasizmi?",
-            okText: 'Qaytarish',
-            okButtonProps: { danger: true },
-            cancelText: 'Ortga',
-            onOk: () => run('refund', refundSubscription, "Pul qaytarish so'rovi qabul qilindi"),
-        });
-
     return (
         <div className={styles.card}>
             {banner && <Alert className={styles.banner} type={banner.type} message={banner.text} showIcon />}
@@ -117,7 +100,9 @@ const SubscriptionOverview = ({ subscription }) => {
                     )}
                 </div>
                 <Link href={SUBSCRIPTION_PAGE_URL}>
-                    <a className={styles.link}>Ta'rifni o'zgartirish</a>
+                    <a className={styles.link}>
+                        Ta'rifni o'zgartirish <HiArrowRight />
+                    </a>
                 </Link>
             </div>
 
@@ -139,18 +124,16 @@ const SubscriptionOverview = ({ subscription }) => {
             {period && (
                 <div className={styles.usage}>
                     <div className={styles.usageRow}>
-                        <span>
-                            Bu oy: <strong>{period.downloads_used}</strong> / {period.download_limit} ta fayl
-                        </span>
-                        <span className={period.downloads_left === 0 ? styles.leftEmpty : styles.left}>
-                            Qoldi: {period.downloads_left}
+                        <span>Bu oy qoldi</span>
+                        <span className={left === 0 ? styles.leftEmpty : styles.usageValue}>
+                            {left} ta
                         </span>
                     </div>
                     <Progress
-                        percent={usedPercent}
+                        percent={leftPercent}
                         showInfo={false}
                         size="small"
-                        strokeColor={period.downloads_left === 0 ? '#e8a400' : '#00a44f'}
+                        strokeColor={left === 0 ? '#d9363e' : '#00a44f'}
                     />
                     <p className={styles.hint}>
                         {period.daily_limit > 0 && `Kuniga ${period.daily_limit} tagacha · `}
@@ -172,13 +155,13 @@ const SubscriptionOverview = ({ subscription }) => {
                         Qayta yoqish
                     </Button>
                 ) : (
-                    <Button size="small" type="text" className={styles.cancelBtn} loading={action === 'cancel'} onClick={handleCancel}>
-                        Bekor qilish
-                    </Button>
-                )}
-                {!refundHidden && canRequestRefund(subscription) && (
-                    <Button danger loading={action === 'refund'} onClick={handleRefund}>
-                        Pulni qaytarish
+                    <Button
+                        size="small"
+                        type="text"
+                        className={styles.cancelBtn}
+                        loading={action === 'cancel'}
+                        onClick={handleCancel}>
+                        Obunani bekor qilish
                     </Button>
                 )}
             </div>

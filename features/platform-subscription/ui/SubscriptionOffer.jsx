@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { MdCheckCircleOutline, MdExpandMore, MdOutlineWorkspacePremium } from 'react-icons/md';
 import { addPeriodToThousands } from '~/features/account/ui/price-formatter';
 import { SUBSCRIPTION_PAGE_URL, useTiers } from '../model';
+import ChangeTierModal from './ChangeTierModal';
 import styles from './SubscriptionOffer.module.scss';
 
 // Cheapest tier that includes the product; the cheapest tier overall when the
@@ -24,6 +25,7 @@ const SubscriptionOffer = ({ product, variant = 'subscribe', myTierTitle, classN
     const tier = useOfferTier(product);
     const isUpgrade = variant === 'upgrade';
     const [expanded, setExpanded] = useState(false);
+    const [changeOpen, setChangeOpen] = useState(false);
 
     // Only the upgrade case needs a note: it explains why the user's own tier isn't enough.
     const upgradeNote = isUpgrade
@@ -92,12 +94,19 @@ const SubscriptionOffer = ({ product, variant = 'subscribe', myTierTitle, classN
                     </button>
                 )}
 
-                <Link href={SUBSCRIPTION_PAGE_URL}>
-                    <a className={styles.cta}>
-                        {isUpgrade ? tier?.title ? `${tier.title}'ga o'tish` : "Ta'rifni oshirish" : "Obuna bo'lib yuklab olish"}
-                    </a>
-                </Link>
+                {/* Upgrade switches in place; a new subscriber still picks a plan on the pricing page. */}
+                {isUpgrade && tier ? (
+                    <button type="button" className={styles.cta} onClick={() => setChangeOpen(true)}>
+                        {tier.title}'ga o'tish
+                    </button>
+                ) : (
+                    <Link href={SUBSCRIPTION_PAGE_URL}>
+                        <a className={styles.cta}>Obuna bo'lib yuklab olish</a>
+                    </Link>
+                )}
             </div>
+
+            {isUpgrade && <ChangeTierModal tier={tier} open={changeOpen} onClose={() => setChangeOpen(false)} />}
         </section>
     );
 };

@@ -148,13 +148,21 @@
     text-align: center;
 }
 
-.done {
-    text-align: center;
-    padding: 12px 0 4px;
+.doneModal {
+    // Close button sits on the green header.
+    :global(.ant-modal-close) {
+        z-index: 2;
+        color: #fff;
+
+        &:hover {
+            background: rgba(#fff, 0.18);
+            color: #fff;
+        }
+    }
 }
 
-.doneIcon {
-    font-size: 56px;
-    color: #00a44f;
-    margin-bottom: 12px;
+.doneClose {
+    width: 20px;
+    height: 20px;
+    color: #fff;
 }

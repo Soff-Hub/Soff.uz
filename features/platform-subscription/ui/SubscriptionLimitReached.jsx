@@ -1,7 +1,7 @@
-import React from 'react';
-import Link from 'next/link';
+import React, { useState } from 'react';
 import { MdArrowForward } from 'react-icons/md';
-import { SUBSCRIPTION_PAGE_URL, formatDate, useTiers } from '../model';
+import { formatDate, useTiers } from '../model';
+import ChangeTierModal from './ChangeTierModal';
 import styles from './SubscriptionLimitReached.module.scss';
 
 // Cheapest tier with a bigger monthly limit than the current one, or null on the top tier.
@@ -21,6 +21,7 @@ const useNextTier = (subscription) => {
  */
 const SubscriptionLimitReached = ({ subscription, className = '' }) => {
     const nextTier = useNextTier(subscription);
+    const [changeOpen, setChangeOpen] = useState(false);
     const period = subscription?.current_period;
     const limit = period?.download_limit ?? 0;
     const used = period?.downloads_used ?? limit;
@@ -40,12 +41,13 @@ const SubscriptionLimitReached = ({ subscription, className = '' }) => {
             )}
 
             {nextTier && (
-                <Link href={SUBSCRIPTION_PAGE_URL}>
-                    <a className={styles.cta}>
+                <>
+                    <button type="button" className={styles.cta} onClick={() => setChangeOpen(true)}>
                         {nextTier.title}'ga o'tish
                         <MdArrowForward aria-hidden />
-                    </a>
-                </Link>
+                    </button>
+                    <ChangeTierModal tier={nextTier} open={changeOpen} onClose={() => setChangeOpen(false)} />
+                </>
             )}
         </section>
     );

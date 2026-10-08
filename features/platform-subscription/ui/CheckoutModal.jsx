@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import { Modal } from 'antd';
+import { MdClose } from 'react-icons/md';
 import { BeatLoader } from 'react-spinners';
-import { FaRegCreditCard, FaRegCalendarDays, FaClock, FaCircleCheck } from 'react-icons/fa6';
+import { FaRegCreditCard, FaRegCalendarDays, FaClock } from 'react-icons/fa6';
 import { addPeriodToThousands } from '~/features/account/ui/price-formatter';
 import { fetchMySubscription, getErrorMessage, subscribe, verifySubscription } from '../api';
-import { useSetMySubscription } from '../model';
+import { MY_SUBSCRIPTION_URL, useSetMySubscription } from '../model';
+import SubscriptionSuccess from './SubscriptionSuccess';
 import styles from './CheckoutModal.module.scss';
 
 const CODE_TTL_SECONDS = 5 * 60;
@@ -22,6 +25,7 @@ const STEP_DONE = 'done';
 
 const CheckoutModal = ({ open, tier, onClose }) => {
     const setMySubscription = useSetMySubscription();
+    const router = useRouter();
     const [step, setStep] = useState(STEP_CARD);
     const [cardNumber, setCardNumber] = useState('');
     const [expiry, setExpiry] = useState('');
@@ -114,8 +118,18 @@ const CheckoutModal = ({ open, tier, onClose }) => {
         }
     }
 
+    // After a successful payment every way out leads to the subscription page.
+    const goToMySubscription = () => {
+        onClose();
+        router.push(MY_SUBSCRIPTION_URL);
+    };
+
     const handleClose = () => {
         if (loading) return;
+        if (step === STEP_DONE) {
+            goToMySubscription();
+            return;
+        }
         onClose();
     };
 
@@ -205,18 +219,7 @@ const CheckoutModal = ({ open, tier, onClose }) => {
     );
 
     const renderDoneStep = () => (
-        <div className={styles.done}>
-            <FaCircleCheck className={styles.doneIcon} />
-            <h3 className={styles.title}>Obuna faollashtirildi!</h3>
-            <p className={styles.subtitle}>
-                {result?.tier?.title || tier?.title} ta'rifi. Bu oy{' '}
-                <strong>{result?.current_period?.downloads_left ?? tier?.monthly_limit} ta</strong> fayl olishingiz
-                mumkin.
-            </p>
-            <button type="button" className={styles.submitBtn} onClick={handleClose}>
-                Yopish
-            </button>
-        </div>
+        <SubscriptionSuccess subscription={result} fallbackTier={tier} onContinue={goToMySubscription} />
     );
 
     return (
@@ -227,6 +230,10 @@ const CheckoutModal = ({ open, tier, onClose }) => {
             onCancel={handleClose}
             maskClosable={false}
             destroyOnClose
+            className={step === STEP_DONE ? styles.doneModal : undefined}
+            closeIcon={step === STEP_DONE ? <MdClose className={styles.doneClose} /> : undefined}
+            // The celebration step draws its own edge-to-edge header.
+            styles={step === STEP_DONE ? { content: { padding: 0, overflow: 'hidden', borderRadius: 18 } } : undefined}
             title={step === STEP_CARD ? 'Obunani rasmiylashtirish' : null}>
             {step === STEP_CARD && renderCardStep()}
             {step === STEP_CODE && renderCodeStep()}

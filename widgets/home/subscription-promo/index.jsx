@@ -52,7 +52,7 @@ const SubscriptionPromo = () => {
             <div className={styles.banner}>
                 <div className={styles.bannerText}>
                     <h2 id="subscription-promo-title" className={styles.title}>
-                        <span className={styles.accent}>{CATALOGUE_SIZE} tayyor fayl</span>
+                        <span className={styles.accent}>{CATALOGUE_SIZE} tayyor fayllar</span>
                         <br />
                         va <SoffX /> bir obunada
                     </h2>
@@ -69,7 +69,7 @@ const SubscriptionPromo = () => {
                                 {offer.isFeatured && <span className={styles.popular}>Ommabop</span>}
                             </div>
                             <p className={styles.price}>
-                                {addPeriodToThousands(offer.tier.price)} so'm<span>/oy</span>
+                                {addPeriodToThousands(offer.tier.price)} <span>so'm/oy</span>
                             </p>
                         </>
                     ) : (
