@@ -30,20 +30,24 @@ const SubscriptionOffer = ({ product, variant = 'subscribe', myTierTitle, classN
         ? `Bu fayl ${tier?.title || 'yuqori'} obunasida${myTierTitle ? ` — ${myTierTitle} ta'rifingizga kirmaydi` : ''}`
         : null;
 
+    const priceBenefit = tier
+        ? tier.max_document_price == null
+            ? 'Narxidan qat\'i nazar barcha fayllar'
+            : `${addPeriodToThousands(tier.max_document_price)} so'mgacha bo'lgan barcha fayllar`
+        : null;
+    const limitBenefit = tier ? `Oyiga ${tier.monthly_limit} ta fayl yuklab olish` : null;
+
+    // Upgrade: lead with the price cap, since that is what unlocks this file.
     const benefits = tier
-        ? [
-              `Oyiga ${tier.monthly_limit} ta fayl yuklab olish`,
-              tier.max_document_price == null
-                  ? 'Narxidan qat\'i nazar barcha fayllar'
-                  : `${addPeriodToThousands(tier.max_document_price)} so'mgacha bo'lgan barcha fayllar`,
-              'Istalgan vaqtda bekor qilish',
-          ]
+        ? isUpgrade
+            ? [priceBenefit, limitBenefit, 'Istalgan vaqtda bekor qilish']
+            : [limitBenefit, priceBenefit, 'Istalgan vaqtda bekor qilish']
         : [];
 
     return (
         <section className={`${styles.offer} ${className}`} aria-label="Obuna taklifi">
             <div className={styles.divider}>
-                <span>yoki obuna bilan oling</span>
+                <span>{isUpgrade ? "yoki ta'rifni oshiring" : 'yoki obuna bilan oling'}</span>
             </div>
 
             <div className={styles.box}>
@@ -90,7 +94,7 @@ const SubscriptionOffer = ({ product, variant = 'subscribe', myTierTitle, classN
 
                 <Link href={SUBSCRIPTION_PAGE_URL}>
                     <a className={styles.cta}>
-                        {isUpgrade ? `${tier?.title || "Ta'rif"}ga o'tish` : "Obuna bo'lib yuklab olish"}
+                        {isUpgrade ? tier?.title ? `${tier.title}'ga o'tish` : "Ta'rifni oshirish" : "Obuna bo'lib yuklab olish"}
                     </a>
                 </Link>
             </div>

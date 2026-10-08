@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Button, Modal, message } from 'antd';
 import { useQueryClient } from '@tanstack/react-query';
 import { MdOutlineWorkspacePremium } from 'react-icons/md';
-import FileDownloadLink from '~/shared/ui/file-download-link';
 import { claimDocument, getErrorCode, getErrorMessage } from '../api';
 import {
     MY_SUBSCRIPTION_QUERY_KEY,
@@ -13,13 +11,15 @@ import {
     useMySubscription,
 } from '../model';
 import SubscriptionOffer from './SubscriptionOffer';
+import SubscriptionLimitReached from './SubscriptionLimitReached';
+import ClaimSuccessModal from './ClaimSuccessModal';
 import styles from './SubscriptionClaim.module.scss';
 
 /**
  * Subscription part of the detail page buy block (guide §4).
  * Renders nothing when the document is purchased or not in the subscription.
  */
-const SubscriptionClaim = ({ product, purchased, className = '' }) => {
+const ClaimBody = ({ product, purchased, className = '', onSuccess }) => {
     const router = useRouter();
     const queryClient = useQueryClient();
     const { subscription, isLoggedIn, isLoading } = useMySubscription();
@@ -50,13 +50,7 @@ const SubscriptionClaim = ({ product, purchased, className = '' }) => {
 
     // Monthly limit used up: the user buys the file instead, so only point to an upgrade.
     if (downloadsLeft === 0) {
-        return (
-            <Link href={SUBSCRIPTION_PAGE_URL}>
-                <a className={`${styles.subscribeLink} ${className}`}>
-                    Bu oy obuna limiti tugadi — ta'rifni oshirish →
-                </a>
-            </Link>
-        );
+        return <SubscriptionLimitReached subscription={subscription} className={className} />;
     }
 
     const goToPricing = () => router.push(SUBSCRIPTION_PAGE_URL);
@@ -126,19 +120,7 @@ const SubscriptionClaim = ({ product, purchased, className = '' }) => {
             // Reload the SSR props: the detail now returns the files for the claimed document.
             await router.replace(router.asPath, undefined, { scroll: false });
             if (data.file_url) {
-                Modal.success({
-                    centered: true,
-                    title: data.claimed ? 'Fayl obuna orqali olindi' : 'Bu fayl allaqachon sizda',
-                    content: (
-                        <FileDownloadLink url={data.file_url} filename={product.title} className={styles.downloadLink}>
-                            <Button type="primary" className={styles.claimBtn} block>
-                                Yuklab olish
-                            </Button>
-                        </FileDownloadLink>
-                    ),
-                    okText: 'Yopish',
-                    okButtonProps: { type: 'default' },
-                });
+                onSuccess({ ...data, title: product.title });
             } else {
                 message.success(data.claimed ? 'Fayl obuna orqali olindi' : 'Bu fayl allaqachon sizda');
             }
@@ -161,6 +143,18 @@ const SubscriptionClaim = ({ product, purchased, className = '' }) => {
             onClick={handleClaim}>
             Obuna orqali olish{downloadsLeft != null ? ` (qoldi: ${downloadsLeft})` : ''}
         </Button>
+    );
+};
+
+// The success modal lives outside ClaimBody: after a claim the page reloads with the
+// file purchased, ClaimBody renders nothing, and the modal must stay open.
+const SubscriptionClaim = (props) => {
+    const [result, setResult] = useState(null);
+    return (
+        <>
+            <ClaimBody {...props} onSuccess={setResult} />
+            <ClaimSuccessModal result={result} onClose={() => setResult(null)} />
+        </>
     );
 };
 

@@ -1,0 +1,86 @@
+$green: #00a44f;
+$green-text: #00803d;
+$ink: #1f2933;
+$muted: #4b5563;
+$line: #e5e7eb;
+
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 14px 16px;
+    border: 1px solid $line;
+    border-radius: 12px;
+    background: #f8f9fa;
+    text-align: left;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.title {
+    margin: 0;
+    color: $ink;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.count {
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: #fff;
+    box-shadow: inset 0 0 0 1px $line;
+    color: $muted;
+    font-size: 13px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
+
+.text {
+    margin: -4px 0 0;
+    color: $muted;
+    font-size: 14px;
+}
+
+.cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 44px;
+    padding: 0 14px;
+    border-radius: 8px;
+    background: $green;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    transition: background-color 160ms ease-out;
+
+    svg {
+        flex-shrink: 0;
+        width: 18px;
+        height: 18px;
+    }
+
+    &:hover {
+        background: #008f44;
+        color: #fff;
+    }
+
+    &:active {
+        background: #007a3a;
+    }
+
+    &:focus-visible {
+        outline: 3px solid rgba($green, 0.35);
+        outline-offset: 2px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        transition: none;
+    }
+}

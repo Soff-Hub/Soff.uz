@@ -107,22 +107,9 @@ const SubscriptionOverview = ({ subscription }) => {
             {banner && <Alert className={styles.banner} type={banner.type} message={banner.text} showIcon />}
 
             <div className={styles.header}>
-                <div>
-                    <div className={styles.titleRow}>
-                        <h2>{tier?.title}</h2>
-                        <Tag color={statusMeta.color}>{statusMeta.label}</Tag>
-                    </div>
-                    <p className={styles.muted}>
-                        {subscription.auto_renew
-                            ? `Keyingi to'lov: ${formatDate(subscription.ends_at)}`
-                            : `Obuna ${formatDate(subscription.ends_at)} gacha amal qiladi`}
-                    </p>
-                    {subscription.card_last4 && <p className={styles.muted}>Karta: **** {subscription.card_last4}</p>}
-                    {subscription.scheduled_tier && (
-                        <p className={styles.muted}>
-                            Keyingi oydan: <strong>{subscription.scheduled_tier.title}</strong>
-                        </p>
-                    )}
+                <div className={styles.titleRow}>
+                    <h2>{tier?.title}</h2>
+                    <Tag color={statusMeta.color}>{statusMeta.label}</Tag>
                     {SOFFX_PLAN_LABELS[subscription.soffx?.plan] && (
                         <span className={styles.aiBadge}>
                             <HiSparkles /> {SOFFX_PLAN_LABELS[subscription.soffx.plan]}
@@ -134,20 +121,42 @@ const SubscriptionOverview = ({ subscription }) => {
                 </Link>
             </div>
 
+            {/* Billing facts on one line instead of a stacked list. */}
+            <p className={styles.meta}>
+                <span>
+                    {subscription.auto_renew
+                        ? `Keyingi to'lov: ${formatDate(subscription.ends_at)}`
+                        : `${formatDate(subscription.ends_at)} gacha amal qiladi`}
+                </span>
+                {subscription.card_last4 && <span>Karta •••• {subscription.card_last4}</span>}
+                {subscription.scheduled_tier && (
+                    <span>
+                        Keyingi oydan: <strong>{subscription.scheduled_tier.title}</strong>
+                    </span>
+                )}
+            </p>
+
             {period && (
                 <div className={styles.usage}>
                     <div className={styles.usageRow}>
                         <span>
-                            Bu oy olingan: {period.downloads_used} / {period.download_limit}
+                            Bu oy: <strong>{period.downloads_used}</strong> / {period.download_limit} ta fayl
                         </span>
-                        <strong>Qoldi: {period.downloads_left}</strong>
+                        <span className={period.downloads_left === 0 ? styles.leftEmpty : styles.left}>
+                            Qoldi: {period.downloads_left}
+                        </span>
                     </div>
-                    <Progress percent={usedPercent} showInfo={false} strokeColor="#00a44f" />
-                    <p className={styles.muted}>
-                        {period.daily_limit > 0 && `Kuniga ${period.daily_limit} tagacha. `}
+                    <Progress
+                        percent={usedPercent}
+                        showInfo={false}
+                        size="small"
+                        strokeColor={period.downloads_left === 0 ? '#e8a400' : '#00a44f'}
+                    />
+                    <p className={styles.hint}>
+                        {period.daily_limit > 0 && `Kuniga ${period.daily_limit} tagacha · `}
                         {period.max_document_price == null
                             ? 'Barcha fayllar'
-                            : `Narxi ${addPeriodToThousands(period.max_document_price)} so'mgacha bo'lgan fayllar`}
+                            : `${addPeriodToThousands(period.max_document_price)} so'mgacha bo'lgan fayllar`}
                     </p>
                 </div>
             )}
@@ -163,7 +172,7 @@ const SubscriptionOverview = ({ subscription }) => {
                         Qayta yoqish
                     </Button>
                 ) : (
-                    <Button loading={action === 'cancel'} onClick={handleCancel}>
+                    <Button size="small" type="text" className={styles.cancelBtn} loading={action === 'cancel'} onClick={handleCancel}>
                         Bekor qilish
                     </Button>
                 )}
@@ -177,7 +186,20 @@ const SubscriptionOverview = ({ subscription }) => {
     );
 };
 
-const MySubscription = () => {
+// Keeps the page readable on wide screens instead of stretching edge to edge.
+const Frame = ({ children }) => (
+    <div className="container">
+        <div className={styles.frame}>{children}</div>
+    </div>
+);
+
+const MySubscription = () => (
+    <Frame>
+        <MySubscriptionContent />
+    </Frame>
+);
+
+const MySubscriptionContent = () => {
     const { subscription, isLoading } = useMySubscription();
 
     if (isLoading) {
