@@ -1,0 +1,209 @@
+name: Deploy to Test Server
+
+on:
+  push:
+    branches: [test]
+  workflow_dispatch: {}
+
+concurrency:
+  group: deploy-test
+  cancel-in-progress: true
+
+env:
+  # ─────────────────────────────────────────────────────────────────────────
+  # CUSTOMIZE HERE (these are the only values you normally touch)
+  # ─────────────────────────────────────────────────────────────────────────
+  # Release root on the server. The deploy flips "$APP_DIR/current" atomically
+  # and PM2 runs "$APP_DIR/current/server.js".
+  # Must NOT be the production APP_DIR if both run on the same machine.
+  APP_DIR: /root/frontend/customer-test
+  # PM2 process name (must be stable across deploys, and different from prod's)
+  PM2_NAME: soff-test
+  # Local port the standalone Next server listens on (nginx reverse-proxies to it).
+  # Must differ from prod if both run on the same machine.
+  PORT: 3002
+  # Public URL for the Telegram message
+  PUBLIC_URL: https://test.soff.uz
+  # Releases kept on disk (each is ~350 MB).
+  KEEP_RELEASES: 2
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Create build env file
+        # Next 12 inlines NEXT_PUBLIC_* into the bundle at build time, and
+        # next.config.js evaluates rewrites()/SERVICE_URL_* at build time too,
+        # so the FULL test env must exist before `next build`. It is written to
+        # .env.production because that is what `next build` loads; CI checkouts
+        # are fresh, so nothing real is overwritten.
+        #
+        # Put the whole file in the ENV_FILE_TEST secret, e.g.:
+        #   NEXT_PUBLIC_BASE_URL=https://test-api.soff.uz
+        #   NEXT_PUBLIC_WS_BASE_URL=...
+        #   NEXT_PUBLIC_FREELEANCE_URL=...
+        #   NEXT_PUBLIC_WS_FREELEANCE_URL=...
+        #   NEXT_PUBLIC_RECAPTCHA_SITE_KEY=...
+        #   SERVICE_URL_VIDEO=...
+        #   SERVICE_URL_FREELANCE=...
+        run: |
+          cat > .env.production <<'ENVEOF'
+          ${{ secrets.ENV_FILE_TEST }}
+          ENVEOF
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build (Next standalone + scheduler injection)
+        # `npm run build` = `next build` + copy-to-standalone.js, which injects
+        # the node-cron scheduler into server.js and copies node-cron,
+        # .next/static and public into .next/standalone.
+        run: npm run build
+        env:
+          NODE_ENV: production
+
+      - name: Assemble deploy bundle
+        # .next/standalone is already self-contained after copy-to-standalone.js;
+        # only the runtime env file is added (the standalone server reads .env).
+        run: |
+          test -f .next/standalone/server.js || { echo "::error::server.js missing in standalone build"; exit 1; }
+          rm -rf deploy
+          cp -r .next/standalone deploy
+          cp .env.production deploy/.env
+          echo "Deploy bundle size: $(du -sh deploy | cut -f1)"
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "${{ secrets.TEST_DEPLOY_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H "${{ secrets.TEST_DEPLOY_HOST }}" >> ~/.ssh/known_hosts 2>/dev/null
+
+      - name: Upload release
+        run: |
+          RELEASE_DIR="$APP_DIR/releases/${GITHUB_SHA::12}"
+          ssh -i ~/.ssh/id_ed25519 "${{ secrets.TEST_DEPLOY_USER }}@${{ secrets.TEST_DEPLOY_HOST }}" "mkdir -p '$RELEASE_DIR'"
+          rsync -az --delete -e "ssh -i ~/.ssh/id_ed25519" deploy/ "${{ secrets.TEST_DEPLOY_USER }}@${{ secrets.TEST_DEPLOY_HOST }}:$RELEASE_DIR/"
+
+      - name: Activate release (symlink switch + PM2 restart + health check)
+        run: |
+          ssh -i ~/.ssh/id_ed25519 "${{ secrets.TEST_DEPLOY_USER }}@${{ secrets.TEST_DEPLOY_HOST }}" \
+            "APP_DIR='$APP_DIR' RELEASE='${GITHUB_SHA::12}' PORT='$PORT' PM2_NAME='$PM2_NAME' \
+             KEEP_RELEASES='$KEEP_RELEASES' bash -s" <<'REMOTE'
+          set -euo pipefail
+
+          RELEASE_DIR="$APP_DIR/releases/$RELEASE"
+          CURRENT_LINK="$APP_DIR/current"
+
+          # Remove a directory a live process may still be writing into (the Next
+          # image optimizer keeps writing under .next/cache). Renaming it first
+          # avoids ENOTEMPTY races. Housekeeping must never fail a deploy.
+          safe_purge() {
+            VICTIM="$1"
+            [ -e "$VICTIM" ] || return 0
+            if [ -L "$VICTIM" ]; then
+              rm -f -- "$VICTIM" || true
+              return 0
+            fi
+            TRASH="$(dirname "$VICTIM")/.purge-$$-$RANDOM"
+            if mv -T "$VICTIM" "$TRASH" 2>/dev/null; then
+              rm -rf -- "$TRASH" 2>/dev/null || echo "warn: leftover trash $TRASH"
+            else
+              rm -rf -- "$VICTIM" 2>/dev/null || echo "warn: could not fully remove $VICTIM"
+            fi
+            return 0
+          }
+
+          test -f "$RELEASE_DIR/server.js" || { echo "::error::server.js missing in release"; exit 1; }
+
+          # Remember previous release for rollback
+          PREV_TARGET="$(readlink -f "$CURRENT_LINK" 2>/dev/null || true)"
+
+          # One shared Next.js cache for all releases, so image cache doesn't
+          # pile up per release and new releases start warm.
+          SHARED_CACHE="$APP_DIR/shared/cache"
+          mkdir -p "$SHARED_CACHE"
+          safe_purge "$RELEASE_DIR/.next/cache"
+          mkdir -p "$RELEASE_DIR/.next"
+          ln -sfn "$SHARED_CACHE" "$RELEASE_DIR/.next/cache"
+
+          # Rotate PM2 logs so they don't fill the disk
+          if [ ! -d "$HOME/.pm2/modules/pm2-logrotate" ]; then
+            pm2 install pm2-logrotate >/dev/null 2>&1 || true
+          fi
+          pm2 set pm2-logrotate:max_size 10M    >/dev/null 2>&1 || true
+          pm2 set pm2-logrotate:retain 7        >/dev/null 2>&1 || true
+          pm2 set pm2-logrotate:compress true   >/dev/null 2>&1 || true
+
+          # Atomic symlink switch
+          ln -sfn "$RELEASE_DIR" "$CURRENT_LINK.tmp" && mv -Tf "$CURRENT_LINK.tmp" "$CURRENT_LINK"
+
+          # delete+start (not restart) so PM2 runs the new release path
+          export PORT HOSTNAME=0.0.0.0 NODE_ENV=production
+          pm2 delete "$PM2_NAME" >/dev/null 2>&1 || true
+          ( cd "$RELEASE_DIR" && pm2 start server.js --name "$PM2_NAME" --update-env )
+          pm2 save >/dev/null 2>&1 || true
+
+          # Health check: any real HTTP response means the server is alive;
+          # only connection-refused (000) fails.
+          OK=0
+          for i in $(seq 1 20); do
+            CODE="$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:$PORT" || true)"
+            case "$CODE" in 200|204|301|302|307|308|401|403|404) OK=1; break;; esac
+            sleep 2
+          done
+
+          if [ "$OK" != "1" ]; then
+            echo "::error::Health check failed (last code: $CODE), rolling back"
+            if [ -n "$PREV_TARGET" ] && [ -d "$PREV_TARGET" ] && [ "$PREV_TARGET" != "$RELEASE_DIR" ]; then
+              ln -sfn "$PREV_TARGET" "$CURRENT_LINK.tmp" && mv -Tf "$CURRENT_LINK.tmp" "$CURRENT_LINK"
+              pm2 delete "$PM2_NAME" >/dev/null 2>&1 || true
+              ( cd "$PREV_TARGET" && pm2 start server.js --name "$PM2_NAME" --update-env ) || true
+              pm2 save >/dev/null 2>&1 || true
+            fi
+            exit 1
+          fi
+
+          # Keep only the N newest releases
+          cd "$APP_DIR/releases"
+          ls -1t | tail -n "+$((KEEP_RELEASES + 1))" | xargs -r rm -rf -- || true
+
+          echo "--- disk after deploy ---"
+          df -h "$APP_DIR" | tail -n +2
+          du -sh "$APP_DIR/releases" "$APP_DIR/shared/cache" 2>/dev/null || true
+
+          echo "Deployed $RELEASE successfully"
+          REMOTE
+
+      - name: Telegram notify (success)
+        if: success()
+        run: |
+          TEXT="🚀 Soff.uz (TEST) deployed
+          Branch: ${GITHUB_REF_NAME}
+          Commit: ${GITHUB_SHA::12}
+          By: ${{ github.actor }}
+          ${PUBLIC_URL}"
+          curl -s "https://api.telegram.org/bot${{ secrets.TG_DEPLOY_BOT_TOKEN }}/sendMessage" \
+            --data-urlencode chat_id="${{ secrets.TG_DEPLOY_CHAT_ID }}" \
+            --data-urlencode text="$TEXT" > /dev/null || true
+
+      - name: Telegram notify (failure)
+        if: failure()
+        run: |
+          TEXT="❌ Soff.uz (TEST) deploy FAILED
+          Commit: ${GITHUB_SHA::12}
+          Logs: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          curl -s "https://api.telegram.org/bot${{ secrets.TG_DEPLOY_BOT_TOKEN }}/sendMessage" \
+            --data-urlencode chat_id="${{ secrets.TG_DEPLOY_CHAT_ID }}" \
+            --data-urlencode text="$TEXT" > /dev/null || true
