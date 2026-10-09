@@ -10,6 +10,11 @@ import { FaShoppingCart } from 'react-icons/fa';
 import { FaHeart } from 'react-icons/fa';
 import Image from 'next/image';
 import { useServiceFeePercentage, withServiceFee } from '~/shared/components/service-fee-hint';
+import {
+    SubscriptionBadge,
+    SubscriptionPriceLabel,
+    useIsCoveredBySubscription,
+} from '~/features/platform-subscription';
 
 const ProductCard = ({ product }) => {
     const { addSavedItem, wishlist, removeSavedItem } = useWishlist();
@@ -17,6 +22,7 @@ const ProductCard = ({ product }) => {
     const { setCartOneItem, removeCartOneItem } = useCart();
     const [basket, setBasket] = useState(false);
     const serviceFeePercentage = useServiceFeePercentage();
+    const isCovered = useIsCoveredBySubscription(product, Boolean(product?.has_purchased));
 
     const handleNavigate = () => {
         Router.push(`/product/${product?.slug}`);
@@ -46,9 +52,12 @@ const ProductCard = ({ product }) => {
             <div className={styles.card}>
                 <div className={styles.cardHead}>
                     <div className={styles.cardHeadInfo}>
-                        <span className={styles.cardType}>
-                            {product?.document?.file_type || '.zip'}
-                        </span>
+                        <div className={styles.cardBadges}>
+                            <span className={styles.cardType}>
+                                {product?.document?.file_type || '.zip'}
+                            </span>
+                            <SubscriptionBadge product={product} />
+                        </div>
                         <div className={styles.cardActions}>
                             <div
                                 onClick={handleAddItemToWishlist}
@@ -63,15 +72,17 @@ const ProductCard = ({ product }) => {
                                     <FaRegHeart />
                                 )}
                             </div>
-                            <div
-                                onClick={handleAddItemToCart}
-                                className={styles.actionIcon}>
-                                {basket ? (
-                                    <FaShoppingCart color="#00a44f" />
-                                ) : (
-                                    <FaShoppingCart />
-                                )}
-                            </div>
+                            {!isCovered && (
+                                <div
+                                    onClick={handleAddItemToCart}
+                                    className={styles.actionIcon}>
+                                    {basket ? (
+                                        <FaShoppingCart color="#00a44f" />
+                                    ) : (
+                                        <FaShoppingCart />
+                                    )}
+                                </div>
+                            )}
                         </div>
                     </div>
                     <div className={styles.cardImgWrapper}>
@@ -93,13 +104,17 @@ const ProductCard = ({ product }) => {
                         className={styles.cardTitle}>
                         {product?.title}
                     </h2>
-                    <h3 className={styles.cardPrice}>
-                        {product?.price === 0 || !product?.price
-                            ? 'Bepul'
-                            : `${formatCurrencyWithSpace(
-                                withServiceFee(product?.price, serviceFeePercentage)
-                            )} so’m`}
-                    </h3>
+                    {isCovered ? (
+                        <SubscriptionPriceLabel />
+                    ) : (
+                        <h3 className={styles.cardPrice}>
+                            {product?.price === 0 || !product?.price
+                                ? 'Bepul'
+                                : `${formatCurrencyWithSpace(
+                                    withServiceFee(product?.price, serviceFeePercentage)
+                                )} so’m`}
+                        </h3>
+                    )}
                 </div>
                 <div className={styles.cardInfo}>
                     {product?.document?.file_size && (

@@ -141,6 +141,7 @@ const mainPages = [
     },
     { key: '6', link: 'https://seller.soff.uz', label: 'Frilanserlar uchun' },
     { key: '7', link: '/affiliate_program', label: 'Hamkorlikda ishlash' },
+    { key: '11', link: '/subscription', label: 'Obuna' },
     { key: '4', link: '/freelancers', label: 'Frilanserlar' },
     { key: '8', link: '/soffia', label: 'Soffia Bot' },
     { key: '9', link: '/page/oferta', label: 'Foydalanish shartlari' },

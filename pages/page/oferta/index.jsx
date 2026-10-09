@@ -2,6 +2,10 @@ import React from 'react';
 import PageLayout from '~/widgets/layouts/PageLayout';
 import Meta from '~/shared/ui/meta';
 
+// Tables inside the offer text (the ball scale in the platform subscription section)
+const OFERTA_TABLE = { borderCollapse: 'collapse', margin: '8px 0 16px', maxWidth: '100%' };
+const OFERTA_CELL = { border: '1px solid #d9d9d9', padding: '8px 16px', textAlign: 'left' };
+
 const meta = {
     title: 'Foydalanish qonun-qoidalari - Soff.uz',
     description:
@@ -416,6 +420,90 @@ export default function Oferta() {
                     - Foydalanuvchilarga shaxsiy profil orqali yetkazilgan
                     bildirishnomalar rasmiy kuchga ega.
                 </p>
+
+                <h4>14. Platforma obunasi orqali fayllarni taqdim etish va daromadni taqsimlash</h4>
+                <h5>14.1. Asosiy tushunchalar</h5>
+                <p>14.1.1. <strong>Platforma obunasi (keyingi o'rinlarda – "Obuna")</strong> – Xaridorga oylik to'lov evaziga Obunaga kiritilgan fayllarni belgilangan limit doirasida olish huquqini beruvchi pullik xizmat.</p>
+                <p>14.1.2. <strong>Obunachi</strong> – Obunani to'lagan va u amal qilayotgan Xaridor.</p>
+                <p>14.1.3. <strong>Obuna davri</strong> – Obunachining har bir muvaffaqiyatli to'lovidan boshlanadigan 30 (o'ttiz) kunlik muddat.</p>
+                <p>14.1.4. <strong>Fayl olish</strong> – Obunachining Obunaga kiritilgan faylni Obuna limiti hisobidan olishi.</p>
+                <p>14.1.5. <strong>Ball</strong> – fayl narxiga qarab unga beriladigan va daromad taqsimotida ishlatiladigan ko'rsatkich.</p>
+                <h5>14.2. Fayllarni Obunaga kiritish</h5>
+                <p>14.2.1. Faylni Obunaga kiritish ixtiyoriy. Sotuvchi o'zining moderatsiyadan o'tgan pullik fayllarini shaxsiy kabinetida Obunaga kiritadi yoki undan chiqaradi.</p>
+                <p>14.2.2. Fayl Obunadan chiqarilganda bu 30 (o'ttiz) kalendar kundan keyin kuchga kiradi. Shu muddat ichida fayl Obunada qoladi.</p>
+                <p>14.2.3. Faylni olib bo'lgan Obunachilar fayl Obunadan chiqarilgandan keyin ham undan muddatsiz foydalanish huquqini saqlab qoladi. Bu holat Sotuvchiga qo'shimcha to'lov olish huquqini bermaydi.</p>
+                <p>14.2.4. Fayl ushbu Oferta yoki Platforma qoidalarini buzgan bo'lsa, Platforma uni Obunadan bir tomonlama chiqarishi mumkin.</p>
+                <p>14.2.5. Sotuvchi o'z fayllarini Obuna orqali olmaydi, bunday olishlar hisobga olinmaydi.</p>
+                <h5>14.3. Daromadni taqsimlash tartibi</h5>
+                <p>14.3.1. Har bir Obuna to'lovining <strong>50 (ellik) foizi</strong> shu Obunachi o'sha Obuna davrida olgan fayllarning Sotuvchilari o'rtasida taqsimlanadi (keyingi o'rinlarda – "Sotuvchilar ulushi").</p>
+                <p>14.3.2. Taqsimot har bir Obunachining Obuna davri tugaganda, faqat shu Obunachi o'sha davrda olgan fayllar bo'yicha amalga oshiriladi.</p>
+                <p>14.3.3. Sotuvchilar ulushi fayllarga ballariga mutanosib ravishda bo'linadi. Ball fayl narxiga qarab quyidagicha belgilanadi:</p>
+                <table style={OFERTA_TABLE}>
+                    <thead>
+                        <tr>
+                            <th style={OFERTA_CELL}>Fayl narxi</th>
+                            <th style={OFERTA_CELL}>Ball</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style={OFERTA_CELL}>10 000 so'mgacha</td>
+                            <td style={OFERTA_CELL}>1</td>
+                        </tr>
+                        <tr>
+                            <td style={OFERTA_CELL}>10 001 – 30 000 so'm</td>
+                            <td style={OFERTA_CELL}>2</td>
+                        </tr>
+                        <tr>
+                            <td style={OFERTA_CELL}>30 001 – 60 000 so'm</td>
+                            <td style={OFERTA_CELL}>3</td>
+                        </tr>
+                        <tr>
+                            <td style={OFERTA_CELL}>60 000 so'mdan yuqori</td>
+                            <td style={OFERTA_CELL}>4</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>14.3.4. Ballni hisoblashda fayl olingan kundan oldingi 30 (o'ttiz) kun ichidagi eng past narx olinadi. Bu narxni sun'iy oshirish orqali taqsimotdagi ulushni ko'paytirishning oldini oladi.</p>
+                <p>14.3.5. Bitta fayl uchun bitta Obuna davrida to'lanadigan summa shu fayl narxining <strong>90 (to'qson) foizidan oshmaydi</strong>. Chegaradan oshgan qism shu Obunachi olgan boshqa fayllarga ballariga mutanosib qayta taqsimlanadi. Taqsimlanmay qolgan qoldiq va so'mgacha yaxlitlashdan qolgan qoldiqlar Platformada qoladi.</p>
+                <p>14.3.6. Hisoblangan summa Obuna davri tugagandan keyin Sotuvchining Platformadagi balansiga o'tkaziladi va Platformaning amaldagi qoidalariga muvofiq yechib olinadi.</p>
+                <p>14.3.7. Obunachi to'lovi Oferta shartlariga ko'ra qaytarilgan bo'lsa, shu to'lov bo'yicha Sotuvchilarga hech qanday summa hisoblanmaydi.</p>
+                <p>14.3.8. Ball shkalasi va Sotuvchilar ulushi foizi Platforma tomonidan o'zgartirilishi mumkin. O'zgarishlar kuchga kirishidan kamida 10 (o'n) kalendar kun oldin saytda e'lon qilinadi va e'londan keyin boshlangan Obuna davrlariga qo'llaniladi.</p>
+                <h5>14.4. Platforma ulushi (50%) va uning asoslari</h5>
+                <p>14.4.1. Har bir Obuna to'lovining qolgan <strong>50 (ellik) foizi</strong> Platformada qoladi va quyidagi xizmatlar hamda xarajatlarni qoplash uchun ishlatiladi:</p>
+                <p>a) <strong>Sun'iy intellekt xizmatlari</strong> – Pro va Max tariflari Obunachilariga beriladigan SoffX sun'iy intellekt xizmatining (matn yaratish va boshqa AI vositalari) xarajatlari;</p>
+                <p>b) <strong>Fayllarni saqlash va yetkazish</strong> – fayllarni xavfsiz serverlarda saqlash, zaxira nusxalarini yaratish va Obunachilarga uzluksiz yetkazib berish xarajatlari;</p>
+                <p>v) <strong>Mijozlarni qo'llab-quvvatlash</strong> – Obunachilar va Sotuvchilarning murojaatlarini ko'rib chiqish, nizolarni hal qilish va texnik yordam;</p>
+                <p>g) <strong>Tizimni ishlatish va rivojlantirish</strong> – Platformaning dasturiy ta'minoti, xavfsizligi, server infratuzilmasi va yangi imkoniyatlarni ishlab chiqish;</p>
+                <p>d) <strong>To'lov va soliq xarajatlari</strong> – to'lov tizimlari komissiyalari, fiskal cheklarni rasmiylashtirish va qonunchilikda belgilangan boshqa majburiy to'lovlar;</p>
+                <p>e) <strong>Marketing</strong> – Obunachilarni jalb qilish, shu orqali Sotuvchilar fayllarining ko'proq Xaridorlarga yetib borishi.</p>
+                <p>14.4.2. Sotuvchi Obunaga fayl kiritish orqali yuqoridagi taqsimot tartibiga roziligini bildiradi.</p>
+
+                <h4>15. Platforma obunasi</h4>
+                <h5>15.1. Obuna mazmuni</h5>
+                <p>15.1.1. <strong>Platforma obunasi (keyingi o'rinlarda – "Obuna")</strong> – Xaridorga oylik to'lov evaziga Sotuvchilar Obunaga kiritgan fayllarni tanlangan tarif limiti doirasida olish huquqini beruvchi pullik xizmat.</p>
+                <p>15.1.2. Tariflar (Start, Pro, Max), ularning narxi, oylik fayl limiti, fayl narxining yuqori chegarasi va qo'shimcha xizmatlar (SoffX sun'iy intellekti) saytda e'lon qilinadi. To'lovdan oldin Xaridor ular bilan tanishib chiqadi.</p>
+                <p>15.1.3. Obuna davri – har bir muvaffaqiyatli to'lovdan boshlanadigan 30 (o'ttiz) kalendar kun.</p>
+                <h5>15.2. Fayllarni olish</h5>
+                <p>15.2.1. Xaridor faqat Obunaga kiritilgan va narxi tarif chegarasidan oshmaydigan fayllarni olishi mumkin.</p>
+                <p>15.2.2. Har bir olingan fayl oylik limitdan bitta o'rinni egallaydi. Avval olingan faylni qayta yuklab olish limitni kamaytirmaydi.</p>
+                <p>15.2.3. Obuna davrida ishlatilmagan limit keyingi davrga o'tmaydi.</p>
+                <p>15.2.4. Olingan fayldan Xaridor muddatsiz foydalanadi: Obuna tugaganda yoki fayl Obunadan chiqarilganda ham bu huquq saqlanadi.</p>
+                <p>15.2.5. Fayllar faqat shaxsiy foydalanish uchun beriladi. Ularni qayta sotish, tarqatish yoki boshqa shaxslarga berish taqiqlanadi.</p>
+                <h5>15.3. To'lov va avtomatik yangilanish</h5>
+                <p>15.3.1. Obuna to'lovi Xaridor saqlagan bank kartasi orqali amalga oshiriladi va har bir to'lov uchun fiskal chek beriladi.</p>
+                <p>15.3.2. Avtomatik yangilanish yoqilgan bo'lsa, Obuna davri tugaganda keyingi davr uchun to'lov kartadan avtomatik yechiladi. To'lov amalga oshmasa, Platforma uni kuniga bir martadan ko'pi bilan 3 (uch) marta qayta urinadi. Shundan keyin ham to'lov o'tmasa, Obuna to'xtatiladi.</p>
+                <p>15.3.3. Xaridor avtomatik yangilanishni istalgan vaqtda o'chirishi mumkin. Bunda Obuna to'langan davr oxirigacha amal qiladi.</p>
+                <p>15.3.4. Tarif o'zgartirilganda yangi tarif keyingi Obuna davridan boshlab qo'llaniladi.</p>
+                <h5>15.4. To'lovni qaytarish</h5>
+                <p>15.4.1. To'lov quyidagi ikkala shart bajarilganda to'liq qaytariladi:</p>
+                <p>a) qaytarish so'rovi to'lovdan keyin 3 (uch) kalendar kun ichida yuborilgan;</p>
+                <p>b) shu Obuna davrida birorta ham fayl olinmagan.</p>
+                <p>15.4.2. Obuna davrida kamida bitta fayl olingan bo'lsa, xizmat ko'rsatilgan hisoblanadi va to'lov qaytarilmaydi.</p>
+                <p>15.4.3. To'lov qaytarilgandan keyin Obuna darhol to'xtatiladi.</p>
+                <h5>15.5. To'lov qanday taqsimlanadi</h5>
+                <p>15.5.1. Obuna to'lovining 50 (ellik) foizi Xaridor shu Obuna davrida olgan fayllarning Sotuvchilariga taqsimlanadi.</p>
+                <p>15.5.2. Qolgan 50 (ellik) foizi Platforma xizmatlarini ta'minlashga sarflanadi: SoffX sun'iy intellekt xizmati, fayllarni saqlash va yetkazish, mijozlarni qo'llab-quvvatlash, tizimni ishlatish va rivojlantirish, to'lov va soliq xarajatlari.</p>
             </div>
         </PageLayout>
     );

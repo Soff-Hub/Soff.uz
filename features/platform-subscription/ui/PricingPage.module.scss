@@ -1,0 +1,280 @@
+.page {
+    padding: 32px 0 64px;
+}
+
+.hero {
+    max-width: 640px;
+    margin: 0 auto 32px;
+    text-align: center;
+
+    h1 {
+        font-size: 36px;
+        font-weight: 700;
+        margin-bottom: 12px;
+    }
+
+    p {
+        color: #4b5563;
+        font-size: 16px;
+        margin: 0;
+    }
+}
+
+.error {
+    text-align: center;
+    color: #6b7280;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+    max-width: 1080px;
+    margin: 0 auto;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    padding: 28px 24px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+}
+
+.cardCurrent {
+    border: 2px solid #00a44f;
+}
+
+.cardHead {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    h2 {
+        margin: 0;
+        font-size: 22px;
+        font-weight: 700;
+    }
+}
+
+.currentBadge,
+.scheduledBadge {
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.currentBadge {
+    background: #00a44f;
+    color: #fff;
+}
+
+.scheduledBadge {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.price {
+    margin: 20px 0 12px;
+    color: #6b7280;
+    font-size: 15px;
+
+    strong {
+        color: #111827;
+        font-size: 32px;
+        font-weight: 700;
+    }
+}
+
+.aiBadge {
+    align-self: flex-start;
+    margin-bottom: 12px;
+}
+
+// ===== SoffX AI explainer: light card, navy ink, green accents =====
+.soffx {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: 32px;
+    align-items: center;
+    max-width: 1080px;
+    margin: 56px auto 0;
+    padding: 36px;
+    border-radius: 20px;
+    border: 1px solid #dcefe4;
+    background: radial-gradient(120% 140% at 0% 0%, #eaf7ef 0%, #f6fbf8 45%, #fff 100%);
+    color: #022335;
+}
+
+.soffxHead {
+    h2 {
+        margin: 10px 0 10px;
+        color: #022335;
+        font-size: 28px;
+        font-weight: 700;
+        line-height: 1.2;
+    }
+
+    p {
+        margin: 0;
+        color: #5b6672;
+        font-size: 15px;
+        line-height: 1.55;
+    }
+}
+
+.soffxEyebrow {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: #dff3e7;
+    color: #00803d;
+    font-size: 12.5px;
+    font-weight: 600;
+}
+
+.soffxGrid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px;
+        border-radius: 12px;
+        background: #fff;
+        border: 1px solid #e6eef0;
+        box-shadow: 0 1px 2px rgba(2, 35, 53, 0.04);
+    }
+}
+
+.soffxText {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+
+    strong {
+        color: #022335;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    span {
+        color: #6b7480;
+        font-size: 12px;
+        line-height: 1.35;
+    }
+}
+
+.soffxIcon {
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+    background: #eaf7ef;
+    color: #00a44f;
+    font-size: 17px;
+}
+
+// Video is the headline: a full-width green tile, so the other six fill clean rows.
+.soffxGrid .soffxFeatured {
+    grid-column: 1 / -1;
+    background: #00a44f;
+    border-color: transparent;
+
+    .soffxIcon {
+        background: rgba(255, 255, 255, 0.2);
+        color: #fff;
+    }
+
+    .soffxText strong {
+        color: #fff;
+    }
+
+    .soffxText span {
+        color: rgba(255, 255, 255, 0.85);
+    }
+}
+
+@media (max-width: 900px) {
+    .soffx {
+        grid-template-columns: 1fr;
+        gap: 22px;
+    }
+}
+
+@media (max-width: 576px) {
+    .soffx {
+        margin-top: 36px;
+        padding: 22px 16px;
+        border-radius: 16px;
+    }
+
+    .soffxHead h2 {
+        font-size: 22px;
+    }
+
+    .soffxGrid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+
+.features {
+    flex: 1;
+    margin: 0 0 24px;
+    padding: 0;
+    list-style: none;
+
+    li {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 6px 0;
+        color: #374151;
+        font-size: 15px;
+
+        svg {
+            flex-shrink: 0;
+            margin-top: 4px;
+            color: #00a44f;
+        }
+    }
+}
+
+.action {
+    margin-top: auto;
+}
+
+.primaryBtn {
+    background: #00a44f;
+
+    &:hover {
+        background: #008f44 !important;
+    }
+}
+
+.currentLink {
+    display: block;
+    padding: 8px 0;
+    color: #00a44f;
+    font-weight: 600;
+    text-align: center;
+}
+
+@media (max-width: 576px) {
+    .hero h1 {
+        font-size: 28px;
+    }
+}

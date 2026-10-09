@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import { Button, message } from 'antd';
+import { Button, Tooltip, message } from 'antd';
 import {
     DownloadOutlined,
     HeartOutlined,
     ShoppingCartOutlined,
-    DeleteOutlined,
     ShareAltOutlined,
 } from '@ant-design/icons';
 import { addPeriodToThousands } from '~/features/account/ui/price-formatter';
@@ -19,6 +18,11 @@ import AuthModal from '~/features/auth/ui/auth-modal';
 import { api } from '~/repositories/api';
 import { trackProductEvent } from '~/shared/utilities/analytics';
 import FileDownloadLink from '~/shared/ui/file-download-link';
+import {
+    SubscriptionClaim,
+    useIsClaimPrimary,
+    useIsCoveredBySubscription,
+} from '~/features/platform-subscription';
 import { FaRegHeart } from 'react-icons/fa';
 import { FaHeart } from 'react-icons/fa';
 import { FaShoppingCart } from 'react-icons/fa';
@@ -103,6 +107,10 @@ function FileActions({ product }) {
     const serviceFeePercentage = useServiceFeePercentage();
     const promotionPrice = Math.round((product?.price || 0) * (1 - (activePromotion?.discount_percent || 0) / 100));
     const state = useSelector((state) => state.auth.user?.access);
+    const isPurchased = Boolean(product?.has_purchased || product?.document?.file_url);
+    const isClaimPrimary = useIsClaimPrimary(product, isPurchased);
+    // The subscription can claim it, so cart and buy buttons are hidden.
+    const isCovered = useIsCoveredBySubscription(product, isPurchased);
 
     function handleAddItemToCart(e) {
         e.preventDefault();
@@ -125,6 +133,35 @@ function FileActions({ product }) {
             removeSavedItem(product.id);
         }
     }
+
+    const isInWishlist = wishlist?.some((item) => Number(item.id) === Number(product?.id));
+
+    // Compact icon actions shown in one row next to the buy button.
+    const cartButton = product?.discount_price !== 0 && !isCovered && (
+        <Tooltip title={isAddedToCart ? 'Savatdan olib tashlash' : "Savatga qo'shish"}>
+            <button
+                type="button"
+                onClick={handleAddItemToCart}
+                className={`${styles.iconAction} ${isAddedToCart ? styles.iconActionActive : ''}`}
+                aria-label={isAddedToCart ? 'Savatdan olib tashlash' : "Savatga qo'shish"}
+                aria-pressed={isAddedToCart}>
+                {isAddedToCart ? <FaShoppingCart /> : <ShoppingCartOutlined />}
+            </button>
+        </Tooltip>
+    );
+
+    const wishlistButton = (
+        <Tooltip title={isInWishlist ? 'Sevimlilardan olib tashlash' : "Sevimlilarga qo'shish"}>
+            <button
+                type="button"
+                onClick={handleAddItemToWishlist}
+                className={`${styles.iconAction} ${isInWishlist ? styles.iconActionLiked : ''}`}
+                aria-label={isInWishlist ? 'Sevimlilardan olib tashlash' : "Sevimlilarga qo'shish"}
+                aria-pressed={Boolean(isInWishlist)}>
+                {isInWishlist ? <FaHeart /> : <FaRegHeart />}
+            </button>
+        </Tooltip>
+    );
 
     // Nusxa olish
     const infoSuccess = (url) => {
@@ -465,56 +502,31 @@ function FileActions({ product }) {
                 </ul>
 
                 <div className="d-flex flex-column gap-3 ">
-                    {!product?.document?.file_url ? (
-                        <div className=" d-flex align-items-center gap-3 justify-content-end">
-                            {product?.discount_price !== 0 && (
-                                <Button
-                                    onClick={handleAddItemToCart}
-                                    iconPosition="end"
-                                    style={{ height: '58px', fontSize: '20px' }}
-                                    type={isAddedToCart ? "primary" : "text"}
-                                    danger={isAddedToCart}
-                                    className={`w-100 button_hover ${isAddedToCart
-                                        ? ''
-                                        : 'border-2 border-success text-success'
-                                        }`}
-                                    icon={isAddedToCart ? <DeleteOutlined /> : <ShoppingCartOutlined />}
-                                    size={'large'}>
-                                    {isAddedToCart ? "Savatdan olib tashlash" : "Savatga qo’shish"}
-                                </Button>
-                            )}
-                            <Button
-                                iconPosition="end"
-                                onClick={handleAddItemToWishlist}
-                                style={{
-                                    height: '58px',
-                                    width: '80px',
-                                    fontSize: '28px',
-                                }}
-                                type="text"
-                                variant="solid"
-                                className="border-2 border-success text-success button_hover"
-                                aria-label="Wishlistga qo'shish"
-                                icon={
-                                    wishlist?.some(
-                                        (item) =>
-                                            Number(item.id) ===
-                                            Number(product?.id)
-                                    ) ? (
-                                        <FaHeart />
-                                    ) : (
-                                        <FaRegHeart />
-                                    )
-                                }
-                                size={'large'}></Button>
-                        </div>
-                    ) : null}
+                    {/* Covered by the subscription: no buy button, so the heart sits alone. */}
+                    {!product?.document?.file_url && isCovered && (
+                        <div className="d-flex justify-content-end">{wishlistButton}</div>
+                    )}
 
-                    <CustomResponsiveLayout
-                        handleBuynow={handleBuynow}
-                        product={product}
-                        buyNowLoading={buyNowLoading}
-                    />
+                    {isClaimPrimary && (
+                        <SubscriptionClaim product={product} purchased={isPurchased} />
+                    )}
+                    {!isCovered && (
+                        <CustomResponsiveLayout
+                            handleBuynow={handleBuynow}
+                            product={product}
+                            buyNowLoading={buyNowLoading}
+                            secondary={isClaimPrimary}
+                            sideActions={
+                                <>
+                                    {cartButton}
+                                    {wishlistButton}
+                                </>
+                            }
+                        />
+                    )}
+                    {!isClaimPrimary && (
+                        <SubscriptionClaim product={product} purchased={isPurchased} />
+                    )}
                 </div>
             </div>
 
@@ -530,8 +542,8 @@ function FileActions({ product }) {
     );
 }
 
-const CustomResponsiveLayout = ({ product, handleBuynow, buyNowLoading }) => {
-    const { isMobile, size } = useResponsive();
+const CustomResponsiveLayout = ({ product, handleBuynow, buyNowLoading, secondary, sideActions }) => {
+    const { isMobile } = useResponsive();
     const { activePromotion } = useSelector((state) => state.ecomerce);
     const [telegramLoading, setTelegramLoading] = useState(false);
 
@@ -565,6 +577,21 @@ const CustomResponsiveLayout = ({ product, handleBuynow, buyNowLoading }) => {
             setTelegramLoading(false);
         }
     };
+
+    // The price is shown right above the buy block, so the inline button keeps just the action.
+    const buyNowButton = (
+        <Button
+            onClick={(e) => handleBuynow(e)}
+            loading={buyNowLoading}
+            disabled={buyNowLoading}
+            iconPosition="end"
+            type={secondary ? 'default' : 'primary'}
+            className={`${styles.buyNow} ${secondary ? 'border-2 border-success text-success' : 'bg-success'}`}
+            icon={<DownloadOutlined />}
+            size={'large'}>
+            {secondary ? 'Sotib olish' : 'Hoziroq xarid qilish'}
+        </Button>
+    );
 
     const renderPurchasedActions = () => (
         <>
@@ -605,20 +632,26 @@ const CustomResponsiveLayout = ({ product, handleBuynow, buyNowLoading }) => {
                 className={`d-flex flex-column gap-3 ${isMobile ? 'sticky-bottom-btn' : ''}`}>
                 {product?.document?.file_url ? (
                     renderPurchasedActions()
-                ) : (
+                ) : isMobile ? (
+                    // Sticky bar on mobile: no room for icons, so keep the price on the button.
                     <Button
                         onClick={(e) => handleBuynow(e)}
                         loading={buyNowLoading}
                         disabled={buyNowLoading}
                         iconPosition="end"
                         style={{ height: '58px', fontSize: '20px' }}
-                        type="primary"
-                        className="w-100 bg-success text-truncate"
+                        type={secondary ? 'default' : 'primary'}
+                        className={`w-100 text-truncate ${secondary ? 'border-2 border-success text-success' : 'bg-success'}`}
                         icon={<DownloadOutlined />}
                         size={'large'}>
-                        Hoziroq xarid qilish (
+                        {secondary ? 'Sotib olish' : 'Hoziroq xarid qilish'} (
                         {formatCurrencyWithSpace(displayPrice)} so'm)
                     </Button>
+                ) : (
+                    <div className={styles.buyRow}>
+                        {buyNowButton}
+                        {sideActions}
+                    </div>
                 )}
             </div>
             {isMobile && (
@@ -626,21 +659,10 @@ const CustomResponsiveLayout = ({ product, handleBuynow, buyNowLoading }) => {
                     {product?.document?.file_url ? (
                         renderPurchasedActions()
                     ) : (
-                        <Button
-                            onClick={(e) => handleBuynow(e)}
-                            loading={buyNowLoading}
-                            disabled={buyNowLoading}
-                            iconPosition="end"
-                            style={{ height: '58px', fontSize: '20px' }}
-                            type="primary"
-                            className="w-100 bg-success"
-                            icon={<DownloadOutlined />}
-                            size={'large'}>
-                            {`Hoziroq xarid qilish ${size >= 360
-                                ? `(${formatCurrencyWithSpace(displayPrice)} so'm)`
-                                : ''
-                                }`}
-                        </Button>
+                        <div className={styles.buyRow}>
+                            {buyNowButton}
+                            {sideActions}
+                        </div>
                     )}
                 </div>
             )}

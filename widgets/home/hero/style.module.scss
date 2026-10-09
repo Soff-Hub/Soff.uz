@@ -79,6 +79,11 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
         display: none;
     }
 
+    // Logged-in visitors only (flag set in _document before first paint).
+    :global(html:not([data-auth])) & {
+        display: none;
+    }
+
     .menuItem {
         display: flex;
         align-items: center;
@@ -341,6 +346,11 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
     display: flex;
     align-items: flex-start;
+
+    // Logged-in visitors only (flag set in _document before first paint).
+    :global(html:not([data-auth])) & {
+        display: none;
+    }
 }
 
 // Popular Categories

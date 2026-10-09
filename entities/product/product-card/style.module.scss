@@ -26,6 +26,13 @@
             justify-content: space-between;
             z-index: 10;
 
+            .cardBadges {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                min-width: 0;
+            }
+
             .cardType {
                 background: #fefefe;
                 padding: 4px 8px;

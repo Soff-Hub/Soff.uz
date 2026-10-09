@@ -18,6 +18,11 @@ import Link from 'next/link';
 import useCart from '~/shared/hooks/useCart';
 import useWishlist from '~/shared/hooks/useWishlist';
 import AuthModal from '~/features/auth/ui/auth-modal';
+import {
+    SubscriptionClaim,
+    useIsClaimPrimary,
+    useIsCoveredBySubscription,
+} from '~/features/platform-subscription';
 import { VideoDetail } from '../../model/types';
 import PurchaseRecommendations from '../PurchaseRecommendations/PurchaseRecommendations';
 import SimilarVideos from '../SimilarVideos/SimilarVideos';
@@ -49,6 +54,10 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
     const isAddedToCart = cartItems?.some((item: any) => Number(item.id) === Number(video.id));
     const isAddedToWishlist = wishlist?.some((item: any) => Number(item.id) === Number(video.id));
     const hasAccess = !!video.document.file_url;
+    const isPurchased = Boolean(video.has_purchased || hasAccess);
+    const isClaimPrimary = useIsClaimPrimary(video, isPurchased);
+    // The subscription can claim it, so cart and buy buttons are hidden.
+    const isCovered = useIsCoveredBySubscription(video, isPurchased);
     const isFree = video.price === 0;
 
     const formatNumber = (num: number | undefined | null) => {
@@ -314,20 +323,27 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
                                     </div>
 
                                     <div className={styles.buttons}>
-                                        <button
-                                            className={styles.btnPrimary}
-                                            onClick={handleStartOrBuy}
-                                        >
-                                            {hasAccess ? (isFree ? "Darsni boshlash" : "Videoni ko'rish") : (isFree ? "Darsni boshlash" : "Hozir sotib olish")}
-                                        </button>
+                                        {isClaimPrimary && !isFree && (
+                                            <SubscriptionClaim product={video} purchased={isPurchased} />
+                                        )}
+                                        {!isCovered && (
+                                            <button
+                                                className={isClaimPrimary && !isFree ? styles.btnSecondary : styles.btnPrimary}
+                                                onClick={handleStartOrBuy}
+                                            >
+                                                {hasAccess ? (isFree ? "Darsni boshlash" : "Videoni ko'rish") : (isFree ? "Darsni boshlash" : isClaimPrimary ? "Sotib olish" : "Hozir sotib olish")}
+                                            </button>
+                                        )}
                                         {!hasAccess && !isFree && (
                                             <div className={styles.secondaryActions}>
-                                                <button
-                                                    className={`${styles.btnSecondary} ${isAddedToCart ? styles.inCart : ''}`}
-                                                    onClick={handleAddToCart}
-                                                >
-                                                    {isAddedToCart ? "Savatdan olish" : "Savatga qo'shish"}
-                                                </button>
+                                                {!isCovered && (
+                                                    <button
+                                                        className={`${styles.btnSecondary} ${isAddedToCart ? styles.inCart : ''}`}
+                                                        onClick={handleAddToCart}
+                                                    >
+                                                        {isAddedToCart ? "Savatdan olish" : "Savatga qo'shish"}
+                                                    </button>
+                                                )}
                                                 <button
                                                     className={`${styles.wishlistBtn} ${isAddedToWishlist ? styles.active : ''}`}
                                                     onClick={handleAddToWishlist}
@@ -335,6 +351,10 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
                                                     {isAddedToWishlist ? <HeartFilled /> : <HeartOutlined />}
                                                 </button>
                                             </div>
+                                        )}
+                                        {/* After the cart row so the subscription offer doesn't split the buy controls. */}
+                                        {!isClaimPrimary && !isFree && (
+                                            <SubscriptionClaim product={video} purchased={isPurchased} />
                                         )}
                                     </div>
 
@@ -365,7 +385,7 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
                 </div>
 
                 {/* Sticky Mobile Bottom Bar */}
-                {!hasAccess && !isFree && (
+                {!hasAccess && !isFree && !isCovered && (
                     <div className={styles.stickyMobileActions}>
                         <div className={styles.mobilePriceInfo}>
                             <span className={styles.mobilePrice}>{formattedPrice}</span>

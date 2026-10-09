@@ -2,6 +2,7 @@ import Link from 'next/link';
 import React from 'react';
 import { fileColors } from '~/features/product-details/ui/actions/file-actions';
 import { addPeriodToThousands } from '~/features/account/ui/price-formatter';
+import { SubscriptionBadge } from '~/features/platform-subscription';
 
 const LastAddedProductCard = ({ product }) => {
     return (
@@ -51,6 +52,7 @@ const LastAddedProductCard = ({ product }) => {
                             }}>
                             {product.title}
                         </h2>
+                        <SubscriptionBadge product={product} className="mb-2" />
                         <p>
                             <span
                                 style={{

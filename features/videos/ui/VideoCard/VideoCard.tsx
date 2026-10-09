@@ -1,6 +1,11 @@
 import React from 'react';
 import Image from 'next/image';
 import { Video } from '~/features/videos/model/types';
+import {
+    SubscriptionBadge,
+    SubscriptionPriceLabel,
+    useIsCoveredBySubscription,
+} from '~/features/platform-subscription';
 import styles from './VideoCard.module.scss';
 import { EyeOutlined, FireOutlined, CaretRightFilled } from '@ant-design/icons';
 
@@ -16,6 +21,7 @@ const formatPrice = (price: number) => {
 
 const VideoCard: React.FC<Props> = ({ video, onClick, variant = 'vertical' }) => {
     const isFree = video.price === 0;
+    const isCovered = useIsCoveredBySubscription(video);
     const hasDiscount = video.discount_price > 0 && video.discount_price < video.price;
 
     // Use poster from API or fallback
@@ -51,6 +57,8 @@ const VideoCard: React.FC<Props> = ({ video, onClick, variant = 'vertical' }) =>
                 )}
 
 
+                <SubscriptionBadge product={video} className={styles.subscriptionBadge} />
+
                 <div className={styles.playOverlay}>
                     <div className={styles.playIconCircle}>
                         <CaretRightFilled className={styles.playIconTriangle} />
@@ -79,6 +87,8 @@ const VideoCard: React.FC<Props> = ({ video, onClick, variant = 'vertical' }) =>
                 <div className={styles.priceWrapper}>
                     {isFree ? (
                         <span className={`${styles.price} ${styles.freePrice}`}>Bepul</span>
+                    ) : isCovered ? (
+                        <SubscriptionPriceLabel />
                     ) : (
                         <div className={styles.priceContainer}>
                             {hasDiscount && (
