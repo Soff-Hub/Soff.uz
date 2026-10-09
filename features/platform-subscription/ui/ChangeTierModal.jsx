@@ -116,7 +116,9 @@ const ChangeTierModal = ({ tier, open, onClose }) => {
                     {aiLabel && (
                         <li>
                             <MdAutoAwesome aria-hidden />
-                            {aiLabel}
+                            <span>
+                                {aiLabel} — video, rasm, taqdimot va ilmiy ishlar yaratish
+                            </span>
                         </li>
                     )}
                 </ul>

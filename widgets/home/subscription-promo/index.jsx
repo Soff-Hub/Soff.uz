@@ -103,7 +103,7 @@ const SubscriptionPromo = () => {
                                 {offer && SOFFX_PLAN_TITLES[offer.tier.soffx_plan]
                                     ? ` ${SOFFX_PLAN_TITLES[offer.tier.soffx_plan]}`
                                     : ''}
-                                : taqdimot, referat va rasm yaratish
+                                : matndan <strong>video</strong>, rasm, taqdimot va referat yaratish
                             </span>
                         </li>
                     )}

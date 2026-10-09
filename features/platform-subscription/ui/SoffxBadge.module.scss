@@ -1,0 +1,164 @@
+@import '/scss/utils/variable';
+
+// Soff brand: green on white, navy ink — no separate "AI purple".
+$green: $color-1st;
+$green-text: #00803d;
+$green-soft: #eaf7ef;
+$ink: $color-2st;
+$muted: #5b6672;
+
+.mark {
+    font: inherit;
+    color: inherit;
+    white-space: nowrap;
+}
+
+.markX {
+    font: inherit;
+    color: $green;
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px 4px 8px;
+    border: 1px solid #cfe9da;
+    border-radius: 8px;
+    background: #fff;
+    color: $ink;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 20px;
+    cursor: pointer;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+    &:hover {
+        border-color: $green;
+        box-shadow: 0 2px 8px rgba($green, 0.12);
+    }
+
+    &:focus-visible {
+        outline: 2px solid rgba($green, 0.4);
+        outline-offset: 2px;
+    }
+}
+
+.spark {
+    color: $green;
+    font-size: 14px;
+}
+
+.infoIcon {
+    color: #9aa5b1;
+    font-size: 15px;
+}
+
+// ===== Popover =====
+.popover {
+    width: 320px;
+    max-width: calc(100vw - 32px);
+
+    :global(.ant-popover-inner) {
+        padding: 16px;
+        border-radius: 14px;
+        box-shadow: 0 12px 32px rgba(2, 35, 53, 0.14);
+    }
+}
+
+.infoHead {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+
+    p {
+        margin: 0;
+    }
+}
+
+.infoLogo {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: $ink;
+    color: #5fe39b;
+    font-size: 18px;
+}
+
+.infoTitle {
+    color: $ink;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.infoText {
+    color: $muted;
+    font-size: 12.5px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        padding: 7px 9px;
+        border-radius: 8px;
+        background: #f6f8f7;
+        color: $ink;
+        font-size: 12.5px;
+        font-weight: 600;
+
+        svg {
+            flex-shrink: 0;
+            color: $green;
+            font-size: 15px;
+        }
+    }
+}
+
+// Video is the feature people don't expect, so it spans the row.
+.featured {
+    grid-column: 1 / -1;
+    background: $green-soft !important;
+    color: $green-text !important;
+}
+
+.infoFoot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #eef1f3;
+    color: $muted;
+    font-size: 12px;
+    line-height: 1.4;
+
+    a {
+        display: inline-flex;
+        align-items: center;
+        gap: 3px;
+        flex-shrink: 0;
+        margin-left: auto;
+        color: $green-text;
+        font-weight: 600;
+        white-space: nowrap;
+
+        &:hover {
+            color: $green;
+        }
+    }
+}

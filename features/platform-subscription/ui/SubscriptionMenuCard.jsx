@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { HiSparkles } from 'react-icons/hi2';
 import { MdWorkspacePremium } from 'react-icons/md';
 import { MY_SUBSCRIPTION_URL, SOFFX_PLAN_LABELS, STATUS_META, formatDate, getTierTheme } from '../model';
+import { SoffxMark } from './SoffxBadge';
 import styles from './SubscriptionMenuCard.module.scss';
 
 // Statuses where the user can still claim files.
@@ -58,7 +59,7 @@ const SubscriptionMenuCard = ({ subscription }) => {
 
                 {aiLabel && (
                     <span className={styles.ai}>
-                        <HiSparkles /> {aiLabel}
+                        <HiSparkles /> <SoffxMark plan={subscription.soffx.plan} />
                     </span>
                 )}
             </a>

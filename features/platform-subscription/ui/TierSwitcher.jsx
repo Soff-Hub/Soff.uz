@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { message } from 'antd';
-import { HiSparkles } from 'react-icons/hi2';
 import { MdArrowDownward, MdArrowUpward, MdCheck } from 'react-icons/md';
 import { addPeriodToThousands } from '~/features/account/ui/price-formatter';
 import { changeTier, getErrorMessage } from '../api';
 import { SOFFX_PLAN_LABELS, formatDate, getTierTheme, useRefreshMySubscription, useTiers } from '../model';
 import ChangeTierModal from './ChangeTierModal';
+import SoffxBadge from './SoffxBadge';
 import styles from './TierSwitcher.module.scss';
 
 /**
@@ -78,7 +78,7 @@ const TierSwitcher = ({ subscription }) => {
                                 </li>
                                 {aiLabel && (
                                     <li className={styles.ai}>
-                                        <HiSparkles aria-hidden /> {aiLabel}
+                                        <SoffxBadge plan={tier.soffx_plan} />
                                     </li>
                                 )}
                             </ul>

@@ -13,7 +13,6 @@ import {
     soffxLogin,
 } from '../api';
 import {
-    SOFFX_PLAN_LABELS,
     STATUS_META,
     SUBSCRIPTION_PAGE_URL,
     formatDate,
@@ -23,6 +22,7 @@ import {
 } from '../model';
 import { AddCardModal, CARDS_QUERY_KEY } from './BillingCards';
 import ClaimsList from './ClaimsList';
+import SoffxBadge from './SoffxBadge';
 import TierSwitcher from './TierSwitcher';
 import styles from './MySubscription.module.scss';
 
@@ -152,11 +152,7 @@ const SubscriptionOverview = ({ subscription }) => {
                     </span>
                     <h2>{tier?.title}</h2>
                     <span className={styles.status}>{statusMeta.label}</span>
-                    {SOFFX_PLAN_LABELS[subscription.soffx?.plan] && (
-                        <span className={styles.aiBadge}>
-                            <HiSparkles /> {SOFFX_PLAN_LABELS[subscription.soffx.plan]}
-                        </span>
-                    )}
+                    <SoffxBadge plan={subscription.soffx?.plan} />
                 </div>
                 <Link href={SUBSCRIPTION_PAGE_URL}>
                     <a className={styles.link}>

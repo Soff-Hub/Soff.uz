@@ -27,8 +27,16 @@ const ClaimBody = ({ product, purchased, className = '', onSuccess }) => {
     const [hidden, setHidden] = useState(false);
     const status = getSubscriptionStatus(product, subscription);
 
-    if (purchased || hidden || status === 'none') return null;
     if (isLoggedIn && isLoading) return null;
+    if (hidden) return null;
+
+    // Every product page pitches the subscription to users without one (active or cancelled).
+    const hasUsableSubscription = ['active', 'cancelled'].includes(subscription?.status);
+    if (purchased || status === 'none') {
+        return hasUsableSubscription ? null : (
+            <SubscriptionOffer product={product} variant="promo" className={className} />
+        );
+    }
 
     if (status === 'subscribe') {
         return <SubscriptionOffer product={product} className={className} />;

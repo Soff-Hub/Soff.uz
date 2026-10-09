@@ -18,11 +18,16 @@ const useOfferTier = (product) => {
 
 /**
  * Subscription offer on the detail page buy block, shown under the buy buttons.
- * variant 'subscribe': the user has no subscription.
+ * variant 'subscribe': the file is in the subscription and the user has none.
  * variant 'upgrade':   the file is only in a higher tier than the user's.
+ * variant 'promo':     the file isn't in the subscription (or is already bought); a general
+ *                      pitch for the subscription that doesn't promise this file.
  */
 const SubscriptionOffer = ({ product, variant = 'subscribe', myTierTitle, className = '' }) => {
-    const tier = useOfferTier(product);
+    const { data: tiers } = useTiers();
+    const isPromo = variant === 'promo';
+    // Promo isn't about this file, so it starts from the cheapest tier.
+    const tier = useOfferTier(isPromo ? null : product);
     const isUpgrade = variant === 'upgrade';
     const [expanded, setExpanded] = useState(false);
     const [changeOpen, setChangeOpen] = useState(false);
@@ -39,8 +44,24 @@ const SubscriptionOffer = ({ product, variant = 'subscribe', myTierTitle, classN
         : null;
     const limitBenefit = tier ? `Oyiga ${tier.monthly_limit} ta fayl yuklab olish` : null;
 
+    // Promo: the range across all tiers, since no single file decides the tier.
+    const limits = (tiers ?? []).map((item) => item.monthly_limit).filter(Boolean);
+    const promoBenefits = limits.length
+        ? [
+              Math.min(...limits) === Math.max(...limits)
+                  ? `Oyiga ${Math.max(...limits)} ta fayl yuklab olish`
+                  : `Oyiga ${Math.min(...limits)} tadan ${Math.max(...limits)} tagacha fayl`,
+              "Turli sotuvchilarning minglab fayllari bitta obunada",
+              "Pro va Max'da SoffX AI: video, rasm, taqdimot va ilmiy ishlar yaratish",
+              'Olingan fayl doim sizda qoladi',
+              'Istalgan vaqtda bekor qilish',
+          ]
+        : [];
+
     // Upgrade: lead with the price cap, since that is what unlocks this file.
-    const benefits = tier
+    const benefits = isPromo
+        ? promoBenefits
+        : tier
         ? isUpgrade
             ? [priceBenefit, limitBenefit, 'Istalgan vaqtda bekor qilish']
             : [limitBenefit, priceBenefit, 'Istalgan vaqtda bekor qilish']
@@ -49,7 +70,9 @@ const SubscriptionOffer = ({ product, variant = 'subscribe', myTierTitle, classN
     return (
         <section className={`${styles.offer} ${className}`} aria-label="Obuna taklifi">
             <div className={styles.divider}>
-                <span>{isUpgrade ? "yoki ta'rifni oshiring" : 'yoki obuna bilan oling'}</span>
+                <span>
+                    {isPromo ? 'Soff obunasi' : isUpgrade ? "yoki ta'rifni oshiring" : 'yoki obuna bilan oling'}
+                </span>
             </div>
 
             <div className={styles.box}>
@@ -60,7 +83,18 @@ const SubscriptionOffer = ({ product, variant = 'subscribe', myTierTitle, classN
                     </p>
                 )}
 
-                {tier ? (
+                {isPromo ? (
+                    tier ? (
+                        <h3 className={styles.title}>
+                            Har oy fayllarni obuna bilan oling
+                            <span className={styles.price}>
+                                {addPeriodToThousands(tier.price)} so'mdan<small>/oy</small>
+                            </span>
+                        </h3>
+                    ) : (
+                        <span className={styles.titlePlaceholder} />
+                    )
+                ) : tier ? (
                     <h3 className={styles.title}>
                         {tier.title} obunasi
                         <span className={styles.price}>
@@ -101,7 +135,7 @@ const SubscriptionOffer = ({ product, variant = 'subscribe', myTierTitle, classN
                     </button>
                 ) : (
                     <Link href={SUBSCRIPTION_PAGE_URL}>
-                        <a className={styles.cta}>Obuna bo'lib yuklab olish</a>
+                        <a className={styles.cta}>{isPromo ? "Ta'riflarni ko'rish" : "Obuna bo'lib yuklab olish"}</a>
                     </Link>
                 )}
             </div>

@@ -8,6 +8,7 @@ import { addPeriodToThousands } from '~/features/account/ui/price-formatter';
 import { changeTier, getErrorMessage } from '../api';
 import {
     MY_SUBSCRIPTION_URL,
+    SOFFX_FEATURES,
     SOFFX_PLAN_LABELS,
     useMySubscription,
     useRefreshMySubscription,
@@ -15,6 +16,7 @@ import {
 } from '../model';
 import ChangeTierModal from './ChangeTierModal';
 import CheckoutModal from './CheckoutModal';
+import SoffxBadge, { SoffxFeatureIcon, SoffxMark } from './SoffxBadge';
 import styles from './PricingPage.module.scss';
 
 const TierFeatures = ({ tier }) => (
@@ -146,13 +148,14 @@ const PricingPage = () => {
                                       {isCurrent && <span className={styles.currentBadge}>Joriy ta'rif</span>}
                                       {isScheduled && <span className={styles.scheduledBadge}>Keyingi oydan</span>}
                                   </div>
-                                  {tier.description && <p className={styles.description}>{tier.description}</p>}
+                                  {/* tier.description isn't shown: it repeats the feature list below
+                                      and its wording ("hujjatlar") comes from the admin, not the site. */}
                                   <div className={styles.price}>
                                       <strong>{addPeriodToThousands(tier.price)}</strong> so'm / oy
                                   </div>
                                   {SOFFX_PLAN_LABELS[tier.soffx_plan] && (
                                       <div className={styles.aiBadge}>
-                                          <HiSparkles /> {SOFFX_PLAN_LABELS[tier.soffx_plan]}
+                                          <SoffxBadge plan={tier.soffx_plan} />
                                       </div>
                                   )}
                                   <TierFeatures tier={tier} />
@@ -161,6 +164,34 @@ const PricingPage = () => {
                           );
                       })}
             </div>
+
+            {tiers.some((tier) => SOFFX_PLAN_LABELS[tier.soffx_plan]) && (
+                <section className={styles.soffx} aria-labelledby="soffx-title">
+                    <div className={styles.soffxHead}>
+                        <span className={styles.soffxEyebrow}>Pro va Max ta'riflarida</span>
+                        <h2 id="soffx-title">
+                            Fayllardan tashqari — <SoffxMark />
+                        </h2>
+                        <p>
+                            Soff'ning sun'iy intellekt yordamchisi. Matndan video, rasm, taqdimot va ilmiy ishlarni bir
+                            necha daqiqada tayyorlaydi — obunangizga qo'shib beriladi.
+                        </p>
+                    </div>
+                    <ul className={styles.soffxGrid}>
+                        {SOFFX_FEATURES.map((feature) => (
+                            <li key={feature.key} className={feature.key === 'video' ? styles.soffxFeatured : ''}>
+                                <span className={styles.soffxIcon}>
+                                    <SoffxFeatureIcon name={feature.key} />
+                                </span>
+                                <span className={styles.soffxText}>
+                                    <strong>{feature.title}</strong>
+                                    <span>{feature.text}</span>
+                                </span>
+                            </li>
+                        ))}
+                    </ul>
+                </section>
+            )}
 
             <ChangeTierModal tier={targetTier} open={Boolean(targetTier)} onClose={() => setTargetTier(null)} />
 

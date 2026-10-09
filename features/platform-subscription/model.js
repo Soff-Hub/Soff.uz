@@ -14,6 +14,22 @@ export const SOFFX_PLAN_LABELS = {
     ultra: 'SoffX AI Max',
 };
 
+// What SoffX AI can do — mirrors the tools on the home page (widgets/home/ai-tools).
+export const SOFFX_URL = 'https://soffx.com/app';
+export const SOFFX_FEATURES = [
+    { key: 'video', title: 'AI video', text: 'Matndan video yaratish' },
+    { key: 'image', title: 'AI rasmlar', text: 'Yuqori sifatli rasmlar' },
+    { key: 'presentation', title: 'Taqdimot', text: 'Slayd va taqdimotlar' },
+    { key: 'coursework', title: 'Kurs ishi', text: 'Kurs ishi va amaliy ish' },
+    { key: 'referat', title: 'Referat', text: 'Referat va maqolalar' },
+    { key: 'diploma', title: 'Diplom ishi', text: 'Bitiruv va BMI ishlari' },
+    { key: 'lesson', title: 'Dars ishlanmasi', text: 'Dars ishlanmasi yaratish' },
+];
+export const SOFFX_PLAN_NOTES = {
+    pro: "Pro ta'rifiga kiradi",
+    ultra: "Max ta'rifida — eng katta reja",
+};
+
 // Visual theme per tier, keyed by the SoffX plan it includes (none → Start, pro → Pro, ultra → Max).
 const TIER_THEMES = { none: 'start', pro: 'pro', ultra: 'max' };
 export const getTierTheme = (tier) => TIER_THEMES[tier?.soffx_plan] || tier?.code || 'start';
