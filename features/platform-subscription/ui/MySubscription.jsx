@@ -41,13 +41,18 @@ const SoffxAction = ({ soffx }) => {
     if (soffx.status === 'pending') return <p className={styles.muted}>SoffX AI tayyorlanmoqda…</p>;
     if (soffx.status !== 'success') return null;
 
+    // The tab opens on click, before the request: a window opened after an await is blocked as a popup.
     const handleLogin = async () => {
+        const tab = window.open('', '_blank');
         setLoading(true);
         try {
             const { url } = await soffxLogin();
-            window.location = url;
+            if (tab) tab.location.href = url;
+            else window.location = url;
         } catch (err) {
+            tab?.close();
             message.error(getErrorMessage(err));
+        } finally {
             setLoading(false);
         }
     };
