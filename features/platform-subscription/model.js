@@ -79,6 +79,26 @@ const isUsableStatus = (subscription) => ['active', 'cancelled'].includes(subscr
 export const getMyTierCode = (subscription) =>
     isUsableStatus(subscription) ? subscription.tier?.code || null : null;
 
+// File price the tier caps are compared with: the seller's price, without the service fee
+// the buy block adds on top (a 30 000 file shows as 33 000 but fits a 30 000 cap).
+const getProductPrice = (product) => product?.discount_price ?? product?.price ?? 0;
+
+const fitsTier = (product, tier) =>
+    tier.max_document_price == null || getProductPrice(product) <= tier.max_document_price;
+
+// Cheapest tier that includes the product. `platform_sub_tiers` narrows the choice when the
+// response has it; the price cap always applies, so a stale or missing list can't offer a
+// tier whose cap is below the file's price.
+export const getCheapestTierFor = (product, tiers) => {
+    if (!tiers?.length) return null;
+    const codes = Array.isArray(product?.platform_sub_tiers) ? product.platform_sub_tiers : null;
+    return (
+        [...tiers]
+            .sort((a, b) => a.price - b.price)
+            .find((tier) => (!codes || codes.includes(tier.code)) && fitsTier(product, tier)) || null
+    );
+};
+
 // Whether the product's tiers include the user's tier. Lists and detail pages send
 // `platform_sub_tiers`; older responses without it fall back to the period's price cap.
 const isInMyTier = (product, subscription) => {
@@ -86,7 +106,7 @@ const isInMyTier = (product, subscription) => {
         return product.platform_sub_tiers.includes(getMyTierCode(subscription));
     }
     const cap = subscription.current_period?.max_document_price;
-    return cap == null || (product.price || 0) <= cap;
+    return cap == null || getProductPrice(product) <= cap;
 };
 
 /**
@@ -110,10 +130,10 @@ export const useSubscriptionStatus = (product) => {
 // Cheapest tier that includes the product, e.g. "Pro" for ["pro", "max"].
 export const useUpgradeTierTitle = (product) => {
     const { data: tiers } = useTiers();
+    const tier = getCheapestTierFor(product, tiers);
+    if (tier) return tier.title;
     const code = product?.platform_sub_tiers?.[0];
-    if (!code) return null;
-    const tier = tiers?.find((item) => item.code === code);
-    return tier?.title || code.charAt(0).toUpperCase() + code.slice(1);
+    return code ? code.charAt(0).toUpperCase() + code.slice(1) : null;
 };
 
 // Whether the user's subscription can claim this product right now, so buying it is pointless.

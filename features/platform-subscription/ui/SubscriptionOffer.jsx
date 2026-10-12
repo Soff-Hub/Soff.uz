@@ -2,18 +2,15 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { MdCheckCircleOutline, MdExpandMore, MdOutlineWorkspacePremium } from 'react-icons/md';
 import { addPeriodToThousands } from '~/features/account/ui/price-formatter';
-import { SUBSCRIPTION_PAGE_URL, useTiers } from '../model';
+import { SUBSCRIPTION_PAGE_URL, getCheapestTierFor, useTiers } from '../model';
 import ChangeTierModal from './ChangeTierModal';
 import styles from './SubscriptionOffer.module.scss';
 
-// Cheapest tier that includes the product; the cheapest tier overall when the
-// response has no `platform_sub_tiers` yet.
+// Cheapest tier that includes the product; the cheapest tier overall for the promo.
 const useOfferTier = (product) => {
     const { data: tiers } = useTiers();
     if (!tiers?.length) return null;
-    const code = product?.platform_sub_tiers?.[0];
-    const sorted = [...tiers].sort((a, b) => a.price - b.price);
-    return (code && sorted.find((tier) => tier.code === code)) || sorted[0];
+    return product ? getCheapestTierFor(product, tiers) : [...tiers].sort((a, b) => a.price - b.price)[0];
 };
 
 /**
@@ -40,7 +37,7 @@ const SubscriptionOffer = ({ product, variant = 'subscribe', myTierTitle, classN
     const priceBenefit = tier
         ? tier.max_document_price == null
             ? 'Narxidan qat\'i nazar barcha fayllar'
-            : `${addPeriodToThousands(tier.max_document_price)} so'mgacha bo'lgan barcha fayllar`
+            : `${addPeriodToThousands(tier.max_document_price)} so'mgacha bo'lgan barcha fayllar (xizmat haqisiz narx)`
         : null;
     const limitBenefit = tier ? `Oyiga ${tier.monthly_limit} ta fayl yuklab olish` : null;
 
