@@ -100,7 +100,7 @@ export default function ProductCategoryScreen({
                 image="https://soff.uz/static/img/ilmiy-ishlar-2.png"
                 keywords={dynamicKeywords}
                 author="Soff.uz"
-                robots={hasFilters ? 'noindex, follow' : 'index, follow'}
+                robots={hasFilters || Number(page) > 1 ? 'noindex, follow' : 'index, follow'}
             />
 
             <ProductFilterSection

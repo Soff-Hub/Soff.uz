@@ -3,5 +3,4 @@ Disallow: /models/
 Disallow: /*?returnUrl=*
 Disallow: /*?edit=*
 Disallow: /*?ref=*
-Disallow: /*?*page=*
 Sitemap: https://soff.uz/sitemap.xml
