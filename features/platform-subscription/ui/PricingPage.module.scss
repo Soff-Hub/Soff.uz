@@ -34,16 +34,49 @@
 }
 
 .card {
+    position: relative;
     display: flex;
     flex-direction: column;
     padding: 28px 24px;
     background: #fff;
     border: 1px solid #e5e7eb;
     border-radius: 16px;
+    transition: box-shadow 180ms ease-out;
 }
 
 .cardCurrent {
     border: 2px solid #00a44f;
+}
+
+// Popular tier: green frame and shadow, lifted on desktop, with a badge on the top edge.
+.cardPopular {
+    border: 2px solid #00a44f;
+    box-shadow: 0 16px 36px rgba(0, 164, 79, 0.16);
+
+    @media (min-width: 992px) {
+        transform: translateY(-12px);
+    }
+}
+
+.popularBadge {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 4px 14px;
+    border-radius: 999px;
+    background: #00a44f;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+    box-shadow: 0 4px 10px rgba(0, 164, 79, 0.3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .card {
+        transition: none;
+    }
 }
 
 .cardHead {

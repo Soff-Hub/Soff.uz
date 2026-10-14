@@ -41,6 +41,9 @@ const TierFeatures = ({ tier }) => (
     </ul>
 );
 
+// The tier most buyers pick; it gets the badge, the stronger card and the filled button.
+const POPULAR_SOFFX_PLAN = 'pro';
+
 const PricingPage = () => {
     const { data: tiers = [], isLoading, isError, refetch } = useTiers();
     const { subscription, isLoggedIn, isLoading: isSubLoading } = useMySubscription();
@@ -81,9 +84,16 @@ const PricingPage = () => {
     const renderAction = (tier) => {
         if (isLoggedIn && isSubLoading) return <Button size="large" block loading />;
 
+        const isPopular = tier.soffx_plan === POPULAR_SOFFX_PLAN;
+
         if (!subscription) {
             return (
-                <Button type="primary" size="large" block className={styles.primaryBtn} onClick={() => handleSubscribe(tier)}>
+                <Button
+                    type={isPopular ? 'primary' : 'default'}
+                    size="large"
+                    block
+                    className={isPopular ? styles.primaryBtn : undefined}
+                    onClick={() => handleSubscribe(tier)}>
                     Obuna bo'lish
                 </Button>
             );
@@ -141,8 +151,12 @@ const PricingPage = () => {
                     : tiers.map((tier) => {
                           const isCurrent = tier.id === currentTierId;
                           const isScheduled = tier.id === scheduledTierId;
+                          const isPopular = tier.soffx_plan === POPULAR_SOFFX_PLAN;
                           return (
-                              <div className={`${styles.card} ${isCurrent ? styles.cardCurrent : ''}`} key={tier.id}>
+                              <div
+                                  className={`${styles.card} ${isCurrent ? styles.cardCurrent : ''} ${isPopular ? styles.cardPopular : ''}`}
+                                  key={tier.id}>
+                                  {isPopular && <span className={styles.popularBadge}>Ko'pchilik tanlovi</span>}
                                   <div className={styles.cardHead}>
                                       <h2>{tier.title}</h2>
                                       {isCurrent && <span className={styles.currentBadge}>Joriy ta'rif</span>}
