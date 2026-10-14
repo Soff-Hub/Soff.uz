@@ -51,12 +51,6 @@ const links = [
         isExternal: false,
     },
     {
-        href: "/studio?utm_source=5a6ce4cf6cdb1ea8",
-        label: "Soff Studio",
-        icon: <TbVideo size={20} />,
-        isExternal: false,
-    },
-    {
         href: "https://soffia.uz/uz/dashboard?ref=ref_YT_60FE9C73",
         label: "AI xizmatlari",
         icon: <TbSparkles size={20} />,

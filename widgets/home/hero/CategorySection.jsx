@@ -20,7 +20,8 @@ const popularCategories = [
     {
         title: 'AI generatsiyalar',
         count: '1K +',
-        href: '/studio?utm_source=5a6ce4cf6cdb1ea8',
+        href: 'https://soffx.com/?ref=ref_WE_7D01F3B3',
+        external: true,
         icon: <TbSparkles />
     },
     {
@@ -59,7 +60,9 @@ const CategorySection = () => {
             <div className={styles.categoryGrid}>
                 {popularCategories.map((cat, idx) => (
                     <Link key={idx} href={cat.href}>
-                        <a className={styles.categoryCard}>
+                        <a
+                            className={styles.categoryCard}
+                            {...(cat.external && { target: '_blank', rel: 'noopener noreferrer' })}>
                             <div className={styles.cardIcon}>
                                 {cat.icon}
                             </div>
