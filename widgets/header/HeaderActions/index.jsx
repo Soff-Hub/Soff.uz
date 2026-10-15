@@ -5,7 +5,6 @@ import useWishlist from '~/shared/hooks/useWishlist';
 import MiniCart from '~/shared/components/modals/MiniCart';
 import HeaderNotifications from './HeaderNotifications';
 import HeaderUserDropdown from './HeaderUserDropdown';
-// import HeaderAISoffia from './HeaderAISoffia';
 import { Badge } from 'antd';
 import MenuCategoriesDropdown from '~/widgets/header/MenuCategoriesDropdown';
 import useResponsive from '~/shared/utilities/useResponsive';
@@ -33,7 +32,6 @@ const HeaderActions = () => {
             {isDesktop && <HeaderCatergories />}
             {isDesktop && <MenuCategoriesDropdown />}
             {isTabletLimit && <HeaderSearch />}
-            {/* <HeaderAISoffia /> */}
             {isWishlistVisible && (
                 <Link href="/account/wishlist">
                     <a className="header__extra">

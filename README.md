@@ -21,7 +21,7 @@ freelance services.
 -   **Affiliate Program**: Built-in affiliate marketing system
 -   **Chat System**: Real-time communication between buyers and sellers
 -   **Order Management**: Complete order processing and tracking system
--   **AI Integration**: Soffia AI assistant for enhanced user experience
+-   **AI Integration**: SoffX AI assistant for enhanced user experience
 
 ### Technology Stack
 

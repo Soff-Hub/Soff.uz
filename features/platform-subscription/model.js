@@ -15,7 +15,7 @@ export const SOFFX_PLAN_LABELS = {
 };
 
 // What SoffX AI can do — mirrors the tools on the home page (widgets/home/ai-tools).
-export const SOFFX_URL = 'https://soffx.com/app';
+export const SOFFX_URL = 'https://soffx.com?ref=ref_WE_7D01F3B3';
 export const SOFFX_FEATURES = [
     { key: 'video', title: 'AI video', text: 'Matndan video yaratish' },
     { key: 'image', title: 'AI rasmlar', text: 'Yuqori sifatli rasmlar' },

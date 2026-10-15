@@ -113,6 +113,17 @@ const nextSettings = {
                 destination: 'https://soff.uz/:path*',
                 permanent: true,
             },
+            // Soffia AI has moved to SoffX AI. Keep old /soffia links working.
+            {
+                source: '/soffia',
+                destination: 'https://soffx.com?ref=ref_WE_7D01F3B3',
+                permanent: true,
+            },
+            {
+                source: '/soffia/:path*',
+                destination: 'https://soffx.com?ref=ref_WE_7D01F3B3',
+                permanent: true,
+            },
         ];
     },
     async rewrites() {

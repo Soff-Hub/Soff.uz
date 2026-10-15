@@ -600,7 +600,7 @@ const Header = () => {
                             </a>
                         </Link>
                         <a
-                            href="https://soffia.uz/uz/dashboard?ref=ref_YT_60FE9C73"
+                            href="https://soffx.com?ref=ref_WE_7D01F3B3"
                             target="_blank"
                             rel="noopener noreferrer"
                             className={styles.navLink}

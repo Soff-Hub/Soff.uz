@@ -36,9 +36,6 @@ const SimilarProducts = dynamic(
     { ssr: false }
 );
 
-const AISoffiaPresentation = dynamic(() => import('~/widgets/home/ai-soffia'), {
-    ssr: false,
-});
 
 const PurchaseRecommendations = dynamic(
     () => import('~/features/product-details/ui/purchase-recommendations'),
@@ -117,11 +114,6 @@ export default function ProductDefaultPage({ defaultProducts }) {
 
     const DetailComponent = useMemo(
         () => productsContentDetails(contentType),
-        [contentType]
-    );
-
-    const shouldShowAISoffia = useMemo(
-        () => contentType === 'file',
         [contentType]
     );
 
@@ -217,7 +209,6 @@ export default function ProductDefaultPage({ defaultProducts }) {
                             </div>
 
                             <div className={contentType === 'video' ? 'container' : ''}>
-                                {shouldShowAISoffia && <AISoffiaPresentation />}
                                 {contentType !== 'video' && <PurchaseRecommendations />}
 
                                 {contentType !== 'video' && (

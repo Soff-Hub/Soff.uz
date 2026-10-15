@@ -10,7 +10,7 @@ import {
     SearchHistoryOption,
     SearchNavigationProgress,
     SearchOption,
-    SearchSoffiaAIOption,
+    SearchSoffxAIOption,
 } from './SearchComponents';
 
 function SearchResult({
@@ -88,7 +88,7 @@ function SearchResult({
             {historyOptions}
             {filteredDataOptions}
             {debouncedSearch && (
-                <SearchSoffiaAIOption debouncedSearch={debouncedSearch} />
+                <SearchSoffxAIOption debouncedSearch={debouncedSearch} />
             )}
         </div>
     );

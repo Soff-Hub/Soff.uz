@@ -4,24 +4,26 @@ import { Button, Spin } from 'antd';
 import { MdOutlineAccessTime } from 'react-icons/md';
 import { IoClose, IoSearch, IoArrowForward } from 'react-icons/io5';
 import { highlightMatch } from '~/shared/utilities/utils';
-import { soffiaIconSVG } from '~/widgets/header/HeaderActions/HeaderAIIcon';
+import { HiSparkles } from 'react-icons/hi2';
 
-type SearchSoffiaAIOptionProps = {
+type SearchSoffxAIOptionProps = {
     debouncedSearch: string;
 };
 
-export const SearchSoffiaAIOption: FC<SearchSoffiaAIOptionProps> = ({
+export const SearchSoffxAIOption: FC<SearchSoffxAIOptionProps> = ({
     debouncedSearch,
 }) => {
     return (
         <a
-            href="https://soffia.uz/dashboard"
+            href="https://soffx.com?ref=ref_WE_7D01F3B3"
             target="_blank"
             rel="noopener noreferrer"
-            className={styles.soffiaAiSuggestion}>
-            <div className={styles.aiIcon}>{soffiaIconSVG}</div>
+            className={styles.soffxAiSuggestion}>
+            <div className={styles.aiIcon}>
+                <HiSparkles />
+            </div>
             <div className={styles.aiText}>
-                <span className={styles.aiLabel}>Soffia AI orqali yaratish</span>
+                <span className={styles.aiLabel}>SoffX AI orqali yaratish</span>
                 <span className={styles.aiDesc}>
                     "{debouncedSearch}" haqida AI dan so'rab ko'ring
                 </span>
