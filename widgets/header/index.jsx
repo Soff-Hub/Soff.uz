@@ -28,6 +28,7 @@ import { useFGet } from '~/shared/hooks/useFApi';
 import { NAVBAR_MENU_CATEGORIES } from '~/shared/api/end-points';
 import useSearch from '~/shared/hooks/useSearch';
 import HeaderUserDropdown from './HeaderActions/HeaderUserDropdown';
+import HeaderCtaBanner from './HeaderCtaBanner';
 import { highlightMatch } from '~/shared/utilities/utils';
 import MobileCatalog from './MobileCatalog';
 import FastDowloadSection from '~/shared/components/fast-dowload/FastDowloadSection';
@@ -283,7 +284,7 @@ const Header = () => {
 
     return (
         <header className={styles.headerMainBlock}>
-
+            <HeaderCtaBanner />
             {renderPromoBanner()}
             <div className="container">
                 {/* PART 1: TOP ROW */}

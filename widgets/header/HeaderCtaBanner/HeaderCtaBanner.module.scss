@@ -1,0 +1,84 @@
+@import '/scss/utils/variable';
+
+.banner {
+    width: 100%;
+    min-height: 44px;
+    background: $color-1st;
+    color: $textColorWhite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px 16px;
+    padding: 8px 16px;
+    position: relative;
+    z-index: 1001;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    background: $color-2st;
+    color: $textColorWhite;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+
+    svg {
+        width: 14px;
+        height: 14px;
+    }
+}
+
+.content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px 14px;
+}
+
+.text {
+    margin: 0;
+    font-weight: 500;
+    color: $textColorWhite !important;
+
+    strong {
+        font-weight: 700;
+    }
+}
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    padding: 7px 16px;
+    border-radius: 999px;
+    background: $textColorWhite;
+    color: $color-1st !important;
+    font-weight: 600;
+    white-space: nowrap;
+    text-decoration: none !important;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+
+    &:hover {
+        opacity: 0.9;
+        transform: translateY(-1px);
+    }
+}
+
+@media (max-width: 575px) {
+    .banner {
+        font-size: 13px;
+        padding: 10px 12px;
+    }
+
+    .button {
+        width: 100%;
+        justify-content: center;
+    }
+}
