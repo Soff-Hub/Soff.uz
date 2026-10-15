@@ -95,6 +95,16 @@ const AiTools = () => {
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className={styles.toolCard}>
+                                <div className={styles.cardHead}>
+                                    <span className={styles.cardTitle}>
+                                        <IconComponent className={styles.cardIcon} />
+                                        {tool.title}
+                                    </span>
+                                    <span className={styles.cardSubtitle}>
+                                        {tool.subtitle}
+                                    </span>
+                                </div>
+
                                 <div className={styles.imageWrapper}>
                                     {tool.video ? (
                                         <video
@@ -126,17 +136,6 @@ const AiTools = () => {
                                             quality={85}
                                         />
                                     )}
-                                    <div className={styles.overlay} />
-                                </div>
-
-                                {/* Envato-style Floating Badge */}
-                                <div className={styles.floatingBadge}>
-                                    <div className={styles.badgeIconBox}>
-                                        <IconComponent className={styles.badgeIcon} />
-                                    </div>
-                                    <span className={styles.badgeText}>
-                                        {tool.title}
-                                    </span>
                                 </div>
                             </a>
                         );

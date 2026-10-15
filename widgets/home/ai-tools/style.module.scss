@@ -2,9 +2,14 @@
 @import '/scss/utils/mixin';
 
 .aiToolsSection {
-    padding: 32px 0 20px;
-    background: #ffffff;
+    padding: 56px 0 64px;
     width: 100%;
+    background: #fcf4ea;
+    overflow: hidden;
+
+    @media (max-width: 576px) {
+        padding: 40px 0 44px;
+    }
 }
 
 .containerFull {
@@ -22,16 +27,16 @@
 }
 
 .title {
-    font-size: 26px;
+    font-size: 34px;
     font-weight: 700;
-    color: #1e293b;
-    margin: 0 0 18px 0;
-    line-height: 1.2;
+    color: #111111;
+    margin: 0 0 32px 0;
+    line-height: 1.15;
     letter-spacing: -0.02em;
 
     @media (max-width: 576px) {
-        font-size: 22px;
-        margin-bottom: 14px;
+        font-size: 24px;
+        margin-bottom: 20px;
     }
 }
 
@@ -39,12 +44,14 @@
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 16px;
+    align-items: start;
     width: 100%;
 
     @media (max-width: 1200px) {
         display: flex;
         overflow-x: auto;
-        padding-bottom: 12px;
+        padding: 0 4px 18px;
+        margin: 0 -4px;
         gap: 14px;
         scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
@@ -54,55 +61,101 @@
         }
 
         &::-webkit-scrollbar-track {
-            background: #f1f5f9;
+            background: #ead9c6;
             border-radius: 4px;
         }
 
         &::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
+            background: #111111;
             border-radius: 4px;
         }
     }
 }
 
 .toolCard {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
     width: 100%;
-    position: relative;
-    aspect-ratio: 1 / 1.18;
-    min-height: 185px;
-    border-radius: 18px;
-    overflow: hidden;
-    background: #0f172a;
-    border: 1px solid rgba(15, 23, 42, 0.08);
-    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+    padding: 16px 16px 14px;
+    border-radius: 16px;
+    border: 1.5px solid #1c1c1c;
+    background: #fcf4ea;
+    color: #111111;
     text-decoration: none;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    isolation: isolate;
+    transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+        box-shadow 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+
+    /* Staggered rhythm, as in the reference grid */
+    &:nth-child(even) {
+        margin-top: 48px;
+    }
 
     @media (max-width: 1200px) {
-        flex: 0 0 175px;
-        min-width: 175px;
-        min-height: 195px;
+        flex: 0 0 200px;
+        min-width: 200px;
         scroll-snap-align: start;
+
+        &:nth-child(even) {
+            margin-top: 0;
+        }
     }
 
     @media (max-width: 576px) {
-        flex: 0 0 150px;
-        min-width: 150px;
-        min-height: 170px;
+        flex: 0 0 165px;
+        min-width: 165px;
+        padding: 12px 12px 10px;
         border-radius: 14px;
     }
 
+    .cardHead {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        min-height: 56px;
+    }
+
+    .cardTitle {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 19px;
+        font-weight: 700;
+        line-height: 1.2;
+        letter-spacing: -0.01em;
+        color: #111111;
+
+        @media (max-width: 576px) {
+            font-size: 16px;
+        }
+    }
+
+    .cardIcon {
+        font-size: 18px;
+        flex-shrink: 0;
+        color: #00a44f;
+    }
+
+    .cardSubtitle {
+        font-size: 14px;
+        line-height: 1.35;
+        color: #4b4b4b;
+
+        @media (max-width: 576px) {
+            font-size: 12px;
+        }
+    }
+
     .imageWrapper {
-        position: absolute;
-        inset: 0;
+        position: relative;
         width: 100%;
-        height: 100%;
+        aspect-ratio: 1 / 1.05;
+        border-radius: 10px;
         overflow: hidden;
+        background: #1c1c1c;
 
         .cardImg {
-            transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+            transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
         }
 
         .cardVideo {
@@ -112,88 +165,23 @@
             height: 100%;
             object-fit: cover;
             pointer-events: none;
-            transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
-        }
-
-        .overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(
-                180deg,
-                rgba(0, 0, 0, 0.35) 0%,
-                rgba(0, 0, 0, 0.04) 45%,
-                rgba(0, 0, 0, 0.6) 100%
-            );
-            pointer-events: none;
-        }
-    }
-
-    /* Envato-style Floating Badge */
-    .floatingBadge {
-        position: absolute;
-        top: 12px;
-        left: 12px;
-        z-index: 4;
-        display: inline-flex;
-        align-items: center;
-        gap: 7px;
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        padding: 4px 10px 4px 4px;
-        border-radius: 10px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.14);
-        border: 1px solid rgba(255, 255, 255, 0.7);
-        transition: transform 0.25s ease;
-        max-width: calc(100% - 24px);
-
-        .badgeIconBox {
-            width: 24px;
-            height: 24px;
-            border-radius: 7px;
-            background: #0f172a;
-            color: #ffffff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-
-            .badgeIcon {
-                font-size: 14px;
-            }
-        }
-
-        .badgeText {
-            font-size: 12.5px;
-            font-weight: 700;
-            color: #0f172a;
-            letter-spacing: -0.01em;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
     }
 
     /* Hover State */
     &:hover {
-        transform: translateY(-5px);
-        border-color: rgba(0, 164, 79, 0.45);
-        box-shadow: 0 16px 30px -8px rgba(0, 0, 0, 0.2),
-            0 4px 16px rgba(0, 164, 79, 0.16);
+        transform: translateY(-4px);
+        box-shadow: 0 14px 28px -12px rgba(17, 17, 17, 0.35);
 
         .imageWrapper .cardImg,
         .imageWrapper .cardVideo {
-            transform: scale(1.08);
+            transform: scale(1.06);
         }
+    }
 
-        .floatingBadge {
-            transform: scale(1.02);
-            background: #ffffff;
-            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
-
-            .badgeIconBox {
-                background: #00a44f;
-            }
-        }
+    &:focus-visible {
+        outline: 3px solid #00a44f;
+        outline-offset: 3px;
     }
 }
