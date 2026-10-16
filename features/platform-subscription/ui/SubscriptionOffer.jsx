@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { MdCheckCircleOutline, MdExpandMore, MdOutlineWorkspacePremium } from 'react-icons/md';
 import { addPeriodToThousands } from '~/features/account/ui/price-formatter';
-import { SUBSCRIPTION_PAGE_URL, getCheapestTierFor, useTiers } from '../model';
+import { CATALOGUE_SIZE, SUBSCRIPTION_PAGE_URL, getCheapestTierFor, useTiers } from '../model';
 import ChangeTierModal from './ChangeTierModal';
 import styles from './SubscriptionOffer.module.scss';
 
@@ -48,7 +48,7 @@ const SubscriptionOffer = ({ product, variant = 'subscribe', myTierTitle, classN
               Math.min(...limits) === Math.max(...limits)
                   ? `Oyiga ${Math.max(...limits)} ta fayl yuklab olish`
                   : `Oyiga ${Math.min(...limits)} tadan ${Math.max(...limits)} tagacha fayl`,
-              "Turli sotuvchilarning minglab fayllari bitta obunada",
+              `${CATALOGUE_SIZE} tayyor mahsulot bitta obunada`,
               "Pro va Max'da SoffX AI: video, rasm, taqdimot va ilmiy ishlar yaratish",
               'Olingan fayl doim sizda qoladi',
               'Istalgan vaqtda bekor qilish',

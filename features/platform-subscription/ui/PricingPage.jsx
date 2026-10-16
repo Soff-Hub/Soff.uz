@@ -7,6 +7,7 @@ import AuthModal from '~/features/auth/ui/auth-modal';
 import { addPeriodToThousands } from '~/features/account/ui/price-formatter';
 import { changeTier, getErrorMessage } from '../api';
 import {
+    CATALOGUE_SIZE,
     MY_SUBSCRIPTION_URL,
     SOFFX_FEATURES,
     SOFFX_PLAN_LABELS,
@@ -22,7 +23,10 @@ import styles from './PricingPage.module.scss';
 const TierFeatures = ({ tier }) => (
     <ul className={styles.features}>
         <li>
-            <FaCheck /> Oyiga {tier.monthly_limit} ta fayl
+            <FaCheck />
+            <span>
+                <strong>{CATALOGUE_SIZE} mahsulotdan</strong> oyiga {tier.monthly_limit} tasini tanlang
+            </span>
         </li>
         {tier.daily_limit > 0 && (
             <li>
@@ -129,8 +133,8 @@ const PricingPage = () => {
             <div className={styles.hero}>
                 <h1>Obuna</h1>
                 <p>
-                    Bitta oylik obuna — butun sayt bo'ylab. Har oy belgilangan miqdordagi fayllarni oling, olingan
-                    fayl esa doim sizda qoladi.
+                    <strong>{CATALOGUE_SIZE} tayyor mahsulot</strong> va SoffX AI vositalari — bitta oylik obunada.
+                    Kerakli fayllarni har oy tanlab oling, olingan fayl esa doim sizda qoladi.
                 </p>
             </div>
 

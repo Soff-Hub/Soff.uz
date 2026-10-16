@@ -157,7 +157,10 @@ $shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
     background: #ffffff;
     box-shadow: $shadow-soft;
     position: sticky;
-    top: 0;
+    // Negative while the CTA banner is hidden, so it slides off-screen without
+    // changing layout (set by HeaderCtaBanner).
+    top: var(--header-cta-offset, 0px);
+    transition: top 0.3s ease;
     z-index: 1000;
     font-family: 'Inter', sans-serif;
 

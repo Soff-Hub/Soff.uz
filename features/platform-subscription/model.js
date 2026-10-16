@@ -6,6 +6,9 @@ import { fetchMySubscription, fetchTiers } from './api';
 export const SUBSCRIPTION_PAGE_URL = '/subscription';
 export const MY_SUBSCRIPTION_URL = '/account/subscription';
 
+// Catalogue size used in subscription copy; non-breaking space keeps "2 mln+" on one line.
+export const CATALOGUE_SIZE = '2\u00a0mln+';
+
 export const TIERS_QUERY_KEY = ['platform-sub-tiers'];
 export const MY_SUBSCRIPTION_QUERY_KEY = ['platform-sub-my'];
 
