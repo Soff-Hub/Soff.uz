@@ -5,6 +5,7 @@ import { FaRegCreditCard } from 'react-icons/fa6';
 import { MdAdd, MdCheckCircle, MdDeleteOutline } from 'react-icons/md';
 import { addCard, deleteCard, fetchCards, getErrorMessage, setSubscriptionCard, verifyCard } from '../api';
 import { formatDate, useMySubscription, useRefreshMySubscription } from '../model';
+import ClickTrust from '~/shared/components/click-trust/ClickTrust';
 import styles from './BillingCards.module.scss';
 
 export const CARDS_QUERY_KEY = ['platform-sub-cards'];
@@ -126,6 +127,7 @@ export const AddCardModal = ({ open, onClose, onAdded, title = "Karta qo'shish",
                                 onChange={(e) => setExpiry(e.target.value.replace(/\D/g, '').slice(0, 4))}
                             />
                         </label>
+                        <ClickTrust />
                         {error && <p className={styles.error}>{error}</p>}
                         <Button type="primary" size="large" block htmlType="submit" loading={loading} className={styles.submit}>
                             Davom etish

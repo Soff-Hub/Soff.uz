@@ -7,6 +7,7 @@ import { FaRegCreditCard, FaRegCalendarDays, FaClock } from 'react-icons/fa6';
 import { addPeriodToThousands } from '~/features/account/ui/price-formatter';
 import { fetchMySubscription, getErrorMessage, subscribe, verifySubscription } from '../api';
 import { MY_SUBSCRIPTION_URL, useSetMySubscription } from '../model';
+import ClickTrust from '~/shared/components/click-trust/ClickTrust';
 import SubscriptionSuccess from './SubscriptionSuccess';
 import styles from './CheckoutModal.module.scss';
 
@@ -172,6 +173,7 @@ const CheckoutModal = ({ open, tier, onClose }) => {
                     />
                 </div>
             </div>
+            <ClickTrust />
             {error && <p className={styles.error}>{error}</p>}
             <button type="submit" className={styles.submitBtn} disabled={loading}>
                 {loading ? <BeatLoader color="#fff" size={8} /> : 'Davom etish'}

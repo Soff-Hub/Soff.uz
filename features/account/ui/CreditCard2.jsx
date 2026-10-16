@@ -12,6 +12,7 @@ import { useTimeManager } from '~/shared/hooks/useTimeManager';
 import { FaRegCreditCard, FaRegCalendarDays, FaShieldHalved, FaClock } from 'react-icons/fa6';
 import { IoAlertCircle } from 'react-icons/io5';
 import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
+import ClickTrust from '~/shared/components/click-trust/ClickTrust';
 import styles from './checkout.module.scss';
 import { cn } from '~/shared/utilities/cn';
 
@@ -513,6 +514,7 @@ const CreditCard2 = ({ document, type }) => {
                                 />
                             </div>
                         </div>
+                        <ClickTrust />
                         <FormSubmitButton hisob={hisobFormatted} message={message} />
                     </form>
                 </div>
