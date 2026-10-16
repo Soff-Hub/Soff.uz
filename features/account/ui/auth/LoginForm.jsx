@@ -129,14 +129,20 @@ export default function LoginForm({
             }
         },
         onError: (error) => {
-            const modal = Modal.error({
+            const status = error?.response?.status;
+            const data = error?.response?.data;
+            const content =
+                status === 429
+                    ? "Juda ko'p urinish. Iltimos, birozdan so'ng qayta urinib ko'ring."
+                    : data?.msg ||
+                      data?.detail ||
+                      "Xatolik yuz berdi. Iltimos, qayta urinib ko'ring.";
+
+            Modal.error({
                 centered: true,
                 title: 'Xatolik',
-                content:
-                    error?.response?.data?.msg ||
-                    JSON.stringify(error?.response),
+                content: Array.isArray(content) ? content.join(' ') : content,
             });
-            modal.update;
         },
     });
 
