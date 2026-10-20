@@ -41,7 +41,7 @@ const footerMenu = {
             {
                 name: 'Instagram',
                 icon: '/static/img/insta.png',
-                url: 'https://www.instagram.com/soff.uz.market/',
+                url: 'https://www.instagram.com/soff_uz_',
             },
         ],
     },
