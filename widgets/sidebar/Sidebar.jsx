@@ -15,6 +15,7 @@ import { MdKeyboardDoubleArrowRight } from 'react-icons/md';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { logOut } from '~/store/auth/slice';
+import { unsubscribeFromPush } from '~/shared/utilities/push';
 import { logout as profileLogout } from '~/store/profile/slice';
 import useAuth from '~/shared/hooks/useAuth';
 import useResponsive from '~/shared/utilities/useResponsive';
@@ -44,6 +45,8 @@ function Sidebar({ collapsed, onChangeCollapse }) {
         'Foydalanuvchi';
 
     const handleLogout = async () => {
+        // Before logout, while the token is still valid
+        await unsubscribeFromPush();
         await logOutAuth({ refresh });
         dispatch(profileLogout());
         // Redirects to home from protected pages, otherwise stays on the page.

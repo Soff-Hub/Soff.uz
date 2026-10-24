@@ -2,6 +2,7 @@ import React from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import { logOut } from '~/store/auth/slice';
+import { unsubscribeFromPush } from '~/shared/utilities/push';
 import { logout as profileLogout } from '~/store/profile/slice';
 import useAuth from '~/shared/hooks/useAuth';
 import { useRouter } from 'next/router';
@@ -28,6 +29,8 @@ const HeaderUserDropdown = () => {
     const { logOutAuth } = useAuth();
 
     const handleLogout = async () => {
+        // Before logout, while the token is still valid
+        await unsubscribeFromPush();
         await logOutAuth({ refresh });
         dispatch(profileLogout());
         // Redirects to home from protected pages, otherwise stays on the page.

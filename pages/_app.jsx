@@ -8,6 +8,7 @@ import Head from 'next/head';
 import NextProgress from 'next-progress';
 import { Providers } from '~/app/providers';
 import AffiliateListener from '~/entities/affiliate';
+import PushPrompt from '~/widgets/push-prompt';
 import { useTelegram } from '~/shared/hooks/useTelegram';
 import { TelegramLink } from '~/shared/components/telegram-link';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
@@ -226,6 +227,7 @@ function App({ Component, pageProps }) {
                 <AffiliateListener />
                 <Component {...pageProps} />
                 <TelegramLink />
+                <PushPrompt />
             </Providers>
         </>
     );

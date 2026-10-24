@@ -29,6 +29,7 @@ export default function MyDocument() {
                     href={'/static/img/soff%20logo.png'}
                     sizes="192x192"
                 />
+                <link rel="manifest" href="/manifest.json" />
                 <link
                     rel="apple-touch-icon-precomposed"
                     href={'/static/img/soff%20logo.png'}
