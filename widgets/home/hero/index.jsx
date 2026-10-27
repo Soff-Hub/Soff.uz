@@ -61,8 +61,8 @@ const slides = [
     },
     {
         img: '/static/img/HomePage/hero/hero_2.jpg',
-        link: 'https://soffx.com?ref=ref_WE_7D01F3B3',
-        target: '_blank'
+        link: '/labs',
+        target: '_self'
     },
     {
         img: '/static/img/HomePage/hero/hero_5.png',

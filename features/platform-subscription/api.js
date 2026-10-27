@@ -9,6 +9,12 @@ export const fetchTiers = async () => {
     return data || [];
 };
 
+// SoffX's own plan catalogue, through the /labs proxy (same origin, public).
+export const fetchSoffxPlans = async () => {
+    const { data } = await Axios.get('/labs/api/v1/subscriptions/plans');
+    return Array.isArray(data) ? data : [];
+};
+
 export const fetchMySubscription = async () => {
     const { data } = await api.get(`${BASE}my/`);
     return data?.subscription || null;

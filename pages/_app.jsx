@@ -9,6 +9,7 @@ import NextProgress from 'next-progress';
 import { Providers } from '~/app/providers';
 import AffiliateListener from '~/entities/affiliate';
 import PushPrompt from '~/widgets/push-prompt';
+import { SoffxLinkListener } from '~/features/platform-subscription/soffx-links';
 import { useTelegram } from '~/shared/hooks/useTelegram';
 import { TelegramLink } from '~/shared/components/telegram-link';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
@@ -225,6 +226,7 @@ function App({ Component, pageProps }) {
             />
             <Providers>
                 <AffiliateListener />
+                <SoffxLinkListener />
                 <Component {...pageProps} />
                 <TelegramLink />
                 <PushPrompt />

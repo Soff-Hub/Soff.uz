@@ -5,6 +5,8 @@
 const SERVICE_URL_VIDEO = process.env.SERVICE_URL_VIDEO || 'http://localhost:3005';
 const SERVICE_URL_FREELANCE = process.env.SERVICE_URL_FREELANCE || 'http://localhost:3006';
 const SERVICE_URL_CREATORS = process.env.SERVICE_URL_CREATORS || 'http://localhost:3000';
+// SoffX AI (SoffAIGenFrontend), built with NEXT_PUBLIC_BASE_PATH=/labs.
+const SERVICE_URL_LABS = process.env.SERVICE_URL_LABS || 'http://localhost:3007';
 
 const nextSettings = {
     optimizeFonts: true,
@@ -16,6 +18,10 @@ const nextSettings = {
         ignoreBuildErrors: true,
     },
     reactStrictMode: true,
+    experimental: {
+        // See the first redirect: /labs/* keeps its trailing slash.
+        skipTrailingSlashRedirect: true,
+    },
     env: {
         title: 'Soff uz',
         titleDescription:
@@ -105,6 +111,14 @@ const nextSettings = {
     },
     async redirects() {
         return [
+            // Next's own "/x/ → /x" redirect is off (experimental.skipTrailingSlashRedirect)
+            // because SoffX at /labs calls API paths that must keep their slash.
+            // Same redirect for everything else.
+            {
+                source: '/:path((?!labs(?:/|$)).+)/',
+                destination: '/:path',
+                permanent: true,
+            },
             // www.soff.uz served every page with 200, giving Google a full
             // duplicate host. Consolidate it onto the canonical apex domain.
             {
@@ -113,15 +127,39 @@ const nextSettings = {
                 destination: 'https://soff.uz/:path*',
                 permanent: true,
             },
-            // Soffia AI has moved to SoffX AI. Keep old /soffia links working.
+            // SoffX's own plans, billing and profile pages: at /labs the account
+            // and its subscription are Soff.uz's, managed on Soff.uz's pages.
+            // Client-side links inside SoffX land here too: the router sees a
+            // non-RSC response and loads the page in full.
+            {
+                source: '/labs/:page(pricing|app/billing)/:rest*',
+                destination: '/subscription',
+                permanent: false,
+            },
+            {
+                source: '/labs/:page(pricing|app/billing)',
+                destination: '/subscription',
+                permanent: false,
+            },
+            {
+                source: '/labs/app/settings/:rest*',
+                destination: '/account/profile',
+                permanent: false,
+            },
+            {
+                source: '/labs/app/settings',
+                destination: '/account/profile',
+                permanent: false,
+            },
+            // Soffia AI has moved to SoffX AI at /labs. Keep old /soffia links working.
             {
                 source: '/soffia',
-                destination: 'https://soffx.com?ref=ref_WE_7D01F3B3',
+                destination: '/labs',
                 permanent: true,
             },
             {
                 source: '/soffia/:path*',
-                destination: 'https://soffx.com?ref=ref_WE_7D01F3B3',
+                destination: '/labs',
                 permanent: true,
             },
         ];
@@ -136,6 +174,25 @@ const nextSettings = {
                 source: '/freelance/:path*',
                 destination: `${SERVICE_URL_FREELANCE}/freelance/:path*`,
             },
+            {
+                source: '/labs',
+                destination: `${SERVICE_URL_LABS}/labs`,
+            },
+            // `:path*` drops a trailing slash, which SoffX's API paths need.
+            {
+                source: '/labs/:path*/',
+                destination: `${SERVICE_URL_LABS}/labs/:path*/`,
+            },
+            {
+                source: '/labs/:path*',
+                destination: `${SERVICE_URL_LABS}/labs/:path*`,
+            },
+            // SoffX renders some public files (<video>, posters) by their bare
+            // path, without /labs. Soff.uz has nothing at these paths.
+            ...['images', 'videos', 'logos', 'landing'].map((dir) => ({
+                source: `/${dir}/:path*`,
+                destination: `${SERVICE_URL_LABS}/labs/${dir}/:path*`,
+            })),
             {
                 source: '/creators',
                 destination: `${SERVICE_URL_CREATORS}/creators`,

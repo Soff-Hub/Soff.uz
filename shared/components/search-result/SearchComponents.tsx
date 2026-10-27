@@ -15,9 +15,7 @@ export const SearchSoffxAIOption: FC<SearchSoffxAIOptionProps> = ({
 }) => {
     return (
         <a
-            href="https://soffx.com?ref=ref_WE_7D01F3B3"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/labs"
             className={styles.soffxAiSuggestion}>
             <div className={styles.aiIcon}>
                 <HiSparkles />

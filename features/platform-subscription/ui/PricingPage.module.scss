@@ -34,6 +34,8 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 20px;
+    // Each card as tall as its own content: Start has far less than Pro/Max.
+    align-items: start;
     max-width: 1080px;
     margin: 0 auto;
 }

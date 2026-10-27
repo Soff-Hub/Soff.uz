@@ -16,3 +16,4 @@ export {
     getTierTheme,
 } from './model';
 export { default as SubscriptionMenuCard, isSubscriptionUsable } from './ui/SubscriptionMenuCard';
+export { openSoffx, SoffxLinkListener } from './soffx-links';

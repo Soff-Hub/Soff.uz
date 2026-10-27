@@ -20,8 +20,7 @@ const popularCategories = [
     {
         title: 'AI generatsiyalar',
         count: '1K +',
-        href: 'https://soffx.com/?ref=ref_WE_7D01F3B3',
-        external: true,
+        href: '/labs',
         icon: <TbSparkles />
     },
     {

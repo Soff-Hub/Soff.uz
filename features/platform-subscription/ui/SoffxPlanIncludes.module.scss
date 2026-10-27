@@ -1,0 +1,187 @@
+// Tier colours as in MySubscription.module.scss (.pro / .max).
+.pro {
+    --tier: #2563eb;
+    --tier-rgb: 37, 99, 235;
+}
+
+.max {
+    --tier: #d97706;
+    --tier-rgb: 217, 119, 6;
+}
+
+.includes {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    // Below the card's button.
+    margin-top: 20px;
+}
+
+.toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    align-self: flex-start;
+    padding: 2px 4px;
+    border: 0;
+    background: none;
+    color: var(--tier);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+
+    svg {
+        font-size: 12px;
+        transition: transform 180ms ease-out;
+    }
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.toggleOpen {
+    transform: rotate(180deg);
+}
+
+.panel {
+    padding: 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    background: #f9fafb;
+
+    &:first-child {
+        border-color: rgba(var(--tier-rgb), 0.28);
+        background: rgba(var(--tier-rgb), 0.06);
+    }
+
+    h4 {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 0;
+        padding: 0 4px;
+        color: #022335;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+
+        svg {
+            flex-shrink: 0;
+            font-size: 16px;
+        }
+    }
+
+    ul {
+        margin: 8px 0 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    li {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 4px;
+        border-top: 1px solid rgba(229, 231, 235, 0.7);
+        font-size: 14px;
+
+        &:first-child {
+            border-top: 0;
+        }
+    }
+}
+
+.tokens {
+    margin: 4px 0 0;
+    padding: 0 4px;
+    color: #6b7280;
+    font-size: 13px;
+}
+
+.icon {
+    display: inline-flex;
+    flex-shrink: 0;
+    color: #9ca3af;
+    font-size: 16px;
+}
+
+.check {
+    flex-shrink: 0;
+    color: #9ca3af;
+    font-size: 12px;
+}
+
+.name {
+    flex: 1;
+    min-width: 0;
+    color: #111827;
+}
+
+.detail {
+    color: #9ca3af;
+}
+
+.count {
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: var(--tier);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.countSkeleton {
+    width: 48px;
+    height: 20px;
+    border-radius: 4px;
+    background: #e5e7eb;
+    animation: pulse 1.2s ease-in-out infinite;
+}
+
+.included {
+    padding: 2px 6px;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    color: #6b7280;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.perks {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 0;
+    padding: 0 4px;
+    list-style: none;
+
+    li {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #111827;
+        font-size: 14px;
+
+        svg {
+            flex-shrink: 0;
+            font-size: 12px;
+        }
+    }
+}
+
+@keyframes pulse {
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .countSkeleton {
+        animation: none;
+    }
+}

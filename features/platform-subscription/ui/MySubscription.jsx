@@ -10,7 +10,6 @@ import {
     getErrorCode,
     getErrorMessage,
     resumeSubscription,
-    soffxLogin,
 } from '../api';
 import {
     STATUS_META,
@@ -20,6 +19,7 @@ import {
     useMySubscription,
     useRefreshMySubscription,
 } from '../model';
+import { openSoffx } from '../soffx-links';
 import { AddCardModal, CARDS_QUERY_KEY } from './BillingCards';
 import ClaimsList from './ClaimsList';
 import SoffxBadge from './SoffxBadge';
@@ -41,20 +41,9 @@ const SoffxAction = ({ soffx }) => {
     if (soffx.status === 'pending') return <p className={styles.muted}>SoffX AI tayyorlanmoqda…</p>;
     if (soffx.status !== 'success') return null;
 
-    // The tab opens on click, before the request: a window opened after an await is blocked as a popup.
     const handleLogin = async () => {
-        const tab = window.open('', '_blank');
         setLoading(true);
-        try {
-            const { url } = await soffxLogin();
-            if (tab) tab.location.href = url;
-            else window.location = url;
-        } catch (err) {
-            tab?.close();
-            message.error(getErrorMessage(err));
-        } finally {
-            setLoading(false);
-        }
+        await openSoffx();
     };
 
     return (

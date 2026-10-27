@@ -51,10 +51,10 @@ const links = [
         isExternal: false,
     },
     {
-        href: "https://soffx.com?ref=ref_WE_7D01F3B3",
+        href: "/labs",
         label: "AI xizmatlari",
         icon: <TbSparkles size={20} />,
-        isExternal: true,
+        isExternal: false,
     },
     {
         href: "https://seller.soff.uz/",

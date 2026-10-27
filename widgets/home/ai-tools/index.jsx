@@ -21,7 +21,7 @@ const AI_TOOLS_DATA = [
         image: '/static/img/ai-tools/ai-video.jpg',
         video: '/static/img/ai-tools/ai-video.mp4',
         videoWebm: '/static/img/ai-tools/ai-video.webm',
-        link: 'https://soffx.com/app/video?ref=ref_WE_7D01F3B3',
+        link: '/labs/app/video',
     },
     {
         id: 'ai-image',
@@ -30,7 +30,7 @@ const AI_TOOLS_DATA = [
         tag: 'Rasm',
         icon: RiImageFill,
         image: '/static/img/ai-tools/ai-image.jpg',
-        link: 'https://soffx.com/app/image?ref=ref_WE_7D01F3B3',
+        link: '/labs/app/image',
     },
     {
         id: 'ai-presentation',
@@ -39,7 +39,7 @@ const AI_TOOLS_DATA = [
         tag: 'Taqdimot',
         icon: RiPresentationFill,
         image: '/static/img/ai-tools/tool-presentation.jpg',
-        link: 'https://soffx.com/app/create/presentation?ref=ref_WE_7D01F3B3',
+        link: '/labs/app/create/presentation',
     },
     {
         id: 'ai-coursework',
@@ -48,7 +48,7 @@ const AI_TOOLS_DATA = [
         tag: 'Ilmiy',
         icon: RiFileList3Fill,
         image: '/static/img/ai-tools/tool-coursework.jpg',
-        link: 'https://soffx.com/app/create/kursIshi?ref=ref_WE_7D01F3B3',
+        link: '/labs/app/create/kursIshi',
     },
     {
         id: 'ai-referat',
@@ -57,7 +57,7 @@ const AI_TOOLS_DATA = [
         tag: 'Referat',
         icon: RiBookOpenFill,
         image: '/static/img/ai-tools/tool-referat.jpg',
-        link: 'https://soffx.com/app/create/report?ref=ref_WE_7D01F3B3',
+        link: '/labs/app/create/report',
     },
     {
         id: 'ai-diploma',
@@ -66,7 +66,7 @@ const AI_TOOLS_DATA = [
         tag: 'Diplom',
         icon: RiAwardFill,
         image: '/static/img/ai-tools/tool-diploma.jpg',
-        link: 'https://soffx.com/app/create/diplomIshi?ref=ref_WE_7D01F3B3',
+        link: '/labs/app/create/diplomIshi',
     },
     {
         id: 'ai-lesson',
@@ -75,7 +75,7 @@ const AI_TOOLS_DATA = [
         tag: 'Dars',
         icon: RiGraduationCapFill,
         image: '/static/img/ai-tools/tool-academic.jpg',
-        link: 'https://soffx.com/app/create/lesson?ref=ref_WE_7D01F3B3',
+        link: '/labs/app/create/lesson',
     },
 ];
 
@@ -92,8 +92,6 @@ const AiTools = () => {
                             <a
                                 key={tool.id}
                                 href={tool.link}
-                                target="_blank"
-                                rel="noopener noreferrer"
                                 className={styles.toolCard}>
                                 <div className={styles.cardHead}>
                                     <span className={styles.cardTitle}>

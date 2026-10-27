@@ -600,12 +600,7 @@ const Header = () => {
                                 Frilanserlik xizmatlari
                             </a>
                         </Link>
-                        <a
-                            href="https://soffx.com?ref=ref_WE_7D01F3B3"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className={styles.navLink}
-                        >
+                        <a href="/labs" className={styles.navLink}>
                             <TbSparkles className={styles.icon} />
                             AI xizmatlari
                         </a>

@@ -4,7 +4,18 @@ import { safeLocalStorage } from './safe-local-storage';
 
 const AUTH_ERROR_STATUSES = new Set([401, 403]);
 const RATE_LIMIT_STATUSES = new Set([429, 413]);
-const AUTH_STORAGE_KEYS = ['user', 'data', 'token', 'qayta_token', 'auth-storage'];
+// The soff.* keys are SoffX's session at /labs (same origin): signed out of
+// Soff.uz means signed out there too.
+const AUTH_STORAGE_KEYS = [
+    'user',
+    'data',
+    'token',
+    'qayta_token',
+    'auth-storage',
+    'soff.access_token',
+    'soff.refresh_token',
+    'soff.soffuz_link',
+];
 
 let authExpireHandled = false;
 let defaultAxiosInterceptorId = null;

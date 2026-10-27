@@ -18,6 +18,7 @@ import {
 import ChangeTierModal from './ChangeTierModal';
 import CheckoutModal from './CheckoutModal';
 import SoffxBadge, { SoffxFeatureIcon, SoffxMark } from './SoffxBadge';
+import SoffxPlanIncludes from './SoffxPlanIncludes';
 import styles from './PricingPage.module.scss';
 
 const TierFeatures = ({ tier }) => (
@@ -177,7 +178,9 @@ const PricingPage = () => {
                                       </div>
                                   )}
                                   <TierFeatures tier={tier} />
+                                  {/* The button before the SoffX block, so it is in view without a scroll. */}
                                   <div className={styles.action}>{renderAction(tier)}</div>
+                                  {SOFFX_PLAN_LABELS[tier.soffx_plan] && <SoffxPlanIncludes tier={tier} />}
                               </div>
                           );
                       })}

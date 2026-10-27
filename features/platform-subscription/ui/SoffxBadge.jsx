@@ -63,7 +63,7 @@ const SoffxInfo = ({ plan }) => (
 
         <div className={styles.infoFoot}>
             {SOFFX_PLAN_NOTES[plan] && <span>{SOFFX_PLAN_NOTES[plan]}</span>}
-            <a href={SOFFX_URL} target="_blank" rel="noopener noreferrer">
+            <a href={SOFFX_URL}>
                 Batafsil <MdArrowForward aria-hidden />
             </a>
         </div>

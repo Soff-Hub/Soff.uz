@@ -1,7 +1,7 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
 import dayjs from 'dayjs';
-import { fetchMySubscription, fetchTiers } from './api';
+import { fetchMySubscription, fetchSoffxPlans, fetchTiers } from './api';
 
 export const SUBSCRIPTION_PAGE_URL = '/subscription';
 export const MY_SUBSCRIPTION_URL = '/account/subscription';
@@ -11,6 +11,7 @@ export const CATALOGUE_SIZE = '2\u00a0mln+';
 
 export const TIERS_QUERY_KEY = ['platform-sub-tiers'];
 export const MY_SUBSCRIPTION_QUERY_KEY = ['platform-sub-my'];
+export const SOFFX_PLANS_QUERY_KEY = ['soffx-plans'];
 
 export const SOFFX_PLAN_LABELS = {
     pro: 'SoffX AI Pro',
@@ -18,7 +19,7 @@ export const SOFFX_PLAN_LABELS = {
 };
 
 // What SoffX AI can do — mirrors the tools on the home page (widgets/home/ai-tools).
-export const SOFFX_URL = 'https://soffx.com?ref=ref_WE_7D01F3B3';
+export const SOFFX_URL = '/labs';
 export const SOFFX_FEATURES = [
     { key: 'video', title: 'AI video', text: 'Matndan video yaratish' },
     { key: 'image', title: 'AI rasmlar', text: 'Yuqori sifatli rasmlar' },
@@ -51,6 +52,20 @@ export const useTiers = () =>
         queryFn: fetchTiers,
         staleTime: 10 * 60 * 1000,
     });
+
+export const useSoffxPlans = () =>
+    useQuery({
+        queryKey: SOFFX_PLANS_QUERY_KEY,
+        queryFn: fetchSoffxPlans,
+        staleTime: 10 * 60 * 1000,
+        retry: 1,
+    });
+
+// The monthly SoffX plan a tier includes (its `soffx_plan` is SoffX's `plan_type`).
+export const getSoffxPlanFor = (tier, plans) =>
+    plans?.find(
+        (plan) => plan.plan_type === tier?.soffx_plan && plan.duration_days >= 28 && plan.duration_days <= 31
+    ) || null;
 
 export const useIsLoggedIn = () => Boolean(useSelector((state) => state.auth.user?.access));
 
