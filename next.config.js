@@ -6,7 +6,7 @@ const SERVICE_URL_VIDEO = process.env.SERVICE_URL_VIDEO || 'http://localhost:300
 const SERVICE_URL_FREELANCE = process.env.SERVICE_URL_FREELANCE || 'http://localhost:3006';
 const SERVICE_URL_CREATORS = process.env.SERVICE_URL_CREATORS || 'http://localhost:3000';
 // SoffX AI (SoffAIGenFrontend), built with NEXT_PUBLIC_BASE_PATH=/labs.
-const SERVICE_URL_LABS = process.env.SERVICE_URL_LABS || 'http://localhost:3007';
+const SERVICE_URL_LABS = process.env.SERVICE_URL_LABS || 'http://localhost:3010';
 
 const nextSettings = {
     optimizeFonts: true,
