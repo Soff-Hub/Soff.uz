@@ -42,7 +42,22 @@ export const getJwtCookieExpires = (token) => {
     }
 };
 
+// SoffX's tokens are blacklisted too (best effort, like its own sign-out), so
+// the session at /labs does not outlive Soff.uz's.
+const revokeSoffxSession = () => {
+    if (typeof window === 'undefined') return;
+    const access = safeLocalStorage.getItem('soff.access_token');
+    if (!access) return;
+    fetch('/labs/api/v1/auth/logout', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${access}`, 'X-Skip-Auth-Retry': '1' },
+        credentials: 'same-origin',
+        keepalive: true,
+    }).catch(() => undefined);
+};
+
 export const clearAuthStorage = () => {
+    revokeSoffxSession();
     AUTH_STORAGE_KEYS.forEach((key) => safeLocalStorage.removeItem(key));
     Cookies.remove('token', { path: '/' });
     Cookies.remove('token');
