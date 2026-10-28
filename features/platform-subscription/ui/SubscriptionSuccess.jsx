@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { MdCheck, MdDownload, MdAllInclusive, MdAutoAwesome, MdArrowForward } from 'react-icons/md';
+import { MdCheck, MdDownload, MdAllInclusive, MdAutoAwesome, MdArrowForward, MdLocalOffer } from 'react-icons/md';
 import { addPeriodToThousands } from '~/features/account/ui/price-formatter';
 import { SOFFX_PLAN_LABELS } from '../model';
 import styles from './SubscriptionSuccess.module.scss';
@@ -21,7 +21,7 @@ const CONFETTI = Array.from({ length: 28 }, (_, i) => ({
  * Celebration step after a successful subscription payment. Counts down and
  * then calls onContinue (which opens /account/subscription); the button skips the wait.
  */
-const SubscriptionSuccess = ({ subscription, fallbackTier, onContinue }) => {
+const SubscriptionSuccess = ({ subscription, fallbackTier, promoCode, onContinue }) => {
     const tier = subscription?.tier || fallbackTier;
     const [secondsLeft, setSecondsLeft] = useState(REDIRECT_SECONDS);
 
@@ -52,8 +52,10 @@ const SubscriptionSuccess = ({ subscription, fallbackTier, onContinue }) => {
         ];
         const aiLabel = SOFFX_PLAN_LABELS[subscription?.soffx?.plan || tier.soffx_plan];
         if (aiLabel) items.push({ icon: <MdAutoAwesome />, text: aiLabel });
+        // `my/` doesn't return the promo code, so the checkout passes the one it applied.
+        if (promoCode) items.push({ icon: <MdLocalOffer />, text: `Chegirma ishlatildi: ${promoCode}` });
         return items;
-    }, [tier, subscription]);
+    }, [tier, subscription, promoCode]);
 
     return (
         <div className={styles.wrap}>

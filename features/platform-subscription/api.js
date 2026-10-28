@@ -25,6 +25,8 @@ export const fetchClaims = async ({ limit, offset }) => {
     return data;
 };
 
+// Price preview for the first period, charges nothing. 400 → {msg, code}.
+export const quotePromo = (body) => api.post(`${BASE}promo/quote/`, body).then((res) => res.data);
 export const subscribe = (body) => api.post(`${BASE}subscribe/`, body).then((res) => res.data);
 export const verifySubscription = (body) => api.post(`${BASE}verify/`, body).then((res) => res.data);
 export const cancelSubscription = () => api.post(`${BASE}cancel/`).then((res) => res.data);

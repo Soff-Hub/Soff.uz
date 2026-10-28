@@ -1,11 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Modal } from 'antd';
-import { MdClose } from 'react-icons/md';
+import { MdClose, MdLocalOffer } from 'react-icons/md';
 import { BeatLoader } from 'react-spinners';
 import { FaRegCreditCard, FaRegCalendarDays, FaClock } from 'react-icons/fa6';
 import { addPeriodToThousands } from '~/features/account/ui/price-formatter';
-import { fetchMySubscription, getErrorMessage, subscribe, verifySubscription } from '../api';
+import {
+    fetchMySubscription,
+    getErrorCode,
+    getErrorMessage,
+    quotePromo,
+    subscribe,
+    verifySubscription,
+} from '../api';
 import { MY_SUBSCRIPTION_URL, useSetMySubscription } from '../model';
 import ClickTrust from '~/shared/components/click-trust/ClickTrust';
 import SubscriptionSuccess from './SubscriptionSuccess';
@@ -19,6 +26,8 @@ const formatExpiry = (digits) => (digits.length > 2 ? `${digits.slice(0, 2)}/${d
 const formatTimer = (seconds) =>
     `${String(Math.floor(seconds / 60)).padStart(2, '0')}:${String(seconds % 60).padStart(2, '0')}`;
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+// subscribe/ and verify/ return promo errors as plain `msg` without a `code`; they all start with "Promokod".
+const isPromoMessage = (msg) => /promokod/i.test(msg || '');
 
 const STEP_CARD = 'card';
 const STEP_CODE = 'code';
@@ -36,8 +45,26 @@ const CheckoutModal = ({ open, tier, onClose }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [result, setResult] = useState(null);
+    const [promoInput, setPromoInput] = useState('');
+    const [quote, setQuote] = useState(null);
+    const [promoError, setPromoError] = useState(null);
+    const [promoErrorCode, setPromoErrorCode] = useState(null);
+    const [promoLoading, setPromoLoading] = useState(false);
+    // Ignores quote responses that arrive after the code, the tier or the modal changed.
+    const quoteRequestRef = useRef(0);
 
+    const resetPromo = () => {
+        quoteRequestRef.current += 1;
+        setPromoInput('');
+        setQuote(null);
+        setPromoError(null);
+        setPromoErrorCode(null);
+        setPromoLoading(false);
+    };
+
+    // Also runs on close, so a reopened modal never re-quotes the previous code.
     useEffect(() => {
+        resetPromo();
         if (!open) return;
         setStep(STEP_CARD);
         setCode('');
@@ -62,6 +89,56 @@ const CheckoutModal = ({ open, tier, onClose }) => {
         }
     }, [step, secondsLeft]);
 
+    // The backend computes the discount; the quote is only shown, never recalculated here.
+    async function applyPromo(value = promoInput) {
+        const promoCode = value.trim();
+        if (!promoCode || !tier) return null;
+        const requestId = ++quoteRequestRef.current;
+        setPromoLoading(true);
+        setPromoError(null);
+        setPromoErrorCode(null);
+        try {
+            const data = await quotePromo({ tier: tier.id, promo_code: promoCode });
+            if (requestId !== quoteRequestRef.current) return null;
+            setQuote(data);
+            return data;
+        } catch (err) {
+            if (requestId !== quoteRequestRef.current) return null;
+            setQuote(null);
+            setPromoError(getErrorMessage(err, "Promokodni tekshirib bo'lmadi"));
+            setPromoErrorCode(getErrorCode(err) || null);
+            return null;
+        } finally {
+            if (requestId === quoteRequestRef.current) setPromoLoading(false);
+        }
+    }
+
+    // The discount depends on the tier: quote the applied code again when it changes.
+    useEffect(() => {
+        if (open && tier && quote?.promo_code) applyPromo(quote.promo_code);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [tier?.id]);
+
+    const handlePromoChange = (e) => {
+        quoteRequestRef.current += 1;
+        setPromoInput(e.target.value);
+        setQuote(null);
+        setPromoError(null);
+        setPromoErrorCode(null);
+        setPromoLoading(false);
+    };
+
+    const handlePromoBlur = () => {
+        if (promoInput.trim() && !quote && !promoError && !promoLoading) applyPromo();
+    };
+
+    const handlePromoKeyDown = (e) => {
+        if (e.key !== 'Enter') return;
+        // Enter applies the code instead of submitting the card form.
+        e.preventDefault();
+        if (!promoLoading) applyPromo();
+    };
+
     const finish = (subscription) => {
         setMySubscription(subscription);
         setResult(subscription);
@@ -79,15 +156,33 @@ const CheckoutModal = ({ open, tier, onClose }) => {
             setError('Amal qilish muddatini kiriting (MM/YY)');
             return;
         }
+        if (promoLoading) return;
+        // A typed code that wasn't checked yet: quote it first so the user sees the price before paying.
+        if (promoInput.trim() && !quote) {
+            setError(null);
+            await applyPromo();
+            return;
+        }
         setLoading(true);
         setError(null);
         try {
-            const data = await subscribe({ tier: tier.id, card_number: cardNumber, expire_date: expiry });
+            const data = await subscribe({
+                tier: tier.id,
+                card_number: cardNumber,
+                expire_date: expiry,
+                ...(quote?.promo_code ? { promo_code: quote.promo_code } : {}),
+            });
             setPending(data);
             setCode('');
             setStep(STEP_CODE);
         } catch (err) {
-            setError(getErrorMessage(err));
+            const message = getErrorMessage(err);
+            if (quote && isPromoMessage(message)) {
+                setQuote(null);
+                setPromoError(message);
+            } else {
+                setError(message);
+            }
         } finally {
             setLoading(false);
         }
@@ -112,7 +207,17 @@ const CheckoutModal = ({ open, tier, onClose }) => {
                     setError("To'lov tekshirilmoqda. Birozdan so'ng sahifani yangilang.");
                 }
             } else {
-                setError(getErrorMessage(err));
+                const message = getErrorMessage(err);
+                if (quote && isPromoMessage(message)) {
+                    // The code stopped being valid after subscribe (e.g. the limit was reached):
+                    // back to the card step to subscribe again.
+                    setQuote(null);
+                    setPromoError(message);
+                    setCode('');
+                    setStep(STEP_CARD);
+                } else {
+                    setError(message);
+                }
             }
         } finally {
             setLoading(false);
@@ -134,12 +239,85 @@ const CheckoutModal = ({ open, tier, onClose }) => {
         onClose();
     };
 
+    const discount = quote?.discount > 0 ? quote.discount : 0;
+
+    const renderSummary = () =>
+        discount ? (
+            <div className={styles.summary}>
+                <div className={styles.summaryRow}>
+                    <span>{tier?.title}</span>
+                    <s className={styles.listPrice}>{addPeriodToThousands(quote.list_price)} so'm</s>
+                </div>
+                <div className={styles.summaryRow}>
+                    <span>Chegirma ({quote.promo_code})</span>
+                    <span>−{addPeriodToThousands(discount)} so'm</span>
+                </div>
+                <div className={`${styles.summaryRow} ${styles.summaryTotal}`}>
+                    <span>To'lov</span>
+                    <strong>{addPeriodToThousands(quote.amount)} so'm</strong>
+                </div>
+                <p className={styles.summaryNote}>
+                    Chegirma faqat birinchi oy uchun. Keyingi oylar —{' '}
+                    {addPeriodToThousands(quote.list_price)} so'm.
+                </p>
+            </div>
+        ) : (
+            <div className={styles.summary}>
+                <div className={styles.summaryRow}>
+                    <span>{tier?.title}</span>
+                    <strong>{addPeriodToThousands(tier?.price || 0)} so'm / oy</strong>
+                </div>
+            </div>
+        );
+
+    const renderPromo = () => (
+        <div className={styles.formGroup}>
+            <label className={styles.inputLabel} htmlFor="checkout-promo">
+                Promokod
+            </label>
+            <div className={styles.inputWrapper}>
+                <span className={styles.inputIcon}><MdLocalOffer /></span>
+                <input
+                    id="checkout-promo"
+                    className={`${styles.input} ${styles.promoInput}`}
+                    type="text"
+                    autoComplete="off"
+                    autoCapitalize="characters"
+                    spellCheck={false}
+                    placeholder="Mavjud bo'lsa kiriting"
+                    value={promoInput}
+                    readOnly={Boolean(quote)}
+                    onChange={handlePromoChange}
+                    onBlur={handlePromoBlur}
+                    onKeyDown={handlePromoKeyDown}
+                />
+                {quote ? (
+                    <button type="button" className={styles.promoAction} onClick={resetPromo}>
+                        Olib tashlash
+                    </button>
+                ) : (
+                    promoInput.trim() &&
+                    promoErrorCode !== 'exhausted' && (
+                        <button
+                            type="button"
+                            className={styles.promoAction}
+                            disabled={promoLoading}
+                            // Keeps the input from blurring, so the click doesn't quote twice.
+                            onMouseDown={(e) => e.preventDefault()}
+                            onClick={() => applyPromo()}>
+                            {promoLoading ? <BeatLoader color="#00a44f" size={6} /> : "Qo'llash"}
+                        </button>
+                    )
+                )}
+            </div>
+            {promoError && <p className={styles.promoError}>{promoError}</p>}
+        </div>
+    );
+
     const renderCardStep = () => (
         <form onSubmit={handleSubscribe}>
-            <div className={styles.summary}>
-                <span>{tier?.title}</span>
-                <strong>{addPeriodToThousands(tier?.price || 0)} so'm / oy</strong>
-            </div>
+            {renderSummary()}
+            {renderPromo()}
             <div className={styles.formGroup}>
                 <label className={styles.inputLabel}>Karta raqami</label>
                 <div className={styles.inputWrapper}>
@@ -175,7 +353,7 @@ const CheckoutModal = ({ open, tier, onClose }) => {
             </div>
             <ClickTrust />
             {error && <p className={styles.error}>{error}</p>}
-            <button type="submit" className={styles.submitBtn} disabled={loading}>
+            <button type="submit" className={styles.submitBtn} disabled={loading || promoLoading}>
                 {loading ? <BeatLoader color="#fff" size={8} /> : 'Davom etish'}
             </button>
             <p className={styles.note}>
@@ -221,7 +399,12 @@ const CheckoutModal = ({ open, tier, onClose }) => {
     );
 
     const renderDoneStep = () => (
-        <SubscriptionSuccess subscription={result} fallbackTier={tier} onContinue={goToMySubscription} />
+        <SubscriptionSuccess
+            subscription={result}
+            fallbackTier={tier}
+            promoCode={quote?.promo_code}
+            onContinue={goToMySubscription}
+        />
     );
 
     return (
