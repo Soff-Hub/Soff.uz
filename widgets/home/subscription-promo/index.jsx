@@ -61,21 +61,15 @@ const SubscriptionPromo = () => {
             </div>
 
             <div className={styles.card}>
-                <div className={styles.priceBlock}>
-                    {offer ? (
-                        <>
-                            <div className={styles.tierRow}>
-                                <span className={styles.tierName}>{offer.tier.title} ta'rifi</span>
-                                {offer.isFeatured && <span className={styles.popular}>Ommabop</span>}
-                            </div>
-                            <p className={styles.price}>
-                                {addPeriodToThousands(offer.tier.price)} <span>so'm/oy</span>
-                            </p>
-                        </>
-                    ) : (
-                        <span className={styles.pricePlaceholder} />
-                    )}
-                </div>
+                {/* The plan's own price is left to the subscription page. */}
+                {offer ? (
+                    <div className={styles.tierRow}>
+                        <span className={styles.tierName}>{offer.tier.title} ta'rifi</span>
+                        {offer.isFeatured && <span className={styles.popular}>Ommabop</span>}
+                    </div>
+                ) : (
+                    <span className={styles.tierPlaceholder} />
+                )}
 
                 <ul className={styles.benefits}>
                     <li>

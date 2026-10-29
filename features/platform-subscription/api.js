@@ -34,6 +34,14 @@ export const resumeSubscription = () => api.post(`${BASE}resume/`).then((res) =>
 export const changeTier = (tier) => api.post(`${BASE}change-tier/`, { tier }).then((res) => res.data);
 // Upgrade right away: charged from the saved card, the new tier starts now.
 export const upgradeNow = (tier) => api.post(`${BASE}upgrade/`, { tier }).then((res) => res.data);
+// Renew now: closes the current period and starts a full one today. Allowed once 10% or less
+// of the period's downloads are left. GET quotes {tier, amount, downloads_left, days_lost,
+// ends_at, new_ends_at}; POST {tier?, card?} charges and returns the whole subscription.
+export const fetchRenewNowQuote = async (tier) => {
+    const { data } = await api.get(`${BASE}renew-now/`, { params: tier ? { tier } : undefined });
+    return data;
+};
+export const renewNow = (body = {}) => api.post(`${BASE}renew-now/`, body).then((res) => res.data);
 export const soffxLogin = (redirect) =>
     api.post(`${BASE}soffx-login/`, redirect ? { redirect } : {}).then((res) => res.data);
 // Saved cards. POST cards/ {card_number, expire_date} → {request_id, phone_number, msg};

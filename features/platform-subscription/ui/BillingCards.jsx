@@ -12,7 +12,7 @@ export const CARDS_QUERY_KEY = ['platform-sub-cards'];
 const CODE_TTL_SECONDS = 5 * 60;
 
 // The cards/ row shape isn't documented yet, so read the likely field names.
-const getLast4 = (card) => {
+export const getLast4 = (card) => {
     const raw = card.card_last4 || card.last4 || card.masked_number || card.number || card.card_number || '';
     return String(raw).replace(/\D/g, '').slice(-4);
 };
@@ -20,7 +20,7 @@ const getExpiry = (card) => {
     const raw = String(card.expire_date || card.expire || card.expiry || '').replace(/\D/g, '');
     return raw.length === 4 ? `${raw.slice(0, 2)}/${raw.slice(2)}` : null;
 };
-const getCardId = (card) => card.id ?? card.card_id;
+export const getCardId = (card) => card.id ?? card.card_id;
 
 const formatCardNumber = (digits) => digits.replace(/(\d{4})(?=\d)/g, '$1 ');
 const formatExpiry = (digits) => (digits.length > 2 ? `${digits.slice(0, 2)}/${digits.slice(2)}` : digits);

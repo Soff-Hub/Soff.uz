@@ -111,12 +111,6 @@ $line: #e5e7eb;
     background: #fff;
 }
 
-.priceBlock {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
-
 .tierRow {
     display: flex;
     align-items: center;
@@ -139,26 +133,11 @@ $line: #e5e7eb;
     line-height: 18px;
 }
 
-.price {
-    margin: 0;
-    color: $ink;
-    font-size: 30px;
-    font-weight: 700;
-    line-height: 1.15;
-    font-variant-numeric: tabular-nums;
-
-    span {
-        color: $muted;
-        font-size: 16px;
-        font-weight: 500;
-    }
-}
-
-// Same height as .price so the card doesn't jump when tiers load.
-.pricePlaceholder {
+// Same height as .tierRow (the .popular pill) so the card doesn't jump when tiers load.
+.tierPlaceholder {
     display: block;
-    width: 170px;
-    height: 34px;
+    width: 150px;
+    height: 22px;
     border-radius: 6px;
     background: #f1f3f5;
 }

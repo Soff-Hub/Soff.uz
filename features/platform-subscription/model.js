@@ -163,6 +163,21 @@ export const canClaimWithSubscription = (subscription, product) => {
     return Boolean(period) && period.downloads_left > 0;
 };
 
+// Renew now is offered once 10% or less of the period's downloads are left (the backend
+// rule), while the subscription hasn't expired. The endpoint still has the final say.
+export const hasRenewablePeriod = (subscription) => {
+    const period = subscription?.current_period;
+    if (!period || !period.download_limit) return false;
+    return !(subscription.ends_at && dayjs(subscription.ends_at).isBefore(dayjs()));
+};
+
+// Most downloads that may be left for renew now to open, e.g. 3 of 30, 0 below a limit of 10.
+export const getRenewNowThreshold = (period) => Math.floor((period?.download_limit || 0) / 10);
+
+export const canRenewNow = (subscription) =>
+    hasRenewablePeriod(subscription) &&
+    subscription.current_period.downloads_left <= getRenewNowThreshold(subscription.current_period);
+
 export const useIsCoveredBySubscription = (product, purchased = false) => {
     const { subscription } = useMySubscription();
     return !purchased && canClaimWithSubscription(subscription, product);

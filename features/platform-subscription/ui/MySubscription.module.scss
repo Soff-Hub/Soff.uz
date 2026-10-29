@@ -168,6 +168,43 @@
     }
 }
 
+// Renew now, under the counter and set off from it by a rule.
+.renewRow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px 12px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #eef0f3;
+}
+
+.renewText {
+    flex: 1 1 220px;
+    margin: 0;
+    color: #6b7280;
+    font-size: 13px;
+    line-height: 1.4;
+
+    strong {
+        color: #111827;
+    }
+}
+
+// Outlined in the tier colour so it doesn't compete with the primary actions.
+.renewBtn {
+    border-color: var(--tier, #00a44f);
+    color: var(--tier, #00803d);
+    font-weight: 600;
+
+    &:hover:not(:disabled) {
+        border-color: var(--tier, #008f44) !important;
+        color: var(--tier, #006b33) !important;
+        background: rgba(var(--tier-rgb, 0, 164, 79), 0.06) !important;
+    }
+}
+
 .primaryBtn {
     margin-left: auto;
     background: #00a44f;

@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { HiSparkles } from 'react-icons/hi2';
 import { useSelector } from 'react-redux';
 import { useMounted } from '~/shared/hooks/useMounted';
 import { trackEvent } from '~/shared/utilities/analytics';
@@ -126,10 +125,6 @@ const HeaderCtaBanner = () => {
             aria-label="Pro tarif taklifi"
             aria-hidden={isHidden}
         >
-            <span className={styles.badge}>
-                <HiSparkles />
-                SoffX AI
-            </span>
             <div className={styles.content}>{showUserCta ? <UserCta /> : <GuestCta />}</div>
         </div>
     );

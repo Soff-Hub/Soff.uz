@@ -3,7 +3,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import Link from 'next/link';
 import { Alert, Button, Modal, Skeleton, Tabs, message } from 'antd';
 import { HiArrowRight, HiSparkles } from 'react-icons/hi2';
-import { MdWorkspacePremium } from 'react-icons/md';
+import { MdRefresh, MdWorkspacePremium } from 'react-icons/md';
 import { addPeriodToThousands } from '~/features/account/ui/price-formatter';
 import {
     cancelSubscription,
@@ -13,6 +13,9 @@ import {
 } from '../api';
 import {
     STATUS_META,
+    canRenewNow,
+    getRenewNowThreshold,
+    hasRenewablePeriod,
     SUBSCRIPTION_PAGE_URL,
     formatDate,
     getTierTheme,
@@ -22,6 +25,7 @@ import {
 import { openSoffx } from '../soffx-links';
 import { AddCardModal, CARDS_QUERY_KEY } from './BillingCards';
 import ClaimsList from './ClaimsList';
+import RenewNowModal from './RenewNowModal';
 import SoffxBadge from './SoffxBadge';
 import TierSwitcher from './TierSwitcher';
 import styles from './MySubscription.module.scss';
@@ -53,6 +57,32 @@ const SoffxAction = ({ soffx }) => {
     );
 };
 
+// Renew now under the counter: it opens once 10% or less of the limit is left (backend rule).
+// Until then it stays visible but disabled, saying when it opens.
+const RenewNowRow = ({ subscription, onRenew }) => {
+    const enabled = canRenewNow(subscription);
+    const threshold = getRenewNowThreshold(subscription.current_period);
+
+    return (
+        <div className={styles.renewRow}>
+            <p className={styles.renewText}>
+                {enabled ? (
+                    <>
+                        <strong>Limit tugayaptimi?</strong> Yangi oyni hoziroq boshlang — limit to'liq tiklanadi.
+                    </>
+                ) : threshold > 0 ? (
+                    `Limit ${threshold} ta yoki undan kam qolganda ta'rifni hozir yangilash mumkin`
+                ) : (
+                    "Limit tugaganda ta'rifni hozir yangilash mumkin"
+                )}
+            </p>
+            <Button size="small" className={styles.renewBtn} icon={<MdRefresh />} disabled={!enabled} onClick={onRenew}>
+                Hozir yangilash
+            </Button>
+        </div>
+    );
+};
+
 const SubscriptionOverview = ({ subscription }) => {
     const refreshMySubscription = useRefreshMySubscription();
     const [action, setAction] = useState(null);
@@ -67,6 +97,7 @@ const SubscriptionOverview = ({ subscription }) => {
 
     const queryClient = useQueryClient();
     const [addCardOpen, setAddCardOpen] = useState(false);
+    const [renewOpen, setRenewOpen] = useState(false);
 
     // "Saqlangan karta topilmadi": resuming needs a saved card. The code isn't documented,
     // so the message is checked too.
@@ -184,6 +215,7 @@ const SubscriptionOverview = ({ subscription }) => {
                             ? 'Barcha fayllar'
                             : `${addPeriodToThousands(period.max_document_price)} so'mgacha bo'lgan fayllar`}
                     </p>
+                    {hasRenewablePeriod(subscription) && <RenewNowRow subscription={subscription} onRenew={() => setRenewOpen(true)} />}
                 </div>
             )}
 
@@ -211,6 +243,7 @@ const SubscriptionOverview = ({ subscription }) => {
                 )}
             </div>
 
+            <RenewNowModal subscription={subscription} open={renewOpen} onClose={() => setRenewOpen(false)} />
             <AddCardModal
                 open={addCardOpen}
                 onClose={() => setAddCardOpen(false)}

@@ -88,3 +88,18 @@ $line: #e5e7eb;
         transition: none;
     }
 }
+
+.ctaSecondary {
+    background: #fff;
+    box-shadow: inset 0 0 0 1px $line;
+    color: $green-text;
+
+    &:hover {
+        background: rgba($green, 0.08);
+        color: $green-text;
+    }
+
+    &:active {
+        background: rgba($green, 0.14);
+    }
+}

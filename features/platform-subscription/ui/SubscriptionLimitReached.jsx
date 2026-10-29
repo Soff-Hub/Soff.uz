@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { MdArrowForward } from 'react-icons/md';
-import { formatDate, useTiers } from '../model';
+import { MdArrowForward, MdRefresh } from 'react-icons/md';
+import { canRenewNow, formatDate, useTiers } from '../model';
 import ChangeTierModal from './ChangeTierModal';
+import RenewNowModal from './RenewNowModal';
 import styles from './SubscriptionLimitReached.module.scss';
 
 // Cheapest tier with a bigger monthly limit than the current one, or null on the top tier.
@@ -17,11 +18,13 @@ const useNextTier = (subscription) => {
 
 /**
  * Shown on the detail page when the subscription's monthly downloads are used up.
- * The buy buttons above stay the way to get the file now.
+ * The buy buttons above stay the way to get the file now; renewing restarts the
+ * current tier with a full limit, and the next tier is offered beside it.
  */
 const SubscriptionLimitReached = ({ subscription, className = '' }) => {
     const nextTier = useNextTier(subscription);
     const [changeOpen, setChangeOpen] = useState(false);
+    const [renewOpen, setRenewOpen] = useState(false);
     const period = subscription?.current_period;
     const limit = period?.download_limit ?? 0;
     const used = period?.downloads_used ?? limit;
@@ -40,9 +43,19 @@ const SubscriptionLimitReached = ({ subscription, className = '' }) => {
                 <p className={styles.text}>Yangi limit {formatDate(period.ends_at)} da ochiladi</p>
             )}
 
+            {canRenewNow(subscription) && (
+                <>
+                    <button type="button" className={styles.cta} onClick={() => setRenewOpen(true)}>
+                        <MdRefresh aria-hidden />
+                        Hozir yangilash
+                    </button>
+                    <RenewNowModal subscription={subscription} open={renewOpen} onClose={() => setRenewOpen(false)} />
+                </>
+            )}
+
             {nextTier && (
                 <>
-                    <button type="button" className={styles.cta} onClick={() => setChangeOpen(true)}>
+                    <button type="button" className={`${styles.cta} ${styles.ctaSecondary}`} onClick={() => setChangeOpen(true)}>
                         {nextTier.title}'ga o'tish
                         <MdArrowForward aria-hidden />
                     </button>
