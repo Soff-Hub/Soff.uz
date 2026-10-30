@@ -7,6 +7,7 @@ import Tags from '../actions/tags';
 import Link from 'next/link';
 import CommentList from '~/features/comments/ui/commentList';
 import CommentFormWrapper from '~/features/comments/ui/commentWrapper';
+import { AiServicesCta } from '../ai-services';
 
 const FileImagesScroll = dynamic(
     () => import('../actions/file-images-scroll'),
@@ -22,6 +23,7 @@ function FileProductsDetails({ product }) {
             <div className="ps-container p-0">
                 <div className="ps-product--detail_seller">
                     <div>
+                        <AiServicesCta />
                         <h1 className="titleh3" style={{ wordBreak: 'break-word', overflowWrap: 'break-word' }}>
                             {product?.title || (
                                 <span className="invisible-text">

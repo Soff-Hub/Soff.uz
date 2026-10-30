@@ -6,6 +6,7 @@ import ImageCarousel from '../actions/imageScroll';
 import Tags from '../actions/tags';
 import CommentList from '~/features/comments/ui/commentList';
 import CommentFormWrapper from '~/features/comments/ui/commentWrapper';
+import { AiServicesCta } from '../ai-services';
 
 function ThreeDesignProductsDetails({ product, template }) {
     return (
@@ -13,6 +14,7 @@ function ThreeDesignProductsDetails({ product, template }) {
             <div className="ps-container p-0">
                 <div className="ps-product--detail_seller_three_design">
                     <div>
+                        <AiServicesCta />
                         <p
                             className="titleh3"
                             style={{

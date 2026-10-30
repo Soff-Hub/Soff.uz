@@ -5,6 +5,7 @@ import { fetchMySubscription, fetchSoffxPlans, fetchTiers } from './api';
 
 export const SUBSCRIPTION_PAGE_URL = '/subscription';
 export const MY_SUBSCRIPTION_URL = '/account/subscription';
+export const BILLING_URL = '/account/billing';
 
 // Catalogue size used in subscription copy; non-breaking space keeps "2 mln+" on one line.
 export const CATALOGUE_SIZE = '2\u00a0mln+';
@@ -14,8 +15,8 @@ export const MY_SUBSCRIPTION_QUERY_KEY = ['platform-sub-my'];
 export const SOFFX_PLANS_QUERY_KEY = ['soffx-plans'];
 
 export const SOFFX_PLAN_LABELS = {
-    pro: 'SoffX AI Pro',
-    ultra: 'SoffX AI Max',
+    pro: 'Soff AI Pro',
+    ultra: 'Soff AI Max',
 };
 
 // What SoffX AI can do — mirrors the tools on the home page (widgets/home/ai-tools).

@@ -21,7 +21,7 @@ export const SearchSoffxAIOption: FC<SearchSoffxAIOptionProps> = ({
                 <HiSparkles />
             </div>
             <div className={styles.aiText}>
-                <span className={styles.aiLabel}>SoffX AI orqali yaratish</span>
+                <span className={styles.aiLabel}>Soff AI orqali yaratish</span>
                 <span className={styles.aiDesc}>
                     "{debouncedSearch}" haqida AI dan so'rab ko'ring
                 </span>

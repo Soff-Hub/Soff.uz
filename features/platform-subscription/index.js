@@ -8,6 +8,7 @@ export { default as SoffxBadge, SoffxFeatureIcon } from './ui/SoffxBadge';
 export {
     SUBSCRIPTION_PAGE_URL,
     MY_SUBSCRIPTION_URL,
+    BILLING_URL,
     useMySubscription,
     useTiers,
     useIsCoveredBySubscription,

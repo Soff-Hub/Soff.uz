@@ -6,6 +6,7 @@ import { Modal } from 'antd';
 import { useDispatch } from 'react-redux';
 import { login } from '~/store/auth/slice';
 import { baseUrlAuth } from '~/repositories/Repository';
+import { goToReturnUrl, readReturnUrl } from '~/shared/utilities/return-url';
 
 export default function GoogleBox({
     isModal,
@@ -87,12 +88,13 @@ export default function GoogleBox({
 
             const redirectUrl =
                 onGoogleSuccessNavigateTo ||
+                readReturnUrl(router.query) ||
                 safeLocalStorage.getItem('google_redirect_url') ||
                 (isModal ? router.asPath : '/');
 
             safeLocalStorage.removeItem('google_redirect_url');
 
-            Router.push(redirectUrl);
+            goToReturnUrl(Router, redirectUrl);
         } catch (error) {
             Modal.error({
                 centered: true,

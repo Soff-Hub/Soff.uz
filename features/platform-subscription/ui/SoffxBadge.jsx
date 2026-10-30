@@ -31,10 +31,10 @@ export const SoffxFeatureIcon = ({ name }) => {
     return <Icon aria-hidden />;
 };
 
-// The SoffX wordmark as the home page writes it: "Soff" + a green "x".
+// The AI wordmark: "Soff AI", plus the plan.
 export const SoffxMark = ({ plan }) => (
     <span className={styles.mark}>
-        Soff<span className={styles.markX}>x</span> AI{PLAN_SUFFIX[plan] ? ` ${PLAN_SUFFIX[plan]}` : ''}
+        Soff AI{PLAN_SUFFIX[plan] ? ` ${PLAN_SUFFIX[plan]}` : ''}
     </span>
 );
 
@@ -71,7 +71,7 @@ const SoffxInfo = ({ plan }) => (
 );
 
 /**
- * "Soffx AI Pro / Max" badge that explains itself: a click opens what SoffX AI can do.
+ * "Soff AI Pro / Max" badge that explains itself: a click opens what SoffX AI can do.
  * People seeing the badge for the first time don't know what SoffX is.
  */
 const SoffxBadge = ({ plan, className = '' }) => {
@@ -87,7 +87,7 @@ const SoffxBadge = ({ plan, className = '' }) => {
             <button
                 type="button"
                 className={`${styles.badge} ${className}`}
-                aria-label={`Soffx AI ${PLAN_SUFFIX[plan]} — bu nima?`}
+                aria-label={`Soff AI ${PLAN_SUFFIX[plan]} — bu nima?`}
                 onClick={(e) => {
                     // Badges sit inside cards and links: open the explanation only.
                     e.preventDefault();

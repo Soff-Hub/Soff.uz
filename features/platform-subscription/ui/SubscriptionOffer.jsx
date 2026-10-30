@@ -49,7 +49,7 @@ const SubscriptionOffer = ({ product, variant = 'subscribe', myTierTitle, classN
                   ? `Oyiga ${Math.max(...limits)} ta fayl yuklab olish`
                   : `Oyiga ${Math.min(...limits)} tadan ${Math.max(...limits)} tagacha fayl`,
               `${CATALOGUE_SIZE} tayyor mahsulot bitta obunada`,
-              "Pro va Max'da SoffX AI: video, rasm, taqdimot va ilmiy ishlar yaratish",
+              "Pro va Max'da Soff AI: video, rasm, taqdimot va ilmiy ishlar yaratish",
               'Olingan fayl doim sizda qoladi',
               'Istalgan vaqtda bekor qilish',
           ]

@@ -7,6 +7,9 @@ const SERVICE_URL_FREELANCE = process.env.SERVICE_URL_FREELANCE || 'http://local
 const SERVICE_URL_CREATORS = process.env.SERVICE_URL_CREATORS || 'http://localhost:3000';
 // SoffX AI (SoffAIGenFrontend), built with NEXT_PUBLIC_BASE_PATH=/labs.
 const SERVICE_URL_LABS = process.env.SERVICE_URL_LABS || 'http://127.0.0.1:3010';
+// Soff.uz's own API, for SoffX at /labs through /soffuz-api: its sign-in bridge
+// then trades the token with the backend that issued it, whichever one .env picks.
+const SOFFUZ_API_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://api.soff.uz';
 
 const nextSettings = {
     optimizeFonts: true,
@@ -112,10 +115,11 @@ const nextSettings = {
     async redirects() {
         return [
             // Next's own "/x/ → /x" redirect is off (experimental.skipTrailingSlashRedirect)
-            // because SoffX at /labs calls API paths that must keep their slash.
+            // because SoffX at /labs calls API paths that must keep their slash
+            // (and so does /soffuz-api, Soff.uz's API for it).
             // Same redirect for everything else.
             {
-                source: '/:path((?!labs(?:/|$)).+)/',
+                source: '/:path((?!labs(?:/|$)|soffuz-api/).+)/',
                 destination: '/:path',
                 permanent: true,
             },
@@ -126,30 +130,6 @@ const nextSettings = {
                 has: [{ type: 'host', value: 'www.soff.uz' }],
                 destination: 'https://soff.uz/:path*',
                 permanent: true,
-            },
-            // SoffX's own plans, billing and profile pages: at /labs the account
-            // and its subscription are Soff.uz's, managed on Soff.uz's pages.
-            // Client-side links inside SoffX land here too: the router sees a
-            // non-RSC response and loads the page in full.
-            {
-                source: '/labs/:page(pricing|app/billing)/:rest*',
-                destination: '/subscription',
-                permanent: false,
-            },
-            {
-                source: '/labs/:page(pricing|app/billing)',
-                destination: '/subscription',
-                permanent: false,
-            },
-            {
-                source: '/labs/app/settings/:rest*',
-                destination: '/account/profile',
-                permanent: false,
-            },
-            {
-                source: '/labs/app/settings',
-                destination: '/account/profile',
-                permanent: false,
             },
             // Soffia AI has moved to SoffX AI at /labs. Keep old /soffia links working.
             {
@@ -186,6 +166,15 @@ const nextSettings = {
             {
                 source: '/labs/:path*',
                 destination: `${SERVICE_URL_LABS}/labs/:path*`,
+            },
+            // Soff.uz's API for SoffX's sign-in bridge (SoffAIGenFrontend soffuz-bridge.ts).
+            {
+                source: '/soffuz-api/:path*/',
+                destination: `${SOFFUZ_API_URL}/:path*/`,
+            },
+            {
+                source: '/soffuz-api/:path*',
+                destination: `${SOFFUZ_API_URL}/:path*`,
             },
             // SoffX renders some public files (<video>, posters) by their bare
             // path, without /labs. Soff.uz has nothing at these paths.

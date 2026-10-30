@@ -37,6 +37,10 @@ const SimilarProducts = dynamic(
 );
 
 
+const AiServices = dynamic(() => import('~/features/product-details/ui/ai-services'), {
+    ssr: false,
+});
+
 const PurchaseRecommendations = dynamic(
     () => import('~/features/product-details/ui/purchase-recommendations'),
     { ssr: false }
@@ -209,6 +213,8 @@ export default function ProductDefaultPage({ defaultProducts }) {
                             </div>
 
                             <div className={contentType === 'video' ? 'container' : ''}>
+                                {/* Every product: whatever was opened, the same kind of work can be made with Soff AI. */}
+                                <AiServices />
                                 {contentType !== 'video' && <PurchaseRecommendations />}
 
                                 {contentType !== 'video' && (

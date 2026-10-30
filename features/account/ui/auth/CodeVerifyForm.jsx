@@ -7,7 +7,7 @@ import { baseUrlAuth } from '~/repositories/Repository';
 import { useDispatch } from 'react-redux';
 import { login } from '~/store/auth/slice';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
-import { isReturnUrlEmpty } from '~/shared/utilities/return-url';
+import { goToReturnUrl, readReturnUrl } from '~/shared/utilities/return-url';
 import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
 
 export const formatTime = (seconds) => {
@@ -76,12 +76,10 @@ export default function CodeVerifyForm({ authCode, onClose, slug, onSuccess }) {
                 onClose();
             }
 
-            const decodedUrl = decodeURIComponent(
-                router?.query?.returnUrl || ''
-            );
+            const returnUrl = readReturnUrl(router?.query);
 
-            if (router?.query?.returnUrl && !isReturnUrlEmpty(decodedUrl)) {
-                router.push(decodedUrl);
+            if (returnUrl) {
+                goToReturnUrl(router, returnUrl);
             } else if (router?.query?.id) {
                 router.push(`/account/checkout?id=${router?.query?.id}`);
             } else if (router?.query?.deal) {

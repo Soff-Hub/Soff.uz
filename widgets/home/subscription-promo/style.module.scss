@@ -206,18 +206,10 @@ $line: #e5e7eb;
     white-space: nowrap;
 }
 
-.soffx,
-.soffxMark {
+.soffx {
     // A global span rule otherwise drops the headline weight.
     font: inherit;
-}
-
-.soffx {
     white-space: nowrap;
-}
-
-.soffxMark {
-    color: $green-text; // same green as "2 mln+ tayyor fayllar"
 }
 
 .otherPlans {

@@ -14,6 +14,7 @@ import {
     LockOutlined
 } from '@ant-design/icons';
 import Link from 'next/link';
+import { AiServicesCta } from '~/features/product-details/ui/ai-services';
 
 import useCart from '~/shared/hooks/useCart';
 import useWishlist from '~/shared/hooks/useWishlist';
@@ -194,6 +195,9 @@ const VideoDetails: React.FC<Props> = ({ video }) => {
                                 </Link>
                             </div>
 
+                            <div>
+                                <AiServicesCta dark lead="Video va rasmlarni" />
+                            </div>
                             <h1 className={styles.title}>{video.title}</h1>
                             <p className={styles.shortDescription}>
                                 {video?.description?.replace(/<[^>]*>/g, '').slice(0, 160)}...

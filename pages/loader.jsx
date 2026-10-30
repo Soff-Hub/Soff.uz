@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { PacmanLoader } from 'react-spinners';
 import { login } from '~/store/auth/slice';
-import { isReturnUrlEmpty } from '~/shared/utilities/return-url';
+import { goToReturnUrl, isReturnUrlEmpty } from '~/shared/utilities/return-url';
 import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
 
 const Loader = () => {
@@ -50,7 +50,7 @@ const Loader = () => {
         }
 
         if (decodedUrl && !isReturnUrlEmpty(decodedUrl)) {
-            Router.push(decodedUrl);
+            goToReturnUrl(Router, decodedUrl);
         } else {
             Router.push('/account/sellerproducts');
         }

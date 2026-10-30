@@ -143,7 +143,7 @@ const mainPages = [
     { key: '7', link: '/affiliate_program', label: 'Hamkorlikda ishlash' },
     { key: '11', link: '/subscription', label: 'Obuna' },
     { key: '4', link: '/freelancers', label: 'Frilanserlar' },
-    { key: '8', link: '/labs', label: 'SoffX AI' },
+    { key: '8', link: '/labs', label: 'Soff AI' },
     { key: '9', link: '/page/oferta', label: 'Foydalanish shartlari' },
     { key: '10', link: '/page/video-list', label: "Video qo'llanmalar" },
 ];

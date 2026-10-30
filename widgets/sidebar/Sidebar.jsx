@@ -8,6 +8,7 @@ import { FaRegUserCircle } from 'react-icons/fa';
 import { FaRegHeart } from 'react-icons/fa';
 import { FaUser } from 'react-icons/fa';
 import { MdOutlineShoppingCart, MdWorkspacePremium } from 'react-icons/md';
+import { FaRegCreditCard } from 'react-icons/fa6';
 import { FaRegCommentDots } from 'react-icons/fa';
 import { FaRegBell } from 'react-icons/fa';
 import { MdKeyboardDoubleArrowLeft } from 'react-icons/md';
@@ -87,6 +88,18 @@ function Sidebar({ collapsed, onChangeCollapse }) {
                     <Link href={'/account/subscription'}>
                         <a style={!isAuthorized ? disableLinkStyle : {}}>
                             Mening obunam
+                        </a>
+                    </Link>
+                ),
+            },
+            {
+                key: 'billing',
+                icon: <FaRegCreditCard size={19} />,
+                disabled: !isAuthorized,
+                label: (
+                    <Link href={'/account/billing'}>
+                        <a style={!isAuthorized ? disableLinkStyle : {}}>
+                            To'lov ma'lumotlari
                         </a>
                     </Link>
                 ),
@@ -178,6 +191,9 @@ function Sidebar({ collapsed, onChangeCollapse }) {
                 break;
             case 'subscription':
                 router.push('/account/subscription');
+                break;
+            case 'billing':
+                router.push('/account/billing');
                 break;
             case 'wishlist':
                 router.push('/account/wishlist');

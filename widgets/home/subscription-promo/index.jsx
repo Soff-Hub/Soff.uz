@@ -13,12 +13,8 @@ const CATALOGUE_SIZE = '2\u00a0mln+'; // non-breaking space keeps "2 mln+" on on
 const FEATURED_TIER_CODE = 'pro';
 const SOFFX_PLAN_TITLES = { pro: 'Pro', ultra: 'Max' };
 
-// "SoffX AI" with the X picked out in the AI accent colour.
-const SoffX = () => (
-    <span className={styles.soffx}>
-        Soff<span className={styles.soffxMark}>x</span> AI
-    </span>
-);
+// "Soff AI", the AI product's name.
+const SoffX = () => <span className={styles.soffx}>Soff AI</span>;
 
 // The card features the Pro tier ("Ommabop"); falls back to the cheapest tier if
 // there is no Pro. The cheapest price is kept for the "other plans" link.

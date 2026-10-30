@@ -6,6 +6,7 @@ import PageContainer from '~/widgets/layouts/PageContainer';
 import LoginForm from '~/features/account/ui/auth/LoginForm';
 import { useRouter } from 'next/router';
 import { message } from 'antd';
+import { goToReturnUrl, readReturnUrl } from '~/shared/utilities/return-url';
 
 const RegisterPage = () => {
     const { user } = useSelector((state) => state.auth);
@@ -25,6 +26,13 @@ const RegisterPage = () => {
     useEffect(() => {
         if (user && !isAlreadyPrinted.current) {
             isAlreadyPrinted.current = true;
+            // Signed in here (Google) or already: back where the sign-in was
+            // asked for — SoffX at /labs sends its "Kirish" here with a returnUrl.
+            const returnUrl = readReturnUrl(router.query);
+            if (returnUrl) {
+                goToReturnUrl(router, returnUrl);
+                return;
+            }
             router.replace('/');
             message.success('Siz allaqachon tizimga kirgansiz');
         }

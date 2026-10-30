@@ -7,6 +7,7 @@ import Axios from 'axios';
 import { baseUrlAuth } from '~/repositories/Repository';
 import { login } from '~/store/auth/slice';
 import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
+import { goToReturnUrl, readReturnUrl } from '~/shared/utilities/return-url';
 
 export const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
@@ -17,15 +18,6 @@ export const formatTime = (seconds) => {
     )}`;
 };
 
-const isReturnUrlEmpty = (returnUrl) => {
-    return (
-        !returnUrl ||
-        returnUrl === 'undefined' ||
-        returnUrl === 'null' ||
-        returnUrl.trim() === '/' ||
-        returnUrl.trim() === ''
-    );
-};
 
 export default function TelegramConfigmForm({ isModal, onSuccess }) {
     const [loading, setLoading] = useState(false);
@@ -67,12 +59,10 @@ export default function TelegramConfigmForm({ isModal, onSuccess }) {
                 return;
             }
 
-            const decodedUrl = decodeURIComponent(
-                router?.query?.returnUrl || ''
-            );
+            const returnUrl = readReturnUrl(router?.query);
 
-            if (router?.query?.returnUrl && !isReturnUrlEmpty(decodedUrl)) {
-                router.push(decodedUrl);
+            if (returnUrl) {
+                goToReturnUrl(router, returnUrl);
             } else if (router?.query?.id) {
                 router.push(`/account/checkout?id=${router?.query?.id}`);
             } else if (router?.query?.deal) {

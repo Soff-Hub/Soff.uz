@@ -134,7 +134,7 @@ const PricingPage = () => {
             <div className={styles.hero}>
                 <h1>Obuna</h1>
                 <p>
-                    <strong>{CATALOGUE_SIZE} tayyor mahsulot</strong> va SoffX AI vositalari — bitta oylik obunada.
+                    <strong>{CATALOGUE_SIZE} tayyor mahsulot</strong> va Soff AI vositalari — bitta oylik obunada.
                     Kerakli fayllarni har oy tanlab oling, olingan fayl esa doim sizda qoladi.
                 </p>
             </div>

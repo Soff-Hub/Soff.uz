@@ -12,6 +12,7 @@ import {
     resumeSubscription,
 } from '../api';
 import {
+    BILLING_URL,
     STATUS_META,
     canRenewNow,
     getRenewNowThreshold,
@@ -30,9 +31,6 @@ import SoffxBadge from './SoffxBadge';
 import TierSwitcher from './TierSwitcher';
 import styles from './MySubscription.module.scss';
 
-// Saved cards live in the profile's "To'lov ma'lumotlari" section.
-const BILLING_URL = '/account/profile#billing';
-
 const STATUS_BANNERS = {
     past_due: { type: 'error', text: "To'lov o'tmadi, kartangizni tekshiring" },
     cancelled: { type: 'warning', text: "Avtomatik yangilanish o'chirilgan" },
@@ -42,7 +40,7 @@ const SoffxAction = ({ soffx }) => {
     const [loading, setLoading] = useState(false);
 
     if (!soffx) return null;
-    if (soffx.status === 'pending') return <p className={styles.muted}>SoffX AI tayyorlanmoqda…</p>;
+    if (soffx.status === 'pending') return <p className={styles.muted}>Soff AI tayyorlanmoqda…</p>;
     if (soffx.status !== 'success') return null;
 
     const handleLogin = async () => {
@@ -52,7 +50,7 @@ const SoffxAction = ({ soffx }) => {
 
     return (
         <Button className={styles.soffxBtn} icon={<HiSparkles />} loading={loading} onClick={handleLogin}>
-            SoffX AI ga o'tish
+            Soff AI ga o'tish
         </Button>
     );
 };
