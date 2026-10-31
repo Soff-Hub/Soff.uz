@@ -50,25 +50,43 @@ const AiServices = () => (
 );
 
 /**
- * The short version, above a product's title: one line and one link to the same page.
- * `dark` is for the video lesson hero; `lead` replaces the wording before the product name.
+ * Banner above a product's title: prompts creating with AI in 2 minutes.
+ * Styled to match the 2-minute creation dark banner with gold accents.
  */
-export const AiServicesCta = ({ dark = false, lead = "Shunga o'xshash ishni" }) => (
-    <a href={SERVICES_URL} className={`${styles.topCta} ${dark ? styles.topCtaDark : ''}`}>
-        <span className={styles.topMark} aria-hidden>
-            <TbSparkles />
-        </span>
-        <span className={styles.topText}>
-            {lead} <strong>Soff AI</strong> bilan o'zingiz yarating
-        </span>
-        <span className={styles.topTextShort}>
-            <strong>Soff AI</strong> bilan yarating
-        </span>
-        <span className={styles.topLink}>
-            AI xizmatlar
-            <TbArrowRight aria-hidden />
-        </span>
-    </a>
-);
+export const AiServicesCta = ({
+    dark = false,
+    title = 'AI yordamida 2 daqiqada yarating',
+    subtitle,
+    lead,
+    ctaText = 'Boshlash',
+}) => {
+    const computedSubtitle =
+        subtitle ||
+        (lead && !lead.includes('tayyorlang')
+            ? `Kerakli ${lead.toLowerCase()} Soffia AI yordamida tayyorlang — tez, qulay va samarali.`
+            : 'Kerakli hujjatni Soffia AI yordamida tayyorlang — tez, qulay va samarali.');
+
+    return (
+        <a
+            href={SERVICES_URL}
+            className={`${styles.topBanner} ${dark ? styles.topBannerDark : ''}`}
+            aria-label={title}
+        >
+            <div className={styles.topBannerLeft}>
+                <span className={styles.topBannerIcon} aria-hidden>
+                    <TbSparkles />
+                </span>
+                <div className={styles.topBannerText}>
+                    <h3 className={styles.topBannerTitle}>{title}</h3>
+                    <p className={styles.topBannerSubtitle}>{computedSubtitle}</p>
+                </div>
+            </div>
+            <div className={styles.topBannerButton}>
+                <span>{ctaText}</span>
+                <TbArrowRight aria-hidden />
+            </div>
+        </a>
+    );
+};
 
 export default AiServices;
