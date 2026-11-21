@@ -33,6 +33,10 @@ const LastServices = dynamic(() => import('./last-services'), {
 const Info = dynamic(() => import('./info'), { ssr: false });
 const Title = dynamic(() => import('./title'), { ssr: false });
 const PlatformStats = dynamic(() => import('./platform-stats'), { ssr: false });
+const AgentsMarket = dynamic(() => import('./agents-market'), {
+    ssr: false,
+    loading: () => <div style={{ minHeight: '420px' }} />
+});
 const AiTools = dynamic(() => import('./ai-tools'), {
     ssr: false,
     loading: () => <div style={{ minHeight: '280px' }} />
@@ -51,6 +55,7 @@ const Home = () => {
                 text={'Soff - Raqamli mahsulotlar va onlayn xizmatlar bozori'}
                 videoId={'https://www.youtube.com/watch?v=hn55AZoxWes'}
             />
+            <AgentsMarket />
             <AiTools />
             <PlatformStats />
             <div className="container">

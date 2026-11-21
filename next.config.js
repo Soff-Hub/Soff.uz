@@ -7,6 +7,9 @@ const SERVICE_URL_FREELANCE = process.env.SERVICE_URL_FREELANCE || 'http://local
 const SERVICE_URL_CREATORS = process.env.SERVICE_URL_CREATORS || 'http://localhost:3000';
 // SoffX AI (SoffAIGenFrontend), built with NEXT_PUBLIC_BASE_PATH=/labs.
 const SERVICE_URL_LABS = process.env.SERVICE_URL_LABS || 'http://127.0.0.1:3010';
+// SoffX AI agent (soffx-agent/ai-agent-front), built with NEXT_PUBLIC_BASE_PATH=/agent
+// (its deploy.sh: AGENT_BASE_PATH=/agent ./deploy.sh, port 3013).
+const SERVICE_URL_AGENT = process.env.SERVICE_URL_AGENT || 'http://127.0.0.1:3013';
 // Soff.uz's own API, for SoffX at /labs through /soffuz-api: its sign-in bridge
 // then trades the token with the backend that issued it, whichever one .env picks.
 const SOFFUZ_API_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://api.soff.uz';
@@ -102,7 +105,7 @@ const nextSettings = {
             },
             // SSR pages cached for 1 minute
             {
-                source: '/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|jpg|png|jpeg|gif|ico|webp|avif|jfif|pjpeg|pjp|apng|bmp|tif|tiff|js|css|woff2)).*)',
+                source: '/((?!api|agent(?:/|$)|_next/static|_next/image|favicon.ico|.*\\.(?:svg|jpg|png|jpeg|gif|ico|webp|avif|jfif|pjpeg|pjp|apng|bmp|tif|tiff|js|css|woff2)).*)',
                 headers: [
                     {
                         key: 'Cache-Control',
@@ -181,6 +184,21 @@ const nextSettings = {
             ...['images', 'videos', 'logos', 'landing'].map((dir) => ({
                 source: `/${dir}/:path*`,
                 destination: `${SERVICE_URL_LABS}/labs/${dir}/:path*`,
+            })),
+            // SoffX AI agent at /agent. Its pages, assets and API all live under /agent.
+            {
+                source: '/agent',
+                destination: `${SERVICE_URL_AGENT}/agent`,
+            },
+            {
+                source: '/agent/:path*',
+                destination: `${SERVICE_URL_AGENT}/agent/:path*`,
+            },
+            // The agent's backend hands out media and logo URLs without /agent
+            // (/api/media/<name>, /api/onboarding/logo/...). Soff.uz has no API at these paths.
+            ...['media', 'onboarding'].map((dir) => ({
+                source: `/api/${dir}/:path*`,
+                destination: `${SERVICE_URL_AGENT}/agent/api/${dir}/:path*`,
             })),
             {
                 source: '/creators',
