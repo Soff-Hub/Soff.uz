@@ -418,38 +418,14 @@ const AgentDetail = ({ agent }) => {
                                 </div>
                             </div>
 
-                            {/* SoffX Engine & Architecture Strip */}
+                            {/* Primary Action Strip */}
                             <div className={styles.engineStrip}>
-                                <div className={styles.engineMeta}>
-                                    <div className={styles.engineIconWrap}>
-                                        <RiCpuLine className={styles.engineIcon} />
-                                    </div>
-                                    <div className={styles.engineDetails}>
-                                        <div className={styles.engineNameRow}>
-                                            <span className={styles.engineName}>
-                                                {agent.engine?.name || 'SoffX Neural Core v2.4'}
-                                            </span>
-                                            <span className={styles.engineUptime}>
-                                                {agent.engine?.uptime || '99.9% Uptime'}
-                                            </span>
-                                        </div>
-                                        <span className={styles.engineDesc}>
-                                            Model: {agent.engine?.model || 'Gemini 4 & Claude 3.5 Sonnet'} ·{' '}
-                                            Tezlik: {agent.engine?.responseTime || '< 1 daqiqa'}
-                                        </span>
-                                    </div>
-                                </div>
                                 <div className={styles.engineActions}>
                                     <a
                                         href={`${AGENT_CHAT_URL}?agent=${agent.id}`}
                                         className={styles.enginePrimaryBtn}>
                                         <RiFlashlightFill aria-hidden="true" />
                                         Agent bilan ishlash
-                                    </a>
-                                    <a
-                                        href={`${AGENT_CHAT_URL}?agent=${agent.id}&demo=true`}
-                                        className={styles.engineSecondaryBtn}>
-                                        Demo suhbat
                                     </a>
                                 </div>
                             </div>
