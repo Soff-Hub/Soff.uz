@@ -10,22 +10,19 @@ import {
     RiTimeLine,
     RiShieldCheckLine,
     RiSparklingFill,
-    RiUserLine,
-    RiMessage3Line,
+    RiCpuLine,
+    RiFlashlightFill,
+    RiCoinsLine,
+    RiArrowRightLine,
 } from 'react-icons/ri';
 import {
     AGENT_APP_URL,
     AGENT_CHAT_URL,
-    AI_AGENTS,
+    SOFFX_PLANS,
     agentImage,
     agentPath,
 } from '~/entities/ai-agent/model';
 import styles from './style.module.scss';
-
-function formatNumber(n) {
-    if (!n) return '0';
-    return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-}
 
 const AgentDetail = ({ agent }) => {
     const [billingPeriod, setBillingPeriod] = useState('monthly'); // 'monthly' | 'yearly'
@@ -33,60 +30,30 @@ const AgentDetail = ({ agent }) => {
     const [activeStyle, setActiveStyle] = useState(agent.styles?.[0] || 'Dinamik');
     const [activeSample, setActiveSample] = useState(null);
 
-    const plans = agent.plans || [
-        {
-            id: 'start',
-            name: 'Start',
-            monthlyPrice: 129000,
-            yearlyPrice: 103200,
-            features: '10 ta vazifa/oy · Standart sifat · Har biriga 2 ta tuzatish',
-        },
-        {
-            id: 'pro',
-            name: 'Pro',
-            isPopular: true,
-            monthlyPrice: 249000,
-            yearlyPrice: 199200,
-            features: '30 ta vazifa/oy · Yuqori aniqlik · Brend shablon · 5 ta tuzatish',
-        },
-        {
-            id: 'biznes',
-            name: 'Biznes',
-            monthlyPrice: 499000,
-            yearlyPrice: 399200,
-            features: '60 ta vazifa/oy · Ustuvor navbat · 2 jamoa a’zosi',
-        },
-    ];
-
+    const plans = agent.plans || SOFFX_PLANS;
     const currentPlan = plans.find((p) => p.id === selectedPlanId) || plans[1] || plans[0];
-    const related = agent.relatedStyles || [
-        {
-            author: 'Soff agent',
-            title: 'Standart uslub',
-            desc: 'Tez va sifatli natija',
-            rating: 4.8,
-            subscribers: 120,
-            price: '99 000 so‘m/oy dan',
-        },
-    ];
+    const currentPrice =
+        billingPeriod === 'yearly'
+            ? currentPlan.yearlyPriceUSD || 119
+            : currentPlan.monthlyPriceUSD || 149;
 
     return (
         <div className={styles.page}>
             <div className="container">
-                {/* Breadcrumbs */}
+                {/* Modern Breadcrumbs */}
                 <nav aria-label="Breadcrumb" className={styles.crumbs}>
                     <Link href="/">
                         <a>Bosh sahifa</a>
                     </Link>
                     <span className={styles.crumbSep}>/</span>
-                    <a href={AGENT_APP_URL}>AI Agentlar</a>
+                    <a href={AGENT_APP_URL}>SoffX AI Agentlar</a>
                     <span className={styles.crumbSep}>/</span>
                     <span>{agent.category}</span>
                     <span className={styles.crumbSep}>/</span>
                     <span aria-current="page">{agent.title || agent.name}</span>
                 </nav>
 
-                {/* Main 2-column marketplace layout */}
+                {/* Main 2-Column Marketplace Layout */}
                 <div className={styles.layout}>
                     {/* Left Column */}
                     <main className={styles.mainContent}>
@@ -97,24 +64,31 @@ const AgentDetail = ({ agent }) => {
                                     <img
                                         src={agentImage(agent.id, 'bust')}
                                         alt={agent.name}
-                                        width={72}
-                                        height={72}
+                                        width={80}
+                                        height={80}
                                         className={styles.agentAvatar}
                                     />
-                                    <span className={styles.onlineDot} title="Onlayn 24/7" />
+                                    <span className={styles.onlineDot} title="AI Onlayn 24/7" />
                                 </div>
                                 <div className={styles.headerInfo}>
                                     <div className={styles.badgeRow}>
                                         <span
                                             className={styles.catBadge}
                                             style={{
-                                                backgroundColor: `${agent.badgeColor || '#00a44f'}15`,
+                                                backgroundColor: `${agent.badgeColor || '#00a44f'}18`,
                                                 color: agent.badgeColor || '#00a44f',
                                             }}>
+                                            <RiSparklingFill aria-hidden="true" />
                                             {agent.badges?.[0] || agent.category}
                                         </span>
                                         {agent.badges?.[1] && (
                                             <span className={styles.subBadge}>{agent.badges[1]}</span>
+                                        )}
+                                        {agent.costPerTask && (
+                                            <span className={styles.costBadge}>
+                                                <RiCoinsLine aria-hidden="true" />
+                                                {agent.costPerTask}
+                                            </span>
                                         )}
                                     </div>
                                     <h1 className={styles.title}>{agent.title || agent.name}</h1>
@@ -139,50 +113,60 @@ const AgentDetail = ({ agent }) => {
                                         </span>
                                         <span className={styles.statDot}>·</span>
                                         <span className={styles.statItem}>
-                                            {agent.stats?.avgTime || 'O‘rtacha 8 daqiqa'}
+                                            {agent.stats?.avgTime || 'O‘rtacha 2 daqiqa'}
                                         </span>
                                     </div>
                                 </div>
                             </div>
 
-                            {/* Author Row */}
-                            <div className={styles.authorRow}>
-                                <div className={styles.authorMeta}>
-                                    <div className={styles.authorAvatar}>
-                                        {agent.author?.initials || 'SK'}
+                            {/* SoffX Engine & Architecture Strip */}
+                            <div className={styles.engineStrip}>
+                                <div className={styles.engineMeta}>
+                                    <div className={styles.engineIconWrap}>
+                                        <RiCpuLine className={styles.engineIcon} />
                                     </div>
-                                    <div className={styles.authorDetails}>
-                                        <span className={styles.authorLabel}>Agent muallifi:</span>
-                                        <span className={styles.authorName}>
-                                            {agent.author?.name || 'Sardor K.'} ·{' '}
-                                            <span className={styles.authorRole}>
-                                                {agent.author?.role || 'Mutaxassis'},{' '}
-                                                {agent.author?.experience || '5 yil tajriba'}
+                                    <div className={styles.engineDetails}>
+                                        <div className={styles.engineNameRow}>
+                                            <span className={styles.engineName}>
+                                                {agent.engine?.name || 'SoffX Neural Core v2.4'}
                                             </span>
+                                            <span className={styles.engineUptime}>
+                                                {agent.engine?.uptime || '99.9% Uptime'}
+                                            </span>
+                                        </div>
+                                        <span className={styles.engineDesc}>
+                                            Model: {agent.engine?.model || 'Gemini 4 & Claude 3.5 Sonnet'} ·{' '}
+                                            Tezlik: {agent.engine?.responseTime || '< 1 daqiqa'}
                                         </span>
                                     </div>
                                 </div>
-                                <div className={styles.authorActions}>
-                                    <a href={AGENT_CHAT_URL} className={styles.authorBtn}>
-                                        <RiUserLine aria-hidden="true" />
-                                        Profil
+                                <div className={styles.engineActions}>
+                                    <a
+                                        href={`${AGENT_CHAT_URL}?agent=${agent.id}`}
+                                        className={styles.enginePrimaryBtn}>
+                                        <RiFlashlightFill aria-hidden="true" />
+                                        Agent bilan ishlash
                                     </a>
                                     <a
-                                        href={`${AGENT_CHAT_URL}?author=${encodeURIComponent(agent.author?.name || agent.name)}`}
-                                        className={styles.authorBtn}>
-                                        <RiMessage3Line aria-hidden="true" />
-                                        Xabar
+                                        href={`${AGENT_CHAT_URL}?agent=${agent.id}&demo=true`}
+                                        className={styles.engineSecondaryBtn}>
+                                        Demo suhbat
                                     </a>
                                 </div>
                             </div>
                         </section>
 
-                        {/* 2. Namuna natijalar (Showcase / Samples) */}
+                        {/* 2. Namuna natijalar (Showcase) */}
                         <section className={styles.card}>
                             <div className={styles.sectionHeader}>
-                                <h2 className={styles.sectionTitle}>Namuna natijalar</h2>
-                                <span className={styles.sectionSubtitle}>
-                                    agent tomonidan haqiqiy vazifalarda yaratilgan
+                                <div>
+                                    <h2 className={styles.sectionTitle}>Namuna natijalar</h2>
+                                    <span className={styles.sectionSubtitle}>
+                                        SoffX AI tomonidan real bizneslar uchun generatsiya qilingan
+                                    </span>
+                                </div>
+                                <span className={styles.creditTip}>
+                                    Kredit faqat tayyor natija uchun yechiladi
                                 </span>
                             </div>
 
@@ -195,6 +179,12 @@ const AgentDetail = ({ agent }) => {
                                         <div
                                             className={styles.sampleThumb}
                                             style={{ background: sample.gradient }}>
+                                            {sample.credits && (
+                                                <span className={styles.sampleCreditsBadge}>
+                                                    <RiCoinsLine aria-hidden="true" />
+                                                    {sample.credits}
+                                                </span>
+                                            )}
                                             <button
                                                 type="button"
                                                 className={styles.playButton}
@@ -211,10 +201,10 @@ const AgentDetail = ({ agent }) => {
                             </div>
                         </section>
 
-                        {/* 3. Can Do vs Cannot Do (2-column split) */}
+                        {/* 3. Can Do vs Cannot Do (Split Grid) */}
                         <div className={styles.splitGrid}>
                             <section className={`${styles.card} ${styles.canDoCard}`}>
-                                <h3 className={styles.splitTitle}>Agent nima qila oladi</h3>
+                                <h3 className={styles.splitTitle}>SoffX AI nima qila oladi</h3>
                                 <ul className={styles.checkList}>
                                     {(agent.canDo || agent.abilities || []).map((item, idx) => (
                                         <li key={idx} className={styles.checkItem}>
@@ -241,12 +231,10 @@ const AgentDetail = ({ agent }) => {
                                 </ul>
 
                                 <div className={styles.customOrderBox}>
-                                    <span className={styles.customOrderText}>
-                                        Murakkab loyiha bormi?{' '}
-                                        <a href={AGENT_CHAT_URL} className={styles.customOrderLink}>
-                                            Muallifning o‘ziga buyurtma bering →
-                                        </a>
-                                    </span>
+                                    <p className={styles.customOrderText}>
+                                        {agent.guaranteeNote ||
+                                            'Kreditlar faqat yakuniy natija ma’qul kelganda yechiladi. Qayta tahrirlash bepul.'}
+                                    </p>
                                 </div>
                             </section>
                         </div>
@@ -287,7 +275,7 @@ const AgentDetail = ({ agent }) => {
                                     <span className={styles.specHeading}>Tillar</span>
                                     <p className={styles.specDesc}>
                                         {agent.specs?.languages ||
-                                            'O‘zbek, rus — subtitr va matnlar uchun'}
+                                            'O‘zbek, rus, ingliz — subtitr va matnlar uchun'}
                                     </p>
                                 </div>
                             </div>
@@ -310,7 +298,7 @@ const AgentDetail = ({ agent }) => {
                         {/* 6. Sharhlar */}
                         <section className={styles.card}>
                             <div className={styles.sectionHeader}>
-                                <h2 className={styles.sectionTitle}>Sharhlar</h2>
+                                <h2 className={styles.sectionTitle}>Mijozlar fikri va tajribasi</h2>
                                 <span className={styles.ratingSummary}>
                                     <strong>{agent.reviewsSummary?.rating || '4.9'}</strong> ·{' '}
                                     {agent.reviewsSummary?.count || '312'} sharh ·{' '}
@@ -326,7 +314,7 @@ const AgentDetail = ({ agent }) => {
                                                 <strong>{rev.name}</strong>
                                                 {rev.plan && (
                                                     <span className={styles.userPlanBadge}>
-                                                        [{rev.plan}]
+                                                        [{rev.plan} tarifi]
                                                     </span>
                                                 )}
                                                 <span className={styles.reviewTime}>· {rev.time}</span>
@@ -342,44 +330,71 @@ const AgentDetail = ({ agent }) => {
                             </div>
                         </section>
 
-                        {/* 7. Shu vazifa uchun boshqa uslublar */}
+                        {/* 7. SoffX Hamkor Agentlar Jamoasi */}
                         <section className={styles.relatedSection}>
                             <div className={styles.relatedHead}>
-                                <h2 className={styles.sectionTitle}>
-                                    Shu vazifa uchun boshqa uslublar
-                                </h2>
+                                <div>
+                                    <h2 className={styles.sectionTitle}>
+                                        SoffX Agentlar Jamoasi
+                                    </h2>
+                                    <p className={styles.relatedSubtitle}>
+                                        Bitta obunadagi kreditlar bilan butun jamoa xizmatidan foydalanasiz
+                                    </p>
+                                </div>
                                 <a href={AGENT_APP_URL} className={styles.viewAllLink}>
-                                    Barcha {agent.category.toLowerCase()} agentlari →
+                                    Barcha 6 ta agent →
                                 </a>
                             </div>
 
                             <div className={styles.relatedGrid}>
-                                {related.map((item, idx) => (
-                                    <a
-                                        key={idx}
-                                        href={AGENT_CHAT_URL}
-                                        className={styles.relatedCard}>
-                                        <span className={styles.relatedAuthor}>{item.author}</span>
-                                        <h4 className={styles.relatedTitle}>{item.title}</h4>
-                                        <p className={styles.relatedDesc}>{item.desc}</p>
-                                        <div className={styles.relatedFoot}>
-                                            <span className={styles.relatedRating}>
-                                                ★ {item.rating} · {item.subscribers} obunachi
-                                            </span>
-                                            <span className={styles.relatedPrice}>{item.price}</span>
-                                        </div>
-                                    </a>
+                                {(agent.relatedTeam || []).map((item) => (
+                                    <Link key={item.id} href={agentPath(item.id)}>
+                                        <a className={styles.relatedCard}>
+                                            <div className={styles.relatedCardTop}>
+                                                <img
+                                                    src={agentImage(item.id, 'bust')}
+                                                    alt={item.name}
+                                                    width={40}
+                                                    height={40}
+                                                    className={styles.relatedAvatar}
+                                                />
+                                                <div>
+                                                    <span className={styles.relatedCategory}>
+                                                        {item.category}
+                                                    </span>
+                                                    <h4 className={styles.relatedTitle}>
+                                                        {item.name}
+                                                    </h4>
+                                                </div>
+                                            </div>
+                                            <p className={styles.relatedDesc}>{item.desc}</p>
+                                            <div className={styles.relatedFoot}>
+                                                <span className={styles.relatedCost}>
+                                                    <RiCoinsLine aria-hidden="true" />
+                                                    {item.cost}
+                                                </span>
+                                                <span className={styles.relatedRating}>
+                                                    ★ {item.rating}
+                                                </span>
+                                            </div>
+                                        </a>
+                                    </Link>
                                 ))}
                             </div>
                         </section>
                     </main>
 
-                    {/* Right Sticky Sidebar: Pricing & Plans */}
+                    {/* Right Sticky Sidebar: Pricing & Plans in USD */}
                     <aside className={styles.sidebar}>
                         <div className={styles.stickyWrap}>
                             <div className={`${styles.card} ${styles.pricingCard}`}>
                                 <div className={styles.pricingHead}>
-                                    <h3 className={styles.pricingTitle}>Tarifni tanlang</h3>
+                                    <div>
+                                        <h3 className={styles.pricingTitle}>Tarifni tanlang</h3>
+                                        <span className={styles.pricingSub}>
+                                            Barcha 6 ta agent uchun yagona balans
+                                        </span>
+                                    </div>
                                     <div className={styles.periodToggle}>
                                         <button
                                             type="button"
@@ -404,14 +419,14 @@ const AgentDetail = ({ agent }) => {
                                     </div>
                                 </div>
 
-                                {/* Plan Radios */}
+                                {/* Plan Options (USD) */}
                                 <div className={styles.plansList}>
                                     {plans.map((p) => {
                                         const isSelected = selectedPlanId === p.id;
                                         const price =
                                             billingPeriod === 'yearly'
-                                                ? p.yearlyPrice
-                                                : p.monthlyPrice;
+                                                ? p.yearlyPriceUSD || 119
+                                                : p.monthlyPriceUSD || 149;
 
                                         return (
                                             <div
@@ -421,56 +436,75 @@ const AgentDetail = ({ agent }) => {
                                                     isSelected ? styles.planOptionSelected : ''
                                                 }`}>
                                                 <div className={styles.planOptionHead}>
-                                                    <span className={styles.planName}>
-                                                        {p.name}
-                                                    </span>
+                                                    <div className={styles.planNameWrap}>
+                                                        <span className={styles.planName}>
+                                                            {p.name}
+                                                        </span>
+                                                        <span className={styles.creditsPill}>
+                                                            <RiCoinsLine aria-hidden="true" />
+                                                            {p.credits}
+                                                        </span>
+                                                    </div>
                                                     {p.isPopular && (
                                                         <span className={styles.popularBadge}>
                                                             Ommabop
                                                         </span>
                                                     )}
                                                 </div>
+
                                                 <div className={styles.planPriceRow}>
+                                                    <span className={styles.planDollar}>$</span>
                                                     <span className={styles.planPrice}>
-                                                        {formatNumber(price)}
+                                                        {price}
                                                     </span>
-                                                    <span className={styles.planUnit}>so‘m/oy</span>
+                                                    <span className={styles.planUnit}>/ oy</span>
+                                                    {p.tasksEstimate && (
+                                                        <span className={styles.planTasksEstimate}>
+                                                            ({p.tasksEstimate})
+                                                        </span>
+                                                    )}
                                                 </div>
+
                                                 <p className={styles.planFeatures}>{p.features}</p>
                                             </div>
                                         );
                                     })}
                                 </div>
 
-                                {/* Actions */}
+                                {/* CTA Actions */}
                                 <div className={styles.planActions}>
                                     <a
                                         href={`${AGENT_CHAT_URL}?agent=${agent.id}&plan=${selectedPlanId}&period=${billingPeriod}`}
                                         className={styles.ctaPrimary}>
-                                        {currentPlan.name} tarifiga obuna bo‘lish
+                                        {currentPlan.name} tarifiga ulanish (${currentPrice}/oy)
+                                        <RiArrowRightLine aria-hidden="true" />
                                     </a>
 
                                     <a
                                         href={`${AGENT_CHAT_URL}?agent=${agent.id}&trial=true`}
                                         className={styles.ctaSecondary}>
-                                        1 ta vazifa bepul sinab ko‘rish
+                                        100 bepul kredit bilan sinab ko‘rish
                                     </a>
                                 </div>
 
-                                {/* Benefits / Guarantee */}
+                                {/* Guarantees */}
                                 <ul className={styles.guaranteeList}>
-                                    <li>100% pul qaytarish kafolati (3 kun, keyingi oylik bekor qilinadi)</li>
-                                    <li>Ishlatilmagan limit keyingi oyga o‘tmaydi</li>
-                                    <li>To‘lov: Click · Payme · Uzum</li>
+                                    <li>Kredit faqat tasdiqlangan natija uchun yechiladi</li>
+                                    <li>Istalgan vaqtda tarifni o‘zgartirish yoki bekor qilish</li>
+                                    <li>Xavfsiz to‘lov: Visa · Mastercard · Uzcard · Humo · Click</li>
                                 </ul>
                             </div>
 
-                            {/* Soff Ecosystem Box */}
+                            {/* SoffX Unified Balance Box */}
                             <div className={`${styles.card} ${styles.soffBox}`}>
-                                <h4 className={styles.soffBoxTitle}>Soff obunasi bilan</h4>
+                                <div className={styles.soffBoxHead}>
+                                    <RiCoinsLine className={styles.soffBoxIcon} />
+                                    <h4 className={styles.soffBoxTitle}>Yagona kredit balansi</h4>
+                                </div>
                                 <p className={styles.soffBoxText}>
-                                    Soff obunachilari Soff agentlaridan bepul limit bilan
-                                    foydalanadi. Boshqa agentlarni alohida obuna qilmaydi.
+                                    Bitta obuna bilan barcha 6 ta agentdan (Marketolog, Kopirayter,
+                                    Dizayner, SMM, Montajor, Targetolog) umumiy kredit hisobidan
+                                    erkin foydalanasiz. Alohida obuna shart emas.
                                 </p>
                             </div>
                         </div>
@@ -478,7 +512,7 @@ const AgentDetail = ({ agent }) => {
                 </div>
             </div>
 
-            {/* Sample Preview Modal (optional interaction) */}
+            {/* Interactive Sample Preview Modal */}
             {activeSample && (
                 <div className={styles.modalOverlay} onClick={() => setActiveSample(null)}>
                     <div
@@ -491,12 +525,20 @@ const AgentDetail = ({ agent }) => {
                         </div>
                         <div className={styles.modalBody}>
                             <h3 className={styles.modalTitle}>{activeSample.title}</h3>
-                            <span className={styles.modalCategory}>
-                                {activeSample.category} · {activeSample.duration}
-                            </span>
+                            <div className={styles.modalMetaRow}>
+                                <span className={styles.modalCategory}>
+                                    {activeSample.category} · {activeSample.duration}
+                                </span>
+                                {activeSample.credits && (
+                                    <span className={styles.modalCredits}>
+                                        <RiCoinsLine aria-hidden="true" />
+                                        {activeSample.credits}
+                                    </span>
+                                )}
+                            </div>
                             <p className={styles.modalDesc}>
-                                Ushbu namuna {agent.name} tomonidan haqiqiy mijoz buyurtmasi asosida
-                                generatsiya qilingan.
+                                Ushbu namuna SoffX {agent.name} tomonidan real mijoz topshirig‘i
+                                asosida avtomatik tarzda yaratilgan.
                             </p>
                             <div className={styles.modalActions}>
                                 <a
@@ -504,7 +546,7 @@ const AgentDetail = ({ agent }) => {
                                         activeSample.title
                                     )}`}
                                     className={styles.ctaPrimary}>
-                                    Shunday natija tayyorlash
+                                    Xuddi shunday natija tayyorlash
                                 </a>
                                 <button
                                     type="button"
