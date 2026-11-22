@@ -114,6 +114,37 @@ const AgentDetail = ({ agent }) => {
             );
         }
 
+        // Image-based deliverables (design, SMM, copy, strategy, ads with sample image)
+        if (sample.imageUrl) {
+            return (
+                <div className={styles.designImageWrap}>
+                    <img
+                        src={sample.imageUrl}
+                        alt={sample.title}
+                        className={styles.designImageElement}
+                        loading="lazy"
+                    />
+                    <div className={styles.designImageOverlayGradient} />
+
+                    <div className={styles.sampleTopRow}>
+                        <span className={styles.sampleCreditsBadge}>
+                            <RiCoinsLine aria-hidden="true" />
+                            {sample.credits}
+                        </span>
+                        <span className={styles.designFormatPill}>
+                            {sample.badgeText || sample.duration}
+                        </span>
+                    </div>
+
+                    <div className={styles.designBottomMeta}>
+                        <span className={styles.designAction}>
+                            <RiSparklingFill /> Natijani ko‘rish
+                        </span>
+                    </div>
+                </div>
+            );
+        }
+
         if (sample.type === 'copy') {
             return (
                 <div
@@ -911,8 +942,8 @@ const AgentDetail = ({ agent }) => {
                             </div>
                         )}
 
-                        {/* Design Modal Display */}
-                        {activeSample.type === 'design' && (
+                        {/* Image-based Modal Display (design, SMM, or any deliverable with image) */}
+                        {activeSample.imageUrl && (
                             <div className={styles.modalDesignSection}>
                                 <div className={styles.modalDesignImgWrap}>
                                     <img
@@ -937,9 +968,13 @@ const AgentDetail = ({ agent }) => {
                                                 )}
                                             </div>
                                         </div>
-                                        <span className={styles.modalFormatPill}>4K Ultra HD</span>
+                                        <span className={styles.modalFormatPill}>
+                                            {activeSample.badgeText || '4K Ultra HD'}
+                                        </span>
                                     </div>
-                                    <p className={styles.modalDesignDesc}>{activeSample.bodySnippet}</p>
+                                    <p className={styles.modalDesignDesc}>
+                                        {activeSample.bodySnippet || activeSample.headline}
+                                    </p>
                                     {activeSample.prompt && (
                                         <div className={styles.modalPromptBox}>
                                             <strong>AI Prompt:</strong> {activeSample.prompt}
@@ -949,10 +984,10 @@ const AgentDetail = ({ agent }) => {
                             </div>
                         )}
 
-                        {/* Strategy / Calendar / Ads Generic Modal Display */}
+                        {/* Strategy / Calendar / Ads Generic Modal Display (when no image) */}
                         {activeSample.type !== 'video' &&
-                            activeSample.type !== 'copy' &&
-                            activeSample.type !== 'design' && (
+                            !activeSample.imageUrl &&
+                            activeSample.type !== 'copy' && (
                                 <div className={styles.modalDetailSection}>
                                     <div
                                         className={styles.modalDetailHero}
