@@ -194,9 +194,8 @@ const AgentDetail = ({ agent }) => {
                     </div>
 
                     <div className={styles.designBottomMeta}>
-                        <h4 className={styles.designBottomTitle}>{sample.headline}</h4>
                         <span className={styles.designAction}>
-                            <RiSparklingFill /> Rasmni ochish →
+                            <RiSparklingFill /> Rasmni ko‘rish
                         </span>
                     </div>
                 </div>
@@ -444,7 +443,10 @@ const AgentDetail = ({ agent }) => {
                                         <div className={styles.sampleCardContent}>
                                             {renderSampleCardContent(sample)}
                                         </div>
-                                        <span className={styles.sampleCaption}>{sample.title}</span>
+                                        <div className={styles.sampleMetaBelow}>
+                                            <span className={styles.sampleCaption}>{sample.title}</span>
+                                            <span className={styles.sampleCategorySub}>{sample.category}</span>
+                                        </div>
                                     </div>
                                 ))}
                             </div>
