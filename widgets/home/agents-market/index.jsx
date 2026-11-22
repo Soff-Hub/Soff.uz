@@ -11,12 +11,8 @@ const AgentsMarket = () => {
                 <div className={styles.head}>
                     <div>
                         <h2 id="agents-market-title" className={styles.title}>
-                            Biznesingiz uchun tayyor AI jamoa
+                            Biznesingiz uchun tayyor AI agentlar
                         </h2>
-                        <p className={styles.subtitle}>
-                            SoffX AI Marketolog bilan gaplashasiz — u ishni 6 ta agentga
-                            taqsimlaydi: reja, matn, rasm, video va reklama.
-                        </p>
                     </div>
                     <a href={AGENT_APP_URL} className={styles.allLink}>
                         Agentni ochish
