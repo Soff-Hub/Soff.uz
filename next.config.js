@@ -194,9 +194,9 @@ const nextSettings = {
                 source: '/agent/:path*',
                 destination: `${SERVICE_URL_AGENT}/agent/:path*`,
             },
-            // The agent's backend hands out media and logo URLs without /agent
-            // (/api/media/<name>, /api/onboarding/logo/...). Soff.uz has no API at these paths.
-            ...['media', 'onboarding'].map((dir) => ({
+            // The agent's backend hands out media, style preview and logo URLs without /agent
+            // (/api/media/<name>, /api/styles/<id>/..., /api/onboarding/logo/...). Soff.uz has no API at these paths.
+            ...['media', 'onboarding', 'styles'].map((dir) => ({
                 source: `/api/${dir}/:path*`,
                 destination: `${SERVICE_URL_AGENT}/agent/api/${dir}/:path*`,
             })),

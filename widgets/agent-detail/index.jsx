@@ -70,7 +70,7 @@ const AgentDetail = ({ agent }) => {
                             </a>
                         </div>
                         <p className={styles.note}>
-                            Telegram orqali kirasiz. Kredit faqat tayyor natija uchun yechiladi.
+                            Soff.uz akkauntingiz bilan ishlaydi. Kredit faqat tayyor natija uchun yechiladi.
                         </p>
                     </div>
                 </section>
