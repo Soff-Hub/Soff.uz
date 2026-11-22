@@ -72,7 +72,7 @@ $line: #e5e7eb;
 }
 
 .agentBanner {
-    background: linear-gradient(135deg, #e3f2eb 0%, #eef7f2 48%, #d6cccb 100%);
+    background: linear-gradient(90deg, #e3f2eb 0%, #e3f2eb 45%, #d6cccb 60%, #d1c6c5 100%);
     color: $ink;
     cursor: pointer;
 
@@ -84,8 +84,8 @@ $line: #e5e7eb;
 
 .agentSubtitle {
     margin: 12px 0 18px;
-    max-width: 440px;
-    font-size: 15px;
+    max-width: 420px;
+    font-size: 14.5px;
     line-height: 1.5;
     color: $muted;
 
@@ -117,7 +117,7 @@ $line: #e5e7eb;
 .agentBannerArt {
     position: absolute;
     inset: 0;
-    background: url('/static/img/agents/team-3d.webp') right center / 58% auto no-repeat;
+    background: url('/static/img/agents/team-3d.webp') right 24px center / auto 92% no-repeat;
     pointer-events: none;
 
     &::before {
@@ -127,22 +127,23 @@ $line: #e5e7eb;
         background: linear-gradient(
             90deg,
             #e3f2eb 0%,
-            #e3f2eb 40%,
-            rgba(227, 242, 235, 0.85) 50%,
-            rgba(227, 242, 235, 0) 64%
+            #e3f2eb 43%,
+            rgba(227, 242, 235, 0.78) 51%,
+            rgba(227, 242, 235, 0) 60%
         );
     }
 
     @media (max-width: 1200px) {
-        background-size: 62% auto;
+        background-position: right 12px center;
+        background-size: auto 86%;
 
         &::before {
             background: linear-gradient(
                 90deg,
                 #e3f2eb 0%,
-                #e3f2eb 42%,
+                #e3f2eb 44%,
                 rgba(227, 242, 235, 0.8) 54%,
-                rgba(227, 242, 235, 0) 70%
+                rgba(227, 242, 235, 0) 66%
             );
         }
     }
@@ -150,7 +151,7 @@ $line: #e5e7eb;
     @media (max-width: 768px) {
         background-size: cover;
         background-position: right bottom;
-        opacity: 0.3;
+        opacity: 0.24;
 
         &::before {
             background: linear-gradient(90deg, #e3f2eb 20%, rgba(227, 242, 235, 0.4) 100%);

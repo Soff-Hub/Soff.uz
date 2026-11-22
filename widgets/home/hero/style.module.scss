@@ -459,7 +459,7 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background: linear-gradient(135deg, #e3f2eb 0%, #eef7f2 48%, #d6cccb 100%);
+    background: linear-gradient(90deg, #e3f2eb 0%, #e3f2eb 45%, #d6cccb 60%, #d1c6c5 100%);
     text-decoration: none;
     color: #1f2933;
 
@@ -472,28 +472,32 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
 .agentHeroText {
     position: relative;
     z-index: 2;
-    max-width: 520px;
-    padding: 28px 36px;
+    max-width: 470px;
+    padding: 20px 24px 20px 60px;
+
+    @media (max-width: 992px) {
+        padding: 18px 20px 18px 48px;
+    }
 
     @media (max-width: 768px) {
-        padding: 20px 22px;
+        padding: 18px 20px;
     }
 }
 
 .agentHeroTitle {
     margin: 0;
-    font-size: 32px;
+    font-size: 26px;
     font-weight: 700;
-    line-height: 1.15;
+    line-height: 1.18;
     letter-spacing: -0.02em;
     color: #1f2933;
 
     @media (max-width: 1200px) {
-        font-size: 26px;
+        font-size: 22px;
     }
 
     @media (max-width: 576px) {
-        font-size: 20px;
+        font-size: 18px;
     }
 }
 
@@ -502,15 +506,15 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
 }
 
 .agentHeroSubtitle {
-    margin: 10px 0 16px;
-    max-width: 420px;
-    font-size: 14px;
+    margin: 8px 0 14px;
+    max-width: 390px;
+    font-size: 13px;
     line-height: 1.45;
     color: #4b5563;
 
     @media (max-width: 576px) {
-        font-size: 12px;
-        margin: 6px 0 12px;
+        font-size: 11.5px;
+        margin: 6px 0 10px;
     }
 }
 
@@ -518,11 +522,11 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 9px 18px;
+    padding: 8px 18px;
     border-radius: 999px;
     background: #00a44f;
     color: #ffffff;
-    font-size: 13.5px;
+    font-size: 13px;
     font-weight: 600;
     box-shadow: 0 6px 16px rgba(0, 164, 79, 0.25);
     transition: background-color 0.2s ease, transform 0.2s ease;
@@ -536,7 +540,7 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
 .agentHeroArt {
     position: absolute;
     inset: 0;
-    background: url('/static/img/agents/team-3d.webp') right center / 58% auto no-repeat;
+    background: url('/static/img/agents/team-3d.webp') right 44px center / auto 94% no-repeat;
     pointer-events: none;
     z-index: 1;
 
@@ -547,15 +551,21 @@ $shadow-mega: 0 10px 40px rgba(0, 0, 0, 0.1);
         background: linear-gradient(
             90deg,
             #e3f2eb 0%,
-            #e3f2eb 38%,
-            rgba(227, 242, 235, 0.85) 50%,
-            rgba(227, 242, 235, 0) 64%
+            #e3f2eb 44%,
+            rgba(227, 242, 235, 0.75) 50%,
+            rgba(227, 242, 235, 0) 57%
         );
+    }
+
+    @media (max-width: 1200px) {
+        background-position: right 20px center;
+        background-size: auto 88%;
     }
 
     @media (max-width: 768px) {
         background-size: cover;
-        opacity: 0.28;
+        background-position: center;
+        opacity: 0.22;
 
         &::before {
             background: linear-gradient(90deg, #e3f2eb 20%, rgba(227, 242, 235, 0.35) 100%);
