@@ -435,7 +435,7 @@ const AgentDetail = ({ agent }) => {
                                 <div>
                                     <h2 className={styles.sectionTitle}>Namuna natijalar</h2>
                                     <span className={styles.sectionSubtitle}>
-                                        SoffX AI tomonidan real bizneslar uchun generatsiya qilingan
+                                        Agent {agent.name} tomonidan real bizneslar uchun tayyorlangan
                                     </span>
                                 </div>
                                 <span className={styles.creditTip}>
@@ -477,7 +477,7 @@ const AgentDetail = ({ agent }) => {
                         {/* 3. Can Do vs Cannot Do (Split Grid) */}
                         <div className={styles.splitGrid}>
                             <section className={`${styles.card} ${styles.canDoCard}`}>
-                                <h3 className={styles.splitTitle}>SoffX AI nima qila oladi</h3>
+                                <h3 className={styles.splitTitle}>Agent {agent.name} nima qila oladi</h3>
                                 <ul className={styles.checkList}>
                                     {(agent.canDo || agent.abilities || []).map((item, idx) => (
                                         <li key={idx} className={styles.checkItem}>
