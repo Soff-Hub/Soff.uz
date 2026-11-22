@@ -15,20 +15,6 @@ export default function useAuth() {
 
         return user;
     };
-    const registerGoogleUser = (params, e) => {
-        let user = Repository.get(
-            baseUrlAuth + `auth/social/login/${e}/${params}`
-        )
-            .then((ress) => {
-                return ress;
-            })
-            .catch((error) => {
-                return Promise.reject(error);
-            });
-
-        return user;
-    };
-
     const loginUser = (e) => {
         let endPoint = 'auth/login/';
 
@@ -68,7 +54,7 @@ export default function useAuth() {
         const endPoint = 'auth/reset-password-verify/';
         let config = {
             headers: {
-                Authorization: `Bearer ${safeLocalStorage.getItem('qayta_token')} `,
+                Authorization: `Bearer ${safeLocalStorage.getItem('qayta_token')}`,
             },
         };
         let user = Repository.post(baseUrlAuth + endPoint, e, config)
@@ -88,7 +74,7 @@ export default function useAuth() {
         let endPoint = 'auth/get-new-code/';
         // let endPoint = 'auth/get-new-code/';
         let config = {
-            Authorization: `Bearer ${safeLocalStorage.getItem('token')} `,
+            Authorization: `Bearer ${safeLocalStorage.getItem('token')}`,
         };
         let user = Repository({
             url: baseUrlAuth + endPoint,
@@ -111,7 +97,7 @@ export default function useAuth() {
         let endPoint = 'auth/get-new-code/';
         // let endPoint = 'auth/get-new-code/';
         let config = {
-            Authorization: `Bearer ${safeLocalStorage.getItem('qayta_token')} `,
+            Authorization: `Bearer ${safeLocalStorage.getItem('qayta_token')}`,
         };
         let user = Repository({
             url: baseUrlAuth + endPoint,
@@ -151,7 +137,7 @@ export default function useAuth() {
         let endPoint = 'auth/reset-password-confirm/';
         let config = {
             headers: {
-                Authorization: `Bearer ${safeLocalStorage.getItem('qayta_token')} `,
+                Authorization: `Bearer ${safeLocalStorage.getItem('qayta_token')}`,
             },
         };
         let user = Repository.post(baseUrlAuth + endPoint, e, config)
@@ -170,7 +156,7 @@ export default function useAuth() {
         let endPoint = 'auth/logout/';
         let config = {
             headers: {
-                Authorization: `Bearer ${safeLocalStorage.getItem('token')} `,
+                Authorization: `Bearer ${safeLocalStorage.getItem('token')}`,
             },
         };
         let user = Repository.post(baseUrlAuth + endPoint, e, config)
@@ -213,6 +199,5 @@ export default function useAuth() {
         logOutAuth,
         qaytaKodYuborishParol,
         feedbackPost,
-        registerGoogleUser,
     };
 }

@@ -271,6 +271,7 @@ function useCreateOrder({
                             'YYYY-MM-DD'
                         )} ${dayjs(values.deadline_time).format('HH:mm')}`,
                     };
+                    if (id) order.seller_id = id;
                     setPendingOrderData({ order, files });
                     setPhoneModalOpen(true);
                 }

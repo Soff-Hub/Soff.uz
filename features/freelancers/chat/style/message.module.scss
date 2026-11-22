@@ -148,3 +148,56 @@
         transform: scale(0.95);
     }
 }
+
+.faq_feedback_box {
+    margin-top: 12px;
+    padding-top: 8px;
+    border-top: 1px dashed rgba(0, 0, 0, 0.1);
+    width: 100%;
+
+    .faq_feedback_text {
+        font-size: 11px;
+        color: #595959;
+        margin-bottom: 8px;
+        font-weight: 500;
+    }
+
+    .faq_feedback_btns {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+
+        :global(.ant-btn) {
+            border-radius: 16px;
+            font-size: 11px;
+            height: 26px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .faq_feedback_btn_yes {
+            background: #f6ffed;
+            border-color: #b7eb8f;
+            color: #389e0d;
+
+            &:hover {
+                background: #ebfadc;
+                border-color: #95de64;
+                color: #237804;
+            }
+        }
+
+        .faq_feedback_btn_no {
+            background: #fff1f0;
+            border-color: #ffa39e;
+            color: #cf1322;
+
+            &:hover {
+                background: #fff1f0;
+                border-color: #ff7875;
+                color: #a8071a;
+            }
+        }
+    }
+}

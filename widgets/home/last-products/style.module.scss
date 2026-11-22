@@ -72,9 +72,21 @@
     }
 }
 
+.sectionsList {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    margin-top: 24px;
+
+    @media (max-width: 768px) {
+        gap: 28px;
+    }
+}
+
 .productBox {
     opacity: 0;
     transform: translateY(40px);
+    margin-bottom: 30px;
     transition: opacity 0.8s ease, transform 0.8s ease;
 
     &.fadeIn {
@@ -85,33 +97,82 @@
     .titleBox {
         display: flex;
         align-items: center;
-        gap: 17px;
-        margin: 24px 0;
-        cursor: pointer; // butun box bosiladigan bo‘lsin
-        transition: all 0.3s ease;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 18px;
 
-        h3 {
-            font-weight: 600;
-            font-size: 24px;
-            line-height: 100%;
-            margin: 0;
-            color: #24282b;
-            transition: all 0.3s ease;
+        .titleLeft {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            text-decoration: none;
+
+            .iconBadge {
+                width: 34px;
+                height: 34px;
+                border-radius: 10px;
+                background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+                border: 1px solid rgba(0, 164, 79, 0.2);
+                color: #00a44f;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+                font-size: 16px;
+            }
+
+            h3 {
+                font-weight: 600;
+                font-size: 22px;
+                line-height: 100%;
+                margin: 0;
+                color: #24282b;
+                transition: color 0.3s ease;
+            }
+
+            .chevron {
+                font-size: 14px;
+                color: #94a3b8;
+                transition: color 0.3s ease, transform 0.3s ease;
+            }
+
+            &:hover {
+                h3 {
+                    color: #00a44f;
+                }
+
+                .chevron {
+                    color: #00a44f;
+                    transform: translateX(3px);
+                }
+            }
         }
 
-        svg {
+        .viewAllLink {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
             font-weight: 600;
-            font-size: 20px;
-            margin: 0;
-            color: #24282b;
-            transition: all 0.3s ease;
-        }
+            color: #00a44f;
+            text-decoration: none;
+            white-space: nowrap;
+            flex-shrink: 0;
 
-        &:hover {
+            .viewAllArrow {
+                font-size: 16px;
+                transition: transform 0.25s ease;
+            }
 
-            h3,
-            svg {
-                color: #00a44f !important;
+            &:hover .viewAllArrow {
+                transform: translateX(4px);
+            }
+
+            @media (max-width: 480px) {
+                span {
+                    display: none;
+                }
             }
         }
     }

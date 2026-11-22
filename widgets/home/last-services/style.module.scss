@@ -1,59 +1,253 @@
 @import '/scss/utils/variable';
 @import '/scss/utils/mixin';
 
+.lastServicesWrapper {
+    width: 100%;
+    padding: 40px 0;
+
+    @media (max-width: 992px) {
+        padding: 20px 0 40px;
+    }
+}
+
 .freelance_section {
-    padding: 80px 0 54px 0;
-    border-radius: 24px;
+    padding: 0 0 28px 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 20px;
     flex-wrap: wrap;
 
     .freelance_text {
-        .titleWrapper {
+        .headerLeft {
             display: flex;
-            flex-direction: column;
-            .labelWrapperH1 {
-                font-size: 36px;
-                font-weight: 600;
-                color: #24282b;
-                margin-bottom: 1rem;
-                line-height: 1.3;
-            }
-            .labelWrapperP {
-                font-size: 20px;
-                line-height: 1.6;
-                color: #706f6f;
-                margin-bottom: 0;
-            }
-        }
+            align-items: center;
+            gap: 14px;
 
-        .badge {
-            width: 30px; // kerakli o‘lcham
-            height: 30px;
-            object-fit: contain;
+            .iconBadge {
+                width: 44px;
+                height: 44px;
+                border-radius: 12px;
+                background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+                border: 1px solid rgba(0, 164, 79, 0.2);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+                box-shadow: 0 4px 12px rgba(0, 164, 79, 0.12);
 
-            @media (max-width: 700px) {
-                display: none;
+                .sparkleIcon {
+                    color: #00a44f;
+                    font-size: 22px;
+                }
+            }
+
+            .titleWrapper {
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+
+                .labelWrapperH1 {
+                    font-size: 26px;
+                    font-weight: 700;
+                    color: #1e293b;
+                    margin: 0;
+                    line-height: 1.25;
+                    letter-spacing: -0.02em;
+                }
+
+                .labelWrapperP {
+                    font-size: 14px;
+                    line-height: 1.4;
+                    color: #64748b;
+                    margin: 0;
+                    font-weight: 400;
+                }
             }
         }
     }
 
     .freelance_button {
-        @include link-button-style();
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: linear-gradient(135deg, #00b653 0%, #009343 100%);
+        color: #ffffff !important;
+        font-size: 14px;
+        font-weight: 600;
+        padding: 10px 20px;
+        border-radius: 9999px;
+        text-decoration: none;
+        box-shadow: 0 4px 14px rgba(0, 164, 79, 0.24);
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        white-space: nowrap;
+
+        .arrowIcon {
+            font-size: 16px;
+            transition: transform 0.25s ease;
+        }
+
+        &:hover {
+            box-shadow: 0 6px 20px rgba(0, 164, 79, 0.35);
+            filter: brightness(1.05);
+            transform: translateY(-1px);
+
+            .arrowIcon {
+                transform: translateX(4px);
+            }
+        }
+
+        &:active {
+            transform: translateY(0);
+        }
     }
 }
+
+.compact {
+    padding-top: 0;
+    padding-bottom: 24px;
+
+    .freelance_text .headerLeft .titleWrapper {
+        .labelWrapperH1 {
+            font-size: 24px;
+        }
+        .labelWrapperP {
+            font-size: 13px;
+        }
+    }
+}
+
 .cardSection {
     display: grid;
-    grid-template-columns: repeat(5, 1fr); /* <= 480px: 1 ta */
-    gap: 10px;
-    padding-bottom: 80px;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    padding-bottom: 40px;
+
     @media (max-width: 1200px) {
-        grid-template-columns: repeat(3, 1fr); /* 481–991px: 2 ta */
+        grid-template-columns: repeat(3, 1fr);
     }
     @media (max-width: 768px) {
-        grid-template-columns: repeat(2, 1fr); /* 481–991px: 2 ta */
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+    @media (max-width: 480px) {
+        grid-template-columns: 1fr;
         gap: 10px;
+    }
+}
+
+.cardSectionCompact {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    padding-bottom: 30px;
+
+    @media (max-width: 1200px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 576px) {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+}
+
+/* Skeleton loader */
+.skeletonCard {
+    background: #ffffff;
+    border: 1px solid #eef2f6;
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+
+    .skeletonTitle {
+        height: 16px;
+        width: 85%;
+        border-radius: 6px;
+        background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+        background-size: 200% 100%;
+        animation: shimmer 1.5s infinite;
+    }
+
+    .skeletonTitleShort {
+        height: 16px;
+        width: 55%;
+        border-radius: 6px;
+        background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+        background-size: 200% 100%;
+        animation: shimmer 1.5s infinite;
+    }
+
+    .skeletonMetaRow {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 4px;
+
+        .skeletonBadge {
+            width: 60px;
+            height: 22px;
+            border-radius: 6px;
+            background: #f1f5f9;
+        }
+
+        .skeletonPrice {
+            width: 70px;
+            height: 22px;
+            border-radius: 6px;
+            background: #f1f5f9;
+        }
+    }
+
+    .skeletonBtns {
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: 8px;
+        margin-top: 6px;
+
+        .skeletonBtn,
+        .skeletonBtnPrimary {
+            height: 38px;
+            border-radius: 10px;
+            background: #f1f5f9;
+        }
+    }
+
+    .skeletonDivider {
+        height: 1px;
+        background: #f1f5f9;
+        margin: 6px 0;
+    }
+
+    .skeletonFooter {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        .skeletonAvatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #f1f5f9;
+        }
+
+        .skeletonName {
+            width: 100px;
+            height: 14px;
+            border-radius: 4px;
+            background: #f1f5f9;
+        }
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
     }
 }
 
@@ -61,50 +255,49 @@
 @media (max-width: 992px) {
     .freelance_section {
         flex-direction: column;
-        text-align: center;
-        gap: 24px;
+        align-items: flex-start;
+        gap: 16px;
 
-        // .freelance_text {
-        //     max-width: 100%;
-        //     .titleWrapper {
-        //         .labelWrapperH1 {
-        //             font-size: 28px !important;
-        //         }
-        //         .labelWrapperP {
-        //             font-size: 14px !important;
-        //         }
-        //     }
-        // }
-
-        // .freelance_button {
-        //     width: 100%;
-        //     max-width: 320px;
-        // }
+        .freelance_button {
+            width: 100%;
+            justify-content: center;
+        }
     }
 }
 
 /* Mobile (≤576px) */
 @media (max-width: 576px) {
     .freelance_section {
-        // padding: 40px 0;
-        gap: 10px;
+        padding: 16px 0 20px 0;
 
         .freelance_text {
-            max-width: 100%;
-            .titleWrapper {
-                .labelWrapperH1 {
-                    font-size: 24px !important;
+            .headerLeft {
+                gap: 10px;
+
+                .iconBadge {
+                    width: 36px;
+                    height: 36px;
+
+                    .sparkleIcon {
+                        font-size: 18px;
+                    }
                 }
-                .labelWrapperP {
-                    font-size: 14px !important;
+
+                .titleWrapper {
+                    .labelWrapperH1 {
+                        font-size: 20px !important;
+                    }
+                    .labelWrapperP {
+                        font-size: 12px !important;
+                    }
                 }
             }
         }
 
-        // .freelance_button {
-        //     font-size: 16px;
-        //     padding: 14px 22px;
-        //     width: 100%;
-        // }
+        .freelance_button {
+            font-size: 13px;
+            padding: 9px 16px;
+        }
     }
 }
+

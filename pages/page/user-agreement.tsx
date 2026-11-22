@@ -437,8 +437,162 @@ export default function UserAgreement() {
                 </p>
                 <p>
                     14.5. Rasmiy Telegram kanalida (
-                    <strong>t.me/soff_uz</strong>) e'lon qilingan har qanday
+                    <strong>telegram.me/soff_uz</strong>) e'lon qilingan har qanday
                     yangilik yoki o'zgarish rasmiy hisoblanadi.
+                </p>
+
+                <h4>15. To'lovlarni qaytarish siyosati</h4>
+
+                <h5>15.1. Umumiy qoidalar</h5>
+                <p>
+                    Mazkur To'lovlarni qaytarish siyosati Soff platformasi
+                    orqali amalga oshirilgan to'lovlarni qaytarish tartibini
+                    belgilaydi va barcha foydalanuvchilar uchun majburiy
+                    hisoblanadi.
+                </p>
+
+                <h5>15.2. To'lovni qaytarish asoslari</h5>
+                <p>
+                    Foydalanuvchi quyidagi holatlarda to'langan mablag'ni
+                    qaytarishni so'rash huquqiga ega:
+                </p>
+                <p>
+                    — xizmat texnik nosozlik sababli taqdim etilmagan bo'lsa;
+                </p>
+                <p>
+                    — to'lov muvaffaqiyatli amalga oshirilgan bo'lsa-yu,
+                    xizmatdan foydalanish imkoniyati yaratilmagan bo'lsa;
+                </p>
+                <p>
+                    — bir xil xizmat uchun foydalanuvchi tomonidan takroriy yoki
+                    xato to'lov amalga oshirilgan bo'lsa;
+                </p>
+                <p>
+                    — amaldagi qonunchilikda nazarda tutilgan boshqa holatlarda.
+                </p>
+
+                <h5>15.3. To'lovni qaytarish uchun murojaat qilish tartibi</h5>
+                <p>
+                    To'lovni qaytarish bo'yicha murojaatlar{' '}
+                    <strong>support@soff.uz</strong> elektron pochta manzili
+                    orqali qabul qilinadi.
+                </p>
+                <p>Murojaatda quyidagi ma'lumotlar ko'rsatilishi lozim:</p>
+                <p>— foydalanuvchining F.I.Sh.;</p>
+                <p>
+                    — bog'lanish uchun telefon raqami yoki elektron pochta
+                    manzili;
+                </p>
+                <p>— to'lov sanasi va summasi;</p>
+                <p>— to'lovni tasdiqlovchi ma'lumotlar;</p>
+                <p>— qaytarish sababi.</p>
+
+                <h5>15.4. Mablag'larni qaytarish tartibi</h5>
+                <p>
+                    Murojaat ko'rib chiqilib, qaytarish asosli deb topilgan
+                    taqdirda mablag' foydalanuvchi to'lovni amalga oshirgan bank
+                    kartasiga qaytariladi.
+                </p>
+                <p>
+                    Qaytarish faqat dastlabki to'lov amalga oshirilgan Visa yoki
+                    Mastercard kartasiga amalga oshiriladi.
+                </p>
+
+                <h5>15.5. Qaytarish muddati</h5>
+                <p>
+                    Tasdiqlangan qaytarishlar bo'yicha mablag'lar bank va to'lov
+                    tizimlarining ichki qoidalariga muvofiq odatda 5–15 ish kuni
+                    ichida foydalanuvchining hisobiga qaytariladi.
+                </p>
+                <p>
+                    Aniq muddat foydalanuvchining banki va xalqaro to'lov
+                    tizimlari qoidalariga bog'liq bo'lishi mumkin.
+                </p>
+
+                <h5>15.6. To'lov qaytarilmaydigan holatlar</h5>
+                <p>Quyidagi hollarda mablag' qaytarilmasligi mumkin:</p>
+                <p>— xizmat to'liq hajmda taqdim etilgan bo'lsa;</p>
+                <p>— foydalanuvchi xizmatdan foydalangan bo'lsa;</p>
+                <p>
+                    — foydalanuvchi tomonidan noto'g'ri kiritilgan ma'lumotlar
+                    sababli yuzaga kelgan muammolar mavjud bo'lsa;
+                </p>
+                <p>
+                    — amaldagi qonunchilik yoki mazkur siyosatda nazarda
+                    tutilgan boshqa holatlarda.
+                </p>
+
+                <h5>15.7. Aloqa ma'lumotlari</h5>
+                <p>
+                    <strong>MCHJ «SOFF-STUDY»</strong>
+                </p>
+                <p>STIR (INN): 309460545</p>
+                <p>
+                    Yuridik manzil: O'zbekiston Respublikasi, Toshkent shahri,
+                    Chilonzor tumani, Novza mahallasi, E kvartali, 8/1-uy
+                </p>
+                <p>
+                    E-mail: <strong>support@soff.uz</strong>
+                </p>
+                <p>
+                    Veb-sayt: <strong>soff.uz</strong>
+                </p>
+
+                <h4>
+                    16. Visa va Mastercard to'lov tizimlari orqali to'lovlarni
+                    qaytarish
+                </h4>
+                <p>
+                    16.1. Visa va Mastercard xalqaro to'lov tizimlari orqali
+                    amalga oshirilgan to'lovlar bo'yicha mablag'larni qaytarish
+                    ushbu to'lov tizimlarining amaldagi qoidalari va
+                    standartlariga muvofiq amalga oshiriladi.
+                </p>
+                <p>
+                    16.2. Qaytarish tasdiqlangan taqdirda mablag' faqat
+                    dastlabki to'lov amalga oshirilgan Visa yoki Mastercard
+                    kartasiga qaytariladi.
+                </p>
+                <p>
+                    16.3. Mablag' boshqa bank kartasi, elektron hamyon yoki
+                    uchinchi shaxs hisob raqamiga o'tkazilmaydi.
+                </p>
+                <p>
+                    16.4. Foydalanuvchi tomonidan chargeback (to'lov yuzasidan
+                    nizo) jarayoni boshlangan taqdirda, xizmat ko'rsatuvchi
+                    tegishli banklar va xalqaro to'lov tizimlariga zarur
+                    ma'lumot hamda hujjatlarni taqdim etish huquqiga ega.
+                </p>
+
+                <h4>17. Rekvizitlar</h4>
+                <p>
+                    Mazkur ommaviy oferta doirasida xizmatlarni taqdim etuvchi
+                    tashkilot quyidagi rekvizitlarga ega:
+                </p>
+                <p>
+                    Tashkilot nomi: <strong>MCHJ «SOFF-STUDY»</strong>
+                </p>
+                <p>STIR (INN): 309460545</p>
+                <p>
+                    Yuridik manzil: O'zbekiston Respublikasi, Toshkent shahri,
+                    Chilonzor tumani, Novza mahallasi, E kvartali, 8/1-uy
+                </p>
+                <p>
+                    Faoliyat yuritish manzili: O'zbekiston Respublikasi, Toshkent
+                    shahri, Chilonzor tumani, Novza mahallasi, E kvartali,
+                    8/1-uy, 100115
+                </p>
+                <p>Davlat ro'yxatidan o'tgan sana: 2022-yil 12-aprel</p>
+                <p>Asosiy faoliyat turi (OKED): 62090</p>
+                <p>Elektron pochta manzili: support@soff.uz</p>
+                <p>Telefon: +998 91 008 67 89</p>
+                <p>
+                    MCHJ «SOFF-STUDY» Soff ta'lim platformasining huquqiy egasi
+                    hamda mazkur ofertada nazarda tutilgan xizmatlarni taqdim
+                    etuvchi tomon hisoblanadi. Foydalanuvchilar xizmatlardan
+                    foydalanish, to'lovlar, taklif va murojaatlar yuzasidan
+                    yuqorida ko'rsatilgan aloqa vositalari orqali murojaat
+                    qilishlari mumkin.
                 </p>
             </div>
         </PageLayout>

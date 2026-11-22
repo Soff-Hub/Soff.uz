@@ -80,7 +80,12 @@ const OrderPendingFiles: React.FC<PendingFilesCase> = ({
         );
     } else if (hasPendingFiles) {
         filesContent = pendingFiles.map((f) => (
-            <OrderFile key={f.url} file={f} size={size} />
+            <OrderFile
+                key={f.url}
+                file={f}
+                size={size}
+                isRestricted={true}
+            />
         ));
     } else {
         filesContent = (
@@ -93,9 +98,9 @@ const OrderPendingFiles: React.FC<PendingFilesCase> = ({
     const orderContent = (
         <div className={styles.orderConfirmContent}>
             <p style={{ fontSize: sizeStyles.textFontSize }}>
-                Mutahasis buyurtmani yakunladi va natijani sizga jo'natdi.
-                Natijani yuklab olib ko'rib chiqing va tasdiqlang yoki rad
-                eting.
+                Mutaxassis buyurtmani yakunladi va natijani sizga jo'natdi.
+                Natijani ko'rib chiqing va tasdiqlang yoki kamchilikni
+                ko'rsatib rad eting.
             </p>
             <Alert
                 message="Eslatma:"

@@ -2,7 +2,7 @@ name: Deploy to Test Server
 
 on:
   push:
-    branches: [test]
+    branches: [feat/platform-subscription]
   workflow_dispatch: {}
 
 concurrency:
@@ -17,13 +17,19 @@ env:
   # and PM2 runs "$APP_DIR/current/server.js".
   # Must NOT be the production APP_DIR if both run on the same machine.
   APP_DIR: /root/frontend/customer-test
-  # PM2 process name (must be stable across deploys, and different from prod's)
+  # PM2 process name (must be stable across deploys, and different from prod's soff3001)
   PM2_NAME: soff-test
   # Local port the standalone Next server listens on (nginx reverse-proxies to it).
-  # Must differ from prod if both run on the same machine.
+  # Must differ from prod (3001) if both run on the same machine.
   PORT: 3002
   # Public URL for the Telegram message
   PUBLIC_URL: https://test.soff.uz
+  # Disk budget for the shared Next.js image cache ($APP_DIR/shared/cache).
+  # The in-process scheduler prunes least-recently-used entries down to 70% of
+  # this every hour.
+  CACHE_MAX_MB: 512
+  # Cache entries untouched for this many days are dropped even when under budget.
+  CACHE_MAX_AGE_DAYS: 7
   # Releases kept on disk (each is ~350 MB).
   KEEP_RELEASES: 2
 
@@ -43,20 +49,20 @@ jobs:
           cache: npm
 
       - name: Create build env file
-        # Next 12 inlines NEXT_PUBLIC_* into the bundle at build time, and
+        # Next 12 inlines NEXT_PUBLIC_* into the bundle at build time, AND
         # next.config.js evaluates rewrites()/SERVICE_URL_* at build time too,
-        # so the FULL test env must exist before `next build`. It is written to
-        # .env.production because that is what `next build` loads; CI checkouts
-        # are fresh, so nothing real is overwritten.
+        # so the FULL test env must exist before `next build`.
+        # The test env is written to .env.production on purpose: `next build`
+        # loads it, and prepare-deploy.js (--env prod) copies it -> deploy/.env
+        # for runtime server-only vars. CI checkouts are fresh, so nothing is
+        # overwritten.
         #
         # Put the whole file in the ENV_FILE_TEST secret, e.g.:
         #   NEXT_PUBLIC_BASE_URL=https://test-api.soff.uz
-        #   NEXT_PUBLIC_WS_BASE_URL=...
-        #   NEXT_PUBLIC_FREELEANCE_URL=...
-        #   NEXT_PUBLIC_WS_FREELEANCE_URL=...
-        #   NEXT_PUBLIC_RECAPTCHA_SITE_KEY=...
-        #   SERVICE_URL_VIDEO=...
+        #   SERVICE_URL_VIDEO=https://soff.uz   (or the internal upstream)
         #   SERVICE_URL_FREELANCE=...
+        #   SERVICE_URL_CREATORS=...
+        #   TG_DEPLOY_BOT_TOKEN=... / TG_DEPLOY_CHAT_ID=...   (optional)
         run: |
           cat > .env.production <<'ENVEOF'
           ${{ secrets.ENV_FILE_TEST }}
@@ -66,22 +72,17 @@ jobs:
         run: npm ci
 
       - name: Build (Next standalone + scheduler injection)
-        # `npm run build` = `next build` + copy-to-standalone.js, which injects
-        # the node-cron scheduler into server.js and copies node-cron,
-        # .next/static and public into .next/standalone.
+        # `npm run build` = clear .next/cache + `next build` + copy-to-standalone.js
+        # (copy-to-standalone injects the node-cron scheduler into server.js and
+        # bundles node-cron into .next/standalone/node_modules).
         run: npm run build
         env:
           NODE_ENV: production
 
       - name: Assemble deploy bundle
-        # .next/standalone is already self-contained after copy-to-standalone.js;
-        # only the runtime env file is added (the standalone server reads .env).
-        run: |
-          test -f .next/standalone/server.js || { echo "::error::server.js missing in standalone build"; exit 1; }
-          rm -rf deploy
-          cp -r .next/standalone deploy
-          cp .env.production deploy/.env
-          echo "Deploy bundle size: $(du -sh deploy | cut -f1)"
+        # Produces a self-contained ./deploy folder: standalone server.js (with the
+        # injected scheduler) + traced node_modules + .next/static + public + .env
+        run: node scripts/prepare-deploy.js --env prod
 
       - name: Setup SSH
         run: |
@@ -100,15 +101,21 @@ jobs:
         run: |
           ssh -i ~/.ssh/id_ed25519 "${{ secrets.TEST_DEPLOY_USER }}@${{ secrets.TEST_DEPLOY_HOST }}" \
             "APP_DIR='$APP_DIR' RELEASE='${GITHUB_SHA::12}' PORT='$PORT' PM2_NAME='$PM2_NAME' \
+             CACHE_MAX_MB='$CACHE_MAX_MB' CACHE_MAX_AGE_DAYS='$CACHE_MAX_AGE_DAYS' \
              KEEP_RELEASES='$KEEP_RELEASES' bash -s" <<'REMOTE'
           set -euo pipefail
 
           RELEASE_DIR="$APP_DIR/releases/$RELEASE"
           CURRENT_LINK="$APP_DIR/current"
 
-          # Remove a directory a live process may still be writing into (the Next
-          # image optimizer keeps writing under .next/cache). Renaming it first
-          # avoids ENOTEMPTY races. Housekeeping must never fail a deploy.
+          # Remove a directory a live process may still be writing into. The
+          # running release's Next image optimizer keeps creating files under
+          # .next/cache/images, so a plain `rm -rf` unlinks children, the server
+          # recreates some, and the final rmdir dies with ENOTEMPTY — which under
+          # `set -e` kills the whole deploy. Detaching the tree with an atomic
+          # rename first removes the race: later writes land in a directory the
+          # server recreates, and nothing can repopulate what we then delete.
+          # Housekeeping must never fail a deploy, so this always returns 0.
           safe_purge() {
             VICTIM="$1"
             [ -e "$VICTIM" ] || return 0
@@ -125,20 +132,27 @@ jobs:
             return 0
           }
 
+          # A standalone build must contain the server entry point
           test -f "$RELEASE_DIR/server.js" || { echo "::error::server.js missing in release"; exit 1; }
 
           # Remember previous release for rollback
           PREV_TARGET="$(readlink -f "$CURRENT_LINK" 2>/dev/null || true)"
 
-          # One shared Next.js cache for all releases, so image cache doesn't
-          # pile up per release and new releases start warm.
+          # Point this release's Next.js cache at ONE shared directory instead of
+          # letting every release grow its own. The Next 12 image optimizer writes
+          # to <cwd>/.next/cache/images and only ever evicts an entry when that
+          # same image is requested again after its TTL — so a per-release cache
+          # grows without bound and every deploy left another multi-GB copy behind.
+          # Sharing it also means a new release starts with a warm image cache.
           SHARED_CACHE="$APP_DIR/shared/cache"
           mkdir -p "$SHARED_CACHE"
           safe_purge "$RELEASE_DIR/.next/cache"
           mkdir -p "$RELEASE_DIR/.next"
           ln -sfn "$SHARED_CACHE" "$RELEASE_DIR/.next/cache"
 
-          # Rotate PM2 logs so they don't fill the disk
+          # PM2 log files are append-only and unrotated by default. This app logs
+          # on every request error and on every hourly cache sweep, so without
+          # rotation ~/.pm2/logs alone fills the disk over time.
           if [ ! -d "$HOME/.pm2/modules/pm2-logrotate" ]; then
             pm2 install pm2-logrotate >/dev/null 2>&1 || true
           fi
@@ -146,17 +160,22 @@ jobs:
           pm2 set pm2-logrotate:retain 7        >/dev/null 2>&1 || true
           pm2 set pm2-logrotate:compress true   >/dev/null 2>&1 || true
 
-          # Atomic symlink switch
+          # Atomic symlink switch (zero downtime: the running process keeps serving
+          # from the old path until PM2 restarts onto the new one below).
           ln -sfn "$RELEASE_DIR" "$CURRENT_LINK.tmp" && mv -Tf "$CURRENT_LINK.tmp" "$CURRENT_LINK"
 
-          # delete+start (not restart) so PM2 runs the new release path
+          # (Re)start the Node server under PM2 against the NEW release.
+          # delete+start (not restart) guarantees PM2 runs the freshly-resolved
+          # release path rather than a cached one from a previous deploy.
           export PORT HOSTNAME=0.0.0.0 NODE_ENV=production
+          export CACHE_MAX_MB CACHE_MAX_AGE_DAYS
           pm2 delete "$PM2_NAME" >/dev/null 2>&1 || true
           ( cd "$RELEASE_DIR" && pm2 start server.js --name "$PM2_NAME" --update-env )
           pm2 save >/dev/null 2>&1 || true
 
-          # Health check: any real HTTP response means the server is alive;
-          # only connection-refused (000) fails.
+          # Health check the local Node port directly. Any real HTTP response
+          # (200, or a locale redirect like 307 -> /uz, or even 404) means the
+          # Node server is alive; only connection-refused (000) fails.
           OK=0
           for i in $(seq 1 20); do
             CODE="$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:$PORT" || true)"
@@ -174,6 +193,25 @@ jobs:
             fi
             exit 1
           fi
+
+          # Housekeeping runs only now that PM2 serves the new release: the old
+          # release's Node process is gone, so nothing is writing into its cache
+          # any more and these purges have no live writer to race against.
+
+          # Reclaim the per-release caches older deploys wrote to disk, plus any
+          # trash left by an interrupted purge. `-L` skips the symlink created
+          # above, so the shared cache is never touched.
+          for RELEASE_PATH in "$APP_DIR"/releases/*; do
+            [ -d "$RELEASE_PATH" ] || continue
+            CACHE_PATH="$RELEASE_PATH/.next/cache"
+            if [ -d "$CACHE_PATH" ] && [ ! -L "$CACHE_PATH" ]; then
+              echo "Removing stale per-release cache: $CACHE_PATH"
+              safe_purge "$CACHE_PATH"
+            fi
+            for LEFTOVER in "$RELEASE_PATH"/.next/.purge-*; do
+              [ -e "$LEFTOVER" ] && rm -rf -- "$LEFTOVER" 2>/dev/null || true
+            done
+          done
 
           # Keep only the N newest releases
           cd "$APP_DIR/releases"

@@ -83,16 +83,20 @@ export default function HeaderNotifications() {
                                 Batafsil <FaHandPointRight />
                             </a>
                         </Link>
-                        <span
+                        <button
+                            type="button"
                             onClick={handleRead}
                             className={cn(
                                 'text-primary',
                                 'cursor-pointer',
                                 'hover-underline',
-                                'transition'
+                                'transition',
+                                'bg-transparent',
+                                'border-none',
+                                'p-0'
                             )}>
                             O'qildi
-                        </span>
+                        </button>
                     </div>
                 </div>
             ),

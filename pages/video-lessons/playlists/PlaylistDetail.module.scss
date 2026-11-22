@@ -1,0 +1,578 @@
+.playlistDetail {
+    background: #fff;
+    padding-bottom: 80px;
+
+    @media (min-width: 992px) {
+        padding-bottom: 40px;
+    }
+}
+
+.hero {
+    background-color: #1c1d1f;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #fff;
+    padding: 80px 0;
+    position: relative;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+
+    @media (max-width: 992px) {
+        background: #fff !important;
+        color: #1c1d1f;
+        padding: 12px 0 24px 0;
+        min-height: auto;
+    }
+
+    .heroWrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+
+    .heroContent {
+        max-width: 800px;
+        position: relative;
+        z-index: 2;
+
+        .title {
+            font-size: 40px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            color: inherit;
+            letter-spacing: -0.02em;
+
+            @media (max-width: 992px) {
+                font-size: 28px;
+            }
+        }
+
+        .description {
+            font-size: 18px;
+            line-height: 1.5;
+            margin-bottom: 24px;
+            opacity: 0.8;
+            color: #fff;
+
+            @media (max-width: 992px) {
+                display: none;
+            }
+        }
+    }
+}
+
+// Preview Modal Styles
+.previewModal {
+    :global(.ant-modal-content) {
+        border-radius: 4px;
+        overflow: hidden;
+        background-color: #1c1d1f;
+        padding: 0 !important;
+    }
+    :global(.ant-modal-mask) {
+        background-color: rgba(0, 0, 0, 0.85) !important;
+    }
+    :global(.ant-modal-close) {
+        top: 20px;
+        right: 20px;
+    }
+}
+
+.modalContent {
+    background: #1c1d1f;
+    display: flex;
+    flex-direction: column;
+
+    .modalHeader {
+        padding: 24px 32px;
+        background: #1c1d1f;
+
+        .previewLabel {
+            color: #d1d7dc;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .previewTitle {
+            color: #fff;
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0;
+        }
+    }
+
+    .playerSection {
+        position: relative;
+        background: #000;
+        aspect-ratio: 16 / 9;
+
+        video {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .qualityOverlay {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+
+        .qualityBtn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(45, 47, 49, 0.8);
+            backdrop-filter: blur(8px);
+            padding: 8px 16px;
+            border-radius: 4px;
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.1);
+            }
+        }
+    }
+
+    .playlistDrawer {
+        max-height: 350px;
+        overflow-y: auto;
+        background: #1c1d1f;
+        padding: 24px 32px;
+
+        .drawerTitle {
+            color: #fff;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .drawerList {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .drawerItem {
+            display: flex;
+            gap: 16px;
+            padding: 8px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s;
+
+            &:hover {
+                background: #2d2f31;
+            }
+
+            &.active {
+                background: #3e4143;
+                .drawerName {
+                    color: #2ecc71;
+                }
+            }
+
+            .drawerThumb {
+                width: 120px;
+                aspect-ratio: 16 / 9;
+                position: relative;
+                flex-shrink: 0;
+                border-radius: 2px;
+                overflow: hidden;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+
+                .playIconOverlay {
+                    position: absolute;
+                    inset: 0;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background: rgba(0, 0, 0, 0.4);
+                    color: #fff;
+                    font-size: 24px;
+                    opacity: 0;
+                    transition: opacity 0.2s;
+                }
+            }
+
+            &:hover .playIconOverlay {
+                opacity: 1;
+            }
+
+            .drawerInfo {
+                flex: 1;
+                .drawerName {
+                    color: #fff;
+                    font-size: 14px;
+                    font-weight: 600;
+                    margin-bottom: 4px;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    line-clamp: 2;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                }
+                .drawerMeta {
+                    color: #d1d7dc;
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+
+    .purchaseOverlay {
+        position: absolute;
+        inset: 0;
+        z-index: 200;
+        background: rgba(28, 29, 31, 1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 40px;
+        text-align: center;
+
+        .lockIcon {
+            font-size: 56px;
+            color: #2ecc71;
+            margin-bottom: 24px;
+        }
+
+        .overlayTitle {
+            color: #fff;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .overlayText {
+            color: #d1d7dc;
+            font-size: 16px;
+            margin-bottom: 32px;
+            max-width: 450px;
+        }
+
+        .overlayBtn {
+            padding: 12px 40px;
+            background: #2ecc71;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+
+            &:hover {
+                background: #27ae60;
+                transform: scale(1.02);
+            }
+        }
+    }
+}
+
+.qualityMenu {
+    background: #1c1d1f !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    padding: 8px !important;
+
+    :global(.ant-dropdown-menu-item) {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        color: #fff !important;
+        padding: 8px 16px !important;
+        border-radius: 4px !important;
+
+        &:hover {
+            background: #2d2f31 !important;
+        }
+
+        &.activeItem {
+            color: #2ecc71 !important;
+            background: rgba(46, 204, 113, 0.1) !important;
+            color: #fff;
+        }
+
+        .checkIcon {
+            color: #2ecc71;
+        }
+    }
+}
+
+.mainSection {
+    margin-top: 40px;
+
+    .contentGrid {
+        display: flex;
+        gap: 40px;
+
+        @media (max-width: 1200px) {
+            flex-direction: column;
+        }
+    }
+
+    .infoColumn {
+        flex: 1;
+    }
+
+    .sidebarColumn {
+        width: 380px;
+        flex-shrink: 0;
+
+        @media (max-width: 1200px) {
+            width: 100%;
+        }
+    }
+}
+
+.sectionTitle {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 24px;
+    color: #1c1d1f;
+}
+
+.accordion {
+    border: 1px solid #d1d7dc;
+    border-radius: 4px;
+    overflow: hidden;
+
+    .groupItem {
+        border-bottom: 1px solid #d1d7dc;
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        .groupHeader {
+            background: #f7f9fa;
+            padding: 16px 24px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+
+            &:hover {
+                background: #eff2f3;
+            }
+
+            h3 {
+                margin: 0;
+                font-size: 16px;
+                font-weight: 700;
+                color: #1c1d1f;
+            }
+
+            .groupMeta {
+                font-size: 14px;
+                color: #6a6f73;
+            }
+        }
+
+        .groupContent {
+            padding: 8px 0;
+        }
+    }
+}
+
+.lessonItem {
+    padding: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+
+    &:hover {
+        background: #f7f9fa;
+    }
+
+    &.active {
+        background: rgba(46, 204, 113, 0.05);
+        .lessonTitle {
+            color: #2ecc71 !important;
+            font-weight: 700;
+        }
+    }
+
+    .lessonInfo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        .playIcon {
+            font-size: 16px;
+            color: #6a6f73;
+        }
+
+        .lessonTitle {
+            font-size: 14px;
+            font-weight: 500;
+        }
+    }
+
+    .lessonMeta {
+        font-size: 13px;
+        color: #6a6f73;
+    }
+}
+
+.sidebarCard {
+    background: #fff;
+    border: 1px solid #d1d7dc;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    position: sticky;
+    top: 100px;
+    z-index: 10;
+
+    @media (min-width: 1200px) {
+        margin-top: -300px;
+    }
+
+    .imageWrapper {
+        position: relative;
+        aspect-ratio: 16 / 9;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 64px;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
+
+    .cardBody {
+        padding: 24px;
+
+        .priceSection {
+            margin-bottom: 24px;
+
+            .price {
+                font-size: 32px;
+                font-weight: 800;
+                color: #1c1d1f;
+            }
+        }
+
+        .btnBuy {
+            width: 100%;
+            height: 48px;
+            background: #2ecc71;
+            color: #fff;
+            border: none;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 12px;
+            transition: all 0.2s ease;
+
+            &:hover {
+                background: #27ae60;
+                transform: translateY(-1px);
+            }
+
+            &:active {
+                transform: translateY(0);
+            }
+        }
+
+        .btnCart {
+            width: 100%;
+            height: 48px;
+            background: #fff;
+            color: #1c1d1f;
+            border: 1px solid #1c1d1f;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+
+            &:hover {
+                background: #f7f9fa;
+            }
+
+            &.inCart {
+                background: #fff1f0;
+                color: #ff4d4f;
+                border-color: #ff7875;
+
+                &:hover {
+                    background: #fff1f0;
+                    border-color: #ff4d4f;
+                }
+            }
+        }
+    }
+
+    .cardFooter {
+        padding: 24px;
+        background: #f7f9fa;
+        border-top: 1px solid #d1d7dc;
+
+        h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+
+            li {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                font-size: 14px;
+                margin-bottom: 8px;
+                color: #1c1d1f;
+
+                svg {
+                    font-size: 16px;
+                }
+            }
+        }
+    }
+}
+
+

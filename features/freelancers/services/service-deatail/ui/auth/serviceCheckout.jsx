@@ -4,14 +4,16 @@ import React, {
     forwardRef,
     useRef,
 } from 'react';
-import { Input, Modal, Tabs, Alert, Button } from 'antd';
+import { Input, Modal, Tabs, Alert, Button, DatePicker } from 'antd';
 import { BeatLoader } from 'react-spinners';
 import { useRouter } from 'next/router';
 import useCreateOrder from './api/createOrder';
+import useUpdateOrderDeadline from './api/updateOrderDeadline';
 import { useVerifyCode } from './api/verifyCode';
 import { useCountdown } from '~/shared/hooks/useCountDown';
 import { useQueryClient } from '@tanstack/react-query';
 import { message as AlertMessage } from 'antd';
+import dayjs from 'dayjs';
 import { FaRegCreditCard } from 'react-icons/fa6';
 import { FaRegCalendarDays } from 'react-icons/fa6';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
@@ -47,6 +49,13 @@ const ServiceCheckout = ({
     const queryClient = useQueryClient();
     const router = useRouter();
 
+    const [isDeadlineModalOpen, setIsDeadlineModalOpen] = useState(false);
+    const [deadlineMessage, setDeadlineMessage] = useState('');
+    const [pendingOrderId, setPendingOrderId] = useState(null);
+    const retryPaymentRef = useRef(null);
+    const { mutateAsync: updateDeadline, isPending: isDeadlineUpdating } =
+        useUpdateOrderDeadline();
+
     const resetVerificationModal = () => {
         if (verificationModalRef.current) {
             verificationModalRef.current.reset();
@@ -70,6 +79,38 @@ const ServiceCheckout = ({
                     router.push(data.url);
                 },
                 onError: (err) => {
+                    const detail = err?.response?.data?.detail;
+                    if (
+                        detail &&
+                        typeof detail === 'object' &&
+                        detail.code === 'order_deadline_expired'
+                    ) {
+                        setDeadlineMessage(detail.message);
+                        setPendingOrderId(order_id);
+                        retryPaymentRef.current = () =>
+                            createOrder(
+                                {
+                                    service_id: document,
+                                    payment_type: type,
+                                    order_id,
+                                    order_requirement_description: description,
+                                    order_requirement_file: files?.[0]?.originFileObj,
+                                },
+                                {
+                                    onSuccess: (data) => {
+                                        if (onClose) onClose();
+                                        router.push(data.url);
+                                    },
+                                    onError: (err) => {
+                                        AlertMessage.error(
+                                            err.response.data.detail
+                                        );
+                                    },
+                                }
+                            );
+                        setIsDeadlineModalOpen(true);
+                        return;
+                    }
                     AlertMessage.error(err.response.data.detail);
                 },
             }
@@ -93,13 +134,44 @@ const ServiceCheckout = ({
                     router.push(data.url);
                 },
                 onError: (err) => {
+                    const detail = err?.response?.data?.detail;
+                    if (
+                        detail &&
+                        typeof detail === 'object' &&
+                        detail.code === 'order_deadline_expired'
+                    ) {
+                        setDeadlineMessage(detail.message);
+                        setPendingOrderId(order_id);
+                        retryPaymentRef.current = () =>
+                            createOrder(
+                                {
+                                    service_id: document,
+                                    payment_type: type,
+                                    order_id,
+                                    order_requirement_description: description,
+                                    order_requirement_file: files?.[0]?.originFileObj,
+                                },
+                                {
+                                    onSuccess: (data) => {
+                                        if (onClose) onClose();
+                                        router.push(data.url);
+                                    },
+                                    onError: (err) => {
+                                        AlertMessage.error(
+                                            err.response.data.detail
+                                        );
+                                    },
+                                }
+                            );
+                        setIsDeadlineModalOpen(true);
+                        return;
+                    }
                     AlertMessage.error(err.response.data.detail);
                 },
             }
         );
     }
 
-    // 📌 Oddiy karta raqami orqali to'lov
     async function handleCardPayment(e) {
         e?.preventDefault();
 
@@ -113,38 +185,56 @@ const ServiceCheckout = ({
         };
 
         if (order_id) payload.order_id = order_id;
-        await createOrder(payload, {
-            onSuccess: async (data) => {
-                if (
-                    data.msg === 'Success' &&
-                    data.payment_method === 'wallet'
-                ) {
-                    await queryClient.invalidateQueries({
-                        queryKey: ['orders'],
-                    });
-                    await queryClient.invalidateQueries({
-                        queryKey: ['getCustomBalance'],
-                    });
-                    AlertMessage.success(
-                        "To'lov muvaffaqiyatli amalga oshirildi"
-                    );
-                    if (onSuccess) {
-                        onSuccess(data?.order_id);
-                        return;
-                    }
-                    if (!order_id) push('/order/my-orders?tab=2');
-                    if (onClose) onClose();
-                }
-                setIsVerificationModalOpen(true);
-                setResData(data);
-                resetVerificationModal();
-            },
-            onError: (err) => {
-                console.error('❌ Click payment error:', err);
-                setResData({
-                    detail: err?.response?.data?.detail || "Noma'lum xato",
+        const onCardSuccess = async (data) => {
+            if (
+                data.msg === 'Success' &&
+                data.payment_method === 'wallet'
+            ) {
+                await queryClient.invalidateQueries({
+                    queryKey: ['orders'],
                 });
-            },
+                await queryClient.invalidateQueries({
+                    queryKey: ['getCustomBalance'],
+                });
+                AlertMessage.success(
+                    "To'lov muvaffaqiyatli amalga oshirildi"
+                );
+                if (onSuccess) {
+                    onSuccess(data?.order_id);
+                    return;
+                }
+                if (!order_id) push('/order/my-orders?tab=2');
+                if (onClose) onClose();
+            }
+            setIsVerificationModalOpen(true);
+            setResData(data);
+            resetVerificationModal();
+        };
+        const onCardError = (err) => {
+            const detail = err?.response?.data?.detail;
+            if (
+                detail &&
+                typeof detail === 'object' &&
+                detail.code === 'order_deadline_expired'
+            ) {
+                setDeadlineMessage(detail.message);
+                setPendingOrderId(order_id);
+                retryPaymentRef.current = () =>
+                    createOrder(payload, {
+                        onSuccess: onCardSuccess,
+                        onError: onCardError,
+                    });
+                setIsDeadlineModalOpen(true);
+                return;
+            }
+            console.error('❌ Click payment error:', err);
+            setResData({
+                detail: detail || "Noma'lum xato",
+            });
+        };
+        await createOrder(payload, {
+            onSuccess: onCardSuccess,
+            onError: onCardError,
         });
     }
 
@@ -424,88 +514,117 @@ const ServiceCheckout = ({
         },
     ];
 
-    return isBalanceMode ? (
-        <div>
-            <Alert
-                message="Sizning balansingizda yetarli mablag' mavjud. To'lovni balansdan to'lash mumkin - karta kerak emas."
-                type="success"
-                showIcon
-                style={{ marginBlock: '20px' }}
-            />
-            <div className="service-details-box bg-white border rounded p-3 mb-4">
-                <div
-                    className="d-flex justify-content-between align-items-center"
-                    style={{
-                        gap: '8px',
-                    }}>
-                    <div className="d-flex align-items-start">
+    return (
+        <>
+            {isBalanceMode ? (
+                <div>
+                    <Alert
+                        message="Sizning balansingizda yetarli mablag' mavjud. To'lovni balansdan to'lash mumkin - karta kerak emas."
+                        type="success"
+                        showIcon
+                        style={{ marginBlock: '20px' }}
+                    />
+                    <div className="service-details-box bg-white border rounded p-3 mb-4">
                         <div
+                            className="d-flex justify-content-between align-items-center"
                             style={{
-                                width: '20px',
+                                gap: '8px',
                             }}>
-                            <IoCard
-                                fontSize={16}
-                                style={{
-                                    marginRight: '8px',
-                                    marginBottom: '5px',
-                                }}
-                            />
+                            <div className="d-flex align-items-start">
+                                <div
+                                    style={{
+                                        width: '20px',
+                                    }}>
+                                    <IoCard
+                                        fontSize={16}
+                                        style={{
+                                            marginRight: '8px',
+                                            marginBottom: '5px',
+                                        }}
+                                    />
+                                </div>
+                                <h5
+                                    className="mb-1"
+                                    style={{
+                                        overflowWrap: 'anywhere',
+                                        fontWeight: 'normal',
+                                    }}>
+                                    {order?.title}
+                                </h5>
+                            </div>
+                            <div className="text-end">
+                                <h4
+                                    className=" mb-0"
+                                    style={{
+                                        whiteSpace: 'nowrap',
+                                        fontWeight: 'normal',
+                                        fontSize: '16px',
+                                    }}>
+                                    {formatCurrencyWithSpace(order?.price)} so'm
+                                </h4>
+                            </div>
                         </div>
-                        <h5
-                            className="mb-1"
-                            style={{
-                                overflowWrap: 'anywhere',
-                                fontWeight: 'normal',
-                            }}>
-                            {order?.title}
-                        </h5>
                     </div>
-                    <div className="text-end">
-                        <h4
-                            className=" mb-0"
-                            style={{
-                                whiteSpace: 'nowrap',
-                                fontWeight: 'normal',
-                                fontSize: '16px',
-                            }}>
-                            {formatCurrencyWithSpace(order?.price)} so'm
-                        </h4>
-                    </div>
-                </div>
-            </div>
 
-            <button
-                type="submit"
-                className="w-100 ps-btn"
-                disabled={isOrderCreatePending}
-                onClick={handleCardPayment}
-                style={{
-                    color: '#fff',
-                    marginTop: '10px',
-                }}>
-                {!isOrderCreatePending ? (
-                    "To'lov qilish"
-                ) : (
-                    <BeatLoader color="#fff" />
-                )}
-            </button>
-            <SecurePaymentAlert
-                bordered={false}
-                style={{
-                    marginTop: '10px',
+                    <button
+                        type="submit"
+                        className="w-100 ps-btn"
+                        disabled={isOrderCreatePending}
+                        onClick={handleCardPayment}
+                        style={{
+                            color: '#fff',
+                            marginTop: '10px',
+                        }}>
+                        {!isOrderCreatePending ? (
+                            "To'lov qilish"
+                        ) : (
+                            <BeatLoader color="#fff" />
+                        )}
+                    </button>
+                    <SecurePaymentAlert
+                        bordered={false}
+                        style={{
+                            marginTop: '10px',
+                        }}
+                    />
+                </div>
+            ) : (
+                <Tabs
+                    centered
+                    style={{
+                        marginTop: '20px',
+                        marginBottom: 0,
+                    }}
+                    items={items}
+                    onChange={setType}
+                />
+            )}
+            <DeadlineModal
+                isOpen={isDeadlineModalOpen}
+                onClose={() => setIsDeadlineModalOpen(false)}
+                message={deadlineMessage}
+                onConfirm={async (newDeadline) => {
+                    try {
+                        await updateDeadline({
+                            order_id: pendingOrderId,
+                            deadline_date: newDeadline.format(
+                                'YYYY-MM-DDTHH:mm:ss'
+                            ),
+                        });
+                        setIsDeadlineModalOpen(false);
+                        if (retryPaymentRef.current) {
+                            retryPaymentRef.current();
+                        }
+                    } catch (error) {
+                        const errorMsg =
+                            error?.response?.data?.detail ||
+                            "Muddatni yangilashda xatolik yuz berdi";
+                        AlertMessage.error(errorMsg);
+                    }
                 }}
+                isLoading={isDeadlineUpdating}
             />
-        </div>
-    ) : (
-        <Tabs
-            centered
-            style={{
-                marginTop: '20px',
-                marginBottom: 0,
-            }}
-            items={items}
-            onChange={setType}
-        />
+        </>
     );
 };
 
@@ -769,5 +888,44 @@ const VerificationCodeModal = forwardRef(
         );
     }
 );
+
+const DeadlineModal = ({ isOpen, onClose, message, onConfirm, isLoading }) => {
+    const [newDeadlineDate, setNewDeadlineDate] = useState(
+        dayjs().add(3, 'day').hour(18).minute(0).second(0)
+    );
+
+    return (
+        <Modal
+            title="Buyurtma muddati tugagan"
+            open={isOpen}
+            onCancel={onClose}
+            onOk={() => onConfirm(newDeadlineDate)}
+            confirmLoading={isLoading}
+            okText="Muddatni uzaytirish"
+            cancelText="Bekor qilish"
+            destroyOnClose>
+            <p
+                style={{
+                    color: '#faad14',
+                    marginBottom: 16,
+                }}>
+                {message}
+            </p>
+            <p>To'lovni davom ettirish uchun yangi muddatni tanlang:</p>
+            <DatePicker
+                style={{
+                    width: '100%',
+                }}
+                format="MMM DD, YYYY HH:mm"
+                showTime
+                value={newDeadlineDate}
+                onChange={(date) => setNewDeadlineDate(date)}
+                disabledDate={(current) =>
+                    current && current < dayjs().startOf('day')
+                }
+            />
+        </Modal>
+    );
+};
 
 export default ServiceCheckout;

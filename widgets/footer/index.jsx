@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './style.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useGetDirectionsQuery } from '~/store/profile/slice';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { Collapse } from 'antd';
@@ -19,9 +20,9 @@ const footerMenu = {
         links: [
             { name: 'Sotib olish va moderatsiya bo‘yicha', link: '' },
             { name: '+998 (91) 008 67 89', link: 'tel:+998910086789' },
-            { name: '@soff_moderator', link: 'https://t.me/soff_moderator' },
+            { name: '@soff_moderator', link: 'https://telegram.me/soff_moderator' },
             { name: 'Texnik muammolar uchun', link: 'tel:+998910086789' },
-            { name: '@hr_soffhub', link: 'https://t.me/hr_soffhub' },
+            { name: '@hr_soffhub', link: 'https://telegram.me/hr_soffhub' },
         ],
     },
     social: {
@@ -30,7 +31,7 @@ const footerMenu = {
             {
                 name: 'Telegram',
                 icon: '/static/svg/telegram_.svg',
-                url: 'https://t.me/+y5GpvEz48_hkMzli',
+                url: 'https://telegram.me/+y5GpvEz48_hkMzli',
             },
             {
                 name: 'YouTube',
@@ -40,7 +41,7 @@ const footerMenu = {
             {
                 name: 'Instagram',
                 icon: '/static/img/insta.png',
-                url: 'https://www.instagram.com/soff.uz.market/',
+                url: 'https://www.instagram.com/soff_uz_',
             },
         ],
     },
@@ -110,7 +111,7 @@ const products = [
                 height={20}
             />
         ),
-        link: '/video-lessons/all?slug=all',
+        link: '/video-lessons',
         label: 'Video darsliklar',
     },
     {
@@ -140,8 +141,9 @@ const mainPages = [
     },
     { key: '6', link: 'https://seller.soff.uz', label: 'Frilanserlar uchun' },
     { key: '7', link: '/affiliate_program', label: 'Hamkorlikda ishlash' },
+    { key: '11', link: '/subscription', label: 'Obuna' },
     { key: '4', link: '/freelancers', label: 'Frilanserlar' },
-    { key: '8', link: '/soffia', label: 'Soffia Bot' },
+    { key: '8', link: '/labs', label: 'Soff AI' },
     { key: '9', link: '/page/oferta', label: 'Foydalanish shartlari' },
     { key: '10', link: '/page/video-list', label: "Video qo'llanmalar" },
 ];
@@ -151,6 +153,23 @@ const aboutUsPages = [
     { key: '3', link: '/page/faq', label: 'Savollar (FAQ)' },
     { key: '4', link: '/page/form', label: 'Talab va takliflar uchun' },
     { key: '5', link: '/page/oferta', label: 'Oferta' },
+];
+
+const paymentMethods = [
+    {
+        name: 'Click',
+        icon: '/static/img/payment-method/click-logo.png',
+    },
+    {
+        name: 'Payme',
+        icon: '/static/img/payment-method/payme-logo.png',
+    },
+    {
+        name: 'Paynet',
+        icon: '/static/svg/paynet.svg?v=3',
+        // The SVG has no built-in padding, unlike the PNG logos.
+        className: 'paymentCardSvg',
+    },
 ];
 
 const FooterCollapse = ({ title, children, defaultOpen = false }) => {
@@ -187,8 +206,15 @@ const FooterCollapse = ({ title, children, defaultOpen = false }) => {
 };
 
 export default function Footer() {
+    const router = useRouter();
     const currentYear = new Date().getFullYear();
     const { data: directions } = useGetDirectionsQuery();
+
+    const isCheckoutMode = ['/account/checkout', '/account/shopping-cart'].includes(router.pathname);
+
+    if (isCheckoutMode) {
+        return null;
+    }
 
     return (
         <footer className={styles.mainblock}>
@@ -247,6 +273,25 @@ export default function Footer() {
                                 )}
                             </ul>
                         </FooterCollapse>
+
+                        <div className={styles.paymentSection}>
+                            <span className={styles.paymentTitle}>
+                                To'lov usullari
+                            </span>
+                            <div className={styles.paymentLogos}>
+                                {paymentMethods.map((method) => (
+                                    <div
+                                        key={method.name}
+                                        className={`${styles.paymentCard} ${method.className ? styles[method.className] : ''}`}>
+                                        <img
+                                            src={method.icon}
+                                            alt={method.name}
+                                            loading="lazy"
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
                     </div>
                     <div className={styles.footerLinksSection}>
                         <FooterCollapse title="Tayyor mahsulotlar">

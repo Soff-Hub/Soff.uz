@@ -1,0 +1,398 @@
+.videoCard {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+    position: relative;
+    height: 100%;
+    width: 100%; // Fill the grid column
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #f0f2f5;
+
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+
+        .thumbnailWrapper img {
+            transform: scale(1.1);
+            filter: brightness(0.85);
+        }
+
+        .playOverlay {
+            opacity: 1 !important;
+            visibility: visible !important;
+            transform: scale(1) translate(-50%, -50%) !important;
+        }
+    }
+
+    .thumbnailWrapper {
+        position: relative;
+        aspect-ratio: 16 / 9;
+        overflow: hidden;
+        background: #000;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1),
+                filter 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .playOverlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: scale(0.8) translate(-50%, -50%);
+            transform-origin: top left; // Needed because translate is also applied
+            width: auto;
+            height: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            z-index: 10;
+            pointer-events: none;
+
+            .playIconCircle {
+                width: 72px;
+                height: 72px;
+                border: 4px solid #fff;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(2px);
+                box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+
+                .playIconTriangle {
+                    color: #fff;
+                    font-size: 36px;
+                    margin-left: 6px;
+                }
+            }
+        }
+
+        .badge {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #fff;
+            z-index: 2;
+        }
+
+        .freeBadge {
+            background: #2ecc71;
+        }
+
+        .paidBadge {
+            background: #3498db;
+        }
+
+        .trendingBadge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: #ff5e57;
+            color: #fff;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            z-index: 2;
+        }
+
+        .duration {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            background: rgba(0, 0, 0, 0.65);
+            color: #fff;
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            z-index: 2;
+        }
+    }
+
+    .content {
+        padding: 12px;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+
+        .title {
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1.4;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            height: 2.8em;
+            word-break: break-word; // Fix for long unbreakable titles
+            overflow-wrap: break-word;
+        }
+
+        .sellerInfo {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 0; // Removed margin to align with views in meta
+
+            .avatar {
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+
+            .name {
+                font-size: 12px;
+                color: #595959;
+                font-weight: 500;
+            }
+        }
+
+        .meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 8px;
+            width: 100%;
+
+            .views {
+                font-size: 11px;
+                color: #8c8c8c;
+                display: flex;
+                align-items: center;
+                gap: 4px;
+
+                svg {
+                    font-size: 13px;
+                }
+            }
+        }
+    }
+
+    .footer {
+        padding: 10px 12px;
+        border-top: 1px solid #f0f0f0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .priceWrapper {
+            .priceContainer {
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+            }
+
+            .oldPrice {
+                font-size: 11px;
+                color: #8c8c8c;
+                text-decoration: line-through;
+            }
+
+            .price {
+                font-size: 15px;
+                font-weight: 700;
+                color: #1a1a1a;
+            }
+
+            .freePrice {
+                color: #2ecc71;
+            }
+        }
+
+        .action {
+            .playIcon {
+                font-size: 18px;
+                color: #bfbfbf;
+                transition: color 0.2s;
+
+                &:hover {
+                    color: #3498db;
+                }
+            }
+        }
+    }
+
+    &.horizontal {
+        flex-direction: row;
+        height: 140px;
+
+        .thumbnailWrapper {
+            width: 180px;
+            height: 100%;
+            aspect-ratio: auto;
+            flex-shrink: 0;
+
+            img {
+                height: 100%;
+            }
+        }
+
+        .content {
+            padding: 10px 12px;
+            justify-content: center;
+
+            .title {
+                font-size: 13px;
+                margin-bottom: 6px;
+                height: auto;
+                max-height: 2.8em;
+            }
+
+            .sellerInfo {
+                margin-bottom: 6px;
+            }
+
+            .meta {
+                margin-top: 4px;
+            }
+        }
+
+        .footer {
+            border: none;
+            position: absolute;
+            bottom: 6px; // Pastga yaqinroq
+            right: 0;
+            left: 180px;
+            padding: 0 12px;
+            display: flex;
+            justify-content: flex-start;
+
+            .priceWrapper {
+                .priceContainer {
+                    flex-direction: row; // Narxlarni yonma-yon qilamiz
+                    align-items: baseline; // Bir xil chiziqda turishi uchun
+                    gap: 8px; // Ularni bir-biriga yaqinlashtiramiz
+
+                    .oldPrice {
+                        font-size: 11px;
+                        margin-bottom: 0;
+                    }
+
+                    .price {
+                        font-size: 15px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -468px 0;
+    }
+
+    100% {
+        background-position: 468px 0;
+    }
+}
+
+.skeleton {
+    cursor: default !important;
+    pointer-events: none !important;
+    transform: none !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04) !important;
+
+    .skeletonImage,
+    .skeletonTitle,
+    .skeletonAvatar,
+    .skeletonText,
+    .skeletonPrice {
+        background: #f6f7f8;
+        background-image: linear-gradient(to right,
+                #f6f7f8 0%,
+                #edeef1 20%,
+                #f6f7f8 40%,
+                #f6f7f8 100%);
+        background-repeat: no-repeat;
+        background-size: 800px 104px;
+        animation: shimmer 1.5s infinite linear;
+    }
+
+    .skeletonImage {
+        width: 100%;
+        height: 100%;
+    }
+
+    .skeletonTitle {
+        height: 18px;
+        width: 90%;
+        margin-bottom: 12px;
+        border-radius: 4px;
+    }
+
+    .skeletonMeta {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: auto;
+    }
+
+    .skeletonAvatar {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+    }
+
+    .skeletonText {
+        height: 12px;
+        width: 60px;
+        border-radius: 4px;
+    }
+
+    .skeletonPrice {
+        height: 20px;
+        width: 80px;
+        border-radius: 4px;
+    }
+}
+
+@media (max-width: 768px) {
+    .videoCard.horizontal {
+        height: auto;
+        flex-direction: column;
+
+        .thumbnailWrapper {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+        }
+
+        .footer {
+            position: static;
+            padding: 10px 12px;
+            border-top: 1px solid #f0f0f0;
+        }
+    }
+}
+.subscriptionBadge {
+    position: absolute;
+    left: 8px;
+    bottom: 8px;
+    z-index: 2;
+}

@@ -1,4 +1,4 @@
-import { useMemo, useEffect } from 'react';
+import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { baseUrlUseApi } from '~/repositories/useApi';
 import { useRouter } from 'next/router';
@@ -126,27 +126,6 @@ function useSimilarSearch({ defaultData, defaultType = 'file' }) {
             count: (defaultData?.count || 0) + filteredSimilarDocuments.count,
         };
     }, [defaultData, filteredSimilarDocuments, isFetchingSimilarDocuments]);
-
-
-    useEffect(() => {
-        if (
-            similarDocuments &&
-            similarDocuments.results &&
-            similarDocuments.results.length
-        ) {
-            router.push(
-                {
-                    pathname: router.pathname,
-                    query: {
-                        ...router.query,
-                        similar_documents: 'true',
-                    },
-                },
-                undefined,
-                { shallow: true }
-            );
-        }
-    }, [similarDocuments]);
 
     return {
         mergedData,

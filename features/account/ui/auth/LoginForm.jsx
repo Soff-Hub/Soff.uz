@@ -129,14 +129,20 @@ export default function LoginForm({
             }
         },
         onError: (error) => {
-            const modal = Modal.error({
+            const status = error?.response?.status;
+            const data = error?.response?.data;
+            const content =
+                status === 429
+                    ? "Juda ko'p urinish. Iltimos, birozdan so'ng qayta urinib ko'ring."
+                    : data?.msg ||
+                      data?.detail ||
+                      "Xatolik yuz berdi. Iltimos, qayta urinib ko'ring.";
+
+            Modal.error({
                 centered: true,
                 title: 'Xatolik',
-                content:
-                    error?.response?.data?.msg ||
-                    JSON.stringify(error?.response),
+                content: Array.isArray(content) ? content.join(' ') : content,
             });
-            modal.update;
         },
     });
 
@@ -178,9 +184,9 @@ export default function LoginForm({
                 <div className="ps-form--account">
                     <Form onFinish={handleFormSubmit}>
                         <div className="d-flex justify-content-center align-items-center flex-column mb-4">
-                            <span style={{ fontSize: '28px', fontWeight: 700 }}>
+                            <h2 style={{ fontSize: '28px', fontWeight: 700, margin: 0 }}>
                                 Kirish
-                            </span>
+                            </h2>
                         </div>
                         <GoogleBox
                             isModal={isModal}

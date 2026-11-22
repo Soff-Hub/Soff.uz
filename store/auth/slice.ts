@@ -1,7 +1,12 @@
+import { redirectAfterLogout } from '~/shared/utilities/protected-routes';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie';
 import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
+import {
+    clearAuthStorage,
+    getJwtCookieExpires,
+} from '~/shared/utilities/auth-session';
 
 export interface AuthState {
     isLoggedIn: boolean;
@@ -23,7 +28,7 @@ export const login = createAsyncThunk(
         try {
             safeLocalStorage.setItem('user', JSON.stringify(user));
             Cookies.set('token', user?.access, {
-                expires: jwtDecode(user?.access)?.exp || 8,
+                expires: getJwtCookieExpires(user?.access),
             });
             if (data) {
                 safeLocalStorage.setItem('data', JSON.stringify(data));
@@ -43,8 +48,8 @@ export const logOut = createAsyncThunk(
     'auth/logOut',
     async (_, { rejectWithValue }) => {
         try {
-            safeLocalStorage.clear();
-            Cookies.remove('token');
+            clearAuthStorage();
+            redirectAfterLogout();
             return;
         } catch (error: any) {
             return rejectWithValue(error.message);
@@ -58,11 +63,21 @@ export const checkAuthorization = createAsyncThunk(
         try {
             let user: any = safeLocalStorage.getItem('user');
             user = user ? JSON.parse(user) : '';
+            const decodedToken: any = user?.access ? jwtDecode(user.access) : null;
+            const isExpired =
+                decodedToken?.exp && decodedToken.exp * 1000 <= Date.now();
+
+            if (isExpired) {
+                clearAuthStorage();
+                return { isLoggedIn: false, user: null, status: 'failed' };
+            }
+
             const token = Cookies.get('token');
-            if (!token)
+            if (!token && user?.access) {
                 Cookies.set('token', user?.access, {
-                    expires: jwtDecode(user?.access)?.exp || 8,
+                    expires: getJwtCookieExpires(user?.access),
                 });
+            }
             if (user?.access) {
                 return { isLoggedIn: true, user, status: 'succeeded' };
             } else {

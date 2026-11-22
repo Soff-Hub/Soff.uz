@@ -1,0 +1,87 @@
+.searchWrapper {
+    width: 400px;
+    max-width: 100%;
+    transition: all 0.3s ease;
+
+    @media (max-width: 768px) {
+        width: 100%;
+    }
+}
+
+.searchContainer {
+    display: flex;
+    align-items: center;
+    background: #ffffff;
+    border: 1.5px solid #00a44f; // Soff green primary color
+    border-radius: 50px; // Pill shape as in reference image
+    padding: 3px 3px 3px 20px;
+    height: 48px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 10px rgba(0, 164, 79, 0.05);
+
+    &:focus-within {
+        box-shadow: 0 4px 15px rgba(0, 164, 79, 0.15);
+        border-color: #00a44f;
+        background: #fff;
+    }
+
+    .customInput {
+        flex: 1;
+        border: none;
+        outline: none;
+        background: transparent;
+        font-size: 15px;
+        color: #333;
+        height: 100%;
+        padding: 0;
+        font-family: inherit;
+
+        &::placeholder {
+            color: #999;
+            font-weight: 400;
+        }
+    }
+
+    .actionGroup {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        height: 100%;
+
+        .clearIcon {
+            color: #bfbfbf;
+            font-size: 16px;
+            cursor: pointer;
+            transition: color 0.2s;
+
+            &:hover {
+                color: #8c8c8c;
+            }
+        }
+
+        .searchButton {
+            width: 40px;
+            height: 40px;
+            min-width: 40px;
+            border-radius: 50%;
+            background: #00a44f;
+            color: #ffffff;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 18px;
+
+            &:hover {
+                background: #008f44;
+                transform: scale(1.05);
+            }
+
+            &:active {
+                transform: scale(0.95);
+            }
+        }
+    }
+}

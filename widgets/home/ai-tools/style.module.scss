@@ -1,0 +1,187 @@
+@import '/scss/utils/variable';
+@import '/scss/utils/mixin';
+
+.aiToolsSection {
+    padding: 56px 0 64px;
+    width: 100%;
+    background: #fcf4ea;
+    overflow: hidden;
+
+    @media (max-width: 576px) {
+        padding: 40px 0 44px;
+    }
+}
+
+.containerFull {
+    width: 100%;
+    max-width: 100%;
+    padding: 0 36px;
+
+    @media (max-width: 992px) {
+        padding: 0 20px;
+    }
+
+    @media (max-width: 576px) {
+        padding: 0 16px;
+    }
+}
+
+.title {
+    font-size: 34px;
+    font-weight: 700;
+    color: #111111;
+    margin: 0 0 32px 0;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+
+    @media (max-width: 576px) {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+}
+
+.cardsGrid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 16px;
+    align-items: start;
+    width: 100%;
+
+    @media (max-width: 1200px) {
+        display: flex;
+        overflow-x: auto;
+        padding: 0 4px 18px;
+        margin: 0 -4px;
+        gap: 14px;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+
+        &::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: #ead9c6;
+            border-radius: 4px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: #111111;
+            border-radius: 4px;
+        }
+    }
+}
+
+.toolCard {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+    padding: 16px 16px 14px;
+    border-radius: 16px;
+    border: 1.5px solid #1c1c1c;
+    background: #fcf4ea;
+    color: #111111;
+    text-decoration: none;
+    transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+        box-shadow 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+
+    /* Staggered rhythm, as in the reference grid */
+    &:nth-child(even) {
+        margin-top: 48px;
+    }
+
+    @media (max-width: 1200px) {
+        flex: 0 0 200px;
+        min-width: 200px;
+        scroll-snap-align: start;
+
+        &:nth-child(even) {
+            margin-top: 0;
+        }
+    }
+
+    @media (max-width: 576px) {
+        flex: 0 0 165px;
+        min-width: 165px;
+        padding: 12px 12px 10px;
+        border-radius: 14px;
+    }
+
+    .cardHead {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        min-height: 56px;
+    }
+
+    .cardTitle {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 19px;
+        font-weight: 700;
+        line-height: 1.2;
+        letter-spacing: -0.01em;
+        color: #111111;
+
+        @media (max-width: 576px) {
+            font-size: 16px;
+        }
+    }
+
+    .cardIcon {
+        font-size: 18px;
+        flex-shrink: 0;
+        color: #00a44f;
+    }
+
+    .cardSubtitle {
+        font-size: 14px;
+        line-height: 1.35;
+        color: #4b4b4b;
+
+        @media (max-width: 576px) {
+            font-size: 12px;
+        }
+    }
+
+    .imageWrapper {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 1 / 1.05;
+        border-radius: 10px;
+        overflow: hidden;
+        background: #1c1c1c;
+
+        .cardImg {
+            transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+        }
+
+        .cardVideo {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            pointer-events: none;
+            transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+    }
+
+    /* Hover State */
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 14px 28px -12px rgba(17, 17, 17, 0.35);
+
+        .imageWrapper .cardImg,
+        .imageWrapper .cardVideo {
+            transform: scale(1.06);
+        }
+    }
+
+    &:focus-visible {
+        outline: 3px solid #00a44f;
+        outline-offset: 3px;
+    }
+}

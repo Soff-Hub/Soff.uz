@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
+import { attachAuthErrorInterceptor } from '~/shared/utilities/auth-session';
 export const authBaseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 export const authAxios = axios.create({
@@ -21,20 +22,4 @@ authAxios.interceptors.request.use(
     }
 );
 
-authAxios.interceptors.response.use(
-    (response) => {
-        return response;
-    },
-    (error) => {
-        if (error.response && error.response.status === 403) {
-            const urlParams = new URLSearchParams(window.location.search);
-            const hasModalOpen = urlParams.get('modal') === 'open';
-
-            if (!hasModalOpen) {
-                safeLocalStorage.clear();
-                window.location.href = '/';
-            }
-        }
-        return Promise.reject(error);
-    }
-);
+attachAuthErrorInterceptor(authAxios);

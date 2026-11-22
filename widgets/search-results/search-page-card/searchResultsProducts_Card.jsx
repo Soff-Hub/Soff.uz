@@ -8,9 +8,15 @@ import { formatFileSize } from '~/shared/utilities/utils';
 import { FaMoneyBillWave } from 'react-icons/fa6';
 import { FaCopy } from 'react-icons/fa6';
 import { FaDatabase } from 'react-icons/fa6';
+import {
+    SubscriptionBadge,
+    SubscriptionPriceLabel,
+    useIsCoveredBySubscription,
+} from '~/features/platform-subscription';
 
 export default function SearchResultsProducts_Card({ product }) {
     const { isDesktop } = useResponsive();
+    const isCovered = useIsCoveredBySubscription(product);
     const [isHovering, setIsHovering] = useState(false);
     const [previewPosition, setPreviewPosition] = useState({
         top: '0',
@@ -112,14 +118,18 @@ export default function SearchResultsProducts_Card({ product }) {
                         </p>
 
                         <div className="Search_Results_Products_card_info">
-                            <p className="Search_Results_Products_card_price">
-                                <FaMoneyBillWave className="price_icon" />
-                                <span className="Search_Results_Products_card_price_boldspan">
-                                    {addPeriodToThousands(
-                                        product.discount_price
-                                    )}
-                                </span>
-                            </p>
+                            {isCovered ? (
+                                <SubscriptionPriceLabel />
+                            ) : (
+                                <p className="Search_Results_Products_card_price">
+                                    <FaMoneyBillWave className="price_icon" />
+                                    <span className="Search_Results_Products_card_price_boldspan">
+                                        {addPeriodToThousands(
+                                            product.discount_price
+                                        )}
+                                    </span>
+                                </p>
+                            )}
                             <div className="search_main_info">
                                 <p className="Search_Results_Products_card_type">
                                     <span
@@ -136,6 +146,7 @@ export default function SearchResultsProducts_Card({ product }) {
                                         {product.file_type}
                                     </span>
                                 </p>
+                                <SubscriptionBadge product={product} />
                                 <p className="Search_Results_Products_card_price">
                                     <FaCopy className="file_icon" />
                                     <span className="Search_Results_Products_card_price_boldspan">

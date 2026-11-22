@@ -1,9 +1,12 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { d_base_url, f_base_url } from '~/shared/api/base-url';
-import Cookies from 'js-cookie';
-import { logOut } from '~/store/auth/slice';
 import { logout as profileLogout } from '~/store/profile/slice';
 import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
+import {
+    handleExpiredAuthSession,
+    isAuthErrorStatus,
+    isRateLimitStatus,
+} from '~/shared/utilities/auth-session';
 
 const getToken = () => {
     if (typeof window !== 'undefined') {
@@ -16,7 +19,7 @@ const getToken = () => {
     return null;
 };
 
-// Retry function: only retry on server errors (5xx) or connection errors, not on 4xx errors
+// Retry function: retry on server errors (5xx), connection errors, or rate limit (429)
 const retryLogic = (failureCount, error) => {
     if (failureCount >= 3) {
         return false;
@@ -30,35 +33,30 @@ const retryLogic = (failureCount, error) => {
         return true;
     }
 
+    if (error.status === 429) {
+        return true;
+    }
+
     return false;
 };
 
-// Custom base query wrapper to handle 403 errors
+// Custom base query wrapper to handle expired/invalid auth errors
 const baseQueryWithLogout = (baseQuery) => {
     return async (args, api, extraOptions) => {
         const result = await baseQuery(args, api, extraOptions);
 
-        // Handle 403 Forbidden errors
-        if (result.error && result.error.status === 403) {
+        if (result.error && isAuthErrorStatus(result.error.status)) {
             if (typeof window !== 'undefined') {
-                safeLocalStorage.clear();
-                Cookies.remove('token');
-                api.dispatch(logOut());
                 api.dispatch(profileLogout());
-
-                // Navigate to login page if on a protected/account page
-                const currentPath = window.location.pathname;
-                if (
-                    (currentPath.includes('/account') ||
-                        currentPath.includes('/order') ||
-                        currentPath.includes('/chat')) &&
-                    !currentPath.includes('/auth/login') &&
-                    !currentPath.includes('/auth/register') &&
-                    !currentPath.includes('/auth/reset-password') &&
-                    !currentPath.includes('/oauth')
-                ) {
-                    window.location.href = '/auth/login';
-                }
+                handleExpiredAuthSession();
+            }
+        } else if (result.error && isRateLimitStatus(result.error.status)) {
+            const detail = result.error?.data?.detail;
+            if (detail && typeof window !== 'undefined') {
+                try {
+                    const { message } = await import('antd');
+                    message.error(detail);
+                } catch {}
             }
         }
 

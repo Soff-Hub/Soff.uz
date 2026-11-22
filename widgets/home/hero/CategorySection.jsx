@@ -1,125 +1,79 @@
+import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import styles from './style.module.scss';
-import { Skeleton } from 'antd';
+import {
+    TbPalette,
+    TbCode,
+    TbSchool,
+    TbSparkles,
+    TbBox,
+    TbLayout
+} from 'react-icons/tb';
 
-const readyProducts = [
+const popularCategories = [
     {
-        href: '/scientific-resources/all',
-        img: '/static/img/HomePage/file3.webp',
-        alt: 'Ilmiy ishlar',
-        label: 'Ilmiy ishlar',
+        title: 'Ilmiy ish',
+        count: '1.5mln +',
+        href: '/scientific-resources',
+        icon: <TbSchool />
     },
     {
-        href: '/3d-models-and-interior-designs/all',
-        img: '/static/img/HomePage/3d2.webp',
-        alt: '3D Modellar',
-        label: '3D Modellar',
+        title: 'AI generatsiyalar',
+        count: '1K +',
+        href: '/labs',
+        icon: <TbSparkles />
     },
     {
-        href: '/design-developments/all',
-        img: '/static/img/HomePage/design1.webp',
-        alt: 'Dizayn shablonlari',
-        label: 'Dizayn shablonlari',
+        title: '3D Modellar',
+        count: '500+',
+        href: '/3d-models-and-interior-designs',
+        icon: <TbBox />
     },
     {
-        href: '/websites/all',
-        img: '/static/img/HomePage/web2.webp',
-        alt: 'Veb saytlar',
-        label: 'Veb saytlar',
+        title: 'Dizayn shablonlari',
+        count: '1.5K +',
+        href: '/design-developments',
+        icon: <TbPalette />
     },
     {
-        href: '/templates/all',
-        img: '/static/img/HomePage/template2.webp',
-        alt: 'Shablonlar',
-        label: 'Shablonlar',
+        title: 'Veb saytlar',
+        count: '500+',
+        href: '/websites',
+        icon: <TbCode />
     },
     {
-        href: '/video-lessons/all',
-        img: '/static/img/HomePage/video1.webp',
-        alt: 'Video darsliklar',
-        label: 'Video darsliklar',
+        title: 'Shablonlar',
+        count: '2k+',
+        href: '/templates',
+        icon: <TbLayout />
     },
+
 ];
 
-// 2️⃣ Xizmatlar ro‘yxati
-const services = [
-    {
-        href: '/orders?direction=scientific_work',
-        img: '/static/img/HomePage/file2.webp',
-        alt: 'Ilmiy va Akademik xizmatlar',
-        label: 'Ilmiy va Akademik Xizmatlar',
-    },
-    {
-        href: '/orders?direction=dizayn',
-        img: '/static/img/HomePage/design3.webp',
-        alt: 'Dizayn xizmatlari',
-        label: 'Dizayn xizmatlari',
-    },
-    {
-        href: '/orders?direction=web',
-        img: '/static/img/HomePage/web3.webp',
-        alt: 'Dasturlash xizmatlari',
-        label: 'Dasturlash xizmatlari',
-    },
-    {
-        href: '/orders?direction=three_d',
-        img: '/static/img/HomePage/3d.webp',
-        alt: '3D Dizayn va Vizualizatsiya',
-        label: '3D Dizayn va Vizualizatsiya',
-    },
-];
 const CategorySection = () => {
-    const renderCategoryBlock = (title, items, showBadge = false) => (
-        <div className={styles.categoryBlock}>
-            <div className={styles.titleWrapper}>
-                {showBadge && (
-                    <Image
-                        priority
-                        src="/static/img/star.svg"
-                        alt="badge"
-                        width={30}
-                        height={30}
-                        className={styles.badge}
-                    />
-                )}
-                <h3>{title}</h3>
+    return (
+        <section className={styles.popularCategories}>
+            <div className={styles.gridHeader}>
+                <h2>Mashhur kategoriyalar</h2>
             </div>
             <div className={styles.categoryGrid}>
-                {items.map((item, index) => (
-                    <Link key={index} href={item.href}>
-                        <div className={styles.categoryItem}>
-                            <Image
-                                src={item.img}
-                                alt={item.alt}
-                                width={40}
-                                height={40}
-                                style={{ objectFit: 'contain' }}
-                                loading={index < 4 ? "eager" : "lazy"}
-                                priority={index < 4}
-                            />
-                            <span>{item.label}</span>
-                        </div>
+                {popularCategories.map((cat, idx) => (
+                    <Link key={idx} href={cat.href}>
+                        <a
+                            className={styles.categoryCard}
+                            {...(cat.external && { target: '_blank', rel: 'noopener noreferrer' })}>
+                            <div className={styles.cardIcon}>
+                                {cat.icon}
+                            </div>
+                            <div className={styles.cardInfo}>
+                                <span className={styles.cardTitle}>{cat.title}</span>
+                                <span className={styles.cardCount}>{cat.count}</span>
+                            </div>
+                        </a>
                     </Link>
                 ))}
             </div>
-        </div>
-    );
-
-    return (
-        <div
-            style={{ backgroundColor: 'transparent' }}
-            className={styles.heroCategorySection}>
-            {renderCategoryBlock(
-                'Tayyor yuklangan mahsulotlar',
-                readyProducts,
-                true
-            )}
-            {renderCategoryBlock(
-                'Xizmatni tanlang – Buyurtma bering',
-                services
-            )}
-        </div>
+        </section>
     );
 };
 

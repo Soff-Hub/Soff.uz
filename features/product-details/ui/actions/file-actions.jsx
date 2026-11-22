@@ -1,24 +1,32 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import { Button, message } from 'antd';
+import { Button, Tooltip, message } from 'antd';
 import {
     DownloadOutlined,
     HeartOutlined,
     ShoppingCartOutlined,
-    DeleteOutlined,
+    ShareAltOutlined,
 } from '@ant-design/icons';
-import ShareAltOutlined from '@ant-design/icons/ShareAltOutlined';
 import { addPeriodToThousands } from '~/features/account/ui/price-formatter';
 import useWishlist from '~/shared/hooks/useWishlist';
 import useCart from '~/shared/hooks/useCart';
 import { useSelector } from 'react-redux';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { formatCurrencyWithSpace } from '~/shared/utilities/product-helper';
+import ServiceFeeHint, { useServiceFeePercentage, withServiceFee } from '~/shared/components/service-fee-hint';
 import AuthModal from '~/features/auth/ui/auth-modal';
+import { api } from '~/repositories/api';
+import { trackProductEvent } from '~/shared/utilities/analytics';
+import FileDownloadLink from '~/shared/ui/file-download-link';
+import {
+    SubscriptionClaim,
+    useIsClaimPrimary,
+    useIsCoveredBySubscription,
+} from '~/features/platform-subscription';
 import { FaRegHeart } from 'react-icons/fa';
 import { FaHeart } from 'react-icons/fa';
 import { FaShoppingCart } from 'react-icons/fa';
-import { FaFileWord, FaS } from 'react-icons/fa6';
+import { FaFileWord } from 'react-icons/fa6';
 import { FaFileExcel } from 'react-icons/fa6';
 import { FaFilePowerpoint } from 'react-icons/fa6';
 import { FaFilePdf } from 'react-icons/fa6';
@@ -39,6 +47,7 @@ import { FaArrowsAltH } from 'react-icons/fa';
 import { FaPalette } from 'react-icons/fa6';
 import { FaLayerGroup } from 'react-icons/fa6';
 import { FaShapes } from 'react-icons/fa6';
+import { HiSparkles } from 'react-icons/hi2';
 import styles from './file-actions.module.scss';
 
 export const fileColors = {
@@ -52,8 +61,10 @@ export const fileColors = {
     '.mp3': '#88549E',
     '.html': '#6D96A',
     '.zip': '#E4BD3E',
+    '.rar': '#9B59B6',
     '.psd': '#0053BD',
     '.pptx': '#DD7657',
+    '.mov': '#6EB5E9',
 };
 
 export const fileReactIcons = {
@@ -79,6 +90,7 @@ export const fileReactIcons = {
     '.tiff': FaFileImage, // TIFF - rasm/foto format
     '.svg': FaFileImage, // SVG - rasm/foto format
     '.ps': FaFileImage, // PS - rasm/foto format
+    '.mov': FaFileVideo, // MOV video format
 };
 
 function FileActions({ product }) {
@@ -91,7 +103,14 @@ function FileActions({ product }) {
         (item) => Number(item.id) === Number(product?.id)
     );
     const [messageApi, contextHolder] = message.useMessage();
+    const { activePromotion } = useSelector((state) => state.ecomerce);
+    const serviceFeePercentage = useServiceFeePercentage();
+    const promotionPrice = Math.round((product?.price || 0) * (1 - (activePromotion?.discount_percent || 0) / 100));
     const state = useSelector((state) => state.auth.user?.access);
+    const isPurchased = Boolean(product?.has_purchased || product?.document?.file_url);
+    const isClaimPrimary = useIsClaimPrimary(product, isPurchased);
+    // The subscription can claim it, so cart and buy buttons are hidden.
+    const isCovered = useIsCoveredBySubscription(product, isPurchased);
 
     function handleAddItemToCart(e) {
         e.preventDefault();
@@ -99,6 +118,11 @@ function FileActions({ product }) {
             removeCartOneItem(product.id);
         } else {
             setCartOneItem(product.id);
+            trackProductEvent(
+                'add_to_cart',
+                product,
+                activePromotion?.discount_percent
+            );
         }
     }
 
@@ -109,6 +133,35 @@ function FileActions({ product }) {
             removeSavedItem(product.id);
         }
     }
+
+    const isInWishlist = wishlist?.some((item) => Number(item.id) === Number(product?.id));
+
+    // Compact icon actions shown in one row next to the buy button.
+    const cartButton = product?.discount_price !== 0 && !isCovered && (
+        <Tooltip title={isAddedToCart ? 'Savatdan olib tashlash' : "Savatga qo'shish"}>
+            <button
+                type="button"
+                onClick={handleAddItemToCart}
+                className={`${styles.iconAction} ${isAddedToCart ? styles.iconActionActive : ''}`}
+                aria-label={isAddedToCart ? 'Savatdan olib tashlash' : "Savatga qo'shish"}
+                aria-pressed={isAddedToCart}>
+                {isAddedToCart ? <FaShoppingCart /> : <ShoppingCartOutlined />}
+            </button>
+        </Tooltip>
+    );
+
+    const wishlistButton = (
+        <Tooltip title={isInWishlist ? 'Sevimlilardan olib tashlash' : "Sevimlilarga qo'shish"}>
+            <button
+                type="button"
+                onClick={handleAddItemToWishlist}
+                className={`${styles.iconAction} ${isInWishlist ? styles.iconActionLiked : ''}`}
+                aria-label={isInWishlist ? 'Sevimlilardan olib tashlash' : "Sevimlilarga qo'shish"}
+                aria-pressed={Boolean(isInWishlist)}>
+                {isInWishlist ? <FaHeart /> : <FaRegHeart />}
+            </button>
+        </Tooltip>
+    );
 
     // Nusxa olish
     const infoSuccess = (url) => {
@@ -125,22 +178,36 @@ function FileActions({ product }) {
         }
 
         const videoUrl = `https://soff.uz${pid}`;
-        const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(
+        const telegramUrl = `https://telegram.me/share/url?url=${encodeURIComponent(
             videoUrl
         )}`;
 
         window.open(telegramUrl, '_blank');
     };
 
+    const [buyNowLoading, setBuyNowLoading] = useState(false);
+
     //  Hoziroq xarid qilish
-    function handleBuynow(e) {
+    async function handleBuynow(e) {
         e.preventDefault();
-        setCartOneItem(product.id);
-        if (state) {
-            Router.push(`/account/checkout?id=${product?.id}`);
-        } else {
-            // Router.push(`/auth/login?id=${product?.id}`);
-            setAuthModal(true);
+        if (buyNowLoading) return;
+        try {
+            setBuyNowLoading(true);
+            trackProductEvent(
+                'buy_now',
+                product,
+                activePromotion?.discount_percent
+            );
+            await setCartOneItem(product?.id);
+            if (state) {
+                await Router.push(`/account/checkout?id=${product?.id}`);
+            } else {
+                setAuthModal(true);
+            }
+        } catch (error) {
+            console.error('Failed to prepare checkout:', error);
+        } finally {
+            setBuyNowLoading(false);
         }
     }
     return (
@@ -151,26 +218,50 @@ function FileActions({ product }) {
                     <div className="price_container">
                         {product?.discount_price === 0 ? (
                             <h2>Bepul</h2>
+                        ) : activePromotion?.discount_percent > 0 ? (
+                            <div className="d-flex gap-3 align-items-center">
+                                <h2 className="mb-0">
+                                    {addPeriodToThousands(
+                                        withServiceFee(promotionPrice, serviceFeePercentage)
+                                    )}{' '}
+                                    so'm{' '}
+                                    <ServiceFeeHint price={promotionPrice} />
+                                </h2>
+                                <del style={{ color: '#999', fontSize: '1.2rem' }}>
+                                    {addPeriodToThousands(withServiceFee(product?.price, serviceFeePercentage))}{' '}
+                                    so'm
+                                </del>
+                                <span style={{ fontSize: '1.2rem', color: '#fff', padding: '0.5rem', borderRadius: '5px', fontWeight: 'bold' }} className="badge bg-success ">-{activePromotion.discount_percent}%</span>
+                            </div>
                         ) : product?.discount === 0 ? (
                             <h2>
                                 {addPeriodToThousands(
-                                    product?.discount_price || 0
+                                    withServiceFee(product?.discount_price, serviceFeePercentage)
                                 )}{' '}
-                                so'm
+                                so'm{' '}
+                                <ServiceFeeHint price={product?.discount_price} />
                             </h2>
                         ) : (
                             <div className="d-flex gap-3">
                                 <h2>
                                     {addPeriodToThousands(
-                                        product?.discount_price || 0
+                                        withServiceFee(product?.discount_price, serviceFeePercentage)
                                     )}{' '}
-                                    so'm
+                                    so'm{' '}
+                                    <ServiceFeeHint price={product?.discount_price} />
                                 </h2>
                                 <del>
-                                    {addPeriodToThousands(product?.price || 0)}{' '}
+                                    {addPeriodToThousands(withServiceFee(product?.price, serviceFeePercentage))}{' '}
                                     so'm
                                 </del>
                             </div>
+                        )}
+                        {product?.seller?.id === 69 && (
+                            <div className={styles.aiBadge}>
+                                <HiSparkles className={styles.aiIcon} />
+                                <span className='text-black'>AI orqali yaratilgan</span>
+                            </div>
+
                         )}
                     </div>
 
@@ -226,7 +317,7 @@ function FileActions({ product }) {
                                     icon={
                                         fileReactIcons[
                                         product?.document?.file_type
-                                        ]
+                                        ] || FaFileVideo
                                     }
                                     className={styles.infoKeyIcon}
                                 />
@@ -240,7 +331,7 @@ function FileActions({ product }) {
                                     backgroundColor:
                                         fileColors[
                                         product?.document?.file_type
-                                        ],
+                                        ] || '#007DFF',
                                 }}>
                                 {product?.document?.file_type}
                             </span>
@@ -411,136 +502,167 @@ function FileActions({ product }) {
                 </ul>
 
                 <div className="d-flex flex-column gap-3 ">
-                    {!product?.document?.file_url ? (
-                        <div className=" d-flex align-items-center gap-3 justify-content-end">
-                            {product?.discount_price !== 0 && (
-                                <Button
-                                    onClick={handleAddItemToCart}
-                                    iconPosition="end"
-                                    style={{ height: '58px', fontSize: '20px' }}
-                                    type={isAddedToCart ? "primary" : "text"}
-                                    danger={isAddedToCart}
-                                    className={`w-100 button_hover ${isAddedToCart
-                                        ? ''
-                                        : 'border-2 border-success text-success'
-                                        }`}
-                                    icon={isAddedToCart ? <DeleteOutlined /> : <ShoppingCartOutlined />}
-                                    size={'large'}>
-                                    {isAddedToCart ? "Savatdan olib tashlash" : "Savatga qo’shish"}
-                                </Button>
-                            )}
-                            <Button
-                                iconPosition="end"
-                                onClick={handleAddItemToWishlist}
-                                style={{
-                                    height: '58px',
-                                    width: '80px',
-                                    fontSize: '28px',
-                                }}
-                                type="text"
-                                variant="solid"
-                                className="border-2 border-success text-success button_hover"
-                                aria-label="Wishlistga qo'shish"
-                                icon={
-                                    wishlist?.some(
-                                        (item) =>
-                                            Number(item.id) ===
-                                            Number(product?.id)
-                                    ) ? (
-                                        <FaHeart />
-                                    ) : (
-                                        <FaRegHeart />
-                                    )
-                                }
-                                size={'large'}></Button>
-                        </div>
-                    ) : null}
+                    {/* Covered by the subscription: no buy button, so the heart sits alone. */}
+                    {!product?.document?.file_url && isCovered && (
+                        <div className="d-flex justify-content-end">{wishlistButton}</div>
+                    )}
 
-                    <CustomResponsiveLayout
-                        handleBuynow={handleBuynow}
-                        product={product}
-                    />
+                    {isClaimPrimary && (
+                        <SubscriptionClaim product={product} purchased={isPurchased} />
+                    )}
+                    {!isCovered && (
+                        <CustomResponsiveLayout
+                            handleBuynow={handleBuynow}
+                            product={product}
+                            buyNowLoading={buyNowLoading}
+                            secondary={isClaimPrimary}
+                            sideActions={
+                                <>
+                                    {cartButton}
+                                    {wishlistButton}
+                                </>
+                            }
+                        />
+                    )}
+                    {!isClaimPrimary && (
+                        <SubscriptionClaim product={product} purchased={isPurchased} />
+                    )}
                 </div>
             </div>
 
             <AuthModal
                 open={authModal}
                 onClose={() => setAuthModal(false)}
-                onGoogleSuccessNavigateTo={'/account/checkout'}
+                onGoogleSuccessNavigateTo={`/account/checkout?id=${product?.id}`}
                 onSuccess={() => {
-                    Router.push('/account/checkout');
+                    Router.push(`/account/checkout?id=${product?.id}`);
                 }}
             />
         </>
     );
 }
 
-const CustomResponsiveLayout = ({ product, handleBuynow }) => {
-    const { isMobile, size } = useResponsive();
+const CustomResponsiveLayout = ({ product, handleBuynow, buyNowLoading, secondary, sideActions }) => {
+    const { isMobile } = useResponsive();
+    const { activePromotion } = useSelector((state) => state.ecomerce);
+    const [telegramLoading, setTelegramLoading] = useState(false);
+
+    const serviceFeePercentage = useServiceFeePercentage();
+    const displayPrice = withServiceFee(
+        activePromotion?.discount_percent > 0
+            ? Math.round(product?.price * (1 - activePromotion.discount_percent / 100))
+            : product?.price,
+        serviceFeePercentage
+    );
+
+    const handleDownloadThroughTelegram = async () => {
+        if (!product?.id) return;
+
+        try {
+            setTelegramLoading(true);
+            const { data } = await api.get(
+                `seller/return-telegram-link/${product.id}/`
+            );
+
+            if (data?.link) {
+                window.open(data.link, '_blank');
+                return;
+            }
+
+            message.error('Telegram havolasi topilmadi');
+        } catch (error) {
+            console.error('Telegram download error:', error);
+            message.error('Telegram orqali yuklab olishda xatolik yuz berdi');
+        } finally {
+            setTelegramLoading(false);
+        }
+    };
+
+    // The price is shown right above the buy block, so the inline button keeps just the action.
+    const buyNowButton = (
+        <Button
+            onClick={(e) => handleBuynow(e)}
+            loading={buyNowLoading}
+            disabled={buyNowLoading}
+            iconPosition="end"
+            type={secondary ? 'default' : 'primary'}
+            className={`${styles.buyNow} ${secondary ? 'border-2 border-success text-success' : 'bg-success'}`}
+            icon={<DownloadOutlined />}
+            size={'large'}>
+            {secondary ? 'Sotib olish' : 'Hoziroq xarid qilish'}
+        </Button>
+    );
+
+    const renderPurchasedActions = () => (
+        <>
+            <FileDownloadLink
+                url={product?.document?.file_url}
+                filename={product?.title}
+                className={styles.downloadLink}>
+                <Button
+                    iconPosition="end"
+                    style={{ height: '58px', fontSize: '20px' }}
+                    type="primary"
+                    className="w-100 bg-success"
+                    icon={<DownloadOutlined />}
+                    size={'large'}>
+                    Yuklab olish
+                </Button>
+            </FileDownloadLink>
+            <Button
+                onClick={handleDownloadThroughTelegram}
+                loading={telegramLoading}
+                style={{ height: '58px', fontSize: '20px' }}
+                type="default"
+                className={styles.telegramButton}
+                size={'large'}>
+                <img
+                    src="/static/img/telegram.png"
+                    alt="Telegram"
+                    height={24}
+                />
+                <span>Telegram orqali olish</span>
+            </Button>
+        </>
+    );
+
     return (
         <>
             <div
-                className={`d-flex flex-column gap-3 ${isMobile ? 'sticky-bottom-btn' : ''
-                    }`}>
+                className={`d-flex flex-column gap-3 ${isMobile ? 'sticky-bottom-btn' : ''}`}>
                 {product?.document?.file_url ? (
-                    <a href={product?.document?.file_url} target="_blank" rel="noreferrer">
-                        <Button
-                            iconPosition="end"
-                            style={{ height: '58px', fontSize: '20px' }}
-                            type="primary"
-                            className="w-100 bg-success"
-                            icon={<DownloadOutlined />}
-                            size={'large'}>
-                            Yuklab olish
-                        </Button>
-                    </a>
-                ) : (
+                    renderPurchasedActions()
+                ) : isMobile ? (
+                    // Sticky bar on mobile: no room for icons, so keep the price on the button.
                     <Button
                         onClick={(e) => handleBuynow(e)}
+                        loading={buyNowLoading}
+                        disabled={buyNowLoading}
                         iconPosition="end"
                         style={{ height: '58px', fontSize: '20px' }}
-                        type="primary"
-                        className="w-100 bg-success text-truncate"
+                        type={secondary ? 'default' : 'primary'}
+                        className={`w-100 text-truncate ${secondary ? 'border-2 border-success text-success' : 'bg-success'}`}
                         icon={<DownloadOutlined />}
                         size={'large'}>
-                        Hoziroq xarid qilish (
-                        {formatCurrencyWithSpace(product?.price)} so'm)
+                        {secondary ? 'Sotib olish' : 'Hoziroq xarid qilish'} (
+                        {formatCurrencyWithSpace(displayPrice)} so'm)
                     </Button>
+                ) : (
+                    <div className={styles.buyRow}>
+                        {buyNowButton}
+                        {sideActions}
+                    </div>
                 )}
             </div>
             {isMobile && (
                 <div className={`d-flex flex-column gap-3 `}>
                     {product?.document?.file_url ? (
-                        <a href={product?.document?.file_url} target="_blank" rel="noreferrer">
-                            <Button
-                                iconPosition="end"
-                                style={{
-                                    height: '58px',
-                                    fontSize: '20px',
-                                }}
-                                type="primary"
-                                className="w-100 bg-success"
-                                icon={<DownloadOutlined />}
-                                size={'large'}>
-                                Yuklab olish
-                            </Button>
-                        </a>
+                        renderPurchasedActions()
                     ) : (
-                        <Button
-                            onClick={(e) => handleBuynow(e)}
-                            iconPosition="end"
-                            style={{ height: '58px', fontSize: '20px' }}
-                            type="primary"
-                            className="w-100 bg-success"
-                            icon={<DownloadOutlined />}
-                            size={'large'}>
-                            {`Hoziroq xarid qilish ${size >= 360
-                                ? `(${formatCurrencyWithSpace(
-                                    product?.price
-                                )} so'm)`
-                                : ''
-                                }`}
-                        </Button>
+                        <div className={styles.buyRow}>
+                            {buyNowButton}
+                            {sideActions}
+                        </div>
                     )}
                 </div>
             )}

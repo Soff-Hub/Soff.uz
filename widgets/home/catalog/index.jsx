@@ -96,7 +96,7 @@ const service = {
     '3d': '/3d-models-and-interior-designs/all',
     website: '/websites/all',
     design: '/design-developments/all',
-    video: '/video-lessons/all',
+    video: '/video-lessons',
     template: '/templates/all',
     file: '/scientific-resources/all',
 };
@@ -153,10 +153,9 @@ const CatalogCard = ({ content_type, title }) => {
                                             cardStyles.cardBlockRightTopRight
                                         }
                                         style={{
-                                            backgroundImage: `url(${
-                                                img ||
+                                            backgroundImage: `url(${img ||
                                                 '/static/img/not-found.png'
-                                            })`,
+                                                })`,
                                             backgroundSize: 'cover',
                                             backgroundPosition: 'center',
                                         }}></div>

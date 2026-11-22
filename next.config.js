@@ -1,3 +1,19 @@
+/** @type {import('next').NextConfig} */
+
+// Micro-service internal endpoints (Proxies/Rewrites)
+// Defaults to localhost for development if .env variables are missing
+const SERVICE_URL_VIDEO = process.env.SERVICE_URL_VIDEO || 'http://localhost:3005';
+const SERVICE_URL_FREELANCE = process.env.SERVICE_URL_FREELANCE || 'http://localhost:3006';
+const SERVICE_URL_CREATORS = process.env.SERVICE_URL_CREATORS || 'http://localhost:3000';
+// SoffX AI (SoffAIGenFrontend), built with NEXT_PUBLIC_BASE_PATH=/labs.
+const SERVICE_URL_LABS = process.env.SERVICE_URL_LABS || 'http://127.0.0.1:3010';
+// SoffX AI agent (soffx-agent/ai-agent-front), built with NEXT_PUBLIC_BASE_PATH=/agent
+// (its deploy.sh: AGENT_BASE_PATH=/agent ./deploy.sh, port 3013).
+const SERVICE_URL_AGENT = process.env.SERVICE_URL_AGENT || 'http://127.0.0.1:3013';
+// Soff.uz's own API, for SoffX at /labs through /soffuz-api: its sign-in bridge
+// then trades the token with the backend that issued it, whichever one .env picks.
+const SOFFUZ_API_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://api.soff.uz';
+
 const nextSettings = {
     optimizeFonts: true,
     output: 'standalone',
@@ -8,6 +24,10 @@ const nextSettings = {
         ignoreBuildErrors: true,
     },
     reactStrictMode: true,
+    experimental: {
+        // See the first redirect: /labs/* keeps its trailing slash.
+        skipTrailingSlashRedirect: true,
+    },
     env: {
         title: 'Soff uz',
         titleDescription:
@@ -31,21 +51,11 @@ const nextSettings = {
             'placehold.co',
             'freelance-media.s3.amazonaws.com',
             'img.youtube.com',
+            'picsum.photos',
+            'ui-avatars.com',
         ],
     },
     async headers() {
-        // Analytics va Metrikalar ruxsatlari bilan (Google, Yandex, Facebook) toza va tartibli CSP (Content Security Policy) qoidalari
-        // const cspHeader = [
-        //     "default-src 'self'",
-        //     "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cdnjs.cloudflare.com https://mc.yandex.ru https://yastatic.net https://www.googletagmanager.com https://www.google-analytics.com https://connect.facebook.net https://an.yandex.ru https://www.google.com https://www.gstatic.com https://www.recaptcha.net",
-        //     "style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://use.fontawesome.com https://fonts.googleapis.com",
-        //     "img-src 'self' blob: data: https://eu2.contabostorage.com https://d2co7bxjtnp5o.cloudfront.net https://api.soff.uz https://test-soffuz.s3.amazonaws.com http://176.96.241.219 https://encrypted-tbn0.gstatic.com http://www.bukhari.uz http://localhost http://192.168.1.15 https://media.licdn.com https://freelance.soff.uz https://freelance.ilmiyish.uz https://placehold.co https://freelance-media.s3.amazonaws.com https://img.youtube.com https://mc.yandex.ru https://www.google-analytics.com https://www.facebook.com",
-        //     "font-src 'self' data: https://cdnjs.cloudflare.com https://use.fontawesome.com https://fonts.gstatic.com",
-        //     "connect-src 'self' https://api.soff.uz wss://api.soff.uz https://freelance.soff.uz wss://freelance.soff.uz *.sentry.io https://mc.yandex.ru wss://mc.yandex.ru https://www.google-analytics.com wss://www.google-analytics.com https://analytics.google.com wss://analytics.google.com https://stats.g.doubleclick.net https://www.google.com https://www.gstatic.com https://www.recaptcha.net",
-        //     "frame-src 'self' https://www.youtube.com https://mc.yandex.ru https://yandex.ru https://www.google.com https://recaptcha.google.com https://www.recaptcha.net",
-        //     "child-src 'self' https://www.youtube.com https://mc.yandex.ru https://yandex.ru https://www.google.com https://recaptcha.google.com https://www.recaptcha.net"
-        // ].join('; ');
-
         return [
             // Security headers for Lighthouse Best Practices
             {
@@ -56,8 +66,8 @@ const nextSettings = {
                         value: 'nosniff',
                     },
                     {
-                        key: 'X-Frame-Options',
-                        value: 'SAMEORIGIN',
+                        key: 'Content-Security-Policy',
+                        value: "frame-ancestors 'self' https://*.yandex.ru https://*.yandex.uz https://*.yandex.kz https://*.yandex.com https://*.webvisor.com blob:;",
                     },
                     {
                         key: 'X-XSS-Protection',
@@ -71,11 +81,6 @@ const nextSettings = {
                         key: 'Permissions-Policy',
                         value: 'camera=(), microphone=(), geolocation=()',
                     },
-                    // BIZ QO'SHGAN XAVFSIZLIK DEVORI (CSP)
-                    // {
-                    //     key: 'Content-Security-Policy',
-                    //     value: cspHeader,
-                    // }
                 ],
             },
             // Caching static files for 1 year
@@ -98,19 +103,9 @@ const nextSettings = {
                     },
                 ],
             },
-            // IMPORTANT: Exclude product pages from caching
-            {
-                source: '/product/:path*',
-                headers: [
-                    {
-                        key: 'Cache-Control',
-                        value: 'no-store, no-cache, must-revalidate, private, max-age=0',
-                    },
-                ],
-            },
             // SSR pages cached for 1 minute
             {
-                source: '/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|jpg|png|jpeg|gif|ico|webp|avif|jfif|pjpeg|pjp|apng|bmp|tif|tiff|js|css|woff2)).*)',
+                source: '/((?!api|agent(?:/|$)|_next/static|_next/image|favicon.ico|.*\\.(?:svg|jpg|png|jpeg|gif|ico|webp|avif|jfif|pjpeg|pjp|apng|bmp|tif|tiff|js|css|woff2)).*)',
                 headers: [
                     {
                         key: 'Cache-Control',
@@ -120,32 +115,101 @@ const nextSettings = {
             },
         ];
     },
+    async redirects() {
+        return [
+            // Next's own "/x/ → /x" redirect is off (experimental.skipTrailingSlashRedirect)
+            // because SoffX at /labs calls API paths that must keep their slash
+            // (and so does /soffuz-api, Soff.uz's API for it).
+            // Same redirect for everything else.
+            {
+                source: '/:path((?!labs(?:/|$)|soffuz-api/).+)/',
+                destination: '/:path',
+                permanent: true,
+            },
+            // www.soff.uz served every page with 200, giving Google a full
+            // duplicate host. Consolidate it onto the canonical apex domain.
+            {
+                source: '/:path*',
+                has: [{ type: 'host', value: 'www.soff.uz' }],
+                destination: 'https://soff.uz/:path*',
+                permanent: true,
+            },
+            // Soffia AI has moved to SoffX AI at /labs. Keep old /soffia links working.
+            {
+                source: '/soffia',
+                destination: '/labs',
+                permanent: true,
+            },
+            {
+                source: '/soffia/:path*',
+                destination: '/labs',
+                permanent: true,
+            },
+        ];
+    },
+    async rewrites() {
+        return [
+            {
+                source: '/studio/:path*',
+                destination: `${SERVICE_URL_VIDEO}/studio/:path*`,
+            },
+            {
+                source: '/freelance/:path*',
+                destination: `${SERVICE_URL_FREELANCE}/freelance/:path*`,
+            },
+            {
+                source: '/labs',
+                destination: `${SERVICE_URL_LABS}/labs`,
+            },
+            // `:path*` drops a trailing slash, which SoffX's API paths need.
+            {
+                source: '/labs/:path*/',
+                destination: `${SERVICE_URL_LABS}/labs/:path*/`,
+            },
+            {
+                source: '/labs/:path*',
+                destination: `${SERVICE_URL_LABS}/labs/:path*`,
+            },
+            // Soff.uz's API for SoffX's sign-in bridge (SoffAIGenFrontend soffuz-bridge.ts).
+            {
+                source: '/soffuz-api/:path*/',
+                destination: `${SOFFUZ_API_URL}/:path*/`,
+            },
+            {
+                source: '/soffuz-api/:path*',
+                destination: `${SOFFUZ_API_URL}/:path*`,
+            },
+            // SoffX renders some public files (<video>, posters) by their bare
+            // path, without /labs. Soff.uz has nothing at these paths.
+            ...['images', 'videos', 'logos', 'landing'].map((dir) => ({
+                source: `/${dir}/:path*`,
+                destination: `${SERVICE_URL_LABS}/labs/${dir}/:path*`,
+            })),
+            // SoffX AI agent at /agent. Its pages, assets and API all live under /agent.
+            {
+                source: '/agent',
+                destination: `${SERVICE_URL_AGENT}/agent`,
+            },
+            {
+                source: '/agent/:path*',
+                destination: `${SERVICE_URL_AGENT}/agent/:path*`,
+            },
+            // The agent's backend hands out media, style preview and logo URLs without /agent
+            // (/api/media/<name>, /api/styles/<id>/..., /api/onboarding/logo/...). Soff.uz has no API at these paths.
+            ...['media', 'onboarding', 'styles'].map((dir) => ({
+                source: `/api/${dir}/:path*`,
+                destination: `${SERVICE_URL_AGENT}/agent/api/${dir}/:path*`,
+            })),
+            {
+                source: '/creators',
+                destination: `${SERVICE_URL_CREATORS}/creators`,
+            },
+            {
+                source: '/creators/:path*',
+                destination: `${SERVICE_URL_CREATORS}/creators/:path*`,
+            },
+        ];
+    },
 };
 
 module.exports = nextSettings;
-
-if (process.env.NODE_ENV === 'production') {
-    const { withSentryConfig } = require('@sentry/nextjs');
-
-    module.exports = withSentryConfig(module.exports, {
-        org: 'for-personal-use-jw',
-        project: 'javascript-nextjs',
-
-        hideSourceMaps: true,
-        disableLogger: true,
-        widenClientFileUpload: true,
-        silent: true,
-        webpack: (config) => {
-            return {
-                ...config,
-                treeshake: {
-                    removeDebugLogging: true,
-                    removeTracing: false,
-                },
-            };
-        },
-
-        tunnelRoute: '/monitoring',
-        automaticVercelMonitors: true,
-    });
-}

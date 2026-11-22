@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import Router from 'next/router';
 import '~/scss/boostrap.min.css';
 import '~/scss/style.scss';
 import '~/scss/electronic.scss';
@@ -7,17 +8,74 @@ import Head from 'next/head';
 import NextProgress from 'next-progress';
 import { Providers } from '~/app/providers';
 import AffiliateListener from '~/entities/affiliate';
+import PushPrompt from '~/widgets/push-prompt';
+import { SoffxLinkListener } from '~/features/platform-subscription/soffx-links';
 import { useTelegram } from '~/shared/hooks/useTelegram';
 import { TelegramLink } from '~/shared/components/telegram-link';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
 import '~/shared/utilities/dayjs-locale-uz';
 import Script from 'next/script';
 import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
+import { configureDefaultAxiosAuthHandling } from '~/shared/utilities/auth-session';
+import Cookies from 'js-cookie';
 // import showOfferNotification from '~/shared/components/offer-notification';
 
 function App({ Component, pageProps }) {
     const { tg } = useTelegram();
     const { startTimeout } = useTimeManager();
+
+    useEffect(() => {
+        configureDefaultAxiosAuthHandling();
+
+        // Sync logout across tabs/apps on the same origin
+        const handleStorageChange = (e) => {
+            if ((e.key === 'auth-storage' || e.key === 'user' || e.key === 'data') && !e.newValue) {
+                // If auth data is cleared elsewhere, refresh to update UI state
+                window.location.reload();
+            }
+        };
+
+        const checkSession = () => {
+            const token = Cookies.get('token');
+            const user = safeLocalStorage.getItem('user');
+            if (user && !token) {
+                // Session expired or logged out elsewhere
+                safeLocalStorage.removeItem('user');
+                safeLocalStorage.removeItem('data');
+                window.location.reload();
+            }
+        };
+
+        window.addEventListener('storage', handleStorageChange);
+        window.addEventListener('focus', checkSession);
+
+        return () => {
+            window.removeEventListener('storage', handleStorageChange);
+            window.removeEventListener('focus', checkSession);
+        };
+    }, []);
+
+    useEffect(() => {
+        // Next.js 12 dagi stillar o'chib ketish muammosini fix qilish
+        const handleRouteChange = () => {
+            const allStyles = document.querySelectorAll(
+                'style[data-n-href], style[data-n-p]'
+            );
+            const copyStyles = Array.from(allStyles);
+            copyStyles.forEach((style) => {
+                style.removeAttribute('data-n-href');
+                style.removeAttribute('data-n-p');
+            });
+        };
+
+        Router.events.on('routeChangeComplete', handleRouteChange);
+        Router.events.on('beforeHistoryChange', handleRouteChange);
+
+        return () => {
+            Router.events.off('routeChangeComplete', handleRouteChange);
+            Router.events.off('beforeHistoryChange', handleRouteChange);
+        };
+    }, []);
 
     useEffect(() => {
         tg?.ready();
@@ -72,9 +130,6 @@ function App({ Component, pageProps }) {
             window.removeEventListener('contextmenu', (e) =>
                 e.preventDefault()
             );
-            safeLocalStorage.removeItem('utm_source');
-            safeLocalStorage.removeItem('utm_medium');
-            safeLocalStorage.removeItem('utm_campaign');
         };
     }, []);
 
@@ -110,7 +165,7 @@ function App({ Component, pageProps }) {
                             url: 'https://soff.uz',
                             logo: 'https://soff.uz/static/img/soff/logo-dark.png',
                             sameAs: [
-                                'https://t.me/soff_uz',
+                                'https://telegram.me/soff_uz',
                                 'https://www.youtube.com/@soffuz',
                                 'https://www.facebook.com/people/Soffuz/61579052952962/',
                             ],
@@ -131,7 +186,7 @@ function App({ Component, pageProps }) {
                     />
                     <Script
                         src="/scripts/google-analytics-init.js"
-                        strategy="lazyOnload"
+                        strategy="afterInteractive"
                     />
                     <Script
                         src="/scripts/yandex-metrika-init.js"
@@ -139,6 +194,18 @@ function App({ Component, pageProps }) {
                     />
                     <Script
                         src="/scripts/facebook-pixel-init.js"
+                        strategy="lazyOnload"
+                    />
+                    <Script
+                        src="/scripts/facebook-pixel-init-2.js"
+                        strategy="lazyOnload"
+                    />
+                    <Script
+                        src="/scripts/facebook-pixel-init-3.js"
+                        strategy="lazyOnload"
+                    />
+                    <Script
+                        src="/scripts/facebook-pixel-init-4.js"
                         strategy="lazyOnload"
                     />
                     <Script
@@ -159,8 +226,10 @@ function App({ Component, pageProps }) {
             />
             <Providers>
                 <AffiliateListener />
+                <SoffxLinkListener />
                 <Component {...pageProps} />
                 <TelegramLink />
+                <PushPrompt />
             </Providers>
         </>
     );

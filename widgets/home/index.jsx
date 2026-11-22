@@ -1,6 +1,8 @@
 import React from 'react';
 import Hero from './hero';
+import SubscriptionPromo from './subscription-promo';
 import dynamic from 'next/dynamic';
+import styles from './style.module.scss';
 
 // const Bests = dynamic(() => import('./bests'), {
 //     ssr: false,
@@ -18,7 +20,7 @@ const YoutubeVid = dynamic(() => import('./youtube-vid'), {
     ssr: false,
     loading: () => <div style={{ minHeight: '250px', backgroundColor: '#f0f0f0' }} />
 });
-const Statistics = dynamic(() => import('./statistics'), { ssr: false });
+// const Statistics = dynamic(() => import('./statistics'), { ssr: false });
 const TwoCard = dynamic(() => import('./two-card'), { ssr: false });
 const Freelance = dynamic(() => import('./freelance'), {
     ssr: false,
@@ -30,12 +32,22 @@ const LastServices = dynamic(() => import('./last-services'), {
 });
 const Info = dynamic(() => import('./info'), { ssr: false });
 const Title = dynamic(() => import('./title'), { ssr: false });
+const PlatformStats = dynamic(() => import('./platform-stats'), { ssr: false });
+const AgentsMarket = dynamic(() => import('./agents-market'), {
+    ssr: false,
+    loading: () => <div style={{ minHeight: '420px' }} />
+});
+const AiTools = dynamic(() => import('./ai-tools'), {
+    ssr: false,
+    loading: () => <div style={{ minHeight: '280px' }} />
+});
 
 const Home = () => {
     return (
         <div>
-            <div className="bg-white ">
+            <div style={{ background: '#fbfbfc' }}>
                 <div className="container">
+                    <SubscriptionPromo />
                     <Hero />
                 </div>
             </div>
@@ -43,19 +55,24 @@ const Home = () => {
                 text={'Soff - Raqamli mahsulotlar va onlayn xizmatlar bozori'}
                 videoId={'https://www.youtube.com/watch?v=hn55AZoxWes'}
             />
+            <AgentsMarket />
+            <AiTools />
+            <PlatformStats />
             <div className="container">
                 <Freelance />
             </div>
             <div className="bg-white">
                 <div className="container">
-                    <LastServices />
-                    <Info />
+                    <div className={styles.infoServicesRow}>
+                        <Info />
+                        <LastServices compact />
+                    </div>
                 </div>
             </div>
             <div className="bg-white py-1">
                 <div className="container">
                     <LastProducts />
-                    <Statistics />
+                    {/* <Statistics /> */}
                     {/* <Bests /> */}
                 </div>
             </div>

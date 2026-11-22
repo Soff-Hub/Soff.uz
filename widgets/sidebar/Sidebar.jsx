@@ -6,7 +6,9 @@ import { FaTruck } from 'react-icons/fa';
 import { PiSignOutBold } from 'react-icons/pi';
 import { FaRegUserCircle } from 'react-icons/fa';
 import { FaRegHeart } from 'react-icons/fa';
-import { MdOutlineShoppingCart } from 'react-icons/md';
+import { FaUser } from 'react-icons/fa';
+import { MdOutlineShoppingCart, MdWorkspacePremium } from 'react-icons/md';
+import { FaRegCreditCard } from 'react-icons/fa6';
 import { FaRegCommentDots } from 'react-icons/fa';
 import { FaRegBell } from 'react-icons/fa';
 import { MdKeyboardDoubleArrowLeft } from 'react-icons/md';
@@ -14,6 +16,7 @@ import { MdKeyboardDoubleArrowRight } from 'react-icons/md';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { logOut } from '~/store/auth/slice';
+import { unsubscribeFromPush } from '~/shared/utilities/push';
 import { logout as profileLogout } from '~/store/profile/slice';
 import useAuth from '~/shared/hooks/useAuth';
 import useResponsive from '~/shared/utilities/useResponsive';
@@ -42,27 +45,13 @@ function Sidebar({ collapsed, onChangeCollapse }) {
         `${user?.first_name || ''} ${user?.last_name || ''}`.trim() ||
         'Foydalanuvchi';
 
-    const handleLogout = () => {
-        const data = {
-            refresh: refresh,
-        };
-        const res = logOutAuth(data);
-
-        if (res) {
-            dispatch(logOut());
-            dispatch(profileLogout());
-            // Navigate to login page after logout
-            const currentPath = router.asPath;
-            // Don't redirect if already on login page or auth pages
-            if (
-                !currentPath.includes('/auth/login') &&
-                !currentPath.includes('/auth/register') &&
-                !currentPath.includes('/auth/reset-password') &&
-                !currentPath.includes('/oauth')
-            ) {
-                router.push('/auth/login');
-            }
-        }
+    const handleLogout = async () => {
+        // Before logout, while the token is still valid
+        await unsubscribeFromPush();
+        await logOutAuth({ refresh });
+        dispatch(profileLogout());
+        // Redirects to home from protected pages, otherwise stays on the page.
+        dispatch(logOut());
     };
 
     const items = useMemo(
@@ -87,6 +76,30 @@ function Sidebar({ collapsed, onChangeCollapse }) {
                     <Link href={'/order/my-orders'}>
                         <a style={!isAuthorized ? disableLinkStyle : {}}>
                             Buyurtmalarim
+                        </a>
+                    </Link>
+                ),
+            },
+            {
+                key: 'subscription',
+                icon: <MdWorkspacePremium size={20} />,
+                disabled: !isAuthorized,
+                label: (
+                    <Link href={'/account/subscription'}>
+                        <a style={!isAuthorized ? disableLinkStyle : {}}>
+                            Mening obunam
+                        </a>
+                    </Link>
+                ),
+            },
+            {
+                key: 'billing',
+                icon: <FaRegCreditCard size={19} />,
+                disabled: !isAuthorized,
+                label: (
+                    <Link href={'/account/billing'}>
+                        <a style={!isAuthorized ? disableLinkStyle : {}}>
+                            To'lov ma'lumotlari
                         </a>
                     </Link>
                 ),
@@ -142,6 +155,18 @@ function Sidebar({ collapsed, onChangeCollapse }) {
                 type: 'divider',
             },
             {
+                key: 'profile',
+                icon: <FaUser size={19} />,
+                disabled: !isAuthorized,
+                label: (
+                    <Link href={'/account/profile'}>
+                        <a style={!isAuthorized ? disableLinkStyle : {}}>
+                            Profil
+                        </a>
+                    </Link>
+                ),
+            },
+            {
                 key: 'logout',
                 icon: <PiSignOutBold size={20} />,
                 disabled: !isAuthorized,
@@ -155,11 +180,20 @@ function Sidebar({ collapsed, onChangeCollapse }) {
 
     const onClickMenuItem = (menuItem) => {
         switch (menuItem.key) {
+            case 'profile':
+                router.push('/account/profile');
+                break;
             case 'sellerproducts':
                 router.push('/account/sellerproducts');
                 break;
             case 'my-orders':
                 router.push('/order/my-orders');
+                break;
+            case 'subscription':
+                router.push('/account/subscription');
+                break;
+            case 'billing':
+                router.push('/account/billing');
                 break;
             case 'wishlist':
                 router.push('/account/wishlist');

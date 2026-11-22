@@ -1,6 +1,6 @@
 import { Pagination, Input, Button, Select, Skeleton, Rate, Modal } from 'antd';
 import { useState, useMemo } from 'react';
-import { DownloadOutlined, ShoppingCartOutlined } from '@ant-design/icons';
+import { DownloadOutlined, ShoppingCartOutlined, EyeOutlined } from '@ant-design/icons';
 import Link from 'next/link';
 import { api, baseURL } from '~/repositories/api';
 import axios from 'axios';
@@ -334,36 +334,51 @@ const PurchasedProductsLayout = ({
 
                                 {/* Action Buttons */}
                                 <div className={styles.actionButtons}>
-                                    <FileDownloadLink
-                                        url={item.document?.file_url}
-                                        filename={item.document?.title}
-                                        className={styles.downloadLinkWrapper}>
-                                        <Button
-                                            type="primary"
-                                            icon={<DownloadOutlined />}
-                                            className={styles.downloadBtn}
-                                            size="middle"
-                                            block>
-                                            Yuklab olish
-                                        </Button>
-                                    </FileDownloadLink>
-                                    <Button
-                                        type="link"
-                                        className={styles.telegramBtn}
-                                        onClick={() =>
-                                            handleDownloadThroughTelegram(
-                                                productId
-                                            )
-                                        }
-                                        size="middle"
-                                        block>
-                                        <img
-                                            src="/static/img/telegram.png"
-                                            alt="Telegram"
-                                            height={20}
-                                        />
-                                        <span>Telegram orqali olish</span>
-                                    </Button>
+                                    {item.document?.file_url ? (
+                                        <>
+                                            <FileDownloadLink
+                                                url={item.document?.file_url}
+                                                filename={item.document?.title}
+                                                className={styles.downloadLinkWrapper}>
+                                                <Button
+                                                    type="primary"
+                                                    icon={<DownloadOutlined />}
+                                                    className={styles.downloadBtn}
+                                                    size="middle"
+                                                    block>
+                                                    Yuklab olish
+                                                </Button>
+                                            </FileDownloadLink>
+                                            <Button
+                                                type="link"
+                                                className={styles.telegramBtn}
+                                                onClick={() =>
+                                                    handleDownloadThroughTelegram(
+                                                        productId
+                                                    )
+                                                }
+                                                size="middle"
+                                                block>
+                                                <img
+                                                    src="/static/img/telegram.png"
+                                                    alt="Telegram"
+                                                    height={20}
+                                                />
+                                                <span>Telegram orqali olish</span>
+                                            </Button>
+                                        </>
+                                    ) : (
+                                        <Link href={`/video-lessons/${item.document?.slug}`}>
+                                            <Button
+                                                type="primary"
+                                                icon={<EyeOutlined />}
+                                                className={styles.downloadBtn}
+                                                size="middle"
+                                                block>
+                                                Videoni ko'rish
+                                            </Button>
+                                        </Link>
+                                    )}
                                 </div>
                             </div>
                         </div>

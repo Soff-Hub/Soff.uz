@@ -7,6 +7,7 @@ import Axios from 'axios';
 import { baseUrlAuth } from '~/repositories/Repository';
 import { login } from '~/store/auth/slice';
 import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
+import { goToReturnUrl, readReturnUrl } from '~/shared/utilities/return-url';
 
 export const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
@@ -17,15 +18,6 @@ export const formatTime = (seconds) => {
     )}`;
 };
 
-const isReturnUrlEmpty = (returnUrl) => {
-    return (
-        !returnUrl ||
-        returnUrl === 'undefined' ||
-        returnUrl === 'null' ||
-        returnUrl.trim() === '/' ||
-        returnUrl.trim() === ''
-    );
-};
 
 export default function TelegramConfigmForm({ isModal, onSuccess }) {
     const [loading, setLoading] = useState(false);
@@ -45,9 +37,8 @@ export default function TelegramConfigmForm({ isModal, onSuccess }) {
             const utm_source = safeLocalStorage.getItem('utm_source');
             const resp = await Axios.post(
                 baseUrlAuth +
-                    `auth/telegram-verify/${
-                        utm_source ? `?utm_source=${utm_source}` : ''
-                    }`,
+                `auth/telegram-verify/${utm_source ? `?utm_source=${utm_source}` : ''
+                }`,
                 data
             );
             dispatch(
@@ -68,12 +59,10 @@ export default function TelegramConfigmForm({ isModal, onSuccess }) {
                 return;
             }
 
-            const decodedUrl = decodeURIComponent(
-                router?.query?.returnUrl || ''
-            );
+            const returnUrl = readReturnUrl(router?.query);
 
-            if (router?.query?.returnUrl && !isReturnUrlEmpty(decodedUrl)) {
-                router.push(decodedUrl);
+            if (returnUrl) {
+                goToReturnUrl(router, returnUrl);
             } else if (router?.query?.id) {
                 router.push(`/account/checkout?id=${router?.query?.id}`);
             } else if (router?.query?.deal) {
@@ -121,7 +110,7 @@ export default function TelegramConfigmForm({ isModal, onSuccess }) {
                             <span>Kirish uchun </span>
                             <a
                                 onClick={handleStart}
-                                href="https://t.me/soff_auth_bot?start=new_code"
+                                href="https://telegram.me/soff_auth_bot?start=new_code"
                                 target="_blank"
                                 className="text-success">
                                 @soff_auth_bot
@@ -178,7 +167,7 @@ export default function TelegramConfigmForm({ isModal, onSuccess }) {
                                 <button
                                     type="submit"
                                     className="ps-btn ps-btn--fullwidth text-white">
-                                    Tasdiqlash
+                                    Tekshirish
                                 </button>
                             )}
                         </div>

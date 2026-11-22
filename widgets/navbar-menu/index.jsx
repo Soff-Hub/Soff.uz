@@ -12,7 +12,6 @@ import SwiperController from './swiperController';
 import { useSelector } from 'react-redux';
 import { FiExternalLink } from 'react-icons/fi';
 import { HeaderDirectionsLoader } from '../header/HeaderLoader';
-import { soffiaIconSVG } from '../header/HeaderActions/HeaderAIIcon';
 
 const NavbarMenu = () => {
     const { data, isLoading } = useFGet('navbar-items', NAVBAR_MENU_CATEGORIES);
@@ -111,25 +110,6 @@ const NavbarMenu = () => {
                                 />
                             </SwiperSlide>
                         ))}
-
-                        {/* <SwiperSlide style={{ width: 'auto' }}>
-                            <div className={menuItemStyle.menuItem}>
-                                <a
-                                    href="https://soffia.uz"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className={menuItemStyle.soffiaAiLabel}
-                                >
-                                    <div style={{ display: 'flex', alignItems: 'center', width: '20px' }}>
-                                        {soffiaIconSVG}
-                                    </div>
-                                    <span style={{ whiteSpace: 'nowrap' }}>Soffia AI</span>
-                                    <span className={menuItemStyle.newBadge}>
-                                        NEW
-                                    </span>
-                                </a>
-                            </div>
-                        </SwiperSlide> */}
 
                         <SwiperController
                             getMethods={getMethods}

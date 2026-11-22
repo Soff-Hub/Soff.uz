@@ -45,6 +45,7 @@ const Chat = () => {
             key={chatId as string}
             chatId={chatId as string}
             goBack={clearChatId}
+            fullHeight={true}
         />
     );
 
@@ -52,18 +53,32 @@ const Chat = () => {
         <div
             style={{
                 position: 'relative',
-                height: '100%',
+                height: isSmallScreen
+                    ? 'calc(100vh - 140px)'
+                    : 'calc(100vh - 140px)',
                 maxWidth: '1370px',
                 margin: `${isSmallScreen ? 0 : '10px'} auto 0`,
+                overflow: 'hidden',
+                display: 'flex',
+                flexDirection: 'column',
             }}>
             {isSmallScreen ? (
-                <Row>
-                    <Col span={24}>{!chatId ? Sidebar : Window}</Col>
-                </Row>
+                <div style={{ flex: 1, height: '100%', overflow: 'hidden' }}>
+                    {!chatId ? Sidebar : Window}
+                </div>
             ) : (
-                <Row>
-                    <Col span={6}>{Sidebar}</Col>
-                    <Col span={18} style={{ position: 'relative' }}>
+                <Row style={{ flex: 1, height: '100%', overflow: 'hidden' }}>
+                    <Col
+                        span={6}
+                        style={{
+                            height: '100%',
+                            borderRight: '1px solid #f0f0f0',
+                        }}>
+                        {Sidebar}
+                    </Col>
+                    <Col
+                        span={18}
+                        style={{ position: 'relative', height: '100%' }}>
                         {Window}
                     </Col>
                 </Row>

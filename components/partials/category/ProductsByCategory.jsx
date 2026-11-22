@@ -7,7 +7,27 @@ export default function ProductsByCategory({
     data = [],
     page,
     handlePagination,
+    router,
 }) {
+    const itemRender = (current, type, originalElement) => {
+        if (type === 'page' || type === 'prev' || type === 'next') {
+            const query = { ...router?.query, page: current };
+            // Remove search if empty to keep URLs clean
+            if (!query.search) delete query.search;
+
+            return (
+                <Link
+                    href={{
+                        pathname: router?.pathname,
+                        query: query,
+                    }}>
+                    <a>{originalElement}</a>
+                </Link>
+            );
+        }
+        return originalElement;
+    };
+
     return (
         <section className="">
             <div className="row px-1 row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-gap-2 row-gap-md-5 row-gap-lg-3 mb-5">
@@ -53,7 +73,8 @@ export default function ProductsByCategory({
                         pageSize={50}
                         responsive={true}
                         showSizeChanger={false}
-                        current={page}
+                        current={Number(page) || 1}
+                        itemRender={itemRender}
                         onChange={(e) => handlePagination(e)}
                     />
                 </div>

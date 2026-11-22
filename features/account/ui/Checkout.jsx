@@ -1,80 +1,89 @@
 import React from 'react';
-import FormCheckoutInformation from './modules/FormCheckoutInformation';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
+import { FaArrowLeft, FaBoxOpen } from 'react-icons/fa6';
+import { Button, Spin } from 'antd';
 import RedesignModulePaymentOrderSummary from './modules/RedesignModulePaymentOrderSummary';
-import { FaArrowLeft } from 'react-icons/fa6';
-import { FaBoxOpen } from 'react-icons/fa';
-import { Button } from 'antd';
+import FormCheckoutInformation from './modules/FormCheckoutInformation';
+import styles from './checkout.module.scss';
+import { cn } from '~/shared/utilities/cn';
 
 const Checkout = () => {
     const router = useRouter();
-    const { cartDataItems, status } = useSelector(state => state.ecomerce);
+    const { cartDataItems, playlistCartDataItems, status } = useSelector(
+        (state) => state.ecomerce
+    );
+
     if (!router.isReady) return null;
 
-    const isCartEmpty = !cartDataItems || cartDataItems.length === 0;
-    let checkoutContent = null;
+    const allItems = [
+        ...(cartDataItems || []),
+        ...(playlistCartDataItems || []),
+    ];
 
-    if (isCartEmpty && status !== 'loading') {
-        checkoutContent = (
-            <div
-                style={{ height: '80vh' }}
-                className="d-flex justify-content-center flex-column align-items-center">
-                <div
-                    style={{
-                        borderRadius: '50%',
-                        background: '#7575751c',
-                        width: '130px',
-                        height: '130px',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        marginBottom: '20px',
-                    }}>
-                    <FaBoxOpen
-                        style={{
-                            color: '#00a44f',
-                            fontSize: '70px',
-                        }}
-                    />
-                </div>
-                <h3
-                    style={{ fontSize: '30px' }}
-                    className="font-bold mb-2 text-gray-800">
-                    Savat bo'sh
-                </h3>
-                <p className="mb-4 text-center text-muted">
-                    To'lov qilish uchun biror mahsulot qo'shing.
-                </p>
-                <Button
-                    type="primary"
-                    size="large"
-                    onClick={() => router.push('/')}>
-                    <FaArrowLeft />
-                    Xarid qilishni boshlash
-                </Button>
-            </div>
-        );
-    } else {
-        checkoutContent = (
-            <div className="ps-form__content">
-                <div className="row d-flex justify-content-between my-5">
-                    <div className="col-xl-7 col-lg-8 col-md-12 col-12">
-                        <RedesignModulePaymentOrderSummary
-                            ecomerce={cartDataItems}
-                        />
-                    </div>
-                    <div className="col-xl-5 col-lg-4 col-md-12 col-12">
-                        <FormCheckoutInformation ecomerce={cartDataItems} />
-                    </div>
+    const isCartEmpty = allItems.length === 0;
+    const isLoading = status === 'loading';
+
+    if (isLoading) {
+        return (
+            <div className={styles.pageContainer}>
+                <div className="flex justify-center items-center py-24 min-h-[300px]">
+                    <Spin size="large" />
                 </div>
             </div>
         );
     }
 
+    if (isCartEmpty) {
+        return (
+            <div className={styles.pageContainer}>
+                <div className={styles.emptyCheckout}>
+                    <div className={styles.emptyIcon}>
+                        <FaBoxOpen />
+                    </div>
+                    <h3 className="text-2xl font-bold mb-2">Savat bo'sh</h3>
+                    <p className="mb-6 text-gray-500">
+                        To'lov qilish uchun biror mahsulot qo'shing.
+                    </p>
+                    <Button
+                        type="primary"
+                        size="large"
+                        onClick={() => router.push('/')}
+                        className="rounded-lg h-12 flex items-center gap-2"
+                    >
+                        <FaArrowLeft />
+                        Xarid qilishni boshlash
+                    </Button>
+                </div>
+            </div>
+        );
+    }
+
+    const { type: queryType, id } = router.query;
+    const inferredType = queryType ||
+        (playlistCartDataItems?.length > 0 ? 'playlist' : 'document');
+
     return (
-        <div className="ps-checkout ps-section--shopping p-0">
-            <div className="container p-lg-0">{checkoutContent}</div>
+        <div className={styles.pageContainer}>
+            <div className="flex flex-col gap-6">
+                <div className={styles.mainLayout}>
+                    <div className={styles.orderListColumn}>
+                        <div className={cn(styles.checkoutColumn, "h-full")}>
+                            <RedesignModulePaymentOrderSummary />
+                        </div>
+                    </div>
+
+                    <div className={styles.paymentColumn}>
+                        <div className={styles.checkoutColumn}>
+                            <FormCheckoutInformation
+                                items={allItems}
+                                type={inferredType}
+                                id={id}
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };

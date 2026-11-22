@@ -2,7 +2,8 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import styles from '../styles/user-tab-content.module.scss';
 import { useSellerProducts } from '../api/useSellerProducts';
-import { Skeleton, Select, Pagination, Input } from 'antd';
+import { Skeleton, Select, Pagination, Input, Switch } from 'antd';
+import { MdOutlineWorkspacePremium } from 'react-icons/md';
 import ProductCard from '~/entities/product/product-card';
 import { digitalDirections } from '~/shared/constants';
 import ItemsNotFound from './items-not-found';
@@ -13,6 +14,7 @@ const UserProducts = ({ id, direction }) => {
     const page = parseInt(router.query.page || '1', 10);
     const type = router.query.type || direction || 'file';
     const searchQuery = router.query.search || '';
+    const onlySubscription = router.query.sub === '1';
     const [searchInput, setSearchInput] = useState(searchQuery);
     const debounceSearch = useDebounce(searchInput, 700);
 
@@ -20,7 +22,8 @@ const UserProducts = ({ id, direction }) => {
         id,
         page,
         type,
-        debounceSearch
+        debounceSearch,
+        onlySubscription
     );
 
     const notFound = data?.results?.length === 0 && !isLoading && !isFetching;
@@ -37,6 +40,21 @@ const UserProducts = ({ id, direction }) => {
                         type: value,
                         page: '1',
                     },
+                },
+                undefined,
+                { shallow: true }
+            );
+        },
+        [router]
+    );
+
+    const handleSubscriptionChange = useCallback(
+        (checked) => {
+            const { sub, ...query } = router.query;
+            router.replace(
+                {
+                    pathname: router.pathname,
+                    query: { ...query, ...(checked ? { sub: '1' } : {}), page: '1' },
                 },
                 undefined,
                 { shallow: true }
@@ -105,6 +123,11 @@ const UserProducts = ({ id, direction }) => {
                     onChange={handleTypeChange}
                     className={styles.typeSelect}
                 />
+                <label className={styles.subscriptionFilter}>
+                    <Switch size="small" checked={onlySubscription} onChange={handleSubscriptionChange} />
+                    <MdOutlineWorkspacePremium className={styles.subscriptionFilterIcon} aria-hidden />
+                    Faqat obunadagilar
+                </label>
             </div>
 
             {notFound && <ItemsNotFound type="product" />}

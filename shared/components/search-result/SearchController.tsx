@@ -9,14 +9,14 @@ import useHistorySearch from '~/shared/hooks/useHistorySearch';
 
 type SearchControllerProps = {
     searchOption: 'navigation' | 'selection';
-    categoryType?: 'mahsulotlar' | 'xizmatlar' | 'mutaxasislar';
+    categoryType?: 'mahsulotlar' | 'xizmatlar' | 'mutaxassislar';
     popoverPlacement?: TooltipPlacement;
     searchProps: {
         search: string;
         setSearch: React.Dispatch<React.SetStateAction<string>>;
-        type: 'mahsulotlar' | 'xizmatlar' | 'mutaxasislar';
+        type: 'mahsulotlar' | 'xizmatlar' | 'mutaxassislar';
         setType: React.Dispatch<
-            React.SetStateAction<'mahsulotlar' | 'xizmatlar' | 'mutaxasislar'>
+            React.SetStateAction<'mahsulotlar' | 'xizmatlar' | 'mutaxassislar'>
         >;
         debouncedSearch: string;
         isNavigating: boolean;

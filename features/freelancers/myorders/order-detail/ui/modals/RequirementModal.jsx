@@ -3,11 +3,33 @@ import { Modal, Button, Upload, Input, message } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import useSendReq from '../../api/useSendReq';
 
+const ORDER_FILE_MAX_SIZE = 500 * 1024 * 1024; // 500 MB
+const ORDER_FILE_ALLOWED_EXTENSIONS = [
+    'pdf', 'docx', 'doc', 'txt', 'zip', 'rar',
+    'png', 'jpg', 'jpeg', 'gif', 'mp4', 'mov',
+    'xlsx', 'csv', 'pptx', 'webp', 'mp3', 'wav',
+    'ai', 'psd', 'fig', 'sketch',
+];
+
 const RequirementModal = ({ visible, onClose, orderId }) => {
     const [fileList, setFileList] = useState([]);
     const [content, setContent] = useState('');
 
     const sendReq = useSendReq();
+
+    const validateOrderFile = (file) => {
+        const ext = file.name.split('.').pop()?.toLowerCase() || '';
+        const isAllowedExt = ORDER_FILE_ALLOWED_EXTENSIONS.includes(ext);
+        if (!isAllowedExt) {
+            message.error(`Ruxsat etilmagan fayl turi: .${ext}`);
+            return Upload.LIST_IGNORE;
+        }
+        if (file.size > ORDER_FILE_MAX_SIZE) {
+            message.error('Fayl hajmi juda katta. Maksimal hajm: 500MB');
+            return Upload.LIST_IGNORE;
+        }
+        return true;
+    };
 
     const handleFileChange = ({ fileList: newFileList }) => {
         // Faqat bitta fayl qoldiramiz
@@ -54,7 +76,7 @@ const RequirementModal = ({ visible, onClose, orderId }) => {
 
             <Upload
                 className='w-100'
-                beforeUpload={() => false}
+                beforeUpload={validateOrderFile}
                 fileList={fileList}
                 onChange={handleFileChange}
                 maxCount={1}    

@@ -1,0 +1,73 @@
+.categoryFilters {
+    width: 100%;
+
+    .filterBtn {
+        padding: 8px 18px;
+        border-radius: 20px;
+        background: #f0f2f5;
+        border: 1px solid transparent;
+        font-size: 14px;
+        font-weight: 500;
+        color: #595959;
+        cursor: pointer;
+        transition: all 0.2s;
+        white-space: nowrap;
+
+        &:hover {
+            background: rgba(46, 204, 113, 0.1);
+            color: #2ecc71;
+        }
+
+        &.active {
+            background: #2ecc71;
+            color: #fff;
+            border-color: #2ecc71;
+            box-shadow: 0 4px 10px rgba(46, 204, 113, 0.2);
+        }
+    }
+
+    .moreBtn {
+        padding: 8px 18px;
+        border-radius: 20px;
+        background: #fff;
+        border: 1px solid #2ecc71;
+        font-size: 14px;
+        font-weight: 600;
+        color: #2ecc71;
+        cursor: pointer;
+        transition: all 0.2s;
+
+        &:hover {
+            background: #2ecc71;
+            color: #fff;
+        }
+    }
+
+    .desktopFilters {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+
+        @media (max-width: 768px) {
+            display: none;
+        }
+    }
+
+    .mobileFilters {
+        display: none;
+
+        @media (max-width: 768px) {
+            display: block;
+        }
+
+        .swiper {
+            width: 100%;
+            padding: 4px 0;
+        }
+
+        .swiperSlide {
+            width: auto !important;
+        }
+    }
+}

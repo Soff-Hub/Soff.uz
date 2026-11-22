@@ -7,8 +7,8 @@ import React, {
 } from 'react';
 import PageContainer from '~/widgets/layouts/PageContainer';
 import { baseUrl } from '~/repositories/Repository';
-import * as cookie from 'cookie';
 import Meta from '~/shared/ui/meta';
+import * as cookie from 'cookie';
 import { getOrCreateDeviceId } from '~/shared/utilities/device-id';
 import dynamic from 'next/dynamic';
 import { useTimeManager } from '~/shared/hooks/useTimeManager';
@@ -36,9 +36,15 @@ const SimilarProducts = dynamic(
     { ssr: false }
 );
 
-const AISoffiaPresentation = dynamic(() => import('~/widgets/home/ai-soffia'), {
+
+const AiServices = dynamic(() => import('~/features/product-details/ui/ai-services'), {
     ssr: false,
 });
+
+const PurchaseRecommendations = dynamic(
+    () => import('~/features/product-details/ui/purchase-recommendations'),
+    { ssr: false }
+);
 
 // Conditionally load Joyride only when needed (first visit)
 const Joyride = dynamic(() => import('react-joyride'), {
@@ -56,7 +62,7 @@ const ThreeDesignProductDetails = dynamic(
 );
 
 const VideosProductDetails = dynamic(
-    () => import('~/features/product-details/ui/video-tutorials/details-page'),
+    () => import('~/features/videos/ui/VideoDetails/VideoDetails'),
     { ssr: true }
 );
 
@@ -104,19 +110,14 @@ export default function ProductDefaultPage({ defaultProducts }) {
     const [showJoyride, setShowJoyride] = useState(false);
     const similarRef = useRef();
     const lastProductsRef = useRef();
-
     const contentType = useMemo(
         () => defaultProducts?.document?.content_type,
         [defaultProducts?.document?.content_type]
     );
+    console.log(defaultProducts);
 
     const DetailComponent = useMemo(
         () => productsContentDetails(contentType),
-        [contentType]
-    );
-
-    const shouldShowAISoffia = useMemo(
-        () => contentType === 'file',
         [contentType]
     );
 
@@ -186,46 +187,62 @@ export default function ProductDefaultPage({ defaultProducts }) {
         <PageContainer>
             <Meta {...metaProps} />
             <div>
-                <ProductVideoBanner
-                    videoUrl={video_url}
-                    title={`SOFF'da xarid qilishni bilmayapsizmi?`}
-                    subtitle={`Taxminan 1 daqiqalik video: mahsulotni qanday sotib olishni ko'rsatadi.`}
-                />
+                {contentType !== 'video' && (
+                    <ProductVideoBanner
+                        videoUrl={video_url}
+                        title={`SOFF'da xarid qilishni bilmayapsizmi?`}
+                        subtitle={`Taxminan 1 daqiqalik video: mahsulotni qanday sotib olishni ko'rsatadi.`}
+                    />
+                )}
                 {/* Video helper banner */}
                 <div
-                    className="container mb-5"
+                    className={contentType === 'video' ? 'mb-5' : 'container mb-5'}
                     style={{ position: 'relative' }}>
-                    <div className={containerClassName}>
-                        <div className="ps-container p-0">
-                            <div className="ps-page__container">
-                                <DetailComponent
-                                    product={defaultProducts}
-                                    isPlay={isPlay}
-                                    setIsPlay={setIsPlay}
-                                />
+                    <div className={contentType === 'video' ? '' : containerClassName}>
+                        <div className={contentType === 'video' ? '' : 'ps-container p-0'}>
+                            <div className={contentType === 'video' ? '' : 'ps-page__container'}>
+                                {contentType === 'video' ? (
+                                    <DetailComponent video={defaultProducts} />
+                                ) : (
+                                    <DetailComponent
+                                        product={defaultProducts}
+                                        isPlay={isPlay}
+                                        setIsPlay={setIsPlay}
+                                    />
+                                )}
                             </div>
-                            {shouldShowAISoffia && <AISoffiaPresentation />}
-                            <div ref={similarRef} className="my-5">
-                                <h3
-                                    style={{
-                                        fontSize: '25px',
-                                        fontWeight: 400,
-                                    }}
-                                    className="py-4 similar_title">
-                                    O'xshash mahsulotlar
-                                </h3>
-                                <SimilarProducts />
-                            </div>
-                            <div ref={lastProductsRef}>
-                                <h3
-                                    style={{
-                                        fontSize: '25px',
-                                        fontWeight: 400,
-                                    }}
-                                    className="py-4 similar_title">
-                                    So'ngi yuklangan mahsulotlar
-                                </h3>
-                                <LastAddedProducts contentType={contentType} />
+
+                            <div className={contentType === 'video' ? 'container' : ''}>
+                                {/* Every product: whatever was opened, the same kind of work can be made with Soff AI. */}
+                                <AiServices />
+                                {contentType !== 'video' && <PurchaseRecommendations />}
+
+                                {contentType !== 'video' && (
+                                    <div ref={similarRef} className="my-5">
+                                        <h3
+                                            style={{
+                                                fontSize: '25px',
+                                                fontWeight: 400,
+                                            }}
+                                            className="py-4 similar_title">
+                                            O'xshash mahsulotlar
+                                        </h3>
+                                        <SimilarProducts />
+                                    </div>
+                                )}
+                                {contentType !== "video" && (
+                                    <div ref={lastProductsRef}>
+                                        <h3
+                                            style={{
+                                                fontSize: '25px',
+                                                fontWeight: 400,
+                                            }}
+                                            className="py-4 similar_title">
+                                            So'ngi yuklangan mahsulotlar
+                                        </h3>
+                                        <LastAddedProducts contentType={contentType} />
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -254,8 +271,11 @@ export default function ProductDefaultPage({ defaultProducts }) {
     );
 }
 
-export async function getServerSideProps({ params }) {
+export async function getServerSideProps({ req, res, params }) {
     const { pid } = params;
+    const deviceId = getOrCreateDeviceId({ req, res });
+    const cookies = cookie.parse(req.headers.cookie || '');
+    const token = cookies.token;
 
     if (!pid) {
         return { notFound: true };
@@ -263,7 +283,12 @@ export async function getServerSideProps({ params }) {
 
     const headers = {
         'Accept': 'application/json',
+        'X-Device-Id': deviceId,
     };
+
+    if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+    }
 
     let defaultProducts = null;
 
@@ -288,6 +313,8 @@ export async function getServerSideProps({ params }) {
     if (!defaultProducts) {
         return { notFound: true };
     }
+
+
 
     return {
         props: {

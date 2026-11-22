@@ -1,0 +1,205 @@
+$green: #00a44f;
+$green-dark: #008f44;
+$green-text: #00803d;
+$ink: #1f2933;
+$muted: #4b5563;
+
+.offer {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-align: left;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: $muted;
+    font-size: 14px;
+
+    &::before,
+    &::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: #e5e7eb;
+    }
+}
+
+// A tinted panel so the subscription reads as its own offer, not more buy buttons.
+.box {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 18px;
+    border: 1px solid rgba($green, 0.25);
+    border-radius: 12px;
+    background: #f1faf5;
+}
+
+.status {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 6px;
+    margin: 0;
+    color: $green-text;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.4;
+
+    svg {
+        flex-shrink: 0;
+        margin-top: 1px;
+        font-size: 18px;
+    }
+}
+
+.statusUpgrade {
+    color: #6b4e00;
+}
+
+.title {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 4px 12px;
+    margin: 0;
+    color: $ink;
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1.25;
+}
+
+.price {
+    color: $ink;
+    font-size: 19px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+
+    small {
+        color: $muted;
+        font-size: 14px;
+        font-weight: 500;
+    }
+}
+
+// Same height as .title so the panel doesn't jump when tiers load.
+.titlePlaceholder {
+    display: block;
+    width: 60%;
+    height: 24px;
+    border-radius: 6px;
+    background: rgba($green, 0.1);
+}
+
+.benefits {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        color: $ink;
+        font-size: 15px;
+        line-height: 1.4;
+    }
+
+    svg {
+        flex-shrink: 0;
+        margin-top: 1px;
+        color: $green;
+        font-size: 19px;
+    }
+}
+
+.cta {
+    display: flex;
+    width: 100%;
+    font-family: inherit;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 0 20px;
+    border: 2px solid $green;
+    border-radius: 8px;
+    background: #fff;
+    color: $green-text;
+    font-size: 16px;
+    font-weight: 700;
+    transition:
+        background-color 180ms ease-out,
+        color 180ms ease-out;
+
+    &:hover {
+        background: $green;
+        color: #fff;
+    }
+
+    &:focus-visible {
+        outline: 3px solid rgba($green, 0.35);
+        outline-offset: 2px;
+    }
+
+    &:active {
+        background: $green-dark;
+        border-color: $green-dark;
+        color: #fff;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cta {
+        transition: none;
+    }
+}
+
+.more {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    align-self: flex-start;
+    margin-top: -6px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: $green-text;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+
+    svg {
+        width: 18px;
+        height: 18px;
+        transition: transform 180ms ease-out;
+    }
+
+    &:hover {
+        text-decoration: underline;
+        text-underline-offset: 3px;
+    }
+
+    &:focus-visible {
+        outline: 2px solid rgba($green, 0.4);
+        outline-offset: 2px;
+        border-radius: 4px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        svg {
+            transition: none;
+        }
+    }
+}
+
+.moreOpen {
+    transform: rotate(180deg);
+}

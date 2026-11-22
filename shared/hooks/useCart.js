@@ -1,13 +1,21 @@
 import { useDispatch, useSelector } from 'react-redux';
 import ProductRepository from '~/repositories/ProductRepository';
-import { setCartDataItems, setCartItemDataItems } from '~/store/ecomerce/slice';
+import {
+    setCartDataItems,
+    setCartItemDataItems,
+    setPlaylistCartDataItems,
+    setPlaylistCartItemDataItems,
+} from '~/store/ecomerce/slice';
 import { safeLocalStorage } from '../utilities/safe-local-storage';
 
 export default function useCart() {
     const dispatch = useDispatch();
     const cartItems = useSelector((state) => state.ecomerce.cartDataItems);
+    const playlistCartItems = useSelector((state) => state.ecomerce.playlistCartDataItems); // Access playlists
+
     return {
         cartItems,
+        playlistCartItems, // Return playlists
         setAllCartItem: async () => {
             const data = JSON.parse(safeLocalStorage.getItem('cart'));
             if (data?.length > 0) {
@@ -32,8 +40,21 @@ export default function useCart() {
             dispatch(setCartDataItems(filtered));
         },
 
+        // Playlist functions
+        setPlaylistCartOneItem: (playlist) => {
+            if (playlistCartItems.every((el) => el.id !== playlist.id)) {
+                dispatch(setPlaylistCartItemDataItems(playlist));
+            }
+        },
+
+        removePlaylistCartOneItem: (playlistId) => {
+            const filtered = playlistCartItems.filter((el) => el.id !== playlistId);
+            dispatch(setPlaylistCartDataItems(filtered));
+        },
+
         removeAll: () => {
             dispatch(setCartDataItems([]));
+            dispatch(setPlaylistCartDataItems([]));
         },
 
         removeItems: () => { },

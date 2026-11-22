@@ -35,29 +35,20 @@ const UserTabs = ({ seller }) => {
     const sectionRef = useRef(null);
     const isBlocked = seller?.is_blocked;
 
+    // The default tab lives at the clean /seller/<id> URL. Rewriting it to
+    // ?tab=about acted as a client-side redirect for Googlebot, which then
+    // indexed the parameterised duplicate instead of the canonical page.
     useEffect(() => {
-        const { tab } = router.query;
-        if (!tab) {
-            router.replace(
-                {
-                    pathname: router.pathname,
-                    query: { ...router.query, tab: 'about' },
-                },
-                undefined,
-                { shallow: true }
-            );
-            setActiveKey('about');
-        } else {
-            setActiveKey(tab);
-        }
+        setActiveKey(router.query.tab || 'about');
     }, [router]);
 
     const onChange = useCallback(
         (key) => {
+            const { tab, ...rest } = router.query;
             router.push(
                 {
                     pathname: router.pathname,
-                    query: { ...router.query, tab: key },
+                    query: key === 'about' ? rest : { ...rest, tab: key },
                 },
                 undefined,
                 { shallow: true }

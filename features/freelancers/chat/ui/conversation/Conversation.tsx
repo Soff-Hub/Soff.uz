@@ -11,12 +11,14 @@ import { WebSocketLike } from 'react-use-websocket/dist/lib/types';
 import styles from '../../style/chat.module.scss';
 import { Empty } from 'antd';
 // Compound component parts
+import { useViewportContext } from '~/shared/hooks/useViewportContext';
+import { useFAQ, FAQCategory } from '../../api/useFAQ';
 import DropOverlay from './ChatDropOverlay';
 import Header from './ChatHeader';
 import Messages from './ChatMessages';
 import Input from './ChatInput';
 import Modals from './ChatModals';
-import { useViewportContext } from '~/shared/hooks/useViewportContext';
+import FAQ from './ChatFAQ';
 
 type ConversationProps = {
     chatId?: string;
@@ -79,6 +81,12 @@ type ConversationContextType = {
     handlScroll: () => void;
     handleNavigateSellerProfile: () => void;
     handleCreateOrderClick: () => void;
+    // FAQ
+    isFAQOpen: boolean;
+    setIsFAQOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    faqData: FAQCategory[] | undefined;
+    isFAQLoading: boolean;
+    sendFaqSelect: (optionId: string) => void;
 };
 
 const ConversationContext = createContext<ConversationContextType | null>(null);
@@ -106,9 +114,12 @@ function Conversation({
     const [res, setRes] = useState('');
     const [feedbackOpen, setFeedbackOpen] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState(null);
+    const [isFAQOpen, setIsFAQOpen] = useState(isModerator);
     const messagesContainerRef = useRef<HTMLDivElement>(null);
     const scrollPositionRef = useRef(0);
     const chatWindowRef = useRef(null);
+
+    const { data: faqData, isLoading: isFAQLoading } = useFAQ();
     const {
         chat,
         messages,
@@ -184,6 +195,18 @@ function Conversation({
         }
     };
 
+    const sendFaqSelect = (optionId: string) => {
+        const ws = wsRef.current;
+        if (ws && ws.readyState === 1) {
+            ws.send(
+                JSON.stringify({
+                    event: 'faq_select',
+                    option_id: optionId,
+                })
+            );
+        }
+    };
+
     if (!chatId) {
         return (
             <div
@@ -239,6 +262,11 @@ function Conversation({
         handlScroll,
         handleNavigateSellerProfile,
         handleCreateOrderClick,
+        isFAQOpen,
+        setIsFAQOpen,
+        faqData,
+        isFAQLoading,
+        sendFaqSelect,
     };
 
     return (
@@ -268,5 +296,6 @@ Conversation.Header = Header;
 Conversation.Messages = Messages;
 Conversation.Input = Input;
 Conversation.Modals = Modals;
+Conversation.FAQ = FAQ;
 
 export default Conversation;

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
+import { attachAuthErrorInterceptor } from '~/shared/utilities/auth-session';
 export const baseURL = `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/`;
 export const baseURLFreelance = `${process.env.NEXT_PUBLIC_FREELEANCE_URL}/api/v1/`;
 
@@ -27,21 +28,5 @@ api.interceptors.request.use(
     }
 );
 
-api.interceptors.response.use(
-    (response) => {
-        return response;
-    },
-    (error) => {
-        if (error.response && error.response.status === 403) {
-            // Check if URL has modal=open query parameter
-            const urlParams = new URLSearchParams(window.location.search);
-            const hasModalOpen = urlParams.get('modal') === 'open';
-
-            if (!hasModalOpen) {
-                safeLocalStorage.clear();
-                window.location.href = '/';
-            }
-        }
-        return Promise.reject(error);
-    }
-);
+attachAuthErrorInterceptor(api);
+attachAuthErrorInterceptor(apiForFreelance);

@@ -16,7 +16,7 @@ import {
     DownloadOutlined,
 } from '@ant-design/icons';
 import styles from '../../style/message.module.scss';
-import { Dropdown, message as AntMessage, Modal, Tooltip, Avatar } from 'antd';
+import { Dropdown, message as AntMessage, Modal, Tooltip, Avatar, Button } from 'antd';
 import dayjs from 'dayjs';
 import { truncateTitle } from '~/shared/utilities/TruncateTitle';
 import AvatarTransitioned from './AvatarTransitioned';
@@ -24,6 +24,7 @@ import { FaRegUserCircle } from 'react-icons/fa';
 import OrderCard from '~/widgets/order-card';
 import useResponsive from '~/shared/utilities/useResponsive';
 import { f_base_url } from '~/shared/api/base-url';
+import { useConversation } from './Conversation';
 
 const { confirm } = Modal;
 
@@ -37,6 +38,7 @@ const ChatMessage = ({
     setRes,
     setFeedbackOpen,
 }) => {
+    const { sendMessage } = useConversation();
     const { isMobile } = useResponsive();
     const isMyMessage = msg.is_mine;
     const isMessageLoading =
@@ -219,9 +221,8 @@ const ChatMessage = ({
         <div
             key={msg.id}
             ref={messageRef}
-            className={`${styles.messageRow} ${
-                isMyMessage ? styles.myRow : styles.otherRow
-            } ${shouldAnimate ? styles.messageEnter : ''}`}>
+            className={`${styles.messageRow} ${isMyMessage ? styles.myRow : styles.otherRow
+                } ${shouldAnimate ? styles.messageEnter : ''}`}>
             {!isMyMessage && (
                 <div
                     style={{
@@ -273,9 +274,8 @@ const ChatMessage = ({
                 </div>
             ) : (
                 <div
-                    className={`${styles.chat_message} ${
-                        isMyMessage ? styles.my_message : styles.other_message
-                    }`}
+                    className={`${styles.chat_message} ${isMyMessage ? styles.my_message : styles.other_message
+                        }`}
                     style={{
                         wordBreak: 'break-word',
                         whiteSpace: 'pre-wrap',
@@ -309,9 +309,9 @@ const ChatMessage = ({
                                     <span className={styles.chat_file_size}>
                                         {msg.file.size
                                             ? (
-                                                  msg.file.size /
-                                                  (1024 * 1024)
-                                              ).toFixed(2) + ' MB'
+                                                msg.file.size /
+                                                (1024 * 1024)
+                                            ).toFixed(2) + ' MB'
                                             : '—'}
                                     </span>
                                 </div>

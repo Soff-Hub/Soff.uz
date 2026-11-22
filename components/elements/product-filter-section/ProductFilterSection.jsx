@@ -39,7 +39,31 @@ export const clearEmptyQueries = (obj) => {
 };
 
 const ProductFilterSection = ({ child, parent, path, isFile, title }) => {
-    const searchProps = useSearch();
+    const { query, push, isReady } = useRouter();
+    const { search: querySearch, parentCategory, childCategory } = query;
+
+    const activeCategoryId = useMemo(() => {
+        const activeSlug = childCategory || parentCategory || query.slug;
+        if (!activeSlug || activeSlug === 'all') return null;
+
+        const foundChild = child?.find((c) => c.slug === activeSlug);
+        if (foundChild) return foundChild.id;
+
+        const foundParent = parent?.find((p) => p.slug === activeSlug);
+        if (foundParent) return foundParent.id;
+
+        return query.childCategoryId || query.parentCategoryId || null;
+    }, [
+        childCategory,
+        parentCategory,
+        query.slug,
+        child,
+        parent,
+        query.childCategoryId,
+        query.parentCategoryId,
+    ]);
+
+    const searchProps = useSearch(activeCategoryId);
     const { search, setSearch } = searchProps;
     const [showParentArrow, setShowParentArrow] = useState(false);
     const [showChildArrow, setShowChildArrow] = useState(false);
@@ -47,11 +71,17 @@ const ProductFilterSection = ({ child, parent, path, isFile, title }) => {
     const parentRef = useRef(null);
     const childRef = useRef(null);
     const { isMobile } = useResponsive();
-    const { query, push, isReady } = useRouter();
-    const { search: querySearch, parentCategory, childCategory } = query;
 
     const handleParent = (slug, id) => {
         const newQuery = clearEmptyQueries(query);
+        // Senior fix: Clear child category when parent changes
+        delete newQuery.childCategory;
+        delete newQuery.childCategoryId;
+        // `slug` is already embedded in `pathname` below (a resolved string,
+        // not the `[slug]` route template) — leaving it in `query` duplicates
+        // it as `?slug=...`, e.g. /design-developments/all?slug=all
+        delete newQuery.slug;
+
         push({
             pathname: `${path}${slug}`,
             query: {
@@ -64,8 +94,9 @@ const ProductFilterSection = ({ child, parent, path, isFile, title }) => {
 
     const handleChild = (slug, id) => {
         const newQuery = clearEmptyQueries(query);
+        delete newQuery.slug;
         push({
-            pathname: `${path}${slug}`,
+            pathname: `${path}${query.slug}`,
             query: { ...newQuery, childCategory: slug, childCategoryId: id },
         });
     };
@@ -101,9 +132,12 @@ const ProductFilterSection = ({ child, parent, path, isFile, title }) => {
     useDisableWindowScroll(drawerOpen);
 
     const handleSearch = (search) => {
+        const newQuery = clearEmptyQueries(query);
+        delete newQuery.slug;
+
         push({
-            pathname: query.pathname,
-            query: { ...query, search },
+            pathname: `${path}${query.slug || 'all'}`,
+            query: { ...newQuery, search },
         });
     };
 
@@ -343,10 +377,10 @@ const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
                 id: query.childCategoryId,
             });
             setFileTypes(
-                query.content_extensions
-                    ? Array.isArray(query.content_extensions)
-                        ? query.content_extensions
-                        : [query.content_extensions]
+                query.file_type || query.content_extensions
+                    ? Array.isArray(query.file_type || query.content_extensions)
+                        ? (query.file_type || query.content_extensions)
+                        : [(query.file_type || query.content_extensions)]
                     : []
             );
             setPriceRange([
@@ -354,36 +388,47 @@ const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
                 query.price_to ? Number(query.price_to) : 500000,
             ]);
             setPageRange([
-                query.from_page ? Number(query.from_page) : 0,
-                query.to_page ? Number(query.to_page) : 100,
+                query.page_from || query.from_page ? Number(query.page_from || query.from_page) : 0,
+                query.page_to || query.to_page ? Number(query.page_to || query.to_page) : 100,
             ]);
         }
     }, [open]);
 
     const handleSaveOnClose = () => {
         const filters = {
-            parentCategory: selectedCategory.slug,
-            childCategory: selectedSubCategory.slug,
-            content_extensions: fileTypes,
+            parentCategory: selectedCategory?.slug || query.parentCategory,
+            childCategory: selectedSubCategory?.slug || query.childCategory,
+            file_type: fileTypes, // Now using API standard name
             price_from: priceRange[0],
             price_to: priceRange[1],
-            from_page: pageRange[0],
-            to_page: pageRange[1],
+            page_from: pageRange[0], // Now using API standard name
+            page_to: pageRange[1],   // Now using API standard name
         };
-        const newQuery = clearEmptyQueries({ ...query, ...filters });
+
+        const currentParams = clearEmptyQueries(query);
+        const newQuery = clearEmptyQueries({ ...currentParams, ...filters });
+
+        // Remove empty values and ensure slug is handled correctly
+        const targetSlug = selectedCategory?.slug || query.slug || 'all';
+        // `slug` is embedded in `pathname` below, not the route template —
+        // drop it from `query` or it duplicates as `?slug=...`
+        delete newQuery.slug;
+
         push({
-            pathname: `${path}${selectedSubCategory.slug || selectedCategory.slug || 'all'
-                }`,
+            pathname: `${path}${targetSlug}`,
             query: newQuery,
-        });
+        }, undefined, { scroll: false });
+        
         onClose();
     };
 
     const handleClear = () => {
+        // Clear all filter specific queries but keep search if necessary
+        const { search } = query;
         push({
             pathname: `${path}all`,
-            query: {},
-        });
+            query: search ? { search } : {},
+        }, undefined, { scroll: false });
         onClose();
     };
 
@@ -431,6 +476,8 @@ const ProductFilterForm = ({ open, onClose, path, isFile, parent, child }) => {
                                 slug: val,
                                 id: valObj.id,
                             });
+                            // Clear subcategory when parent changes
+                            setSelectedSubCategory({ slug: null, id: null });
                         }
                     }}
                     options={parentOptions}

@@ -1,0 +1,103 @@
+.header {
+    margin-bottom: 40px;
+
+    .titleSection {
+        margin-bottom: 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+
+        .title {
+            font-size: 32px;
+            font-weight: 800;
+            color: #1a1a1a;
+            margin: 0;
+
+            @media (max-width: 768px) {
+                font-size: 24px;
+                width: 100%;
+            }
+        }
+
+        :global(.ant-input-affix-wrapper) {
+            @media (max-width: 768px) {
+                width: 100% !important;
+            }
+        }
+    }
+
+    .filterBar {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 20px;
+        flex-wrap: wrap;
+
+        @media (max-width: 768px) {
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .filtersWrapper {
+            flex: 1;
+            width: 100%;
+        }
+
+        .sortSection {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            @media (max-width: 576px) {
+                width: 100%;
+
+                .sortSelect {
+                    width: 100% !important;
+                    flex: 1;
+                }
+            }
+
+            .sortSelect {
+                :global(.ant-select-selector) {
+                    border-radius: 8px !important;
+                    height: 38px !important;
+                    display: flex;
+                    align-items: center;
+                }
+            }
+        }
+    }
+}
+
+.emptyState {
+    text-align: center;
+    padding: 80px 20px;
+    background: #fafafa;
+    border-radius: 12px;
+
+    h3 {
+        font-size: 20px;
+        color: #1a1a1a;
+        margin-bottom: 8px;
+    }
+
+    p {
+        color: #8c8c8c;
+    }
+}
+
+.paginationWrapper {
+    margin-top: 48px;
+    display: flex;
+    justify-content: center;
+
+    :global(.ant-pagination-item-active) {
+        border-color: #2ecc71 !important;
+
+        a {
+            color: #2ecc71 !important;
+        }
+    }
+}

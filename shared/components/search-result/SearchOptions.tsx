@@ -7,7 +7,7 @@ import {
     SearchHistoryHeader,
     SearchHistoryOption,
     SearchOption,
-    SearchSoffiaAIOption,
+    SearchSoffxAIOption,
 } from './SearchComponents';
 
 type SearchOptionsProps = {
@@ -15,7 +15,7 @@ type SearchOptionsProps = {
     handleClickOption: (value: string) => void;
     options: Array<{ key: string; value: string }>;
     isLoading: boolean;
-    categoryType?: 'mahsulotlar' | 'xizmatlar' | 'mutaxasislar';
+    categoryType?: 'mahsulotlar' | 'xizmatlar' | 'mutaxassislar';
     isNavigating?: boolean;
 };
 
@@ -86,7 +86,7 @@ function SearchOptions({
             {historyOptions}
             {filteredDataOptions}
             {debouncedSearch && (
-                <SearchSoffiaAIOption debouncedSearch={debouncedSearch} />
+                <SearchSoffxAIOption debouncedSearch={debouncedSearch} />
             )}
         </div>
     );

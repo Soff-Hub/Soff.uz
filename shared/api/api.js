@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { safeLocalStorage } from '../utilities/safe-local-storage';
+import { attachAuthErrorInterceptor } from '../utilities/auth-session';
 
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -18,5 +19,7 @@ api.interceptors.request.use((config) => {
 
     return config;
 });
+
+attachAuthErrorInterceptor(api);
 
 export default api;

@@ -1,0 +1,39 @@
+.videoListContainer {
+    margin-top: 32px;
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 24px;
+        margin-bottom: 40px;
+    }
+
+    .loading,
+    .empty {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 60px 0;
+        text-align: center;
+        color: #999;
+
+        .icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            color: #e0e0e0;
+        }
+
+        h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #666;
+        }
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 40px;
+    }
+}

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { Select, Skeleton } from 'antd';
+import Link from 'next/link';
 
 const Option = Select.Option;
 
@@ -129,26 +130,22 @@ const CategoryFilterSecion = ({
                                 .slice(0, 7)
                                 .map((item, index) => (
                                     <div className="my-2" key={index}>
-                                        <div
-                                            className={`${
-                                                slug === item.slug
-                                                    ? 'bg-success'
-                                                    : ''
-                                            } category-btn card p-3 shadow-sm rounded-3`}
-                                            onClick={() =>
-                                                router.push({
-                                                    pathname: `/category/${item.slug}`,
-                                                    query: { page: 1 },
-                                                })
-                                            }
-                                            style={{ cursor: 'pointer' }}>
-                                            <div className="d-flex justify-content-between">
-                                                <p
-                                                    className={`${
-                                                        slug === item.slug
-                                                            ? 'bg-success text-white'
-                                                            : ''
-                                                    } category-btn-title m-0 p-0`}>
+                                        <Link
+                                            href={{
+                                                pathname: `/category/${item.slug}`,
+                                                query: { page: 1 },
+                                            }}>
+                                            <a
+                                                className={`${
+                                                    slug === item.slug
+                                                        ? 'bg-success text-white'
+                                                        : ''
+                                                } category-btn card p-3 shadow-sm rounded-3 d-flex justify-content-between align-items-center`}
+                                                style={{
+                                                    textDecoration: 'none',
+                                                    color: 'inherit',
+                                                }}>
+                                                <p className="category-btn-title m-0 p-0">
                                                     {item.name}
                                                 </p>
                                                 <img
@@ -159,8 +156,8 @@ const CategoryFilterSecion = ({
                                                     src={item.image}
                                                     alt={item.name}
                                                 />
-                                            </div>
-                                        </div>
+                                            </a>
+                                        </Link>
                                     </div>
                                 ))}
                         </div>
@@ -171,27 +168,23 @@ const CategoryFilterSecion = ({
                             <div className="row">
                                 {breacrumb?.results?.map((item, index) => (
                                     <div className="col-2 my-2" key={index}>
-                                        <div
-                                            className={`${
-                                                slug === item.slug
-                                                    ? 'bg-success'
-                                                    : ''
-                                            } category-btn card p-3 shadow-sm rounded-3`}
-                                            onClick={() => {
-                                                router.push({
-                                                    pathname: `/category/${item.slug}`,
-                                                    query: { page: 1 },
-                                                });
-                                                setDropdownMenu(false);
-                                            }}
-                                            style={{ cursor: 'pointer' }}>
-                                            <div className="d-flex justify-content-between">
-                                                <p
-                                                    className={`${
-                                                        slug === item.slug
-                                                            ? 'bg-success text-white'
-                                                            : ''
-                                                    } category-btn-title m-0 p-0`}>
+                                        <Link
+                                            href={{
+                                                pathname: `/category/${item.slug}`,
+                                                query: { page: 1 },
+                                            }}>
+                                            <a
+                                                className={`${
+                                                    slug === item.slug
+                                                        ? 'bg-success text-white'
+                                                        : ''
+                                                } category-btn card p-3 shadow-sm rounded-3 d-flex justify-content-between align-items-center`}
+                                                onClick={() => setDropdownMenu(false)}
+                                                style={{
+                                                    textDecoration: 'none',
+                                                    color: 'inherit',
+                                                }}>
+                                                <p className="category-btn-title m-0 p-0">
                                                     {item.name}
                                                 </p>
                                                 <img
@@ -202,8 +195,8 @@ const CategoryFilterSecion = ({
                                                     src={item.image}
                                                     alt={item.name}
                                                 />
-                                            </div>
-                                        </div>
+                                            </a>
+                                        </Link>
                                     </div>
                                 ))}
                             </div>
@@ -247,33 +240,31 @@ const CategoryFilterSecion = ({
                                                 <div
                                                     className="my-2"
                                                     key={index}>
-                                                    <div
-                                                        className="sub-category-btn p-3"
-                                                        onClick={() =>
-                                                            router.push({
-                                                                pathname: `/category/${slug}`,
-                                                                query: {
-                                                                    page: 1,
-                                                                    childCategory:
-                                                                        item.slug,
-                                                                },
-                                                            })
-                                                        }
-                                                        style={{
-                                                            cursor: 'pointer',
+                                                    <Link
+                                                        href={{
+                                                            pathname: `/category/${slug}`,
+                                                            query: {
+                                                                page: 1,
+                                                                childCategory:
+                                                                    item.slug,
+                                                            },
                                                         }}>
-                                                        <div className="d-flex justify-content-between">
-                                                            <p
-                                                                className={`${
-                                                                    childCategory ===
-                                                                    item.slug
-                                                                        ? 'text-success text-white'
-                                                                        : ''
-                                                                } text-capitalize sub-category-btn-title m-0 p-0`}>
+                                                        <a
+                                                            className={`${
+                                                                childCategory ===
+                                                                item.slug
+                                                                    ? 'text-success'
+                                                                    : ''
+                                                            } sub-category-btn p-3 d-block`}
+                                                            style={{
+                                                                textDecoration:
+                                                                    'none',
+                                                            }}>
+                                                            <p className="text-capitalize sub-category-btn-title m-0 p-0 text-dark">
                                                                 {item.name}
                                                             </p>
-                                                        </div>
-                                                    </div>
+                                                        </a>
+                                                    </Link>
                                                 </div>
                                             ))}
                                     </div>
@@ -282,25 +273,27 @@ const CategoryFilterSecion = ({
                                 {childCategoryOpen && (
                                     <div className="d-flex flex-wrap bg-white shadow-sm rounded-3 p-4">
                                         {subCategory.map((item, index) => (
-                                            <div
-                                                onClick={() => {
-                                                    router.push({
+                                            <div key={index} className="col-2 my-1 border">
+                                                <Link
+                                                    href={{
                                                         pathname: `/category/${slug}`,
                                                         query: {
                                                             page: 1,
                                                             childCategory:
                                                                 item.slug,
                                                         },
-                                                    });
-                                                    setChildCategoryOpen(false);
-                                                }}
-                                                className={`${
-                                                    slug === item.slug
-                                                        ? 'active'
-                                                        : ''
-                                                } pointer text-capitalize col-2 my-1 border`}
-                                                key={index}>
-                                                {item.name}
+                                                    }}>
+                                                    <a
+                                                        onClick={() => setChildCategoryOpen(false)}
+                                                        className={`${
+                                                            slug === item.slug
+                                                                ? 'active'
+                                                                : ''
+                                                        } pointer text-capitalize d-block p-1`}
+                                                        style={{ textDecoration: 'none', color: 'inherit' }}>
+                                                        {item.name}
+                                                    </a>
+                                                </Link>
                                             </div>
                                         ))}
                                     </div>

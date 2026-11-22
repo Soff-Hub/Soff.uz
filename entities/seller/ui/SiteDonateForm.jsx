@@ -8,6 +8,7 @@ import {
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import { baseUrlCustomer } from '~/reositoriy-admin/Repository';
+import { safeLocalStorage } from '~/shared/utilities/safe-local-storage';
 import { FaGift } from 'react-icons/fa6';
 
 export default function SiteDonateForm() {
@@ -27,6 +28,16 @@ export default function SiteDonateForm() {
     const [loading, setLoading] = useState(false);
 
     const { push } = useRouter();
+
+    const getAuthHeaders = () => {
+        try {
+            const userRaw = safeLocalStorage.getItem('user');
+            if (!userRaw) return {};
+            const user = JSON.parse(userRaw);
+            if (user?.access) return { Authorization: `Bearer ${user.access}` };
+        } catch {}
+        return {};
+    };
 
     function reverseCountdown(minutes, seconds) {
         if (
@@ -84,7 +95,7 @@ export default function SiteDonateForm() {
             };
 
             try {
-                const resp = await axios.post(`${baseUrlCustomer}donate/`, cfg);
+                const resp = await axios.post(`${baseUrlCustomer}donate/`, cfg, { headers: getAuthHeaders() });
 
                 const modal = Modal.success({
                     centered: true,
@@ -113,7 +124,7 @@ export default function SiteDonateForm() {
             };
 
             try {
-                const resp = await axios.post(`${baseUrlCustomer}verify/`, cfg);
+                const resp = await axios.post(`${baseUrlCustomer}verify/`, cfg, { headers: getAuthHeaders() });
 
                 const modal = Modal.success({
                     centered: true,
@@ -155,7 +166,7 @@ export default function SiteDonateForm() {
             };
 
             try {
-                const resp = await axios.post(`${baseUrlCustomer}donate/`, cfg);
+                const resp = await axios.post(`${baseUrlCustomer}donate/`, cfg, { headers: getAuthHeaders() });
 
                 window.location.href = resp.data.url;
             } catch (err) {

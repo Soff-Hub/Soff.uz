@@ -1,0 +1,259 @@
+$green: #00a44f;
+$green-dark: #008f44;
+$green-text: #00803d;
+$ink: #1f2933;
+$muted: #4b5563;
+$ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+.wrap {
+    text-align: center;
+}
+
+// Green stage on top: confetti falls through it, the badge sits on its lower edge.
+.hero {
+    position: relative;
+    height: 150px;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 50% 120%, rgba(#fff, 0.35), transparent 60%),
+        linear-gradient(160deg, #0b8a45 0%, $green 55%, #2fcf78 100%);
+}
+
+.confetti {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.piece,
+.pieceWide {
+    position: absolute;
+    top: -16px;
+    width: 7px;
+    height: 12px;
+    border-radius: 2px;
+    opacity: 0;
+    animation: fall linear 1 forwards;
+}
+
+.pieceWide {
+    width: 12px;
+    height: 6px;
+}
+
+@keyframes fall {
+    0% {
+        opacity: 1;
+        transform: translateY(0) rotate(0);
+    }
+    85% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(180px) rotate(var(--rotate));
+    }
+}
+
+.badge {
+    position: absolute;
+    bottom: 26px;
+    left: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 72px;
+    height: 72px;
+    margin-left: -36px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow:
+        0 0 0 10px rgba(#fff, 0.22),
+        0 12px 30px rgba(0, 0, 0, 0.18);
+    color: $green;
+    animation: pop 520ms $ease-out both;
+
+    svg {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@keyframes pop {
+    from {
+        opacity: 0;
+        transform: scale(0.4);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.tierPill {
+    position: absolute;
+    top: 14px;
+    left: 16px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: rgba(#fff, 0.2);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.body {
+    padding: 22px 28px 22px;
+}
+
+.title {
+    margin: 0;
+    color: $ink;
+    font-size: 26px;
+    font-weight: 800;
+    animation: rise 480ms 120ms $ease-out both;
+}
+
+.subtitle {
+    max-width: 32ch;
+    margin: 6px auto 0;
+    color: $muted;
+    font-size: 15px;
+    line-height: 1.45;
+    animation: rise 480ms 180ms $ease-out both;
+}
+
+@keyframes rise {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.facts {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin: 18px 0 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 12px;
+        border-radius: 999px;
+        background: rgba($green, 0.08);
+        color: $green-text;
+        font-size: 13px;
+        font-weight: 600;
+        animation: rise 420ms $ease-out both;
+
+        &:nth-child(1) {
+            animation-delay: 240ms;
+        }
+        &:nth-child(2) {
+            animation-delay: 300ms;
+        }
+        &:nth-child(3) {
+            animation-delay: 360ms;
+        }
+    }
+
+    svg {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+.cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    height: 50px;
+    margin-top: 22px;
+    border: 0;
+    border-radius: 12px;
+    background: $green;
+    color: #fff;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 160ms ease-out;
+
+    svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    &:hover {
+        background: $green-dark;
+    }
+
+    &:focus-visible {
+        outline: 3px solid rgba($green, 0.35);
+        outline-offset: 2px;
+    }
+}
+
+.countdown {
+    margin: 10px 0 6px;
+    color: $muted;
+    font-size: 13px;
+    font-variant-numeric: tabular-nums;
+}
+
+// Thin bar that drains while the auto-redirect counts down.
+.timer {
+    height: 3px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: #eef0f2;
+
+    span {
+        display: block;
+        height: 100%;
+        background: $green;
+        transform-origin: left;
+        animation: drain linear forwards;
+    }
+}
+
+@keyframes drain {
+    from {
+        transform: scaleX(1);
+    }
+    to {
+        transform: scaleX(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .confetti {
+        display: none;
+    }
+
+    .badge,
+    .title,
+    .subtitle,
+    .facts li {
+        animation: none;
+    }
+
+    .timer span {
+        animation: none;
+    }
+
+    .cta {
+        transition: none;
+    }
+}
