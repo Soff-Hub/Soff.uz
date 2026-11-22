@@ -5,7 +5,7 @@ export const AGENT_APP_URL = '/agent';
 export const AGENT_CHAT_URL = '/agent/chat';
 
 export const agentPath = (id) => `/agents/${id}`;
-export const agentImage = (id, variant = 'bust') => `/static/img/agents/${id}-${variant}.webp`;
+export const agentImage = (id, variant = 'bust') => `/static/img/agents/${id}-${variant}.webp?v=2`;
 
 export const STUDIO_BG = '#d1c6c5';
 
