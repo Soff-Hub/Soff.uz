@@ -36,6 +36,7 @@ const AgentDetail = ({ agent }) => {
     const [selectedPlanId, setSelectedPlanId] = useState('pro');
     const [activeStyle, setActiveStyle] = useState(agent.styles?.[0] || 'Dinamik');
     const [activeSample, setActiveSample] = useState(null);
+    const [activeModalTab, setActiveModalTab] = useState('visual'); // 'visual' | 'text'
     const [activeVariantTab, setActiveVariantTab] = useState('variant1');
     const [copiedKey, setCopiedKey] = useState(null);
 
@@ -476,6 +477,11 @@ const AgentDetail = ({ agent }) => {
                                         onClick={() => {
                                             setActiveSample(sample);
                                             setActiveVariantTab('variant1');
+                                            setActiveModalTab(
+                                                sample.type === 'copy' || sample.fullContent
+                                                    ? 'text'
+                                                    : 'visual'
+                                            );
                                         }}>
                                         <div
                                             className={`${styles.sampleCardContent} ${
@@ -806,249 +812,233 @@ const AgentDetail = ({ agent }) => {
             </div>
 
             {/* Interactive Sample Preview Modal */}
-            {activeSample && (
-                <div className={styles.modalOverlay} onClick={() => setActiveSample(null)}>
-                    <div
-                        className={styles.modalContent}
-                        onClick={(e) => e.stopPropagation()}>
-                        <button
-                            type="button"
-                            className={styles.modalCloseBtn}
-                            onClick={() => setActiveSample(null)}
-                            aria-label="Yopish">
-                            <RiCloseLine />
-                        </button>
+            {activeSample && (() => {
+                const hasText = activeSample.type === 'copy' || Boolean(activeSample.fullContent);
+                const hasVisual = Boolean(activeSample.imageUrl);
+                const hasTabs = hasText && hasVisual;
 
-                        {/* Video Modal Display */}
-                        {activeSample.type === 'video' && (
-                            <div className={styles.modalVideoSection}>
-                                <video
-                                    src={activeSample.videoUrl}
-                                    controls
-                                    autoPlay
-                                    className={styles.modalVideoPlayer}
-                                />
-                                <div className={styles.modalVideoMeta}>
-                                    <div className={styles.modalVideoMetaHead}>
-                                        <div>
-                                            <h3 className={styles.modalTitle}>{activeSample.title}</h3>
-                                            <div className={styles.modalMetaRow}>
-                                                <span className={styles.modalCategory}>
-                                                    {activeSample.category} · {activeSample.duration}
-                                                </span>
-                                                {activeSample.credits && (
-                                                    <span className={styles.modalCredits}>
-                                                        <RiCoinsLine aria-hidden="true" />
-                                                        {activeSample.credits}
-                                                    </span>
-                                                )}
-                                            </div>
-                                        </div>
-                                        <span className={styles.modalFormatPill}>
-                                            1080×1920 (9:16 Full HD)
+                return (
+                    <div className={styles.modalOverlay} onClick={() => setActiveSample(null)}>
+                        <div
+                            className={styles.modalContent}
+                            onClick={(e) => e.stopPropagation()}>
+                            {/* Fixed Top Header */}
+                            <div className={styles.modalTopHeader}>
+                                <div className={styles.modalTopHeaderLeft}>
+                                    <h3 className={styles.modalTitle}>{activeSample.title}</h3>
+                                    <div className={styles.modalMetaRow}>
+                                        <span className={styles.modalCategory}>
+                                            {activeSample.category}
+                                            {activeSample.duration ? ` · ${activeSample.duration}` : ''}
                                         </span>
+                                        {activeSample.credits && (
+                                            <span className={styles.modalCredits}>
+                                                <RiCoinsLine aria-hidden="true" />
+                                                {activeSample.credits}
+                                            </span>
+                                        )}
                                     </div>
-                                    {activeSample.subtitleSnippet && (
-                                        <div className={styles.modalSubtitleBox}>
-                                            <strong>Subtitr:</strong> {activeSample.subtitleSnippet}
-                                        </div>
-                                    )}
-                                    {activeSample.musicTrack && (
-                                        <div className={styles.modalMusicBox}>
-                                            <RiMusic2Line />
-                                            <span>{activeSample.musicTrack}</span>
-                                        </div>
-                                    )}
                                 </div>
+                                <button
+                                    type="button"
+                                    className={styles.modalCloseInline}
+                                    onClick={() => setActiveSample(null)}
+                                    aria-label="Yopish">
+                                    <RiCloseLine />
+                                </button>
                             </div>
-                        )}
 
-                        {/* Copy Modal Display */}
-                        {activeSample.type === 'copy' && (
-                            <div className={styles.modalCopySection}>
-                                <div className={styles.modalCopyHeader}>
-                                    <div className={styles.modalCopyProfile}>
-                                        <div className={styles.postMockAvatar}>
-                                            {activeSample.platform === 'instagram' ? (
-                                                <RiInstagramLine />
-                                            ) : activeSample.platform === 'telegram' ? (
-                                                <RiTelegramLine />
-                                            ) : (
-                                                <RiSparklingFill />
+                            {/* Tab Switcher when sample has both Text and Visual */}
+                            {hasTabs && (
+                                <div className={styles.modalTabsBar}>
+                                    <button
+                                        type="button"
+                                        onClick={() => setActiveModalTab('text')}
+                                        className={`${styles.modalTabBtn} ${
+                                            activeModalTab === 'text' ? styles.modalTabBtnActive : ''
+                                        }`}>
+                                        <RiFileCopyLine aria-hidden="true" />
+                                        Tayyor matn
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={() => setActiveModalTab('visual')}
+                                        className={`${styles.modalTabBtn} ${
+                                            activeModalTab === 'visual' ? styles.modalTabBtnActive : ''
+                                        }`}>
+                                        <RiSparklingFill aria-hidden="true" />
+                                        Vizual ko‘rinish
+                                    </button>
+                                </div>
+                            )}
+
+                            {/* Scrollable Body */}
+                            <div className={styles.modalScrollBody}>
+                                {/* Video Modal Display */}
+                                {activeSample.type === 'video' && (
+                                    <div className={styles.modalVideoSection}>
+                                        <video
+                                            src={activeSample.videoUrl}
+                                            controls
+                                            autoPlay
+                                            className={styles.modalVideoPlayer}
+                                        />
+                                        <div className={styles.modalVideoMeta}>
+                                            {activeSample.subtitleSnippet && (
+                                                <div className={styles.modalSubtitleBox}>
+                                                    <strong>Subtitr:</strong> {activeSample.subtitleSnippet}
+                                                </div>
+                                            )}
+                                            {activeSample.musicTrack && (
+                                                <div className={styles.modalMusicBox}>
+                                                    <RiMusic2Line />
+                                                    <span>{activeSample.musicTrack}</span>
+                                                </div>
                                             )}
                                         </div>
-                                        <div>
-                                            <h3 className={styles.modalTitle}>{activeSample.title}</h3>
-                                            <span className={styles.modalCopyHandle}>
-                                                {activeSample.handle} · {activeSample.category}
-                                            </span>
-                                        </div>
                                     </div>
-                                    {activeSample.credits && (
-                                        <span className={styles.modalCredits}>
-                                            <RiCoinsLine aria-hidden="true" />
-                                            {activeSample.credits}
-                                        </span>
-                                    )}
-                                </div>
+                                )}
 
-                                {activeSample.fullContent ? (
-                                    <div className={styles.modalVariantsWrap}>
-                                        <div className={styles.modalVariantsTabs}>
-                                            {Object.keys(activeSample.fullContent).map((variantKey, vIdx) => (
-                                                <button
-                                                    key={variantKey}
-                                                    type="button"
-                                                    onClick={() => setActiveVariantTab(variantKey)}
-                                                    className={`${styles.variantTabBtn} ${
-                                                        activeVariantTab === variantKey
-                                                            ? styles.variantTabBtnActive
-                                                            : ''
-                                                    }`}>
-                                                    Variant {vIdx + 1}
-                                                </button>
-                                            ))}
-                                        </div>
-
-                                        <div className={styles.modalVariantBox}>
-                                            <div className={styles.modalVariantContent}>
-                                                <pre className={styles.modalVariantText}>
-                                                    {activeSample.fullContent[activeVariantTab] ||
-                                                        activeSample.fullContent.variant1}
-                                                </pre>
-                                            </div>
-                                            <div className={styles.modalVariantBar}>
-                                                <button
-                                                    type="button"
-                                                    onClick={() =>
-                                                        handleCopyText(
-                                                            activeSample.fullContent[activeVariantTab] ||
-                                                                activeSample.fullContent.variant1,
-                                                            activeVariantTab
+                                {/* Text / Copy Tab Display */}
+                                {hasText && (!hasTabs || activeModalTab === 'text') && (
+                                    <div className={styles.modalCopySection}>
+                                        {activeSample.fullContent ? (
+                                            <div className={styles.modalVariantsWrap}>
+                                                <div className={styles.modalVariantsTabs}>
+                                                    {Object.keys(activeSample.fullContent).map(
+                                                        (variantKey, vIdx) => (
+                                                            <button
+                                                                key={variantKey}
+                                                                type="button"
+                                                                onClick={() => setActiveVariantTab(variantKey)}
+                                                                className={`${styles.variantTabBtn} ${
+                                                                    activeVariantTab === variantKey
+                                                                        ? styles.variantTabBtnActive
+                                                                        : ''
+                                                                }`}>
+                                                                Variant {vIdx + 1}
+                                                            </button>
                                                         )
-                                                    }
-                                                    className={styles.modalCopyBtn}>
-                                                    <RiFileCopyLine />
-                                                    {copiedKey === activeVariantTab
-                                                        ? 'Nusxa olindi! ✅'
-                                                        : 'Matndan nusxa olish'}
-                                                </button>
+                                                    )}
+                                                </div>
+
+                                                <div className={styles.modalVariantBox}>
+                                                    <div className={styles.modalVariantContent}>
+                                                        <pre className={styles.modalVariantText}>
+                                                            {activeSample.fullContent[activeVariantTab] ||
+                                                                activeSample.fullContent.variant1}
+                                                        </pre>
+                                                    </div>
+                                                    <div className={styles.modalVariantBar}>
+                                                        <button
+                                                            type="button"
+                                                            onClick={() =>
+                                                                handleCopyText(
+                                                                    activeSample.fullContent[activeVariantTab] ||
+                                                                        activeSample.fullContent.variant1,
+                                                                    activeVariantTab
+                                                                )
+                                                            }
+                                                            className={styles.modalCopyBtn}>
+                                                            <RiFileCopyLine />
+                                                            {copiedKey === activeVariantTab
+                                                                ? 'Nusxa olindi! ✅'
+                                                                : 'Matndan nusxa olish'}
+                                                        </button>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                ) : (
-                                    <div className={styles.modalSingleCopyBox}>
-                                        <h4 className={styles.modalCopyHeadline}>{activeSample.headline}</h4>
-                                        <p className={styles.modalCopyBody}>{activeSample.bodySnippet}</p>
-                                        {activeSample.cta && (
-                                            <div className={styles.postMockCta}>{activeSample.cta}</div>
-                                        )}
-                                        {activeSample.hashtags && (
-                                            <div className={styles.postMockHashtags}>
-                                                {activeSample.hashtags}
+                                        ) : (
+                                            <div className={styles.modalSingleCopyBox}>
+                                                <h4 className={styles.modalCopyHeadline}>
+                                                    {activeSample.headline}
+                                                </h4>
+                                                <p className={styles.modalCopyBody}>
+                                                    {activeSample.bodySnippet}
+                                                </p>
+                                                {activeSample.cta && (
+                                                    <div className={styles.postMockCta}>
+                                                        {activeSample.cta}
+                                                    </div>
+                                                )}
+                                                {activeSample.hashtags && (
+                                                    <div className={styles.postMockHashtags}>
+                                                        {activeSample.hashtags}
+                                                    </div>
+                                                )}
                                             </div>
                                         )}
                                     </div>
                                 )}
-                            </div>
-                        )}
 
-                        {/* Image-based Modal Display (design, SMM, or any deliverable with image) */}
-                        {activeSample.imageUrl && (
-                            <div className={styles.modalDesignSection}>
-                                <div className={styles.modalDesignImgWrap}>
-                                    <img
-                                        src={activeSample.imageUrl}
-                                        alt={activeSample.title}
-                                        className={styles.modalDesignImg}
-                                    />
-                                </div>
-                                <div className={styles.modalDesignInfo}>
-                                    <div className={styles.modalHeroTop}>
-                                        <div>
-                                            <h3 className={styles.modalTitle}>{activeSample.title}</h3>
-                                            <div className={styles.modalMetaRow}>
-                                                <span className={styles.modalCategory}>
-                                                    {activeSample.category} · {activeSample.duration}
-                                                </span>
-                                                {activeSample.credits && (
-                                                    <span className={styles.modalCredits}>
-                                                        <RiCoinsLine aria-hidden="true" />
-                                                        {activeSample.credits}
-                                                    </span>
-                                                )}
-                                            </div>
+                                {/* Visual / Image Tab Display */}
+                                {hasVisual && (!hasTabs || activeModalTab === 'visual') && (
+                                    <div className={styles.modalDesignSection}>
+                                        <div className={styles.modalDesignImgWrap}>
+                                            <img
+                                                src={activeSample.imageUrl}
+                                                alt={activeSample.title}
+                                                className={styles.modalDesignImg}
+                                            />
                                         </div>
-                                        <span className={styles.modalFormatPill}>
-                                            {activeSample.badgeText || '4K Ultra HD'}
-                                        </span>
-                                    </div>
-                                    <p className={styles.modalDesignDesc}>
-                                        {activeSample.bodySnippet || activeSample.headline}
-                                    </p>
-                                    {activeSample.prompt && (
-                                        <div className={styles.modalPromptBox}>
-                                            <strong>AI Prompt:</strong> {activeSample.prompt}
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-                        )}
-
-                        {/* Strategy / Calendar / Ads Generic Modal Display (when no image) */}
-                        {activeSample.type !== 'video' &&
-                            !activeSample.imageUrl &&
-                            activeSample.type !== 'copy' && (
-                                <div className={styles.modalDetailSection}>
-                                    <div
-                                        className={styles.modalDetailHero}
-                                        style={{ background: activeSample.gradient }}>
-                                        <div className={styles.modalHeroTop}>
-                                            <span className={styles.modalCategoryBadge}>
-                                                {activeSample.category}
-                                            </span>
-                                            {activeSample.credits && (
-                                                <span className={styles.modalCredits}>
-                                                    <RiCoinsLine aria-hidden="true" />
-                                                    {activeSample.credits}
-                                                </span>
+                                        <div className={styles.modalDesignInfo}>
+                                            <p className={styles.modalDesignDesc}>
+                                                {activeSample.bodySnippet || activeSample.headline}
+                                            </p>
+                                            {activeSample.prompt && (
+                                                <div className={styles.modalPromptBox}>
+                                                    <strong>AI Prompt:</strong> {activeSample.prompt}
+                                                </div>
                                             )}
                                         </div>
-                                        <h3 className={styles.modalHeroTitle}>{activeSample.headline}</h3>
-                                        <p className={styles.modalHeroDesc}>{activeSample.bodySnippet}</p>
-                                        {activeSample.cta && (
-                                            <div className={styles.modalHeroCta}>{activeSample.cta}</div>
-                                        )}
                                     </div>
-                                </div>
-                            )}
+                                )}
 
-                        {/* Modal Bottom Actions */}
-                        <div className={styles.modalBodyFooter}>
-                            <p className={styles.modalDesc}>
-                                Ushbu namuna SoffX {agent.name} tomonidan real biznes topshirig‘i asosida to‘liq
-                                generatsiya qilingan.
-                            </p>
-                            <div className={styles.modalActions}>
-                                <a
-                                    href={`${AGENT_CHAT_URL}?agent=${agent.id}&prompt=${encodeURIComponent(
-                                        activeSample.prompt || activeSample.headline || activeSample.title
-                                    )}`}
-                                    className={styles.ctaPrimary}>
-                                    SoffX {agent.name} bilan xuddi shunday tayyorlash
-                                    <RiArrowRightLine aria-hidden="true" />
-                                </a>
-                                <button
-                                    type="button"
-                                    onClick={() => setActiveSample(null)}
-                                    className={styles.ctaSecondary}>
-                                    Yopish
-                                </button>
+                                {/* Generic Fallback (when neither video, text, nor image) */}
+                                {activeSample.type !== 'video' && !hasVisual && !hasText && (
+                                    <div className={styles.modalDetailSection}>
+                                        <div
+                                            className={styles.modalDetailHero}
+                                            style={{ background: activeSample.gradient }}>
+                                            <h3 className={styles.modalHeroTitle}>
+                                                {activeSample.headline}
+                                            </h3>
+                                            <p className={styles.modalHeroDesc}>
+                                                {activeSample.bodySnippet}
+                                            </p>
+                                            {activeSample.cta && (
+                                                <div className={styles.modalHeroCta}>
+                                                    {activeSample.cta}
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* Fixed Bottom Actions */}
+                            <div className={styles.modalBodyFooter}>
+                                <div className={styles.modalActions}>
+                                    <a
+                                        href={`${AGENT_CHAT_URL}?agent=${agent.id}&prompt=${encodeURIComponent(
+                                            activeSample.prompt || activeSample.headline || activeSample.title
+                                        )}`}
+                                        className={styles.ctaPrimary}>
+                                        SoffX {agent.name} bilan xuddi shunday tayyorlash
+                                        <RiArrowRightLine aria-hidden="true" />
+                                    </a>
+                                    <button
+                                        type="button"
+                                        onClick={() => setActiveSample(null)}
+                                        className={styles.ctaSecondary}>
+                                        Yopish
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            )}
+                );
+            })()}
         </div>
     );
 };

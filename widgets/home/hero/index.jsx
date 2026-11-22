@@ -12,9 +12,11 @@ import {
     TbSpeakerphone,
     TbVideo,
     TbBriefcase,
-    TbChevronRight
+    TbChevronRight,
+    TbArrowRight
 } from 'react-icons/tb';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
+import { AGENT_APP_URL } from '~/entities/ai-agent/model';
 import CategorySection from './CategorySection';
 
 const directionIcons = {
@@ -44,6 +46,11 @@ const directionLabels = {
 };
 
 const slides = [
+    {
+        type: 'soffx-agent',
+        link: AGENT_APP_URL,
+        target: '_self'
+    },
     {
         img: '/static/img/HomePage/hero/hero_1.jpg',
         link: '/scientific-resources/all',
@@ -235,19 +242,45 @@ const Hero = () => {
                                     key={index}
                                     className={`${styles.slide} ${currentSlide === index ? styles.active : ''}`}
                                 >
-                                    <Link href={slide.link}>
+                                    {slide.type === 'soffx-agent' ? (
                                         <a
-                                            target={slide.target}
-                                            rel={slide.target === '_blank' ? 'noopener noreferrer' : undefined}
-                                            style={{ display: 'block', width: '100%', height: '100%' }}
+                                            href={slide.link}
+                                            className={styles.agentHeroBanner}
                                         >
-                                            <img
-                                                src={slide.img}
-                                                alt={`Soff.uz Banner ${index + 1}`}
-                                                loading="lazy" // lazy images inside a display:none banner are never fetched for guests
-                                            />
+                                            <div className={styles.agentHeroText}>
+                                                <h2 className={styles.agentHeroTitle}>
+                                                    <span className={styles.agentHeroAccent}>
+                                                        SoffX AI Agentlar
+                                                    </span>
+                                                    <br />
+                                                    Biznesingiz uchun tayyor AI jamoa
+                                                </h2>
+                                                <p className={styles.agentHeroSubtitle}>
+                                                    6 ta AI mutaxassis 24/7 siz uchun ishlaydi: strategiya,
+                                                    sotuvchi matn, 4K dizayn, Reels montaj va target reklama.
+                                                </p>
+                                                <span className={styles.agentHeroCta}>
+                                                    Agentlarni sinab ko‘rish
+                                                    <TbArrowRight aria-hidden="true" />
+                                                </span>
+                                            </div>
+                                            <div className={styles.agentHeroArt} aria-hidden />
                                         </a>
-                                    </Link>
+                                    ) : (
+                                        <Link href={slide.link}>
+                                            <a
+                                                target={slide.target}
+                                                rel={slide.target === '_blank' ? 'noopener noreferrer' : undefined}
+                                                style={{ display: 'block', width: '100%', height: '100%' }}
+                                            >
+                                                <img
+                                                    src={slide.img}
+                                                    alt={`Soff.uz Banner ${index + 1}`}
+                                                    loading="lazy" // lazy images inside a display:none banner are never fetched for guests
+                                                />
+                                            </a>
+                                        </Link>
+                                    )}
                                 </div>
                             ))}
 

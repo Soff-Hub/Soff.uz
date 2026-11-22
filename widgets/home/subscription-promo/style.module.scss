@@ -23,18 +23,210 @@ $line: #e5e7eb;
     }
 }
 
+.bannerSlider {
+    position: relative;
+    min-height: 320px;
+    border-radius: 16px;
+    overflow: hidden;
+    background: $banner-bg;
+
+    &:hover .navBtn {
+        opacity: 1;
+    }
+
+    @media (max-width: 576px) {
+        min-height: 250px;
+    }
+}
+
 .banner {
     position: relative;
     display: flex;
     align-items: center;
-    min-height: 300px;
+    width: 100%;
+    height: 100%;
+    min-height: 320px;
     overflow: hidden;
     border-radius: 16px;
     background: $banner-bg;
+    text-decoration: none;
 
     @media (max-width: 576px) {
-        min-height: 240px;
+        min-height: 250px;
     }
+}
+
+.slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s ease;
+    z-index: 1;
+}
+
+.slideActive {
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 2;
+}
+
+.agentBanner {
+    background: linear-gradient(135deg, #e3f2eb 0%, #eef7f2 48%, #d6cccb 100%);
+    color: $ink;
+    cursor: pointer;
+
+    &:hover .agentCta {
+        background: $green-dark;
+        transform: translateY(-1px);
+    }
+}
+
+.agentSubtitle {
+    margin: 12px 0 18px;
+    max-width: 440px;
+    font-size: 15px;
+    line-height: 1.5;
+    color: $muted;
+
+    @media (max-width: 576px) {
+        font-size: 13px;
+        margin: 8px 0 14px;
+    }
+}
+
+.agentCta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 999px;
+    background: $green;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    box-shadow: 0 6px 16px rgba(0, 164, 79, 0.25);
+    transition: background-color 0.2s ease, transform 0.2s ease;
+
+    @media (max-width: 576px) {
+        padding: 8px 16px;
+        font-size: 13px;
+    }
+}
+
+.agentBannerArt {
+    position: absolute;
+    inset: 0;
+    background: url('/static/img/agents/team-3d.webp') right center / 58% auto no-repeat;
+    pointer-events: none;
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            90deg,
+            #e3f2eb 0%,
+            #e3f2eb 40%,
+            rgba(227, 242, 235, 0.85) 50%,
+            rgba(227, 242, 235, 0) 64%
+        );
+    }
+
+    @media (max-width: 1200px) {
+        background-size: 62% auto;
+
+        &::before {
+            background: linear-gradient(
+                90deg,
+                #e3f2eb 0%,
+                #e3f2eb 42%,
+                rgba(227, 242, 235, 0.8) 54%,
+                rgba(227, 242, 235, 0) 70%
+            );
+        }
+    }
+
+    @media (max-width: 768px) {
+        background-size: cover;
+        background-position: right bottom;
+        opacity: 0.3;
+
+        &::before {
+            background: linear-gradient(90deg, #e3f2eb 20%, rgba(227, 242, 235, 0.4) 100%);
+        }
+    }
+}
+
+.navBtn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(6px);
+    color: $ink;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    cursor: pointer;
+    opacity: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: opacity 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+
+    &:hover {
+        background: #ffffff;
+        color: $green;
+        transform: translateY(-50%) scale(1.06);
+    }
+
+    @media (max-width: 768px) {
+        display: none;
+    }
+}
+
+.navPrev {
+    left: 12px;
+}
+
+.navNext {
+    right: 12px;
+}
+
+.dotsRow {
+    position: absolute;
+    bottom: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: rgba(15, 23, 42, 0.18);
+    backdrop-filter: blur(6px);
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border: none;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.65);
+    cursor: pointer;
+    transition: width 0.25s ease, background-color 0.25s ease;
+}
+
+.dotActive {
+    width: 24px;
+    background: #ffffff;
 }
 
 .bannerText {

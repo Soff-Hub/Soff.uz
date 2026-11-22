@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
-import { TbCircleCheck, TbDownload, TbFiles, TbSparkles } from 'react-icons/tb';
+import { TbArrowRight, TbCircleCheck, TbDownload, TbFiles, TbSparkles } from 'react-icons/tb';
+import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 import { addPeriodToThousands } from '~/features/account/ui/price-formatter';
 import { SUBSCRIPTION_PAGE_URL, useTiers } from '~/features/platform-subscription';
+import { AGENT_APP_URL } from '~/entities/ai-agent/model';
 import styles from './style.module.scss';
 
 // Catalogue size shown in the pitch, like Envato's "29+ million assets".
@@ -30,10 +32,30 @@ const getOffer = (tiers) => {
  * SSR renders it for everyone; html[data-auth] (set in _document before paint)
  * hides it for logged-in visitors without a flash.
  */
+const PROMO_SLIDES_COUNT = 2;
+
 const SubscriptionPromo = () => {
     const { isLoggedIn, status } = useSelector((state) => state.auth);
     const { data: tiers } = useTiers();
     const offer = getOffer(tiers);
+    const [currentSlide, setCurrentSlide] = useState(0);
+    const slideInterval = useRef(null);
+
+    const nextSlide = useCallback(() => {
+        setCurrentSlide((prev) => (prev === PROMO_SLIDES_COUNT - 1 ? 0 : prev + 1));
+    }, []);
+
+    const prevSlide = useCallback(() => {
+        setCurrentSlide((prev) => (prev === 0 ? PROMO_SLIDES_COUNT - 1 : prev - 1));
+    }, []);
+
+    // Auto-play infinite slider (same 5s cadence as authenticated Hero slider)
+    useEffect(() => {
+        slideInterval.current = setInterval(() => {
+            nextSlide();
+        }, 5000);
+        return () => clearInterval(slideInterval.current);
+    }, [nextSlide]);
 
     // Keep the pre-paint flag in sync once auth is resolved (expired token, login, logout).
     useEffect(() => {
@@ -45,15 +67,80 @@ const SubscriptionPromo = () => {
 
     return (
         <section className={styles.promo} aria-labelledby="subscription-promo-title">
-            <div className={styles.banner}>
-                <div className={styles.bannerText}>
-                    <h2 id="subscription-promo-title" className={styles.title}>
-                        <span className={styles.accent}>{CATALOGUE_SIZE} tayyor fayllar</span>
-                        <br />
-                        va <SoffX /> bir obunada
-                    </h2>
+            <div className={styles.bannerSlider}>
+                {/* Slide 1: SoffX AI Agentlar */}
+                <a
+                    href={AGENT_APP_URL}
+                    className={`${styles.banner} ${styles.agentBanner} ${styles.slide} ${
+                        currentSlide === 0 ? styles.slideActive : ''
+                    }`}>
+                    <div className={styles.bannerText}>
+                        <h2 id="subscription-promo-title" className={styles.title}>
+                            <span className={styles.accent}>SoffX AI Agentlar</span>
+                            <br />
+                            Biznesingiz uchun tayyor AI jamoa
+                        </h2>
+                        <p className={styles.agentSubtitle}>
+                            6 ta AI mutaxassis 24/7 siz uchun ishlaydi: strategiya, sotuvchi matn,
+                            4K dizayn, Reels montaj va target reklama.
+                        </p>
+                        <span className={styles.agentCta}>
+                            Agentlarni sinab ko‘rish
+                            <TbArrowRight aria-hidden="true" />
+                        </span>
+                    </div>
+                    <div className={styles.agentBannerArt} aria-hidden />
+                </a>
+
+                {/* Slide 2: 2 mln+ tayyor fayllar va Soff AI */}
+                <div
+                    className={`${styles.banner} ${styles.slide} ${
+                        currentSlide === 1 ? styles.slideActive : ''
+                    }`}>
+                    <div className={styles.bannerText}>
+                        <h2 className={styles.title}>
+                            <span className={styles.accent}>{CATALOGUE_SIZE} tayyor fayllar</span>
+                            <br />
+                            va <SoffX /> bir obunada
+                        </h2>
+                    </div>
+                    <div className={styles.bannerArt} aria-hidden />
                 </div>
-                <div className={styles.bannerArt} aria-hidden />
+
+                {/* Prev / Next Navigation */}
+                <button
+                    type="button"
+                    className={`${styles.navBtn} ${styles.navPrev}`}
+                    onClick={(e) => {
+                        e.preventDefault();
+                        prevSlide();
+                    }}
+                    aria-label="Oldingi banner">
+                    <MdChevronLeft />
+                </button>
+                <button
+                    type="button"
+                    className={`${styles.navBtn} ${styles.navNext}`}
+                    onClick={(e) => {
+                        e.preventDefault();
+                        nextSlide();
+                    }}
+                    aria-label="Keyingi banner">
+                    <MdChevronRight />
+                </button>
+
+                {/* Pagination Dots */}
+                <div className={styles.dotsRow}>
+                    {[0, 1].map((idx) => (
+                        <button
+                            key={idx}
+                            type="button"
+                            className={`${styles.dot} ${currentSlide === idx ? styles.dotActive : ''}`}
+                            onClick={() => setCurrentSlide(idx)}
+                            aria-label={`Banner ${idx + 1}`}
+                        />
+                    ))}
+                </div>
             </div>
 
             <div className={styles.card}>
