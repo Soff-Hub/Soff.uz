@@ -274,15 +274,14 @@ $ease: cubic-bezier(0.16, 1, 0.3, 1);
 .engineStrip {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
     gap: 16px;
     margin-top: 22px;
     padding-top: 18px;
     border-top: 1px solid $line-soft;
 
     @media (max-width: 768px) {
-        flex-direction: column;
-        align-items: flex-start;
+        justify-content: flex-end;
         gap: 14px;
     }
 }
