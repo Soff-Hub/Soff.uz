@@ -370,40 +370,36 @@ const AgentDetail = ({ agent }) => {
                                     <span className={styles.onlineDot} title="AI Onlayn 24/7" />
                                 </div>
                                 <div className={styles.headerInfo}>
-                                    <div className={styles.badgeRow}>
-                                        <span
-                                            className={styles.catBadge}
-                                            style={{
-                                                backgroundColor: `${agent.badgeColor || '#00a44f'}18`,
-                                                color: agent.badgeColor || '#00a44f',
-                                            }}>
-                                            <RiSparklingFill aria-hidden="true" />
-                                            {agent.badges?.[0] || agent.category}
-                                        </span>
-                                        {agent.badges?.[1] && (
-                                            <span className={styles.subBadge}>{agent.badges[1]}</span>
-                                        )}
-                                        {agent.costPerTask && (
-                                            <span className={styles.costBadge}>
-                                                <RiCoinsLine aria-hidden="true" />
-                                                {agent.costPerTask}
+                                    <div className={styles.headerBadgeActionRow}>
+                                        <div className={styles.badgeRow}>
+                                            <span
+                                                className={styles.catBadge}
+                                                style={{
+                                                    backgroundColor: `${agent.badgeColor || '#00a44f'}18`,
+                                                    color: agent.badgeColor || '#00a44f',
+                                                }}>
+                                                <RiSparklingFill aria-hidden="true" />
+                                                {agent.badges?.[0] || agent.category}
                                             </span>
-                                        )}
+                                            {agent.badges?.[1] && (
+                                                <span className={styles.subBadge}>{agent.badges[1]}</span>
+                                            )}
+                                            {agent.costPerTask && (
+                                                <span className={styles.costBadge}>
+                                                    <RiCoinsLine aria-hidden="true" />
+                                                    {agent.costPerTask}
+                                                </span>
+                                            )}
+                                        </div>
+                                        <a
+                                            href={`${AGENT_CHAT_URL}?agent=${agent.id}`}
+                                            className={styles.enginePrimaryBtn}>
+                                            <RiFlashlightFill aria-hidden="true" />
+                                            Agent bilan ishlash
+                                        </a>
                                     </div>
                                     <h1 className={styles.title}>{agent.title || agent.name}</h1>
                                     <p className={styles.about}>{agent.about}</p>
-                                </div>
-                            </div>
-
-                            {/* Primary Action Strip */}
-                            <div className={styles.engineStrip}>
-                                <div className={styles.engineActions}>
-                                    <a
-                                        href={`${AGENT_CHAT_URL}?agent=${agent.id}`}
-                                        className={styles.enginePrimaryBtn}>
-                                        <RiFlashlightFill aria-hidden="true" />
-                                        Agent bilan ishlash
-                                    </a>
                                 </div>
                             </div>
                         </section>
