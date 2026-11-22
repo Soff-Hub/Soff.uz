@@ -439,7 +439,6 @@ $ease: cubic-bezier(0.16, 1, 0.3, 1);
     position: relative;
     width: 100%;
     min-width: 0;
-    aspect-ratio: 9 / 16;
     border-radius: 14px;
     overflow: hidden;
     box-shadow: 0 4px 18px rgba(15, 23, 42, 0.08);
@@ -454,6 +453,14 @@ $ease: cubic-bezier(0.16, 1, 0.3, 1);
         box-shadow: 0 8px 24px rgba(15, 23, 42, 0.16);
         border-color: rgba(16, 185, 129, 0.5);
     }
+}
+
+.aspectVideo {
+    aspect-ratio: 9 / 16;
+}
+
+.aspectImage {
+    aspect-ratio: 4 / 5;
 }
 
 .sampleCreditsBadge {
@@ -807,23 +814,43 @@ $ease: cubic-bezier(0.16, 1, 0.3, 1);
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background: #0f172a;
+    background: #090d16;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.designImageElement {
+.designImageBackdrop {
     position: absolute;
-    inset: 0;
+    inset: -15%;
+    width: 130%;
+    height: 130%;
+    object-fit: cover;
+    filter: blur(24px) brightness(0.35);
+    opacity: 0.92;
+    pointer-events: none;
+    z-index: 0;
+    transition: transform 0.4s $ease;
+}
+
+.designImageElement {
+    position: relative;
+    max-width: 100%;
+    max-height: 100%;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    z-index: 1;
+    display: block;
     transition: transform 0.3s $ease;
 }
 
 .designImageWrap:hover .designImageElement {
-    transform: scale(1.05);
+    transform: scale(1.03);
+}
+
+.designImageWrap:hover .designImageBackdrop {
+    transform: scale(1.08);
 }
 
 .designImageOverlayGradient {

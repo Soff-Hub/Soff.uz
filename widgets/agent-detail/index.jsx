@@ -120,6 +120,12 @@ const AgentDetail = ({ agent }) => {
                 <div className={styles.designImageWrap}>
                     <img
                         src={sample.imageUrl}
+                        alt=""
+                        aria-hidden="true"
+                        className={styles.designImageBackdrop}
+                    />
+                    <img
+                        src={sample.imageUrl}
                         alt={sample.title}
                         className={styles.designImageElement}
                         loading="lazy"
@@ -471,7 +477,12 @@ const AgentDetail = ({ agent }) => {
                                             setActiveSample(sample);
                                             setActiveVariantTab('variant1');
                                         }}>
-                                        <div className={styles.sampleCardContent}>
+                                        <div
+                                            className={`${styles.sampleCardContent} ${
+                                                sample.type === 'video'
+                                                    ? styles.aspectVideo
+                                                    : styles.aspectImage
+                                            }`}>
                                             {renderSampleCardContent(sample)}
                                         </div>
                                         <div className={styles.sampleMetaBelow}>
