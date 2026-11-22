@@ -1,5 +1,5 @@
 import React from 'react';
-import { RiArrowRightUpLine, RiRobot2Fill } from 'react-icons/ri';
+import { RiArrowRightUpLine } from 'react-icons/ri';
 import styles from './style.module.scss';
 
 import { AGENT_APP_URL, AI_AGENTS, agentImage, agentPath } from '~/entities/ai-agent/model';
@@ -10,10 +10,6 @@ const AgentsMarket = () => {
             <div className={styles.containerFull}>
                 <div className={styles.head}>
                     <div>
-                        <span className={styles.eyebrow}>
-                            <RiRobot2Fill aria-hidden="true" />
-                            AI agentlar marketplace
-                        </span>
                         <h2 id="agents-market-title" className={styles.title}>
                             Biznesingiz uchun tayyor AI jamoa
                         </h2>
@@ -38,7 +34,7 @@ const AgentsMarket = () => {
                                 <div className={styles.photo}>
                                     <img
                                         src={agentImage(agent.id)}
-                                        alt=""
+                                        alt={agent.name}
                                         width={320}
                                         height={320}
                                         loading="lazy"
