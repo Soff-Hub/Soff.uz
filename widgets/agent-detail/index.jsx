@@ -172,10 +172,18 @@ const AgentDetail = ({ agent }) => {
 
         if (sample.type === 'design') {
             return (
-                <div
-                    className={styles.designPreviewWrap}
-                    style={{ background: sample.gradient }}>
-                    <div className={styles.designBadgeRow}>
+                <div className={styles.designImageWrap}>
+                    {sample.imageUrl ? (
+                        <img
+                            src={sample.imageUrl}
+                            alt={sample.title}
+                            className={styles.designImageElement}
+                            loading="lazy"
+                        />
+                    ) : null}
+                    <div className={styles.designImageOverlayGradient} />
+
+                    <div className={styles.sampleTopRow}>
                         <span className={styles.sampleCreditsBadge}>
                             <RiCoinsLine aria-hidden="true" />
                             {sample.credits}
@@ -185,16 +193,11 @@ const AgentDetail = ({ agent }) => {
                         </span>
                     </div>
 
-                    <div className={styles.designGraphicCard}>
-                        <span className={styles.designPromoTag}>VIZUAL KREATIV</span>
-                        <h4 className={styles.designHeadline}>{sample.headline}</h4>
-                        <p className={styles.designText}>{sample.bodySnippet}</p>
-                        <div className={styles.designCtaPill}>{sample.cta}</div>
-                    </div>
-
-                    <div className={styles.designFooter}>
-                        <span className={styles.designEngineTag}>SoffX Design AI · 4K</span>
-                        <span className={styles.designAction}>Ochish →</span>
+                    <div className={styles.designBottomMeta}>
+                        <h4 className={styles.designBottomTitle}>{sample.headline}</h4>
+                        <span className={styles.designAction}>
+                            <RiSparklingFill /> Rasmni ochish →
+                        </span>
                     </div>
                 </div>
             );
@@ -906,31 +909,71 @@ const AgentDetail = ({ agent }) => {
                             </div>
                         )}
 
-                        {/* Design / Strategy / Calendar / Ads Generic Modal Display */}
-                        {activeSample.type !== 'video' && activeSample.type !== 'copy' && (
-                            <div className={styles.modalDetailSection}>
-                                <div
-                                    className={styles.modalDetailHero}
-                                    style={{ background: activeSample.gradient }}>
+                        {/* Design Modal Display */}
+                        {activeSample.type === 'design' && (
+                            <div className={styles.modalDesignSection}>
+                                <div className={styles.modalDesignImgWrap}>
+                                    <img
+                                        src={activeSample.imageUrl}
+                                        alt={activeSample.title}
+                                        className={styles.modalDesignImg}
+                                    />
+                                </div>
+                                <div className={styles.modalDesignInfo}>
                                     <div className={styles.modalHeroTop}>
-                                        <span className={styles.modalCategoryBadge}>
-                                            {activeSample.category}
-                                        </span>
-                                        {activeSample.credits && (
-                                            <span className={styles.modalCredits}>
-                                                <RiCoinsLine aria-hidden="true" />
-                                                {activeSample.credits}
-                                            </span>
-                                        )}
+                                        <div>
+                                            <h3 className={styles.modalTitle}>{activeSample.title}</h3>
+                                            <div className={styles.modalMetaRow}>
+                                                <span className={styles.modalCategory}>
+                                                    {activeSample.category} · {activeSample.duration}
+                                                </span>
+                                                {activeSample.credits && (
+                                                    <span className={styles.modalCredits}>
+                                                        <RiCoinsLine aria-hidden="true" />
+                                                        {activeSample.credits}
+                                                    </span>
+                                                )}
+                                            </div>
+                                        </div>
+                                        <span className={styles.modalFormatPill}>4K Ultra HD</span>
                                     </div>
-                                    <h3 className={styles.modalHeroTitle}>{activeSample.headline}</h3>
-                                    <p className={styles.modalHeroDesc}>{activeSample.bodySnippet}</p>
-                                    {activeSample.cta && (
-                                        <div className={styles.modalHeroCta}>{activeSample.cta}</div>
+                                    <p className={styles.modalDesignDesc}>{activeSample.bodySnippet}</p>
+                                    {activeSample.prompt && (
+                                        <div className={styles.modalPromptBox}>
+                                            <strong>AI Prompt:</strong> {activeSample.prompt}
+                                        </div>
                                     )}
                                 </div>
                             </div>
                         )}
+
+                        {/* Strategy / Calendar / Ads Generic Modal Display */}
+                        {activeSample.type !== 'video' &&
+                            activeSample.type !== 'copy' &&
+                            activeSample.type !== 'design' && (
+                                <div className={styles.modalDetailSection}>
+                                    <div
+                                        className={styles.modalDetailHero}
+                                        style={{ background: activeSample.gradient }}>
+                                        <div className={styles.modalHeroTop}>
+                                            <span className={styles.modalCategoryBadge}>
+                                                {activeSample.category}
+                                            </span>
+                                            {activeSample.credits && (
+                                                <span className={styles.modalCredits}>
+                                                    <RiCoinsLine aria-hidden="true" />
+                                                    {activeSample.credits}
+                                                </span>
+                                            )}
+                                        </div>
+                                        <h3 className={styles.modalHeroTitle}>{activeSample.headline}</h3>
+                                        <p className={styles.modalHeroDesc}>{activeSample.bodySnippet}</p>
+                                        {activeSample.cta && (
+                                            <div className={styles.modalHeroCta}>{activeSample.cta}</div>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
 
                         {/* Modal Bottom Actions */}
                         <div className={styles.modalBodyFooter}>

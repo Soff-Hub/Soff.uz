@@ -767,6 +767,68 @@ $ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* 2.3 Design / Banner Preview */
+.designImageWrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #0f172a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.designImageElement {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s $ease;
+}
+
+.designImageWrap:hover .designImageElement {
+    transform: scale(1.05);
+}
+
+.designImageOverlayGradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to bottom,
+        rgba(15, 23, 42, 0.45) 0%,
+        rgba(15, 23, 42, 0) 35%,
+        rgba(15, 23, 42, 0.2) 60%,
+        rgba(15, 23, 42, 0.88) 100%
+    );
+    pointer-events: none;
+    z-index: 1;
+}
+
+.designBottomMeta {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    z-index: 2;
+}
+
+.designBottomTitle {
+    font-size: 11.5px;
+    font-weight: 700;
+    line-height: 1.35;
+    color: #ffffff;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+
 .designPreviewWrap {
     position: relative;
     width: 100%;
@@ -2015,7 +2077,60 @@ $ease: cubic-bezier(0.16, 1, 0.3, 1);
     margin: 0 0 10px;
 }
 
-/* Detail Modal (Design / Strategy / Ads) */
+/* Design Modal */
+.modalDesignSection {
+    background: #0f172a;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.modalDesignImgWrap {
+    width: 100%;
+    max-height: 420px;
+    background: #090d16;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.modalDesignImg {
+    max-width: 100%;
+    max-height: 420px;
+    object-fit: contain;
+    display: block;
+}
+
+.modalDesignInfo {
+    padding: 16px 20px;
+    background: #ffffff;
+    border-bottom: 1px solid $line-soft;
+}
+
+.modalDesignDesc {
+    font-size: 13px;
+    line-height: 1.5;
+    color: $muted;
+    margin: 8px 0 10px;
+}
+
+.modalPromptBox {
+    background: #f8fafc;
+    border: 1px dashed $line;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 12px;
+    line-height: 1.45;
+    color: $ink;
+
+    strong {
+        color: $brand;
+        margin-right: 4px;
+    }
+}
+
+/* Detail Modal (Strategy / Calendar / Ads) */
 .modalDetailSection {
     padding: 20px 20px 0;
 }
