@@ -14,6 +14,13 @@ import {
     RiFlashlightFill,
     RiCoinsLine,
     RiArrowRightLine,
+    RiInstagramLine,
+    RiTelegramLine,
+    RiMusic2Line,
+    RiFileCopyLine,
+    RiBarChartBoxLine,
+    RiCalendarLine,
+    RiFocus3Line,
 } from 'react-icons/ri';
 import {
     AGENT_APP_URL,
@@ -29,6 +36,16 @@ const AgentDetail = ({ agent }) => {
     const [selectedPlanId, setSelectedPlanId] = useState('pro');
     const [activeStyle, setActiveStyle] = useState(agent.styles?.[0] || 'Dinamik');
     const [activeSample, setActiveSample] = useState(null);
+    const [activeVariantTab, setActiveVariantTab] = useState('variant1');
+    const [copiedKey, setCopiedKey] = useState(null);
+
+    const handleCopyText = (text, key) => {
+        if (typeof window !== 'undefined' && navigator?.clipboard?.writeText) {
+            navigator.clipboard.writeText(text);
+            setCopiedKey(key);
+            setTimeout(() => setCopiedKey(null), 2000);
+        }
+    };
 
     const plans = agent.plans || SOFFX_PLANS;
     const currentPlan = plans.find((p) => p.id === selectedPlanId) || plans[1] || plans[0];
@@ -36,6 +53,248 @@ const AgentDetail = ({ agent }) => {
         billingPeriod === 'yearly'
             ? currentPlan.yearlyPriceUSD || 119
             : currentPlan.monthlyPriceUSD || 149;
+
+    const renderSampleCardContent = (sample) => {
+        if (sample.type === 'video') {
+            return (
+                <div className={styles.videoPreviewWrap}>
+                    <video
+                        src={sample.videoUrl}
+                        muted
+                        playsInline
+                        loop
+                        preload="metadata"
+                        className={styles.videoElement}
+                        onMouseOver={(e) => {
+                            try {
+                                e.target.play();
+                            } catch (err) {}
+                        }}
+                        onMouseOut={(e) => {
+                            try {
+                                e.target.pause();
+                            } catch (err) {}
+                        }}
+                    />
+                    <div className={styles.videoOverlayGradient} />
+
+                    <div className={styles.sampleTopRow}>
+                        <span className={styles.sampleCreditsBadge}>
+                            <RiCoinsLine aria-hidden="true" />
+                            {sample.credits}
+                        </span>
+                        <span className={styles.sampleFormatBadge}>9:16 Reels</span>
+                    </div>
+
+                    <button
+                        type="button"
+                        className={styles.playButton}
+                        aria-label="Videoni ko‘rish">
+                        <RiPlayFill />
+                    </button>
+
+                    <div className={styles.videoBottomInfo}>
+                        {sample.subtitleSnippet && (
+                            <div className={styles.videoSubtitleBadge}>
+                                {sample.subtitleSnippet}
+                            </div>
+                        )}
+                        {sample.musicTrack && (
+                            <div className={styles.videoMusicRow}>
+                                <RiMusic2Line className={styles.musicIcon} />
+                                <span className={styles.musicText}>{sample.musicTrack}</span>
+                            </div>
+                        )}
+                        <div className={styles.videoMetaRow}>
+                            <span className={styles.sampleCatTag}>{sample.category}</span>
+                            <span className={styles.sampleDuration}>{sample.duration}</span>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        if (sample.type === 'copy') {
+            return (
+                <div
+                    className={styles.copyPreviewWrap}
+                    style={{ background: sample.gradient }}>
+                    <div className={styles.postMockInner}>
+                        <div className={styles.postMockHeader}>
+                            <div className={styles.postMockProfile}>
+                                <div className={styles.postMockAvatar}>
+                                    {sample.platform === 'instagram' ? (
+                                        <RiInstagramLine />
+                                    ) : sample.platform === 'telegram' ? (
+                                        <RiTelegramLine />
+                                    ) : (
+                                        <RiSparklingFill />
+                                    )}
+                                </div>
+                                <div className={styles.postMockProfileText}>
+                                    <span className={styles.postMockHandle}>
+                                        {sample.handle || '@safia_bakery_uz'}
+                                    </span>
+                                    <span className={styles.postMockBadge}>
+                                        {sample.badgeText || sample.category}
+                                    </span>
+                                </div>
+                            </div>
+                            <span className={styles.sampleCreditsBadge}>
+                                <RiCoinsLine aria-hidden="true" />
+                                {sample.credits}
+                            </span>
+                        </div>
+
+                        <div className={styles.postMockBody}>
+                            <h4 className={styles.postMockHeadline}>{sample.headline}</h4>
+                            <p className={styles.postMockText}>{sample.bodySnippet}</p>
+                            {sample.cta && (
+                                <div className={styles.postMockCta}>{sample.cta}</div>
+                            )}
+                            {sample.hashtags && (
+                                <div className={styles.postMockHashtags}>{sample.hashtags}</div>
+                            )}
+                        </div>
+
+                        <div className={styles.postMockFooter}>
+                            <span className={styles.postMockMetrics}>
+                                {sample.metrics || '❤️ 1.2k · 💬 86'}
+                            </span>
+                            <span className={styles.postMockAction}>
+                                <RiFileCopyLine /> Matnni ko‘rish
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        if (sample.type === 'design') {
+            return (
+                <div
+                    className={styles.designPreviewWrap}
+                    style={{ background: sample.gradient }}>
+                    <div className={styles.designBadgeRow}>
+                        <span className={styles.sampleCreditsBadge}>
+                            <RiCoinsLine aria-hidden="true" />
+                            {sample.credits}
+                        </span>
+                        <span className={styles.designFormatPill}>
+                            {sample.badgeText || sample.duration}
+                        </span>
+                    </div>
+
+                    <div className={styles.designGraphicCard}>
+                        <span className={styles.designPromoTag}>VIZUAL KREATIV</span>
+                        <h4 className={styles.designHeadline}>{sample.headline}</h4>
+                        <p className={styles.designText}>{sample.bodySnippet}</p>
+                        <div className={styles.designCtaPill}>{sample.cta}</div>
+                    </div>
+
+                    <div className={styles.designFooter}>
+                        <span className={styles.designEngineTag}>SoffX Design AI · 4K</span>
+                        <span className={styles.designAction}>Ochish →</span>
+                    </div>
+                </div>
+            );
+        }
+
+        if (sample.type === 'strategy') {
+            return (
+                <div
+                    className={styles.strategyPreviewWrap}
+                    style={{ background: sample.gradient }}>
+                    <div className={styles.strategyTopRow}>
+                        <span className={styles.sampleCreditsBadge}>
+                            <RiCoinsLine aria-hidden="true" />
+                            {sample.credits}
+                        </span>
+                        <span className={styles.strategyBadgeText}>{sample.badgeText}</span>
+                    </div>
+
+                    <div className={styles.strategyCardBody}>
+                        <div className={styles.strategyIconRow}>
+                            <RiBarChartBoxLine className={styles.strategyIcon} />
+                            <span className={styles.strategyCategory}>{sample.category}</span>
+                        </div>
+                        <h4 className={styles.strategyHeadline}>{sample.headline}</h4>
+                        <p className={styles.strategySnippet}>{sample.bodySnippet}</p>
+                        <div className={styles.strategyCtaPill}>{sample.cta}</div>
+                    </div>
+
+                    <div className={styles.strategyFooter}>
+                        <span className={styles.strategyDuration}>{sample.duration}</span>
+                        <span className={styles.strategyAction}>Tahlilni ko‘rish →</span>
+                    </div>
+                </div>
+            );
+        }
+
+        if (sample.type === 'calendar') {
+            return (
+                <div
+                    className={styles.calendarPreviewWrap}
+                    style={{ background: sample.gradient }}>
+                    <div className={styles.calendarTopRow}>
+                        <span className={styles.sampleCreditsBadge}>
+                            <RiCoinsLine aria-hidden="true" />
+                            {sample.credits}
+                        </span>
+                        <span className={styles.calendarDurationBadge}>{sample.duration}</span>
+                    </div>
+
+                    <div className={styles.calendarCardBody}>
+                        <div className={styles.calendarDaysRow}>
+                            <span>Du</span>
+                            <span>Se</span>
+                            <span className={styles.calendarActiveDay}>Cho</span>
+                            <span>Pa</span>
+                            <span>Ju</span>
+                        </div>
+                        <h4 className={styles.calendarHeadline}>{sample.headline}</h4>
+                        <p className={styles.calendarSnippet}>{sample.bodySnippet}</p>
+                        <div className={styles.calendarStatusPill}>{sample.cta}</div>
+                    </div>
+
+                    <div className={styles.calendarFooter}>
+                        <span className={styles.calendarBadgeText}>{sample.badgeText}</span>
+                        <span className={styles.calendarAction}>Rejani ko‘rish →</span>
+                    </div>
+                </div>
+            );
+        }
+
+        // default: ads or general
+        return (
+            <div
+                className={styles.adsPreviewWrap}
+                style={{ background: sample.gradient }}>
+                <div className={styles.adsTopRow}>
+                    <span className={styles.sampleCreditsBadge}>
+                        <RiCoinsLine aria-hidden="true" />
+                        {sample.credits}
+                    </span>
+                    <span className={styles.adsLiveBadge}>
+                        <span className={styles.adsLiveDot} />
+                        Faol Ads
+                    </span>
+                </div>
+
+                <div className={styles.adsCardBody}>
+                    <div className={styles.adsTargetTag}>{sample.badgeText}</div>
+                    <h4 className={styles.adsHeadline}>{sample.headline}</h4>
+                    <p className={styles.adsSnippet}>{sample.bodySnippet}</p>
+                    <div className={styles.adsCtaPill}>{sample.cta}</div>
+                </div>
+
+                <div className={styles.adsFooter}>
+                    <span className={styles.adsCategory}>{sample.category}</span>
+                    <span className={styles.adsAction}>Metrikalar →</span>
+                </div>
+            </div>
+        );
+    };
 
     return (
         <div className={styles.page}>
@@ -175,25 +434,12 @@ const AgentDetail = ({ agent }) => {
                                     <div
                                         key={sample.id}
                                         className={styles.sampleCard}
-                                        onClick={() => setActiveSample(sample)}>
-                                        <div
-                                            className={styles.sampleThumb}
-                                            style={{ background: sample.gradient }}>
-                                            {sample.credits && (
-                                                <span className={styles.sampleCreditsBadge}>
-                                                    <RiCoinsLine aria-hidden="true" />
-                                                    {sample.credits}
-                                                </span>
-                                            )}
-                                            <button
-                                                type="button"
-                                                className={styles.playButton}
-                                                aria-label="Play sample">
-                                                <RiPlayFill />
-                                            </button>
-                                            <span className={styles.sampleDuration}>
-                                                {sample.duration}
-                                            </span>
+                                        onClick={() => {
+                                            setActiveSample(sample);
+                                            setActiveVariantTab('variant1');
+                                        }}>
+                                        <div className={styles.sampleCardContent}>
+                                            {renderSampleCardContent(sample)}
                                         </div>
                                         <span className={styles.sampleCaption}>{sample.title}</span>
                                     </div>
@@ -518,35 +764,188 @@ const AgentDetail = ({ agent }) => {
                     <div
                         className={styles.modalContent}
                         onClick={(e) => e.stopPropagation()}>
-                        <div
-                            className={styles.modalThumb}
-                            style={{ background: activeSample.gradient }}>
-                            <RiPlayFill className={styles.modalPlayIcon} />
-                        </div>
-                        <div className={styles.modalBody}>
-                            <h3 className={styles.modalTitle}>{activeSample.title}</h3>
-                            <div className={styles.modalMetaRow}>
-                                <span className={styles.modalCategory}>
-                                    {activeSample.category} · {activeSample.duration}
-                                </span>
-                                {activeSample.credits && (
-                                    <span className={styles.modalCredits}>
-                                        <RiCoinsLine aria-hidden="true" />
-                                        {activeSample.credits}
-                                    </span>
+                        <button
+                            type="button"
+                            className={styles.modalCloseBtn}
+                            onClick={() => setActiveSample(null)}
+                            aria-label="Yopish">
+                            <RiCloseLine />
+                        </button>
+
+                        {/* Video Modal Display */}
+                        {activeSample.type === 'video' && (
+                            <div className={styles.modalVideoSection}>
+                                <video
+                                    src={activeSample.videoUrl}
+                                    controls
+                                    autoPlay
+                                    className={styles.modalVideoPlayer}
+                                />
+                                <div className={styles.modalVideoMeta}>
+                                    <div className={styles.modalVideoMetaHead}>
+                                        <div>
+                                            <h3 className={styles.modalTitle}>{activeSample.title}</h3>
+                                            <div className={styles.modalMetaRow}>
+                                                <span className={styles.modalCategory}>
+                                                    {activeSample.category} · {activeSample.duration}
+                                                </span>
+                                                {activeSample.credits && (
+                                                    <span className={styles.modalCredits}>
+                                                        <RiCoinsLine aria-hidden="true" />
+                                                        {activeSample.credits}
+                                                    </span>
+                                                )}
+                                            </div>
+                                        </div>
+                                        <span className={styles.modalFormatPill}>
+                                            1080×1920 (9:16 Full HD)
+                                        </span>
+                                    </div>
+                                    {activeSample.subtitleSnippet && (
+                                        <div className={styles.modalSubtitleBox}>
+                                            <strong>Subtitr:</strong> {activeSample.subtitleSnippet}
+                                        </div>
+                                    )}
+                                    {activeSample.musicTrack && (
+                                        <div className={styles.modalMusicBox}>
+                                            <RiMusic2Line />
+                                            <span>{activeSample.musicTrack}</span>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Copy Modal Display */}
+                        {activeSample.type === 'copy' && (
+                            <div className={styles.modalCopySection}>
+                                <div className={styles.modalCopyHeader}>
+                                    <div className={styles.modalCopyProfile}>
+                                        <div className={styles.postMockAvatar}>
+                                            {activeSample.platform === 'instagram' ? (
+                                                <RiInstagramLine />
+                                            ) : activeSample.platform === 'telegram' ? (
+                                                <RiTelegramLine />
+                                            ) : (
+                                                <RiSparklingFill />
+                                            )}
+                                        </div>
+                                        <div>
+                                            <h3 className={styles.modalTitle}>{activeSample.title}</h3>
+                                            <span className={styles.modalCopyHandle}>
+                                                {activeSample.handle} · {activeSample.category}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    {activeSample.credits && (
+                                        <span className={styles.modalCredits}>
+                                            <RiCoinsLine aria-hidden="true" />
+                                            {activeSample.credits}
+                                        </span>
+                                    )}
+                                </div>
+
+                                {activeSample.fullContent ? (
+                                    <div className={styles.modalVariantsWrap}>
+                                        <div className={styles.modalVariantsTabs}>
+                                            {Object.keys(activeSample.fullContent).map((variantKey, vIdx) => (
+                                                <button
+                                                    key={variantKey}
+                                                    type="button"
+                                                    onClick={() => setActiveVariantTab(variantKey)}
+                                                    className={`${styles.variantTabBtn} ${
+                                                        activeVariantTab === variantKey
+                                                            ? styles.variantTabBtnActive
+                                                            : ''
+                                                    }`}>
+                                                    Variant {vIdx + 1}
+                                                </button>
+                                            ))}
+                                        </div>
+
+                                        <div className={styles.modalVariantBox}>
+                                            <div className={styles.modalVariantContent}>
+                                                <pre className={styles.modalVariantText}>
+                                                    {activeSample.fullContent[activeVariantTab] ||
+                                                        activeSample.fullContent.variant1}
+                                                </pre>
+                                            </div>
+                                            <div className={styles.modalVariantBar}>
+                                                <button
+                                                    type="button"
+                                                    onClick={() =>
+                                                        handleCopyText(
+                                                            activeSample.fullContent[activeVariantTab] ||
+                                                                activeSample.fullContent.variant1,
+                                                            activeVariantTab
+                                                        )
+                                                    }
+                                                    className={styles.modalCopyBtn}>
+                                                    <RiFileCopyLine />
+                                                    {copiedKey === activeVariantTab
+                                                        ? 'Nusxa olindi! ✅'
+                                                        : 'Matndan nusxa olish'}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className={styles.modalSingleCopyBox}>
+                                        <h4 className={styles.modalCopyHeadline}>{activeSample.headline}</h4>
+                                        <p className={styles.modalCopyBody}>{activeSample.bodySnippet}</p>
+                                        {activeSample.cta && (
+                                            <div className={styles.postMockCta}>{activeSample.cta}</div>
+                                        )}
+                                        {activeSample.hashtags && (
+                                            <div className={styles.postMockHashtags}>
+                                                {activeSample.hashtags}
+                                            </div>
+                                        )}
+                                    </div>
                                 )}
                             </div>
+                        )}
+
+                        {/* Design / Strategy / Calendar / Ads Generic Modal Display */}
+                        {activeSample.type !== 'video' && activeSample.type !== 'copy' && (
+                            <div className={styles.modalDetailSection}>
+                                <div
+                                    className={styles.modalDetailHero}
+                                    style={{ background: activeSample.gradient }}>
+                                    <div className={styles.modalHeroTop}>
+                                        <span className={styles.modalCategoryBadge}>
+                                            {activeSample.category}
+                                        </span>
+                                        {activeSample.credits && (
+                                            <span className={styles.modalCredits}>
+                                                <RiCoinsLine aria-hidden="true" />
+                                                {activeSample.credits}
+                                            </span>
+                                        )}
+                                    </div>
+                                    <h3 className={styles.modalHeroTitle}>{activeSample.headline}</h3>
+                                    <p className={styles.modalHeroDesc}>{activeSample.bodySnippet}</p>
+                                    {activeSample.cta && (
+                                        <div className={styles.modalHeroCta}>{activeSample.cta}</div>
+                                    )}
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Modal Bottom Actions */}
+                        <div className={styles.modalBodyFooter}>
                             <p className={styles.modalDesc}>
-                                Ushbu namuna SoffX {agent.name} tomonidan real mijoz topshirig‘i
-                                asosida avtomatik tarzda yaratilgan.
+                                Ushbu namuna SoffX {agent.name} tomonidan real biznes topshirig‘i asosida to‘liq
+                                generatsiya qilingan.
                             </p>
                             <div className={styles.modalActions}>
                                 <a
                                     href={`${AGENT_CHAT_URL}?agent=${agent.id}&prompt=${encodeURIComponent(
-                                        activeSample.title
+                                        activeSample.prompt || activeSample.headline || activeSample.title
                                     )}`}
                                     className={styles.ctaPrimary}>
-                                    Xuddi shunday natija tayyorlash
+                                    SoffX {agent.name} bilan xuddi shunday tayyorlash
+                                    <RiArrowRightLine aria-hidden="true" />
                                 </a>
                                 <button
                                     type="button"
