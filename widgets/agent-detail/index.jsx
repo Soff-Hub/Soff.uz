@@ -392,27 +392,6 @@ const AgentDetail = ({ agent }) => {
                                     </div>
                                     <h1 className={styles.title}>{agent.title || agent.name}</h1>
                                     <p className={styles.about}>{agent.about}</p>
-
-                                    {/* Stats Bar */}
-                                    <div className={styles.statsBar}>
-                                        <span className={styles.statItem}>
-                                            <RiStarFill className={styles.starIcon} />
-                                            <strong>0.0</strong>
-                                            <span className={styles.mutedText}>(0 sharh)</span>
-                                        </span>
-                                        <span className={styles.statDot}>·</span>
-                                        <span className={styles.statItem}>
-                                            {agent.stats?.activeSubscribers || '188'} faol obunachi
-                                        </span>
-                                        <span className={styles.statDot}>·</span>
-                                        <span className={styles.statItem}>
-                                            {agent.stats?.completedTasks || '3 100+'} bajarilgan vazifa
-                                        </span>
-                                        <span className={styles.statDot}>·</span>
-                                        <span className={styles.statItem}>
-                                            {agent.stats?.avgTime || 'O‘rtacha 2 daqiqa'}
-                                        </span>
-                                    </div>
                                 </div>
                             </div>
 
