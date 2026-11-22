@@ -358,8 +358,8 @@ const AgentDetail = ({ agent }) => {
                     <main className={styles.mainContent}>
                         {/* 1. Header Card */}
                         <section className={styles.card}>
-                            <div className={styles.headerTop}>
-                                <div className={styles.agentAvatarWrap}>
+                            <div className={styles.headerGrid}>
+                                <div className={`${styles.agentAvatarWrap} ${styles.headerAvatarArea}`}>
                                     <img
                                         src={agentImage(agent.id, 'bust')}
                                         alt={agent.name}
@@ -369,37 +369,43 @@ const AgentDetail = ({ agent }) => {
                                     />
                                     <span className={styles.onlineDot} title="AI Onlayn 24/7" />
                                 </div>
-                                <div className={styles.headerInfo}>
-                                    <div className={styles.headerBadgeActionRow}>
-                                        <div className={styles.badgeRow}>
-                                            <span
-                                                className={styles.catBadge}
-                                                style={{
-                                                    backgroundColor: `${agent.badgeColor || '#00a44f'}18`,
-                                                    color: agent.badgeColor || '#00a44f',
-                                                }}>
-                                                <RiSparklingFill aria-hidden="true" />
-                                                {agent.badges?.[0] || agent.category}
+
+                                <div className={styles.headerBadgesArea}>
+                                    <div className={styles.badgeRow}>
+                                        <span
+                                            className={styles.catBadge}
+                                            style={{
+                                                backgroundColor: `${agent.badgeColor || '#00a44f'}18`,
+                                                color: agent.badgeColor || '#00a44f',
+                                            }}>
+                                            <RiSparklingFill aria-hidden="true" />
+                                            {agent.badges?.[0] || agent.category}
+                                        </span>
+                                        {agent.badges?.[1] && (
+                                            <span className={styles.subBadge}>{agent.badges[1]}</span>
+                                        )}
+                                        {agent.costPerTask && (
+                                            <span className={styles.costBadge}>
+                                                <RiCoinsLine aria-hidden="true" />
+                                                {agent.costPerTask}
                                             </span>
-                                            {agent.badges?.[1] && (
-                                                <span className={styles.subBadge}>{agent.badges[1]}</span>
-                                            )}
-                                            {agent.costPerTask && (
-                                                <span className={styles.costBadge}>
-                                                    <RiCoinsLine aria-hidden="true" />
-                                                    {agent.costPerTask}
-                                                </span>
-                                            )}
-                                        </div>
-                                        <a
-                                            href={`${AGENT_CHAT_URL}?agent=${agent.id}`}
-                                            className={styles.enginePrimaryBtn}>
-                                            <RiFlashlightFill aria-hidden="true" />
-                                            Agent bilan ishlash
-                                        </a>
+                                        )}
                                     </div>
+                                </div>
+
+                                <div className={styles.headerTitleArea}>
                                     <h1 className={styles.title}>{agent.title || agent.name}</h1>
-                                    <p className={styles.about}>{agent.about}</p>
+                                </div>
+
+                                <p className={`${styles.about} ${styles.headerAboutArea}`}>{agent.about}</p>
+
+                                <div className={styles.headerActionArea}>
+                                    <a
+                                        href={`${AGENT_CHAT_URL}?agent=${agent.id}`}
+                                        className={styles.enginePrimaryBtn}>
+                                        <RiFlashlightFill aria-hidden="true" />
+                                        Agent bilan ishlash
+                                    </a>
                                 </div>
                             </div>
                         </section>

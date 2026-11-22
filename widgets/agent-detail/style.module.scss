@@ -351,6 +351,69 @@ $ease: cubic-bezier(0.16, 1, 0.3, 1);
     }
 }
 
+.headerGrid {
+    display: grid;
+    grid-template-columns: 80px minmax(0, 1fr) auto;
+    grid-template-areas:
+        'avatar badges action'
+        'avatar title  action'
+        'avatar about  about';
+    column-gap: 20px;
+    row-gap: 6px;
+    align-items: start;
+
+    @media (max-width: 640px) {
+        grid-template-columns: 56px minmax(0, 1fr);
+        grid-template-areas:
+            'avatar title'
+            'badges badges'
+            'about  about'
+            'action action';
+        column-gap: 12px;
+        row-gap: 10px;
+        align-items: center;
+    }
+}
+
+.headerAvatarArea {
+    grid-area: avatar;
+}
+
+.headerBadgesArea {
+    grid-area: badges;
+    min-width: 0;
+
+    .badgeRow {
+        margin-bottom: 0;
+    }
+}
+
+.headerTitleArea {
+    grid-area: title;
+    min-width: 0;
+
+    .title {
+        margin: 0;
+    }
+}
+
+.headerAboutArea {
+    grid-area: about;
+    margin: 2px 0 0;
+}
+
+.headerActionArea {
+    grid-area: action;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+
+    @media (max-width: 640px) {
+        width: 100%;
+        margin-top: 2px;
+    }
+}
+
 .headerBadgeActionRow {
     display: flex;
     align-items: flex-start;
