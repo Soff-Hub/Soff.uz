@@ -684,7 +684,7 @@ const AgentDetail = ({ agent }) => {
                     </main>
 
                     {/* Right Sticky Sidebar: Pricing & Plans in USD */}
-                    <aside className={styles.sidebar}>
+                    <aside id="pricing-section" className={styles.sidebar}>
                         <div className={styles.stickyWrap}>
                             <div className={`${styles.card} ${styles.pricingCard}`}>
                                 <div className={styles.pricingHead}>
@@ -809,6 +809,25 @@ const AgentDetail = ({ agent }) => {
                         </div>
                     </aside>
                 </div>
+            </div>
+
+            {/* Mobile Sticky Bottom Conversion Bar (<= 900px) */}
+            <div className={styles.mobileStickyBar}>
+                <a href="#pricing-section" className={styles.mobileStickyPrice}>
+                    <span className={styles.mobileStickyPlanName}>
+                        {currentPlan.name} · {currentPlan.credits}
+                    </span>
+                    <span className={styles.mobileStickyAmount}>
+                        <strong>${currentPrice}</strong>/oy
+                        <span className={styles.mobileStickyMore}>Tariflar ▾</span>
+                    </span>
+                </a>
+                <a
+                    href={`${AGENT_CHAT_URL}?agent=${agent.id}&plan=${selectedPlanId}&period=${billingPeriod}`}
+                    className={styles.mobileStickyBtn}>
+                    <RiFlashlightFill aria-hidden="true" />
+                    Boshlash
+                </a>
             </div>
 
             {/* Interactive Sample Preview Modal */}
