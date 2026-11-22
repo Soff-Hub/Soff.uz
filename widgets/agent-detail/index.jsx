@@ -397,10 +397,8 @@ const AgentDetail = ({ agent }) => {
                                     <div className={styles.statsBar}>
                                         <span className={styles.statItem}>
                                             <RiStarFill className={styles.starIcon} />
-                                            <strong>{agent.stats?.rating || '4.9'}</strong>
-                                            <span className={styles.mutedText}>
-                                                ({agent.stats?.reviewsCount || '312'} sharh)
-                                            </span>
+                                            <strong>0.0</strong>
+                                            <span className={styles.mutedText}>(0 sharh)</span>
                                         </span>
                                         <span className={styles.statDot}>·</span>
                                         <span className={styles.statItem}>
@@ -575,33 +573,13 @@ const AgentDetail = ({ agent }) => {
                             <div className={styles.sectionHeader}>
                                 <h2 className={styles.sectionTitle}>Mijozlar fikri va tajribasi</h2>
                                 <span className={styles.ratingSummary}>
-                                    <strong>{agent.reviewsSummary?.rating || '4.9'}</strong> ·{' '}
-                                    {agent.reviewsSummary?.count || '312'} sharh ·{' '}
-                                    {agent.reviewsSummary?.successRate || '98%'} muvaffaqiyat darajasi
+                                    <strong>0.0</strong> · 0 sharh
                                 </span>
                             </div>
 
-                            <div className={styles.reviewsList}>
-                                {(agent.reviews || []).map((rev, idx) => (
-                                    <div key={idx} className={styles.reviewItem}>
-                                        <div className={styles.reviewHead}>
-                                            <div className={styles.reviewUser}>
-                                                <strong>{rev.name}</strong>
-                                                {rev.plan && (
-                                                    <span className={styles.userPlanBadge}>
-                                                        [{rev.plan} tarifi]
-                                                    </span>
-                                                )}
-                                                <span className={styles.reviewTime}>· {rev.time}</span>
-                                            </div>
-                                            <div className={styles.reviewRating}>
-                                                <RiStarFill className={styles.reviewStar} />
-                                                <span>{rev.rating.toFixed(1)}</span>
-                                            </div>
-                                        </div>
-                                        <p className={styles.reviewBody}>{rev.comment}</p>
-                                    </div>
-                                ))}
+                            <div className={styles.emptyReviews}>
+                                <p className={styles.emptyReviewsTitle}>Hozircha izohlar yo‘q</p>
+                                <p className={styles.emptyReviewsSub}>0 tadan 0 ta ko‘rsatilgan</p>
                             </div>
                         </section>
 
