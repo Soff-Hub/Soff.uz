@@ -1311,14 +1311,18 @@ $ease: cubic-bezier(0.16, 1, 0.3, 1);
     line-height: 1.45;
     color: #334155;
     text-decoration: none;
-    transition: all 0.28s $ease;
+    transition: background-color 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+        border-color 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+        color 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
 
     &:hover,
     &.checkItemLinkActive {
         background: #f0fdf4;
         border-color: rgba(0, 164, 79, 0.22);
         color: $ink;
-        transform: translateX(4px);
+        transform: translate3d(4px, 0, 0);
 
         .checkTryPill {
             opacity: 1;
@@ -1594,7 +1598,7 @@ $ease: cubic-bezier(0.16, 1, 0.3, 1);
     border-radius: 50%;
     background: $brand;
     box-shadow: 0 0 0 0 rgba(0, 164, 79, 0.55);
-    animation: livePulse 1.6s infinite;
+    animation: livePulse 1.1s cubic-bezier(0.22, 1, 0.36, 1) infinite;
 }
 
 @keyframes livePulse {
@@ -1622,7 +1626,8 @@ $ease: cubic-bezier(0.16, 1, 0.3, 1);
     height: 100%;
     border-radius: 999px;
     background: linear-gradient(90deg, #00b653 0%, #00a44f 100%);
-    transition: width 0.45s $ease;
+    transition: width 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: width;
 }
 
 .workflowMotionStage {
@@ -1635,7 +1640,8 @@ $ease: cubic-bezier(0.16, 1, 0.3, 1);
     border-radius: 12px;
     background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
     border: 1px solid rgba(0, 164, 79, 0.22);
-    animation: stageSlideIn 0.35s $ease;
+    animation: stageSlideIn 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform, opacity;
 
     @media (max-width: 576px) {
         padding: 10px 12px;
@@ -1645,11 +1651,11 @@ $ease: cubic-bezier(0.16, 1, 0.3, 1);
 @keyframes stageSlideIn {
     from {
         opacity: 0;
-        transform: translateY(5px);
+        transform: translate3d(0, 4px, 0);
     }
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translate3d(0, 0, 0);
     }
 }
 
@@ -1703,16 +1709,16 @@ $ease: cubic-bezier(0.16, 1, 0.3, 1);
         height: 8px;
         border-radius: 999px;
         background: $brand;
-        animation: waveBar 1.1s ease-in-out infinite;
+        animation: waveBar 0.75s cubic-bezier(0.22, 1, 0.36, 1) infinite;
 
         &:nth-child(2) {
-            animation-delay: 0.15s;
+            animation-delay: 0.1s;
         }
         &:nth-child(3) {
-            animation-delay: 0.3s;
+            animation-delay: 0.2s;
         }
         &:nth-child(4) {
-            animation-delay: 0.45s;
+            animation-delay: 0.3s;
         }
     }
 }

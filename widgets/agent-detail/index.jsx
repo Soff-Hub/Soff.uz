@@ -59,7 +59,7 @@ const AgentDetail = ({ agent }) => {
         if (isWorkflowPaused || processSteps.length <= 1) return undefined;
         const timer = setInterval(() => {
             setActiveStep((prev) => (prev + 1) % processSteps.length);
-        }, 2500);
+        }, 1600);
         return () => clearInterval(timer);
     }, [isWorkflowPaused, processSteps.length]);
 
@@ -68,7 +68,7 @@ const AgentDetail = ({ agent }) => {
         if (isCanDoPaused || canDoItems.length <= 1) return undefined;
         const timer = setInterval(() => {
             setActiveCanDoIdx((prev) => (prev + 1) % canDoItems.length);
-        }, 2800);
+        }, 1700);
         return () => clearInterval(timer);
     }, [isCanDoPaused, canDoItems.length]);
 
