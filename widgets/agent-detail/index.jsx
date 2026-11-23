@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import {
     RiArrowRightSLine,
@@ -43,10 +43,34 @@ const AgentDetail = ({ agent }) => {
     const [selectedPlanId, setSelectedPlanId] = useState('pro');
     const [activeStyle, setActiveStyle] = useState(agent.styles?.[0] || 'Dinamik');
     const [activeStep, setActiveStep] = useState(0);
+    const [isWorkflowPaused, setIsWorkflowPaused] = useState(false);
+    const [activeCanDoIdx, setActiveCanDoIdx] = useState(0);
+    const [isCanDoPaused, setIsCanDoPaused] = useState(false);
     const [activeSample, setActiveSample] = useState(null);
     const [activeModalTab, setActiveModalTab] = useState('visual'); // 'visual' | 'text'
     const [activeVariantTab, setActiveVariantTab] = useState('variant1');
     const [copiedKey, setCopiedKey] = useState(null);
+
+    const processSteps = agent.processSteps || [];
+    const canDoItems = agent.canDo || agent.abilities || [];
+
+    // Live auto-playing workflow motion (1 -> 2 -> 3 -> 4), pauses on hover/click
+    useEffect(() => {
+        if (isWorkflowPaused || processSteps.length <= 1) return undefined;
+        const timer = setInterval(() => {
+            setActiveStep((prev) => (prev + 1) % processSteps.length);
+        }, 2500);
+        return () => clearInterval(timer);
+    }, [isWorkflowPaused, processSteps.length]);
+
+    // Subtle live spotlight cycling through capabilities so visitors immediately see interactivity
+    useEffect(() => {
+        if (isCanDoPaused || canDoItems.length <= 1) return undefined;
+        const timer = setInterval(() => {
+            setActiveCanDoIdx((prev) => (prev + 1) % canDoItems.length);
+        }, 2800);
+        return () => clearInterval(timer);
+    }, [isCanDoPaused, canDoItems.length]);
 
     const handleCopyText = (text, key) => {
         if (typeof window !== 'undefined' && navigator?.clipboard?.writeText) {
@@ -465,7 +489,10 @@ const AgentDetail = ({ agent }) => {
 
                         {/* 3. Can Do vs Cannot Do (Split Grid) */}
                         <div className={styles.splitGrid}>
-                            <section className={`${styles.card} ${styles.canDoCard}`}>
+                            <section
+                                className={`${styles.card} ${styles.canDoCard}`}
+                                onMouseEnter={() => setIsCanDoPaused(true)}
+                                onMouseLeave={() => setIsCanDoPaused(false)}>
                                 <div className={styles.splitHeadRow}>
                                     <span className={styles.splitIconGreen} aria-hidden="true">
                                         <RiCheckboxCircleLine />
@@ -473,11 +500,14 @@ const AgentDetail = ({ agent }) => {
                                     <h3 className={styles.splitTitle}>Agent {agent.name} nima qila oladi</h3>
                                 </div>
                                 <ul className={styles.checkList}>
-                                    {(agent.canDo || agent.abilities || []).map((item, idx) => (
+                                    {canDoItems.map((item, idx) => (
                                         <li key={idx} className={styles.checkItemInteractive}>
                                             <a
                                                 href={`${AGENT_CHAT_URL}?agent=${agent.id}&prompt=${encodeURIComponent(item)}`}
-                                                className={styles.checkItemLink}>
+                                                onMouseEnter={() => setActiveCanDoIdx(idx)}
+                                                className={`${styles.checkItemLink} ${
+                                                    activeCanDoIdx === idx ? styles.checkItemLinkActive : ''
+                                                }`}>
                                                 <span className={styles.checkIcon}>
                                                     <RiCheckLine />
                                                 </span>
@@ -603,7 +633,10 @@ const AgentDetail = ({ agent }) => {
                         </section>
 
                         {/* 5. Ish jarayoni */}
-                        <section className={styles.card}>
+                        <section
+                            className={styles.card}
+                            onMouseEnter={() => setIsWorkflowPaused(true)}
+                            onMouseLeave={() => setIsWorkflowPaused(false)}>
                             <div className={styles.sectionHeader}>
                                 <div className={styles.splitHeadRow}>
                                     <span className={styles.splitIconBrand} aria-hidden="true">
@@ -612,12 +645,13 @@ const AgentDetail = ({ agent }) => {
                                     <div>
                                         <h2 className={styles.sectionTitle}>Ish jarayoni</h2>
                                         <span className={styles.sectionSubtitle}>
-                                            4 oddiy qadamda tayyor natija — qadamni bosib ko‘ring
+                                            Agent {agent.name} qanday ishlashini jonli ko‘ring
                                         </span>
                                     </div>
                                 </div>
                                 <span className={styles.stepProgressText}>
-                                    {activeStep + 1} / {(agent.processSteps || []).length || 4}-bosqich
+                                    <span className={styles.livePulseDot} aria-hidden="true" />
+                                    {activeStep + 1} / {processSteps.length || 4}-bosqich
                                 </span>
                             </div>
 
@@ -626,16 +660,39 @@ const AgentDetail = ({ agent }) => {
                                     className={styles.workflowProgressFill}
                                     style={{
                                         width: `${
-                                            ((activeStep + 1) /
-                                                Math.max((agent.processSteps || []).length, 1)) *
-                                            100
+                                            ((activeStep + 1) / Math.max(processSteps.length, 1)) * 100
                                         }%`,
                                     }}
                                 />
                             </div>
 
+                            {/* Live Animated Simulation Stage */}
+                            {processSteps[activeStep] && (
+                                <div key={activeStep} className={styles.workflowMotionStage}>
+                                    <div className={styles.motionStageLeft}>
+                                        <span className={styles.motionStageBadge}>
+                                            {processSteps[activeStep].tag}
+                                        </span>
+                                        <div className={styles.motionStageCopy}>
+                                            <strong className={styles.motionStageTitle}>
+                                                {processSteps[activeStep].title}
+                                            </strong>
+                                            <span className={styles.motionStageDesc}>
+                                                {processSteps[activeStep].desc}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div className={styles.motionWave} aria-hidden="true">
+                                        <span />
+                                        <span />
+                                        <span />
+                                        <span />
+                                    </div>
+                                </div>
+                            )}
+
                             <div className={styles.workflowGrid}>
-                                {(agent.processSteps || []).map((step, idx) => {
+                                {processSteps.map((step, idx) => {
                                     const StepIcon =
                                         idx === 0
                                             ? RiUploadCloud2Line
