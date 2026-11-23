@@ -682,11 +682,18 @@ const AgentDetail = ({ agent }) => {
                                             </span>
                                         </div>
                                     </div>
-                                    <div className={styles.motionWave} aria-hidden="true">
-                                        <span />
-                                        <span />
-                                        <span />
-                                        <span />
+                                    <div
+                                        className={`${styles.motionAiBadge} ${
+                                            activeStep === processSteps.length - 1
+                                                ? styles.motionAiBadgeDone
+                                                : ''
+                                        }`}
+                                        aria-hidden="true">
+                                        {activeStep === processSteps.length - 1 ? (
+                                            <RiCheckLine />
+                                        ) : (
+                                            <RiSparklingFill />
+                                        )}
                                     </div>
                                 </div>
                             )}
