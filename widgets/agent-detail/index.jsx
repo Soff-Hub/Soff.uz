@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import {
     RiArrowRightSLine,
@@ -21,6 +21,13 @@ import {
     RiBarChartBoxLine,
     RiCalendarLine,
     RiFocus3Line,
+    RiUploadCloud2Line,
+    RiDownloadCloud2Line,
+    RiTranslate2,
+    RiPaletteLine,
+    RiMagicLine,
+    RiForbidLine,
+    RiCheckboxCircleLine,
 } from 'react-icons/ri';
 import {
     AGENT_APP_URL,
@@ -35,10 +42,35 @@ const AgentDetail = ({ agent }) => {
     const [billingPeriod, setBillingPeriod] = useState('monthly'); // 'monthly' | 'yearly'
     const [selectedPlanId, setSelectedPlanId] = useState('pro');
     const [activeStyle, setActiveStyle] = useState(agent.styles?.[0] || 'Dinamik');
+    const [activeStep, setActiveStep] = useState(0);
+    const [isWorkflowPaused, setIsWorkflowPaused] = useState(false);
+    const [activeCanDoIdx, setActiveCanDoIdx] = useState(0);
+    const [isCanDoPaused, setIsCanDoPaused] = useState(false);
     const [activeSample, setActiveSample] = useState(null);
     const [activeModalTab, setActiveModalTab] = useState('visual'); // 'visual' | 'text'
     const [activeVariantTab, setActiveVariantTab] = useState('variant1');
     const [copiedKey, setCopiedKey] = useState(null);
+
+    const processSteps = agent.processSteps || [];
+    const canDoItems = agent.canDo || agent.abilities || [];
+
+    // Live auto-playing workflow motion (1 -> 2 -> 3 -> 4), pauses on hover/click
+    useEffect(() => {
+        if (isWorkflowPaused || processSteps.length <= 1) return undefined;
+        const timer = setInterval(() => {
+            setActiveStep((prev) => (prev + 1) % processSteps.length);
+        }, 1600);
+        return () => clearInterval(timer);
+    }, [isWorkflowPaused, processSteps.length]);
+
+    // Subtle live spotlight cycling through capabilities so visitors immediately see interactivity
+    useEffect(() => {
+        if (isCanDoPaused || canDoItems.length <= 1) return undefined;
+        const timer = setInterval(() => {
+            setActiveCanDoIdx((prev) => (prev + 1) % canDoItems.length);
+        }, 1700);
+        return () => clearInterval(timer);
+    }, [isCanDoPaused, canDoItems.length]);
 
     const handleCopyText = (text, key) => {
         if (typeof window !== 'undefined' && navigator?.clipboard?.writeText) {
@@ -457,22 +489,46 @@ const AgentDetail = ({ agent }) => {
 
                         {/* 3. Can Do vs Cannot Do (Split Grid) */}
                         <div className={styles.splitGrid}>
-                            <section className={`${styles.card} ${styles.canDoCard}`}>
-                                <h3 className={styles.splitTitle}>Agent {agent.name} nima qila oladi</h3>
+                            <section
+                                className={`${styles.card} ${styles.canDoCard}`}
+                                onMouseEnter={() => setIsCanDoPaused(true)}
+                                onMouseLeave={() => setIsCanDoPaused(false)}>
+                                <div className={styles.splitHeadRow}>
+                                    <span className={styles.splitIconGreen} aria-hidden="true">
+                                        <RiCheckboxCircleLine />
+                                    </span>
+                                    <h3 className={styles.splitTitle}>Agent {agent.name} nima qila oladi</h3>
+                                </div>
                                 <ul className={styles.checkList}>
-                                    {(agent.canDo || agent.abilities || []).map((item, idx) => (
-                                        <li key={idx} className={styles.checkItem}>
-                                            <span className={styles.checkIcon}>
-                                                <RiCheckLine />
-                                            </span>
-                                            <span>{item}</span>
+                                    {canDoItems.map((item, idx) => (
+                                        <li key={idx} className={styles.checkItemInteractive}>
+                                            <a
+                                                href={`${AGENT_CHAT_URL}?agent=${agent.id}&prompt=${encodeURIComponent(item)}`}
+                                                onMouseEnter={() => setActiveCanDoIdx(idx)}
+                                                className={`${styles.checkItemLink} ${
+                                                    activeCanDoIdx === idx ? styles.checkItemLinkActive : ''
+                                                }`}>
+                                                <span className={styles.checkIcon}>
+                                                    <RiCheckLine />
+                                                </span>
+                                                <span className={styles.checkItemText}>{item}</span>
+                                                <span className={styles.checkTryPill}>
+                                                    Sinab ko‘rish
+                                                    <RiArrowRightUpLine aria-hidden="true" />
+                                                </span>
+                                            </a>
                                         </li>
                                     ))}
                                 </ul>
                             </section>
 
                             <section className={`${styles.card} ${styles.cannotDoCard}`}>
-                                <h3 className={styles.splitTitle}>Nima qila olmaydi</h3>
+                                <div className={styles.splitHeadRow}>
+                                    <span className={styles.splitIconRed} aria-hidden="true">
+                                        <RiForbidLine />
+                                    </span>
+                                    <h3 className={styles.splitTitle}>Nima qila olmaydi</h3>
+                                </div>
                                 <ul className={styles.crossList}>
                                     {(agent.cannotDo || []).map((item, idx) => (
                                         <li key={idx} className={styles.crossItem}>
@@ -485,6 +541,9 @@ const AgentDetail = ({ agent }) => {
                                 </ul>
 
                                 <div className={styles.customOrderBox}>
+                                    <span className={styles.guaranteeIcon} aria-hidden="true">
+                                        <RiShieldCheckLine />
+                                    </span>
                                     <p className={styles.customOrderText}>
                                         {agent.guaranteeNote ||
                                             'Kreditlar faqat yakuniy natija ma’qul kelganda yechiladi. Qayta tahrirlash bepul.'}
@@ -495,7 +554,27 @@ const AgentDetail = ({ agent }) => {
 
                         {/* 4. Uslub va formatlar */}
                         <section className={styles.card}>
-                            <h2 className={styles.sectionTitle}>Uslub va formatlar</h2>
+                            <div className={styles.sectionHeader}>
+                                <div className={styles.splitHeadRow}>
+                                    <span className={styles.splitIconBrand} aria-hidden="true">
+                                        <RiPaletteLine />
+                                    </span>
+                                    <div>
+                                        <h2 className={styles.sectionTitle}>Uslub va formatlar</h2>
+                                        <span className={styles.sectionSubtitle}>
+                                            Uslubni tanlang va Agent {agent.name} bilan darhol boshlang
+                                        </span>
+                                    </div>
+                                </div>
+                                <a
+                                    href={`${AGENT_CHAT_URL}?agent=${agent.id}&style=${encodeURIComponent(activeStyle)}`}
+                                    className={styles.styleStartBtn}>
+                                    <RiSparklingFill aria-hidden="true" />
+                                    «{activeStyle}» bilan boshlash
+                                    <RiArrowRightLine aria-hidden="true" />
+                                </a>
+                            </div>
+
                             <div className={styles.stylePills}>
                                 {(agent.styles || ['Dinamik', 'Boshqacha', 'Barchasi']).map((style) => (
                                     <button
@@ -505,6 +584,9 @@ const AgentDetail = ({ agent }) => {
                                         className={`${styles.stylePill} ${
                                             activeStyle === style ? styles.stylePillActive : ''
                                         }`}>
+                                        {activeStyle === style && (
+                                            <RiCheckLine className={styles.stylePillCheck} aria-hidden="true" />
+                                        )}
                                         {style}
                                     </button>
                                 ))}
@@ -512,21 +594,36 @@ const AgentDetail = ({ agent }) => {
 
                             <div className={styles.specsGrid}>
                                 <div className={styles.specBox}>
-                                    <span className={styles.specHeading}>Siz yuborasiz</span>
+                                    <div className={styles.specHeadRow}>
+                                        <span className={`${styles.specIconBadge} ${styles.specIconBlue}`} aria-hidden="true">
+                                            <RiUploadCloud2Line />
+                                        </span>
+                                        <span className={styles.specHeading}>Siz yuborasiz</span>
+                                    </div>
                                     <p className={styles.specDesc}>
                                         {agent.specs?.input ||
                                             'Vazifa tavsifi, xom materiallar va ko‘rsatmalar'}
                                     </p>
                                 </div>
                                 <div className={styles.specBox}>
-                                    <span className={styles.specHeading}>Siz olasiz</span>
+                                    <div className={styles.specHeadRow}>
+                                        <span className={`${styles.specIconBadge} ${styles.specIconGreen}`} aria-hidden="true">
+                                            <RiDownloadCloud2Line />
+                                        </span>
+                                        <span className={styles.specHeading}>Siz olasiz</span>
+                                    </div>
                                     <p className={styles.specDesc}>
                                         {agent.specs?.output ||
                                             'To‘liq tayyor formatdagi natija va tahrirlash imkoniyati'}
                                     </p>
                                 </div>
                                 <div className={styles.specBox}>
-                                    <span className={styles.specHeading}>Tillar</span>
+                                    <div className={styles.specHeadRow}>
+                                        <span className={`${styles.specIconBadge} ${styles.specIconPurple}`} aria-hidden="true">
+                                            <RiTranslate2 />
+                                        </span>
+                                        <span className={styles.specHeading}>Tillar</span>
+                                    </div>
                                     <p className={styles.specDesc}>
                                         {agent.specs?.languages ||
                                             'O‘zbek, rus, ingliz — subtitr va matnlar uchun'}
@@ -536,16 +633,97 @@ const AgentDetail = ({ agent }) => {
                         </section>
 
                         {/* 5. Ish jarayoni */}
-                        <section className={styles.card}>
-                            <h2 className={styles.sectionTitle}>Ish jarayoni</h2>
-                            <div className={styles.workflowGrid}>
-                                {(agent.processSteps || []).map((step) => (
-                                    <div key={step.step} className={styles.workflowStep}>
-                                        <span className={styles.stepBadge}>{step.tag}</span>
-                                        <h4 className={styles.stepTitle}>{step.title}</h4>
-                                        <p className={styles.stepDesc}>{step.desc}</p>
+                        <section
+                            className={styles.card}
+                            onMouseEnter={() => setIsWorkflowPaused(true)}
+                            onMouseLeave={() => setIsWorkflowPaused(false)}>
+                            <div className={styles.sectionHeader}>
+                                <div className={styles.splitHeadRow}>
+                                    <span className={styles.splitIconBrand} aria-hidden="true">
+                                        <RiMagicLine />
+                                    </span>
+                                    <div>
+                                        <h2 className={styles.sectionTitle}>Ish jarayoni</h2>
+                                        <span className={styles.sectionSubtitle}>
+                                            Agent {agent.name} qanday ishlashini jonli ko‘ring
+                                        </span>
                                     </div>
-                                ))}
+                                </div>
+                                <span className={styles.stepProgressText}>
+                                    <span className={styles.livePulseDot} aria-hidden="true" />
+                                    {activeStep + 1} / {processSteps.length || 4}-bosqich
+                                </span>
+                            </div>
+
+                            <div className={styles.workflowProgressTrack} aria-hidden="true">
+                                <div
+                                    className={styles.workflowProgressFill}
+                                    style={{
+                                        width: `${
+                                            ((activeStep + 1) / Math.max(processSteps.length, 1)) * 100
+                                        }%`,
+                                    }}
+                                />
+                            </div>
+
+                            {/* Live Animated Simulation Stage */}
+                            {processSteps[activeStep] && (
+                                <div key={activeStep} className={styles.workflowMotionStage}>
+                                    <div className={styles.motionStageLeft}>
+                                        <span className={styles.motionStageBadge}>
+                                            {processSteps[activeStep].tag}
+                                        </span>
+                                        <div className={styles.motionStageCopy}>
+                                            <strong className={styles.motionStageTitle}>
+                                                {processSteps[activeStep].title}
+                                            </strong>
+                                            <span className={styles.motionStageDesc}>
+                                                {processSteps[activeStep].desc}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div className={styles.motionWave} aria-hidden="true">
+                                        <span />
+                                        <span />
+                                        <span />
+                                        <span />
+                                    </div>
+                                </div>
+                            )}
+
+                            <div className={styles.workflowGrid}>
+                                {processSteps.map((step, idx) => {
+                                    const StepIcon =
+                                        idx === 0
+                                            ? RiUploadCloud2Line
+                                            : idx === 1
+                                            ? RiPaletteLine
+                                            : idx === 2
+                                            ? RiMagicLine
+                                            : RiDownloadCloud2Line;
+                                    const isActive = activeStep === idx;
+                                    const isCompleted = idx < activeStep;
+
+                                    return (
+                                        <button
+                                            key={step.step}
+                                            type="button"
+                                            onClick={() => setActiveStep(idx)}
+                                            onMouseEnter={() => setActiveStep(idx)}
+                                            className={`${styles.workflowStep} ${
+                                                isActive ? styles.workflowStepActive : ''
+                                            } ${isCompleted ? styles.workflowStepDone : ''}`}>
+                                            <div className={styles.workflowStepTop}>
+                                                <span className={styles.stepIconBox} aria-hidden="true">
+                                                    <StepIcon />
+                                                </span>
+                                                <span className={styles.stepBadge}>{step.tag}</span>
+                                            </div>
+                                            <h4 className={styles.stepTitle}>{step.title}</h4>
+                                            <p className={styles.stepDesc}>{step.desc}</p>
+                                        </button>
+                                    );
+                                })}
                             </div>
                         </section>
 
