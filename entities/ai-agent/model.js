@@ -1,8 +1,8 @@
 // The SoffX AI marketing team, shown on the home page (widgets/home/agents-market) and on
-// /agents/[id]. Agent CTAs route to the SoffX B2B page at /labs/b2b.
+// /agents/[id]. The agent itself runs at /agent (rewritten to the SoffX front, see next.config.js).
 
-export const AGENT_APP_URL = '/labs/b2b';
-export const AGENT_CHAT_URL = '/labs/b2b';
+export const AGENT_APP_URL = '/agent';
+export const AGENT_CHAT_URL = '/agent/chat';
 
 export const agentPath = (id) => `/agents/${id}`;
 export const agentImage = (id, variant = 'bust') => `/static/img/agents/${id}-${variant}.webp?v=2`;
